@@ -46,7 +46,6 @@ func resourceEmailfilterDnsbl() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"comment": &schema.Schema{
 				Type:         schema.TypeString,
@@ -72,7 +71,6 @@ func resourceEmailfilterDnsbl() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 127),
 							Optional:     true,
-							Computed:     true,
 						},
 						"action": &schema.Schema{
 							Type:     schema.TypeString,
@@ -248,7 +246,7 @@ func resourceEmailfilterDnsblRead(d *schema.ResourceData, m interface{}) error {
 }
 
 func flattenEmailfilterDnsblId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenEmailfilterDnsblName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -317,7 +315,7 @@ func flattenEmailfilterDnsblEntriesStatus(v interface{}, d *schema.ResourceData,
 }
 
 func flattenEmailfilterDnsblEntriesId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenEmailfilterDnsblEntriesServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -419,6 +417,8 @@ func expandEmailfilterDnsblEntries(d *schema.ResourceData, v interface{}, pre st
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "server"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["server"], _ = expandEmailfilterDnsblEntriesServer(d, i["server"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["server"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
@@ -469,6 +469,8 @@ func getObjectEmailfilterDnsbl(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
@@ -478,6 +480,8 @@ func getObjectEmailfilterDnsbl(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("entries"); ok || d.HasChange("entries") {

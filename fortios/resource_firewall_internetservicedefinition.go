@@ -39,7 +39,6 @@ func resourceFirewallInternetServiceDefinition() *schema.Resource {
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"entry": &schema.Schema{
 				Type:     schema.TypeList,
@@ -54,19 +53,16 @@ func resourceFirewallInternetServiceDefinition() *schema.Resource {
 						"category_id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"name": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"protocol": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"port_range": &schema.Schema{
 							Type:     schema.TypeList,
@@ -76,7 +72,6 @@ func resourceFirewallInternetServiceDefinition() *schema.Resource {
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 									"start_port": &schema.Schema{
 										Type:         schema.TypeInt,
@@ -97,7 +92,6 @@ func resourceFirewallInternetServiceDefinition() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -268,7 +262,7 @@ func resourceFirewallInternetServiceDefinitionRead(d *schema.ResourceData, m int
 }
 
 func flattenFirewallInternetServiceDefinitionId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallInternetServiceDefinitionEntry(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -335,11 +329,11 @@ func flattenFirewallInternetServiceDefinitionEntry(v interface{}, d *schema.Reso
 }
 
 func flattenFirewallInternetServiceDefinitionEntrySeqNum(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallInternetServiceDefinitionEntryCategoryId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallInternetServiceDefinitionEntryName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -347,7 +341,7 @@ func flattenFirewallInternetServiceDefinitionEntryName(v interface{}, d *schema.
 }
 
 func flattenFirewallInternetServiceDefinitionEntryProtocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallInternetServiceDefinitionEntryPortRange(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -399,19 +393,19 @@ func flattenFirewallInternetServiceDefinitionEntryPortRange(v interface{}, d *sc
 }
 
 func flattenFirewallInternetServiceDefinitionEntryPortRangeId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallInternetServiceDefinitionEntryPortRangeStartPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallInternetServiceDefinitionEntryPortRangeEndPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallInternetServiceDefinitionEntryPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectFirewallInternetServiceDefinition(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -480,28 +474,36 @@ func expandFirewallInternetServiceDefinitionEntry(d *schema.ResourceData, v inte
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category_id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["category-id"], _ = expandFirewallInternetServiceDefinitionEntryCategoryId(d, i["category_id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["category-id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandFirewallInternetServiceDefinitionEntryName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["protocol"], _ = expandFirewallInternetServiceDefinitionEntryProtocol(d, i["protocol"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["protocol"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port_range"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["port-range"], _ = expandFirewallInternetServiceDefinitionEntryPortRange(d, i["port_range"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["port-range"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["port"], _ = expandFirewallInternetServiceDefinitionEntryPort(d, i["port"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["port"] = nil
 		}
 
 		result = append(result, tmp)
@@ -545,6 +547,8 @@ func expandFirewallInternetServiceDefinitionEntryPortRange(d *schema.ResourceDat
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandFirewallInternetServiceDefinitionEntryPortRangeId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "start_port"
@@ -591,6 +595,8 @@ func getObjectFirewallInternetServiceDefinition(d *schema.ResourceData, sv strin
 		} else if t != nil {
 			obj["id"] = t
 		}
+	} else if d.HasChange("fosid") {
+		obj["id"] = nil
 	}
 
 	if v, ok := d.GetOk("entry"); ok || d.HasChange("entry") {

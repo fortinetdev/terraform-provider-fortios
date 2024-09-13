@@ -46,12 +46,10 @@ func resourceReportStyle() *schema.Resource {
 			"options": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"font_family": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"font_style": &schema.Schema{
 				Type:     schema.TypeString,
@@ -67,110 +65,91 @@ func resourceReportStyle() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"line_height": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"fg_color": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"bg_color": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"align": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"width": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"height": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"margin_top": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"margin_right": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"margin_bottom": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"margin_left": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"border_top": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"border_right": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"border_bottom": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"border_left": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"padding_top": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"padding_right": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"padding_bottom": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"padding_left": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"column_span": &schema.Schema{
 				Type:     schema.TypeString,
@@ -181,7 +160,6 @@ func resourceReportStyle() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -733,6 +711,8 @@ func getObjectReportStyle(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["options"] = t
 		}
+	} else if d.HasChange("options") {
+		obj["options"] = nil
 	}
 
 	if v, ok := d.GetOk("font_family"); ok {
@@ -742,6 +722,8 @@ func getObjectReportStyle(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["font-family"] = t
 		}
+	} else if d.HasChange("font_family") {
+		obj["font-family"] = nil
 	}
 
 	if v, ok := d.GetOk("font_style"); ok {
@@ -769,6 +751,8 @@ func getObjectReportStyle(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["font-size"] = t
 		}
+	} else if d.HasChange("font_size") {
+		obj["font-size"] = nil
 	}
 
 	if v, ok := d.GetOk("line_height"); ok {
@@ -778,6 +762,8 @@ func getObjectReportStyle(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["line-height"] = t
 		}
+	} else if d.HasChange("line_height") {
+		obj["line-height"] = nil
 	}
 
 	if v, ok := d.GetOk("fg_color"); ok {
@@ -787,6 +773,8 @@ func getObjectReportStyle(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["fg-color"] = t
 		}
+	} else if d.HasChange("fg_color") {
+		obj["fg-color"] = nil
 	}
 
 	if v, ok := d.GetOk("bg_color"); ok {
@@ -796,6 +784,8 @@ func getObjectReportStyle(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["bg-color"] = t
 		}
+	} else if d.HasChange("bg_color") {
+		obj["bg-color"] = nil
 	}
 
 	if v, ok := d.GetOk("align"); ok {
@@ -805,6 +795,8 @@ func getObjectReportStyle(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["align"] = t
 		}
+	} else if d.HasChange("align") {
+		obj["align"] = nil
 	}
 
 	if v, ok := d.GetOk("width"); ok {
@@ -814,6 +806,8 @@ func getObjectReportStyle(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["width"] = t
 		}
+	} else if d.HasChange("width") {
+		obj["width"] = nil
 	}
 
 	if v, ok := d.GetOk("height"); ok {
@@ -823,6 +817,8 @@ func getObjectReportStyle(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["height"] = t
 		}
+	} else if d.HasChange("height") {
+		obj["height"] = nil
 	}
 
 	if v, ok := d.GetOk("margin_top"); ok {
@@ -832,6 +828,8 @@ func getObjectReportStyle(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["margin-top"] = t
 		}
+	} else if d.HasChange("margin_top") {
+		obj["margin-top"] = nil
 	}
 
 	if v, ok := d.GetOk("margin_right"); ok {
@@ -841,6 +839,8 @@ func getObjectReportStyle(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["margin-right"] = t
 		}
+	} else if d.HasChange("margin_right") {
+		obj["margin-right"] = nil
 	}
 
 	if v, ok := d.GetOk("margin_bottom"); ok {
@@ -850,6 +850,8 @@ func getObjectReportStyle(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["margin-bottom"] = t
 		}
+	} else if d.HasChange("margin_bottom") {
+		obj["margin-bottom"] = nil
 	}
 
 	if v, ok := d.GetOk("margin_left"); ok {
@@ -859,6 +861,8 @@ func getObjectReportStyle(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["margin-left"] = t
 		}
+	} else if d.HasChange("margin_left") {
+		obj["margin-left"] = nil
 	}
 
 	if v, ok := d.GetOk("border_top"); ok {
@@ -868,6 +872,8 @@ func getObjectReportStyle(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["border-top"] = t
 		}
+	} else if d.HasChange("border_top") {
+		obj["border-top"] = nil
 	}
 
 	if v, ok := d.GetOk("border_right"); ok {
@@ -877,6 +883,8 @@ func getObjectReportStyle(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["border-right"] = t
 		}
+	} else if d.HasChange("border_right") {
+		obj["border-right"] = nil
 	}
 
 	if v, ok := d.GetOk("border_bottom"); ok {
@@ -886,6 +894,8 @@ func getObjectReportStyle(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["border-bottom"] = t
 		}
+	} else if d.HasChange("border_bottom") {
+		obj["border-bottom"] = nil
 	}
 
 	if v, ok := d.GetOk("border_left"); ok {
@@ -895,6 +905,8 @@ func getObjectReportStyle(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["border-left"] = t
 		}
+	} else if d.HasChange("border_left") {
+		obj["border-left"] = nil
 	}
 
 	if v, ok := d.GetOk("padding_top"); ok {
@@ -904,6 +916,8 @@ func getObjectReportStyle(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["padding-top"] = t
 		}
+	} else if d.HasChange("padding_top") {
+		obj["padding-top"] = nil
 	}
 
 	if v, ok := d.GetOk("padding_right"); ok {
@@ -913,6 +927,8 @@ func getObjectReportStyle(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["padding-right"] = t
 		}
+	} else if d.HasChange("padding_right") {
+		obj["padding-right"] = nil
 	}
 
 	if v, ok := d.GetOk("padding_bottom"); ok {
@@ -922,6 +938,8 @@ func getObjectReportStyle(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["padding-bottom"] = t
 		}
+	} else if d.HasChange("padding_bottom") {
+		obj["padding-bottom"] = nil
 	}
 
 	if v, ok := d.GetOk("padding_left"); ok {
@@ -931,6 +949,8 @@ func getObjectReportStyle(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["padding-left"] = t
 		}
+	} else if d.HasChange("padding_left") {
+		obj["padding-left"] = nil
 	}
 
 	if v, ok := d.GetOk("column_span"); ok {
@@ -949,6 +969,8 @@ func getObjectReportStyle(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["column-gap"] = t
 		}
+	} else if d.HasChange("column_gap") {
+		obj["column-gap"] = nil
 	}
 
 	return &obj, nil

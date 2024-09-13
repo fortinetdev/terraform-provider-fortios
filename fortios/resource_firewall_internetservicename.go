@@ -40,7 +40,6 @@ func resourceFirewallInternetServiceName() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"type": &schema.Schema{
 				Type:     schema.TypeString,
@@ -50,22 +49,18 @@ func resourceFirewallInternetServiceName() *schema.Resource {
 			"internet_service_id": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"country_id": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"region_id": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"city_id": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 		},
 	}
@@ -231,19 +226,19 @@ func flattenFirewallInternetServiceNameType(v interface{}, d *schema.ResourceDat
 }
 
 func flattenFirewallInternetServiceNameInternetServiceId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallInternetServiceNameCountryId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallInternetServiceNameRegionId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallInternetServiceNameCityId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectFirewallInternetServiceName(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -328,6 +323,8 @@ func getObjectFirewallInternetServiceName(d *schema.ResourceData, sv string) (*m
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("type"); ok {
@@ -346,6 +343,8 @@ func getObjectFirewallInternetServiceName(d *schema.ResourceData, sv string) (*m
 		} else if t != nil {
 			obj["internet-service-id"] = t
 		}
+	} else if d.HasChange("internet_service_id") {
+		obj["internet-service-id"] = nil
 	}
 
 	if v, ok := d.GetOkExists("country_id"); ok {
@@ -355,6 +354,8 @@ func getObjectFirewallInternetServiceName(d *schema.ResourceData, sv string) (*m
 		} else if t != nil {
 			obj["country-id"] = t
 		}
+	} else if d.HasChange("country_id") {
+		obj["country-id"] = nil
 	}
 
 	if v, ok := d.GetOkExists("region_id"); ok {
@@ -364,6 +365,8 @@ func getObjectFirewallInternetServiceName(d *schema.ResourceData, sv string) (*m
 		} else if t != nil {
 			obj["region-id"] = t
 		}
+	} else if d.HasChange("region_id") {
+		obj["region-id"] = nil
 	}
 
 	if v, ok := d.GetOkExists("city_id"); ok {
@@ -373,6 +376,8 @@ func getObjectFirewallInternetServiceName(d *schema.ResourceData, sv string) (*m
 		} else if t != nil {
 			obj["city-id"] = t
 		}
+	} else if d.HasChange("city_id") {
+		obj["city-id"] = nil
 	}
 
 	return &obj, nil

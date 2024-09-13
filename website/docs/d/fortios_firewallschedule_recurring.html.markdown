@@ -20,6 +20,7 @@ Use this data source to get information on an fortios firewallschedule recurring
 The following attributes are exported:
 
 * `name` - Recurring schedule name.
+* `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `start` - Time of day to start the schedule, format hh:mm.
 * `end` - Time of day to end the schedule, format hh:mm.
 * `day` - One or more days of the week on which the schedule is valid. Separate the names of the days with a space.

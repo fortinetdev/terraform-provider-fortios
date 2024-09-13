@@ -62,6 +62,8 @@ The following arguments are supported:
 * `password` - Cluster password. Must be the same for all members.
 * `key` - key
 * `hbdev` - Heartbeat interfaces. Must be the same for all members.
+* `auto_virtual_mac_interface` - The physical interface that will be assigned an auto-generated virtual MAC address. The structure of `auto_virtual_mac_interface` block is documented below.
+* `backup_hbdev` - Backup heartbeat interfaces. Must be the same for all members. The structure of `backup_hbdev` block is documented below.
 * `unicast_hb` - Enable/disable unicast heartbeat. Valid values: `enable`, `disable`.
 * `unicast_hb_peerip` - Unicast heartbeat peer IP.
 * `unicast_hb_netmask` - Unicast heartbeat netmask.
@@ -137,11 +139,20 @@ The following arguments are supported:
 * `memory_failover_sample_rate` - Rate at which memory usage is sampled in order to measure memory usage in seconds (1 - 60, default = 1).
 * `memory_failover_flip_timeout` - Time to wait between subsequent memory based failovers in minutes (6 - 2147483647, default = 6).
 * `failover_hold_time` - Time to wait before failover (0 - 300 sec, default = 0), to avoid flip.
+* `check_secondary_dev_health` - Enable/disable secondary dev health check for session load-balance in HA A-A mode. Valid values: `enable`, `disable`.
 * `ipsec_phase2_proposal` - IPsec phase2 proposal. Valid values: `aes128-sha1`, `aes128-sha256`, `aes128-sha384`, `aes128-sha512`, `aes192-sha1`, `aes192-sha256`, `aes192-sha384`, `aes192-sha512`, `aes256-sha1`, `aes256-sha256`, `aes256-sha384`, `aes256-sha512`, `aes128gcm`, `aes256gcm`, `chacha20poly1305`.
 * `inter_cluster_session_sync` - Enable/disable synchronization of sessions among HA clusters. Valid values: `enable`, `disable`.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
 * `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
+
+The `auto_virtual_mac_interface` block supports:
+
+* `interface_name` - Interface name.
+
+The `backup_hbdev` block supports:
+
+* `name` - Interface name.
 
 The `ha_mgmt_interfaces` block supports:
 

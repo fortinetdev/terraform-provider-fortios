@@ -40,25 +40,21 @@ func resourceAlertemailSetting() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"mailto1": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"mailto2": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"mailto3": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"filter_mode": &schema.Schema{
 				Type:     schema.TypeString,
@@ -370,7 +366,7 @@ func flattenAlertemailSettingFilterMode(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenAlertemailSettingEmailInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenAlertemailSettingIpsLogs(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -450,43 +446,43 @@ func flattenAlertemailSettingSshLogs(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenAlertemailSettingFdsLicenseExpiringDays(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenAlertemailSettingLocalDiskUsage(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenAlertemailSettingEmergencyInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenAlertemailSettingAlertInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenAlertemailSettingCriticalInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenAlertemailSettingErrorInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenAlertemailSettingWarningInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenAlertemailSettingNotificationInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenAlertemailSettingInformationInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenAlertemailSettingDebugInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenAlertemailSettingSeverity(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -879,6 +875,8 @@ func getObjectAlertemailSetting(d *schema.ResourceData, setArgNil bool, sv strin
 				obj["username"] = t
 			}
 		}
+	} else if d.HasChange("username") {
+		obj["username"] = nil
 	}
 
 	if v, ok := d.GetOk("mailto1"); ok {
@@ -892,6 +890,8 @@ func getObjectAlertemailSetting(d *schema.ResourceData, setArgNil bool, sv strin
 				obj["mailto1"] = t
 			}
 		}
+	} else if d.HasChange("mailto1") {
+		obj["mailto1"] = nil
 	}
 
 	if v, ok := d.GetOk("mailto2"); ok {
@@ -905,6 +905,8 @@ func getObjectAlertemailSetting(d *schema.ResourceData, setArgNil bool, sv strin
 				obj["mailto2"] = t
 			}
 		}
+	} else if d.HasChange("mailto2") {
+		obj["mailto2"] = nil
 	}
 
 	if v, ok := d.GetOk("mailto3"); ok {
@@ -918,6 +920,8 @@ func getObjectAlertemailSetting(d *schema.ResourceData, setArgNil bool, sv strin
 				obj["mailto3"] = t
 			}
 		}
+	} else if d.HasChange("mailto3") {
+		obj["mailto3"] = nil
 	}
 
 	if v, ok := d.GetOk("filter_mode"); ok {

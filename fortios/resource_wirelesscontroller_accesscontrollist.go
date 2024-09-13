@@ -47,7 +47,6 @@ func resourceWirelessControllerAccessControlList() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"layer3_ipv4_rules": &schema.Schema{
 				Type:     schema.TypeList,
@@ -58,35 +57,29 @@ func resourceWirelessControllerAccessControlList() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 						"comment": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"srcaddr": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"srcport": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 						"dstaddr": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"dstport": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 						"protocol": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -97,7 +90,6 @@ func resourceWirelessControllerAccessControlList() *schema.Resource {
 						"action": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -111,35 +103,29 @@ func resourceWirelessControllerAccessControlList() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 						"comment": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"srcaddr": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"srcport": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 						"dstaddr": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"dstport": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 						"protocol": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -150,7 +136,6 @@ func resourceWirelessControllerAccessControlList() *schema.Resource {
 						"action": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -402,7 +387,7 @@ func flattenWirelessControllerAccessControlListLayer3Ipv4Rules(v interface{}, d 
 }
 
 func flattenWirelessControllerAccessControlListLayer3Ipv4RulesRuleId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerAccessControlListLayer3Ipv4RulesComment(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -414,7 +399,7 @@ func flattenWirelessControllerAccessControlListLayer3Ipv4RulesSrcaddr(v interfac
 }
 
 func flattenWirelessControllerAccessControlListLayer3Ipv4RulesSrcport(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerAccessControlListLayer3Ipv4RulesDstaddr(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -422,11 +407,11 @@ func flattenWirelessControllerAccessControlListLayer3Ipv4RulesDstaddr(v interfac
 }
 
 func flattenWirelessControllerAccessControlListLayer3Ipv4RulesDstport(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerAccessControlListLayer3Ipv4RulesProtocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerAccessControlListLayer3Ipv4RulesAction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -507,7 +492,7 @@ func flattenWirelessControllerAccessControlListLayer3Ipv6Rules(v interface{}, d 
 }
 
 func flattenWirelessControllerAccessControlListLayer3Ipv6RulesRuleId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerAccessControlListLayer3Ipv6RulesComment(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -519,7 +504,7 @@ func flattenWirelessControllerAccessControlListLayer3Ipv6RulesSrcaddr(v interfac
 }
 
 func flattenWirelessControllerAccessControlListLayer3Ipv6RulesSrcport(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerAccessControlListLayer3Ipv6RulesDstaddr(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -527,11 +512,11 @@ func flattenWirelessControllerAccessControlListLayer3Ipv6RulesDstaddr(v interfac
 }
 
 func flattenWirelessControllerAccessControlListLayer3Ipv6RulesDstport(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerAccessControlListLayer3Ipv6RulesProtocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerAccessControlListLayer3Ipv6RulesAction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -625,31 +610,43 @@ func expandWirelessControllerAccessControlListLayer3Ipv4Rules(d *schema.Resource
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rule_id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["rule-id"], _ = expandWirelessControllerAccessControlListLayer3Ipv4RulesRuleId(d, i["rule_id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["rule-id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["comment"], _ = expandWirelessControllerAccessControlListLayer3Ipv4RulesComment(d, i["comment"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["comment"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "srcaddr"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["srcaddr"], _ = expandWirelessControllerAccessControlListLayer3Ipv4RulesSrcaddr(d, i["srcaddr"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["srcaddr"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "srcport"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["srcport"], _ = expandWirelessControllerAccessControlListLayer3Ipv4RulesSrcport(d, i["srcport"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["srcport"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dstaddr"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["dstaddr"], _ = expandWirelessControllerAccessControlListLayer3Ipv4RulesDstaddr(d, i["dstaddr"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["dstaddr"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dstport"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["dstport"], _ = expandWirelessControllerAccessControlListLayer3Ipv4RulesDstport(d, i["dstport"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["dstport"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
@@ -660,6 +657,8 @@ func expandWirelessControllerAccessControlListLayer3Ipv4Rules(d *schema.Resource
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["action"], _ = expandWirelessControllerAccessControlListLayer3Ipv4RulesAction(d, i["action"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["action"] = nil
 		}
 
 		result = append(result, tmp)
@@ -719,31 +718,43 @@ func expandWirelessControllerAccessControlListLayer3Ipv6Rules(d *schema.Resource
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rule_id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["rule-id"], _ = expandWirelessControllerAccessControlListLayer3Ipv6RulesRuleId(d, i["rule_id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["rule-id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["comment"], _ = expandWirelessControllerAccessControlListLayer3Ipv6RulesComment(d, i["comment"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["comment"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "srcaddr"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["srcaddr"], _ = expandWirelessControllerAccessControlListLayer3Ipv6RulesSrcaddr(d, i["srcaddr"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["srcaddr"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "srcport"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["srcport"], _ = expandWirelessControllerAccessControlListLayer3Ipv6RulesSrcport(d, i["srcport"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["srcport"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dstaddr"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["dstaddr"], _ = expandWirelessControllerAccessControlListLayer3Ipv6RulesDstaddr(d, i["dstaddr"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["dstaddr"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dstport"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["dstport"], _ = expandWirelessControllerAccessControlListLayer3Ipv6RulesDstport(d, i["dstport"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["dstport"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
@@ -754,6 +765,8 @@ func expandWirelessControllerAccessControlListLayer3Ipv6Rules(d *schema.Resource
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["action"], _ = expandWirelessControllerAccessControlListLayer3Ipv6RulesAction(d, i["action"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["action"] = nil
 		}
 
 		result = append(result, tmp)
@@ -815,6 +828,8 @@ func getObjectWirelessControllerAccessControlList(d *schema.ResourceData, sv str
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("layer3_ipv4_rules"); ok || d.HasChange("layer3_ipv4_rules") {

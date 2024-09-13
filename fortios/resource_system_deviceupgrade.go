@@ -67,7 +67,6 @@ func resourceSystemDeviceUpgrade() *schema.Resource {
 			"upgrade_path": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"device_type": &schema.Schema{
 				Type:     schema.TypeString,
@@ -88,7 +87,11 @@ func resourceSystemDeviceUpgrade() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
-				Computed:     true,
+			},
+			"next_path_index": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 10),
+				Optional:     true,
 			},
 			"known_ha_members": &schema.Schema{
 				Type:     schema.TypeList,
@@ -99,7 +102,6 @@ func resourceSystemDeviceUpgrade() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -278,7 +280,7 @@ func flattenSystemDeviceUpgradeTiming(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenSystemDeviceUpgradeMaximumMinutes(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemDeviceUpgradeTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -307,6 +309,10 @@ func flattenSystemDeviceUpgradeFailureReason(v interface{}, d *schema.ResourceDa
 
 func flattenSystemDeviceUpgradeHaRebootController(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
+}
+
+func flattenSystemDeviceUpgradeNextPathIndex(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
 }
 
 func flattenSystemDeviceUpgradeKnownHaMembers(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -420,6 +426,12 @@ func refreshObjectSystemDeviceUpgrade(d *schema.ResourceData, o map[string]inter
 		}
 	}
 
+	if err = d.Set("next_path_index", flattenSystemDeviceUpgradeNextPathIndex(o["next-path-index"], d, "next_path_index", sv)); err != nil {
+		if !fortiAPIPatch(o["next-path-index"]) {
+			return fmt.Errorf("Error reading next_path_index: %v", err)
+		}
+	}
+
 	if b_get_all_tables {
 		if err = d.Set("known_ha_members", flattenSystemDeviceUpgradeKnownHaMembers(o["known-ha-members"], d, "known_ha_members", sv)); err != nil {
 			if !fortiAPIPatch(o["known-ha-members"]) {
@@ -485,6 +497,10 @@ func expandSystemDeviceUpgradeHaRebootController(d *schema.ResourceData, v inter
 	return v, nil
 }
 
+func expandSystemDeviceUpgradeNextPathIndex(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemDeviceUpgradeKnownHaMembers(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	result := make([]map[string]interface{}, 0, len(l))
@@ -502,6 +518,8 @@ func expandSystemDeviceUpgradeKnownHaMembers(d *schema.ResourceData, v interface
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "serial"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["serial"], _ = expandSystemDeviceUpgradeKnownHaMembersSerial(d, i["serial"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["serial"] = nil
 		}
 
 		result = append(result, tmp)
@@ -571,6 +589,8 @@ func getObjectSystemDeviceUpgrade(d *schema.ResourceData, sv string) (*map[strin
 		} else if t != nil {
 			obj["upgrade-path"] = t
 		}
+	} else if d.HasChange("upgrade_path") {
+		obj["upgrade-path"] = nil
 	}
 
 	if v, ok := d.GetOk("device_type"); ok {
@@ -607,6 +627,19 @@ func getObjectSystemDeviceUpgrade(d *schema.ResourceData, sv string) (*map[strin
 		} else if t != nil {
 			obj["ha-reboot-controller"] = t
 		}
+	} else if d.HasChange("ha_reboot_controller") {
+		obj["ha-reboot-controller"] = nil
+	}
+
+	if v, ok := d.GetOkExists("next_path_index"); ok {
+		t, err := expandSystemDeviceUpgradeNextPathIndex(d, v, "next_path_index", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["next-path-index"] = t
+		}
+	} else if d.HasChange("next_path_index") {
+		obj["next-path-index"] = nil
 	}
 
 	if v, ok := d.GetOk("known_ha_members"); ok || d.HasChange("known_ha_members") {

@@ -46,7 +46,6 @@ func resourceVideofilterKeyword() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"comment": &schema.Schema{
 				Type:         schema.TypeString,
@@ -67,7 +66,6 @@ func resourceVideofilterKeyword() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 						"comment": &schema.Schema{
 							Type:         schema.TypeString,
@@ -253,7 +251,7 @@ func resourceVideofilterKeywordRead(d *schema.ResourceData, m interface{}) error
 }
 
 func flattenVideofilterKeywordId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVideofilterKeywordName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -428,11 +426,15 @@ func expandVideofilterKeywordWord(d *schema.ResourceData, v interface{}, pre str
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandVideofilterKeywordWordName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["comment"], _ = expandVideofilterKeywordWordComment(d, i["comment"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["comment"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern_type"
@@ -488,6 +490,8 @@ func getObjectVideofilterKeyword(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
@@ -497,6 +501,8 @@ func getObjectVideofilterKeyword(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("match"); ok {

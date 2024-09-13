@@ -15,7 +15,7 @@ The following arguments are supported:
 
 * `name` - Profile name.
 * `comment` - Comment.
-* `severity` - Relative severity of the signature (low, medium, high, critical). Valid values: `low`, `medium`, `high`, `critical`.
+* `severity` - Relative severity of the signature (low, medium, high, critical).
 * `action` - Action (pass/block). Valid values: `pass`, `block`.
 * `log` - Enable/disable logging of detection. Valid values: `enable`, `disable`.
 * `exemption` - Exempt devices or rules. The structure of `exemption` block is documented below.

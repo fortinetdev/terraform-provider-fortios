@@ -217,7 +217,7 @@ func resourceSystemAffinityPacketRedistributionRead(d *schema.ResourceData, m in
 }
 
 func flattenSystemAffinityPacketRedistributionId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemAffinityPacketRedistributionInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -225,7 +225,7 @@ func flattenSystemAffinityPacketRedistributionInterface(v interface{}, d *schema
 }
 
 func flattenSystemAffinityPacketRedistributionRxqid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemAffinityPacketRedistributionRoundRobin(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -317,6 +317,8 @@ func getObjectSystemAffinityPacketRedistribution(d *schema.ResourceData, sv stri
 		} else if t != nil {
 			obj["interface"] = t
 		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
 	}
 
 	if v, ok := d.GetOkExists("rxqid"); ok {
@@ -326,6 +328,8 @@ func getObjectSystemAffinityPacketRedistribution(d *schema.ResourceData, sv stri
 		} else if t != nil {
 			obj["rxqid"] = t
 		}
+	} else if d.HasChange("rxqid") {
+		obj["rxqid"] = nil
 	}
 
 	if v, ok := d.GetOk("round_robin"); ok {
@@ -344,6 +348,8 @@ func getObjectSystemAffinityPacketRedistribution(d *schema.ResourceData, sv stri
 		} else if t != nil {
 			obj["affinity-cpumask"] = t
 		}
+	} else if d.HasChange("affinity_cpumask") {
+		obj["affinity-cpumask"] = nil
 	}
 
 	return &obj, nil

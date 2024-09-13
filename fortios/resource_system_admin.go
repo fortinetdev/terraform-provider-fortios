@@ -57,7 +57,6 @@ func resourceSystemAdmin() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"password": &schema.Schema{
 				Type:         schema.TypeString,
@@ -74,7 +73,6 @@ func resourceSystemAdmin() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"trusthost1": &schema.Schema{
 				Type:     schema.TypeString,
@@ -180,7 +178,6 @@ func resourceSystemAdmin() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"allow_remove_admin_session": &schema.Schema{
 				Type:     schema.TypeString,
@@ -196,7 +193,6 @@ func resourceSystemAdmin() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"vdom": &schema.Schema{
 				Type:     schema.TypeSet,
@@ -207,7 +203,6 @@ func resourceSystemAdmin() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -216,31 +211,26 @@ func resourceSystemAdmin() *schema.Resource {
 				Type:      schema.TypeString,
 				Optional:  true,
 				Sensitive: true,
-				Computed:  true,
 			},
 			"ssh_public_key2": &schema.Schema{
 				Type:      schema.TypeString,
 				Optional:  true,
 				Sensitive: true,
-				Computed:  true,
 			},
 			"ssh_public_key3": &schema.Schema{
 				Type:      schema.TypeString,
 				Optional:  true,
 				Sensitive: true,
-				Computed:  true,
 			},
 			"ssh_certificate": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"schedule": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"accprofile_override": &schema.Schema{
 				Type:     schema.TypeString,
@@ -275,29 +265,24 @@ func resourceSystemAdmin() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"name": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"scope": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"layout_type": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"columns": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(5, 20),
 							Optional:     true,
-							Computed:     true,
 						},
 						"widget": &schema.Schema{
 							Type:     schema.TypeList,
@@ -307,85 +292,70 @@ func resourceSystemAdmin() *schema.Resource {
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 									"type": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
 									},
 									"x_pos": &schema.Schema{
 										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 1000),
 										Optional:     true,
-										Computed:     true,
 									},
 									"y_pos": &schema.Schema{
 										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 1000),
 										Optional:     true,
-										Computed:     true,
 									},
 									"width": &schema.Schema{
 										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(1, 50),
 										Optional:     true,
-										Computed:     true,
 									},
 									"height": &schema.Schema{
 										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(1, 50),
 										Optional:     true,
-										Computed:     true,
 									},
 									"interface": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 15),
 										Optional:     true,
-										Computed:     true,
 									},
 									"region": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
 									},
 									"industry": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
 									},
 									"fabric_device": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 35),
 										Optional:     true,
-										Computed:     true,
 									},
 									"title": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 127),
 										Optional:     true,
-										Computed:     true,
 									},
 									"report_by": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
 									},
 									"timeframe": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
 									},
 									"sort_by": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 127),
 										Optional:     true,
-										Computed:     true,
 									},
 									"visualization": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
 									},
 									"filters": &schema.Schema{
 										Type:     schema.TypeList,
@@ -395,19 +365,16 @@ func resourceSystemAdmin() *schema.Resource {
 												"id": &schema.Schema{
 													Type:     schema.TypeInt,
 													Optional: true,
-													Computed: true,
 												},
 												"key": &schema.Schema{
 													Type:         schema.TypeString,
 													ValidateFunc: validation.StringLenBetween(0, 127),
 													Optional:     true,
-													Computed:     true,
 												},
 												"value": &schema.Schema{
 													Type:         schema.TypeString,
 													ValidateFunc: validation.StringLenBetween(0, 127),
 													Optional:     true,
-													Computed:     true,
 												},
 											},
 										},
@@ -426,24 +393,20 @@ func resourceSystemAdmin() *schema.Resource {
 			"two_factor_authentication": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"two_factor_notification": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"fortitoken": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 16),
 				Optional:     true,
-				Computed:     true,
 			},
 			"email_to": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"sms_server": &schema.Schema{
 				Type:     schema.TypeString,
@@ -454,13 +417,11 @@ func resourceSystemAdmin() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"sms_phone": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"guest_auth": &schema.Schema{
 				Type:     schema.TypeString,
@@ -476,7 +437,6 @@ func resourceSystemAdmin() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -485,7 +445,6 @@ func resourceSystemAdmin() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"history0": &schema.Schema{
 				Type:         schema.TypeString,
@@ -508,17 +467,14 @@ func resourceSystemAdmin() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"last_login": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"last_failed_login": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -532,7 +488,6 @@ func resourceSystemAdmin() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -546,7 +501,6 @@ func resourceSystemAdmin() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -560,7 +514,6 @@ func resourceSystemAdmin() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -746,10 +699,6 @@ func flattenSystemAdminRemoteGroup(v interface{}, d *schema.ResourceData, pre st
 	return v
 }
 
-func flattenSystemAdminPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
 func flattenSystemAdminPeerAuth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -921,7 +870,7 @@ func flattenSystemAdminComments(v interface{}, d *schema.ResourceData, pre strin
 }
 
 func flattenSystemAdminHidden(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemAdminVdom(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -963,18 +912,6 @@ func flattenSystemAdminVdom(v interface{}, d *schema.ResourceData, pre string, s
 }
 
 func flattenSystemAdminVdomName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenSystemAdminSshPublicKey1(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenSystemAdminSshPublicKey2(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenSystemAdminSshPublicKey3(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1070,7 +1007,7 @@ func flattenSystemAdminGuiDashboard(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenSystemAdminGuiDashboardId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemAdminGuiDashboardName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1086,7 +1023,7 @@ func flattenSystemAdminGuiDashboardLayoutType(v interface{}, d *schema.ResourceD
 }
 
 func flattenSystemAdminGuiDashboardColumns(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemAdminGuiDashboardWidget(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -1203,7 +1140,7 @@ func flattenSystemAdminGuiDashboardWidget(v interface{}, d *schema.ResourceData,
 }
 
 func flattenSystemAdminGuiDashboardWidgetId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemAdminGuiDashboardWidgetType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1211,19 +1148,19 @@ func flattenSystemAdminGuiDashboardWidgetType(v interface{}, d *schema.ResourceD
 }
 
 func flattenSystemAdminGuiDashboardWidgetXPos(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemAdminGuiDashboardWidgetYPos(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemAdminGuiDashboardWidgetWidth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemAdminGuiDashboardWidgetHeight(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemAdminGuiDashboardWidgetInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1311,7 +1248,7 @@ func flattenSystemAdminGuiDashboardWidgetFilters(v interface{}, d *schema.Resour
 }
 
 func flattenSystemAdminGuiDashboardWidgetFiltersId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemAdminGuiDashboardWidgetFiltersKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1401,14 +1338,6 @@ func flattenSystemAdminGuestUsergroupsName(v interface{}, d *schema.ResourceData
 }
 
 func flattenSystemAdminGuestLang(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenSystemAdminHistory0(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenSystemAdminHistory1(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2219,32 +2148,42 @@ func expandSystemAdminGuiDashboard(d *schema.ResourceData, v interface{}, pre st
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSystemAdminGuiDashboardId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandSystemAdminGuiDashboardName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "scope"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["scope"], _ = expandSystemAdminGuiDashboardScope(d, i["scope"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["scope"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "layout_type"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["layout-type"], _ = expandSystemAdminGuiDashboardLayoutType(d, i["layout_type"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["layout-type"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "columns"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["columns"], _ = expandSystemAdminGuiDashboardColumns(d, i["columns"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["columns"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "widget"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["widget"], _ = expandSystemAdminGuiDashboardWidget(d, i["widget"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["widget"] = make([]string, 0)
 		}
 
@@ -2293,82 +2232,112 @@ func expandSystemAdminGuiDashboardWidget(d *schema.ResourceData, v interface{}, 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSystemAdminGuiDashboardWidgetId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["type"], _ = expandSystemAdminGuiDashboardWidgetType(d, i["type"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["type"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "x_pos"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["x-pos"], _ = expandSystemAdminGuiDashboardWidgetXPos(d, i["x_pos"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["x-pos"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "y_pos"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["y-pos"], _ = expandSystemAdminGuiDashboardWidgetYPos(d, i["y_pos"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["y-pos"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "width"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["width"], _ = expandSystemAdminGuiDashboardWidgetWidth(d, i["width"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["width"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "height"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["height"], _ = expandSystemAdminGuiDashboardWidgetHeight(d, i["height"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["height"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["interface"], _ = expandSystemAdminGuiDashboardWidgetInterface(d, i["interface"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["interface"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "region"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["region"], _ = expandSystemAdminGuiDashboardWidgetRegion(d, i["region"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["region"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "industry"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["industry"], _ = expandSystemAdminGuiDashboardWidgetIndustry(d, i["industry"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["industry"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "fabric_device"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["fabric-device"], _ = expandSystemAdminGuiDashboardWidgetFabricDevice(d, i["fabric_device"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["fabric-device"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "title"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["title"], _ = expandSystemAdminGuiDashboardWidgetTitle(d, i["title"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["title"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "report_by"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["report-by"], _ = expandSystemAdminGuiDashboardWidgetReportBy(d, i["report_by"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["report-by"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "timeframe"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["timeframe"], _ = expandSystemAdminGuiDashboardWidgetTimeframe(d, i["timeframe"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["timeframe"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sort_by"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["sort-by"], _ = expandSystemAdminGuiDashboardWidgetSortBy(d, i["sort_by"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["sort-by"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "visualization"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["visualization"], _ = expandSystemAdminGuiDashboardWidgetVisualization(d, i["visualization"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["visualization"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filters"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["filters"], _ = expandSystemAdminGuiDashboardWidgetFilters(d, i["filters"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["filters"] = make([]string, 0)
 		}
 
@@ -2457,16 +2426,22 @@ func expandSystemAdminGuiDashboardWidgetFilters(d *schema.ResourceData, v interf
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSystemAdminGuiDashboardWidgetFiltersId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "key"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["key"], _ = expandSystemAdminGuiDashboardWidgetFiltersKey(d, i["key"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["key"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["value"], _ = expandSystemAdminGuiDashboardWidgetFiltersValue(d, i["value"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["value"] = nil
 		}
 
 		result = append(result, tmp)
@@ -2582,16 +2557,22 @@ func expandSystemAdminLoginTime(d *schema.ResourceData, v interface{}, pre strin
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "usr_name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["usr-name"], _ = expandSystemAdminLoginTimeUsrName(d, i["usr_name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["usr-name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "last_login"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["last-login"], _ = expandSystemAdminLoginTimeLastLogin(d, i["last_login"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["last-login"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "last_failed_login"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["last-failed-login"], _ = expandSystemAdminLoginTimeLastFailedLogin(d, i["last_failed_login"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["last-failed-login"] = nil
 		}
 
 		result = append(result, tmp)
@@ -2631,6 +2612,8 @@ func expandSystemAdminGuiGlobalMenuFavorites(d *schema.ResourceData, v interface
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSystemAdminGuiGlobalMenuFavoritesId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		result = append(result, tmp)
@@ -2662,6 +2645,8 @@ func expandSystemAdminGuiVdomMenuFavorites(d *schema.ResourceData, v interface{}
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSystemAdminGuiVdomMenuFavoritesId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		result = append(result, tmp)
@@ -2693,6 +2678,8 @@ func expandSystemAdminGuiNewFeatureAcknowledge(d *schema.ResourceData, v interfa
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSystemAdminGuiNewFeatureAcknowledgeId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		result = append(result, tmp)
@@ -2744,6 +2731,8 @@ func getObjectSystemAdmin(d *schema.ResourceData, sv string, opr string) (*map[s
 		} else if t != nil {
 			obj["remote-group"] = t
 		}
+	} else if d.HasChange("remote_group") {
+		obj["remote-group"] = nil
 	}
 
 	if opr == "create" {
@@ -2754,6 +2743,8 @@ func getObjectSystemAdmin(d *schema.ResourceData, sv string, opr string) (*map[s
 			} else if t != nil {
 				obj["password"] = t
 			}
+		} else if d.HasChange("password") {
+			obj["password"] = nil
 		}
 	}
 
@@ -2773,6 +2764,8 @@ func getObjectSystemAdmin(d *schema.ResourceData, sv string, opr string) (*map[s
 		} else if t != nil {
 			obj["peer-group"] = t
 		}
+	} else if d.HasChange("peer_group") {
+		obj["peer-group"] = nil
 	}
 
 	if v, ok := d.GetOk("trusthost1"); ok {
@@ -2962,6 +2955,8 @@ func getObjectSystemAdmin(d *schema.ResourceData, sv string, opr string) (*map[s
 		} else if t != nil {
 			obj["accprofile"] = t
 		}
+	} else if d.HasChange("accprofile") {
+		obj["accprofile"] = nil
 	}
 
 	if v, ok := d.GetOk("allow_remove_admin_session"); ok {
@@ -2980,6 +2975,8 @@ func getObjectSystemAdmin(d *schema.ResourceData, sv string, opr string) (*map[s
 		} else if t != nil {
 			obj["comments"] = t
 		}
+	} else if d.HasChange("comments") {
+		obj["comments"] = nil
 	}
 
 	if v, ok := d.GetOkExists("hidden"); ok {
@@ -2989,6 +2986,8 @@ func getObjectSystemAdmin(d *schema.ResourceData, sv string, opr string) (*map[s
 		} else if t != nil {
 			obj["hidden"] = t
 		}
+	} else if d.HasChange("hidden") {
+		obj["hidden"] = nil
 	}
 
 	if v, ok := d.GetOk("vdom"); ok || d.HasChange("vdom") {
@@ -3007,6 +3006,8 @@ func getObjectSystemAdmin(d *schema.ResourceData, sv string, opr string) (*map[s
 		} else if t != nil {
 			obj["ssh-public-key1"] = t
 		}
+	} else if d.HasChange("ssh_public_key1") {
+		obj["ssh-public-key1"] = nil
 	}
 
 	if v, ok := d.GetOk("ssh_public_key2"); ok {
@@ -3016,6 +3017,8 @@ func getObjectSystemAdmin(d *schema.ResourceData, sv string, opr string) (*map[s
 		} else if t != nil {
 			obj["ssh-public-key2"] = t
 		}
+	} else if d.HasChange("ssh_public_key2") {
+		obj["ssh-public-key2"] = nil
 	}
 
 	if v, ok := d.GetOk("ssh_public_key3"); ok {
@@ -3025,6 +3028,8 @@ func getObjectSystemAdmin(d *schema.ResourceData, sv string, opr string) (*map[s
 		} else if t != nil {
 			obj["ssh-public-key3"] = t
 		}
+	} else if d.HasChange("ssh_public_key3") {
+		obj["ssh-public-key3"] = nil
 	}
 
 	if v, ok := d.GetOk("ssh_certificate"); ok {
@@ -3034,6 +3039,8 @@ func getObjectSystemAdmin(d *schema.ResourceData, sv string, opr string) (*map[s
 		} else if t != nil {
 			obj["ssh-certificate"] = t
 		}
+	} else if d.HasChange("ssh_certificate") {
+		obj["ssh-certificate"] = nil
 	}
 
 	if v, ok := d.GetOk("schedule"); ok {
@@ -3043,6 +3050,8 @@ func getObjectSystemAdmin(d *schema.ResourceData, sv string, opr string) (*map[s
 		} else if t != nil {
 			obj["schedule"] = t
 		}
+	} else if d.HasChange("schedule") {
+		obj["schedule"] = nil
 	}
 
 	if v, ok := d.GetOk("accprofile_override"); ok {
@@ -3115,6 +3124,8 @@ func getObjectSystemAdmin(d *schema.ResourceData, sv string, opr string) (*map[s
 		} else if t != nil {
 			obj["two-factor-authentication"] = t
 		}
+	} else if d.HasChange("two_factor_authentication") {
+		obj["two-factor-authentication"] = nil
 	}
 
 	if v, ok := d.GetOk("two_factor_notification"); ok {
@@ -3124,6 +3135,8 @@ func getObjectSystemAdmin(d *schema.ResourceData, sv string, opr string) (*map[s
 		} else if t != nil {
 			obj["two-factor-notification"] = t
 		}
+	} else if d.HasChange("two_factor_notification") {
+		obj["two-factor-notification"] = nil
 	}
 
 	if v, ok := d.GetOk("fortitoken"); ok {
@@ -3133,6 +3146,8 @@ func getObjectSystemAdmin(d *schema.ResourceData, sv string, opr string) (*map[s
 		} else if t != nil {
 			obj["fortitoken"] = t
 		}
+	} else if d.HasChange("fortitoken") {
+		obj["fortitoken"] = nil
 	}
 
 	if v, ok := d.GetOk("email_to"); ok {
@@ -3142,6 +3157,8 @@ func getObjectSystemAdmin(d *schema.ResourceData, sv string, opr string) (*map[s
 		} else if t != nil {
 			obj["email-to"] = t
 		}
+	} else if d.HasChange("email_to") {
+		obj["email-to"] = nil
 	}
 
 	if v, ok := d.GetOk("sms_server"); ok {
@@ -3160,6 +3177,8 @@ func getObjectSystemAdmin(d *schema.ResourceData, sv string, opr string) (*map[s
 		} else if t != nil {
 			obj["sms-custom-server"] = t
 		}
+	} else if d.HasChange("sms_custom_server") {
+		obj["sms-custom-server"] = nil
 	}
 
 	if v, ok := d.GetOk("sms_phone"); ok {
@@ -3169,6 +3188,8 @@ func getObjectSystemAdmin(d *schema.ResourceData, sv string, opr string) (*map[s
 		} else if t != nil {
 			obj["sms-phone"] = t
 		}
+	} else if d.HasChange("sms_phone") {
+		obj["sms-phone"] = nil
 	}
 
 	if v, ok := d.GetOk("guest_auth"); ok {
@@ -3196,6 +3217,8 @@ func getObjectSystemAdmin(d *schema.ResourceData, sv string, opr string) (*map[s
 		} else if t != nil {
 			obj["guest-lang"] = t
 		}
+	} else if d.HasChange("guest_lang") {
+		obj["guest-lang"] = nil
 	}
 
 	if v, ok := d.GetOk("history0"); ok {
@@ -3205,6 +3228,8 @@ func getObjectSystemAdmin(d *schema.ResourceData, sv string, opr string) (*map[s
 		} else if t != nil {
 			obj["history0"] = t
 		}
+	} else if d.HasChange("history0") {
+		obj["history0"] = nil
 	}
 
 	if v, ok := d.GetOk("history1"); ok {
@@ -3214,6 +3239,8 @@ func getObjectSystemAdmin(d *schema.ResourceData, sv string, opr string) (*map[s
 		} else if t != nil {
 			obj["history1"] = t
 		}
+	} else if d.HasChange("history1") {
+		obj["history1"] = nil
 	}
 
 	if v, ok := d.GetOk("login_time"); ok || d.HasChange("login_time") {

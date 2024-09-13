@@ -74,13 +74,11 @@ func resourceWebfilterUrlfilter() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"url": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 511),
 							Optional:     true,
-							Computed:     true,
 						},
 						"type": &schema.Schema{
 							Type:     schema.TypeString,
@@ -111,13 +109,11 @@ func resourceWebfilterUrlfilter() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"referrer_host": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"dns_address_family": &schema.Schema{
 							Type:     schema.TypeString,
@@ -293,7 +289,7 @@ func resourceWebfilterUrlfilterRead(d *schema.ResourceData, m interface{}) error
 }
 
 func flattenWebfilterUrlfilterId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWebfilterUrlfilterName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -400,7 +396,7 @@ func flattenWebfilterUrlfilterEntries(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenWebfilterUrlfilterEntriesId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWebfilterUrlfilterEntriesUrl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -550,11 +546,15 @@ func expandWebfilterUrlfilterEntries(d *schema.ResourceData, v interface{}, pre 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandWebfilterUrlfilterEntriesId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "url"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["url"], _ = expandWebfilterUrlfilterEntriesUrl(d, i["url"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["url"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
@@ -585,11 +585,15 @@ func expandWebfilterUrlfilterEntries(d *schema.ResourceData, v interface{}, pre 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "web_proxy_profile"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["web-proxy-profile"], _ = expandWebfilterUrlfilterEntriesWebProxyProfile(d, i["web_proxy_profile"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["web-proxy-profile"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "referrer_host"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["referrer-host"], _ = expandWebfilterUrlfilterEntriesReferrerHost(d, i["referrer_host"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["referrer-host"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dns_address_family"
@@ -664,6 +668,8 @@ func getObjectWebfilterUrlfilter(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
@@ -673,6 +679,8 @@ func getObjectWebfilterUrlfilter(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("one_arm_ips_urlfilter"); ok {

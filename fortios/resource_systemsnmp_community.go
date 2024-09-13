@@ -59,7 +59,6 @@ func resourceSystemSnmpCommunity() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"source_ip": &schema.Schema{
 							Type:     schema.TypeString,
@@ -69,7 +68,6 @@ func resourceSystemSnmpCommunity() *schema.Resource {
 						"ip": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"ha_direct": &schema.Schema{
 							Type:     schema.TypeString,
@@ -80,6 +78,16 @@ func resourceSystemSnmpCommunity() *schema.Resource {
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
+						},
+						"interface_select_method": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"interface": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 15),
+							Optional:     true,
 						},
 					},
 				},
@@ -92,7 +100,6 @@ func resourceSystemSnmpCommunity() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"source_ipv6": &schema.Schema{
 							Type:     schema.TypeString,
@@ -113,6 +120,16 @@ func resourceSystemSnmpCommunity() *schema.Resource {
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
+						},
+						"interface_select_method": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"interface": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 15),
+							Optional:     true,
 						},
 					},
 				},
@@ -182,7 +199,6 @@ func resourceSystemSnmpCommunity() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 32),
 				Optional:     true,
-				Computed:     true,
 			},
 			"vdoms": &schema.Schema{
 				Type:     schema.TypeSet,
@@ -193,7 +209,6 @@ func resourceSystemSnmpCommunity() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -364,7 +379,7 @@ func resourceSystemSnmpCommunityRead(d *schema.ResourceData, m interface{}) erro
 }
 
 func flattenSystemSnmpCommunityId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSnmpCommunityName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -424,6 +439,16 @@ func flattenSystemSnmpCommunityHosts(v interface{}, d *schema.ResourceData, pre 
 			tmp["host_type"] = flattenSystemSnmpCommunityHostsHostType(cur_v, d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_select_method"
+		if cur_v, ok := i["interface-select-method"]; ok {
+			tmp["interface_select_method"] = flattenSystemSnmpCommunityHostsInterfaceSelectMethod(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
+		if cur_v, ok := i["interface"]; ok {
+			tmp["interface"] = flattenSystemSnmpCommunityHostsInterface(cur_v, d, pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -434,7 +459,7 @@ func flattenSystemSnmpCommunityHosts(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenSystemSnmpCommunityHostsId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSnmpCommunityHostsSourceIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -450,6 +475,14 @@ func flattenSystemSnmpCommunityHostsHaDirect(v interface{}, d *schema.ResourceDa
 }
 
 func flattenSystemSnmpCommunityHostsHostType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSnmpCommunityHostsInterfaceSelectMethod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSnmpCommunityHostsInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -502,6 +535,16 @@ func flattenSystemSnmpCommunityHosts6(v interface{}, d *schema.ResourceData, pre
 			tmp["host_type"] = flattenSystemSnmpCommunityHosts6HostType(cur_v, d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_select_method"
+		if cur_v, ok := i["interface-select-method"]; ok {
+			tmp["interface_select_method"] = flattenSystemSnmpCommunityHosts6InterfaceSelectMethod(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
+		if cur_v, ok := i["interface"]; ok {
+			tmp["interface"] = flattenSystemSnmpCommunityHosts6Interface(cur_v, d, pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -512,7 +555,7 @@ func flattenSystemSnmpCommunityHosts6(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenSystemSnmpCommunityHosts6Id(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSnmpCommunityHosts6SourceIpv6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -531,12 +574,20 @@ func flattenSystemSnmpCommunityHosts6HostType(v interface{}, d *schema.ResourceD
 	return v
 }
 
+func flattenSystemSnmpCommunityHosts6InterfaceSelectMethod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSnmpCommunityHosts6Interface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemSnmpCommunityQueryV1Status(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
 func flattenSystemSnmpCommunityQueryV1Port(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSnmpCommunityQueryV2CStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -544,7 +595,7 @@ func flattenSystemSnmpCommunityQueryV2CStatus(v interface{}, d *schema.ResourceD
 }
 
 func flattenSystemSnmpCommunityQueryV2CPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSnmpCommunityTrapV1Status(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -552,11 +603,11 @@ func flattenSystemSnmpCommunityTrapV1Status(v interface{}, d *schema.ResourceDat
 }
 
 func flattenSystemSnmpCommunityTrapV1Lport(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSnmpCommunityTrapV1Rport(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSnmpCommunityTrapV2CStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -564,11 +615,11 @@ func flattenSystemSnmpCommunityTrapV2CStatus(v interface{}, d *schema.ResourceDa
 }
 
 func flattenSystemSnmpCommunityTrapV2CLport(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSnmpCommunityTrapV2CRport(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSnmpCommunityEvents(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -806,6 +857,8 @@ func expandSystemSnmpCommunityHosts(d *schema.ResourceData, v interface{}, pre s
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSystemSnmpCommunityHostsId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_ip"
@@ -816,6 +869,8 @@ func expandSystemSnmpCommunityHosts(d *schema.ResourceData, v interface{}, pre s
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["ip"], _ = expandSystemSnmpCommunityHostsIp(d, i["ip"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["ip"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ha_direct"
@@ -826,6 +881,18 @@ func expandSystemSnmpCommunityHosts(d *schema.ResourceData, v interface{}, pre s
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "host_type"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["host-type"], _ = expandSystemSnmpCommunityHostsHostType(d, i["host_type"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_select_method"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["interface-select-method"], _ = expandSystemSnmpCommunityHostsInterfaceSelectMethod(d, i["interface_select_method"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["interface"], _ = expandSystemSnmpCommunityHostsInterface(d, i["interface"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["interface"] = nil
 		}
 
 		result = append(result, tmp)
@@ -856,6 +923,14 @@ func expandSystemSnmpCommunityHostsHostType(d *schema.ResourceData, v interface{
 	return v, nil
 }
 
+func expandSystemSnmpCommunityHostsInterfaceSelectMethod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSnmpCommunityHostsInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemSnmpCommunityHosts6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	result := make([]map[string]interface{}, 0, len(l))
@@ -873,6 +948,8 @@ func expandSystemSnmpCommunityHosts6(d *schema.ResourceData, v interface{}, pre 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSystemSnmpCommunityHosts6Id(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_ipv6"
@@ -893,6 +970,18 @@ func expandSystemSnmpCommunityHosts6(d *schema.ResourceData, v interface{}, pre 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "host_type"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["host-type"], _ = expandSystemSnmpCommunityHosts6HostType(d, i["host_type"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_select_method"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["interface-select-method"], _ = expandSystemSnmpCommunityHosts6InterfaceSelectMethod(d, i["interface_select_method"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["interface"], _ = expandSystemSnmpCommunityHosts6Interface(d, i["interface"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["interface"] = nil
 		}
 
 		result = append(result, tmp)
@@ -920,6 +1009,14 @@ func expandSystemSnmpCommunityHosts6HaDirect(d *schema.ResourceData, v interface
 }
 
 func expandSystemSnmpCommunityHosts6HostType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSnmpCommunityHosts6InterfaceSelectMethod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSnmpCommunityHosts6Interface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1018,6 +1115,8 @@ func getObjectSystemSnmpCommunity(d *schema.ResourceData, sv string) (*map[strin
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("status"); ok {
@@ -1153,6 +1252,8 @@ func getObjectSystemSnmpCommunity(d *schema.ResourceData, sv string) (*map[strin
 		} else if t != nil {
 			obj["mib-view"] = t
 		}
+	} else if d.HasChange("mib_view") {
+		obj["mib-view"] = nil
 	}
 
 	if v, ok := d.GetOk("vdoms"); ok || d.HasChange("vdoms") {

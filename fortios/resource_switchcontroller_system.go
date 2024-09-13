@@ -225,35 +225,35 @@ func flattenSwitchControllerSystemParallelProcessOverride(v interface{}, d *sche
 }
 
 func flattenSwitchControllerSystemParallelProcess(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerSystemDataSyncInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerSystemIotWeightThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerSystemIotScanInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerSystemIotHoldoff(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerSystemIotMacIdle(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerSystemNacPeriodicInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerSystemDynamicPeriodicInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerSystemTunnelMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -261,11 +261,11 @@ func flattenSwitchControllerSystemTunnelMode(v interface{}, d *schema.ResourceDa
 }
 
 func flattenSwitchControllerSystemCaputpEchoInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerSystemCaputpMaxRetransmit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectSwitchControllerSystem(d *schema.ResourceData, o map[string]interface{}, sv string) error {

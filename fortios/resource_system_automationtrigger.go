@@ -67,7 +67,6 @@ func resourceSystemAutomationTrigger() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -96,7 +95,6 @@ func resourceSystemAutomationTrigger() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -105,7 +103,6 @@ func resourceSystemAutomationTrigger() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 99999),
 				Optional:     true,
-				Computed:     true,
 			},
 			"trigger_frequency": &schema.Schema{
 				Type:     schema.TypeString,
@@ -115,7 +112,6 @@ func resourceSystemAutomationTrigger() *schema.Resource {
 			"trigger_weekday": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"trigger_day": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -127,13 +123,11 @@ func resourceSystemAutomationTrigger() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 23),
 				Optional:     true,
-				Computed:     true,
 			},
 			"trigger_minute": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 60),
 				Optional:     true,
-				Computed:     true,
 			},
 			"trigger_datetime": &schema.Schema{
 				Type:     schema.TypeString,
@@ -148,13 +142,11 @@ func resourceSystemAutomationTrigger() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"name": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"value": &schema.Schema{
 							Type:         schema.TypeString,
@@ -468,11 +460,11 @@ func flattenSystemAutomationTriggerLogidBlock(v interface{}, d *schema.ResourceD
 }
 
 func flattenSystemAutomationTriggerLogidBlockId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemAutomationTriggerLogid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemAutomationTriggerTriggerFrequency(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -484,15 +476,15 @@ func flattenSystemAutomationTriggerTriggerWeekday(v interface{}, d *schema.Resou
 }
 
 func flattenSystemAutomationTriggerTriggerDay(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemAutomationTriggerTriggerHour(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemAutomationTriggerTriggerMinute(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemAutomationTriggerTriggerDatetime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -548,7 +540,7 @@ func flattenSystemAutomationTriggerFields(v interface{}, d *schema.ResourceData,
 }
 
 func flattenSystemAutomationTriggerFieldsId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemAutomationTriggerFieldsName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -902,16 +894,22 @@ func expandSystemAutomationTriggerFields(d *schema.ResourceData, v interface{}, 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSystemAutomationTriggerFieldsId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandSystemAutomationTriggerFieldsName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["value"], _ = expandSystemAutomationTriggerFieldsValue(d, i["value"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["value"] = nil
 		}
 
 		result = append(result, tmp)
@@ -977,6 +975,8 @@ func getObjectSystemAutomationTrigger(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["description"] = t
 		}
+	} else if d.HasChange("description") {
+		obj["description"] = nil
 	}
 
 	if v, ok := d.GetOk("trigger_type"); ok {
@@ -1069,6 +1069,8 @@ func getObjectSystemAutomationTrigger(d *schema.ResourceData, sv string) (*map[s
 				obj["logid"] = t
 			}
 		}
+	} else if d.HasChange("logid") {
+		obj["logid"] = nil
 	}
 
 	if v, ok := d.GetOk("trigger_frequency"); ok {
@@ -1087,6 +1089,8 @@ func getObjectSystemAutomationTrigger(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["trigger-weekday"] = t
 		}
+	} else if d.HasChange("trigger_weekday") {
+		obj["trigger-weekday"] = nil
 	}
 
 	if v, ok := d.GetOk("trigger_day"); ok {
@@ -1105,6 +1109,8 @@ func getObjectSystemAutomationTrigger(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["trigger-hour"] = t
 		}
+	} else if d.HasChange("trigger_hour") {
+		obj["trigger-hour"] = nil
 	}
 
 	if v, ok := d.GetOkExists("trigger_minute"); ok {
@@ -1114,6 +1120,8 @@ func getObjectSystemAutomationTrigger(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["trigger-minute"] = t
 		}
+	} else if d.HasChange("trigger_minute") {
+		obj["trigger-minute"] = nil
 	}
 
 	if v, ok := d.GetOk("trigger_datetime"); ok {
@@ -1141,6 +1149,8 @@ func getObjectSystemAutomationTrigger(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["faz-event-name"] = t
 		}
+	} else if d.HasChange("faz_event_name") {
+		obj["faz-event-name"] = nil
 	}
 
 	if v, ok := d.GetOk("faz_event_severity"); ok {
@@ -1150,6 +1160,8 @@ func getObjectSystemAutomationTrigger(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["faz-event-severity"] = t
 		}
+	} else if d.HasChange("faz_event_severity") {
+		obj["faz-event-severity"] = nil
 	}
 
 	if v, ok := d.GetOk("faz_event_tags"); ok {
@@ -1159,6 +1171,8 @@ func getObjectSystemAutomationTrigger(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["faz-event-tags"] = t
 		}
+	} else if d.HasChange("faz_event_tags") {
+		obj["faz-event-tags"] = nil
 	}
 
 	if v, ok := d.GetOk("serial"); ok {
@@ -1168,6 +1182,8 @@ func getObjectSystemAutomationTrigger(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["serial"] = t
 		}
+	} else if d.HasChange("serial") {
+		obj["serial"] = nil
 	}
 
 	if v, ok := d.GetOk("fabric_event_name"); ok {
@@ -1177,6 +1193,8 @@ func getObjectSystemAutomationTrigger(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["fabric-event-name"] = t
 		}
+	} else if d.HasChange("fabric_event_name") {
+		obj["fabric-event-name"] = nil
 	}
 
 	if v, ok := d.GetOk("fabric_event_severity"); ok {
@@ -1186,6 +1204,8 @@ func getObjectSystemAutomationTrigger(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["fabric-event-severity"] = t
 		}
+	} else if d.HasChange("fabric_event_severity") {
+		obj["fabric-event-severity"] = nil
 	}
 
 	return &obj, nil

@@ -57,7 +57,6 @@ func resourceUserGroup() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 43200),
 				Optional:     true,
-				Computed:     true,
 			},
 			"auth_concurrent_override": &schema.Schema{
 				Type:     schema.TypeString,
@@ -68,19 +67,16 @@ func resourceUserGroup() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 100),
 				Optional:     true,
-				Computed:     true,
 			},
 			"http_digest_realm": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"sso_attribute_value": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 511),
 				Optional:     true,
-				Computed:     true,
 			},
 			"member": &schema.Schema{
 				Type:     schema.TypeSet,
@@ -91,7 +87,6 @@ func resourceUserGroup() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 511),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -104,19 +99,16 @@ func resourceUserGroup() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"server_name": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"group_name": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 511),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -165,7 +157,6 @@ func resourceUserGroup() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"expire_type": &schema.Schema{
 				Type:     schema.TypeString,
@@ -182,7 +173,6 @@ func resourceUserGroup() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 1024),
 				Optional:     true,
-				Computed:     true,
 			},
 			"multiple_guest_add": &schema.Schema{
 				Type:     schema.TypeString,
@@ -197,19 +187,16 @@ func resourceUserGroup() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"user_id": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
 							Optional:     true,
-							Computed:     true,
 						},
 						"name": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
 							Optional:     true,
-							Computed:     true,
 						},
 						"password": &schema.Schema{
 							Type:         schema.TypeString,
@@ -221,30 +208,25 @@ func resourceUserGroup() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"sponsor": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"company": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"email": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
 							Optional:     true,
-							Computed:     true,
 						},
 						"expiration": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"comment": &schema.Schema{
 							Type:         schema.TypeString,
@@ -424,7 +406,7 @@ func flattenUserGroupName(v interface{}, d *schema.ResourceData, pre string, sv 
 }
 
 func flattenUserGroupId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserGroupGroupType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -432,7 +414,7 @@ func flattenUserGroupGroupType(v interface{}, d *schema.ResourceData, pre string
 }
 
 func flattenUserGroupAuthtimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserGroupAuthConcurrentOverride(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -440,7 +422,7 @@ func flattenUserGroupAuthConcurrentOverride(v interface{}, d *schema.ResourceDat
 }
 
 func flattenUserGroupAuthConcurrentValue(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserGroupHttpDigestRealm(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -542,7 +524,7 @@ func flattenUserGroupMatch(v interface{}, d *schema.ResourceData, pre string, sv
 }
 
 func flattenUserGroupMatchId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserGroupMatchServerName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -594,11 +576,11 @@ func flattenUserGroupExpireType(v interface{}, d *schema.ResourceData, pre strin
 }
 
 func flattenUserGroupExpire(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserGroupMaxAccounts(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserGroupMultipleGuestAdd(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -645,8 +627,7 @@ func flattenUserGroupGuest(v interface{}, d *schema.ResourceData, pre string, sv
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "password"
-		if cur_v, ok := i["password"]; ok {
-			tmp["password"] = flattenUserGroupGuestPassword(cur_v, d, pre_append, sv)
+		if _, ok := i["password"]; ok {
 			c := d.Get(pre_append).(string)
 			if c != "" {
 				tmp["password"] = c
@@ -693,7 +674,7 @@ func flattenUserGroupGuest(v interface{}, d *schema.ResourceData, pre string, sv
 }
 
 func flattenUserGroupGuestId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserGroupGuestUserId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -701,10 +682,6 @@ func flattenUserGroupGuestUserId(v interface{}, d *schema.ResourceData, pre stri
 }
 
 func flattenUserGroupGuestName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenUserGroupGuestPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1001,16 +978,22 @@ func expandUserGroupMatch(d *schema.ResourceData, v interface{}, pre string, sv 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandUserGroupMatchId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "server_name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["server-name"], _ = expandUserGroupMatchServerName(d, i["server_name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["server-name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "group_name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["group-name"], _ = expandUserGroupMatchGroupName(d, i["group_name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["group-name"] = nil
 		}
 
 		result = append(result, tmp)
@@ -1102,51 +1085,71 @@ func expandUserGroupGuest(d *schema.ResourceData, v interface{}, pre string, sv 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandUserGroupGuestId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "user_id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["user-id"], _ = expandUserGroupGuestUserId(d, i["user_id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["user-id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandUserGroupGuestName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "password"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["password"], _ = expandUserGroupGuestPassword(d, i["password"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["password"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mobile_phone"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["mobile-phone"], _ = expandUserGroupGuestMobilePhone(d, i["mobile_phone"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["mobile-phone"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sponsor"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["sponsor"], _ = expandUserGroupGuestSponsor(d, i["sponsor"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["sponsor"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "company"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["company"], _ = expandUserGroupGuestCompany(d, i["company"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["company"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "email"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["email"], _ = expandUserGroupGuestEmail(d, i["email"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["email"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "expiration"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["expiration"], _ = expandUserGroupGuestExpiration(d, i["expiration"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["expiration"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["comment"], _ = expandUserGroupGuestComment(d, i["comment"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["comment"] = nil
 		}
 
 		result = append(result, tmp)
@@ -1234,6 +1237,8 @@ func getObjectUserGroup(d *schema.ResourceData, sv string) (*map[string]interfac
 		} else if t != nil {
 			obj["authtimeout"] = t
 		}
+	} else if d.HasChange("authtimeout") {
+		obj["authtimeout"] = nil
 	}
 
 	if v, ok := d.GetOk("auth_concurrent_override"); ok {
@@ -1252,6 +1257,8 @@ func getObjectUserGroup(d *schema.ResourceData, sv string) (*map[string]interfac
 		} else if t != nil {
 			obj["auth-concurrent-value"] = t
 		}
+	} else if d.HasChange("auth_concurrent_value") {
+		obj["auth-concurrent-value"] = nil
 	}
 
 	if v, ok := d.GetOk("http_digest_realm"); ok {
@@ -1261,6 +1268,8 @@ func getObjectUserGroup(d *schema.ResourceData, sv string) (*map[string]interfac
 		} else if t != nil {
 			obj["http-digest-realm"] = t
 		}
+	} else if d.HasChange("http_digest_realm") {
+		obj["http-digest-realm"] = nil
 	}
 
 	if v, ok := d.GetOk("sso_attribute_value"); ok {
@@ -1270,6 +1279,8 @@ func getObjectUserGroup(d *schema.ResourceData, sv string) (*map[string]interfac
 		} else if t != nil {
 			obj["sso-attribute-value"] = t
 		}
+	} else if d.HasChange("sso_attribute_value") {
+		obj["sso-attribute-value"] = nil
 	}
 
 	if v, ok := d.GetOk("member"); ok || d.HasChange("member") {
@@ -1369,6 +1380,8 @@ func getObjectUserGroup(d *schema.ResourceData, sv string) (*map[string]interfac
 		} else if t != nil {
 			obj["sms-custom-server"] = t
 		}
+	} else if d.HasChange("sms_custom_server") {
+		obj["sms-custom-server"] = nil
 	}
 
 	if v, ok := d.GetOk("expire_type"); ok {
@@ -1396,6 +1409,8 @@ func getObjectUserGroup(d *schema.ResourceData, sv string) (*map[string]interfac
 		} else if t != nil {
 			obj["max-accounts"] = t
 		}
+	} else if d.HasChange("max_accounts") {
+		obj["max-accounts"] = nil
 	}
 
 	if v, ok := d.GetOk("multiple_guest_add"); ok {

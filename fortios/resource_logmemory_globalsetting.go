@@ -178,19 +178,19 @@ func resourceLogMemoryGlobalSettingRead(d *schema.ResourceData, m interface{}) e
 }
 
 func flattenLogMemoryGlobalSettingMaxSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenLogMemoryGlobalSettingFullFirstWarningThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenLogMemoryGlobalSettingFullSecondWarningThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenLogMemoryGlobalSettingFullFinalWarningThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectLogMemoryGlobalSetting(d *schema.ResourceData, o map[string]interface{}, sv string) error {

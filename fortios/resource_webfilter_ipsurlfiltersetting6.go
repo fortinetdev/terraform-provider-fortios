@@ -40,7 +40,6 @@ func resourceWebfilterIpsUrlfilterSetting6() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"distance": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -181,7 +180,7 @@ func flattenWebfilterIpsUrlfilterSetting6Device(v interface{}, d *schema.Resourc
 }
 
 func flattenWebfilterIpsUrlfilterSetting6Distance(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWebfilterIpsUrlfilterSetting6Gateway6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -258,6 +257,8 @@ func getObjectWebfilterIpsUrlfilterSetting6(d *schema.ResourceData, setArgNil bo
 				obj["device"] = t
 			}
 		}
+	} else if d.HasChange("device") {
+		obj["device"] = nil
 	}
 
 	if v, ok := d.GetOk("distance"); ok {
@@ -297,6 +298,8 @@ func getObjectWebfilterIpsUrlfilterSetting6(d *schema.ResourceData, setArgNil bo
 				obj["geo-filter"] = t
 			}
 		}
+	} else if d.HasChange("geo_filter") {
+		obj["geo-filter"] = nil
 	}
 
 	return &obj, nil

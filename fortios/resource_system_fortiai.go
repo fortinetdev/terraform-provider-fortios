@@ -45,7 +45,6 @@ func resourceSystemFortiai() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"interface_select_method": &schema.Schema{
 				Type:     schema.TypeString,
@@ -56,7 +55,6 @@ func resourceSystemFortiai() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -271,6 +269,8 @@ func getObjectSystemFortiai(d *schema.ResourceData, setArgNil bool, sv string) (
 				obj["source-ip"] = t
 			}
 		}
+	} else if d.HasChange("source_ip") {
+		obj["source-ip"] = nil
 	}
 
 	if v, ok := d.GetOk("interface_select_method"); ok {
@@ -297,6 +297,8 @@ func getObjectSystemFortiai(d *schema.ResourceData, setArgNil bool, sv string) (
 				obj["interface"] = t
 			}
 		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
 	}
 
 	return &obj, nil

@@ -55,13 +55,11 @@ func resourceRouterAspathList() *schema.Resource {
 						"action": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"regexp": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -284,7 +282,7 @@ func flattenRouterAspathListRule(v interface{}, d *schema.ResourceData, pre stri
 }
 
 func flattenRouterAspathListRuleId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterAspathListRuleAction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -361,11 +359,15 @@ func expandRouterAspathListRule(d *schema.ResourceData, v interface{}, pre strin
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["action"], _ = expandRouterAspathListRuleAction(d, i["action"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["action"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "regexp"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["regexp"], _ = expandRouterAspathListRuleRegexp(d, i["regexp"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["regexp"] = nil
 		}
 
 		result = append(result, tmp)

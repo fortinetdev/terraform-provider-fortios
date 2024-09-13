@@ -60,7 +60,11 @@ func resourceRouterbgpNetwork() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
+			},
+			"prefix_name": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 79),
+				Optional:     true,
 			},
 		},
 	}
@@ -218,7 +222,7 @@ func resourceRouterbgpNetworkRead(d *schema.ResourceData, m interface{}) error {
 }
 
 func flattenRouterbgpNetworkId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterbgpNetworkPrefix(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -241,6 +245,10 @@ func flattenRouterbgpNetworkBackdoor(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenRouterbgpNetworkRouteMap(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterbgpNetworkPrefixName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -277,6 +285,12 @@ func refreshObjectRouterbgpNetwork(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
+	if err = d.Set("prefix_name", flattenRouterbgpNetworkPrefixName(o["prefix-name"], d, "prefix_name", sv)); err != nil {
+		if !fortiAPIPatch(o["prefix-name"]) {
+			return fmt.Errorf("Error reading prefix_name: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -303,6 +317,10 @@ func expandRouterbgpNetworkBackdoor(d *schema.ResourceData, v interface{}, pre s
 }
 
 func expandRouterbgpNetworkRouteMap(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterbgpNetworkPrefixName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -352,6 +370,19 @@ func getObjectRouterbgpNetwork(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["route-map"] = t
 		}
+	} else if d.HasChange("route_map") {
+		obj["route-map"] = nil
+	}
+
+	if v, ok := d.GetOk("prefix_name"); ok {
+		t, err := expandRouterbgpNetworkPrefixName(d, v, "prefix_name", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["prefix-name"] = t
+		}
+	} else if d.HasChange("prefix_name") {
+		obj["prefix-name"] = nil
 	}
 
 	return &obj, nil

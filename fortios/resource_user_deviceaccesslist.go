@@ -45,7 +45,6 @@ func resourceUserDeviceAccessList() *schema.Resource {
 			"default_action": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"device_list": &schema.Schema{
 				Type:     schema.TypeList,
@@ -55,18 +54,15 @@ func resourceUserDeviceAccessList() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"device": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"action": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -293,7 +289,7 @@ func flattenUserDeviceAccessListDeviceList(v interface{}, d *schema.ResourceData
 }
 
 func flattenUserDeviceAccessListDeviceListId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserDeviceAccessListDeviceListDevice(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -375,16 +371,22 @@ func expandUserDeviceAccessListDeviceList(d *schema.ResourceData, v interface{},
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandUserDeviceAccessListDeviceListId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "device"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["device"], _ = expandUserDeviceAccessListDeviceListDevice(d, i["device"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["device"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["action"], _ = expandUserDeviceAccessListDeviceListAction(d, i["action"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["action"] = nil
 		}
 
 		result = append(result, tmp)
@@ -426,6 +428,8 @@ func getObjectUserDeviceAccessList(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["default-action"] = t
 		}
+	} else if d.HasChange("default_action") {
+		obj["default-action"] = nil
 	}
 
 	if v, ok := d.GetOk("device_list"); ok || d.HasChange("device_list") {

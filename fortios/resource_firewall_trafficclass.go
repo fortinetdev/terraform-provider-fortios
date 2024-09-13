@@ -46,7 +46,6 @@ func resourceFirewallTrafficClass() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -204,7 +203,7 @@ func resourceFirewallTrafficClassRead(d *schema.ResourceData, m interface{}) err
 }
 
 func flattenFirewallTrafficClassClassId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallTrafficClassClassName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -262,6 +261,8 @@ func getObjectFirewallTrafficClass(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["class-name"] = t
 		}
+	} else if d.HasChange("class_name") {
+		obj["class-name"] = nil
 	}
 
 	return &obj, nil

@@ -56,12 +56,10 @@ func resourceSctpFilterProfile() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"ppid": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"action": &schema.Schema{
 							Type:     schema.TypeString,
@@ -303,11 +301,11 @@ func flattenSctpFilterProfilePpidFilters(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenSctpFilterProfilePpidFiltersId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSctpFilterProfilePpidFiltersPpid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSctpFilterProfilePpidFiltersAction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -389,11 +387,15 @@ func expandSctpFilterProfilePpidFilters(d *schema.ResourceData, v interface{}, p
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSctpFilterProfilePpidFiltersId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ppid"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["ppid"], _ = expandSctpFilterProfilePpidFiltersPpid(d, i["ppid"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["ppid"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
@@ -404,6 +406,8 @@ func expandSctpFilterProfilePpidFilters(d *schema.ResourceData, v interface{}, p
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["comment"], _ = expandSctpFilterProfilePpidFiltersComment(d, i["comment"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["comment"] = nil
 		}
 
 		result = append(result, tmp)
@@ -449,6 +453,8 @@ func getObjectSctpFilterProfile(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("ppid_filters"); ok || d.HasChange("ppid_filters") {

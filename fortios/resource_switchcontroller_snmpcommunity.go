@@ -46,7 +46,6 @@ func resourceSwitchControllerSnmpCommunity() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
@@ -61,12 +60,10 @@ func resourceSwitchControllerSnmpCommunity() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"ip": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -298,7 +295,7 @@ func resourceSwitchControllerSnmpCommunityRead(d *schema.ResourceData, m interfa
 }
 
 func flattenSwitchControllerSnmpCommunityId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerSnmpCommunityName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -353,7 +350,7 @@ func flattenSwitchControllerSnmpCommunityHosts(v interface{}, d *schema.Resource
 }
 
 func flattenSwitchControllerSnmpCommunityHostsId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerSnmpCommunityHostsIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -365,7 +362,7 @@ func flattenSwitchControllerSnmpCommunityQueryV1Status(v interface{}, d *schema.
 }
 
 func flattenSwitchControllerSnmpCommunityQueryV1Port(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerSnmpCommunityQueryV2CStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -373,7 +370,7 @@ func flattenSwitchControllerSnmpCommunityQueryV2CStatus(v interface{}, d *schema
 }
 
 func flattenSwitchControllerSnmpCommunityQueryV2CPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerSnmpCommunityTrapV1Status(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -381,11 +378,11 @@ func flattenSwitchControllerSnmpCommunityTrapV1Status(v interface{}, d *schema.R
 }
 
 func flattenSwitchControllerSnmpCommunityTrapV1Lport(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerSnmpCommunityTrapV1Rport(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerSnmpCommunityTrapV2CStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -393,11 +390,11 @@ func flattenSwitchControllerSnmpCommunityTrapV2CStatus(v interface{}, d *schema.
 }
 
 func flattenSwitchControllerSnmpCommunityTrapV2CLport(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerSnmpCommunityTrapV2CRport(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerSnmpCommunityEvents(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -551,11 +548,15 @@ func expandSwitchControllerSnmpCommunityHosts(d *schema.ResourceData, v interfac
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSwitchControllerSnmpCommunityHostsId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["ip"], _ = expandSwitchControllerSnmpCommunityHostsIp(d, i["ip"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["ip"] = nil
 		}
 
 		result = append(result, tmp)
@@ -637,6 +638,8 @@ func getObjectSwitchControllerSnmpCommunity(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("status"); ok {

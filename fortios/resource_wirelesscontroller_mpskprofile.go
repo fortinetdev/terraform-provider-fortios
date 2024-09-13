@@ -47,7 +47,6 @@ func resourceWirelessControllerMpskProfile() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"mpsk_external_server_auth": &schema.Schema{
 				Type:     schema.TypeString,
@@ -58,7 +57,6 @@ func resourceWirelessControllerMpskProfile() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"mpsk_type": &schema.Schema{
 				Type:     schema.TypeString,
@@ -74,7 +72,6 @@ func resourceWirelessControllerMpskProfile() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"vlan_type": &schema.Schema{
 							Type:     schema.TypeString,
@@ -85,7 +82,6 @@ func resourceWirelessControllerMpskProfile() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 4094),
 							Optional:     true,
-							Computed:     true,
 						},
 						"mpsk_key": &schema.Schema{
 							Type:     schema.TypeList,
@@ -96,7 +92,6 @@ func resourceWirelessControllerMpskProfile() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 35),
 										Optional:     true,
-										Computed:     true,
 									},
 									"key_type": &schema.Schema{
 										Type:     schema.TypeString,
@@ -118,6 +113,7 @@ func resourceWirelessControllerMpskProfile() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 128),
 										Optional:     true,
+										Sensitive:    true,
 									},
 									"sae_pk": &schema.Schema{
 										Type:     schema.TypeString,
@@ -128,7 +124,6 @@ func resourceWirelessControllerMpskProfile() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 359),
 										Optional:     true,
-										Computed:     true,
 									},
 									"concurrent_client_limit_type": &schema.Schema{
 										Type:     schema.TypeString,
@@ -155,7 +150,6 @@ func resourceWirelessControllerMpskProfile() *schema.Resource {
 													Type:         schema.TypeString,
 													ValidateFunc: validation.StringLenBetween(0, 35),
 													Optional:     true,
-													Computed:     true,
 												},
 											},
 										},
@@ -336,7 +330,7 @@ func flattenWirelessControllerMpskProfileName(v interface{}, d *schema.ResourceD
 }
 
 func flattenWirelessControllerMpskProfileMpskConcurrentClients(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerMpskProfileMpskExternalServerAuth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -413,7 +407,7 @@ func flattenWirelessControllerMpskProfileMpskGroupVlanType(v interface{}, d *sch
 }
 
 func flattenWirelessControllerMpskProfileMpskGroupVlanId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerMpskProfileMpskGroupMpskKey(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -456,8 +450,7 @@ func flattenWirelessControllerMpskProfileMpskGroupMpskKey(v interface{}, d *sche
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "passphrase"
-		if cur_v, ok := i["passphrase"]; ok {
-			tmp["passphrase"] = flattenWirelessControllerMpskProfileMpskGroupMpskKeyPassphrase(cur_v, d, pre_append, sv)
+		if _, ok := i["passphrase"]; ok {
 			c := d.Get(pre_append).(string)
 			if c != "" {
 				tmp["passphrase"] = c
@@ -465,8 +458,11 @@ func flattenWirelessControllerMpskProfileMpskGroupMpskKey(v interface{}, d *sche
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sae_password"
-		if cur_v, ok := i["sae-password"]; ok {
-			tmp["sae_password"] = flattenWirelessControllerMpskProfileMpskGroupMpskKeySaePassword(cur_v, d, pre_append, sv)
+		if _, ok := i["sae-password"]; ok {
+			c := d.Get(pre_append).(string)
+			if c != "" {
+				tmp["sae_password"] = c
+			}
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sae_pk"
@@ -520,14 +516,6 @@ func flattenWirelessControllerMpskProfileMpskGroupMpskKeyMac(v interface{}, d *s
 	return v
 }
 
-func flattenWirelessControllerMpskProfileMpskGroupMpskKeyPassphrase(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenWirelessControllerMpskProfileMpskGroupMpskKeySaePassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
 func flattenWirelessControllerMpskProfileMpskGroupMpskKeySaePk(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -541,7 +529,7 @@ func flattenWirelessControllerMpskProfileMpskGroupMpskKeyConcurrentClientLimitTy
 }
 
 func flattenWirelessControllerMpskProfileMpskGroupMpskKeyConcurrentClients(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerMpskProfileMpskGroupMpskKeyComment(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -691,6 +679,8 @@ func expandWirelessControllerMpskProfileMpskGroup(d *schema.ResourceData, v inte
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandWirelessControllerMpskProfileMpskGroupName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan_type"
@@ -701,12 +691,14 @@ func expandWirelessControllerMpskProfileMpskGroup(d *schema.ResourceData, v inte
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan_id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["vlan-id"], _ = expandWirelessControllerMpskProfileMpskGroupVlanId(d, i["vlan_id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["vlan-id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mpsk_key"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["mpsk-key"], _ = expandWirelessControllerMpskProfileMpskGroupMpskKey(d, i["mpsk_key"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["mpsk-key"] = make([]string, 0)
 		}
 
@@ -747,6 +739,8 @@ func expandWirelessControllerMpskProfileMpskGroupMpskKey(d *schema.ResourceData,
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandWirelessControllerMpskProfileMpskGroupMpskKeyName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "key_type"
@@ -762,11 +756,15 @@ func expandWirelessControllerMpskProfileMpskGroupMpskKey(d *schema.ResourceData,
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "passphrase"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["passphrase"], _ = expandWirelessControllerMpskProfileMpskGroupMpskKeyPassphrase(d, i["passphrase"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["passphrase"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sae_password"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["sae-password"], _ = expandWirelessControllerMpskProfileMpskGroupMpskKeySaePassword(d, i["sae_password"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["sae-password"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sae_pk"
@@ -777,6 +775,8 @@ func expandWirelessControllerMpskProfileMpskGroupMpskKey(d *schema.ResourceData,
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sae_private_key"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["sae-private-key"], _ = expandWirelessControllerMpskProfileMpskGroupMpskKeySaePrivateKey(d, i["sae_private_key"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["sae-private-key"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "concurrent_client_limit_type"
@@ -792,12 +792,14 @@ func expandWirelessControllerMpskProfileMpskGroupMpskKey(d *schema.ResourceData,
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["comment"], _ = expandWirelessControllerMpskProfileMpskGroupMpskKeyComment(d, i["comment"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["comment"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mpsk_schedules"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["mpsk-schedules"], _ = expandWirelessControllerMpskProfileMpskGroupMpskKeyMpskSchedules(d, i["mpsk_schedules"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["mpsk-schedules"] = make([]string, 0)
 		}
 
@@ -896,6 +898,8 @@ func getObjectWirelessControllerMpskProfile(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["mpsk-concurrent-clients"] = t
 		}
+	} else if d.HasChange("mpsk_concurrent_clients") {
+		obj["mpsk-concurrent-clients"] = nil
 	}
 
 	if v, ok := d.GetOk("mpsk_external_server_auth"); ok {
@@ -914,6 +918,8 @@ func getObjectWirelessControllerMpskProfile(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["mpsk-external-server"] = t
 		}
+	} else if d.HasChange("mpsk_external_server") {
+		obj["mpsk-external-server"] = nil
 	}
 
 	if v, ok := d.GetOk("mpsk_type"); ok {

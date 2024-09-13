@@ -40,7 +40,6 @@ func resourceFirewallInternetServiceCustomGroup() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"comment": &schema.Schema{
 				Type:         schema.TypeString,
@@ -56,7 +55,6 @@ func resourceFirewallInternetServiceCustomGroup() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -368,6 +366,8 @@ func getObjectFirewallInternetServiceCustomGroup(d *schema.ResourceData, sv stri
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
@@ -377,6 +377,8 @@ func getObjectFirewallInternetServiceCustomGroup(d *schema.ResourceData, sv stri
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("member"); ok || d.HasChange("member") {

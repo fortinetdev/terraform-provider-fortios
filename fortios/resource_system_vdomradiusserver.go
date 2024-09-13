@@ -290,6 +290,8 @@ func getObjectSystemVdomRadiusServer(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["radius-server-vdom"] = t
 		}
+	} else if d.HasChange("radius_server_vdom") {
+		obj["radius-server-vdom"] = nil
 	}
 
 	return &obj, nil

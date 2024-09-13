@@ -46,7 +46,6 @@ func resourceSystemTosBasedPriority() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"priority": &schema.Schema{
 				Type:     schema.TypeString,
@@ -209,11 +208,11 @@ func resourceSystemTosBasedPriorityRead(d *schema.ResourceData, m interface{}) e
 }
 
 func flattenSystemTosBasedPriorityId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemTosBasedPriorityTos(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemTosBasedPriorityPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -281,6 +280,8 @@ func getObjectSystemTosBasedPriority(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["tos"] = t
 		}
+	} else if d.HasChange("tos") {
+		obj["tos"] = nil
 	}
 
 	if v, ok := d.GetOk("priority"); ok {

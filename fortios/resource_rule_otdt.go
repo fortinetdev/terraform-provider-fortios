@@ -46,50 +46,41 @@ func resourceRuleOtdt() *schema.Resource {
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"category": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"popularity": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"risk": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"weight": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"protocol": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"technology": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"behavior": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"vendor": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
@@ -100,7 +91,6 @@ func resourceRuleOtdt() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 31),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -113,17 +103,14 @@ func resourceRuleOtdt() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"metaid": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"valueid": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -298,23 +285,23 @@ func flattenRuleOtdtName(v interface{}, d *schema.ResourceData, pre string, sv s
 }
 
 func flattenRuleOtdtId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRuleOtdtCategory(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRuleOtdtPopularity(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRuleOtdtRisk(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRuleOtdtWeight(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRuleOtdtProtocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -424,15 +411,15 @@ func flattenRuleOtdtMetadata(v interface{}, d *schema.ResourceData, pre string, 
 }
 
 func flattenRuleOtdtMetadataId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRuleOtdtMetadataMetaid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRuleOtdtMetadataValueid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectRuleOtdt(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -602,6 +589,8 @@ func expandRuleOtdtParameters(d *schema.ResourceData, v interface{}, pre string,
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandRuleOtdtParametersName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		result = append(result, tmp)
@@ -633,16 +622,22 @@ func expandRuleOtdtMetadata(d *schema.ResourceData, v interface{}, pre string, s
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandRuleOtdtMetadataId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "metaid"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["metaid"], _ = expandRuleOtdtMetadataMetaid(d, i["metaid"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["metaid"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "valueid"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["valueid"], _ = expandRuleOtdtMetadataValueid(d, i["valueid"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["valueid"] = nil
 		}
 
 		result = append(result, tmp)
@@ -684,6 +679,8 @@ func getObjectRuleOtdt(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["id"] = t
 		}
+	} else if d.HasChange("fosid") {
+		obj["id"] = nil
 	}
 
 	if v, ok := d.GetOkExists("category"); ok {
@@ -693,6 +690,8 @@ func getObjectRuleOtdt(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["category"] = t
 		}
+	} else if d.HasChange("category") {
+		obj["category"] = nil
 	}
 
 	if v, ok := d.GetOkExists("popularity"); ok {
@@ -702,6 +701,8 @@ func getObjectRuleOtdt(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["popularity"] = t
 		}
+	} else if d.HasChange("popularity") {
+		obj["popularity"] = nil
 	}
 
 	if v, ok := d.GetOkExists("risk"); ok {
@@ -711,6 +712,8 @@ func getObjectRuleOtdt(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["risk"] = t
 		}
+	} else if d.HasChange("risk") {
+		obj["risk"] = nil
 	}
 
 	if v, ok := d.GetOkExists("weight"); ok {
@@ -720,6 +723,8 @@ func getObjectRuleOtdt(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["weight"] = t
 		}
+	} else if d.HasChange("weight") {
+		obj["weight"] = nil
 	}
 
 	if v, ok := d.GetOk("protocol"); ok {
@@ -729,6 +734,8 @@ func getObjectRuleOtdt(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["protocol"] = t
 		}
+	} else if d.HasChange("protocol") {
+		obj["protocol"] = nil
 	}
 
 	if v, ok := d.GetOk("technology"); ok {
@@ -738,6 +745,8 @@ func getObjectRuleOtdt(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["technology"] = t
 		}
+	} else if d.HasChange("technology") {
+		obj["technology"] = nil
 	}
 
 	if v, ok := d.GetOk("behavior"); ok {
@@ -747,6 +756,8 @@ func getObjectRuleOtdt(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["behavior"] = t
 		}
+	} else if d.HasChange("behavior") {
+		obj["behavior"] = nil
 	}
 
 	if v, ok := d.GetOk("vendor"); ok {
@@ -756,6 +767,8 @@ func getObjectRuleOtdt(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["vendor"] = t
 		}
+	} else if d.HasChange("vendor") {
+		obj["vendor"] = nil
 	}
 
 	if v, ok := d.GetOk("parameters"); ok || d.HasChange("parameters") {

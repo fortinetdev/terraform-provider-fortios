@@ -50,7 +50,6 @@ func resourceSystemSnmpSysinfo() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 54),
 				Optional:     true,
-				Computed:     true,
 			},
 			"description": &schema.Schema{
 				Type:         schema.TypeString,
@@ -86,6 +85,11 @@ func resourceSystemSnmpSysinfo() *schema.Resource {
 				Computed:     true,
 			},
 			"append_index": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"non_mgmt_vdom_query": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -245,27 +249,31 @@ func flattenSystemSnmpSysinfoLocation(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenSystemSnmpSysinfoTrapHighCpuThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSnmpSysinfoTrapLowMemoryThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSnmpSysinfoTrapLogFullThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSnmpSysinfoAppendIndex(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemSnmpSysinfoTrapFreeMemoryThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+func flattenSystemSnmpSysinfoNonMgmtVdomQuery(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
+func flattenSystemSnmpSysinfoTrapFreeMemoryThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
 func flattenSystemSnmpSysinfoTrapFreeableMemoryThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectSystemSnmpSysinfo(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -331,6 +339,12 @@ func refreshObjectSystemSnmpSysinfo(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
+	if err = d.Set("non_mgmt_vdom_query", flattenSystemSnmpSysinfoNonMgmtVdomQuery(o["non-mgmt-vdom-query"], d, "non_mgmt_vdom_query", sv)); err != nil {
+		if !fortiAPIPatch(o["non-mgmt-vdom-query"]) {
+			return fmt.Errorf("Error reading non_mgmt_vdom_query: %v", err)
+		}
+	}
+
 	if err = d.Set("trap_free_memory_threshold", flattenSystemSnmpSysinfoTrapFreeMemoryThreshold(o["trap-free-memory-threshold"], d, "trap_free_memory_threshold", sv)); err != nil {
 		if !fortiAPIPatch(o["trap-free-memory-threshold"]) {
 			return fmt.Errorf("Error reading trap_free_memory_threshold: %v", err)
@@ -392,6 +406,10 @@ func expandSystemSnmpSysinfoAppendIndex(d *schema.ResourceData, v interface{}, p
 	return v, nil
 }
 
+func expandSystemSnmpSysinfoNonMgmtVdomQuery(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemSnmpSysinfoTrapFreeMemoryThreshold(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -440,6 +458,8 @@ func getObjectSystemSnmpSysinfo(d *schema.ResourceData, setArgNil bool, sv strin
 				obj["engine-id"] = t
 			}
 		}
+	} else if d.HasChange("engine_id") {
+		obj["engine-id"] = nil
 	}
 
 	if v, ok := d.GetOk("description"); ok {
@@ -453,6 +473,8 @@ func getObjectSystemSnmpSysinfo(d *schema.ResourceData, setArgNil bool, sv strin
 				obj["description"] = t
 			}
 		}
+	} else if d.HasChange("description") {
+		obj["description"] = nil
 	}
 
 	if v, ok := d.GetOk("contact_info"); ok {
@@ -466,6 +488,8 @@ func getObjectSystemSnmpSysinfo(d *schema.ResourceData, setArgNil bool, sv strin
 				obj["contact-info"] = t
 			}
 		}
+	} else if d.HasChange("contact_info") {
+		obj["contact-info"] = nil
 	}
 
 	if v, ok := d.GetOk("location"); ok {
@@ -479,6 +503,8 @@ func getObjectSystemSnmpSysinfo(d *schema.ResourceData, setArgNil bool, sv strin
 				obj["location"] = t
 			}
 		}
+	} else if d.HasChange("location") {
+		obj["location"] = nil
 	}
 
 	if v, ok := d.GetOk("trap_high_cpu_threshold"); ok {
@@ -529,6 +555,19 @@ func getObjectSystemSnmpSysinfo(d *schema.ResourceData, setArgNil bool, sv strin
 				return &obj, err
 			} else if t != nil {
 				obj["append-index"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("non_mgmt_vdom_query"); ok {
+		if setArgNil {
+			obj["non-mgmt-vdom-query"] = nil
+		} else {
+			t, err := expandSystemSnmpSysinfoNonMgmtVdomQuery(d, v, "non_mgmt_vdom_query", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["non-mgmt-vdom-query"] = t
 			}
 		}
 	}

@@ -47,13 +47,11 @@ func resourceSystemSnmpMibView() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
-				Computed:     true,
 			},
 			"exclude": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -283,6 +281,8 @@ func getObjectSystemSnmpMibView(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["include"] = t
 		}
+	} else if d.HasChange("include") {
+		obj["include"] = nil
 	}
 
 	if v, ok := d.GetOk("exclude"); ok {
@@ -292,6 +292,8 @@ func getObjectSystemSnmpMibView(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["exclude"] = t
 		}
+	} else if d.HasChange("exclude") {
+		obj["exclude"] = nil
 	}
 
 	return &obj, nil

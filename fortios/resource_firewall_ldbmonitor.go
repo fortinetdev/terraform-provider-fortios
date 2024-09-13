@@ -40,7 +40,6 @@ func resourceFirewallLdbMonitor() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"type": &schema.Schema{
 				Type:     schema.TypeString,
@@ -68,7 +67,6 @@ func resourceFirewallLdbMonitor() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"src_ip": &schema.Schema{
 				Type:     schema.TypeString,
@@ -79,19 +77,16 @@ func resourceFirewallLdbMonitor() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"http_match": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"http_max_redirects": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 5),
 				Optional:     true,
-				Computed:     true,
 			},
 			"dns_protocol": &schema.Schema{
 				Type:     schema.TypeString,
@@ -102,7 +97,6 @@ func resourceFirewallLdbMonitor() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"dns_match_ip": &schema.Schema{
 				Type:     schema.TypeString,
@@ -273,19 +267,19 @@ func flattenFirewallLdbMonitorType(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenFirewallLdbMonitorInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallLdbMonitorTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallLdbMonitorRetry(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallLdbMonitorPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallLdbMonitorSrcIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -301,7 +295,7 @@ func flattenFirewallLdbMonitorHttpMatch(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenFirewallLdbMonitorHttpMaxRedirects(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallLdbMonitorDnsProtocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -468,6 +462,8 @@ func getObjectFirewallLdbMonitor(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("type"); ok {
@@ -477,6 +473,8 @@ func getObjectFirewallLdbMonitor(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["type"] = t
 		}
+	} else if d.HasChange("type") {
+		obj["type"] = nil
 	}
 
 	if v, ok := d.GetOk("interval"); ok {
@@ -513,6 +511,8 @@ func getObjectFirewallLdbMonitor(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["port"] = t
 		}
+	} else if d.HasChange("port") {
+		obj["port"] = nil
 	}
 
 	if v, ok := d.GetOk("src_ip"); ok {
@@ -531,6 +531,8 @@ func getObjectFirewallLdbMonitor(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["http-get"] = t
 		}
+	} else if d.HasChange("http_get") {
+		obj["http-get"] = nil
 	}
 
 	if v, ok := d.GetOk("http_match"); ok {
@@ -540,6 +542,8 @@ func getObjectFirewallLdbMonitor(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["http-match"] = t
 		}
+	} else if d.HasChange("http_match") {
+		obj["http-match"] = nil
 	}
 
 	if v, ok := d.GetOkExists("http_max_redirects"); ok {
@@ -549,6 +553,8 @@ func getObjectFirewallLdbMonitor(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["http-max-redirects"] = t
 		}
+	} else if d.HasChange("http_max_redirects") {
+		obj["http-max-redirects"] = nil
 	}
 
 	if v, ok := d.GetOk("dns_protocol"); ok {
@@ -567,6 +573,8 @@ func getObjectFirewallLdbMonitor(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["dns-request-domain"] = t
 		}
+	} else if d.HasChange("dns_request_domain") {
+		obj["dns-request-domain"] = nil
 	}
 
 	if v, ok := d.GetOk("dns_match_ip"); ok {

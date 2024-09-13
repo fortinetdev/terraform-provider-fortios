@@ -66,6 +66,11 @@ func resourceLogFortianalyzerCloudOverrideFilter() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"http_transaction": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"anomaly": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -99,7 +104,6 @@ func resourceLogFortianalyzerCloudOverrideFilter() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"category": &schema.Schema{
 							Type:     schema.TypeString,
@@ -110,7 +114,6 @@ func resourceLogFortianalyzerCloudOverrideFilter() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 1023),
 							Optional:     true,
-							Computed:     true,
 						},
 						"filter_type": &schema.Schema{
 							Type:     schema.TypeString,
@@ -124,7 +127,6 @@ func resourceLogFortianalyzerCloudOverrideFilter() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 1023),
 				Optional:     true,
-				Computed:     true,
 			},
 			"filter_type": &schema.Schema{
 				Type:     schema.TypeString,
@@ -283,6 +285,10 @@ func flattenLogFortianalyzerCloudOverrideFilterZtnaTraffic(v interface{}, d *sch
 	return v
 }
 
+func flattenLogFortianalyzerCloudOverrideFilterHttpTransaction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenLogFortianalyzerCloudOverrideFilterAnomaly(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -357,7 +363,7 @@ func flattenLogFortianalyzerCloudOverrideFilterFreeStyle(v interface{}, d *schem
 }
 
 func flattenLogFortianalyzerCloudOverrideFilterFreeStyleId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenLogFortianalyzerCloudOverrideFilterFreeStyleCategory(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -422,6 +428,12 @@ func refreshObjectLogFortianalyzerCloudOverrideFilter(d *schema.ResourceData, o 
 	if err = d.Set("ztna_traffic", flattenLogFortianalyzerCloudOverrideFilterZtnaTraffic(o["ztna-traffic"], d, "ztna_traffic", sv)); err != nil {
 		if !fortiAPIPatch(o["ztna-traffic"]) {
 			return fmt.Errorf("Error reading ztna_traffic: %v", err)
+		}
+	}
+
+	if err = d.Set("http_transaction", flattenLogFortianalyzerCloudOverrideFilterHttpTransaction(o["http-transaction"], d, "http_transaction", sv)); err != nil {
+		if !fortiAPIPatch(o["http-transaction"]) {
+			return fmt.Errorf("Error reading http_transaction: %v", err)
 		}
 	}
 
@@ -516,6 +528,10 @@ func expandLogFortianalyzerCloudOverrideFilterZtnaTraffic(d *schema.ResourceData
 	return v, nil
 }
 
+func expandLogFortianalyzerCloudOverrideFilterHttpTransaction(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandLogFortianalyzerCloudOverrideFilterAnomaly(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -553,6 +569,8 @@ func expandLogFortianalyzerCloudOverrideFilterFreeStyle(d *schema.ResourceData, 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandLogFortianalyzerCloudOverrideFilterFreeStyleId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
@@ -563,6 +581,8 @@ func expandLogFortianalyzerCloudOverrideFilterFreeStyle(d *schema.ResourceData, 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["filter"], _ = expandLogFortianalyzerCloudOverrideFilterFreeStyleFilter(d, i["filter"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["filter"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_type"
@@ -683,6 +703,19 @@ func getObjectLogFortianalyzerCloudOverrideFilter(d *schema.ResourceData, setArg
 		}
 	}
 
+	if v, ok := d.GetOk("http_transaction"); ok {
+		if setArgNil {
+			obj["http-transaction"] = nil
+		} else {
+			t, err := expandLogFortianalyzerCloudOverrideFilterHttpTransaction(d, v, "http_transaction", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["http-transaction"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("anomaly"); ok {
 		if setArgNil {
 			obj["anomaly"] = nil
@@ -772,6 +805,8 @@ func getObjectLogFortianalyzerCloudOverrideFilter(d *schema.ResourceData, setArg
 				obj["filter"] = t
 			}
 		}
+	} else if d.HasChange("filter") {
+		obj["filter"] = nil
 	}
 
 	if v, ok := d.GetOk("filter_type"); ok {

@@ -40,13 +40,11 @@ func resourceFirewallVip6() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
-				Computed:     true,
 			},
 			"fosid": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"uuid": &schema.Schema{
 				Type:     schema.TypeString,
@@ -72,7 +70,6 @@ func resourceFirewallVip6() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -129,7 +126,6 @@ func resourceFirewallVip6() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 32),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ldb_method": &schema.Schema{
 				Type:     schema.TypeString,
@@ -240,7 +236,6 @@ func resourceFirewallVip6() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"ip": &schema.Schema{
 							Type:     schema.TypeString,
@@ -251,7 +246,6 @@ func resourceFirewallVip6() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -279,7 +273,6 @@ func resourceFirewallVip6() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"translate_host": &schema.Schema{
 							Type:     schema.TypeString,
@@ -289,17 +282,14 @@ func resourceFirewallVip6() *schema.Resource {
 						"max_connections": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"monitor": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"client_ip": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -313,18 +303,15 @@ func resourceFirewallVip6() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"http_cookie_path": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"http_cookie_generation": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"http_cookie_age": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -356,7 +343,6 @@ func resourceFirewallVip6() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"outlook_web_access": &schema.Schema{
 				Type:     schema.TypeString,
@@ -381,7 +367,6 @@ func resourceFirewallVip6() *schema.Resource {
 			"ssl_certificate": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"ssl_dh_bits": &schema.Schema{
 				Type:     schema.TypeString,
@@ -401,12 +386,10 @@ func resourceFirewallVip6() *schema.Resource {
 						"priority": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"cipher": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"versions": &schema.Schema{
 							Type:     schema.TypeString,
@@ -434,12 +417,10 @@ func resourceFirewallVip6() *schema.Resource {
 						"priority": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"cipher": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"versions": &schema.Schema{
 							Type:     schema.TypeString,
@@ -515,7 +496,6 @@ func resourceFirewallVip6() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(200, 1048576),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ssl_server_session_state_type": &schema.Schema{
 				Type:     schema.TypeString,
@@ -553,13 +533,11 @@ func resourceFirewallVip6() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ssl_hpkp_backup": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ssl_hpkp_age": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -602,7 +580,6 @@ func resourceFirewallVip6() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -798,7 +775,7 @@ func flattenFirewallVip6Name(v interface{}, d *schema.ResourceData, pre string, 
 }
 
 func flattenFirewallVip6Id(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallVip6Uuid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -896,7 +873,7 @@ func flattenFirewallVip6Mappedport(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenFirewallVip6Color(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallVip6LdbMethod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -977,27 +954,27 @@ func flattenFirewallVip6Quic(v interface{}, d *schema.ResourceData, pre string, 
 }
 
 func flattenFirewallVip6QuicMaxIdleTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallVip6QuicMaxUdpPayloadSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallVip6QuicActiveConnectionIdLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallVip6QuicAckDelayExponent(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallVip6QuicMaxAckDelay(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallVip6QuicMaxDatagramFrameSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallVip6QuicActiveMigration(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1096,34 +1073,7 @@ func flattenFirewallVip6Realservers(v interface{}, d *schema.ResourceData, pre s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "monitor"
 		if cur_v, ok := i["monitor"]; ok {
-			v := flattenFirewallVip6RealserversMonitor(cur_v, d, pre_append, sv)
-			vx := ""
-			bstring := false
-			new_version_map := map[string][]string{
-				">=": []string{"6.4.1"},
-			}
-			if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
-				l := v.([]interface{})
-				if len(l) > 0 {
-					for k, r := range l {
-						i := r.(map[string]interface{})
-						if _, ok := i["name"]; ok {
-							if xv, ok := i["name"].(string); ok {
-								vx += xv
-								if k < len(l)-1 {
-									vx += ", "
-								}
-							}
-						}
-					}
-					bstring = true
-				}
-			}
-			if bstring == true {
-				tmp["monitor"] = vx
-			} else {
-				tmp["monitor"] = v
-			}
+			tmp["monitor"] = flattenFirewallVip6RealserversMonitor(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "client_ip"
@@ -1141,7 +1091,7 @@ func flattenFirewallVip6Realservers(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenFirewallVip6RealserversId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallVip6RealserversIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1149,7 +1099,7 @@ func flattenFirewallVip6RealserversIp(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenFirewallVip6RealserversPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallVip6RealserversStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1157,11 +1107,11 @@ func flattenFirewallVip6RealserversStatus(v interface{}, d *schema.ResourceData,
 }
 
 func flattenFirewallVip6RealserversWeight(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallVip6RealserversHolddownInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallVip6RealserversHealthcheck(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1177,11 +1127,11 @@ func flattenFirewallVip6RealserversTranslateHost(v interface{}, d *schema.Resour
 }
 
 func flattenFirewallVip6RealserversMaxConnections(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallVip6RealserversMonitor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convmap2str(v, d.Get("monitor"), "name")
 }
 
 func flattenFirewallVip6RealserversClientIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1201,11 +1151,11 @@ func flattenFirewallVip6HttpCookiePath(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenFirewallVip6HttpCookieGeneration(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallVip6HttpCookieAge(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallVip6HttpCookieShare(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1245,7 +1195,7 @@ func flattenFirewallVip6SslMode(v interface{}, d *schema.ResourceData, pre strin
 }
 
 func flattenFirewallVip6SslCertificate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convmap2str(v, d.Get("ssl_certificate"), "name")
 }
 
 func flattenFirewallVip6SslDhBits(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1305,7 +1255,7 @@ func flattenFirewallVip6SslCipherSuites(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenFirewallVip6SslCipherSuitesPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallVip6SslCipherSuitesCipher(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1373,7 +1323,7 @@ func flattenFirewallVip6SslServerCipherSuites(v interface{}, d *schema.ResourceD
 }
 
 func flattenFirewallVip6SslServerCipherSuitesPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallVip6SslServerCipherSuitesCipher(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1425,15 +1375,15 @@ func flattenFirewallVip6SslClientSessionStateType(v interface{}, d *schema.Resou
 }
 
 func flattenFirewallVip6SslClientSessionStateTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallVip6SslClientSessionStateMax(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallVip6SslClientRekeyCount(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallVip6SslServerSessionStateType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1441,11 +1391,11 @@ func flattenFirewallVip6SslServerSessionStateType(v interface{}, d *schema.Resou
 }
 
 func flattenFirewallVip6SslServerSessionStateTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallVip6SslServerSessionStateMax(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallVip6SslHttpLocationConversion(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1469,7 +1419,7 @@ func flattenFirewallVip6SslHpkpBackup(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenFirewallVip6SslHpkpAge(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallVip6SslHpkpReportUri(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1485,7 +1435,7 @@ func flattenFirewallVip6SslHsts(v interface{}, d *schema.ResourceData, pre strin
 }
 
 func flattenFirewallVip6SslHstsAge(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallVip6SslHstsIncludeSubdomains(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1535,7 +1485,7 @@ func flattenFirewallVip6MonitorName(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenFirewallVip6MaxEmbryonicConnections(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallVip6EmbeddedIpv4Address(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1841,42 +1791,9 @@ func refreshObjectFirewallVip6(d *schema.ResourceData, o map[string]interface{},
 		}
 	}
 
-	{
-		v := flattenFirewallVip6SslCertificate(o["ssl-certificate"], d, "ssl_certificate", sv)
-		vx := ""
-		bstring := false
-		new_version_map := map[string][]string{
-			">=": []string{"7.4.2"},
-		}
-		if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
-			l := v.([]interface{})
-			if len(l) > 0 {
-				for k, r := range l {
-					i := r.(map[string]interface{})
-					if _, ok := i["name"]; ok {
-						if xv, ok := i["name"].(string); ok {
-							vx += xv
-							if k < len(l)-1 {
-								vx += ", "
-							}
-						}
-					}
-				}
-			}
-			bstring = true
-		}
-		if bstring == true {
-			if err = d.Set("ssl_certificate", vx); err != nil {
-				if !fortiAPIPatch(o["ssl-certificate"]) {
-					return fmt.Errorf("Error reading ssl_certificate: %v", err)
-				}
-			}
-		} else {
-			if err = d.Set("ssl_certificate", v); err != nil {
-				if !fortiAPIPatch(o["ssl-certificate"]) {
-					return fmt.Errorf("Error reading ssl_certificate: %v", err)
-				}
-			}
+	if err = d.Set("ssl_certificate", flattenFirewallVip6SslCertificate(o["ssl-certificate"], d, "ssl_certificate", sv)); err != nil {
+		if !fortiAPIPatch(o["ssl-certificate"]) {
+			return fmt.Errorf("Error reading ssl_certificate: %v", err)
 		}
 	}
 
@@ -2370,6 +2287,8 @@ func expandFirewallVip6Realservers(d *schema.ResourceData, v interface{}, pre st
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandFirewallVip6RealserversId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
@@ -2380,6 +2299,8 @@ func expandFirewallVip6Realservers(d *schema.ResourceData, v interface{}, pre st
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["port"], _ = expandFirewallVip6RealserversPort(d, i["port"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["port"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
@@ -2405,6 +2326,8 @@ func expandFirewallVip6Realservers(d *schema.ResourceData, v interface{}, pre st
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_host"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["http-host"], _ = expandFirewallVip6RealserversHttpHost(d, i["http_host"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["http-host"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "translate_host"
@@ -2415,43 +2338,22 @@ func expandFirewallVip6Realservers(d *schema.ResourceData, v interface{}, pre st
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "max_connections"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["max-connections"], _ = expandFirewallVip6RealserversMaxConnections(d, i["max_connections"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["max-connections"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "monitor"
 		if _, ok := d.GetOk(pre_append); ok {
-			bstring := false
-			t, _ := expandFirewallVip6RealserversMonitor(d, i["monitor"], pre_append, sv)
-			if t != nil {
-				new_version_map := map[string][]string{
-					">=": []string{"6.4.1"},
-				}
-				if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
-					bstring = true
-				}
-			}
-
-			if bstring == true {
-				vx := fmt.Sprintf("%v", t)
-				vx = strings.Replace(vx, "\"", "", -1)
-				vxx := strings.Split(vx, " ")
-
-				tmps := make([]map[string]interface{}, 0, len(vxx))
-
-				for _, xv := range vxx {
-					xtmp := make(map[string]interface{})
-					xtmp["name"] = xv
-
-					tmps = append(tmps, xtmp)
-				}
-				tmp["monitor"] = tmps
-			} else {
-				tmp["monitor"] = t
-			}
+			tmp["monitor"], _ = expandFirewallVip6RealserversMonitor(d, i["monitor"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["monitor"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "client_ip"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["client-ip"], _ = expandFirewallVip6RealserversClientIp(d, i["client_ip"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["client-ip"] = nil
 		}
 
 		result = append(result, tmp)
@@ -2503,7 +2405,25 @@ func expandFirewallVip6RealserversMaxConnections(d *schema.ResourceData, v inter
 }
 
 func expandFirewallVip6RealserversMonitor(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
+	new_version_map := map[string][]string{
+		">=": []string{"6.4.1"},
+	}
+	if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
+		vx := fmt.Sprintf("%v", v)
+		vxx := strings.Split(vx, ", ")
+
+		tmps := make([]map[string]interface{}, 0, len(vxx))
+
+		for _, xv := range vxx {
+			xtmp := make(map[string]interface{})
+			xtmp["name"] = xv
+
+			tmps = append(tmps, xtmp)
+		}
+		return tmps, nil
+	} else {
+		return v, nil
+	}
 }
 
 func expandFirewallVip6RealserversClientIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
@@ -2567,7 +2487,25 @@ func expandFirewallVip6SslMode(d *schema.ResourceData, v interface{}, pre string
 }
 
 func expandFirewallVip6SslCertificate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
+	new_version_map := map[string][]string{
+		">=": []string{"7.4.2"},
+	}
+	if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
+		vx := fmt.Sprintf("%v", v)
+		vxx := strings.Split(vx, ", ")
+
+		tmps := make([]map[string]interface{}, 0, len(vxx))
+
+		for _, xv := range vxx {
+			xtmp := make(map[string]interface{})
+			xtmp["name"] = xv
+
+			tmps = append(tmps, xtmp)
+		}
+		return tmps, nil
+	} else {
+		return v, nil
+	}
 }
 
 func expandFirewallVip6SslDhBits(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
@@ -2595,11 +2533,15 @@ func expandFirewallVip6SslCipherSuites(d *schema.ResourceData, v interface{}, pr
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["priority"], _ = expandFirewallVip6SslCipherSuitesPriority(d, i["priority"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["priority"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "cipher"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["cipher"], _ = expandFirewallVip6SslCipherSuitesCipher(d, i["cipher"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["cipher"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "versions"
@@ -2652,11 +2594,15 @@ func expandFirewallVip6SslServerCipherSuites(d *schema.ResourceData, v interface
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["priority"], _ = expandFirewallVip6SslServerCipherSuitesPriority(d, i["priority"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["priority"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "cipher"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["cipher"], _ = expandFirewallVip6SslServerCipherSuitesCipher(d, i["cipher"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["cipher"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "versions"
@@ -2846,6 +2792,8 @@ func getObjectFirewallVip6(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOkExists("fosid"); ok {
@@ -2855,6 +2803,8 @@ func getObjectFirewallVip6(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["id"] = t
 		}
+	} else if d.HasChange("fosid") {
+		obj["id"] = nil
 	}
 
 	if v, ok := d.GetOk("uuid"); ok {
@@ -2873,6 +2823,8 @@ func getObjectFirewallVip6(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("type"); ok {
@@ -2909,6 +2861,8 @@ func getObjectFirewallVip6(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["extip"] = t
 		}
+	} else if d.HasChange("extip") {
+		obj["extip"] = nil
 	}
 
 	if v, ok := d.GetOk("mappedip"); ok {
@@ -2918,6 +2872,8 @@ func getObjectFirewallVip6(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["mappedip"] = t
 		}
+	} else if d.HasChange("mappedip") {
+		obj["mappedip"] = nil
 	}
 
 	if v, ok := d.GetOk("nat_source_vip"); ok {
@@ -2990,6 +2946,8 @@ func getObjectFirewallVip6(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["color"] = t
 		}
+	} else if d.HasChange("color") {
+		obj["color"] = nil
 	}
 
 	if v, ok := d.GetOk("ldb_method"); ok {
@@ -3107,6 +3065,8 @@ func getObjectFirewallVip6(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["http-cookie-domain"] = t
 		}
+	} else if d.HasChange("http_cookie_domain") {
+		obj["http-cookie-domain"] = nil
 	}
 
 	if v, ok := d.GetOk("http_cookie_path"); ok {
@@ -3116,6 +3076,8 @@ func getObjectFirewallVip6(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["http-cookie-path"] = t
 		}
+	} else if d.HasChange("http_cookie_path") {
+		obj["http-cookie-path"] = nil
 	}
 
 	if v, ok := d.GetOkExists("http_cookie_generation"); ok {
@@ -3125,6 +3087,8 @@ func getObjectFirewallVip6(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["http-cookie-generation"] = t
 		}
+	} else if d.HasChange("http_cookie_generation") {
+		obj["http-cookie-generation"] = nil
 	}
 
 	if v, ok := d.GetOkExists("http_cookie_age"); ok {
@@ -3179,6 +3143,8 @@ func getObjectFirewallVip6(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["http-ip-header-name"] = t
 		}
+	} else if d.HasChange("http_ip_header_name") {
+		obj["http-ip-header-name"] = nil
 	}
 
 	if v, ok := d.GetOk("outlook_web_access"); ok {
@@ -3222,26 +3188,10 @@ func getObjectFirewallVip6(d *schema.ResourceData, sv string) (*map[string]inter
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
-			new_version_map := map[string][]string{
-				">=": []string{"7.4.2"},
-			}
-			if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
-				vx := fmt.Sprintf("%v", t)
-				vxx := strings.Split(vx, ", ")
-
-				tmps := make([]map[string]interface{}, 0, len(vxx))
-
-				for _, xv := range vxx {
-					xtmp := make(map[string]interface{})
-					xtmp["name"] = xv
-
-					tmps = append(tmps, xtmp)
-				}
-				obj["ssl-certificate"] = tmps
-			} else {
-				obj["ssl-certificate"] = t
-			}
+			obj["ssl-certificate"] = t
 		}
+	} else if d.HasChange("ssl_certificate") {
+		obj["ssl-certificate"] = nil
 	}
 
 	if v, ok := d.GetOk("ssl_dh_bits"); ok {
@@ -3413,6 +3363,8 @@ func getObjectFirewallVip6(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["ssl-client-rekey-count"] = t
 		}
+	} else if d.HasChange("ssl_client_rekey_count") {
+		obj["ssl-client-rekey-count"] = nil
 	}
 
 	if v, ok := d.GetOk("ssl_server_session_state_type"); ok {
@@ -3476,6 +3428,8 @@ func getObjectFirewallVip6(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["ssl-hpkp-primary"] = t
 		}
+	} else if d.HasChange("ssl_hpkp_primary") {
+		obj["ssl-hpkp-primary"] = nil
 	}
 
 	if v, ok := d.GetOk("ssl_hpkp_backup"); ok {
@@ -3485,6 +3439,8 @@ func getObjectFirewallVip6(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["ssl-hpkp-backup"] = t
 		}
+	} else if d.HasChange("ssl_hpkp_backup") {
+		obj["ssl-hpkp-backup"] = nil
 	}
 
 	if v, ok := d.GetOk("ssl_hpkp_age"); ok {
@@ -3503,6 +3459,8 @@ func getObjectFirewallVip6(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["ssl-hpkp-report-uri"] = t
 		}
+	} else if d.HasChange("ssl_hpkp_report_uri") {
+		obj["ssl-hpkp-report-uri"] = nil
 	}
 
 	if v, ok := d.GetOk("ssl_hpkp_include_subdomains"); ok {

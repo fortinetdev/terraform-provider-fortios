@@ -30,7 +30,7 @@ The following arguments are supported:
 
 * `agelimit` - Age limit for quarantined files (0 - 479 hours, 0 means forever).
 * `maxfilesize` - Maximum file size to quarantine (0 - 500 Mbytes, 0 means unlimited).
-* `quarantine_quota` - The amount of disk space to reserve for quarantining files (0 - 4294967295 Mbytes, depends on disk space).
+* `quarantine_quota` - The amount of disk space to reserve for quarantining files (0 - 4294967295 Mbytes, 0 means unlimited and depends on disk space).
 * `drop_infected` - Do not quarantine infected files found in sessions using the selected protocols. Dropped files are deleted instead of being quarantined.
 * `store_infected` - Quarantine infected files found in sessions using the selected protocols.
 * `drop_blocked` - Do not quarantine dropped files found in sessions using the selected protocols. Dropped files are deleted instead of being quarantined.

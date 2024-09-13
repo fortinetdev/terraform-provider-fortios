@@ -80,13 +80,11 @@ func resourceSystemIpam() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 						"description": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 127),
 							Optional:     true,
-							Computed:     true,
 						},
 						"subnet": &schema.Schema{
 							Type:     schema.TypeString,
@@ -101,7 +99,6 @@ func resourceSystemIpam() *schema.Resource {
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 									"exclude_subnet": &schema.Schema{
 										Type:     schema.TypeString,
@@ -123,13 +120,11 @@ func resourceSystemIpam() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 						"description": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 127),
 							Optional:     true,
-							Computed:     true,
 						},
 						"device": &schema.Schema{
 							Type:     schema.TypeSet,
@@ -140,7 +135,6 @@ func resourceSystemIpam() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -154,7 +148,6 @@ func resourceSystemIpam() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -173,7 +166,6 @@ func resourceSystemIpam() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -463,7 +455,7 @@ func flattenSystemIpamPoolsExclude(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenSystemIpamPoolsExcludeId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemIpamPoolsExcludeExcludeSubnet(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -841,11 +833,15 @@ func expandSystemIpamPools(d *schema.ResourceData, v interface{}, pre string, sv
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandSystemIpamPoolsName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["description"], _ = expandSystemIpamPoolsDescription(d, i["description"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["description"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "subnet"
@@ -854,9 +850,9 @@ func expandSystemIpamPools(d *schema.ResourceData, v interface{}, pre string, sv
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "exclude"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["exclude"], _ = expandSystemIpamPoolsExclude(d, i["exclude"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["exclude"] = make([]string, 0)
 		}
 
@@ -897,6 +893,8 @@ func expandSystemIpamPoolsExclude(d *schema.ResourceData, v interface{}, pre str
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["ID"], _ = expandSystemIpamPoolsExcludeId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["ID"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "exclude_subnet"
@@ -937,24 +935,28 @@ func expandSystemIpamRules(d *schema.ResourceData, v interface{}, pre string, sv
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandSystemIpamRulesName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["description"], _ = expandSystemIpamRulesDescription(d, i["description"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["description"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "device"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["device"], _ = expandSystemIpamRulesDevice(d, i["device"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["device"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["interface"], _ = expandSystemIpamRulesInterface(d, i["interface"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["interface"] = make([]string, 0)
 		}
 
@@ -964,9 +966,9 @@ func expandSystemIpamRules(d *schema.ResourceData, v interface{}, pre string, sv
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pool"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["pool"], _ = expandSystemIpamRulesPool(d, i["pool"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["pool"] = make([]string, 0)
 		}
 

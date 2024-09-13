@@ -40,7 +40,6 @@ func resourceDlpSensitivity() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -233,6 +232,8 @@ func getObjectDlpSensitivity(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	return &obj, nil

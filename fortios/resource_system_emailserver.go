@@ -51,7 +51,6 @@ func resourceSystemEmailServer() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"port": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -81,9 +80,8 @@ func resourceSystemEmailServer() *schema.Resource {
 			},
 			"username": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 63),
+				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"password": &schema.Schema{
 				Type:         schema.TypeString,
@@ -110,7 +108,6 @@ func resourceSystemEmailServer() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -243,7 +240,7 @@ func flattenSystemEmailServerServer(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenSystemEmailServerPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemEmailServerSourceIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -263,10 +260,6 @@ func flattenSystemEmailServerValidateServer(v interface{}, d *schema.ResourceDat
 }
 
 func flattenSystemEmailServerUsername(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenSystemEmailServerPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -472,6 +465,8 @@ func getObjectSystemEmailServer(d *schema.ResourceData, setArgNil bool, sv strin
 				obj["server"] = t
 			}
 		}
+	} else if d.HasChange("server") {
+		obj["server"] = nil
 	}
 
 	if v, ok := d.GetOk("port"); ok {
@@ -550,6 +545,8 @@ func getObjectSystemEmailServer(d *schema.ResourceData, setArgNil bool, sv strin
 				obj["username"] = t
 			}
 		}
+	} else if d.HasChange("username") {
+		obj["username"] = nil
 	}
 
 	if v, ok := d.GetOk("password"); ok {
@@ -563,6 +560,8 @@ func getObjectSystemEmailServer(d *schema.ResourceData, setArgNil bool, sv strin
 				obj["password"] = t
 			}
 		}
+	} else if d.HasChange("password") {
+		obj["password"] = nil
 	}
 
 	if v, ok := d.GetOk("security"); ok {
@@ -615,6 +614,8 @@ func getObjectSystemEmailServer(d *schema.ResourceData, setArgNil bool, sv strin
 				obj["interface"] = t
 			}
 		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
 	}
 
 	return &obj, nil

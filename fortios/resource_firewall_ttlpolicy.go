@@ -65,7 +65,6 @@ func resourceFirewallTtlPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -79,7 +78,6 @@ func resourceFirewallTtlPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -259,7 +257,7 @@ func resourceFirewallTtlPolicyRead(d *schema.ResourceData, m interface{}) error 
 }
 
 func flattenFirewallTtlPolicyId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallTtlPolicyStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -569,6 +567,8 @@ func getObjectFirewallTtlPolicy(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["srcintf"] = t
 		}
+	} else if d.HasChange("srcintf") {
+		obj["srcintf"] = nil
 	}
 
 	if v, ok := d.GetOk("srcaddr"); ok || d.HasChange("srcaddr") {
@@ -596,6 +596,8 @@ func getObjectFirewallTtlPolicy(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["schedule"] = t
 		}
+	} else if d.HasChange("schedule") {
+		obj["schedule"] = nil
 	}
 
 	if v, ok := d.GetOk("ttl"); ok {
@@ -605,6 +607,8 @@ func getObjectFirewallTtlPolicy(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["ttl"] = t
 		}
+	} else if d.HasChange("ttl") {
+		obj["ttl"] = nil
 	}
 
 	return &obj, nil

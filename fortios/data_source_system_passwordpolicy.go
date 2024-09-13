@@ -76,6 +76,10 @@ func dataSourceSystemPasswordPolicy() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"reuse_password_limit": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -162,6 +166,10 @@ func dataSourceFlattenSystemPasswordPolicyReusePassword(v interface{}, d *schema
 	return v
 }
 
+func dataSourceFlattenSystemPasswordPolicyReusePasswordLimit(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceRefreshObjectSystemPasswordPolicy(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
 
@@ -234,6 +242,12 @@ func dataSourceRefreshObjectSystemPasswordPolicy(d *schema.ResourceData, o map[s
 	if err = d.Set("reuse_password", dataSourceFlattenSystemPasswordPolicyReusePassword(o["reuse-password"], d, "reuse_password")); err != nil {
 		if !fortiAPIPatch(o["reuse-password"]) {
 			return fmt.Errorf("Error reading reuse_password: %v", err)
+		}
+	}
+
+	if err = d.Set("reuse_password_limit", dataSourceFlattenSystemPasswordPolicyReusePasswordLimit(o["reuse-password-limit"], d, "reuse_password_limit")); err != nil {
+		if !fortiAPIPatch(o["reuse-password-limit"]) {
+			return fmt.Errorf("Error reading reuse_password_limit: %v", err)
 		}
 	}
 

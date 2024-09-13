@@ -59,7 +59,6 @@ func resourceSystemNat64() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"nat64_prefix": &schema.Schema{
 							Type:     schema.TypeString,
@@ -386,6 +385,8 @@ func expandSystemNat64SecondaryPrefix(d *schema.ResourceData, v interface{}, pre
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandSystemNat64SecondaryPrefixName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "nat64_prefix"

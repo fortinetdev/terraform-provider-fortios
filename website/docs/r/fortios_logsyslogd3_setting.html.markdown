@@ -33,6 +33,7 @@ The following arguments are supported:
 * `mode` - Remote syslog logging over UDP/Reliable TCP. Valid values: `udp`, `legacy-reliable`, `reliable`.
 * `port` - Server listen port.
 * `facility` - Remote syslog facility. Valid values: `kernel`, `user`, `mail`, `daemon`, `auth`, `syslog`, `lpr`, `news`, `uucp`, `cron`, `authpriv`, `ftp`, `ntp`, `audit`, `alert`, `clock`, `local0`, `local1`, `local2`, `local3`, `local4`, `local5`, `local6`, `local7`.
+* `source_ip_interface` - Source interface of syslog.
 * `source_ip` - Source IP address of syslog.
 * `format` - Log format.
 * `priority` - Set log transmission priority. Valid values: `default`, `low`.

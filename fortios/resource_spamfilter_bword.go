@@ -59,44 +59,36 @@ func resourceSpamfilterBword() *schema.Resource {
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"pattern": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 127),
 							Optional:     true,
-							Computed:     true,
 						},
 						"pattern_type": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"action": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"where": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"language": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"score": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 99999),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -267,7 +259,7 @@ func resourceSpamfilterBwordRead(d *schema.ResourceData, m interface{}) error {
 }
 
 func flattenSpamfilterBwordId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSpamfilterBwordName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -356,7 +348,7 @@ func flattenSpamfilterBwordEntriesStatus(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenSpamfilterBwordEntriesId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSpamfilterBwordEntriesPattern(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -380,7 +372,7 @@ func flattenSpamfilterBwordEntriesLanguage(v interface{}, d *schema.ResourceData
 }
 
 func flattenSpamfilterBwordEntriesScore(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectSpamfilterBword(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -464,41 +456,57 @@ func expandSpamfilterBwordEntries(d *schema.ResourceData, v interface{}, pre str
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["status"], _ = expandSpamfilterBwordEntriesStatus(d, i["status"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["status"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSpamfilterBwordEntriesId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["pattern"], _ = expandSpamfilterBwordEntriesPattern(d, i["pattern"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["pattern"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern_type"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["pattern-type"], _ = expandSpamfilterBwordEntriesPatternType(d, i["pattern_type"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["pattern-type"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["action"], _ = expandSpamfilterBwordEntriesAction(d, i["action"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["action"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "where"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["where"], _ = expandSpamfilterBwordEntriesWhere(d, i["where"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["where"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "language"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["language"], _ = expandSpamfilterBwordEntriesLanguage(d, i["language"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["language"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "score"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["score"], _ = expandSpamfilterBwordEntriesScore(d, i["score"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["score"] = nil
 		}
 
 		result = append(result, tmp)
@@ -560,6 +568,8 @@ func getObjectSpamfilterBword(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
@@ -569,6 +579,8 @@ func getObjectSpamfilterBword(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("entries"); ok || d.HasChange("entries") {

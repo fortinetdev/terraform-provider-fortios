@@ -40,7 +40,6 @@ func resourceFirewallServiceCustom() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
-				Computed:     true,
 			},
 			"uuid": &schema.Schema{
 				Type:     schema.TypeString,
@@ -56,7 +55,6 @@ func resourceFirewallServiceCustom() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"protocol": &schema.Schema{
 				Type:     schema.TypeString,
@@ -77,7 +75,6 @@ func resourceFirewallServiceCustom() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"protocol_number": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -88,64 +85,57 @@ func resourceFirewallServiceCustom() *schema.Resource {
 			"icmptype": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"icmpcode": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"tcp_portrange": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"udp_portrange": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
+			},
+			"udplite_portrange": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
 			},
 			"sctp_portrange": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"tcp_halfclose_timer": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 86400),
 				Optional:     true,
-				Computed:     true,
 			},
 			"tcp_halfopen_timer": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 86400),
 				Optional:     true,
-				Computed:     true,
 			},
 			"tcp_timewait_timer": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 300),
 				Optional:     true,
-				Computed:     true,
 			},
 			"tcp_rst_timer": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(5, 300),
 				Optional:     true,
-				Computed:     true,
 			},
 			"udp_idle_timer": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 86400),
 				Optional:     true,
-				Computed:     true,
 			},
 			"session_ttl": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(300, 604800),
 				Optional:     true,
-				Computed:     true,
 			},
 			"check_reset_range": &schema.Schema{
 				Type:     schema.TypeString,
@@ -161,7 +151,6 @@ func resourceFirewallServiceCustom() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 32),
 				Optional:     true,
-				Computed:     true,
 			},
 			"visibility": &schema.Schema{
 				Type:     schema.TypeString,
@@ -181,7 +170,6 @@ func resourceFirewallServiceCustom() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -194,7 +182,6 @@ func resourceFirewallServiceCustom() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -402,15 +389,15 @@ func flattenFirewallServiceCustomFqdn(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenFirewallServiceCustomProtocolNumber(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallServiceCustomIcmptype(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallServiceCustomIcmpcode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallServiceCustomTcpPortrange(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -421,32 +408,36 @@ func flattenFirewallServiceCustomUdpPortrange(v interface{}, d *schema.ResourceD
 	return v
 }
 
+func flattenFirewallServiceCustomUdplitePortrange(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallServiceCustomSctpPortrange(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
 func flattenFirewallServiceCustomTcpHalfcloseTimer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallServiceCustomTcpHalfopenTimer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallServiceCustomTcpTimewaitTimer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallServiceCustomTcpRstTimer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallServiceCustomUdpIdleTimer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallServiceCustomSessionTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallServiceCustomCheckResetRange(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -458,7 +449,7 @@ func flattenFirewallServiceCustomComment(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenFirewallServiceCustomColor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallServiceCustomVisibility(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -508,7 +499,7 @@ func flattenFirewallServiceCustomAppCategory(v interface{}, d *schema.ResourceDa
 }
 
 func flattenFirewallServiceCustomAppCategoryId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallServiceCustomApplication(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -550,7 +541,7 @@ func flattenFirewallServiceCustomApplication(v interface{}, d *schema.ResourceDa
 }
 
 func flattenFirewallServiceCustomApplicationId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallServiceCustomFabricObject(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -644,6 +635,12 @@ func refreshObjectFirewallServiceCustom(d *schema.ResourceData, o map[string]int
 		}
 	}
 
+	if err = d.Set("udplite_portrange", flattenFirewallServiceCustomUdplitePortrange(o["udplite-portrange"], d, "udplite_portrange", sv)); err != nil {
+		if !fortiAPIPatch(o["udplite-portrange"]) {
+			return fmt.Errorf("Error reading udplite_portrange: %v", err)
+		}
+	}
+
 	if err = d.Set("sctp_portrange", flattenFirewallServiceCustomSctpPortrange(o["sctp-portrange"], d, "sctp_portrange", sv)); err != nil {
 		if !fortiAPIPatch(o["sctp-portrange"]) {
 			return fmt.Errorf("Error reading sctp_portrange: %v", err)
@@ -680,24 +677,9 @@ func refreshObjectFirewallServiceCustom(d *schema.ResourceData, o map[string]int
 		}
 	}
 
-	{
-		v := flattenFirewallServiceCustomSessionTtl(o["session-ttl"], d, "session_ttl", sv)
-		new_version_map := map[string][]string{
-			">=": []string{"6.2.4"},
-		}
-		if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
-			if vx, ok := v.(string); ok {
-				vxx, err := strconv.Atoi(vx)
-				if err == nil {
-					v = vxx
-				}
-			}
-		}
-
-		if err = d.Set("session_ttl", v); err != nil {
-			if !fortiAPIPatch(o["session-ttl"]) {
-				return fmt.Errorf("Error reading session_ttl: %v", err)
-			}
+	if err = d.Set("session_ttl", flattenFirewallServiceCustomSessionTtl(o["session-ttl"], d, "session_ttl", sv)); err != nil {
+		if !fortiAPIPatch(o["session-ttl"]) {
+			return fmt.Errorf("Error reading session_ttl: %v", err)
 		}
 	}
 
@@ -830,6 +812,10 @@ func expandFirewallServiceCustomUdpPortrange(d *schema.ResourceData, v interface
 	return v, nil
 }
 
+func expandFirewallServiceCustomUdplitePortrange(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallServiceCustomSctpPortrange(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -855,7 +841,7 @@ func expandFirewallServiceCustomUdpIdleTimer(d *schema.ResourceData, v interface
 }
 
 func expandFirewallServiceCustomSessionTtl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
+	return convintf2i(v), nil
 }
 
 func expandFirewallServiceCustomCheckResetRange(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
@@ -948,6 +934,8 @@ func getObjectFirewallServiceCustom(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("uuid"); ok {
@@ -975,6 +963,8 @@ func getObjectFirewallServiceCustom(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["category"] = t
 		}
+	} else if d.HasChange("category") {
+		obj["category"] = nil
 	}
 
 	if v, ok := d.GetOk("protocol"); ok {
@@ -1011,6 +1001,8 @@ func getObjectFirewallServiceCustom(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["fqdn"] = t
 		}
+	} else if d.HasChange("fqdn") {
+		obj["fqdn"] = nil
 	}
 
 	if v, ok := d.GetOkExists("protocol_number"); ok {
@@ -1029,6 +1021,8 @@ func getObjectFirewallServiceCustom(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["icmptype"] = t
 		}
+	} else if d.HasChange("icmptype") {
+		obj["icmptype"] = nil
 	}
 
 	if v, ok := d.GetOkExists("icmpcode"); ok {
@@ -1038,6 +1032,8 @@ func getObjectFirewallServiceCustom(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["icmpcode"] = t
 		}
+	} else if d.HasChange("icmpcode") {
+		obj["icmpcode"] = nil
 	}
 
 	if v, ok := d.GetOk("tcp_portrange"); ok {
@@ -1047,6 +1043,8 @@ func getObjectFirewallServiceCustom(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["tcp-portrange"] = t
 		}
+	} else if d.HasChange("tcp_portrange") {
+		obj["tcp-portrange"] = nil
 	}
 
 	if v, ok := d.GetOk("udp_portrange"); ok {
@@ -1056,6 +1054,19 @@ func getObjectFirewallServiceCustom(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["udp-portrange"] = t
 		}
+	} else if d.HasChange("udp_portrange") {
+		obj["udp-portrange"] = nil
+	}
+
+	if v, ok := d.GetOk("udplite_portrange"); ok {
+		t, err := expandFirewallServiceCustomUdplitePortrange(d, v, "udplite_portrange", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["udplite-portrange"] = t
+		}
+	} else if d.HasChange("udplite_portrange") {
+		obj["udplite-portrange"] = nil
 	}
 
 	if v, ok := d.GetOk("sctp_portrange"); ok {
@@ -1065,6 +1076,8 @@ func getObjectFirewallServiceCustom(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["sctp-portrange"] = t
 		}
+	} else if d.HasChange("sctp_portrange") {
+		obj["sctp-portrange"] = nil
 	}
 
 	if v, ok := d.GetOkExists("tcp_halfclose_timer"); ok {
@@ -1074,6 +1087,8 @@ func getObjectFirewallServiceCustom(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["tcp-halfclose-timer"] = t
 		}
+	} else if d.HasChange("tcp_halfclose_timer") {
+		obj["tcp-halfclose-timer"] = nil
 	}
 
 	if v, ok := d.GetOkExists("tcp_halfopen_timer"); ok {
@@ -1083,6 +1098,8 @@ func getObjectFirewallServiceCustom(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["tcp-halfopen-timer"] = t
 		}
+	} else if d.HasChange("tcp_halfopen_timer") {
+		obj["tcp-halfopen-timer"] = nil
 	}
 
 	if v, ok := d.GetOkExists("tcp_timewait_timer"); ok {
@@ -1092,6 +1109,8 @@ func getObjectFirewallServiceCustom(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["tcp-timewait-timer"] = t
 		}
+	} else if d.HasChange("tcp_timewait_timer") {
+		obj["tcp-timewait-timer"] = nil
 	}
 
 	if v, ok := d.GetOk("tcp_rst_timer"); ok {
@@ -1101,6 +1120,8 @@ func getObjectFirewallServiceCustom(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["tcp-rst-timer"] = t
 		}
+	} else if d.HasChange("tcp_rst_timer") {
+		obj["tcp-rst-timer"] = nil
 	}
 
 	if v, ok := d.GetOkExists("udp_idle_timer"); ok {
@@ -1110,6 +1131,8 @@ func getObjectFirewallServiceCustom(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["udp-idle-timer"] = t
 		}
+	} else if d.HasChange("udp_idle_timer") {
+		obj["udp-idle-timer"] = nil
 	}
 
 	if v, ok := d.GetOk("session_ttl"); ok {
@@ -1117,15 +1140,10 @@ func getObjectFirewallServiceCustom(d *schema.ResourceData, sv string) (*map[str
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
-			new_version_map := map[string][]string{
-				">=": []string{"6.2.4"},
-			}
-			if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
-				obj["session-ttl"] = fmt.Sprintf("%v", t)
-			} else {
-				obj["session-ttl"] = t
-			}
+			obj["session-ttl"] = t
 		}
+	} else if d.HasChange("session_ttl") {
+		obj["session-ttl"] = nil
 	}
 
 	if v, ok := d.GetOk("check_reset_range"); ok {
@@ -1144,6 +1162,8 @@ func getObjectFirewallServiceCustom(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOkExists("color"); ok {
@@ -1153,6 +1173,8 @@ func getObjectFirewallServiceCustom(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["color"] = t
 		}
+	} else if d.HasChange("color") {
+		obj["color"] = nil
 	}
 
 	if v, ok := d.GetOk("visibility"); ok {

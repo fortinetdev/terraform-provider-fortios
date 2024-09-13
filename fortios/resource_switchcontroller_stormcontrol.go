@@ -176,7 +176,7 @@ func resourceSwitchControllerStormControlRead(d *schema.ResourceData, m interfac
 }
 
 func flattenSwitchControllerStormControlRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerStormControlUnknownUnicast(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {

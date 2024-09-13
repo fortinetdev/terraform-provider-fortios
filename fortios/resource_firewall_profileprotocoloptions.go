@@ -49,13 +49,11 @@ func resourceFirewallProfileProtocolOptions() *schema.Resource {
 			"feature_set": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"replacemsg_group": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"oversize_log": &schema.Schema{
 				Type:     schema.TypeString,
@@ -78,7 +76,6 @@ func resourceFirewallProfileProtocolOptions() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -98,7 +95,6 @@ func resourceFirewallProfileProtocolOptions() *schema.Resource {
 						"options": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"comfort_interval": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -120,7 +116,6 @@ func resourceFirewallProfileProtocolOptions() *schema.Resource {
 						"http_policy": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"strip_x_forwarded_for": &schema.Schema{
 							Type:     schema.TypeString,
@@ -130,18 +125,15 @@ func resourceFirewallProfileProtocolOptions() *schema.Resource {
 						"post_lang": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"fortinet_bar": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"fortinet_bar_port": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 						"streaming_content_bypass": &schema.Schema{
 							Type:     schema.TypeString,
@@ -194,7 +186,6 @@ func resourceFirewallProfileProtocolOptions() *schema.Resource {
 						"stream_based_uncompressed_limit": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"scan_bzip2": &schema.Schema{
 							Type:     schema.TypeString,
@@ -216,7 +207,11 @@ func resourceFirewallProfileProtocolOptions() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 100),
 							Optional:     true,
-							Computed:     true,
+						},
+						"domain_fronting": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
 						},
 						"tcp_window_type": &schema.Schema{
 							Type:     schema.TypeString,
@@ -265,7 +260,6 @@ func resourceFirewallProfileProtocolOptions() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -280,7 +274,6 @@ func resourceFirewallProfileProtocolOptions() *schema.Resource {
 						"options": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"comfort_interval": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -315,7 +308,6 @@ func resourceFirewallProfileProtocolOptions() *schema.Resource {
 						"stream_based_uncompressed_limit": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"scan_bzip2": &schema.Schema{
 							Type:     schema.TypeString,
@@ -369,7 +361,6 @@ func resourceFirewallProfileProtocolOptions() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -389,7 +380,6 @@ func resourceFirewallProfileProtocolOptions() *schema.Resource {
 						"options": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"oversize_limit": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -433,7 +423,6 @@ func resourceFirewallProfileProtocolOptions() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -443,7 +432,6 @@ func resourceFirewallProfileProtocolOptions() *schema.Resource {
 						"options": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"oversize_limit": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -482,7 +470,6 @@ func resourceFirewallProfileProtocolOptions() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -502,7 +489,6 @@ func resourceFirewallProfileProtocolOptions() *schema.Resource {
 						"options": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"oversize_limit": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -546,7 +532,6 @@ func resourceFirewallProfileProtocolOptions() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -566,7 +551,6 @@ func resourceFirewallProfileProtocolOptions() *schema.Resource {
 						"options": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"oversize_limit": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -615,7 +599,6 @@ func resourceFirewallProfileProtocolOptions() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -635,7 +618,6 @@ func resourceFirewallProfileProtocolOptions() *schema.Resource {
 						"options": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"oversize_limit": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -673,7 +655,6 @@ func resourceFirewallProfileProtocolOptions() *schema.Resource {
 						"options": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"comfort_interval": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -708,7 +689,6 @@ func resourceFirewallProfileProtocolOptions() *schema.Resource {
 						"stream_based_uncompressed_limit": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"scan_bzip2": &schema.Schema{
 							Type:     schema.TypeString,
@@ -757,7 +737,6 @@ func resourceFirewallProfileProtocolOptions() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -778,7 +757,6 @@ func resourceFirewallProfileProtocolOptions() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -788,7 +766,6 @@ func resourceFirewallProfileProtocolOptions() *schema.Resource {
 						"options": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"oversize_limit": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -845,7 +822,6 @@ func resourceFirewallProfileProtocolOptions() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"server_keytab": &schema.Schema{
 							Type:     schema.TypeList,
@@ -856,13 +832,11 @@ func resourceFirewallProfileProtocolOptions() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 511),
 										Optional:     true,
-										Computed:     true,
 									},
 									"keytab": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 8191),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -886,7 +860,6 @@ func resourceFirewallProfileProtocolOptions() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 1023),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -1224,6 +1197,11 @@ func flattenFirewallProfileProtocolOptionsHttp(v interface{}, d *schema.Resource
 		result["retry_count"] = flattenFirewallProfileProtocolOptionsHttpRetryCount(i["retry-count"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "domain_fronting"
+	if _, ok := i["domain-fronting"]; ok {
+		result["domain_fronting"] = flattenFirewallProfileProtocolOptionsHttpDomainFronting(i["domain-fronting"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "tcp_window_type"
 	if _, ok := i["tcp-window-type"]; ok {
 		result["tcp_window_type"] = flattenFirewallProfileProtocolOptionsHttpTcpWindowType(i["tcp-window-type"], d, pre_append, sv)
@@ -1259,7 +1237,7 @@ func flattenFirewallProfileProtocolOptionsHttp(v interface{}, d *schema.Resource
 }
 
 func flattenFirewallProfileProtocolOptionsHttpPorts(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return convintflist2i(v)
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsHttpStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1279,11 +1257,11 @@ func flattenFirewallProfileProtocolOptionsHttpOptions(v interface{}, d *schema.R
 }
 
 func flattenFirewallProfileProtocolOptionsHttpComfortInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsHttpComfortAmount(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsHttpRangeBlock(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1307,7 +1285,7 @@ func flattenFirewallProfileProtocolOptionsHttpFortinetBar(v interface{}, d *sche
 }
 
 func flattenFirewallProfileProtocolOptionsHttpFortinetBarPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsHttpStreamingContentBypass(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1335,19 +1313,19 @@ func flattenFirewallProfileProtocolOptionsHttpUnknownContentEncoding(v interface
 }
 
 func flattenFirewallProfileProtocolOptionsHttpOversizeLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsHttpUncompressedOversizeLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsHttpUncompressedNestLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsHttpStreamBasedUncompressedLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsHttpScanBzip2(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1359,10 +1337,14 @@ func flattenFirewallProfileProtocolOptionsHttpVerifyDnsForPolicyMatching(v inter
 }
 
 func flattenFirewallProfileProtocolOptionsHttpBlockPageStatusCode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsHttpRetryCount(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenFirewallProfileProtocolOptionsHttpDomainFronting(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1371,15 +1353,15 @@ func flattenFirewallProfileProtocolOptionsHttpTcpWindowType(v interface{}, d *sc
 }
 
 func flattenFirewallProfileProtocolOptionsHttpTcpWindowMinimum(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsHttpTcpWindowMaximum(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsHttpTcpWindowSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsHttpSslOffloaded(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1489,7 +1471,7 @@ func flattenFirewallProfileProtocolOptionsFtp(v interface{}, d *schema.ResourceD
 }
 
 func flattenFirewallProfileProtocolOptionsFtpPorts(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return convintflist2i(v)
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsFtpStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1505,27 +1487,27 @@ func flattenFirewallProfileProtocolOptionsFtpOptions(v interface{}, d *schema.Re
 }
 
 func flattenFirewallProfileProtocolOptionsFtpComfortInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsFtpComfortAmount(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsFtpOversizeLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsFtpUncompressedOversizeLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsFtpUncompressedNestLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsFtpStreamBasedUncompressedLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsFtpScanBzip2(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1537,15 +1519,15 @@ func flattenFirewallProfileProtocolOptionsFtpTcpWindowType(v interface{}, d *sch
 }
 
 func flattenFirewallProfileProtocolOptionsFtpTcpWindowMinimum(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsFtpTcpWindowMaximum(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsFtpTcpWindowSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsFtpSslOffloaded(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1620,7 +1602,7 @@ func flattenFirewallProfileProtocolOptionsImap(v interface{}, d *schema.Resource
 }
 
 func flattenFirewallProfileProtocolOptionsImapPorts(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return convintflist2i(v)
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsImapStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1640,15 +1622,15 @@ func flattenFirewallProfileProtocolOptionsImapOptions(v interface{}, d *schema.R
 }
 
 func flattenFirewallProfileProtocolOptionsImapOversizeLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsImapUncompressedOversizeLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsImapUncompressedNestLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsImapScanBzip2(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1708,7 +1690,7 @@ func flattenFirewallProfileProtocolOptionsMapi(v interface{}, d *schema.Resource
 }
 
 func flattenFirewallProfileProtocolOptionsMapiPorts(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return convintflist2i(v)
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsMapiStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1720,15 +1702,15 @@ func flattenFirewallProfileProtocolOptionsMapiOptions(v interface{}, d *schema.R
 }
 
 func flattenFirewallProfileProtocolOptionsMapiOversizeLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsMapiUncompressedOversizeLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsMapiUncompressedNestLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsMapiScanBzip2(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1799,7 +1781,7 @@ func flattenFirewallProfileProtocolOptionsPop3(v interface{}, d *schema.Resource
 }
 
 func flattenFirewallProfileProtocolOptionsPop3Ports(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return convintflist2i(v)
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsPop3Status(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1819,15 +1801,15 @@ func flattenFirewallProfileProtocolOptionsPop3Options(v interface{}, d *schema.R
 }
 
 func flattenFirewallProfileProtocolOptionsPop3OversizeLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsPop3UncompressedOversizeLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsPop3UncompressedNestLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsPop3ScanBzip2(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1907,7 +1889,7 @@ func flattenFirewallProfileProtocolOptionsSmtp(v interface{}, d *schema.Resource
 }
 
 func flattenFirewallProfileProtocolOptionsSmtpPorts(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return convintflist2i(v)
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsSmtpStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1927,15 +1909,15 @@ func flattenFirewallProfileProtocolOptionsSmtpOptions(v interface{}, d *schema.R
 }
 
 func flattenFirewallProfileProtocolOptionsSmtpOversizeLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsSmtpUncompressedOversizeLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsSmtpUncompressedNestLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsSmtpScanBzip2(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2009,7 +1991,7 @@ func flattenFirewallProfileProtocolOptionsNntp(v interface{}, d *schema.Resource
 }
 
 func flattenFirewallProfileProtocolOptionsNntpPorts(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return convintflist2i(v)
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsNntpStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2029,15 +2011,15 @@ func flattenFirewallProfileProtocolOptionsNntpOptions(v interface{}, d *schema.R
 }
 
 func flattenFirewallProfileProtocolOptionsNntpOversizeLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsNntpUncompressedOversizeLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsNntpUncompressedNestLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsNntpScanBzip2(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2127,27 +2109,27 @@ func flattenFirewallProfileProtocolOptionsSshOptions(v interface{}, d *schema.Re
 }
 
 func flattenFirewallProfileProtocolOptionsSshComfortInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsSshComfortAmount(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsSshOversizeLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsSshUncompressedOversizeLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsSshUncompressedNestLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsSshStreamBasedUncompressedLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsSshScanBzip2(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2159,15 +2141,15 @@ func flattenFirewallProfileProtocolOptionsSshTcpWindowType(v interface{}, d *sch
 }
 
 func flattenFirewallProfileProtocolOptionsSshTcpWindowMinimum(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsSshTcpWindowMaximum(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsSshTcpWindowSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsSshSslOffloaded(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2198,7 +2180,7 @@ func flattenFirewallProfileProtocolOptionsDns(v interface{}, d *schema.ResourceD
 }
 
 func flattenFirewallProfileProtocolOptionsDnsPorts(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return convintflist2i(v)
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsDnsStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2289,7 +2271,7 @@ func flattenFirewallProfileProtocolOptionsCifs(v interface{}, d *schema.Resource
 }
 
 func flattenFirewallProfileProtocolOptionsCifsPorts(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return convintflist2i(v)
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsCifsStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2301,15 +2283,15 @@ func flattenFirewallProfileProtocolOptionsCifsOptions(v interface{}, d *schema.R
 }
 
 func flattenFirewallProfileProtocolOptionsCifsOversizeLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsCifsUncompressedOversizeLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsCifsUncompressedNestLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsCifsScanBzip2(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2321,15 +2303,15 @@ func flattenFirewallProfileProtocolOptionsCifsTcpWindowType(v interface{}, d *sc
 }
 
 func flattenFirewallProfileProtocolOptionsCifsTcpWindowMinimum(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsCifsTcpWindowMaximum(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsCifsTcpWindowSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallProfileProtocolOptionsCifsServerCredentialType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2804,6 +2786,10 @@ func expandFirewallProfileProtocolOptionsHttp(d *schema.ResourceData, v interfac
 	if _, ok := d.GetOk(pre_append); ok {
 		result["retry-count"], _ = expandFirewallProfileProtocolOptionsHttpRetryCount(d, i["retry_count"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "domain_fronting"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["domain-fronting"], _ = expandFirewallProfileProtocolOptionsHttpDomainFronting(d, i["domain_fronting"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "tcp_window_type"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["tcp-window-type"], _ = expandFirewallProfileProtocolOptionsHttpTcpWindowType(d, i["tcp_window_type"], pre_append, sv)
@@ -2937,6 +2923,10 @@ func expandFirewallProfileProtocolOptionsHttpBlockPageStatusCode(d *schema.Resou
 }
 
 func expandFirewallProfileProtocolOptionsHttpRetryCount(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallProfileProtocolOptionsHttpDomainFronting(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3849,11 +3839,15 @@ func expandFirewallProfileProtocolOptionsCifsServerKeytab(d *schema.ResourceData
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "principal"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["principal"], _ = expandFirewallProfileProtocolOptionsCifsServerKeytabPrincipal(d, i["principal"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["principal"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "keytab"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["keytab"], _ = expandFirewallProfileProtocolOptionsCifsServerKeytabKeytab(d, i["keytab"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["keytab"] = nil
 		}
 
 		result = append(result, tmp)
@@ -3916,6 +3910,8 @@ func getObjectFirewallProfileProtocolOptions(d *schema.ResourceData, sv string) 
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
@@ -3925,6 +3921,8 @@ func getObjectFirewallProfileProtocolOptions(d *schema.ResourceData, sv string) 
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("feature_set"); ok {
@@ -3934,6 +3932,8 @@ func getObjectFirewallProfileProtocolOptions(d *schema.ResourceData, sv string) 
 		} else if t != nil {
 			obj["feature-set"] = t
 		}
+	} else if d.HasChange("feature_set") {
+		obj["feature-set"] = nil
 	}
 
 	if v, ok := d.GetOk("replacemsg_group"); ok {
@@ -3943,6 +3943,8 @@ func getObjectFirewallProfileProtocolOptions(d *schema.ResourceData, sv string) 
 		} else if t != nil {
 			obj["replacemsg-group"] = t
 		}
+	} else if d.HasChange("replacemsg_group") {
+		obj["replacemsg-group"] = nil
 	}
 
 	if v, ok := d.GetOk("oversize_log"); ok {

@@ -46,7 +46,6 @@ func resourceIpsSettings() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"packet_log_memory": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -57,9 +56,13 @@ func resourceIpsSettings() *schema.Resource {
 			"ips_packet_quota": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"proxy_inline_ips": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"ha_session_pickup": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -183,22 +186,26 @@ func resourceIpsSettingsRead(d *schema.ResourceData, m interface{}) error {
 }
 
 func flattenIpsSettingsPacketLogHistory(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenIpsSettingsPacketLogPostAttack(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenIpsSettingsPacketLogMemory(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenIpsSettingsIpsPacketQuota(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenIpsSettingsProxyInlineIps(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenIpsSettingsHaSessionPickup(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -235,6 +242,12 @@ func refreshObjectIpsSettings(d *schema.ResourceData, o map[string]interface{}, 
 		}
 	}
 
+	if err = d.Set("ha_session_pickup", flattenIpsSettingsHaSessionPickup(o["ha-session-pickup"], d, "ha_session_pickup", sv)); err != nil {
+		if !fortiAPIPatch(o["ha-session-pickup"]) {
+			return fmt.Errorf("Error reading ha_session_pickup: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -261,6 +274,10 @@ func expandIpsSettingsIpsPacketQuota(d *schema.ResourceData, v interface{}, pre 
 }
 
 func expandIpsSettingsProxyInlineIps(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandIpsSettingsHaSessionPickup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -291,6 +308,8 @@ func getObjectIpsSettings(d *schema.ResourceData, setArgNil bool, sv string) (*m
 				obj["packet-log-post-attack"] = t
 			}
 		}
+	} else if d.HasChange("packet_log_post_attack") {
+		obj["packet-log-post-attack"] = nil
 	}
 
 	if v, ok := d.GetOk("packet_log_memory"); ok {
@@ -317,6 +336,8 @@ func getObjectIpsSettings(d *schema.ResourceData, setArgNil bool, sv string) (*m
 				obj["ips-packet-quota"] = t
 			}
 		}
+	} else if d.HasChange("ips_packet_quota") {
+		obj["ips-packet-quota"] = nil
 	}
 
 	if v, ok := d.GetOk("proxy_inline_ips"); ok {
@@ -328,6 +349,19 @@ func getObjectIpsSettings(d *schema.ResourceData, setArgNil bool, sv string) (*m
 				return &obj, err
 			} else if t != nil {
 				obj["proxy-inline-ips"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("ha_session_pickup"); ok {
+		if setArgNil {
+			obj["ha-session-pickup"] = nil
+		} else {
+			t, err := expandIpsSettingsHaSessionPickup(d, v, "ha_session_pickup", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ha-session-pickup"] = t
 			}
 		}
 	}

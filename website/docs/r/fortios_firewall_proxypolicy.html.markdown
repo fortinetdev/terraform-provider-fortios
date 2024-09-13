@@ -67,6 +67,7 @@ The following arguments are supported:
 * `proxy` - (Required) Type of explicit proxy.
 * `access_proxy` - IPv4 access proxy. The structure of `access_proxy` block is documented below.
 * `access_proxy6` - IPv6 access proxy. The structure of `access_proxy6` block is documented below.
+* `ztna_proxy` - IPv4 ZTNA traffic forward proxy. The structure of `ztna_proxy` block is documented below.
 * `srcintf` - Source interface names. The structure of `srcintf` block is documented below.
 * `dstintf` - (Required) Destination interface names. The structure of `dstintf` block is documented below.
 * `srcaddr` - Source address objects. The structure of `srcaddr` block is documented below.
@@ -114,6 +115,7 @@ The following arguments are supported:
 * `profile_group` - Name of profile group.
 * `av_profile` - Name of an existing Antivirus profile.
 * `webfilter_profile` - Name of an existing Web filter profile.
+* `dnsfilter_profile` - Name of an existing DNS filter profile.
 * `emailfilter_profile` - Name of an existing email filter profile.
 * `dlp_profile` - Name of an existing DLP profile.
 * `spamfilter_profile` - Name of an existing Spam filter profile.
@@ -136,6 +138,7 @@ The following arguments are supported:
 * `ssl_ssh_profile` - Name of an existing SSL SSH profile.
 * `replacemsg_override_group` - Authentication replacement message override group.
 * `logtraffic_start` - Enable/disable policy log traffic start. Valid values: `enable`, `disable`.
+* `log_http_transaction` - Enable/disable HTTP transaction log. Valid values: `enable`, `disable`.
 * `label` - VDOM-specific GUI visible label.
 * `global_label` - Global web-based manager visible label.
 * `scan_botnet_connections` - Enable/disable scanning of connections to Botnet servers. Valid values: `disable`, `block`, `monitor`.
@@ -155,6 +158,10 @@ The `access_proxy` block supports:
 The `access_proxy6` block supports:
 
 * `name` - Access proxy name.
+
+The `ztna_proxy` block supports:
+
+* `name` - ZTNA Traffic Forward Proxy name.
 
 The `srcintf` block supports:
 

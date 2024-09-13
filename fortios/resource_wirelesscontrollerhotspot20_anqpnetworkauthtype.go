@@ -52,7 +52,6 @@ func resourceWirelessControllerHotspot20AnqpNetworkAuthType() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -291,6 +290,8 @@ func getObjectWirelessControllerHotspot20AnqpNetworkAuthType(d *schema.ResourceD
 		} else if t != nil {
 			obj["url"] = t
 		}
+	} else if d.HasChange("url") {
+		obj["url"] = nil
 	}
 
 	return &obj, nil

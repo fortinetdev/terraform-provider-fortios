@@ -1,5 +1,26 @@
-## 1.21.0 (Unreleased)
+## 1.22.0 (Unreleased)
 
+
+## 1.21.0 (Sep 12, 2024)
+BUG FIXES:
+
+* Fix global scope issue;
+* Fix issue of type mismatch from API response for integer type of variables;
+* Fix variables could not been removed/reset issue;
+
+IMPROVEMENTS:
+
+* Support FortiOS version 7.2.9, 7.6.0;
+
+FEATURES:
+
+* **New Resource:** `fortios_system_vneinterface`
+* **New Resource:** `fortios_systemsnmp_rmonstat`
+* **New Resource:** `fortios_user_scim`
+* **New Resource:** `fortios_ztna_trafficforwardproxyreverseservice`
+* **New Resource:** `fortios_ztna_trafficforwardproxy`
+* **New Resource:** `fortios_firewall_shapingpolicy_move`
+* **New Resource:** `fortios_firewall_shapingpolicy_sort`
 
 ## 1.20.0 (Jun 21, 2024)
 BUG FIXES:
@@ -13,10 +34,9 @@ IMPROVEMENTS:
 
 FEATURES:
 
-* **New Data source:** `fortios_extensioncontroller_extendervap`
-* **New Data source:** `fortios_firewall_ondemandsniffer`
-* **New Data source:** `fortios_system_sshconfig`
-
+* **New Resource:** `fortios_extensioncontroller_extendervap`
+* **New Resource:** `fortios_firewall_ondemandsniffer`
+* **New Resource:** `fortios_system_sshconfig`
 
 ## 1.19.1 (Apr 29, 2024)
 BUG FIXES:
@@ -33,9 +53,9 @@ IMPROVEMENTS:
 
 FEATURES:
 
-* **New Data source:** `fortios_system_license_fortiflex`
+* **New Resource:** `fortios_system_license_fortiflex`
 
-## 1.19.0 (Jan 29, 2024)
+## 1.19.0 (Jan 30, 2024)
 BUG FIXES:
 
 * Fix issue of remove BGP redistribute route map;
@@ -52,14 +72,14 @@ IMPROVEMENTS:
 
 FEATURES:
 
-* **New Data source:** `fortios_diameterfilter_profile`
-* **New Data source:** `fortios_dlp_exactdatamatch`
-* **New Data source:** `fortios_rule_fmwp`
-* **New Data source:** `fortios_user_externalidentityprovider`
-* **New Data source:** `fortios_videofilter_keyword`
-* **New Data source:** `fortios_vpn_qkd`
+* **New Resource:** `fortios_diameterfilter_profile`
+* **New Resource:** `fortios_dlp_exactdatamatch`
+* **New Resource:** `fortios_rule_fmwp`
+* **New Resource:** `fortios_user_externalidentityprovider`
+* **New Resource:** `fortios_videofilter_keyword`
+* **New Resource:** `fortios_vpn_qkd`
 
-## 1.18.1 (Nov 14, 2023)
+## 1.18.1 (Nov 15, 2023)
 BUG FIXES:
 
 * Fix move resources always show changes issue (#289);

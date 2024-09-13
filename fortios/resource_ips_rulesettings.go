@@ -39,7 +39,6 @@ func resourceIpsRuleSettings() *schema.Resource {
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 		},
 	}
@@ -197,7 +196,7 @@ func resourceIpsRuleSettingsRead(d *schema.ResourceData, m interface{}) error {
 }
 
 func flattenIpsRuleSettingsId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectIpsRuleSettings(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -232,6 +231,8 @@ func getObjectIpsRuleSettings(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["id"] = t
 		}
+	} else if d.HasChange("fosid") {
+		obj["id"] = nil
 	}
 
 	return &obj, nil

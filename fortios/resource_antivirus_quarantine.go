@@ -40,23 +40,19 @@ func resourceAntivirusQuarantine() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 479),
 				Optional:     true,
-				Computed:     true,
 			},
 			"maxfilesize": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 500),
 				Optional:     true,
-				Computed:     true,
 			},
 			"quarantine_quota": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"drop_infected": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"store_infected": &schema.Schema{
 				Type:     schema.TypeString,
@@ -66,7 +62,6 @@ func resourceAntivirusQuarantine() *schema.Resource {
 			"drop_blocked": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"store_blocked": &schema.Schema{
 				Type:     schema.TypeString,
@@ -76,7 +71,6 @@ func resourceAntivirusQuarantine() *schema.Resource {
 			"drop_machine_learning": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"store_machine_learning": &schema.Schema{
 				Type:     schema.TypeString,
@@ -86,7 +80,6 @@ func resourceAntivirusQuarantine() *schema.Resource {
 			"drop_heuristic": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"store_heuristic": &schema.Schema{
 				Type:     schema.TypeString,
@@ -222,15 +215,15 @@ func resourceAntivirusQuarantineRead(d *schema.ResourceData, m interface{}) erro
 }
 
 func flattenAntivirusQuarantineAgelimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenAntivirusQuarantineMaxfilesize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenAntivirusQuarantineQuarantineQuota(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenAntivirusQuarantineDropInfected(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -429,6 +422,8 @@ func getObjectAntivirusQuarantine(d *schema.ResourceData, setArgNil bool, sv str
 				obj["agelimit"] = t
 			}
 		}
+	} else if d.HasChange("agelimit") {
+		obj["agelimit"] = nil
 	}
 
 	if v, ok := d.GetOkExists("maxfilesize"); ok {
@@ -442,6 +437,8 @@ func getObjectAntivirusQuarantine(d *schema.ResourceData, setArgNil bool, sv str
 				obj["maxfilesize"] = t
 			}
 		}
+	} else if d.HasChange("maxfilesize") {
+		obj["maxfilesize"] = nil
 	}
 
 	if v, ok := d.GetOkExists("quarantine_quota"); ok {
@@ -455,6 +452,8 @@ func getObjectAntivirusQuarantine(d *schema.ResourceData, setArgNil bool, sv str
 				obj["quarantine-quota"] = t
 			}
 		}
+	} else if d.HasChange("quarantine_quota") {
+		obj["quarantine-quota"] = nil
 	}
 
 	if v, ok := d.GetOk("drop_infected"); ok {
@@ -468,6 +467,8 @@ func getObjectAntivirusQuarantine(d *schema.ResourceData, setArgNil bool, sv str
 				obj["drop-infected"] = t
 			}
 		}
+	} else if d.HasChange("drop_infected") {
+		obj["drop-infected"] = nil
 	}
 
 	if v, ok := d.GetOk("store_infected"); ok {
@@ -494,6 +495,8 @@ func getObjectAntivirusQuarantine(d *schema.ResourceData, setArgNil bool, sv str
 				obj["drop-blocked"] = t
 			}
 		}
+	} else if d.HasChange("drop_blocked") {
+		obj["drop-blocked"] = nil
 	}
 
 	if v, ok := d.GetOk("store_blocked"); ok {
@@ -520,6 +523,8 @@ func getObjectAntivirusQuarantine(d *schema.ResourceData, setArgNil bool, sv str
 				obj["drop-machine-learning"] = t
 			}
 		}
+	} else if d.HasChange("drop_machine_learning") {
+		obj["drop-machine-learning"] = nil
 	}
 
 	if v, ok := d.GetOk("store_machine_learning"); ok {
@@ -546,6 +551,8 @@ func getObjectAntivirusQuarantine(d *schema.ResourceData, setArgNil bool, sv str
 				obj["drop-heuristic"] = t
 			}
 		}
+	} else if d.HasChange("drop_heuristic") {
+		obj["drop-heuristic"] = nil
 	}
 
 	if v, ok := d.GetOk("store_heuristic"); ok {

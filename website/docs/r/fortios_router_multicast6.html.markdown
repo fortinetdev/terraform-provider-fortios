@@ -43,6 +43,7 @@ The `interface` block supports:
 The `pim_sm_global` block supports:
 
 * `register_rate_limit` - Limit of packets/sec per source registered through this RP (0 means unlimited).
+* `pim_use_sdwan` - Enable/disable use of SDWAN when checking RPF neighbor and sending of REG packet. Valid values: `enable`, `disable`.
 * `rp_address` - Statically configured RP addresses. The structure of `rp_address` block is documented below.
 
 The `rp_address` block supports:

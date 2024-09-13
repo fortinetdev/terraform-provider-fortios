@@ -40,13 +40,11 @@ func resourceFirewallNetworkServiceDynamic() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"sdn": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"comment": &schema.Schema{
 				Type:         schema.TypeString,
@@ -291,6 +289,8 @@ func getObjectFirewallNetworkServiceDynamic(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("sdn"); ok {
@@ -300,6 +300,8 @@ func getObjectFirewallNetworkServiceDynamic(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["sdn"] = t
 		}
+	} else if d.HasChange("sdn") {
+		obj["sdn"] = nil
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
@@ -309,6 +311,8 @@ func getObjectFirewallNetworkServiceDynamic(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("filter"); ok {
@@ -318,6 +322,8 @@ func getObjectFirewallNetworkServiceDynamic(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["filter"] = t
 		}
+	} else if d.HasChange("filter") {
+		obj["filter"] = nil
 	}
 
 	return &obj, nil

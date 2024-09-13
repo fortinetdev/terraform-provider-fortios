@@ -45,7 +45,6 @@ func resourceReportChart() *schema.Resource {
 			"policy": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"type": &schema.Schema{
 				Type:     schema.TypeString,
@@ -65,13 +64,11 @@ func resourceReportChart() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"chart_name": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 71),
 							Optional:     true,
-							Computed:     true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -127,25 +124,21 @@ func resourceReportChart() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 127),
 							Optional:     true,
-							Computed:     true,
 						},
 						"caption": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"caption_font_size": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(5, 20),
 							Optional:     true,
-							Computed:     true,
 						},
 						"font_size": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(5, 20),
 							Optional:     true,
-							Computed:     true,
 						},
 						"label_angle": &schema.Schema{
 							Type:     schema.TypeString,
@@ -182,7 +175,6 @@ func resourceReportChart() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -198,25 +190,21 @@ func resourceReportChart() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 127),
 							Optional:     true,
-							Computed:     true,
 						},
 						"caption": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"caption_font_size": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(5, 20),
 							Optional:     true,
-							Computed:     true,
 						},
 						"font_size": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(5, 20),
 							Optional:     true,
-							Computed:     true,
 						},
 						"label_angle": &schema.Schema{
 							Type:     schema.TypeString,
@@ -227,13 +215,11 @@ func resourceReportChart() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 127),
 							Optional:     true,
-							Computed:     true,
 						},
 						"unit": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"extra_y": &schema.Schema{
 							Type:     schema.TypeString,
@@ -244,19 +230,16 @@ func resourceReportChart() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 127),
 							Optional:     true,
-							Computed:     true,
 						},
 						"y_legend": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"extra_y_legend": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -272,13 +255,11 @@ func resourceReportChart() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 127),
 							Optional:     true,
-							Computed:     true,
 						},
 						"font_size": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(5, 20),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -294,7 +275,6 @@ func resourceReportChart() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 127),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -303,24 +283,20 @@ func resourceReportChart() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"title_font_size": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"background": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 11),
 				Optional:     true,
-				Computed:     true,
 			},
 			"color_palette": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 11),
 				Optional:     true,
-				Computed:     true,
 			},
 			"legend": &schema.Schema{
 				Type:     schema.TypeString,
@@ -330,7 +306,6 @@ func resourceReportChart() *schema.Resource {
 			"legend_font_size": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"column": &schema.Schema{
 				Type:     schema.TypeList,
@@ -340,37 +315,31 @@ func resourceReportChart() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"header_value": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 127),
 							Optional:     true,
-							Computed:     true,
 						},
 						"detail_value": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 127),
 							Optional:     true,
-							Computed:     true,
 						},
 						"footer_value": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 127),
 							Optional:     true,
-							Computed:     true,
 						},
 						"detail_unit": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"footer_unit": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"mapping": &schema.Schema{
 							Type:     schema.TypeList,
@@ -380,7 +349,6 @@ func resourceReportChart() *schema.Resource {
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 									"op": &schema.Schema{
 										Type:     schema.TypeString,
@@ -396,19 +364,16 @@ func resourceReportChart() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 127),
 										Optional:     true,
-										Computed:     true,
 									},
 									"value2": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 127),
 										Optional:     true,
-										Computed:     true,
 									},
 									"displayname": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 127),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -586,7 +551,7 @@ func flattenReportChartName(v interface{}, d *schema.ResourceData, pre string, s
 }
 
 func flattenReportChartPolicy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenReportChartType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -646,7 +611,7 @@ func flattenReportChartDrillDownCharts(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenReportChartDrillDownChartsId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenReportChartDrillDownChartsChartName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -762,11 +727,11 @@ func flattenReportChartXSeriesCaption(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenReportChartXSeriesCaptionFontSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenReportChartXSeriesFontSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenReportChartXSeriesLabelAngle(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -782,7 +747,7 @@ func flattenReportChartXSeriesScaleUnit(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenReportChartXSeriesScaleStep(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenReportChartXSeriesScaleDirection(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -874,11 +839,11 @@ func flattenReportChartYSeriesCaption(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenReportChartYSeriesCaptionFontSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenReportChartYSeriesFontSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenReportChartYSeriesLabelAngle(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -937,7 +902,7 @@ func flattenReportChartCategorySeriesDatabind(v interface{}, d *schema.ResourceD
 }
 
 func flattenReportChartCategorySeriesFontSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenReportChartValueSeries(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -967,7 +932,7 @@ func flattenReportChartTitle(v interface{}, d *schema.ResourceData, pre string, 
 }
 
 func flattenReportChartTitleFontSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenReportChartBackground(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -983,7 +948,7 @@ func flattenReportChartLegend(v interface{}, d *schema.ResourceData, pre string,
 }
 
 func flattenReportChartLegendFontSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenReportChartColumn(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -1055,7 +1020,7 @@ func flattenReportChartColumn(v interface{}, d *schema.ResourceData, pre string,
 }
 
 func flattenReportChartColumnId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenReportChartColumnHeaderValue(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1142,7 +1107,7 @@ func flattenReportChartColumnMapping(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenReportChartColumnMappingId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenReportChartColumnMappingOp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1414,11 +1379,15 @@ func expandReportChartDrillDownCharts(d *schema.ResourceData, v interface{}, pre
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandReportChartDrillDownChartsId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "chart_name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["chart-name"], _ = expandReportChartDrillDownChartsChartName(d, i["chart_name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["chart-name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
@@ -1771,37 +1740,49 @@ func expandReportChartColumn(d *schema.ResourceData, v interface{}, pre string, 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandReportChartColumnId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "header_value"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["header-value"], _ = expandReportChartColumnHeaderValue(d, i["header_value"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["header-value"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "detail_value"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["detail-value"], _ = expandReportChartColumnDetailValue(d, i["detail_value"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["detail-value"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "footer_value"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["footer-value"], _ = expandReportChartColumnFooterValue(d, i["footer_value"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["footer-value"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "detail_unit"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["detail-unit"], _ = expandReportChartColumnDetailUnit(d, i["detail_unit"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["detail-unit"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "footer_unit"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["footer-unit"], _ = expandReportChartColumnFooterUnit(d, i["footer_unit"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["footer-unit"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mapping"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["mapping"], _ = expandReportChartColumnMapping(d, i["mapping"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["mapping"] = make([]string, 0)
 		}
 
@@ -1854,6 +1835,8 @@ func expandReportChartColumnMapping(d *schema.ResourceData, v interface{}, pre s
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandReportChartColumnMappingId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "op"
@@ -1869,16 +1852,22 @@ func expandReportChartColumnMapping(d *schema.ResourceData, v interface{}, pre s
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value1"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["value1"], _ = expandReportChartColumnMappingValue1(d, i["value1"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["value1"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value2"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["value2"], _ = expandReportChartColumnMappingValue2(d, i["value2"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["value2"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "displayname"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["displayname"], _ = expandReportChartColumnMappingDisplayname(d, i["displayname"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["displayname"] = nil
 		}
 
 		result = append(result, tmp)
@@ -1932,6 +1921,8 @@ func getObjectReportChart(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["policy"] = t
 		}
+	} else if d.HasChange("policy") {
+		obj["policy"] = nil
 	}
 
 	if v, ok := d.GetOk("type"); ok {
@@ -1968,6 +1959,8 @@ func getObjectReportChart(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["comments"] = t
 		}
+	} else if d.HasChange("comments") {
+		obj["comments"] = nil
 	}
 
 	if v, ok := d.GetOk("dataset"); ok {
@@ -1977,6 +1970,8 @@ func getObjectReportChart(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["dataset"] = t
 		}
+	} else if d.HasChange("dataset") {
+		obj["dataset"] = nil
 	}
 
 	if v, ok := d.GetOk("category"); ok {
@@ -2067,6 +2062,8 @@ func getObjectReportChart(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["title"] = t
 		}
+	} else if d.HasChange("title") {
+		obj["title"] = nil
 	}
 
 	if v, ok := d.GetOkExists("title_font_size"); ok {
@@ -2076,6 +2073,8 @@ func getObjectReportChart(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["title-font-size"] = t
 		}
+	} else if d.HasChange("title_font_size") {
+		obj["title-font-size"] = nil
 	}
 
 	if v, ok := d.GetOk("background"); ok {
@@ -2085,6 +2084,8 @@ func getObjectReportChart(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["background"] = t
 		}
+	} else if d.HasChange("background") {
+		obj["background"] = nil
 	}
 
 	if v, ok := d.GetOk("color_palette"); ok {
@@ -2094,6 +2095,8 @@ func getObjectReportChart(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["color-palette"] = t
 		}
+	} else if d.HasChange("color_palette") {
+		obj["color-palette"] = nil
 	}
 
 	if v, ok := d.GetOk("legend"); ok {
@@ -2112,6 +2115,8 @@ func getObjectReportChart(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["legend-font-size"] = t
 		}
+	} else if d.HasChange("legend_font_size") {
+		obj["legend-font-size"] = nil
 	}
 
 	if v, ok := d.GetOk("column"); ok || d.HasChange("column") {

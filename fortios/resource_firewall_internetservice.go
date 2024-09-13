@@ -39,28 +39,23 @@ func resourceFirewallInternetService() *schema.Resource {
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"reputation": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"icon_id": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"sld_id": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"direction": &schema.Schema{
 				Type:     schema.TypeString,
@@ -75,39 +70,32 @@ func resourceFirewallInternetService() *schema.Resource {
 			"ip_range_number": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"extra_ip_range_number": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"ip_number": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"ip6_range_number": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"extra_ip6_range_number": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"singularity": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"obsolete": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -265,7 +253,7 @@ func resourceFirewallInternetServiceRead(d *schema.ResourceData, m interface{}) 
 }
 
 func flattenFirewallInternetServiceId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallInternetServiceName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -273,15 +261,15 @@ func flattenFirewallInternetServiceName(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenFirewallInternetServiceReputation(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallInternetServiceIconId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallInternetServiceSldId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallInternetServiceDirection(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -293,31 +281,31 @@ func flattenFirewallInternetServiceDatabase(v interface{}, d *schema.ResourceDat
 }
 
 func flattenFirewallInternetServiceIpRangeNumber(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallInternetServiceExtraIpRangeNumber(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallInternetServiceIpNumber(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallInternetServiceIp6RangeNumber(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallInternetServiceExtraIp6RangeNumber(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallInternetServiceSingularity(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallInternetServiceObsolete(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectFirewallInternetService(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -482,6 +470,8 @@ func getObjectFirewallInternetService(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["id"] = t
 		}
+	} else if d.HasChange("fosid") {
+		obj["id"] = nil
 	}
 
 	if v, ok := d.GetOk("name"); ok {
@@ -491,6 +481,8 @@ func getObjectFirewallInternetService(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOkExists("reputation"); ok {
@@ -500,6 +492,8 @@ func getObjectFirewallInternetService(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["reputation"] = t
 		}
+	} else if d.HasChange("reputation") {
+		obj["reputation"] = nil
 	}
 
 	if v, ok := d.GetOkExists("icon_id"); ok {
@@ -509,6 +503,8 @@ func getObjectFirewallInternetService(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["icon-id"] = t
 		}
+	} else if d.HasChange("icon_id") {
+		obj["icon-id"] = nil
 	}
 
 	if v, ok := d.GetOkExists("sld_id"); ok {
@@ -518,6 +514,8 @@ func getObjectFirewallInternetService(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["sld-id"] = t
 		}
+	} else if d.HasChange("sld_id") {
+		obj["sld-id"] = nil
 	}
 
 	if v, ok := d.GetOk("direction"); ok {
@@ -545,6 +543,8 @@ func getObjectFirewallInternetService(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["ip-range-number"] = t
 		}
+	} else if d.HasChange("ip_range_number") {
+		obj["ip-range-number"] = nil
 	}
 
 	if v, ok := d.GetOkExists("extra_ip_range_number"); ok {
@@ -554,6 +554,8 @@ func getObjectFirewallInternetService(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["extra-ip-range-number"] = t
 		}
+	} else if d.HasChange("extra_ip_range_number") {
+		obj["extra-ip-range-number"] = nil
 	}
 
 	if v, ok := d.GetOkExists("ip_number"); ok {
@@ -563,6 +565,8 @@ func getObjectFirewallInternetService(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["ip-number"] = t
 		}
+	} else if d.HasChange("ip_number") {
+		obj["ip-number"] = nil
 	}
 
 	if v, ok := d.GetOkExists("ip6_range_number"); ok {
@@ -572,6 +576,8 @@ func getObjectFirewallInternetService(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["ip6-range-number"] = t
 		}
+	} else if d.HasChange("ip6_range_number") {
+		obj["ip6-range-number"] = nil
 	}
 
 	if v, ok := d.GetOkExists("extra_ip6_range_number"); ok {
@@ -581,6 +587,8 @@ func getObjectFirewallInternetService(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["extra-ip6-range-number"] = t
 		}
+	} else if d.HasChange("extra_ip6_range_number") {
+		obj["extra-ip6-range-number"] = nil
 	}
 
 	if v, ok := d.GetOkExists("singularity"); ok {
@@ -590,6 +598,8 @@ func getObjectFirewallInternetService(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["singularity"] = t
 		}
+	} else if d.HasChange("singularity") {
+		obj["singularity"] = nil
 	}
 
 	if v, ok := d.GetOkExists("obsolete"); ok {
@@ -599,6 +609,8 @@ func getObjectFirewallInternetService(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["obsolete"] = t
 		}
+	} else if d.HasChange("obsolete") {
+		obj["obsolete"] = nil
 	}
 
 	return &obj, nil

@@ -68,6 +68,10 @@ func dataSourceSystemSnmpSysinfo() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"non_mgmt_vdom_query": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"trap_free_memory_threshold": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
@@ -154,6 +158,10 @@ func dataSourceFlattenSystemSnmpSysinfoAppendIndex(v interface{}, d *schema.Reso
 	return v
 }
 
+func dataSourceFlattenSystemSnmpSysinfoNonMgmtVdomQuery(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemSnmpSysinfoTrapFreeMemoryThreshold(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -222,6 +230,12 @@ func dataSourceRefreshObjectSystemSnmpSysinfo(d *schema.ResourceData, o map[stri
 	if err = d.Set("append_index", dataSourceFlattenSystemSnmpSysinfoAppendIndex(o["append-index"], d, "append_index")); err != nil {
 		if !fortiAPIPatch(o["append-index"]) {
 			return fmt.Errorf("Error reading append_index: %v", err)
+		}
+	}
+
+	if err = d.Set("non_mgmt_vdom_query", dataSourceFlattenSystemSnmpSysinfoNonMgmtVdomQuery(o["non-mgmt-vdom-query"], d, "non_mgmt_vdom_query")); err != nil {
+		if !fortiAPIPatch(o["non-mgmt-vdom-query"]) {
+			return fmt.Errorf("Error reading non_mgmt_vdom_query: %v", err)
 		}
 	}
 

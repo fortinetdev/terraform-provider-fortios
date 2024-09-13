@@ -35,8 +35,8 @@ The following arguments are supported:
 * `type` - IP pool type. On FortiOS versions 6.2.0-7.4.1: overload, one-to-one, fixed port range, or port block allocation. On FortiOS versions >= 7.4.2: overload, one-to-one, fixed-port-range, port-block-allocation, cgn-resource-allocation (hyperscale vdom only). Valid values: `overload`, `one-to-one`, `fixed-port-range`, `port-block-allocation`.
 * `startip` - (Required) First IPv4 address (inclusive) in the range for the address pool (format xxx.xxx.xxx.xxx, Default: 0.0.0.0).
 * `endip` - (Required) Final IPv4 address (inclusive) in the range for the address pool (format xxx.xxx.xxx.xxx, Default: 0.0.0.0).
-* `startport` - First port number (inclusive) in the range for the address pool (Default: 5117).
-* `endport` - Final port number (inclusive) in the range for the address pool (Default: 65533).
+* `startport` - First port number (inclusive) in the range for the address pool (1024 - 65535, Default: 5117).
+* `endport` - Final port number (inclusive) in the range for the address pool (1024 - 65535, Default: 65533).
 * `source_startip` -  First IPv4 address (inclusive) in the range of the source addresses to be translated (format xxx.xxx.xxx.xxx, Default: 0.0.0.0).
 * `source_endip` - Final IPv4 address (inclusive) in the range of the source addresses to be translated (format xxx.xxx.xxx.xxx, Default: 0.0.0.0).
 * `block_size` - Number of addresses in a block (64 - 4096, default = 128).
@@ -51,7 +51,13 @@ The following arguments are supported:
 * `comments` - Comment.
 * `nat64` - Enable/disable NAT64. Valid values: `disable`, `enable`.
 * `add_nat64_route` - Enable/disable adding NAT64 route. Valid values: `disable`, `enable`.
-* `subnet_broadcast_in_ippool` - Enable/disable inclusion of the subnetwork address and broadcast IP address in the NAT64 IP pool. Valid values: `disable`, `enable`.
+* `source_prefix6` - Source IPv6 network to be translated (format = xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx/xxx, default = ::/0).
+* `client_prefix_length` - Subnet length of a single deterministic NAT64 client (1 - 128, default = 64).
+* `tcp_session_quota` - Maximum number of concurrent TCP sessions allowed per client (0 - 2097000, default = 0 which means no limit).
+* `udp_session_quota` - Maximum number of concurrent UDP sessions allowed per client (0 - 2097000, default = 0 which means no limit).
+* `icmp_session_quota` - Maximum number of concurrent ICMP sessions allowed per client (0 - 2097000, default = 0 which means no limit).
+* `privileged_port_use_pba` - Enable/disable selection of the external port from the port block allocation for NAT'ing privileged ports (deafult = disable). Valid values: `disable`, `enable`.
+* `subnet_broadcast_in_ippool` - Enable/disable inclusion of the subnetwork address and broadcast IP address in the NAT64 IP pool.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 

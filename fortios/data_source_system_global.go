@@ -549,6 +549,14 @@ func dataSourceSystemGlobal() *schema.Resource {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+			"ip_fragment_timeout": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"ipv6_fragment_timeout": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
 			"cpu_use_threshold": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
@@ -785,6 +793,10 @@ func dataSourceSystemGlobal() *schema.Resource {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+			"httpd_max_worker_count": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
 			"proxy_worker_count": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
@@ -930,6 +942,10 @@ func dataSourceSystemGlobal() *schema.Resource {
 				Computed: true,
 			},
 			"login_timestamp": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"ip_conflict_detection": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -1177,6 +1193,10 @@ func dataSourceSystemGlobal() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"delay_tcp_npu_session": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"interface_subnet_usage": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -1186,6 +1206,30 @@ func dataSourceSystemGlobal() *schema.Resource {
 				Computed: true,
 			},
 			"fortigslb_integration": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"user_history_password_threshold": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"auth_session_auto_backup": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"auth_session_auto_backup_interval": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"scim_https_port": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"scim_http_port": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"scim_server_cert": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -1747,6 +1791,14 @@ func dataSourceFlattenSystemGlobalIpFragmentMemThresholds(v interface{}, d *sche
 	return v
 }
 
+func dataSourceFlattenSystemGlobalIpFragmentTimeout(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalIpv6FragmentTimeout(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemGlobalCpuUseThreshold(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -1990,6 +2042,10 @@ func dataSourceFlattenSystemGlobalUrlFilterCount(v interface{}, d *schema.Resour
 	return v
 }
 
+func dataSourceFlattenSystemGlobalHttpdMaxWorkerCount(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemGlobalProxyWorkerCount(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -2135,6 +2191,10 @@ func dataSourceFlattenSystemGlobalWadMemoryChangeGranularity(v interface{}, d *s
 }
 
 func dataSourceFlattenSystemGlobalLoginTimestamp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalIpConflictDetection(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -2406,6 +2466,10 @@ func dataSourceFlattenSystemGlobalNpuNeighborUpdate(v interface{}, d *schema.Res
 	return v
 }
 
+func dataSourceFlattenSystemGlobalDelayTcpNpuSession(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemGlobalInterfaceSubnetUsage(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -2415,6 +2479,30 @@ func dataSourceFlattenSystemGlobalSflowdMaxChildrenNum(v interface{}, d *schema.
 }
 
 func dataSourceFlattenSystemGlobalFortigslbIntegration(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalUserHistoryPasswordThreshold(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalAuthSessionAutoBackup(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalAuthSessionAutoBackupInterval(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalScimHttpsPort(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalScimHttpPort(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalScimServerCert(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -2931,12 +3019,6 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 		}
 	}
 
-	if err = d.Set("ssh_hostkey_password", dataSourceFlattenSystemGlobalSshHostkeyPassword(o["ssh-hostkey-password"], d, "ssh_hostkey_password")); err != nil {
-		if !fortiAPIPatch(o["ssh-hostkey-password"]) {
-			return fmt.Errorf("Error reading ssh_hostkey_password: %v", err)
-		}
-	}
-
 	if err = d.Set("ssh_hostkey", dataSourceFlattenSystemGlobalSshHostkey(o["ssh-hostkey"], d, "ssh_hostkey")); err != nil {
 		if !fortiAPIPatch(o["ssh-hostkey"]) {
 			return fmt.Errorf("Error reading ssh_hostkey: %v", err)
@@ -3198,6 +3280,18 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 	if err = d.Set("ip_fragment_mem_thresholds", dataSourceFlattenSystemGlobalIpFragmentMemThresholds(o["ip-fragment-mem-thresholds"], d, "ip_fragment_mem_thresholds")); err != nil {
 		if !fortiAPIPatch(o["ip-fragment-mem-thresholds"]) {
 			return fmt.Errorf("Error reading ip_fragment_mem_thresholds: %v", err)
+		}
+	}
+
+	if err = d.Set("ip_fragment_timeout", dataSourceFlattenSystemGlobalIpFragmentTimeout(o["ip-fragment-timeout"], d, "ip_fragment_timeout")); err != nil {
+		if !fortiAPIPatch(o["ip-fragment-timeout"]) {
+			return fmt.Errorf("Error reading ip_fragment_timeout: %v", err)
+		}
+	}
+
+	if err = d.Set("ipv6_fragment_timeout", dataSourceFlattenSystemGlobalIpv6FragmentTimeout(o["ipv6-fragment-timeout"], d, "ipv6_fragment_timeout")); err != nil {
+		if !fortiAPIPatch(o["ipv6-fragment-timeout"]) {
+			return fmt.Errorf("Error reading ipv6_fragment_timeout: %v", err)
 		}
 	}
 
@@ -3555,6 +3649,12 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 		}
 	}
 
+	if err = d.Set("httpd_max_worker_count", dataSourceFlattenSystemGlobalHttpdMaxWorkerCount(o["httpd-max-worker-count"], d, "httpd_max_worker_count")); err != nil {
+		if !fortiAPIPatch(o["httpd-max-worker-count"]) {
+			return fmt.Errorf("Error reading httpd_max_worker_count: %v", err)
+		}
+	}
+
 	if err = d.Set("proxy_worker_count", dataSourceFlattenSystemGlobalProxyWorkerCount(o["proxy-worker-count"], d, "proxy_worker_count")); err != nil {
 		if !fortiAPIPatch(o["proxy-worker-count"]) {
 			return fmt.Errorf("Error reading proxy_worker_count: %v", err)
@@ -3774,6 +3874,12 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 	if err = d.Set("login_timestamp", dataSourceFlattenSystemGlobalLoginTimestamp(o["login-timestamp"], d, "login_timestamp")); err != nil {
 		if !fortiAPIPatch(o["login-timestamp"]) {
 			return fmt.Errorf("Error reading login_timestamp: %v", err)
+		}
+	}
+
+	if err = d.Set("ip_conflict_detection", dataSourceFlattenSystemGlobalIpConflictDetection(o["ip-conflict-detection"], d, "ip_conflict_detection")); err != nil {
+		if !fortiAPIPatch(o["ip-conflict-detection"]) {
+			return fmt.Errorf("Error reading ip_conflict_detection: %v", err)
 		}
 	}
 
@@ -4131,6 +4237,12 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 		}
 	}
 
+	if err = d.Set("delay_tcp_npu_session", dataSourceFlattenSystemGlobalDelayTcpNpuSession(o["delay-tcp-npu-session"], d, "delay_tcp_npu_session")); err != nil {
+		if !fortiAPIPatch(o["delay-tcp-npu-session"]) {
+			return fmt.Errorf("Error reading delay_tcp_npu_session: %v", err)
+		}
+	}
+
 	if err = d.Set("interface_subnet_usage", dataSourceFlattenSystemGlobalInterfaceSubnetUsage(o["interface-subnet-usage"], d, "interface_subnet_usage")); err != nil {
 		if !fortiAPIPatch(o["interface-subnet-usage"]) {
 			return fmt.Errorf("Error reading interface_subnet_usage: %v", err)
@@ -4146,6 +4258,42 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 	if err = d.Set("fortigslb_integration", dataSourceFlattenSystemGlobalFortigslbIntegration(o["fortigslb-integration"], d, "fortigslb_integration")); err != nil {
 		if !fortiAPIPatch(o["fortigslb-integration"]) {
 			return fmt.Errorf("Error reading fortigslb_integration: %v", err)
+		}
+	}
+
+	if err = d.Set("user_history_password_threshold", dataSourceFlattenSystemGlobalUserHistoryPasswordThreshold(o["user-history-password-threshold"], d, "user_history_password_threshold")); err != nil {
+		if !fortiAPIPatch(o["user-history-password-threshold"]) {
+			return fmt.Errorf("Error reading user_history_password_threshold: %v", err)
+		}
+	}
+
+	if err = d.Set("auth_session_auto_backup", dataSourceFlattenSystemGlobalAuthSessionAutoBackup(o["auth-session-auto-backup"], d, "auth_session_auto_backup")); err != nil {
+		if !fortiAPIPatch(o["auth-session-auto-backup"]) {
+			return fmt.Errorf("Error reading auth_session_auto_backup: %v", err)
+		}
+	}
+
+	if err = d.Set("auth_session_auto_backup_interval", dataSourceFlattenSystemGlobalAuthSessionAutoBackupInterval(o["auth-session-auto-backup-interval"], d, "auth_session_auto_backup_interval")); err != nil {
+		if !fortiAPIPatch(o["auth-session-auto-backup-interval"]) {
+			return fmt.Errorf("Error reading auth_session_auto_backup_interval: %v", err)
+		}
+	}
+
+	if err = d.Set("scim_https_port", dataSourceFlattenSystemGlobalScimHttpsPort(o["scim-https-port"], d, "scim_https_port")); err != nil {
+		if !fortiAPIPatch(o["scim-https-port"]) {
+			return fmt.Errorf("Error reading scim_https_port: %v", err)
+		}
+	}
+
+	if err = d.Set("scim_http_port", dataSourceFlattenSystemGlobalScimHttpPort(o["scim-http-port"], d, "scim_http_port")); err != nil {
+		if !fortiAPIPatch(o["scim-http-port"]) {
+			return fmt.Errorf("Error reading scim_http_port: %v", err)
+		}
+	}
+
+	if err = d.Set("scim_server_cert", dataSourceFlattenSystemGlobalScimServerCert(o["scim-server-cert"], d, "scim_server_cert")); err != nil {
+		if !fortiAPIPatch(o["scim-server-cert"]) {
+			return fmt.Errorf("Error reading scim_server_cert: %v", err)
 		}
 	}
 

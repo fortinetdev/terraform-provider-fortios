@@ -165,6 +165,10 @@ func dataSourceFirewallProfileProtocolOptions() *schema.Resource {
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
+						"domain_fronting": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"tcp_window_type": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
@@ -883,6 +887,11 @@ func dataSourceFlattenFirewallProfileProtocolOptionsHttp(v interface{}, d *schem
 		result["retry_count"] = dataSourceFlattenFirewallProfileProtocolOptionsHttpRetryCount(i["retry-count"], d, pre_append)
 	}
 
+	pre_append = pre + ".0." + "domain_fronting"
+	if _, ok := i["domain-fronting"]; ok {
+		result["domain_fronting"] = dataSourceFlattenFirewallProfileProtocolOptionsHttpDomainFronting(i["domain-fronting"], d, pre_append)
+	}
+
 	pre_append = pre + ".0." + "tcp_window_type"
 	if _, ok := i["tcp-window-type"]; ok {
 		result["tcp_window_type"] = dataSourceFlattenFirewallProfileProtocolOptionsHttpTcpWindowType(i["tcp-window-type"], d, pre_append)
@@ -918,7 +927,7 @@ func dataSourceFlattenFirewallProfileProtocolOptionsHttp(v interface{}, d *schem
 }
 
 func dataSourceFlattenFirewallProfileProtocolOptionsHttpPorts(v interface{}, d *schema.ResourceData, pre string) interface{} {
-	return convintflist2i(v)
+	return convintf2i(v)
 }
 
 func dataSourceFlattenFirewallProfileProtocolOptionsHttpStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
@@ -1022,6 +1031,10 @@ func dataSourceFlattenFirewallProfileProtocolOptionsHttpBlockPageStatusCode(v in
 }
 
 func dataSourceFlattenFirewallProfileProtocolOptionsHttpRetryCount(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallProfileProtocolOptionsHttpDomainFronting(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1148,7 +1161,7 @@ func dataSourceFlattenFirewallProfileProtocolOptionsFtp(v interface{}, d *schema
 }
 
 func dataSourceFlattenFirewallProfileProtocolOptionsFtpPorts(v interface{}, d *schema.ResourceData, pre string) interface{} {
-	return convintflist2i(v)
+	return convintf2i(v)
 }
 
 func dataSourceFlattenFirewallProfileProtocolOptionsFtpStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
@@ -1279,7 +1292,7 @@ func dataSourceFlattenFirewallProfileProtocolOptionsImap(v interface{}, d *schem
 }
 
 func dataSourceFlattenFirewallProfileProtocolOptionsImapPorts(v interface{}, d *schema.ResourceData, pre string) interface{} {
-	return convintflist2i(v)
+	return convintf2i(v)
 }
 
 func dataSourceFlattenFirewallProfileProtocolOptionsImapStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
@@ -1367,7 +1380,7 @@ func dataSourceFlattenFirewallProfileProtocolOptionsMapi(v interface{}, d *schem
 }
 
 func dataSourceFlattenFirewallProfileProtocolOptionsMapiPorts(v interface{}, d *schema.ResourceData, pre string) interface{} {
-	return convintflist2i(v)
+	return convintf2i(v)
 }
 
 func dataSourceFlattenFirewallProfileProtocolOptionsMapiStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
@@ -1458,7 +1471,7 @@ func dataSourceFlattenFirewallProfileProtocolOptionsPop3(v interface{}, d *schem
 }
 
 func dataSourceFlattenFirewallProfileProtocolOptionsPop3Ports(v interface{}, d *schema.ResourceData, pre string) interface{} {
-	return convintflist2i(v)
+	return convintf2i(v)
 }
 
 func dataSourceFlattenFirewallProfileProtocolOptionsPop3Status(v interface{}, d *schema.ResourceData, pre string) interface{} {
@@ -1566,7 +1579,7 @@ func dataSourceFlattenFirewallProfileProtocolOptionsSmtp(v interface{}, d *schem
 }
 
 func dataSourceFlattenFirewallProfileProtocolOptionsSmtpPorts(v interface{}, d *schema.ResourceData, pre string) interface{} {
-	return convintflist2i(v)
+	return convintf2i(v)
 }
 
 func dataSourceFlattenFirewallProfileProtocolOptionsSmtpStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
@@ -1668,7 +1681,7 @@ func dataSourceFlattenFirewallProfileProtocolOptionsNntp(v interface{}, d *schem
 }
 
 func dataSourceFlattenFirewallProfileProtocolOptionsNntpPorts(v interface{}, d *schema.ResourceData, pre string) interface{} {
-	return convintflist2i(v)
+	return convintf2i(v)
 }
 
 func dataSourceFlattenFirewallProfileProtocolOptionsNntpStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
@@ -1857,7 +1870,7 @@ func dataSourceFlattenFirewallProfileProtocolOptionsDns(v interface{}, d *schema
 }
 
 func dataSourceFlattenFirewallProfileProtocolOptionsDnsPorts(v interface{}, d *schema.ResourceData, pre string) interface{} {
-	return convintflist2i(v)
+	return convintf2i(v)
 }
 
 func dataSourceFlattenFirewallProfileProtocolOptionsDnsStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
@@ -1948,7 +1961,7 @@ func dataSourceFlattenFirewallProfileProtocolOptionsCifs(v interface{}, d *schem
 }
 
 func dataSourceFlattenFirewallProfileProtocolOptionsCifsPorts(v interface{}, d *schema.ResourceData, pre string) interface{} {
-	return convintflist2i(v)
+	return convintf2i(v)
 }
 
 func dataSourceFlattenFirewallProfileProtocolOptionsCifsStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {

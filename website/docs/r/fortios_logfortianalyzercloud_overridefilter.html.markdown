@@ -19,6 +19,7 @@ The following arguments are supported:
 * `multicast_traffic` - Enable/disable multicast traffic logging. Valid values: `enable`, `disable`.
 * `sniffer_traffic` - Enable/disable sniffer traffic logging. Valid values: `enable`, `disable`.
 * `ztna_traffic` - Enable/disable ztna traffic logging. Valid values: `enable`, `disable`.
+* `http_transaction` - Enable/disable log HTTP transaction messages. Valid values: `enable`, `disable`.
 * `anomaly` - Enable/disable anomaly logging. Valid values: `enable`, `disable`.
 * `voip` - Enable/disable VoIP logging. Valid values: `enable`, `disable`.
 * `dlp_archive` - Enable/disable DLP archive logging. Valid values: `enable`, `disable`.

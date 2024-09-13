@@ -146,15 +146,6 @@ func dataSourceFlattenRouterKeyChainKey(v interface{}, d *schema.ResourceData, p
 			tmp["send_lifetime"] = dataSourceFlattenRouterKeyChainKeySendLifetime(i["send-lifetime"], d, pre_append)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "key_string"
-		if _, ok := i["key-string"]; ok {
-			tmp["key_string"] = dataSourceFlattenRouterKeyChainKeyKeyString(i["key-string"], d, pre_append)
-			c := d.Get(pre_append).(string)
-			if c != "" {
-				tmp["key_string"] = c
-			}
-		}
-
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "algorithm"
 		if _, ok := i["algorithm"]; ok {
 			tmp["algorithm"] = dataSourceFlattenRouterKeyChainKeyAlgorithm(i["algorithm"], d, pre_append)

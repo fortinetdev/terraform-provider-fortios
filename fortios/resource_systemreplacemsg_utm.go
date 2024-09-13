@@ -271,6 +271,8 @@ func getObjectSystemReplacemsgUtm(d *schema.ResourceData, setArgNil bool, sv str
 				obj["buffer"] = t
 			}
 		}
+	} else if d.HasChange("buffer") {
+		obj["buffer"] = nil
 	}
 
 	if v, ok := d.GetOk("header"); ok {

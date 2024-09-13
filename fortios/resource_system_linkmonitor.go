@@ -52,7 +52,6 @@ func resourceSystemLinkMonitor() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"server_config": &schema.Schema{
 				Type:     schema.TypeString,
@@ -73,7 +72,6 @@ func resourceSystemLinkMonitor() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -87,7 +85,6 @@ func resourceSystemLinkMonitor() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"gateway_ip": &schema.Schema{
 				Type:     schema.TypeString,
@@ -108,7 +105,6 @@ func resourceSystemLinkMonitor() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -139,7 +135,6 @@ func resourceSystemLinkMonitor() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 1024),
 				Optional:     true,
-				Computed:     true,
 			},
 			"interval": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -198,7 +193,6 @@ func resourceSystemLinkMonitor() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"update_cascade_interface": &schema.Schema{
 				Type:     schema.TypeString,
@@ -228,7 +222,6 @@ func resourceSystemLinkMonitor() *schema.Resource {
 			"class_id": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"service_detection": &schema.Schema{
 				Type:     schema.TypeString,
@@ -244,13 +237,11 @@ func resourceSystemLinkMonitor() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 32),
 							Optional:     true,
-							Computed:     true,
 						},
 						"dst": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
 							Optional:     true,
-							Computed:     true,
 						},
 						"protocol": &schema.Schema{
 							Type:     schema.TypeString,
@@ -261,13 +252,11 @@ func resourceSystemLinkMonitor() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 						"weight": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -504,7 +493,7 @@ func flattenSystemLinkMonitorProtocol(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenSystemLinkMonitorPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemLinkMonitorGatewayIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -578,43 +567,39 @@ func flattenSystemLinkMonitorHttpMatch(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenSystemLinkMonitorInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemLinkMonitorProbeTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemLinkMonitorFailtime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemLinkMonitorRecoverytime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemLinkMonitorProbeCount(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemLinkMonitorSecurityMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemLinkMonitorPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
 func flattenSystemLinkMonitorPacketSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemLinkMonitorHaPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemLinkMonitorFailWeight(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemLinkMonitorUpdateCascadeInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -638,7 +623,7 @@ func flattenSystemLinkMonitorDiffservcode(v interface{}, d *schema.ResourceData,
 }
 
 func flattenSystemLinkMonitorClassId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemLinkMonitorServiceDetection(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -704,7 +689,7 @@ func flattenSystemLinkMonitorServerList(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenSystemLinkMonitorServerListId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemLinkMonitorServerListDst(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -716,11 +701,11 @@ func flattenSystemLinkMonitorServerListProtocol(v interface{}, d *schema.Resourc
 }
 
 func flattenSystemLinkMonitorServerListPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemLinkMonitorServerListWeight(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectSystemLinkMonitor(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -1166,11 +1151,15 @@ func expandSystemLinkMonitorServerList(d *schema.ResourceData, v interface{}, pr
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSystemLinkMonitorServerListId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["dst"], _ = expandSystemLinkMonitorServerListDst(d, i["dst"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["dst"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
@@ -1181,11 +1170,15 @@ func expandSystemLinkMonitorServerList(d *schema.ResourceData, v interface{}, pr
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["port"], _ = expandSystemLinkMonitorServerListPort(d, i["port"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["port"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "weight"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["weight"], _ = expandSystemLinkMonitorServerListWeight(d, i["weight"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["weight"] = nil
 		}
 
 		result = append(result, tmp)
@@ -1244,6 +1237,8 @@ func getObjectSystemLinkMonitor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["srcintf"] = t
 		}
+	} else if d.HasChange("srcintf") {
+		obj["srcintf"] = nil
 	}
 
 	if v, ok := d.GetOk("server_config"); ok {
@@ -1289,6 +1284,8 @@ func getObjectSystemLinkMonitor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["port"] = t
 		}
+	} else if d.HasChange("port") {
+		obj["port"] = nil
 	}
 
 	if v, ok := d.GetOk("gateway_ip"); ok {
@@ -1361,6 +1358,8 @@ func getObjectSystemLinkMonitor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["http-match"] = t
 		}
+	} else if d.HasChange("http_match") {
+		obj["http-match"] = nil
 	}
 
 	if v, ok := d.GetOk("interval"); ok {
@@ -1424,6 +1423,8 @@ func getObjectSystemLinkMonitor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["password"] = t
 		}
+	} else if d.HasChange("password") {
+		obj["password"] = nil
 	}
 
 	if v, ok := d.GetOkExists("packet_size"); ok {
@@ -1451,6 +1452,8 @@ func getObjectSystemLinkMonitor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["fail-weight"] = t
 		}
+	} else if d.HasChange("fail_weight") {
+		obj["fail-weight"] = nil
 	}
 
 	if v, ok := d.GetOk("update_cascade_interface"); ok {
@@ -1505,6 +1508,8 @@ func getObjectSystemLinkMonitor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["class-id"] = t
 		}
+	} else if d.HasChange("class_id") {
+		obj["class-id"] = nil
 	}
 
 	if v, ok := d.GetOk("service_detection"); ok {

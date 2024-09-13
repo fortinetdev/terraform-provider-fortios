@@ -76,6 +76,40 @@ func resourceSystemNetflow() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"exclusion_filters": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeInt,
+							Optional: true,
+						},
+						"source_ip": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"destination_ip": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"source_port": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"destination_port": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"protocol": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(0, 255),
+							Optional:     true,
+							Computed:     true,
+						},
+					},
+				},
+			},
 			"collectors": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -85,13 +119,11 @@ func resourceSystemNetflow() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 6),
 							Optional:     true,
-							Computed:     true,
 						},
 						"collector_ip": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"collector_port": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -103,7 +135,11 @@ func resourceSystemNetflow() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
+						},
+						"source_ip_interface": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 15),
+							Optional:     true,
 						},
 						"interface_select_method": &schema.Schema{
 							Type:     schema.TypeString,
@@ -114,7 +150,6 @@ func resourceSystemNetflow() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -128,7 +163,6 @@ func resourceSystemNetflow() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
@@ -263,7 +297,7 @@ func flattenSystemNetflowCollectorIp(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenSystemNetflowCollectorPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemNetflowSourceIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -271,19 +305,106 @@ func flattenSystemNetflowSourceIp(v interface{}, d *schema.ResourceData, pre str
 }
 
 func flattenSystemNetflowActiveFlowTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemNetflowInactiveFlowTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemNetflowTemplateTxTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemNetflowTemplateTxCounter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenSystemNetflowExclusionFilters(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemNetflowExclusionFiltersId(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_ip"
+		if cur_v, ok := i["source-ip"]; ok {
+			tmp["source_ip"] = flattenSystemNetflowExclusionFiltersSourceIp(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "destination_ip"
+		if cur_v, ok := i["destination-ip"]; ok {
+			tmp["destination_ip"] = flattenSystemNetflowExclusionFiltersDestinationIp(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_port"
+		if cur_v, ok := i["source-port"]; ok {
+			tmp["source_port"] = flattenSystemNetflowExclusionFiltersSourcePort(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "destination_port"
+		if cur_v, ok := i["destination-port"]; ok {
+			tmp["destination_port"] = flattenSystemNetflowExclusionFiltersDestinationPort(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
+		if cur_v, ok := i["protocol"]; ok {
+			tmp["protocol"] = flattenSystemNetflowExclusionFiltersProtocol(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "id", d)
+	return result
+}
+
+func flattenSystemNetflowExclusionFiltersId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenSystemNetflowExclusionFiltersSourceIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
+}
+
+func flattenSystemNetflowExclusionFiltersDestinationIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemNetflowExclusionFiltersSourcePort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemNetflowExclusionFiltersDestinationPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemNetflowExclusionFiltersProtocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
 }
 
 func flattenSystemNetflowCollectors(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -330,6 +451,11 @@ func flattenSystemNetflowCollectors(v interface{}, d *schema.ResourceData, pre s
 			tmp["source_ip"] = flattenSystemNetflowCollectorsSourceIp(cur_v, d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_ip_interface"
+		if cur_v, ok := i["source-ip-interface"]; ok {
+			tmp["source_ip_interface"] = flattenSystemNetflowCollectorsSourceIpInterface(cur_v, d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_select_method"
 		if cur_v, ok := i["interface-select-method"]; ok {
 			tmp["interface_select_method"] = flattenSystemNetflowCollectorsInterfaceSelectMethod(cur_v, d, pre_append, sv)
@@ -350,7 +476,7 @@ func flattenSystemNetflowCollectors(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenSystemNetflowCollectorsId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemNetflowCollectorsCollectorIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -358,10 +484,14 @@ func flattenSystemNetflowCollectorsCollectorIp(v interface{}, d *schema.Resource
 }
 
 func flattenSystemNetflowCollectorsCollectorPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemNetflowCollectorsSourceIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemNetflowCollectorsSourceIpInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -433,6 +563,22 @@ func refreshObjectSystemNetflow(d *schema.ResourceData, o map[string]interface{}
 	}
 
 	if b_get_all_tables {
+		if err = d.Set("exclusion_filters", flattenSystemNetflowExclusionFilters(o["exclusion-filters"], d, "exclusion_filters", sv)); err != nil {
+			if !fortiAPIPatch(o["exclusion-filters"]) {
+				return fmt.Errorf("Error reading exclusion_filters: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("exclusion_filters"); ok {
+			if err = d.Set("exclusion_filters", flattenSystemNetflowExclusionFilters(o["exclusion-filters"], d, "exclusion_filters", sv)); err != nil {
+				if !fortiAPIPatch(o["exclusion-filters"]) {
+					return fmt.Errorf("Error reading exclusion_filters: %v", err)
+				}
+			}
+		}
+	}
+
+	if b_get_all_tables {
 		if err = d.Set("collectors", flattenSystemNetflowCollectors(o["collectors"], d, "collectors", sv)); err != nil {
 			if !fortiAPIPatch(o["collectors"]) {
 				return fmt.Errorf("Error reading collectors: %v", err)
@@ -497,6 +643,92 @@ func expandSystemNetflowTemplateTxCounter(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
+func expandSystemNetflowExclusionFilters(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["id"], _ = expandSystemNetflowExclusionFiltersId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_ip"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["source-ip"], _ = expandSystemNetflowExclusionFiltersSourceIp(d, i["source_ip"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["source-ip"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "destination_ip"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["destination-ip"], _ = expandSystemNetflowExclusionFiltersDestinationIp(d, i["destination_ip"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["destination-ip"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_port"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["source-port"], _ = expandSystemNetflowExclusionFiltersSourcePort(d, i["source_port"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["source-port"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "destination_port"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["destination-port"], _ = expandSystemNetflowExclusionFiltersDestinationPort(d, i["destination_port"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["destination-port"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["protocol"], _ = expandSystemNetflowExclusionFiltersProtocol(d, i["protocol"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemNetflowExclusionFiltersId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemNetflowExclusionFiltersSourceIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemNetflowExclusionFiltersDestinationIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemNetflowExclusionFiltersSourcePort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemNetflowExclusionFiltersDestinationPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemNetflowExclusionFiltersProtocol(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemNetflowCollectors(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	result := make([]map[string]interface{}, 0, len(l))
@@ -514,11 +746,15 @@ func expandSystemNetflowCollectors(d *schema.ResourceData, v interface{}, pre st
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSystemNetflowCollectorsId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "collector_ip"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["collector-ip"], _ = expandSystemNetflowCollectorsCollectorIp(d, i["collector_ip"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["collector-ip"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "collector_port"
@@ -529,6 +765,15 @@ func expandSystemNetflowCollectors(d *schema.ResourceData, v interface{}, pre st
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_ip"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["source-ip"], _ = expandSystemNetflowCollectorsSourceIp(d, i["source_ip"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["source-ip"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_ip_interface"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["source-ip-interface"], _ = expandSystemNetflowCollectorsSourceIpInterface(d, i["source_ip_interface"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["source-ip-interface"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_select_method"
@@ -539,6 +784,8 @@ func expandSystemNetflowCollectors(d *schema.ResourceData, v interface{}, pre st
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["interface"], _ = expandSystemNetflowCollectorsInterface(d, i["interface"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["interface"] = nil
 		}
 
 		result = append(result, tmp)
@@ -562,6 +809,10 @@ func expandSystemNetflowCollectorsCollectorPort(d *schema.ResourceData, v interf
 }
 
 func expandSystemNetflowCollectorsSourceIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemNetflowCollectorsSourceIpInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -675,6 +926,19 @@ func getObjectSystemNetflow(d *schema.ResourceData, setArgNil bool, sv string) (
 		}
 	}
 
+	if v, ok := d.GetOk("exclusion_filters"); ok || d.HasChange("exclusion_filters") {
+		if setArgNil {
+			obj["exclusion-filters"] = make([]struct{}, 0)
+		} else {
+			t, err := expandSystemNetflowExclusionFilters(d, v, "exclusion_filters", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["exclusion-filters"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("collectors"); ok || d.HasChange("collectors") {
 		if setArgNil {
 			obj["collectors"] = make([]struct{}, 0)
@@ -712,6 +976,8 @@ func getObjectSystemNetflow(d *schema.ResourceData, setArgNil bool, sv string) (
 				obj["interface"] = t
 			}
 		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
 	}
 
 	return &obj, nil

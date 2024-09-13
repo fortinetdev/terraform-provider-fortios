@@ -47,13 +47,11 @@ func resourceSwitchControllerSwitchGroup() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"fortilink": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"members": &schema.Schema{
 				Type:     schema.TypeSet,
@@ -64,13 +62,11 @@ func resourceSwitchControllerSwitchGroup() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 						"name": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -420,6 +416,8 @@ func getObjectSwitchControllerSwitchGroup(d *schema.ResourceData, sv string) (*m
 		} else if t != nil {
 			obj["description"] = t
 		}
+	} else if d.HasChange("description") {
+		obj["description"] = nil
 	}
 
 	if v, ok := d.GetOk("fortilink"); ok {
@@ -429,6 +427,8 @@ func getObjectSwitchControllerSwitchGroup(d *schema.ResourceData, sv string) (*m
 		} else if t != nil {
 			obj["fortilink"] = t
 		}
+	} else if d.HasChange("fortilink") {
+		obj["fortilink"] = nil
 	}
 
 	if v, ok := d.GetOk("members"); ok || d.HasChange("members") {

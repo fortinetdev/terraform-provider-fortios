@@ -20,6 +20,7 @@ Use this data source to get information on an fortios firewall address6template
 The following attributes are exported:
 
 * `name` - IPv6 address template name.
+* `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `ip6` - IPv6 address prefix.
 * `subnet_segment_count` - Number of IPv6 subnet segments.
 * `subnet_segment` - IPv6 subnet segments. The structure of `subnet_segment` block is documented below.

@@ -50,7 +50,6 @@ func resourceSystemSettings() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"opmode": &schema.Schema{
 				Type:     schema.TypeString,
@@ -60,7 +59,6 @@ func resourceSystemSettings() *schema.Resource {
 			"inspection_mode": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"ngfw_mode": &schema.Schema{
 				Type:     schema.TypeString,
@@ -70,18 +68,15 @@ func resourceSystemSettings() *schema.Resource {
 			"implicit_allow_dns": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"ssl_ssh_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"consolidated_firewall_mode": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"http_external_dest": &schema.Schema{
 				Type:     schema.TypeString,
@@ -96,7 +91,6 @@ func resourceSystemSettings() *schema.Resource {
 			"manageip": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"gateway": &schema.Schema{
 				Type:     schema.TypeString,
@@ -127,7 +121,6 @@ func resourceSystemSettings() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"bfd": &schema.Schema{
 				Type:     schema.TypeString,
@@ -217,17 +210,14 @@ func resourceSystemSettings() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"dhcp_server_ip": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"dhcp6_server_ip": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"central_nat": &schema.Schema{
 				Type:     schema.TypeString,
@@ -243,7 +233,6 @@ func resourceSystemSettings() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -341,7 +330,6 @@ func resourceSystemSettings() *schema.Resource {
 			"sip_helper": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"sip_nat_trace": &schema.Schema{
 				Type:     schema.TypeString,
@@ -497,7 +485,6 @@ func resourceSystemSettings() *schema.Resource {
 			"gui_dynamic_profile_display": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"gui_local_in_policy": &schema.Schema{
 				Type:     schema.TypeString,
@@ -527,7 +514,6 @@ func resourceSystemSettings() *schema.Resource {
 			"gui_dlp": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"gui_sslvpn_personal_bookmarks": &schema.Schema{
 				Type:     schema.TypeString,
@@ -552,7 +538,6 @@ func resourceSystemSettings() *schema.Resource {
 			"gui_multiple_utm_profiles": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"gui_spamfilter": &schema.Schema{
 				Type:     schema.TypeString,
@@ -702,7 +687,6 @@ func resourceSystemSettings() *schema.Resource {
 			"gui_domain_ip_reputation": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"gui_multiple_interface_policy": &schema.Schema{
 				Type:     schema.TypeString,
@@ -729,6 +713,11 @@ func resourceSystemSettings() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"gui_gtp": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"location_id": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -737,17 +726,14 @@ func resourceSystemSettings() *schema.Resource {
 			"gui_per_policy_disclaimer": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"gui_policy_learning": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"compliance_check": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"ike_session_resume": &schema.Schema{
 				Type:     schema.TypeString,
@@ -785,7 +771,6 @@ func resourceSystemSettings() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1024, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"block_land_attack": &schema.Schema{
 				Type:     schema.TypeString,
@@ -1043,15 +1028,15 @@ func flattenSystemSettingsBfd(v interface{}, d *schema.ResourceData, pre string,
 }
 
 func flattenSystemSettingsBfdDesiredMinTx(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSettingsBfdRequiredMinRx(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSettingsBfdDetectMult(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSettingsBfdDontEnforceSrcPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1071,7 +1056,7 @@ func flattenSystemSettingsVpnStatsLog(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenSystemSettingsVpnStatsPeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSettingsV4EcmpMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1079,7 +1064,7 @@ func flattenSystemSettingsV4EcmpMode(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenSystemSettingsMacTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSettingsFwSessionHairpin(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1249,19 +1234,19 @@ func flattenSystemSettingsStatus(v interface{}, d *schema.ResourceData, pre stri
 }
 
 func flattenSystemSettingsSipTcpPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSettingsSipUdpPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSettingsSipSslPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSettingsSccpPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSettingsMulticastForward(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1285,11 +1270,11 @@ func flattenSystemSettingsDenyTcpWithIcmp(v interface{}, d *schema.ResourceData,
 }
 
 func flattenSystemSettingsEcmpMaxPaths(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSettingsDiscoveredDeviceTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSettingsEmailPortalCheckDns(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1540,6 +1525,10 @@ func flattenSystemSettingsGuiDynamicDeviceOsId(v interface{}, d *schema.Resource
 	return v
 }
 
+func flattenSystemSettingsGuiGtp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemSettingsLocationId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1573,15 +1562,15 @@ func flattenSystemSettingsIkePolicyRoute(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenSystemSettingsIkePort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSettingsIkeTcpPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSettingsIkeNattPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSettingsBlockLandAttack(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1609,7 +1598,7 @@ func flattenSystemSettingsDynAddrSessionCheck(v interface{}, d *schema.ResourceD
 }
 
 func flattenSystemSettingsDefaultPolicyExpiryDays(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSettingsGuiEnforceChangeSummary(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1621,7 +1610,7 @@ func flattenSystemSettingsInternetServiceDatabaseCache(v interface{}, d *schema.
 }
 
 func flattenSystemSettingsInternetServiceAppCtrlSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectSystemSettings(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -2447,6 +2436,12 @@ func refreshObjectSystemSettings(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("gui_gtp", flattenSystemSettingsGuiGtp(o["gui-gtp"], d, "gui_gtp", sv)); err != nil {
+		if !fortiAPIPatch(o["gui-gtp"]) {
+			return fmt.Errorf("Error reading gui_gtp: %v", err)
+		}
+	}
+
 	if err = d.Set("location_id", flattenSystemSettingsLocationId(o["location-id"], d, "location_id", sv)); err != nil {
 		if !fortiAPIPatch(o["location-id"]) {
 			return fmt.Errorf("Error reading location_id: %v", err)
@@ -3142,6 +3137,10 @@ func expandSystemSettingsGuiDynamicDeviceOsId(d *schema.ResourceData, v interfac
 	return v, nil
 }
 
+func expandSystemSettingsGuiGtp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemSettingsLocationId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -3240,6 +3239,8 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 				obj["comments"] = t
 			}
 		}
+	} else if d.HasChange("comments") {
+		obj["comments"] = nil
 	}
 
 	if v, ok := d.GetOk("vdom_type"); ok {
@@ -3266,6 +3267,8 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 				obj["lan-extension-controller-addr"] = t
 			}
 		}
+	} else if d.HasChange("lan_extension_controller_addr") {
+		obj["lan-extension-controller-addr"] = nil
 	}
 
 	if v, ok := d.GetOk("opmode"); ok {
@@ -3292,6 +3295,8 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 				obj["inspection-mode"] = t
 			}
 		}
+	} else if d.HasChange("inspection_mode") {
+		obj["inspection-mode"] = nil
 	}
 
 	if v, ok := d.GetOk("ngfw_mode"); ok {
@@ -3318,6 +3323,8 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 				obj["implicit-allow-dns"] = t
 			}
 		}
+	} else if d.HasChange("implicit_allow_dns") {
+		obj["implicit-allow-dns"] = nil
 	}
 
 	if v, ok := d.GetOk("ssl_ssh_profile"); ok {
@@ -3331,6 +3338,8 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 				obj["ssl-ssh-profile"] = t
 			}
 		}
+	} else if d.HasChange("ssl_ssh_profile") {
+		obj["ssl-ssh-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("consolidated_firewall_mode"); ok {
@@ -3344,6 +3353,8 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 				obj["consolidated-firewall-mode"] = t
 			}
 		}
+	} else if d.HasChange("consolidated_firewall_mode") {
+		obj["consolidated-firewall-mode"] = nil
 	}
 
 	if v, ok := d.GetOk("http_external_dest"); ok {
@@ -3383,6 +3394,8 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 				obj["manageip"] = t
 			}
 		}
+	} else if d.HasChange("manageip") {
+		obj["manageip"] = nil
 	}
 
 	if v, ok := d.GetOk("gateway"); ok {
@@ -3461,6 +3474,8 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 				obj["device"] = t
 			}
 		}
+	} else if d.HasChange("device") {
+		obj["device"] = nil
 	}
 
 	if v, ok := d.GetOk("bfd"); ok {
@@ -3682,6 +3697,8 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 				obj["dhcp-proxy-interface"] = t
 			}
 		}
+	} else if d.HasChange("dhcp_proxy_interface") {
+		obj["dhcp-proxy-interface"] = nil
 	}
 
 	if v, ok := d.GetOk("dhcp_server_ip"); ok {
@@ -3695,6 +3712,8 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 				obj["dhcp-server-ip"] = t
 			}
 		}
+	} else if d.HasChange("dhcp_server_ip") {
+		obj["dhcp-server-ip"] = nil
 	}
 
 	if v, ok := d.GetOk("dhcp6_server_ip"); ok {
@@ -3708,6 +3727,8 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 				obj["dhcp6-server-ip"] = t
 			}
 		}
+	} else if d.HasChange("dhcp6_server_ip") {
+		obj["dhcp6-server-ip"] = nil
 	}
 
 	if v, ok := d.GetOk("central_nat"); ok {
@@ -3981,6 +4002,8 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 				obj["sip-helper"] = t
 			}
 		}
+	} else if d.HasChange("sip_helper") {
+		obj["sip-helper"] = nil
 	}
 
 	if v, ok := d.GetOk("sip_nat_trace"); ok {
@@ -4371,6 +4394,8 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 				obj["gui-dynamic-profile-display"] = t
 			}
 		}
+	} else if d.HasChange("gui_dynamic_profile_display") {
+		obj["gui-dynamic-profile-display"] = nil
 	}
 
 	if v, ok := d.GetOk("gui_local_in_policy"); ok {
@@ -4449,6 +4474,8 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 				obj["gui-dlp"] = t
 			}
 		}
+	} else if d.HasChange("gui_dlp") {
+		obj["gui-dlp"] = nil
 	}
 
 	if v, ok := d.GetOk("gui_sslvpn_personal_bookmarks"); ok {
@@ -4514,6 +4541,8 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 				obj["gui-multiple-utm-profiles"] = t
 			}
 		}
+	} else if d.HasChange("gui_multiple_utm_profiles") {
+		obj["gui-multiple-utm-profiles"] = nil
 	}
 
 	if v, ok := d.GetOk("gui_spamfilter"); ok {
@@ -4904,6 +4933,8 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 				obj["gui-domain-ip-reputation"] = t
 			}
 		}
+	} else if d.HasChange("gui_domain_ip_reputation") {
+		obj["gui-domain-ip-reputation"] = nil
 	}
 
 	if v, ok := d.GetOk("gui_multiple_interface_policy"); ok {
@@ -4971,6 +5002,19 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		}
 	}
 
+	if v, ok := d.GetOk("gui_gtp"); ok {
+		if setArgNil {
+			obj["gui-gtp"] = nil
+		} else {
+			t, err := expandSystemSettingsGuiGtp(d, v, "gui_gtp", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-gtp"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("location_id"); ok {
 		if setArgNil {
 			obj["location-id"] = nil
@@ -4995,6 +5039,8 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 				obj["gui-per-policy-disclaimer"] = t
 			}
 		}
+	} else if d.HasChange("gui_per_policy_disclaimer") {
+		obj["gui-per-policy-disclaimer"] = nil
 	}
 
 	if v, ok := d.GetOk("gui_policy_learning"); ok {
@@ -5008,6 +5054,8 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 				obj["gui-policy-learning"] = t
 			}
 		}
+	} else if d.HasChange("gui_policy_learning") {
+		obj["gui-policy-learning"] = nil
 	}
 
 	if v, ok := d.GetOk("compliance_check"); ok {
@@ -5021,6 +5069,8 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 				obj["compliance-check"] = t
 			}
 		}
+	} else if d.HasChange("compliance_check") {
+		obj["compliance-check"] = nil
 	}
 
 	if v, ok := d.GetOk("ike_session_resume"); ok {
@@ -5112,6 +5162,8 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 				obj["ike-natt-port"] = t
 			}
 		}
+	} else if d.HasChange("ike_natt_port") {
+		obj["ike-natt-port"] = nil
 	}
 
 	if v, ok := d.GetOk("block_land_attack"); ok {

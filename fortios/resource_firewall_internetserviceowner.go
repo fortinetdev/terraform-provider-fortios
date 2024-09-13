@@ -39,13 +39,11 @@ func resourceFirewallInternetServiceOwner() *schema.Resource {
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -203,7 +201,7 @@ func resourceFirewallInternetServiceOwnerRead(d *schema.ResourceData, m interfac
 }
 
 func flattenFirewallInternetServiceOwnerId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallInternetServiceOwnerName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -252,6 +250,8 @@ func getObjectFirewallInternetServiceOwner(d *schema.ResourceData, sv string) (*
 		} else if t != nil {
 			obj["id"] = t
 		}
+	} else if d.HasChange("fosid") {
+		obj["id"] = nil
 	}
 
 	if v, ok := d.GetOk("name"); ok {
@@ -261,6 +261,8 @@ func getObjectFirewallInternetServiceOwner(d *schema.ResourceData, sv string) (*
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	return &obj, nil

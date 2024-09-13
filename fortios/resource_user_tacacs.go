@@ -47,19 +47,16 @@ func resourceUserTacacs() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"secondary_server": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"tertiary_server": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"port": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -105,7 +102,6 @@ func resourceUserTacacs() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"interface_select_method": &schema.Schema{
 				Type:     schema.TypeString,
@@ -116,7 +112,6 @@ func resourceUserTacacs() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -290,23 +285,11 @@ func flattenUserTacacsTertiaryServer(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenUserTacacsPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenUserTacacsKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenUserTacacsSecondaryKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenUserTacacsTertiaryKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserTacacsStatusTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserTacacsAuthenType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -482,6 +465,8 @@ func getObjectUserTacacs(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["server"] = t
 		}
+	} else if d.HasChange("server") {
+		obj["server"] = nil
 	}
 
 	if v, ok := d.GetOk("secondary_server"); ok {
@@ -491,6 +476,8 @@ func getObjectUserTacacs(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["secondary-server"] = t
 		}
+	} else if d.HasChange("secondary_server") {
+		obj["secondary-server"] = nil
 	}
 
 	if v, ok := d.GetOk("tertiary_server"); ok {
@@ -500,6 +487,8 @@ func getObjectUserTacacs(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["tertiary-server"] = t
 		}
+	} else if d.HasChange("tertiary_server") {
+		obj["tertiary-server"] = nil
 	}
 
 	if v, ok := d.GetOk("port"); ok {
@@ -518,6 +507,8 @@ func getObjectUserTacacs(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["key"] = t
 		}
+	} else if d.HasChange("key") {
+		obj["key"] = nil
 	}
 
 	if v, ok := d.GetOk("secondary_key"); ok {
@@ -527,6 +518,8 @@ func getObjectUserTacacs(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["secondary-key"] = t
 		}
+	} else if d.HasChange("secondary_key") {
+		obj["secondary-key"] = nil
 	}
 
 	if v, ok := d.GetOk("tertiary_key"); ok {
@@ -536,6 +529,8 @@ func getObjectUserTacacs(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["tertiary-key"] = t
 		}
+	} else if d.HasChange("tertiary_key") {
+		obj["tertiary-key"] = nil
 	}
 
 	if v, ok := d.GetOkExists("status_ttl"); ok {
@@ -572,6 +567,8 @@ func getObjectUserTacacs(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["source-ip"] = t
 		}
+	} else if d.HasChange("source_ip") {
+		obj["source-ip"] = nil
 	}
 
 	if v, ok := d.GetOk("interface_select_method"); ok {
@@ -590,6 +587,8 @@ func getObjectUserTacacs(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["interface"] = t
 		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
 	}
 
 	return &obj, nil

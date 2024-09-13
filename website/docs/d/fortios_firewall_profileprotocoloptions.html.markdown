@@ -67,6 +67,7 @@ The `http` block contains:
 * `verify_dns_for_policy_matching` - Enable/disable verification of DNS for policy matching.
 * `block_page_status_code` - Code number returned for blocked HTTP pages (non-FortiGuard only) (100 - 599, default = 403).
 * `retry_count` - Number of attempts to retry HTTP connection (0 - 100, default = 0).
+* `domain_fronting` - Configure HTTP domain fronting (default = block).
 * `tcp_window_type` - Specify type of TCP window to use for this protocol.
 * `tcp_window_minimum` - Minimum dynamic TCP window size (default = 128KB).
 * `tcp_window_maximum` - Maximum dynamic TCP window size (default = 8MB).

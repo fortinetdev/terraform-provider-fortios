@@ -39,34 +39,28 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"load_balance_mode": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"neighbor_hold_down": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"neighbor_hold_down_time": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 10000000),
 				Optional:     true,
-				Computed:     true,
 			},
 			"neighbor_hold_boot_time": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 10000000),
 				Optional:     true,
-				Computed:     true,
 			},
 			"fail_detect": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"fail_alert_interfaces": &schema.Schema{
 				Type:     schema.TypeSet,
@@ -77,7 +71,6 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -91,7 +84,6 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -105,72 +97,59 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"interface": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 						"gateway": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"source": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"gateway6": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"source6": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"cost": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"weight": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"priority": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"spillover_threshold": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 16776000),
 							Optional:     true,
-							Computed:     true,
 						},
 						"ingress_spillover_threshold": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 16776000),
 							Optional:     true,
-							Computed:     true,
 						},
 						"volume_ratio": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"comment": &schema.Schema{
 							Type:         schema.TypeString,
@@ -189,44 +168,36 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"probe_packets": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"addr_mode": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"system_dns": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"server": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 						"protocol": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"port": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 						"security_mode": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"password": &schema.Schema{
 							Type:         schema.TypeString,
@@ -238,126 +209,104 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(64, 1024),
 							Optional:     true,
-							Computed:     true,
 						},
 						"ha_priority": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 50),
 							Optional:     true,
-							Computed:     true,
 						},
 						"http_get": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 1024),
 							Optional:     true,
-							Computed:     true,
 						},
 						"http_agent": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 1024),
 							Optional:     true,
-							Computed:     true,
 						},
 						"http_match": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 1024),
 							Optional:     true,
-							Computed:     true,
 						},
 						"dns_request_domain": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"interval": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 3600000),
 							Optional:     true,
-							Computed:     true,
 						},
 						"probe_timeout": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(500, 5000),
 							Optional:     true,
-							Computed:     true,
 						},
 						"failtime": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 3600),
 							Optional:     true,
-							Computed:     true,
 						},
 						"recoverytime": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 3600),
 							Optional:     true,
-							Computed:     true,
 						},
 						"probe_count": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(5, 30),
 							Optional:     true,
-							Computed:     true,
 						},
 						"diffservcode": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"update_cascade_interface": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"update_static_route": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"sla_fail_log_period": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 3600),
 							Optional:     true,
-							Computed:     true,
 						},
 						"sla_pass_log_period": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 3600),
 							Optional:     true,
-							Computed:     true,
 						},
 						"threshold_warning_packetloss": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 100),
 							Optional:     true,
-							Computed:     true,
 						},
 						"threshold_alert_packetloss": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 100),
 							Optional:     true,
-							Computed:     true,
 						},
 						"threshold_warning_latency": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"threshold_alert_latency": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"threshold_warning_jitter": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"threshold_alert_jitter": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"members": &schema.Schema{
 							Type:     schema.TypeSet,
@@ -367,7 +316,6 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 									"seq_num": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 								},
 							},
@@ -381,30 +329,25 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(1, 32),
 										Optional:     true,
-										Computed:     true,
 									},
 									"link_cost_factor": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
 									},
 									"latency_threshold": &schema.Schema{
 										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 10000000),
 										Optional:     true,
-										Computed:     true,
 									},
 									"jitter_threshold": &schema.Schema{
 										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 10000000),
 										Optional:     true,
-										Computed:     true,
 									},
 									"packetloss_threshold": &schema.Schema{
 										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 100),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -421,28 +364,23 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 45),
 							Optional:     true,
-							Computed:     true,
 						},
 						"member": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"role": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"health_check": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"sla_id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -456,18 +394,15 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 4000),
 							Optional:     true,
-							Computed:     true,
 						},
 						"name": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"addr_mode": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"input_device": &schema.Schema{
 							Type:     schema.TypeSet,
@@ -478,7 +413,6 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -486,66 +420,54 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 						"input_device_negate": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"mode": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"role": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"standalone_action": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"quality_link": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"member": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"tos": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"tos_mask": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"protocol": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"start_port": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 						"end_port": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 						"route_tag": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"dst": &schema.Schema{
 							Type:     schema.TypeSet,
@@ -556,7 +478,6 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -564,7 +485,6 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 						"dst_negate": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"src": &schema.Schema{
 							Type:     schema.TypeSet,
@@ -575,7 +495,6 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -589,7 +508,6 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -603,7 +521,6 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -611,7 +528,6 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 						"src_negate": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"users": &schema.Schema{
 							Type:     schema.TypeSet,
@@ -622,7 +538,6 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -636,7 +551,6 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -644,7 +558,6 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 						"internet_service": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"internet_service_custom": &schema.Schema{
 							Type:     schema.TypeSet,
@@ -655,7 +568,6 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -669,7 +581,6 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -683,7 +594,6 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -696,7 +606,6 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 								},
 							},
@@ -710,7 +619,6 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -723,7 +631,6 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 								},
 							},
@@ -737,7 +644,6 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -750,7 +656,6 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 								},
 							},
@@ -764,7 +669,6 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 64),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -772,68 +676,56 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 						"health_check": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"link_cost_factor": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"packet_loss_weight": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 10000000),
 							Optional:     true,
-							Computed:     true,
 						},
 						"latency_weight": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 10000000),
 							Optional:     true,
-							Computed:     true,
 						},
 						"jitter_weight": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 10000000),
 							Optional:     true,
-							Computed:     true,
 						},
 						"bandwidth_weight": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 10000000),
 							Optional:     true,
-							Computed:     true,
 						},
 						"link_cost_threshold": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 10000000),
 							Optional:     true,
-							Computed:     true,
 						},
 						"hold_down_time": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 10000000),
 							Optional:     true,
-							Computed:     true,
 						},
 						"dscp_forward": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"dscp_reverse": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"dscp_forward_tag": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"dscp_reverse_tag": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"sla": &schema.Schema{
 							Type:     schema.TypeList,
@@ -844,12 +736,10 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 35),
 										Optional:     true,
-										Computed:     true,
 									},
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 								},
 							},
@@ -862,7 +752,6 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 									"seq_num": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 								},
 							},
@@ -870,22 +759,18 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"gateway": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"default": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"sla_compare_method": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -1031,11 +916,11 @@ func flattenSystemVirtualWanLinkNeighborHoldDown(v interface{}, d *schema.Resour
 }
 
 func flattenSystemVirtualWanLinkNeighborHoldDownTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVirtualWanLinkNeighborHoldBootTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVirtualWanLinkFailDetect(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1230,7 +1115,7 @@ func flattenSystemVirtualWanLinkMembers(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenSystemVirtualWanLinkMembersSeqNum(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVirtualWanLinkMembersInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1254,27 +1139,27 @@ func flattenSystemVirtualWanLinkMembersSource6(v interface{}, d *schema.Resource
 }
 
 func flattenSystemVirtualWanLinkMembersCost(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVirtualWanLinkMembersWeight(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVirtualWanLinkMembersPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVirtualWanLinkMembersSpilloverThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVirtualWanLinkMembersIngressSpilloverThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVirtualWanLinkMembersVolumeRatio(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVirtualWanLinkMembersStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1350,8 +1235,7 @@ func flattenSystemVirtualWanLinkHealthCheck(v interface{}, d *schema.ResourceDat
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "password"
-		if cur_v, ok := i["password"]; ok {
-			tmp["password"] = flattenSystemVirtualWanLinkHealthCheckPassword(cur_v, d, pre_append, sv)
+		if _, ok := i["password"]; ok {
 			c := d.Get(pre_append).(string)
 			if c != "" {
 				tmp["password"] = c
@@ -1512,23 +1396,19 @@ func flattenSystemVirtualWanLinkHealthCheckProtocol(v interface{}, d *schema.Res
 }
 
 func flattenSystemVirtualWanLinkHealthCheckPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVirtualWanLinkHealthCheckSecurityMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemVirtualWanLinkHealthCheckPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
 func flattenSystemVirtualWanLinkHealthCheckPacketSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVirtualWanLinkHealthCheckHaPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVirtualWanLinkHealthCheckHttpGet(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1548,23 +1428,23 @@ func flattenSystemVirtualWanLinkHealthCheckDnsRequestDomain(v interface{}, d *sc
 }
 
 func flattenSystemVirtualWanLinkHealthCheckInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVirtualWanLinkHealthCheckProbeTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVirtualWanLinkHealthCheckFailtime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVirtualWanLinkHealthCheckRecoverytime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVirtualWanLinkHealthCheckProbeCount(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVirtualWanLinkHealthCheckDiffservcode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1580,35 +1460,35 @@ func flattenSystemVirtualWanLinkHealthCheckUpdateStaticRoute(v interface{}, d *s
 }
 
 func flattenSystemVirtualWanLinkHealthCheckSlaFailLogPeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVirtualWanLinkHealthCheckSlaPassLogPeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVirtualWanLinkHealthCheckThresholdWarningPacketloss(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVirtualWanLinkHealthCheckThresholdAlertPacketloss(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVirtualWanLinkHealthCheckThresholdWarningLatency(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVirtualWanLinkHealthCheckThresholdAlertLatency(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVirtualWanLinkHealthCheckThresholdWarningJitter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVirtualWanLinkHealthCheckThresholdAlertJitter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVirtualWanLinkHealthCheckMembers(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -1650,7 +1530,7 @@ func flattenSystemVirtualWanLinkHealthCheckMembers(v interface{}, d *schema.Reso
 }
 
 func flattenSystemVirtualWanLinkHealthCheckMembersSeqNum(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVirtualWanLinkHealthCheckSla(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -1712,7 +1592,7 @@ func flattenSystemVirtualWanLinkHealthCheckSla(v interface{}, d *schema.Resource
 }
 
 func flattenSystemVirtualWanLinkHealthCheckSlaId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVirtualWanLinkHealthCheckSlaLinkCostFactor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1720,15 +1600,15 @@ func flattenSystemVirtualWanLinkHealthCheckSlaLinkCostFactor(v interface{}, d *s
 }
 
 func flattenSystemVirtualWanLinkHealthCheckSlaLatencyThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVirtualWanLinkHealthCheckSlaJitterThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVirtualWanLinkHealthCheckSlaPacketlossThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVirtualWanLinkNeighbor(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -1794,7 +1674,7 @@ func flattenSystemVirtualWanLinkNeighborIp(v interface{}, d *schema.ResourceData
 }
 
 func flattenSystemVirtualWanLinkNeighborMember(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVirtualWanLinkNeighborRole(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1806,7 +1686,7 @@ func flattenSystemVirtualWanLinkNeighborHealthCheck(v interface{}, d *schema.Res
 }
 
 func flattenSystemVirtualWanLinkNeighborSlaId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVirtualWanLinkService(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -2005,34 +1885,7 @@ func flattenSystemVirtualWanLinkService(v interface{}, d *schema.ResourceData, p
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "health_check"
 		if cur_v, ok := i["health-check"]; ok {
-			v := flattenSystemVirtualWanLinkServiceHealthCheck(cur_v, d, pre_append, sv)
-			vx := ""
-			bstring := false
-			new_version_map := map[string][]string{
-				"=": []string{"6.4.0"},
-			}
-			if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
-				l := v.([]interface{})
-				if len(l) > 0 {
-					for k, r := range l {
-						i := r.(map[string]interface{})
-						if _, ok := i["name"]; ok {
-							if xv, ok := i["name"].(string); ok {
-								vx += xv
-								if k < len(l)-1 {
-									vx += ", "
-								}
-							}
-						}
-					}
-					bstring = true
-				}
-			}
-			if bstring == true {
-				tmp["health_check"] = vx
-			} else {
-				tmp["health_check"] = v
-			}
+			tmp["health_check"] = flattenSystemVirtualWanLinkServiceHealthCheck(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "link_cost_factor"
@@ -2130,7 +1983,7 @@ func flattenSystemVirtualWanLinkService(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenSystemVirtualWanLinkServiceId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVirtualWanLinkServiceName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2200,11 +2053,11 @@ func flattenSystemVirtualWanLinkServiceStandaloneAction(v interface{}, d *schema
 }
 
 func flattenSystemVirtualWanLinkServiceQualityLink(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVirtualWanLinkServiceMember(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVirtualWanLinkServiceTos(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2216,19 +2069,19 @@ func flattenSystemVirtualWanLinkServiceTosMask(v interface{}, d *schema.Resource
 }
 
 func flattenSystemVirtualWanLinkServiceProtocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVirtualWanLinkServiceStartPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVirtualWanLinkServiceEndPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVirtualWanLinkServiceRouteTag(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVirtualWanLinkServiceDst(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -2660,7 +2513,7 @@ func flattenSystemVirtualWanLinkServiceInternetServiceId(v interface{}, d *schem
 }
 
 func flattenSystemVirtualWanLinkServiceInternetServiceIdId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVirtualWanLinkServiceInternetServiceGroup(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -2744,7 +2597,7 @@ func flattenSystemVirtualWanLinkServiceInternetServiceAppCtrl(v interface{}, d *
 }
 
 func flattenSystemVirtualWanLinkServiceInternetServiceAppCtrlId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVirtualWanLinkServiceInternetServiceAppCtrlGroup(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -2828,7 +2681,7 @@ func flattenSystemVirtualWanLinkServiceInternetServiceCtrl(v interface{}, d *sch
 }
 
 func flattenSystemVirtualWanLinkServiceInternetServiceCtrlId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVirtualWanLinkServiceInternetServiceCtrlGroup(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -2874,7 +2727,7 @@ func flattenSystemVirtualWanLinkServiceInternetServiceCtrlGroupName(v interface{
 }
 
 func flattenSystemVirtualWanLinkServiceHealthCheck(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convmap2str(v, d.Get("health_check"), "name")
 }
 
 func flattenSystemVirtualWanLinkServiceLinkCostFactor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2882,27 +2735,27 @@ func flattenSystemVirtualWanLinkServiceLinkCostFactor(v interface{}, d *schema.R
 }
 
 func flattenSystemVirtualWanLinkServicePacketLossWeight(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVirtualWanLinkServiceLatencyWeight(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVirtualWanLinkServiceJitterWeight(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVirtualWanLinkServiceBandwidthWeight(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVirtualWanLinkServiceLinkCostThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVirtualWanLinkServiceHoldDownTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVirtualWanLinkServiceDscpForward(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2969,7 +2822,7 @@ func flattenSystemVirtualWanLinkServiceSlaHealthCheck(v interface{}, d *schema.R
 }
 
 func flattenSystemVirtualWanLinkServiceSlaId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVirtualWanLinkServicePriorityMembers(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -3011,7 +2864,7 @@ func flattenSystemVirtualWanLinkServicePriorityMembers(v interface{}, d *schema.
 }
 
 func flattenSystemVirtualWanLinkServicePriorityMembersSeqNum(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVirtualWanLinkServiceStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -3249,6 +3102,8 @@ func expandSystemVirtualWanLinkZone(d *schema.ResourceData, v interface{}, pre s
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandSystemVirtualWanLinkZoneName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		result = append(result, tmp)
@@ -3280,71 +3135,99 @@ func expandSystemVirtualWanLinkMembers(d *schema.ResourceData, v interface{}, pr
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "seq_num"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["seq-num"], _ = expandSystemVirtualWanLinkMembersSeqNum(d, i["seq_num"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["seq-num"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["interface"], _ = expandSystemVirtualWanLinkMembersInterface(d, i["interface"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["interface"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "gateway"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["gateway"], _ = expandSystemVirtualWanLinkMembersGateway(d, i["gateway"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["gateway"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "source"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["source"], _ = expandSystemVirtualWanLinkMembersSource(d, i["source"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["source"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "gateway6"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["gateway6"], _ = expandSystemVirtualWanLinkMembersGateway6(d, i["gateway6"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["gateway6"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "source6"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["source6"], _ = expandSystemVirtualWanLinkMembersSource6(d, i["source6"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["source6"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "cost"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["cost"], _ = expandSystemVirtualWanLinkMembersCost(d, i["cost"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["cost"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "weight"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["weight"], _ = expandSystemVirtualWanLinkMembersWeight(d, i["weight"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["weight"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["priority"], _ = expandSystemVirtualWanLinkMembersPriority(d, i["priority"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["priority"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "spillover_threshold"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["spillover-threshold"], _ = expandSystemVirtualWanLinkMembersSpilloverThreshold(d, i["spillover_threshold"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["spillover-threshold"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ingress_spillover_threshold"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["ingress-spillover-threshold"], _ = expandSystemVirtualWanLinkMembersIngressSpilloverThreshold(d, i["ingress_spillover_threshold"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["ingress-spillover-threshold"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "volume_ratio"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["volume-ratio"], _ = expandSystemVirtualWanLinkMembersVolumeRatio(d, i["volume_ratio"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["volume-ratio"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["status"], _ = expandSystemVirtualWanLinkMembersStatus(d, i["status"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["status"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["comment"], _ = expandSystemVirtualWanLinkMembersComment(d, i["comment"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["comment"] = nil
 		}
 
 		result = append(result, tmp)
@@ -3428,169 +3311,231 @@ func expandSystemVirtualWanLinkHealthCheck(d *schema.ResourceData, v interface{}
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandSystemVirtualWanLinkHealthCheckName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "probe_packets"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["probe-packets"], _ = expandSystemVirtualWanLinkHealthCheckProbePackets(d, i["probe_packets"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["probe-packets"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr_mode"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["addr-mode"], _ = expandSystemVirtualWanLinkHealthCheckAddrMode(d, i["addr_mode"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["addr-mode"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "system_dns"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["system-dns"], _ = expandSystemVirtualWanLinkHealthCheckSystemDns(d, i["system_dns"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["system-dns"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "server"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["server"], _ = expandSystemVirtualWanLinkHealthCheckServer(d, i["server"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["server"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["protocol"], _ = expandSystemVirtualWanLinkHealthCheckProtocol(d, i["protocol"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["protocol"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["port"], _ = expandSystemVirtualWanLinkHealthCheckPort(d, i["port"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["port"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "security_mode"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["security-mode"], _ = expandSystemVirtualWanLinkHealthCheckSecurityMode(d, i["security_mode"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["security-mode"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "password"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["password"], _ = expandSystemVirtualWanLinkHealthCheckPassword(d, i["password"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["password"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "packet_size"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["packet-size"], _ = expandSystemVirtualWanLinkHealthCheckPacketSize(d, i["packet_size"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["packet-size"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ha_priority"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["ha-priority"], _ = expandSystemVirtualWanLinkHealthCheckHaPriority(d, i["ha_priority"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["ha-priority"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_get"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["http-get"], _ = expandSystemVirtualWanLinkHealthCheckHttpGet(d, i["http_get"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["http-get"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_agent"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["http-agent"], _ = expandSystemVirtualWanLinkHealthCheckHttpAgent(d, i["http_agent"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["http-agent"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_match"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["http-match"], _ = expandSystemVirtualWanLinkHealthCheckHttpMatch(d, i["http_match"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["http-match"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dns_request_domain"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["dns-request-domain"], _ = expandSystemVirtualWanLinkHealthCheckDnsRequestDomain(d, i["dns_request_domain"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["dns-request-domain"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interval"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["interval"], _ = expandSystemVirtualWanLinkHealthCheckInterval(d, i["interval"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["interval"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "probe_timeout"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["probe-timeout"], _ = expandSystemVirtualWanLinkHealthCheckProbeTimeout(d, i["probe_timeout"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["probe-timeout"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "failtime"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["failtime"], _ = expandSystemVirtualWanLinkHealthCheckFailtime(d, i["failtime"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["failtime"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "recoverytime"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["recoverytime"], _ = expandSystemVirtualWanLinkHealthCheckRecoverytime(d, i["recoverytime"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["recoverytime"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "probe_count"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["probe-count"], _ = expandSystemVirtualWanLinkHealthCheckProbeCount(d, i["probe_count"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["probe-count"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "diffservcode"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["diffservcode"], _ = expandSystemVirtualWanLinkHealthCheckDiffservcode(d, i["diffservcode"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["diffservcode"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "update_cascade_interface"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["update-cascade-interface"], _ = expandSystemVirtualWanLinkHealthCheckUpdateCascadeInterface(d, i["update_cascade_interface"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["update-cascade-interface"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "update_static_route"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["update-static-route"], _ = expandSystemVirtualWanLinkHealthCheckUpdateStaticRoute(d, i["update_static_route"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["update-static-route"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sla_fail_log_period"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["sla-fail-log-period"], _ = expandSystemVirtualWanLinkHealthCheckSlaFailLogPeriod(d, i["sla_fail_log_period"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["sla-fail-log-period"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sla_pass_log_period"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["sla-pass-log-period"], _ = expandSystemVirtualWanLinkHealthCheckSlaPassLogPeriod(d, i["sla_pass_log_period"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["sla-pass-log-period"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "threshold_warning_packetloss"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["threshold-warning-packetloss"], _ = expandSystemVirtualWanLinkHealthCheckThresholdWarningPacketloss(d, i["threshold_warning_packetloss"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["threshold-warning-packetloss"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "threshold_alert_packetloss"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["threshold-alert-packetloss"], _ = expandSystemVirtualWanLinkHealthCheckThresholdAlertPacketloss(d, i["threshold_alert_packetloss"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["threshold-alert-packetloss"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "threshold_warning_latency"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["threshold-warning-latency"], _ = expandSystemVirtualWanLinkHealthCheckThresholdWarningLatency(d, i["threshold_warning_latency"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["threshold-warning-latency"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "threshold_alert_latency"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["threshold-alert-latency"], _ = expandSystemVirtualWanLinkHealthCheckThresholdAlertLatency(d, i["threshold_alert_latency"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["threshold-alert-latency"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "threshold_warning_jitter"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["threshold-warning-jitter"], _ = expandSystemVirtualWanLinkHealthCheckThresholdWarningJitter(d, i["threshold_warning_jitter"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["threshold-warning-jitter"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "threshold_alert_jitter"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["threshold-alert-jitter"], _ = expandSystemVirtualWanLinkHealthCheckThresholdAlertJitter(d, i["threshold_alert_jitter"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["threshold-alert-jitter"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "members"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["members"], _ = expandSystemVirtualWanLinkHealthCheckMembers(d, i["members"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["members"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sla"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["sla"], _ = expandSystemVirtualWanLinkHealthCheckSla(d, i["sla"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["sla"] = make([]string, 0)
 		}
 
@@ -3771,26 +3716,36 @@ func expandSystemVirtualWanLinkHealthCheckSla(d *schema.ResourceData, v interfac
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSystemVirtualWanLinkHealthCheckSlaId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "link_cost_factor"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["link-cost-factor"], _ = expandSystemVirtualWanLinkHealthCheckSlaLinkCostFactor(d, i["link_cost_factor"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["link-cost-factor"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "latency_threshold"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["latency-threshold"], _ = expandSystemVirtualWanLinkHealthCheckSlaLatencyThreshold(d, i["latency_threshold"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["latency-threshold"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "jitter_threshold"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["jitter-threshold"], _ = expandSystemVirtualWanLinkHealthCheckSlaJitterThreshold(d, i["jitter_threshold"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["jitter-threshold"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "packetloss_threshold"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["packetloss-threshold"], _ = expandSystemVirtualWanLinkHealthCheckSlaPacketlossThreshold(d, i["packetloss_threshold"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["packetloss-threshold"] = nil
 		}
 
 		result = append(result, tmp)
@@ -3838,26 +3793,36 @@ func expandSystemVirtualWanLinkNeighbor(d *schema.ResourceData, v interface{}, p
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["ip"], _ = expandSystemVirtualWanLinkNeighborIp(d, i["ip"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["ip"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "member"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["member"], _ = expandSystemVirtualWanLinkNeighborMember(d, i["member"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["member"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "role"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["role"], _ = expandSystemVirtualWanLinkNeighborRole(d, i["role"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["role"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "health_check"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["health-check"], _ = expandSystemVirtualWanLinkNeighborHealthCheck(d, i["health_check"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["health-check"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sla_id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["sla-id"], _ = expandSystemVirtualWanLinkNeighborSlaId(d, i["sla_id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["sla-id"] = nil
 		}
 
 		result = append(result, tmp)
@@ -3905,324 +3870,365 @@ func expandSystemVirtualWanLinkService(d *schema.ResourceData, v interface{}, pr
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSystemVirtualWanLinkServiceId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandSystemVirtualWanLinkServiceName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr_mode"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["addr-mode"], _ = expandSystemVirtualWanLinkServiceAddrMode(d, i["addr_mode"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["addr-mode"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "input_device"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["input-device"], _ = expandSystemVirtualWanLinkServiceInputDevice(d, i["input_device"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["input-device"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "input_device_negate"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["input-device-negate"], _ = expandSystemVirtualWanLinkServiceInputDeviceNegate(d, i["input_device_negate"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["input-device-negate"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mode"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["mode"], _ = expandSystemVirtualWanLinkServiceMode(d, i["mode"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["mode"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "role"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["role"], _ = expandSystemVirtualWanLinkServiceRole(d, i["role"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["role"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "standalone_action"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["standalone-action"], _ = expandSystemVirtualWanLinkServiceStandaloneAction(d, i["standalone_action"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["standalone-action"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "quality_link"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["quality-link"], _ = expandSystemVirtualWanLinkServiceQualityLink(d, i["quality_link"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["quality-link"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "member"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["member"], _ = expandSystemVirtualWanLinkServiceMember(d, i["member"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["member"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tos"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["tos"], _ = expandSystemVirtualWanLinkServiceTos(d, i["tos"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["tos"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tos_mask"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["tos-mask"], _ = expandSystemVirtualWanLinkServiceTosMask(d, i["tos_mask"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["tos-mask"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["protocol"], _ = expandSystemVirtualWanLinkServiceProtocol(d, i["protocol"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["protocol"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "start_port"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["start-port"], _ = expandSystemVirtualWanLinkServiceStartPort(d, i["start_port"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["start-port"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "end_port"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["end-port"], _ = expandSystemVirtualWanLinkServiceEndPort(d, i["end_port"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["end-port"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_tag"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["route-tag"], _ = expandSystemVirtualWanLinkServiceRouteTag(d, i["route_tag"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["route-tag"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["dst"], _ = expandSystemVirtualWanLinkServiceDst(d, i["dst"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["dst"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst_negate"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["dst-negate"], _ = expandSystemVirtualWanLinkServiceDstNegate(d, i["dst_negate"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["dst-negate"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "src"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["src"], _ = expandSystemVirtualWanLinkServiceSrc(d, i["src"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["src"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst6"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["dst6"], _ = expandSystemVirtualWanLinkServiceDst6(d, i["dst6"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["dst6"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "src6"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["src6"], _ = expandSystemVirtualWanLinkServiceSrc6(d, i["src6"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["src6"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "src_negate"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["src-negate"], _ = expandSystemVirtualWanLinkServiceSrcNegate(d, i["src_negate"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["src-negate"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "users"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["users"], _ = expandSystemVirtualWanLinkServiceUsers(d, i["users"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["users"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "groups"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["groups"], _ = expandSystemVirtualWanLinkServiceGroups(d, i["groups"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["groups"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "internet_service"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["internet-service"], _ = expandSystemVirtualWanLinkServiceInternetService(d, i["internet_service"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["internet-service"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "internet_service_custom"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["internet-service-custom"], _ = expandSystemVirtualWanLinkServiceInternetServiceCustom(d, i["internet_service_custom"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["internet-service-custom"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "internet_service_custom_group"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["internet-service-custom-group"], _ = expandSystemVirtualWanLinkServiceInternetServiceCustomGroup(d, i["internet_service_custom_group"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["internet-service-custom-group"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "internet_service_name"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["internet-service-name"], _ = expandSystemVirtualWanLinkServiceInternetServiceName(d, i["internet_service_name"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["internet-service-name"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "internet_service_id"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["internet-service-id"], _ = expandSystemVirtualWanLinkServiceInternetServiceId(d, i["internet_service_id"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["internet-service-id"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "internet_service_group"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["internet-service-group"], _ = expandSystemVirtualWanLinkServiceInternetServiceGroup(d, i["internet_service_group"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["internet-service-group"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "internet_service_app_ctrl"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["internet-service-app-ctrl"], _ = expandSystemVirtualWanLinkServiceInternetServiceAppCtrl(d, i["internet_service_app_ctrl"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["internet-service-app-ctrl"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "internet_service_app_ctrl_group"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["internet-service-app-ctrl-group"], _ = expandSystemVirtualWanLinkServiceInternetServiceAppCtrlGroup(d, i["internet_service_app_ctrl_group"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["internet-service-app-ctrl-group"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "internet_service_ctrl"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["internet-service-ctrl"], _ = expandSystemVirtualWanLinkServiceInternetServiceCtrl(d, i["internet_service_ctrl"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["internet-service-ctrl"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "internet_service_ctrl_group"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["internet-service-ctrl-group"], _ = expandSystemVirtualWanLinkServiceInternetServiceCtrlGroup(d, i["internet_service_ctrl_group"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["internet-service-ctrl-group"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "health_check"
 		if _, ok := d.GetOk(pre_append); ok {
-			bstring := false
-			t, _ := expandSystemVirtualWanLinkServiceHealthCheck(d, i["health_check"], pre_append, sv)
-			if t != nil {
-				new_version_map := map[string][]string{
-					"=": []string{"6.4.0"},
-				}
-				if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
-					bstring = true
-				}
-			}
-
-			if bstring == true {
-				vx := fmt.Sprintf("%v", t)
-				vx = strings.Replace(vx, "\"", "", -1)
-				vxx := strings.Split(vx, " ")
-
-				tmps := make([]map[string]interface{}, 0, len(vxx))
-
-				for _, xv := range vxx {
-					xtmp := make(map[string]interface{})
-					xtmp["name"] = xv
-
-					tmps = append(tmps, xtmp)
-				}
-				tmp["health-check"] = tmps
-			} else {
-				tmp["health-check"] = t
-			}
+			tmp["health-check"], _ = expandSystemVirtualWanLinkServiceHealthCheck(d, i["health_check"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["health-check"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "link_cost_factor"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["link-cost-factor"], _ = expandSystemVirtualWanLinkServiceLinkCostFactor(d, i["link_cost_factor"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["link-cost-factor"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "packet_loss_weight"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["packet-loss-weight"], _ = expandSystemVirtualWanLinkServicePacketLossWeight(d, i["packet_loss_weight"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["packet-loss-weight"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "latency_weight"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["latency-weight"], _ = expandSystemVirtualWanLinkServiceLatencyWeight(d, i["latency_weight"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["latency-weight"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "jitter_weight"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["jitter-weight"], _ = expandSystemVirtualWanLinkServiceJitterWeight(d, i["jitter_weight"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["jitter-weight"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "bandwidth_weight"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["bandwidth-weight"], _ = expandSystemVirtualWanLinkServiceBandwidthWeight(d, i["bandwidth_weight"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["bandwidth-weight"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "link_cost_threshold"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["link-cost-threshold"], _ = expandSystemVirtualWanLinkServiceLinkCostThreshold(d, i["link_cost_threshold"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["link-cost-threshold"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "hold_down_time"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["hold-down-time"], _ = expandSystemVirtualWanLinkServiceHoldDownTime(d, i["hold_down_time"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["hold-down-time"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dscp_forward"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["dscp-forward"], _ = expandSystemVirtualWanLinkServiceDscpForward(d, i["dscp_forward"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["dscp-forward"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dscp_reverse"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["dscp-reverse"], _ = expandSystemVirtualWanLinkServiceDscpReverse(d, i["dscp_reverse"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["dscp-reverse"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dscp_forward_tag"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["dscp-forward-tag"], _ = expandSystemVirtualWanLinkServiceDscpForwardTag(d, i["dscp_forward_tag"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["dscp-forward-tag"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dscp_reverse_tag"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["dscp-reverse-tag"], _ = expandSystemVirtualWanLinkServiceDscpReverseTag(d, i["dscp_reverse_tag"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["dscp-reverse-tag"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sla"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["sla"], _ = expandSystemVirtualWanLinkServiceSla(d, i["sla"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["sla"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority_members"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["priority-members"], _ = expandSystemVirtualWanLinkServicePriorityMembers(d, i["priority_members"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["priority-members"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["status"], _ = expandSystemVirtualWanLinkServiceStatus(d, i["status"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["status"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "gateway"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["gateway"], _ = expandSystemVirtualWanLinkServiceGateway(d, i["gateway"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["gateway"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "default"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["default"], _ = expandSystemVirtualWanLinkServiceDefault(d, i["default"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["default"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sla_compare_method"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["sla-compare-method"], _ = expandSystemVirtualWanLinkServiceSlaCompareMethod(d, i["sla_compare_method"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["sla-compare-method"] = nil
 		}
 
 		result = append(result, tmp)
@@ -4714,6 +4720,8 @@ func expandSystemVirtualWanLinkServiceInternetServiceCtrl(d *schema.ResourceData
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSystemVirtualWanLinkServiceInternetServiceCtrlId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		result = append(result, tmp)
@@ -4745,6 +4753,8 @@ func expandSystemVirtualWanLinkServiceInternetServiceCtrlGroup(d *schema.Resourc
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandSystemVirtualWanLinkServiceInternetServiceCtrlGroupName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		result = append(result, tmp)
@@ -4760,7 +4770,25 @@ func expandSystemVirtualWanLinkServiceInternetServiceCtrlGroupName(d *schema.Res
 }
 
 func expandSystemVirtualWanLinkServiceHealthCheck(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
+	new_version_map := map[string][]string{
+		"=": []string{"6.4.0"},
+	}
+	if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
+		vx := fmt.Sprintf("%v", v)
+		vxx := strings.Split(vx, ", ")
+
+		tmps := make([]map[string]interface{}, 0, len(vxx))
+
+		for _, xv := range vxx {
+			xtmp := make(map[string]interface{})
+			xtmp["name"] = xv
+
+			tmps = append(tmps, xtmp)
+		}
+		return tmps, nil
+	} else {
+		return v, nil
+	}
 }
 
 func expandSystemVirtualWanLinkServiceLinkCostFactor(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
@@ -4824,11 +4852,15 @@ func expandSystemVirtualWanLinkServiceSla(d *schema.ResourceData, v interface{},
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "health_check"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["health-check"], _ = expandSystemVirtualWanLinkServiceSlaHealthCheck(d, i["health_check"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["health-check"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSystemVirtualWanLinkServiceSlaId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		result = append(result, tmp)
@@ -4905,6 +4937,8 @@ func getObjectSystemVirtualWanLink(d *schema.ResourceData, setArgNil bool, sv st
 				obj["status"] = t
 			}
 		}
+	} else if d.HasChange("status") {
+		obj["status"] = nil
 	}
 
 	if v, ok := d.GetOk("load_balance_mode"); ok {
@@ -4918,6 +4952,8 @@ func getObjectSystemVirtualWanLink(d *schema.ResourceData, setArgNil bool, sv st
 				obj["load-balance-mode"] = t
 			}
 		}
+	} else if d.HasChange("load_balance_mode") {
+		obj["load-balance-mode"] = nil
 	}
 
 	if v, ok := d.GetOk("neighbor_hold_down"); ok {
@@ -4931,6 +4967,8 @@ func getObjectSystemVirtualWanLink(d *schema.ResourceData, setArgNil bool, sv st
 				obj["neighbor-hold-down"] = t
 			}
 		}
+	} else if d.HasChange("neighbor_hold_down") {
+		obj["neighbor-hold-down"] = nil
 	}
 
 	if v, ok := d.GetOkExists("neighbor_hold_down_time"); ok {
@@ -4944,6 +4982,8 @@ func getObjectSystemVirtualWanLink(d *schema.ResourceData, setArgNil bool, sv st
 				obj["neighbor-hold-down-time"] = t
 			}
 		}
+	} else if d.HasChange("neighbor_hold_down_time") {
+		obj["neighbor-hold-down-time"] = nil
 	}
 
 	if v, ok := d.GetOkExists("neighbor_hold_boot_time"); ok {
@@ -4957,6 +4997,8 @@ func getObjectSystemVirtualWanLink(d *schema.ResourceData, setArgNil bool, sv st
 				obj["neighbor-hold-boot-time"] = t
 			}
 		}
+	} else if d.HasChange("neighbor_hold_boot_time") {
+		obj["neighbor-hold-boot-time"] = nil
 	}
 
 	if v, ok := d.GetOk("fail_detect"); ok {
@@ -4970,6 +5012,8 @@ func getObjectSystemVirtualWanLink(d *schema.ResourceData, setArgNil bool, sv st
 				obj["fail-detect"] = t
 			}
 		}
+	} else if d.HasChange("fail_detect") {
+		obj["fail-detect"] = nil
 	}
 
 	if v, ok := d.GetOk("fail_alert_interfaces"); ok || d.HasChange("fail_alert_interfaces") {

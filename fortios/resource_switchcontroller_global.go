@@ -45,7 +45,6 @@ func resourceSwitchControllerGlobal() *schema.Resource {
 			"allow_multiple_interfaces": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"https_image_push": &schema.Schema{
 				Type:     schema.TypeString,
@@ -76,7 +75,6 @@ func resourceSwitchControllerGlobal() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -91,7 +89,6 @@ func resourceSwitchControllerGlobal() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"dhcp_server_access_list": &schema.Schema{
 				Type:     schema.TypeString,
@@ -138,7 +135,6 @@ func resourceSwitchControllerGlobal() *schema.Resource {
 			"mac_violation_timer": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"sn_dns_resolution": &schema.Schema{
 				Type:     schema.TypeString,
@@ -174,13 +170,11 @@ func resourceSwitchControllerGlobal() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"command_name": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -324,7 +318,7 @@ func resourceSwitchControllerGlobalRead(d *schema.ResourceData, m interface{}) e
 }
 
 func flattenSwitchControllerGlobalMacAgingInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerGlobalAllowMultipleInterfaces(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -390,7 +384,7 @@ func flattenSwitchControllerGlobalDisableDiscoveryName(v interface{}, d *schema.
 }
 
 func flattenSwitchControllerGlobalMacRetentionPeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerGlobalDefaultVirtualSwitchVlan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -418,11 +412,11 @@ func flattenSwitchControllerGlobalDhcpSnoopClientReq(v interface{}, d *schema.Re
 }
 
 func flattenSwitchControllerGlobalDhcpSnoopClientDbExp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerGlobalDhcpSnoopDbPerPortLearnLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerGlobalLogMacLimitViolations(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -430,7 +424,7 @@ func flattenSwitchControllerGlobalLogMacLimitViolations(v interface{}, d *schema
 }
 
 func flattenSwitchControllerGlobalMacViolationTimer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerGlobalSnDnsResolution(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -839,11 +833,15 @@ func expandSwitchControllerGlobalCustomCommand(d *schema.ResourceData, v interfa
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "command_entry"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["command-entry"], _ = expandSwitchControllerGlobalCustomCommandCommandEntry(d, i["command_entry"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["command-entry"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "command_name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["command-name"], _ = expandSwitchControllerGlobalCustomCommandCommandName(d, i["command_name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["command-name"] = nil
 		}
 
 		result = append(result, tmp)
@@ -897,6 +895,8 @@ func getObjectSwitchControllerGlobal(d *schema.ResourceData, setArgNil bool, sv 
 				obj["allow-multiple-interfaces"] = t
 			}
 		}
+	} else if d.HasChange("allow_multiple_interfaces") {
+		obj["allow-multiple-interfaces"] = nil
 	}
 
 	if v, ok := d.GetOk("https_image_push"); ok {
@@ -988,6 +988,8 @@ func getObjectSwitchControllerGlobal(d *schema.ResourceData, setArgNil bool, sv 
 				obj["default-virtual-switch-vlan"] = t
 			}
 		}
+	} else if d.HasChange("default_virtual_switch_vlan") {
+		obj["default-virtual-switch-vlan"] = nil
 	}
 
 	if v, ok := d.GetOk("dhcp_server_access_list"); ok {
@@ -1105,6 +1107,8 @@ func getObjectSwitchControllerGlobal(d *schema.ResourceData, setArgNil bool, sv 
 				obj["mac-violation-timer"] = t
 			}
 		}
+	} else if d.HasChange("mac_violation_timer") {
+		obj["mac-violation-timer"] = nil
 	}
 
 	if v, ok := d.GetOk("sn_dns_resolution"); ok {

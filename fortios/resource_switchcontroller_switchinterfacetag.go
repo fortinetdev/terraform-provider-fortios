@@ -40,7 +40,6 @@ func resourceSwitchControllerSwitchInterfaceTag() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -233,6 +232,8 @@ func getObjectSwitchControllerSwitchInterfaceTag(d *schema.ResourceData, sv stri
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	return &obj, nil

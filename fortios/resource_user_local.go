@@ -66,19 +66,16 @@ func resourceUserLocal() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"radius_server": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"tacacs_server": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"two_factor": &schema.Schema{
 				Type:     schema.TypeString,
@@ -88,24 +85,20 @@ func resourceUserLocal() *schema.Resource {
 			"two_factor_authentication": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"two_factor_notification": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"fortitoken": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 16),
 				Optional:     true,
-				Computed:     true,
 			},
 			"email_to": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"sms_server": &schema.Schema{
 				Type:     schema.TypeString,
@@ -116,36 +109,30 @@ func resourceUserLocal() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"sms_phone": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"passwd_policy": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"passwd_time": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"authtimeout": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 1440),
 				Optional:     true,
-				Computed:     true,
 			},
 			"workstation": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"auth_concurrent_override": &schema.Schema{
 				Type:     schema.TypeString,
@@ -156,7 +143,6 @@ func resourceUserLocal() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 100),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ppk_secret": &schema.Schema{
 				Type:      schema.TypeString,
@@ -167,13 +153,11 @@ func resourceUserLocal() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"qkd_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"username_sensitivity": &schema.Schema{
 				Type:     schema.TypeString,
@@ -183,12 +167,10 @@ func resourceUserLocal() *schema.Resource {
 			"username_case_insensitivity": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"username_case_sensitivity": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 		},
 	}
@@ -350,7 +332,7 @@ func flattenUserLocalName(v interface{}, d *schema.ResourceData, pre string, sv 
 }
 
 func flattenUserLocalId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserLocalStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -358,10 +340,6 @@ func flattenUserLocalStatus(v interface{}, d *schema.ResourceData, pre string, s
 }
 
 func flattenUserLocalType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenUserLocalPasswd(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -418,7 +396,7 @@ func flattenUserLocalPasswdTime(v interface{}, d *schema.ResourceData, pre strin
 }
 
 func flattenUserLocalAuthtimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserLocalWorkstation(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -430,11 +408,7 @@ func flattenUserLocalAuthConcurrentOverride(v interface{}, d *schema.ResourceDat
 }
 
 func flattenUserLocalAuthConcurrentValue(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenUserLocalPpkSecret(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserLocalPpkIdentity(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -783,6 +757,8 @@ func getObjectUserLocal(d *schema.ResourceData, sv string) (*map[string]interfac
 		} else if t != nil {
 			obj["passwd"] = t
 		}
+	} else if d.HasChange("passwd") {
+		obj["passwd"] = nil
 	}
 
 	if v, ok := d.GetOk("ldap_server"); ok {
@@ -792,6 +768,8 @@ func getObjectUserLocal(d *schema.ResourceData, sv string) (*map[string]interfac
 		} else if t != nil {
 			obj["ldap-server"] = t
 		}
+	} else if d.HasChange("ldap_server") {
+		obj["ldap-server"] = nil
 	}
 
 	if v, ok := d.GetOk("radius_server"); ok {
@@ -801,6 +779,8 @@ func getObjectUserLocal(d *schema.ResourceData, sv string) (*map[string]interfac
 		} else if t != nil {
 			obj["radius-server"] = t
 		}
+	} else if d.HasChange("radius_server") {
+		obj["radius-server"] = nil
 	}
 
 	if v, ok := d.GetOk("tacacs_server"); ok {
@@ -810,6 +790,8 @@ func getObjectUserLocal(d *schema.ResourceData, sv string) (*map[string]interfac
 		} else if t != nil {
 			obj["tacacs+-server"] = t
 		}
+	} else if d.HasChange("tacacs_server") {
+		obj["tacacs+-server"] = nil
 	}
 
 	if v, ok := d.GetOk("two_factor"); ok {
@@ -828,6 +810,8 @@ func getObjectUserLocal(d *schema.ResourceData, sv string) (*map[string]interfac
 		} else if t != nil {
 			obj["two-factor-authentication"] = t
 		}
+	} else if d.HasChange("two_factor_authentication") {
+		obj["two-factor-authentication"] = nil
 	}
 
 	if v, ok := d.GetOk("two_factor_notification"); ok {
@@ -837,6 +821,8 @@ func getObjectUserLocal(d *schema.ResourceData, sv string) (*map[string]interfac
 		} else if t != nil {
 			obj["two-factor-notification"] = t
 		}
+	} else if d.HasChange("two_factor_notification") {
+		obj["two-factor-notification"] = nil
 	}
 
 	if v, ok := d.GetOk("fortitoken"); ok {
@@ -846,6 +832,8 @@ func getObjectUserLocal(d *schema.ResourceData, sv string) (*map[string]interfac
 		} else if t != nil {
 			obj["fortitoken"] = t
 		}
+	} else if d.HasChange("fortitoken") {
+		obj["fortitoken"] = nil
 	}
 
 	if v, ok := d.GetOk("email_to"); ok {
@@ -855,6 +843,8 @@ func getObjectUserLocal(d *schema.ResourceData, sv string) (*map[string]interfac
 		} else if t != nil {
 			obj["email-to"] = t
 		}
+	} else if d.HasChange("email_to") {
+		obj["email-to"] = nil
 	}
 
 	if v, ok := d.GetOk("sms_server"); ok {
@@ -873,6 +863,8 @@ func getObjectUserLocal(d *schema.ResourceData, sv string) (*map[string]interfac
 		} else if t != nil {
 			obj["sms-custom-server"] = t
 		}
+	} else if d.HasChange("sms_custom_server") {
+		obj["sms-custom-server"] = nil
 	}
 
 	if v, ok := d.GetOk("sms_phone"); ok {
@@ -882,6 +874,8 @@ func getObjectUserLocal(d *schema.ResourceData, sv string) (*map[string]interfac
 		} else if t != nil {
 			obj["sms-phone"] = t
 		}
+	} else if d.HasChange("sms_phone") {
+		obj["sms-phone"] = nil
 	}
 
 	if v, ok := d.GetOk("passwd_policy"); ok {
@@ -891,6 +885,8 @@ func getObjectUserLocal(d *schema.ResourceData, sv string) (*map[string]interfac
 		} else if t != nil {
 			obj["passwd-policy"] = t
 		}
+	} else if d.HasChange("passwd_policy") {
+		obj["passwd-policy"] = nil
 	}
 
 	if v, ok := d.GetOk("passwd_time"); ok {
@@ -900,6 +896,8 @@ func getObjectUserLocal(d *schema.ResourceData, sv string) (*map[string]interfac
 		} else if t != nil {
 			obj["passwd-time"] = t
 		}
+	} else if d.HasChange("passwd_time") {
+		obj["passwd-time"] = nil
 	}
 
 	if v, ok := d.GetOkExists("authtimeout"); ok {
@@ -909,6 +907,8 @@ func getObjectUserLocal(d *schema.ResourceData, sv string) (*map[string]interfac
 		} else if t != nil {
 			obj["authtimeout"] = t
 		}
+	} else if d.HasChange("authtimeout") {
+		obj["authtimeout"] = nil
 	}
 
 	if v, ok := d.GetOk("workstation"); ok {
@@ -918,6 +918,8 @@ func getObjectUserLocal(d *schema.ResourceData, sv string) (*map[string]interfac
 		} else if t != nil {
 			obj["workstation"] = t
 		}
+	} else if d.HasChange("workstation") {
+		obj["workstation"] = nil
 	}
 
 	if v, ok := d.GetOk("auth_concurrent_override"); ok {
@@ -936,6 +938,8 @@ func getObjectUserLocal(d *schema.ResourceData, sv string) (*map[string]interfac
 		} else if t != nil {
 			obj["auth-concurrent-value"] = t
 		}
+	} else if d.HasChange("auth_concurrent_value") {
+		obj["auth-concurrent-value"] = nil
 	}
 
 	if v, ok := d.GetOk("ppk_secret"); ok {
@@ -945,6 +949,8 @@ func getObjectUserLocal(d *schema.ResourceData, sv string) (*map[string]interfac
 		} else if t != nil {
 			obj["ppk-secret"] = t
 		}
+	} else if d.HasChange("ppk_secret") {
+		obj["ppk-secret"] = nil
 	}
 
 	if v, ok := d.GetOk("ppk_identity"); ok {
@@ -954,6 +960,8 @@ func getObjectUserLocal(d *schema.ResourceData, sv string) (*map[string]interfac
 		} else if t != nil {
 			obj["ppk-identity"] = t
 		}
+	} else if d.HasChange("ppk_identity") {
+		obj["ppk-identity"] = nil
 	}
 
 	if v, ok := d.GetOk("qkd_profile"); ok {
@@ -963,6 +971,8 @@ func getObjectUserLocal(d *schema.ResourceData, sv string) (*map[string]interfac
 		} else if t != nil {
 			obj["qkd-profile"] = t
 		}
+	} else if d.HasChange("qkd_profile") {
+		obj["qkd-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("username_sensitivity"); ok {
@@ -981,6 +991,8 @@ func getObjectUserLocal(d *schema.ResourceData, sv string) (*map[string]interfac
 		} else if t != nil {
 			obj["username-case-insensitivity"] = t
 		}
+	} else if d.HasChange("username_case_insensitivity") {
+		obj["username-case-insensitivity"] = nil
 	}
 
 	if v, ok := d.GetOk("username_case_sensitivity"); ok {
@@ -990,6 +1002,8 @@ func getObjectUserLocal(d *schema.ResourceData, sv string) (*map[string]interfac
 		} else if t != nil {
 			obj["username-case-sensitivity"] = t
 		}
+	} else if d.HasChange("username_case_sensitivity") {
+		obj["username-case-sensitivity"] = nil
 	}
 
 	return &obj, nil

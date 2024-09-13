@@ -64,7 +64,6 @@ func resourceIpsGlobal() *schema.Resource {
 			"intelligent_mode": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"socket_size": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -76,7 +75,6 @@ func resourceIpsGlobal() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"sync_session_ttl": &schema.Schema{
 				Type:     schema.TypeString,
@@ -106,12 +104,10 @@ func resourceIpsGlobal() *schema.Resource {
 			"deep_app_insp_timeout": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"deep_app_insp_db_limit": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"exclude_signatures": &schema.Schema{
 				Type:     schema.TypeString,
@@ -133,7 +129,6 @@ func resourceIpsGlobal() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(10, 50),
 				Optional:     true,
-				Computed:     true,
 			},
 			"tls_active_probe": &schema.Schema{
 				Type:     schema.TypeList,
@@ -151,13 +146,11 @@ func resourceIpsGlobal() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 						"vdom": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 31),
 							Optional:     true,
-							Computed:     true,
 						},
 						"source_ip": &schema.Schema{
 							Type:     schema.TypeString,
@@ -320,11 +313,11 @@ func flattenIpsGlobalIntelligentMode(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenIpsGlobalSocketSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenIpsGlobalEngineCount(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenIpsGlobalSyncSessionTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -348,11 +341,11 @@ func flattenIpsGlobalSkypeClientPublicIpaddr(v interface{}, d *schema.ResourceDa
 }
 
 func flattenIpsGlobalDeepAppInspTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenIpsGlobalDeepAppInspDbLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenIpsGlobalExcludeSignatures(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -360,15 +353,15 @@ func flattenIpsGlobalExcludeSignatures(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenIpsGlobalPacketLogQueueDepth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenIpsGlobalNgfwMaxScanRange(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenIpsGlobalAvMemLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenIpsGlobalTlsActiveProbe(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -806,6 +799,8 @@ func getObjectIpsGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*map
 				obj["intelligent-mode"] = t
 			}
 		}
+	} else if d.HasChange("intelligent_mode") {
+		obj["intelligent-mode"] = nil
 	}
 
 	if v, ok := d.GetOkExists("socket_size"); ok {
@@ -832,6 +827,8 @@ func getObjectIpsGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*map
 				obj["engine-count"] = t
 			}
 		}
+	} else if d.HasChange("engine_count") {
+		obj["engine-count"] = nil
 	}
 
 	if v, ok := d.GetOk("sync_session_ttl"); ok {
@@ -897,6 +894,8 @@ func getObjectIpsGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*map
 				obj["skype-client-public-ipaddr"] = t
 			}
 		}
+	} else if d.HasChange("skype_client_public_ipaddr") {
+		obj["skype-client-public-ipaddr"] = nil
 	}
 
 	if v, ok := d.GetOkExists("deep_app_insp_timeout"); ok {
@@ -910,6 +909,8 @@ func getObjectIpsGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*map
 				obj["deep-app-insp-timeout"] = t
 			}
 		}
+	} else if d.HasChange("deep_app_insp_timeout") {
+		obj["deep-app-insp-timeout"] = nil
 	}
 
 	if v, ok := d.GetOkExists("deep_app_insp_db_limit"); ok {
@@ -923,6 +924,8 @@ func getObjectIpsGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*map
 				obj["deep-app-insp-db-limit"] = t
 			}
 		}
+	} else if d.HasChange("deep_app_insp_db_limit") {
+		obj["deep-app-insp-db-limit"] = nil
 	}
 
 	if v, ok := d.GetOk("exclude_signatures"); ok {
@@ -975,6 +978,8 @@ func getObjectIpsGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*map
 				obj["av-mem-limit"] = t
 			}
 		}
+	} else if d.HasChange("av_mem_limit") {
+		obj["av-mem-limit"] = nil
 	}
 
 	if v, ok := d.GetOk("tls_active_probe"); ok {

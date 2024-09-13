@@ -47,25 +47,21 @@ func resourceVpnQkd() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"port": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"fosid": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 291),
 				Optional:     true,
-				Computed:     true,
 			},
 			"peer": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"certificate": &schema.Schema{
 				Type:     schema.TypeSet,
@@ -76,7 +72,6 @@ func resourceVpnQkd() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -260,7 +255,7 @@ func flattenVpnQkdServer(v interface{}, d *schema.ResourceData, pre string, sv s
 }
 
 func flattenVpnQkdPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVpnQkdId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -458,6 +453,8 @@ func getObjectVpnQkd(d *schema.ResourceData, sv string) (*map[string]interface{}
 		} else if t != nil {
 			obj["server"] = t
 		}
+	} else if d.HasChange("server") {
+		obj["server"] = nil
 	}
 
 	if v, ok := d.GetOk("port"); ok {
@@ -467,6 +464,8 @@ func getObjectVpnQkd(d *schema.ResourceData, sv string) (*map[string]interface{}
 		} else if t != nil {
 			obj["port"] = t
 		}
+	} else if d.HasChange("port") {
+		obj["port"] = nil
 	}
 
 	if v, ok := d.GetOk("fosid"); ok {
@@ -476,6 +475,8 @@ func getObjectVpnQkd(d *schema.ResourceData, sv string) (*map[string]interface{}
 		} else if t != nil {
 			obj["id"] = t
 		}
+	} else if d.HasChange("fosid") {
+		obj["id"] = nil
 	}
 
 	if v, ok := d.GetOk("peer"); ok {
@@ -485,6 +486,8 @@ func getObjectVpnQkd(d *schema.ResourceData, sv string) (*map[string]interface{}
 		} else if t != nil {
 			obj["peer"] = t
 		}
+	} else if d.HasChange("peer") {
+		obj["peer"] = nil
 	}
 
 	if v, ok := d.GetOk("certificate"); ok || d.HasChange("certificate") {
@@ -503,6 +506,8 @@ func getObjectVpnQkd(d *schema.ResourceData, sv string) (*map[string]interface{}
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	return &obj, nil

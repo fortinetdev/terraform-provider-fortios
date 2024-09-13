@@ -210,7 +210,7 @@ func resourceSystemIpv6NeighborCacheRead(d *schema.ResourceData, m interface{}) 
 }
 
 func flattenSystemIpv6NeighborCacheId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemIpv6NeighborCacheInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -296,6 +296,8 @@ func getObjectSystemIpv6NeighborCache(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["interface"] = t
 		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
 	}
 
 	if v, ok := d.GetOk("ipv6"); ok {

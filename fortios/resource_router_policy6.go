@@ -65,7 +65,6 @@ func resourceRouterPolicy6() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -89,7 +88,6 @@ func resourceRouterPolicy6() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -108,7 +106,6 @@ func resourceRouterPolicy6() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"start_port": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -143,17 +140,14 @@ func resourceRouterPolicy6() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"tos": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"tos_mask": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
@@ -173,7 +167,6 @@ func resourceRouterPolicy6() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -187,7 +180,6 @@ func resourceRouterPolicy6() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -358,11 +350,11 @@ func resourceRouterPolicy6Read(d *schema.ResourceData, m interface{}) error {
 }
 
 func flattenRouterPolicy6SeqNum(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterPolicy6InputDevice(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convmap2str(v, d.Get("input_device"), "name")
 }
 
 func flattenRouterPolicy6InputDeviceNegate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -370,7 +362,7 @@ func flattenRouterPolicy6InputDeviceNegate(v interface{}, d *schema.ResourceData
 }
 
 func flattenRouterPolicy6Src(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convmap2str(v, d.Get("src"), "addr6")
 }
 
 func flattenRouterPolicy6Srcaddr(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -420,7 +412,7 @@ func flattenRouterPolicy6SrcNegate(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenRouterPolicy6Dst(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convmap2str(v, d.Get("dst"), "addr6")
 }
 
 func flattenRouterPolicy6Dstaddr(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -474,23 +466,23 @@ func flattenRouterPolicy6Action(v interface{}, d *schema.ResourceData, pre strin
 }
 
 func flattenRouterPolicy6Protocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterPolicy6StartPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterPolicy6EndPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterPolicy6StartSourcePort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterPolicy6EndSourcePort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterPolicy6Gateway(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -556,7 +548,7 @@ func flattenRouterPolicy6InternetServiceId(v interface{}, d *schema.ResourceData
 }
 
 func flattenRouterPolicy6InternetServiceIdId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterPolicy6InternetServiceCustom(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -616,42 +608,9 @@ func refreshObjectRouterPolicy6(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
-	{
-		v := flattenRouterPolicy6InputDevice(o["input-device"], d, "input_device", sv)
-		vx := ""
-		bstring := false
-		new_version_map := map[string][]string{
-			">=": []string{"6.2.4"},
-		}
-		if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
-			l := v.([]interface{})
-			if len(l) > 0 {
-				for k, r := range l {
-					i := r.(map[string]interface{})
-					if _, ok := i["name"]; ok {
-						if xv, ok := i["name"].(string); ok {
-							vx += xv
-							if k < len(l)-1 {
-								vx += ", "
-							}
-						}
-					}
-				}
-			}
-			bstring = true
-		}
-		if bstring == true {
-			if err = d.Set("input_device", vx); err != nil {
-				if !fortiAPIPatch(o["input-device"]) {
-					return fmt.Errorf("Error reading input_device: %v", err)
-				}
-			}
-		} else {
-			if err = d.Set("input_device", v); err != nil {
-				if !fortiAPIPatch(o["input-device"]) {
-					return fmt.Errorf("Error reading input_device: %v", err)
-				}
-			}
+	if err = d.Set("input_device", flattenRouterPolicy6InputDevice(o["input-device"], d, "input_device", sv)); err != nil {
+		if !fortiAPIPatch(o["input-device"]) {
+			return fmt.Errorf("Error reading input_device: %v", err)
 		}
 	}
 
@@ -661,42 +620,9 @@ func refreshObjectRouterPolicy6(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
-	{
-		v := flattenRouterPolicy6Src(o["src"], d, "src", sv)
-		vx := ""
-		bstring := false
-		new_version_map := map[string][]string{
-			">=": []string{"7.2.1"},
-		}
-		if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
-			l := v.([]interface{})
-			if len(l) > 0 {
-				for k, r := range l {
-					i := r.(map[string]interface{})
-					if _, ok := i["addr6"]; ok {
-						if xv, ok := i["addr6"].(string); ok {
-							vx += xv
-							if k < len(l)-1 {
-								vx += ", "
-							}
-						}
-					}
-				}
-			}
-			bstring = true
-		}
-		if bstring == true {
-			if err = d.Set("src", vx); err != nil {
-				if !fortiAPIPatch(o["src"]) {
-					return fmt.Errorf("Error reading src: %v", err)
-				}
-			}
-		} else {
-			if err = d.Set("src", v); err != nil {
-				if !fortiAPIPatch(o["src"]) {
-					return fmt.Errorf("Error reading src: %v", err)
-				}
-			}
+	if err = d.Set("src", flattenRouterPolicy6Src(o["src"], d, "src", sv)); err != nil {
+		if !fortiAPIPatch(o["src"]) {
+			return fmt.Errorf("Error reading src: %v", err)
 		}
 	}
 
@@ -722,42 +648,9 @@ func refreshObjectRouterPolicy6(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
-	{
-		v := flattenRouterPolicy6Dst(o["dst"], d, "dst", sv)
-		vx := ""
-		bstring := false
-		new_version_map := map[string][]string{
-			">=": []string{"7.2.1"},
-		}
-		if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
-			l := v.([]interface{})
-			if len(l) > 0 {
-				for k, r := range l {
-					i := r.(map[string]interface{})
-					if _, ok := i["addr6"]; ok {
-						if xv, ok := i["addr6"].(string); ok {
-							vx += xv
-							if k < len(l)-1 {
-								vx += ", "
-							}
-						}
-					}
-				}
-			}
-			bstring = true
-		}
-		if bstring == true {
-			if err = d.Set("dst", vx); err != nil {
-				if !fortiAPIPatch(o["dst"]) {
-					return fmt.Errorf("Error reading dst: %v", err)
-				}
-			}
-		} else {
-			if err = d.Set("dst", v); err != nil {
-				if !fortiAPIPatch(o["dst"]) {
-					return fmt.Errorf("Error reading dst: %v", err)
-				}
-			}
+	if err = d.Set("dst", flattenRouterPolicy6Dst(o["dst"], d, "dst", sv)); err != nil {
+		if !fortiAPIPatch(o["dst"]) {
+			return fmt.Errorf("Error reading dst: %v", err)
 		}
 	}
 
@@ -901,7 +794,25 @@ func expandRouterPolicy6SeqNum(d *schema.ResourceData, v interface{}, pre string
 }
 
 func expandRouterPolicy6InputDevice(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
+	new_version_map := map[string][]string{
+		">=": []string{"6.2.4"},
+	}
+	if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
+		vx := fmt.Sprintf("%v", v)
+		vxx := strings.Split(vx, ", ")
+
+		tmps := make([]map[string]interface{}, 0, len(vxx))
+
+		for _, xv := range vxx {
+			xtmp := make(map[string]interface{})
+			xtmp["name"] = xv
+
+			tmps = append(tmps, xtmp)
+		}
+		return tmps, nil
+	} else {
+		return v, nil
+	}
 }
 
 func expandRouterPolicy6InputDeviceNegate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
@@ -909,7 +820,25 @@ func expandRouterPolicy6InputDeviceNegate(d *schema.ResourceData, v interface{},
 }
 
 func expandRouterPolicy6Src(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
+	new_version_map := map[string][]string{
+		">=": []string{"7.2.1"},
+	}
+	if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
+		vx := fmt.Sprintf("%v", v)
+		vxx := strings.Split(vx, ", ")
+
+		tmps := make([]map[string]interface{}, 0, len(vxx))
+
+		for _, xv := range vxx {
+			xtmp := make(map[string]interface{})
+			xtmp["addr6"] = xv
+
+			tmps = append(tmps, xtmp)
+		}
+		return tmps, nil
+	} else {
+		return v, nil
+	}
 }
 
 func expandRouterPolicy6Srcaddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
@@ -945,7 +874,25 @@ func expandRouterPolicy6SrcNegate(d *schema.ResourceData, v interface{}, pre str
 }
 
 func expandRouterPolicy6Dst(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
+	new_version_map := map[string][]string{
+		">=": []string{"7.2.1"},
+	}
+	if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
+		vx := fmt.Sprintf("%v", v)
+		vxx := strings.Split(vx, ", ")
+
+		tmps := make([]map[string]interface{}, 0, len(vxx))
+
+		for _, xv := range vxx {
+			xtmp := make(map[string]interface{})
+			xtmp["addr6"] = xv
+
+			tmps = append(tmps, xtmp)
+		}
+		return tmps, nil
+	} else {
+		return v, nil
+	}
 }
 
 func expandRouterPolicy6Dstaddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
@@ -1101,26 +1048,10 @@ func getObjectRouterPolicy6(d *schema.ResourceData, sv string) (*map[string]inte
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
-			new_version_map := map[string][]string{
-				">=": []string{"6.2.4"},
-			}
-			if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
-				vx := fmt.Sprintf("%v", t)
-				vxx := strings.Split(vx, ", ")
-
-				tmps := make([]map[string]interface{}, 0, len(vxx))
-
-				for _, xv := range vxx {
-					xtmp := make(map[string]interface{})
-					xtmp["name"] = xv
-
-					tmps = append(tmps, xtmp)
-				}
-				obj["input-device"] = tmps
-			} else {
-				obj["input-device"] = t
-			}
+			obj["input-device"] = t
 		}
+	} else if d.HasChange("input_device") {
+		obj["input-device"] = nil
 	}
 
 	if v, ok := d.GetOk("input_device_negate"); ok {
@@ -1137,25 +1068,7 @@ func getObjectRouterPolicy6(d *schema.ResourceData, sv string) (*map[string]inte
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
-			new_version_map := map[string][]string{
-				">=": []string{"7.2.1"},
-			}
-			if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
-				vx := fmt.Sprintf("%v", t)
-				vxx := strings.Split(vx, ", ")
-
-				tmps := make([]map[string]interface{}, 0, len(vxx))
-
-				for _, xv := range vxx {
-					xtmp := make(map[string]interface{})
-					xtmp["addr6"] = xv
-
-					tmps = append(tmps, xtmp)
-				}
-				obj["src"] = tmps
-			} else {
-				obj["src"] = t
-			}
+			obj["src"] = t
 		}
 	}
 
@@ -1182,25 +1095,7 @@ func getObjectRouterPolicy6(d *schema.ResourceData, sv string) (*map[string]inte
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
-			new_version_map := map[string][]string{
-				">=": []string{"7.2.1"},
-			}
-			if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
-				vx := fmt.Sprintf("%v", t)
-				vxx := strings.Split(vx, ", ")
-
-				tmps := make([]map[string]interface{}, 0, len(vxx))
-
-				for _, xv := range vxx {
-					xtmp := make(map[string]interface{})
-					xtmp["addr6"] = xv
-
-					tmps = append(tmps, xtmp)
-				}
-				obj["dst"] = tmps
-			} else {
-				obj["dst"] = t
-			}
+			obj["dst"] = t
 		}
 	}
 
@@ -1238,6 +1133,8 @@ func getObjectRouterPolicy6(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["protocol"] = t
 		}
+	} else if d.HasChange("protocol") {
+		obj["protocol"] = nil
 	}
 
 	if v, ok := d.GetOk("start_port"); ok {
@@ -1292,6 +1189,8 @@ func getObjectRouterPolicy6(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["output-device"] = t
 		}
+	} else if d.HasChange("output_device") {
+		obj["output-device"] = nil
 	}
 
 	if v, ok := d.GetOk("tos"); ok {
@@ -1301,6 +1200,8 @@ func getObjectRouterPolicy6(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["tos"] = t
 		}
+	} else if d.HasChange("tos") {
+		obj["tos"] = nil
 	}
 
 	if v, ok := d.GetOk("tos_mask"); ok {
@@ -1310,6 +1211,8 @@ func getObjectRouterPolicy6(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["tos-mask"] = t
 		}
+	} else if d.HasChange("tos_mask") {
+		obj["tos-mask"] = nil
 	}
 
 	if v, ok := d.GetOk("status"); ok {
@@ -1328,6 +1231,8 @@ func getObjectRouterPolicy6(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["comments"] = t
 		}
+	} else if d.HasChange("comments") {
+		obj["comments"] = nil
 	}
 
 	if v, ok := d.GetOk("internet_service_id"); ok || d.HasChange("internet_service_id") {

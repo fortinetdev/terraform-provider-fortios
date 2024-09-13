@@ -57,7 +57,6 @@ func resourceSystemSsoAdmin() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -66,7 +65,6 @@ func resourceSystemSsoAdmin() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 5),
 				Optional:     true,
-				Computed:     true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
@@ -398,6 +396,8 @@ func getObjectSystemSsoAdmin(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["accprofile"] = t
 		}
+	} else if d.HasChange("accprofile") {
+		obj["accprofile"] = nil
 	}
 
 	if v, ok := d.GetOk("vdom"); ok || d.HasChange("vdom") {
@@ -416,6 +416,8 @@ func getObjectSystemSsoAdmin(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["gui-ignore-release-overview-version"] = t
 		}
+	} else if d.HasChange("gui_ignore_release_overview_version") {
+		obj["gui-ignore-release-overview-version"] = nil
 	}
 
 	return &obj, nil

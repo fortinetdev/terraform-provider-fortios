@@ -52,13 +52,11 @@ func resourceVpnSslClient() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"user": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"psk": &schema.Schema{
 				Type:     schema.TypeString,
@@ -68,13 +66,11 @@ func resourceVpnSslClient() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"server": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"port": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -86,7 +82,6 @@ func resourceVpnSslClient() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
@@ -97,13 +92,11 @@ func resourceVpnSslClient() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"source_ip": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"distance": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -119,19 +112,16 @@ func resourceVpnSslClient() *schema.Resource {
 			"class_id": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"ipv4_subnets": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ipv6_subnets": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -317,7 +307,7 @@ func flattenVpnSslClientServer(v interface{}, d *schema.ResourceData, pre string
 }
 
 func flattenVpnSslClientPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVpnSslClientRealm(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -337,15 +327,15 @@ func flattenVpnSslClientSourceIp(v interface{}, d *schema.ResourceData, pre stri
 }
 
 func flattenVpnSslClientDistance(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVpnSslClientPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVpnSslClientClassId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVpnSslClientIpv4Subnets(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -557,6 +547,8 @@ func getObjectVpnSslClient(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
@@ -566,6 +558,8 @@ func getObjectVpnSslClient(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["interface"] = t
 		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
 	}
 
 	if v, ok := d.GetOk("user"); ok {
@@ -575,6 +569,8 @@ func getObjectVpnSslClient(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["user"] = t
 		}
+	} else if d.HasChange("user") {
+		obj["user"] = nil
 	}
 
 	if v, ok := d.GetOk("psk"); ok {
@@ -584,6 +580,8 @@ func getObjectVpnSslClient(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["psk"] = t
 		}
+	} else if d.HasChange("psk") {
+		obj["psk"] = nil
 	}
 
 	if v, ok := d.GetOk("peer"); ok {
@@ -593,6 +591,8 @@ func getObjectVpnSslClient(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["peer"] = t
 		}
+	} else if d.HasChange("peer") {
+		obj["peer"] = nil
 	}
 
 	if v, ok := d.GetOk("server"); ok {
@@ -602,6 +602,8 @@ func getObjectVpnSslClient(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["server"] = t
 		}
+	} else if d.HasChange("server") {
+		obj["server"] = nil
 	}
 
 	if v, ok := d.GetOk("port"); ok {
@@ -620,6 +622,8 @@ func getObjectVpnSslClient(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["realm"] = t
 		}
+	} else if d.HasChange("realm") {
+		obj["realm"] = nil
 	}
 
 	if v, ok := d.GetOk("status"); ok {
@@ -638,6 +642,8 @@ func getObjectVpnSslClient(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["certificate"] = t
 		}
+	} else if d.HasChange("certificate") {
+		obj["certificate"] = nil
 	}
 
 	if v, ok := d.GetOk("source_ip"); ok {
@@ -647,6 +653,8 @@ func getObjectVpnSslClient(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["source-ip"] = t
 		}
+	} else if d.HasChange("source_ip") {
+		obj["source-ip"] = nil
 	}
 
 	if v, ok := d.GetOk("distance"); ok {
@@ -674,6 +682,8 @@ func getObjectVpnSslClient(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["class-id"] = t
 		}
+	} else if d.HasChange("class_id") {
+		obj["class-id"] = nil
 	}
 
 	if v, ok := d.GetOk("ipv4_subnets"); ok {
@@ -683,6 +693,8 @@ func getObjectVpnSslClient(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["ipv4-subnets"] = t
 		}
+	} else if d.HasChange("ipv4_subnets") {
+		obj["ipv4-subnets"] = nil
 	}
 
 	if v, ok := d.GetOk("ipv6_subnets"); ok {
@@ -692,6 +704,8 @@ func getObjectVpnSslClient(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["ipv6-subnets"] = t
 		}
+	} else if d.HasChange("ipv6_subnets") {
+		obj["ipv6-subnets"] = nil
 	}
 
 	return &obj, nil

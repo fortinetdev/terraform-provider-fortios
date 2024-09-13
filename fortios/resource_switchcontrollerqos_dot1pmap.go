@@ -46,7 +46,6 @@ func resourceSwitchControllerQosDot1PMap() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"egress_pri_tagging": &schema.Schema{
 				Type:     schema.TypeString,
@@ -433,6 +432,8 @@ func getObjectSwitchControllerQosDot1PMap(d *schema.ResourceData, sv string) (*m
 		} else if t != nil {
 			obj["description"] = t
 		}
+	} else if d.HasChange("description") {
+		obj["description"] = nil
 	}
 
 	if v, ok := d.GetOk("egress_pri_tagging"); ok {

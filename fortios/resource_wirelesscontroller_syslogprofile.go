@@ -62,7 +62,6 @@ func resourceWirelessControllerSyslogProfile() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"server_ip": &schema.Schema{
 				Type:     schema.TypeString,
@@ -260,7 +259,7 @@ func flattenWirelessControllerSyslogProfileServerIp(v interface{}, d *schema.Res
 }
 
 func flattenWirelessControllerSyslogProfileServerPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerSyslogProfileLogLevel(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -378,6 +377,8 @@ func getObjectWirelessControllerSyslogProfile(d *schema.ResourceData, sv string)
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("server_status"); ok {
@@ -405,6 +406,8 @@ func getObjectWirelessControllerSyslogProfile(d *schema.ResourceData, sv string)
 		} else if t != nil {
 			obj["server-fqdn"] = t
 		}
+	} else if d.HasChange("server_fqdn") {
+		obj["server-fqdn"] = nil
 	}
 
 	if v, ok := d.GetOk("server_ip"); ok {

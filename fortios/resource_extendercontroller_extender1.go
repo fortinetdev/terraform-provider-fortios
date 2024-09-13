@@ -46,7 +46,6 @@ func resourceExtenderControllerExtender1() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 19),
 				Optional:     true,
-				Computed:     true,
 			},
 			"authorized": &schema.Schema{
 				Type:     schema.TypeString,
@@ -56,18 +55,15 @@ func resourceExtenderControllerExtender1() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 31),
 				Optional:     true,
-				Computed:     true,
 			},
 			"description": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"vdom": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"login_password": &schema.Schema{
 				Type:         schema.TypeString,
@@ -85,17 +81,14 @@ func resourceExtenderControllerExtender1() *schema.Resource {
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"interval": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"signal_threshold": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -111,43 +104,35 @@ func resourceExtenderControllerExtender1() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 						"redundant_mode": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"redundant_intf": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 						"conn_status": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"default_sim": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"gps": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"sim1_pin": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"sim2_pin": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"sim1_pin_code": &schema.Schema{
 							Type:         schema.TypeString,
@@ -165,7 +150,6 @@ func resourceExtenderControllerExtender1() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 31),
 							Optional:     true,
-							Computed:     true,
 						},
 						"auto_switch": &schema.Schema{
 							Type:     schema.TypeList,
@@ -177,44 +161,36 @@ func resourceExtenderControllerExtender1() *schema.Resource {
 									"disconnect": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
 									},
 									"disconnect_threshold": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 									"disconnect_period": &schema.Schema{
 										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(600, 18000),
 										Optional:     true,
-										Computed:     true,
 									},
 									"signal": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
 									},
 									"dataplan": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
 									},
 									"switch_back": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
 									},
 									"switch_back_time": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 31),
 										Optional:     true,
-										Computed:     true,
 									},
 									"switch_back_timer": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 								},
 							},
@@ -233,43 +209,35 @@ func resourceExtenderControllerExtender1() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 						"redundant_mode": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"redundant_intf": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 						"conn_status": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"default_sim": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"gps": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"sim1_pin": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"sim2_pin": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"sim1_pin_code": &schema.Schema{
 							Type:         schema.TypeString,
@@ -287,7 +255,6 @@ func resourceExtenderControllerExtender1() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 31),
 							Optional:     true,
-							Computed:     true,
 						},
 						"auto_switch": &schema.Schema{
 							Type:     schema.TypeList,
@@ -299,44 +266,36 @@ func resourceExtenderControllerExtender1() *schema.Resource {
 									"disconnect": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
 									},
 									"disconnect_threshold": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 									"disconnect_period": &schema.Schema{
 										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(600, 18000),
 										Optional:     true,
-										Computed:     true,
 									},
 									"signal": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
 									},
 									"dataplan": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
 									},
 									"switch_back": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
 									},
 									"switch_back_time": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 31),
 										Optional:     true,
-										Computed:     true,
 									},
 									"switch_back_timer": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 								},
 							},
@@ -525,11 +484,7 @@ func flattenExtenderControllerExtender1Description(v interface{}, d *schema.Reso
 }
 
 func flattenExtenderControllerExtender1Vdom(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenExtenderControllerExtender1LoginPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenExtenderControllerExtender1ControllerReport(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -565,11 +520,11 @@ func flattenExtenderControllerExtender1ControllerReportStatus(v interface{}, d *
 }
 
 func flattenExtenderControllerExtender1ControllerReportInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenExtenderControllerExtender1ControllerReportSignalThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenExtenderControllerExtender1Modem1(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -623,7 +578,6 @@ func flattenExtenderControllerExtender1Modem1(v interface{}, d *schema.ResourceD
 
 	pre_append = pre + ".0." + "sim1_pin_code"
 	if _, ok := i["sim1-pin-code"]; ok {
-		result["sim1_pin_code"] = flattenExtenderControllerExtender1Modem1Sim1PinCode(i["sim1-pin-code"], d, pre_append, sv)
 		c := d.Get(pre_append).(string)
 		if c != "" {
 			result["sim1_pin_code"] = c
@@ -632,7 +586,6 @@ func flattenExtenderControllerExtender1Modem1(v interface{}, d *schema.ResourceD
 
 	pre_append = pre + ".0." + "sim2_pin_code"
 	if _, ok := i["sim2-pin-code"]; ok {
-		result["sim2_pin_code"] = flattenExtenderControllerExtender1Modem1Sim2PinCode(i["sim2-pin-code"], d, pre_append, sv)
 		c := d.Get(pre_append).(string)
 		if c != "" {
 			result["sim2_pin_code"] = c
@@ -666,7 +619,7 @@ func flattenExtenderControllerExtender1Modem1RedundantIntf(v interface{}, d *sch
 }
 
 func flattenExtenderControllerExtender1Modem1ConnStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenExtenderControllerExtender1Modem1DefaultSim(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -682,14 +635,6 @@ func flattenExtenderControllerExtender1Modem1Sim1Pin(v interface{}, d *schema.Re
 }
 
 func flattenExtenderControllerExtender1Modem1Sim2Pin(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenExtenderControllerExtender1Modem1Sim1PinCode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenExtenderControllerExtender1Modem1Sim2PinCode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -755,11 +700,11 @@ func flattenExtenderControllerExtender1Modem1AutoSwitchDisconnect(v interface{},
 }
 
 func flattenExtenderControllerExtender1Modem1AutoSwitchDisconnectThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenExtenderControllerExtender1Modem1AutoSwitchDisconnectPeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenExtenderControllerExtender1Modem1AutoSwitchSignal(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -779,7 +724,7 @@ func flattenExtenderControllerExtender1Modem1AutoSwitchSwitchBackTime(v interfac
 }
 
 func flattenExtenderControllerExtender1Modem1AutoSwitchSwitchBackTimer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenExtenderControllerExtender1Modem2(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -833,7 +778,6 @@ func flattenExtenderControllerExtender1Modem2(v interface{}, d *schema.ResourceD
 
 	pre_append = pre + ".0." + "sim1_pin_code"
 	if _, ok := i["sim1-pin-code"]; ok {
-		result["sim1_pin_code"] = flattenExtenderControllerExtender1Modem2Sim1PinCode(i["sim1-pin-code"], d, pre_append, sv)
 		c := d.Get(pre_append).(string)
 		if c != "" {
 			result["sim1_pin_code"] = c
@@ -842,7 +786,6 @@ func flattenExtenderControllerExtender1Modem2(v interface{}, d *schema.ResourceD
 
 	pre_append = pre + ".0." + "sim2_pin_code"
 	if _, ok := i["sim2-pin-code"]; ok {
-		result["sim2_pin_code"] = flattenExtenderControllerExtender1Modem2Sim2PinCode(i["sim2-pin-code"], d, pre_append, sv)
 		c := d.Get(pre_append).(string)
 		if c != "" {
 			result["sim2_pin_code"] = c
@@ -876,7 +819,7 @@ func flattenExtenderControllerExtender1Modem2RedundantIntf(v interface{}, d *sch
 }
 
 func flattenExtenderControllerExtender1Modem2ConnStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenExtenderControllerExtender1Modem2DefaultSim(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -892,14 +835,6 @@ func flattenExtenderControllerExtender1Modem2Sim1Pin(v interface{}, d *schema.Re
 }
 
 func flattenExtenderControllerExtender1Modem2Sim2Pin(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenExtenderControllerExtender1Modem2Sim1PinCode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenExtenderControllerExtender1Modem2Sim2PinCode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -965,11 +900,11 @@ func flattenExtenderControllerExtender1Modem2AutoSwitchDisconnect(v interface{},
 }
 
 func flattenExtenderControllerExtender1Modem2AutoSwitchDisconnectThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenExtenderControllerExtender1Modem2AutoSwitchDisconnectPeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenExtenderControllerExtender1Modem2AutoSwitchSignal(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -989,7 +924,7 @@ func flattenExtenderControllerExtender1Modem2AutoSwitchSwitchBackTime(v interfac
 }
 
 func flattenExtenderControllerExtender1Modem2AutoSwitchSwitchBackTimer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectExtenderControllerExtender1(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -1551,6 +1486,8 @@ func getObjectExtenderControllerExtender1(d *schema.ResourceData, sv string) (*m
 		} else if t != nil {
 			obj["id"] = t
 		}
+	} else if d.HasChange("fosid") {
+		obj["id"] = nil
 	}
 
 	if v, ok := d.GetOk("authorized"); ok {
@@ -1560,6 +1497,8 @@ func getObjectExtenderControllerExtender1(d *schema.ResourceData, sv string) (*m
 		} else if t != nil {
 			obj["authorized"] = t
 		}
+	} else if d.HasChange("authorized") {
+		obj["authorized"] = nil
 	}
 
 	if v, ok := d.GetOk("ext_name"); ok {
@@ -1569,6 +1508,8 @@ func getObjectExtenderControllerExtender1(d *schema.ResourceData, sv string) (*m
 		} else if t != nil {
 			obj["ext-name"] = t
 		}
+	} else if d.HasChange("ext_name") {
+		obj["ext-name"] = nil
 	}
 
 	if v, ok := d.GetOk("description"); ok {
@@ -1578,6 +1519,8 @@ func getObjectExtenderControllerExtender1(d *schema.ResourceData, sv string) (*m
 		} else if t != nil {
 			obj["description"] = t
 		}
+	} else if d.HasChange("description") {
+		obj["description"] = nil
 	}
 
 	if v, ok := d.GetOkExists("vdom"); ok {
@@ -1587,6 +1530,8 @@ func getObjectExtenderControllerExtender1(d *schema.ResourceData, sv string) (*m
 		} else if t != nil {
 			obj["vdom"] = t
 		}
+	} else if d.HasChange("vdom") {
+		obj["vdom"] = nil
 	}
 
 	if v, ok := d.GetOk("login_password"); ok {
@@ -1596,6 +1541,8 @@ func getObjectExtenderControllerExtender1(d *schema.ResourceData, sv string) (*m
 		} else if t != nil {
 			obj["login-password"] = t
 		}
+	} else if d.HasChange("login_password") {
+		obj["login-password"] = nil
 	}
 
 	if v, ok := d.GetOk("controller_report"); ok {

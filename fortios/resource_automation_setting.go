@@ -166,7 +166,7 @@ func resourceAutomationSettingRead(d *schema.ResourceData, m interface{}) error 
 }
 
 func flattenAutomationSettingMaxConcurrentStitches(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenAutomationSettingFabricSync(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {

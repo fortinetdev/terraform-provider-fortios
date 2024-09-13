@@ -56,13 +56,11 @@ func resourceSystemAutomationAction() *schema.Resource {
 			"system_action": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"tls_certificate": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"forticare_email": &schema.Schema{
 				Type:     schema.TypeString,
@@ -78,7 +76,6 @@ func resourceSystemAutomationAction() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -97,19 +94,16 @@ func resourceSystemAutomationAction() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 1023),
 				Optional:     true,
-				Computed:     true,
 			},
 			"minimum_interval": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 2592000),
 				Optional:     true,
-				Computed:     true,
 			},
 			"delay": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 3600),
 				Optional:     true,
-				Computed:     true,
 			},
 			"required": &schema.Schema{
 				Type:     schema.TypeString,
@@ -120,13 +114,11 @@ func resourceSystemAutomationAction() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"aws_region": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"aws_domain": &schema.Schema{
 				Type:         schema.TypeString,
@@ -138,13 +130,11 @@ func resourceSystemAutomationAction() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"aws_api_path": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"aws_api_key": &schema.Schema{
 				Type:         schema.TypeString,
@@ -156,13 +146,11 @@ func resourceSystemAutomationAction() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"azure_function": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"azure_domain": &schema.Schema{
 				Type:         schema.TypeString,
@@ -185,13 +173,11 @@ func resourceSystemAutomationAction() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"gcp_project": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"gcp_function_domain": &schema.Schema{
 				Type:         schema.TypeString,
@@ -203,19 +189,16 @@ func resourceSystemAutomationAction() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"alicloud_account_id": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"alicloud_region": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"alicloud_function_domain": &schema.Schema{
 				Type:         schema.TypeString,
@@ -227,19 +210,16 @@ func resourceSystemAutomationAction() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"alicloud_service": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
-				Computed:     true,
 			},
 			"alicloud_function": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
-				Computed:     true,
 			},
 			"alicloud_function_authorization": &schema.Schema{
 				Type:     schema.TypeString,
@@ -250,7 +230,6 @@ func resourceSystemAutomationAction() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"alicloud_access_key_secret": &schema.Schema{
 				Type:         schema.TypeString,
@@ -278,7 +257,6 @@ func resourceSystemAutomationAction() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"protocol": &schema.Schema{
 				Type:     schema.TypeString,
@@ -304,7 +282,6 @@ func resourceSystemAutomationAction() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"http_headers": &schema.Schema{
 				Type:     schema.TypeList,
@@ -314,7 +291,6 @@ func resourceSystemAutomationAction() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"key": &schema.Schema{
 							Type:         schema.TypeString,
@@ -338,7 +314,6 @@ func resourceSystemAutomationAction() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -363,7 +338,6 @@ func resourceSystemAutomationAction() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 300),
 				Optional:     true,
-				Computed:     true,
 			},
 			"execute_security_fabric": &schema.Schema{
 				Type:     schema.TypeString,
@@ -374,13 +348,11 @@ func resourceSystemAutomationAction() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"security_tag": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"sdn_connector": &schema.Schema{
 				Type:     schema.TypeSet,
@@ -391,7 +363,6 @@ func resourceSystemAutomationAction() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -640,11 +611,11 @@ func flattenSystemAutomationActionEmailBody(v interface{}, d *schema.ResourceDat
 }
 
 func flattenSystemAutomationActionMinimumInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemAutomationActionDelay(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemAutomationActionRequired(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -671,10 +642,6 @@ func flattenSystemAutomationActionAwsApiPath(v interface{}, d *schema.ResourceDa
 	return v
 }
 
-func flattenSystemAutomationActionAwsApiKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
 func flattenSystemAutomationActionAzureApp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -688,10 +655,6 @@ func flattenSystemAutomationActionAzureDomain(v interface{}, d *schema.ResourceD
 }
 
 func flattenSystemAutomationActionAzureFunctionAuthorization(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenSystemAutomationActionAzureApiKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -743,10 +706,6 @@ func flattenSystemAutomationActionAlicloudAccessKeyId(v interface{}, d *schema.R
 	return v
 }
 
-func flattenSystemAutomationActionAlicloudAccessKeySecret(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
 func flattenSystemAutomationActionMessageType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -780,7 +739,7 @@ func flattenSystemAutomationActionHttpBody(v interface{}, d *schema.ResourceData
 }
 
 func flattenSystemAutomationActionPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemAutomationActionHttpHeaders(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -832,7 +791,7 @@ func flattenSystemAutomationActionHttpHeaders(v interface{}, d *schema.ResourceD
 }
 
 func flattenSystemAutomationActionHttpHeadersId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemAutomationActionHttpHeadersKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -894,11 +853,11 @@ func flattenSystemAutomationActionScript(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenSystemAutomationActionOutputSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemAutomationActionTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemAutomationActionExecuteSecurityFabric(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1556,16 +1515,22 @@ func expandSystemAutomationActionHttpHeaders(d *schema.ResourceData, v interface
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSystemAutomationActionHttpHeadersId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "key"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["key"], _ = expandSystemAutomationActionHttpHeadersKey(d, i["key"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["key"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["value"], _ = expandSystemAutomationActionHttpHeadersValue(d, i["value"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["value"] = nil
 		}
 
 		result = append(result, tmp)
@@ -1691,6 +1656,8 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["description"] = t
 		}
+	} else if d.HasChange("description") {
+		obj["description"] = nil
 	}
 
 	if v, ok := d.GetOk("action_type"); ok {
@@ -1709,6 +1676,8 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["system-action"] = t
 		}
+	} else if d.HasChange("system_action") {
+		obj["system-action"] = nil
 	}
 
 	if v, ok := d.GetOk("tls_certificate"); ok {
@@ -1718,6 +1687,8 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["tls-certificate"] = t
 		}
+	} else if d.HasChange("tls_certificate") {
+		obj["tls-certificate"] = nil
 	}
 
 	if v, ok := d.GetOk("forticare_email"); ok {
@@ -1745,6 +1716,8 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["email-from"] = t
 		}
+	} else if d.HasChange("email_from") {
+		obj["email-from"] = nil
 	}
 
 	if v, ok := d.GetOk("email_subject"); ok {
@@ -1754,6 +1727,8 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["email-subject"] = t
 		}
+	} else if d.HasChange("email_subject") {
+		obj["email-subject"] = nil
 	}
 
 	if v, ok := d.GetOk("email_body"); ok {
@@ -1763,6 +1738,8 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["email-body"] = t
 		}
+	} else if d.HasChange("email_body") {
+		obj["email-body"] = nil
 	}
 
 	if v, ok := d.GetOkExists("minimum_interval"); ok {
@@ -1772,6 +1749,8 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["minimum-interval"] = t
 		}
+	} else if d.HasChange("minimum_interval") {
+		obj["minimum-interval"] = nil
 	}
 
 	if v, ok := d.GetOkExists("delay"); ok {
@@ -1781,6 +1760,8 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["delay"] = t
 		}
+	} else if d.HasChange("delay") {
+		obj["delay"] = nil
 	}
 
 	if v, ok := d.GetOk("required"); ok {
@@ -1799,6 +1780,8 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["aws-api-id"] = t
 		}
+	} else if d.HasChange("aws_api_id") {
+		obj["aws-api-id"] = nil
 	}
 
 	if v, ok := d.GetOk("aws_region"); ok {
@@ -1808,6 +1791,8 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["aws-region"] = t
 		}
+	} else if d.HasChange("aws_region") {
+		obj["aws-region"] = nil
 	}
 
 	if v, ok := d.GetOk("aws_domain"); ok {
@@ -1826,6 +1811,8 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["aws-api-stage"] = t
 		}
+	} else if d.HasChange("aws_api_stage") {
+		obj["aws-api-stage"] = nil
 	}
 
 	if v, ok := d.GetOk("aws_api_path"); ok {
@@ -1835,6 +1822,8 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["aws-api-path"] = t
 		}
+	} else if d.HasChange("aws_api_path") {
+		obj["aws-api-path"] = nil
 	}
 
 	if v, ok := d.GetOk("aws_api_key"); ok {
@@ -1844,6 +1833,8 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["aws-api-key"] = t
 		}
+	} else if d.HasChange("aws_api_key") {
+		obj["aws-api-key"] = nil
 	}
 
 	if v, ok := d.GetOk("azure_app"); ok {
@@ -1853,6 +1844,8 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["azure-app"] = t
 		}
+	} else if d.HasChange("azure_app") {
+		obj["azure-app"] = nil
 	}
 
 	if v, ok := d.GetOk("azure_function"); ok {
@@ -1862,6 +1855,8 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["azure-function"] = t
 		}
+	} else if d.HasChange("azure_function") {
+		obj["azure-function"] = nil
 	}
 
 	if v, ok := d.GetOk("azure_domain"); ok {
@@ -1889,6 +1884,8 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["azure-api-key"] = t
 		}
+	} else if d.HasChange("azure_api_key") {
+		obj["azure-api-key"] = nil
 	}
 
 	if v, ok := d.GetOk("gcp_function_region"); ok {
@@ -1898,6 +1895,8 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["gcp-function-region"] = t
 		}
+	} else if d.HasChange("gcp_function_region") {
+		obj["gcp-function-region"] = nil
 	}
 
 	if v, ok := d.GetOk("gcp_project"); ok {
@@ -1907,6 +1906,8 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["gcp-project"] = t
 		}
+	} else if d.HasChange("gcp_project") {
+		obj["gcp-project"] = nil
 	}
 
 	if v, ok := d.GetOk("gcp_function_domain"); ok {
@@ -1925,6 +1926,8 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["gcp-function"] = t
 		}
+	} else if d.HasChange("gcp_function") {
+		obj["gcp-function"] = nil
 	}
 
 	if v, ok := d.GetOk("alicloud_account_id"); ok {
@@ -1934,6 +1937,8 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["alicloud-account-id"] = t
 		}
+	} else if d.HasChange("alicloud_account_id") {
+		obj["alicloud-account-id"] = nil
 	}
 
 	if v, ok := d.GetOk("alicloud_region"); ok {
@@ -1943,6 +1948,8 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["alicloud-region"] = t
 		}
+	} else if d.HasChange("alicloud_region") {
+		obj["alicloud-region"] = nil
 	}
 
 	if v, ok := d.GetOk("alicloud_function_domain"); ok {
@@ -1961,6 +1968,8 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["alicloud-version"] = t
 		}
+	} else if d.HasChange("alicloud_version") {
+		obj["alicloud-version"] = nil
 	}
 
 	if v, ok := d.GetOk("alicloud_service"); ok {
@@ -1970,6 +1979,8 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["alicloud-service"] = t
 		}
+	} else if d.HasChange("alicloud_service") {
+		obj["alicloud-service"] = nil
 	}
 
 	if v, ok := d.GetOk("alicloud_function"); ok {
@@ -1979,6 +1990,8 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["alicloud-function"] = t
 		}
+	} else if d.HasChange("alicloud_function") {
+		obj["alicloud-function"] = nil
 	}
 
 	if v, ok := d.GetOk("alicloud_function_authorization"); ok {
@@ -1997,6 +2010,8 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["alicloud-access-key-id"] = t
 		}
+	} else if d.HasChange("alicloud_access_key_id") {
+		obj["alicloud-access-key-id"] = nil
 	}
 
 	if v, ok := d.GetOk("alicloud_access_key_secret"); ok {
@@ -2006,6 +2021,8 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["alicloud-access-key-secret"] = t
 		}
+	} else if d.HasChange("alicloud_access_key_secret") {
+		obj["alicloud-access-key-secret"] = nil
 	}
 
 	if v, ok := d.GetOk("message_type"); ok {
@@ -2042,6 +2059,8 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["replacemsg-group"] = t
 		}
+	} else if d.HasChange("replacemsg_group") {
+		obj["replacemsg-group"] = nil
 	}
 
 	if v, ok := d.GetOk("protocol"); ok {
@@ -2069,6 +2088,8 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["uri"] = t
 		}
+	} else if d.HasChange("uri") {
+		obj["uri"] = nil
 	}
 
 	if v, ok := d.GetOk("http_body"); ok {
@@ -2078,6 +2099,8 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["http-body"] = t
 		}
+	} else if d.HasChange("http_body") {
+		obj["http-body"] = nil
 	}
 
 	if v, ok := d.GetOk("port"); ok {
@@ -2087,6 +2110,8 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["port"] = t
 		}
+	} else if d.HasChange("port") {
+		obj["port"] = nil
 	}
 
 	if v, ok := d.GetOk("http_headers"); ok || d.HasChange("http_headers") {
@@ -2123,6 +2148,8 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["script"] = t
 		}
+	} else if d.HasChange("script") {
+		obj["script"] = nil
 	}
 
 	if v, ok := d.GetOk("output_size"); ok {
@@ -2141,6 +2168,8 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["timeout"] = t
 		}
+	} else if d.HasChange("timeout") {
+		obj["timeout"] = nil
 	}
 
 	if v, ok := d.GetOk("execute_security_fabric"); ok {
@@ -2159,6 +2188,8 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["accprofile"] = t
 		}
+	} else if d.HasChange("accprofile") {
+		obj["accprofile"] = nil
 	}
 
 	if v, ok := d.GetOk("security_tag"); ok {
@@ -2168,6 +2199,8 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["security-tag"] = t
 		}
+	} else if d.HasChange("security_tag") {
+		obj["security-tag"] = nil
 	}
 
 	if v, ok := d.GetOk("sdn_connector"); ok || d.HasChange("sdn_connector") {

@@ -56,31 +56,26 @@ func resourceSystemPasswordPolicyGuestAdmin() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 128),
 				Optional:     true,
-				Computed:     true,
 			},
 			"min_upper_case_letter": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 128),
 				Optional:     true,
-				Computed:     true,
 			},
 			"min_non_alphanumeric": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 128),
 				Optional:     true,
-				Computed:     true,
 			},
 			"min_number": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 128),
 				Optional:     true,
-				Computed:     true,
 			},
 			"min_change_characters": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 128),
 				Optional:     true,
-				Computed:     true,
 			},
 			"change_4_characters": &schema.Schema{
 				Type:     schema.TypeString,
@@ -102,6 +97,11 @@ func resourceSystemPasswordPolicyGuestAdmin() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
+			},
+			"reuse_password_limit": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 20),
+				Optional:     true,
 			},
 		},
 	}
@@ -230,27 +230,27 @@ func flattenSystemPasswordPolicyGuestAdminApplyTo(v interface{}, d *schema.Resou
 }
 
 func flattenSystemPasswordPolicyGuestAdminMinimumLength(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemPasswordPolicyGuestAdminMinLowerCaseLetter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemPasswordPolicyGuestAdminMinUpperCaseLetter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemPasswordPolicyGuestAdminMinNonAlphanumeric(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemPasswordPolicyGuestAdminMinNumber(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemPasswordPolicyGuestAdminMinChangeCharacters(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemPasswordPolicyGuestAdminChange4Characters(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -262,11 +262,15 @@ func flattenSystemPasswordPolicyGuestAdminExpireStatus(v interface{}, d *schema.
 }
 
 func flattenSystemPasswordPolicyGuestAdminExpireDay(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemPasswordPolicyGuestAdminReusePassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
+}
+
+func flattenSystemPasswordPolicyGuestAdminReusePasswordLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
 }
 
 func refreshObjectSystemPasswordPolicyGuestAdmin(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -344,6 +348,12 @@ func refreshObjectSystemPasswordPolicyGuestAdmin(d *schema.ResourceData, o map[s
 		}
 	}
 
+	if err = d.Set("reuse_password_limit", flattenSystemPasswordPolicyGuestAdminReusePasswordLimit(o["reuse-password-limit"], d, "reuse_password_limit", sv)); err != nil {
+		if !fortiAPIPatch(o["reuse-password-limit"]) {
+			return fmt.Errorf("Error reading reuse_password_limit: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -401,6 +411,10 @@ func expandSystemPasswordPolicyGuestAdminReusePassword(d *schema.ResourceData, v
 	return v, nil
 }
 
+func expandSystemPasswordPolicyGuestAdminReusePasswordLimit(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectSystemPasswordPolicyGuestAdmin(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
@@ -454,6 +468,8 @@ func getObjectSystemPasswordPolicyGuestAdmin(d *schema.ResourceData, setArgNil b
 				obj["min-lower-case-letter"] = t
 			}
 		}
+	} else if d.HasChange("min_lower_case_letter") {
+		obj["min-lower-case-letter"] = nil
 	}
 
 	if v, ok := d.GetOkExists("min_upper_case_letter"); ok {
@@ -467,6 +483,8 @@ func getObjectSystemPasswordPolicyGuestAdmin(d *schema.ResourceData, setArgNil b
 				obj["min-upper-case-letter"] = t
 			}
 		}
+	} else if d.HasChange("min_upper_case_letter") {
+		obj["min-upper-case-letter"] = nil
 	}
 
 	if v, ok := d.GetOkExists("min_non_alphanumeric"); ok {
@@ -480,6 +498,8 @@ func getObjectSystemPasswordPolicyGuestAdmin(d *schema.ResourceData, setArgNil b
 				obj["min-non-alphanumeric"] = t
 			}
 		}
+	} else if d.HasChange("min_non_alphanumeric") {
+		obj["min-non-alphanumeric"] = nil
 	}
 
 	if v, ok := d.GetOkExists("min_number"); ok {
@@ -493,6 +513,8 @@ func getObjectSystemPasswordPolicyGuestAdmin(d *schema.ResourceData, setArgNil b
 				obj["min-number"] = t
 			}
 		}
+	} else if d.HasChange("min_number") {
+		obj["min-number"] = nil
 	}
 
 	if v, ok := d.GetOkExists("min_change_characters"); ok {
@@ -506,6 +528,8 @@ func getObjectSystemPasswordPolicyGuestAdmin(d *schema.ResourceData, setArgNil b
 				obj["min-change-characters"] = t
 			}
 		}
+	} else if d.HasChange("min_change_characters") {
+		obj["min-change-characters"] = nil
 	}
 
 	if v, ok := d.GetOk("change_4_characters"); ok {
@@ -558,6 +582,21 @@ func getObjectSystemPasswordPolicyGuestAdmin(d *schema.ResourceData, setArgNil b
 				obj["reuse-password"] = t
 			}
 		}
+	}
+
+	if v, ok := d.GetOkExists("reuse_password_limit"); ok {
+		if setArgNil {
+			obj["reuse-password-limit"] = nil
+		} else {
+			t, err := expandSystemPasswordPolicyGuestAdminReusePasswordLimit(d, v, "reuse_password_limit", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["reuse-password-limit"] = t
+			}
+		}
+	} else if d.HasChange("reuse_password_limit") {
+		obj["reuse-password-limit"] = nil
 	}
 
 	return &obj, nil

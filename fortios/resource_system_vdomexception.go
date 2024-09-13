@@ -50,7 +50,6 @@ func resourceSystemVdomException() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"scope": &schema.Schema{
 				Type:     schema.TypeString,
@@ -66,7 +65,6 @@ func resourceSystemVdomException() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -237,7 +235,7 @@ func resourceSystemVdomExceptionRead(d *schema.ResourceData, m interface{}) erro
 }
 
 func flattenSystemVdomExceptionId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVdomExceptionObject(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -245,7 +243,7 @@ func flattenSystemVdomExceptionObject(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenSystemVdomExceptionOid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVdomExceptionScope(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -415,6 +413,8 @@ func getObjectSystemVdomException(d *schema.ResourceData, sv string) (*map[strin
 		} else if t != nil {
 			obj["object"] = t
 		}
+	} else if d.HasChange("object") {
+		obj["object"] = nil
 	}
 
 	if v, ok := d.GetOkExists("oid"); ok {
@@ -424,6 +424,8 @@ func getObjectSystemVdomException(d *schema.ResourceData, sv string) (*map[strin
 		} else if t != nil {
 			obj["oid"] = t
 		}
+	} else if d.HasChange("oid") {
+		obj["oid"] = nil
 	}
 
 	if v, ok := d.GetOk("scope"); ok {

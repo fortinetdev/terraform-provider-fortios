@@ -40,19 +40,16 @@ func resourceFirewallOnDemandSniffer() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"interface": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"max_packet_count": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 20000),
 				Optional:     true,
-				Computed:     true,
 			},
 			"hosts": &schema.Schema{
 				Type:     schema.TypeSet,
@@ -63,7 +60,6 @@ func resourceFirewallOnDemandSniffer() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -77,7 +73,6 @@ func resourceFirewallOnDemandSniffer() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 65536),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -91,7 +86,6 @@ func resourceFirewallOnDemandSniffer() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -280,7 +274,7 @@ func flattenFirewallOnDemandSnifferInterface(v interface{}, d *schema.ResourceDa
 }
 
 func flattenFirewallOnDemandSnifferMaxPacketCount(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallOnDemandSnifferHosts(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -364,7 +358,7 @@ func flattenFirewallOnDemandSnifferPorts(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenFirewallOnDemandSnifferPortsPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallOnDemandSnifferProtocols(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -406,7 +400,7 @@ func flattenFirewallOnDemandSnifferProtocols(v interface{}, d *schema.ResourceDa
 }
 
 func flattenFirewallOnDemandSnifferProtocolsProtocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallOnDemandSnifferNonIpPacket(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -627,6 +621,8 @@ func getObjectFirewallOnDemandSniffer(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
@@ -636,6 +632,8 @@ func getObjectFirewallOnDemandSniffer(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["interface"] = t
 		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
 	}
 
 	if v, ok := d.GetOk("max_packet_count"); ok {
@@ -645,6 +643,8 @@ func getObjectFirewallOnDemandSniffer(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["max-packet-count"] = t
 		}
+	} else if d.HasChange("max_packet_count") {
+		obj["max-packet-count"] = nil
 	}
 
 	if v, ok := d.GetOk("hosts"); ok || d.HasChange("hosts") {
@@ -690,6 +690,8 @@ func getObjectFirewallOnDemandSniffer(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["advanced-filter"] = t
 		}
+	} else if d.HasChange("advanced_filter") {
+		obj["advanced-filter"] = nil
 	}
 
 	return &obj, nil

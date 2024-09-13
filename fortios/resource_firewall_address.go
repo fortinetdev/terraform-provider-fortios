@@ -79,7 +79,6 @@ func resourceFirewallAddress() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 127),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -143,7 +142,6 @@ func resourceFirewallAddress() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 511),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -272,7 +270,6 @@ func resourceFirewallAddress() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -286,13 +283,11 @@ func resourceFirewallAddress() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"category": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"tags": &schema.Schema{
 							Type:     schema.TypeSet,
@@ -303,7 +298,6 @@ func resourceFirewallAddress() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -510,7 +504,7 @@ func flattenFirewallAddressType(v interface{}, d *schema.ResourceData, pre strin
 }
 
 func flattenFirewallAddressRouteTag(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallAddressSubType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -592,7 +586,7 @@ func flattenFirewallAddressWildcardFqdn(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenFirewallAddressCacheTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallAddressWildcard(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -725,7 +719,7 @@ func flattenFirewallAddressAssociatedInterface(v interface{}, d *schema.Resource
 }
 
 func flattenFirewallAddressColor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallAddressFilter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1459,6 +1453,8 @@ func expandFirewallAddressList(d *schema.ResourceData, v interface{}, pre string
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["ip"], _ = expandFirewallAddressListIp(d, i["ip"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["ip"] = nil
 		}
 
 		result = append(result, tmp)
@@ -1490,17 +1486,21 @@ func expandFirewallAddressTagging(d *schema.ResourceData, v interface{}, pre str
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandFirewallAddressTaggingName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["category"], _ = expandFirewallAddressTaggingCategory(d, i["category"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["category"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tags"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["tags"], _ = expandFirewallAddressTaggingTags(d, i["tags"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["tags"] = make([]string, 0)
 		}
 

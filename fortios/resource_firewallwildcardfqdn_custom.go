@@ -40,7 +40,6 @@ func resourceFirewallWildcardFqdnCustom() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
-				Computed:     true,
 			},
 			"uuid": &schema.Schema{
 				Type:     schema.TypeString,
@@ -51,13 +50,11 @@ func resourceFirewallWildcardFqdnCustom() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"color": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 32),
 				Optional:     true,
-				Computed:     true,
 			},
 			"comment": &schema.Schema{
 				Type:         schema.TypeString,
@@ -67,7 +64,6 @@ func resourceFirewallWildcardFqdnCustom() *schema.Resource {
 			"visibility": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 		},
 	}
@@ -237,7 +233,7 @@ func flattenFirewallWildcardFqdnCustomWildcardFqdn(v interface{}, d *schema.Reso
 }
 
 func flattenFirewallWildcardFqdnCustomColor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallWildcardFqdnCustomComment(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -330,6 +326,8 @@ func getObjectFirewallWildcardFqdnCustom(d *schema.ResourceData, sv string) (*ma
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("uuid"); ok {
@@ -348,6 +346,8 @@ func getObjectFirewallWildcardFqdnCustom(d *schema.ResourceData, sv string) (*ma
 		} else if t != nil {
 			obj["wildcard-fqdn"] = t
 		}
+	} else if d.HasChange("wildcard_fqdn") {
+		obj["wildcard-fqdn"] = nil
 	}
 
 	if v, ok := d.GetOkExists("color"); ok {
@@ -357,6 +357,8 @@ func getObjectFirewallWildcardFqdnCustom(d *schema.ResourceData, sv string) (*ma
 		} else if t != nil {
 			obj["color"] = t
 		}
+	} else if d.HasChange("color") {
+		obj["color"] = nil
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
@@ -366,6 +368,8 @@ func getObjectFirewallWildcardFqdnCustom(d *schema.ResourceData, sv string) (*ma
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("visibility"); ok {
@@ -375,6 +379,8 @@ func getObjectFirewallWildcardFqdnCustom(d *schema.ResourceData, sv string) (*ma
 		} else if t != nil {
 			obj["visibility"] = t
 		}
+	} else if d.HasChange("visibility") {
+		obj["visibility"] = nil
 	}
 
 	return &obj, nil

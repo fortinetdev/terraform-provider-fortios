@@ -40,7 +40,6 @@ func resourceEndpointControlFctems() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 7),
 				Optional:     true,
-				Computed:     true,
 			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
@@ -63,19 +62,16 @@ func resourceEndpointControlFctems() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"serial_number": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 16),
 				Optional:     true,
-				Computed:     true,
 			},
 			"tenant_id": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 32),
 				Optional:     true,
-				Computed:     true,
 			},
 			"fortinetone_cloud_authentication": &schema.Schema{
 				Type:     schema.TypeString,
@@ -86,7 +82,6 @@ func resourceEndpointControlFctems() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 20),
 				Optional:     true,
-				Computed:     true,
 			},
 			"https_port": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -98,7 +93,6 @@ func resourceEndpointControlFctems() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
-				Computed:     true,
 			},
 			"admin_password": &schema.Schema{
 				Type:         schema.TypeString,
@@ -144,7 +138,6 @@ func resourceEndpointControlFctems() *schema.Resource {
 			"capabilities": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"call_timeout": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -182,7 +175,6 @@ func resourceEndpointControlFctems() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"trust_ca_cn": &schema.Schema{
 				Type:     schema.TypeString,
@@ -193,7 +185,6 @@ func resourceEndpointControlFctems() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
-				Computed:     true,
 			},
 			"status_check_interval": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -205,7 +196,6 @@ func resourceEndpointControlFctems() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -363,7 +353,7 @@ func resourceEndpointControlFctemsRead(d *schema.ResourceData, m interface{}) er
 }
 
 func flattenEndpointControlFctemsEmsId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenEndpointControlFctemsStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -399,14 +389,10 @@ func flattenEndpointControlFctemsCloudAuthenticationAccessKey(v interface{}, d *
 }
 
 func flattenEndpointControlFctemsHttpsPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenEndpointControlFctemsAdminUsername(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenEndpointControlFctemsAdminPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -443,11 +429,11 @@ func flattenEndpointControlFctemsCapabilities(v interface{}, d *schema.ResourceD
 }
 
 func flattenEndpointControlFctemsCallTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenEndpointControlFctemsOutOfSyncThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenEndpointControlFctemsSendTagsToAllVdoms(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -479,7 +465,7 @@ func flattenEndpointControlFctemsVerifyingCa(v interface{}, d *schema.ResourceDa
 }
 
 func flattenEndpointControlFctemsStatusCheckInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenEndpointControlFctemsCertificate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -812,6 +798,8 @@ func getObjectEndpointControlFctems(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["ems-id"] = t
 		}
+	} else if d.HasChange("ems_id") {
+		obj["ems-id"] = nil
 	}
 
 	if v, ok := d.GetOk("status"); ok {
@@ -848,6 +836,8 @@ func getObjectEndpointControlFctems(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["server"] = t
 		}
+	} else if d.HasChange("server") {
+		obj["server"] = nil
 	}
 
 	if v, ok := d.GetOk("serial_number"); ok {
@@ -857,6 +847,8 @@ func getObjectEndpointControlFctems(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["serial-number"] = t
 		}
+	} else if d.HasChange("serial_number") {
+		obj["serial-number"] = nil
 	}
 
 	if v, ok := d.GetOk("tenant_id"); ok {
@@ -866,6 +858,8 @@ func getObjectEndpointControlFctems(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["tenant-id"] = t
 		}
+	} else if d.HasChange("tenant_id") {
+		obj["tenant-id"] = nil
 	}
 
 	if v, ok := d.GetOk("fortinetone_cloud_authentication"); ok {
@@ -884,6 +878,8 @@ func getObjectEndpointControlFctems(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["cloud-authentication-access-key"] = t
 		}
+	} else if d.HasChange("cloud_authentication_access_key") {
+		obj["cloud-authentication-access-key"] = nil
 	}
 
 	if v, ok := d.GetOk("https_port"); ok {
@@ -902,6 +898,8 @@ func getObjectEndpointControlFctems(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["admin-username"] = t
 		}
+	} else if d.HasChange("admin_username") {
+		obj["admin-username"] = nil
 	}
 
 	if v, ok := d.GetOk("admin_password"); ok {
@@ -911,6 +909,8 @@ func getObjectEndpointControlFctems(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["admin-password"] = t
 		}
+	} else if d.HasChange("admin_password") {
+		obj["admin-password"] = nil
 	}
 
 	if v, ok := d.GetOk("source_ip"); ok {
@@ -983,6 +983,8 @@ func getObjectEndpointControlFctems(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["capabilities"] = t
 		}
+	} else if d.HasChange("capabilities") {
+		obj["capabilities"] = nil
 	}
 
 	if v, ok := d.GetOk("call_timeout"); ok {
@@ -1046,6 +1048,8 @@ func getObjectEndpointControlFctems(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["interface"] = t
 		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
 	}
 
 	if v, ok := d.GetOk("trust_ca_cn"); ok {
@@ -1064,6 +1068,8 @@ func getObjectEndpointControlFctems(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["verifying-ca"] = t
 		}
+	} else if d.HasChange("verifying_ca") {
+		obj["verifying-ca"] = nil
 	}
 
 	if v, ok := d.GetOk("status_check_interval"); ok {
@@ -1082,6 +1088,8 @@ func getObjectEndpointControlFctems(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["certificate"] = t
 		}
+	} else if d.HasChange("certificate") {
+		obj["certificate"] = nil
 	}
 
 	return &obj, nil

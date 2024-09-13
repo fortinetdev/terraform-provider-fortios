@@ -5,7 +5,7 @@ go 1.21
 require (
 	github.com/fortinetdev/forti-sdk-go v1.9.2
 	github.com/google/uuid v1.6.0
-	github.com/hashicorp/go-version v1.6.0
+	github.com/hashicorp/go-version v1.7.0
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.34.0
 )
 

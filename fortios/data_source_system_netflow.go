@@ -56,6 +56,38 @@ func dataSourceSystemNetflow() *schema.Resource {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+			"exclusion_filters": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"source_ip": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"destination_ip": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"source_port": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"destination_port": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"protocol": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+					},
+				},
+			},
 			"collectors": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
@@ -74,6 +106,10 @@ func dataSourceSystemNetflow() *schema.Resource {
 							Computed: true,
 						},
 						"source_ip": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"source_ip_interface": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -162,6 +198,87 @@ func dataSourceFlattenSystemNetflowTemplateTxCounter(v interface{}, d *schema.Re
 	return v
 }
 
+func dataSourceFlattenSystemNetflowExclusionFilters(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := i["id"]; ok {
+			tmp["id"] = dataSourceFlattenSystemNetflowExclusionFiltersId(i["id"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_ip"
+		if _, ok := i["source-ip"]; ok {
+			tmp["source_ip"] = dataSourceFlattenSystemNetflowExclusionFiltersSourceIp(i["source-ip"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "destination_ip"
+		if _, ok := i["destination-ip"]; ok {
+			tmp["destination_ip"] = dataSourceFlattenSystemNetflowExclusionFiltersDestinationIp(i["destination-ip"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_port"
+		if _, ok := i["source-port"]; ok {
+			tmp["source_port"] = dataSourceFlattenSystemNetflowExclusionFiltersSourcePort(i["source-port"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "destination_port"
+		if _, ok := i["destination-port"]; ok {
+			tmp["destination_port"] = dataSourceFlattenSystemNetflowExclusionFiltersDestinationPort(i["destination-port"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
+		if _, ok := i["protocol"]; ok {
+			tmp["protocol"] = dataSourceFlattenSystemNetflowExclusionFiltersProtocol(i["protocol"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenSystemNetflowExclusionFiltersId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemNetflowExclusionFiltersSourceIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemNetflowExclusionFiltersDestinationIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemNetflowExclusionFiltersSourcePort(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemNetflowExclusionFiltersDestinationPort(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemNetflowExclusionFiltersProtocol(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemNetflowCollectors(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -201,6 +318,11 @@ func dataSourceFlattenSystemNetflowCollectors(v interface{}, d *schema.ResourceD
 			tmp["source_ip"] = dataSourceFlattenSystemNetflowCollectorsSourceIp(i["source-ip"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_ip_interface"
+		if _, ok := i["source-ip-interface"]; ok {
+			tmp["source_ip_interface"] = dataSourceFlattenSystemNetflowCollectorsSourceIpInterface(i["source-ip-interface"], d, pre_append)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_select_method"
 		if _, ok := i["interface-select-method"]; ok {
 			tmp["interface_select_method"] = dataSourceFlattenSystemNetflowCollectorsInterfaceSelectMethod(i["interface-select-method"], d, pre_append)
@@ -232,6 +354,10 @@ func dataSourceFlattenSystemNetflowCollectorsCollectorPort(v interface{}, d *sch
 }
 
 func dataSourceFlattenSystemNetflowCollectorsSourceIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemNetflowCollectorsSourceIpInterface(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -293,6 +419,12 @@ func dataSourceRefreshObjectSystemNetflow(d *schema.ResourceData, o map[string]i
 	if err = d.Set("template_tx_counter", dataSourceFlattenSystemNetflowTemplateTxCounter(o["template-tx-counter"], d, "template_tx_counter")); err != nil {
 		if !fortiAPIPatch(o["template-tx-counter"]) {
 			return fmt.Errorf("Error reading template_tx_counter: %v", err)
+		}
+	}
+
+	if err = d.Set("exclusion_filters", dataSourceFlattenSystemNetflowExclusionFilters(o["exclusion-filters"], d, "exclusion_filters")); err != nil {
+		if !fortiAPIPatch(o["exclusion-filters"]) {
+			return fmt.Errorf("Error reading exclusion_filters: %v", err)
 		}
 	}
 

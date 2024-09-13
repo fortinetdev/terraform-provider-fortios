@@ -21,6 +21,8 @@ The following arguments are supported:
 * `psksecret` - Pre-shared secret for session synchronization (ASCII string or hexadecimal encoded with a leading 0x).
 * `asymmetric_traffic_control` - Asymmetric traffic control mode. Valid values: `cps-preferred`, `strict-anti-replay`.
 * `cluster_peer` - Configure FortiGate Session Life Support Protocol (FGSP) session synchronization. The structure of `cluster_peer` block is documented below.
+* `monitor_interface` - Configure a list of interfaces on which to monitor itself. Monitoring is performed on the status of the interface. The structure of `monitor_interface` block is documented below.
+* `pingsvr_monitor_interface` - List of pingsvr monitor interface to check for remote IP monitoring. The structure of `pingsvr_monitor_interface` block is documented below.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
 * `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
@@ -61,6 +63,14 @@ The `custom_service` block supports:
 * `id` - Custom service ID.
 * `src_port_range` - Custom service source port range.
 * `dst_port_range` - Custom service destination port range.
+
+The `monitor_interface` block supports:
+
+* `name` - Interface name.
+
+The `pingsvr_monitor_interface` block supports:
+
+* `name` - Interface name.
 
 
 ## Attribute Reference

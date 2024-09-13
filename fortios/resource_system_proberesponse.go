@@ -194,7 +194,7 @@ func resourceSystemProbeResponseRead(d *schema.ResourceData, m interface{}) erro
 }
 
 func flattenSystemProbeResponsePort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemProbeResponseHttpProbeValue(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -213,12 +213,8 @@ func flattenSystemProbeResponseSecurityMode(v interface{}, d *schema.ResourceDat
 	return v
 }
 
-func flattenSystemProbeResponsePassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
 func flattenSystemProbeResponseTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectSystemProbeResponse(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -376,6 +372,8 @@ func getObjectSystemProbeResponse(d *schema.ResourceData, setArgNil bool, sv str
 				obj["password"] = t
 			}
 		}
+	} else if d.HasChange("password") {
+		obj["password"] = nil
 	}
 
 	if v, ok := d.GetOk("timeout"); ok {

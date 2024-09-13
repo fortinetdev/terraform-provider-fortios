@@ -77,7 +77,6 @@ func resourceRouterStatic() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"priority": &schema.Schema{
 				Type:     schema.TypeInt,
@@ -88,7 +87,6 @@ func resourceRouterStatic() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"comment": &schema.Schema{
 				Type:         schema.TypeString,
@@ -114,7 +112,6 @@ func resourceRouterStatic() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -127,24 +124,20 @@ func resourceRouterStatic() *schema.Resource {
 			"virtual_wan_link": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"dstaddr": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
-				Computed:     true,
 			},
 			"internet_service": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"internet_service_custom": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 64),
 				Optional:     true,
-				Computed:     true,
 			},
 			"link_monitor_exempt": &schema.Schema{
 				Type:     schema.TypeString,
@@ -154,7 +147,6 @@ func resourceRouterStatic() *schema.Resource {
 			"tag": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"vrf": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -333,7 +325,7 @@ func resourceRouterStaticRead(d *schema.ResourceData, m interface{}) error {
 }
 
 func flattenRouterStaticSeqNum(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterStaticStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -371,15 +363,15 @@ func flattenRouterStaticPreferredSource(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenRouterStaticDistance(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterStaticWeight(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterStaticPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterStaticDevice(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -453,7 +445,7 @@ func flattenRouterStaticDstaddr(v interface{}, d *schema.ResourceData, pre strin
 }
 
 func flattenRouterStaticInternetService(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterStaticInternetServiceCustom(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -465,11 +457,11 @@ func flattenRouterStaticLinkMonitorExempt(v interface{}, d *schema.ResourceData,
 }
 
 func flattenRouterStaticTag(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterStaticVrf(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterStaticBfd(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -831,6 +823,8 @@ func getObjectRouterStatic(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["weight"] = t
 		}
+	} else if d.HasChange("weight") {
+		obj["weight"] = nil
 	}
 
 	if v, ok := d.GetOkExists("priority"); ok {
@@ -849,6 +843,8 @@ func getObjectRouterStatic(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["device"] = t
 		}
+	} else if d.HasChange("device") {
+		obj["device"] = nil
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
@@ -858,6 +854,8 @@ func getObjectRouterStatic(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("blackhole"); ok {
@@ -903,6 +901,8 @@ func getObjectRouterStatic(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["virtual-wan-link"] = t
 		}
+	} else if d.HasChange("virtual_wan_link") {
+		obj["virtual-wan-link"] = nil
 	}
 
 	if v, ok := d.GetOk("dstaddr"); ok {
@@ -912,6 +912,8 @@ func getObjectRouterStatic(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["dstaddr"] = t
 		}
+	} else if d.HasChange("dstaddr") {
+		obj["dstaddr"] = nil
 	}
 
 	if v, ok := d.GetOkExists("internet_service"); ok {
@@ -921,6 +923,8 @@ func getObjectRouterStatic(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["internet-service"] = t
 		}
+	} else if d.HasChange("internet_service") {
+		obj["internet-service"] = nil
 	}
 
 	if v, ok := d.GetOk("internet_service_custom"); ok {
@@ -930,6 +934,8 @@ func getObjectRouterStatic(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["internet-service-custom"] = t
 		}
+	} else if d.HasChange("internet_service_custom") {
+		obj["internet-service-custom"] = nil
 	}
 
 	if v, ok := d.GetOk("link_monitor_exempt"); ok {
@@ -948,6 +954,8 @@ func getObjectRouterStatic(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["tag"] = t
 		}
+	} else if d.HasChange("tag") {
+		obj["tag"] = nil
 	}
 
 	if v, ok := d.GetOkExists("vrf"); ok {

@@ -57,7 +57,6 @@ func resourceVpnSslWebHostCheckSoftware() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"guid": &schema.Schema{
 				Type:     schema.TypeString,
@@ -73,7 +72,6 @@ func resourceVpnSslWebHostCheckSoftware() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 						"action": &schema.Schema{
 							Type:     schema.TypeString,
@@ -89,13 +87,11 @@ func resourceVpnSslWebHostCheckSoftware() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"version": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"md5s": &schema.Schema{
 							Type:     schema.TypeSet,
@@ -106,7 +102,6 @@ func resourceVpnSslWebHostCheckSoftware() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 32),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -363,7 +358,7 @@ func flattenVpnSslWebHostCheckSoftwareCheckItemList(v interface{}, d *schema.Res
 }
 
 func flattenVpnSslWebHostCheckSoftwareCheckItemListId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVpnSslWebHostCheckSoftwareCheckItemListAction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -525,6 +520,8 @@ func expandVpnSslWebHostCheckSoftwareCheckItemList(d *schema.ResourceData, v int
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandVpnSslWebHostCheckSoftwareCheckItemListId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
@@ -540,17 +537,21 @@ func expandVpnSslWebHostCheckSoftwareCheckItemList(d *schema.ResourceData, v int
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "target"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["target"], _ = expandVpnSslWebHostCheckSoftwareCheckItemListTarget(d, i["target"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["target"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "version"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["version"], _ = expandVpnSslWebHostCheckSoftwareCheckItemListVersion(d, i["version"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["version"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "md5s"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["md5s"], _ = expandVpnSslWebHostCheckSoftwareCheckItemListMd5S(d, i["md5s"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["md5s"] = make([]string, 0)
 		}
 
@@ -647,6 +648,8 @@ func getObjectVpnSslWebHostCheckSoftware(d *schema.ResourceData, sv string) (*ma
 		} else if t != nil {
 			obj["version"] = t
 		}
+	} else if d.HasChange("version") {
+		obj["version"] = nil
 	}
 
 	if v, ok := d.GetOk("guid"); ok {

@@ -46,7 +46,6 @@ func resourceSwitchControllerTrafficPolicy() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"policer_status": &schema.Schema{
 				Type:     schema.TypeString,
@@ -78,13 +77,11 @@ func resourceSwitchControllerTrafficPolicy() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 7),
 				Optional:     true,
-				Computed:     true,
 			},
 			"cos": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 7),
 				Optional:     true,
-				Computed:     true,
 			},
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
@@ -259,15 +256,15 @@ func flattenSwitchControllerTrafficPolicyPolicerStatus(v interface{}, d *schema.
 }
 
 func flattenSwitchControllerTrafficPolicyGuaranteedBandwidth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerTrafficPolicyGuaranteedBurst(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerTrafficPolicyMaximumBurst(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerTrafficPolicyType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -275,15 +272,15 @@ func flattenSwitchControllerTrafficPolicyType(v interface{}, d *schema.ResourceD
 }
 
 func flattenSwitchControllerTrafficPolicyCosQueue(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerTrafficPolicyCos(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerTrafficPolicyId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectSwitchControllerTrafficPolicy(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -417,6 +414,8 @@ func getObjectSwitchControllerTrafficPolicy(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["description"] = t
 		}
+	} else if d.HasChange("description") {
+		obj["description"] = nil
 	}
 
 	if v, ok := d.GetOk("policer_status"); ok {
@@ -471,6 +470,8 @@ func getObjectSwitchControllerTrafficPolicy(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["cos-queue"] = t
 		}
+	} else if d.HasChange("cos_queue") {
+		obj["cos-queue"] = nil
 	}
 
 	if v, ok := d.GetOkExists("cos"); ok {
@@ -480,6 +481,8 @@ func getObjectSwitchControllerTrafficPolicy(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["cos"] = t
 		}
+	} else if d.HasChange("cos") {
+		obj["cos"] = nil
 	}
 
 	if v, ok := d.GetOkExists("fosid"); ok {

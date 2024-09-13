@@ -1675,6 +1675,10 @@ func dataSourceRouterBgp() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"prefix_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 					},
 				},
 			},
@@ -3171,15 +3175,6 @@ func dataSourceFlattenRouterBgpNeighbor(v interface{}, d *schema.ResourceData, p
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "adv_additional_path_vpnv6"
 		if _, ok := i["adv-additional-path-vpnv6"]; ok {
 			tmp["adv_additional_path_vpnv6"] = dataSourceFlattenRouterBgpNeighborAdvAdditionalPathVpnv6(i["adv-additional-path-vpnv6"], d, pre_append)
-		}
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "password"
-		if _, ok := i["password"]; ok {
-			tmp["password"] = dataSourceFlattenRouterBgpNeighborPassword(i["password"], d, pre_append)
-			c := d.Get(pre_append).(string)
-			if c != "" {
-				tmp["password"] = c
-			}
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_options"
@@ -4722,15 +4717,6 @@ func dataSourceFlattenRouterBgpNeighborGroup(v interface{}, d *schema.ResourceDa
 			tmp["adv_additional_path_vpnv6"] = dataSourceFlattenRouterBgpNeighborGroupAdvAdditionalPathVpnv6(i["adv-additional-path-vpnv6"], d, pre_append)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "password"
-		if _, ok := i["password"]; ok {
-			tmp["password"] = dataSourceFlattenRouterBgpNeighborGroupPassword(i["password"], d, pre_append)
-			c := d.Get(pre_append).(string)
-			if c != "" {
-				tmp["password"] = c
-			}
-		}
-
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_options"
 		if _, ok := i["auth-options"]; ok {
 			tmp["auth_options"] = dataSourceFlattenRouterBgpNeighborGroupAuthOptions(i["auth-options"], d, pre_append)
@@ -5545,6 +5531,11 @@ func dataSourceFlattenRouterBgpNetwork(v interface{}, d *schema.ResourceData, pr
 			tmp["route_map"] = dataSourceFlattenRouterBgpNetworkRouteMap(i["route-map"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_name"
+		if _, ok := i["prefix-name"]; ok {
+			tmp["prefix_name"] = dataSourceFlattenRouterBgpNetworkPrefixName(i["prefix-name"], d, pre_append)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -5577,6 +5568,10 @@ func dataSourceFlattenRouterBgpNetworkBackdoor(v interface{}, d *schema.Resource
 }
 
 func dataSourceFlattenRouterBgpNetworkRouteMap(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNetworkPrefixName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 

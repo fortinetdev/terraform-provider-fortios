@@ -45,7 +45,6 @@ func resourceNsxtSetting() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -232,6 +231,8 @@ func getObjectNsxtSetting(d *schema.ResourceData, setArgNil bool, sv string) (*m
 				obj["service"] = t
 			}
 		}
+	} else if d.HasChange("service") {
+		obj["service"] = nil
 	}
 
 	return &obj, nil

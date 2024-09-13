@@ -57,7 +57,6 @@ func resourceDlpProfile() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"rule": &schema.Schema{
 				Type:     schema.TypeList,
@@ -67,13 +66,11 @@ func resourceDlpProfile() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"name": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"severity": &schema.Schema{
 							Type:     schema.TypeString,
@@ -88,7 +85,6 @@ func resourceDlpProfile() *schema.Resource {
 						"proto": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"filter_by": &schema.Schema{
 							Type:     schema.TypeString,
@@ -98,7 +94,6 @@ func resourceDlpProfile() *schema.Resource {
 						"file_size": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"sensitivity": &schema.Schema{
 							Type:     schema.TypeSet,
@@ -109,7 +104,6 @@ func resourceDlpProfile() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 35),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -123,7 +117,6 @@ func resourceDlpProfile() *schema.Resource {
 						"file_type": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"sensor": &schema.Schema{
 							Type:     schema.TypeSet,
@@ -134,7 +127,6 @@ func resourceDlpProfile() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 35),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -143,7 +135,6 @@ func resourceDlpProfile() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"archive": &schema.Schema{
 							Type:     schema.TypeString,
@@ -181,12 +172,10 @@ func resourceDlpProfile() *schema.Resource {
 			"full_archive_proto": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"summary_proto": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
@@ -478,7 +467,7 @@ func flattenDlpProfileRule(v interface{}, d *schema.ResourceData, pre string, sv
 }
 
 func flattenDlpProfileRuleId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenDlpProfileRuleName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -502,7 +491,7 @@ func flattenDlpProfileRuleFilterBy(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenDlpProfileRuleFileSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenDlpProfileRuleSensitivity(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -548,11 +537,11 @@ func flattenDlpProfileRuleSensitivityName(v interface{}, d *schema.ResourceData,
 }
 
 func flattenDlpProfileRuleMatchPercentage(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenDlpProfileRuleFileType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenDlpProfileRuleSensor(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -754,11 +743,15 @@ func expandDlpProfileRule(d *schema.ResourceData, v interface{}, pre string, sv 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandDlpProfileRuleId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandDlpProfileRuleName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "severity"
@@ -774,6 +767,8 @@ func expandDlpProfileRule(d *schema.ResourceData, v interface{}, pre string, sv 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "proto"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["proto"], _ = expandDlpProfileRuleProto(d, i["proto"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["proto"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_by"
@@ -784,12 +779,14 @@ func expandDlpProfileRule(d *schema.ResourceData, v interface{}, pre string, sv 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "file_size"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["file-size"], _ = expandDlpProfileRuleFileSize(d, i["file_size"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["file-size"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sensitivity"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["sensitivity"], _ = expandDlpProfileRuleSensitivity(d, i["sensitivity"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["sensitivity"] = make([]string, 0)
 		}
 
@@ -801,18 +798,22 @@ func expandDlpProfileRule(d *schema.ResourceData, v interface{}, pre string, sv 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "file_type"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["file-type"], _ = expandDlpProfileRuleFileType(d, i["file_type"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["file-type"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sensor"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["sensor"], _ = expandDlpProfileRuleSensor(d, i["sensor"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["sensor"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "label"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["label"], _ = expandDlpProfileRuleLabel(d, i["label"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["label"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "archive"
@@ -985,6 +986,8 @@ func getObjectDlpProfile(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("feature_set"); ok {
@@ -1003,6 +1006,8 @@ func getObjectDlpProfile(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["replacemsg-group"] = t
 		}
+	} else if d.HasChange("replacemsg_group") {
+		obj["replacemsg-group"] = nil
 	}
 
 	if v, ok := d.GetOk("rule"); ok || d.HasChange("rule") {
@@ -1048,6 +1053,8 @@ func getObjectDlpProfile(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["full-archive-proto"] = t
 		}
+	} else if d.HasChange("full_archive_proto") {
+		obj["full-archive-proto"] = nil
 	}
 
 	if v, ok := d.GetOk("summary_proto"); ok {
@@ -1057,6 +1064,8 @@ func getObjectDlpProfile(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["summary-proto"] = t
 		}
+	} else if d.HasChange("summary_proto") {
+		obj["summary-proto"] = nil
 	}
 
 	return &obj, nil

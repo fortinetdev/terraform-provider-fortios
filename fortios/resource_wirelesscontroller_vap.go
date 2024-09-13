@@ -66,12 +66,10 @@ func resourceWirelessControllerVap() *schema.Resource {
 			"max_clients": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"max_clients_ap": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"ssid": &schema.Schema{
 				Type:         schema.TypeString,
@@ -188,12 +186,10 @@ func resourceWirelessControllerVap() *schema.Resource {
 			"sae_groups": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"owe_groups": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"owe_transition": &schema.Schema{
 				Type:     schema.TypeString,
@@ -204,12 +200,10 @@ func resourceWirelessControllerVap() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 32),
 				Optional:     true,
-				Computed:     true,
 			},
 			"additional_akms": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"eapol_key_retries": &schema.Schema{
 				Type:     schema.TypeString,
@@ -225,7 +219,6 @@ func resourceWirelessControllerVap() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 1023),
 				Optional:     true,
-				Computed:     true,
 			},
 			"external_web_format": &schema.Schema{
 				Type:     schema.TypeString,
@@ -236,7 +229,6 @@ func resourceWirelessControllerVap() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
-				Computed:     true,
 			},
 			"mac_username_delimiter": &schema.Schema{
 				Type:     schema.TypeString,
@@ -277,13 +269,11 @@ func resourceWirelessControllerVap() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"radius_mac_auth_block_interval": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(30, 864000),
 				Optional:     true,
-				Computed:     true,
 			},
 			"radius_mac_mpsk_auth": &schema.Schema{
 				Type:     schema.TypeString,
@@ -305,7 +295,6 @@ func resourceWirelessControllerVap() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -363,7 +352,6 @@ func resourceWirelessControllerVap() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 359),
 				Optional:     true,
-				Computed:     true,
 			},
 			"akm24_only": &schema.Schema{
 				Type:     schema.TypeString,
@@ -374,9 +362,13 @@ func resourceWirelessControllerVap() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"nas_filter_rule": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"domain_name_stripping": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -385,7 +377,6 @@ func resourceWirelessControllerVap() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(60, 86400),
 				Optional:     true,
-				Computed:     true,
 			},
 			"local_standalone": &schema.Schema{
 				Type:     schema.TypeString,
@@ -416,6 +407,10 @@ func resourceWirelessControllerVap() *schema.Resource {
 			"local_standalone_dns_ip": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+			},
+			"local_lan_partition": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
 				Computed: true,
 			},
 			"local_bridging": &schema.Schema{
@@ -442,7 +437,6 @@ func resourceWirelessControllerVap() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -451,7 +445,6 @@ func resourceWirelessControllerVap() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"portal_message_overrides": &schema.Schema{
 				Type:     schema.TypeList,
@@ -464,25 +457,21 @@ func resourceWirelessControllerVap() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"auth_reject_page": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"auth_login_page": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"auth_login_failed_page": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -501,7 +490,6 @@ func resourceWirelessControllerVap() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -510,25 +498,21 @@ func resourceWirelessControllerVap() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"security_redirect_url": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 1023),
 				Optional:     true,
-				Computed:     true,
 			},
 			"auth_cert": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"auth_portal_addr": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"intra_vap_privacy": &schema.Schema{
 				Type:     schema.TypeString,
@@ -538,7 +522,6 @@ func resourceWirelessControllerVap() *schema.Resource {
 			"schedule": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"ldpc": &schema.Schema{
 				Type:     schema.TypeString,
@@ -581,18 +564,15 @@ func resourceWirelessControllerVap() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"mpsk": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"mpsk_concurrent_clients": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"mpsk_key": &schema.Schema{
 				Type:     schema.TypeList,
@@ -603,7 +583,6 @@ func resourceWirelessControllerVap() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"passphrase": &schema.Schema{
 							Type:         schema.TypeString,
@@ -615,7 +594,6 @@ func resourceWirelessControllerVap() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 						"comment": &schema.Schema{
 							Type:         schema.TypeString,
@@ -631,7 +609,6 @@ func resourceWirelessControllerVap() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 35),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -653,13 +630,11 @@ func resourceWirelessControllerVap() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"vlanid": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4094),
 				Optional:     true,
-				Computed:     true,
 			},
 			"vlan_auto": &schema.Schema{
 				Type:     schema.TypeString,
@@ -685,7 +660,6 @@ func resourceWirelessControllerVap() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"captive_portal_radius_secret": &schema.Schema{
 				Type:         schema.TypeString,
@@ -697,7 +671,6 @@ func resourceWirelessControllerVap() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"captive_portal_macauth_radius_secret": &schema.Schema{
 				Type:         schema.TypeString,
@@ -709,19 +682,16 @@ func resourceWirelessControllerVap() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"captive_portal_auth_timeout": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 864000),
 				Optional:     true,
-				Computed:     true,
 			},
 			"captive_portal_session_timeout_interval": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 864000),
 				Optional:     true,
-				Computed:     true,
 			},
 			"alias": &schema.Schema{
 				Type:         schema.TypeString,
@@ -812,13 +782,11 @@ func resourceWirelessControllerVap() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"vlan_id": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4094),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -837,13 +805,11 @@ func resourceWirelessControllerVap() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4094),
 							Optional:     true,
-							Computed:     true,
 						},
 						"wtp_group": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -910,31 +876,26 @@ func resourceWirelessControllerVap() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"hotspot20_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"access_control_list": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"primary_wag_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"secondary_wag_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"tunnel_echo_interval": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -951,78 +912,64 @@ func resourceWirelessControllerVap() *schema.Resource {
 			"rates_11a": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"rates_11bg": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"rates_11n_ss12": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"rates_11n_ss34": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"rates_11ac_mcs_map": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"rates_11ax_mcs_map": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"rates_11be_mcs_map": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"rates_11be_mcs_map_160": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"rates_11be_mcs_map_320": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"rates_11ac_ss12": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"rates_11ac_ss34": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"rates_11ax_ss12": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"rates_11ax_ss34": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"utm_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"utm_status": &schema.Schema{
 				Type:     schema.TypeString,
@@ -1038,25 +985,21 @@ func resourceWirelessControllerVap() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"application_list": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"antivirus_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"webfilter_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"scan_botnet_connections": &schema.Schema{
 				Type:     schema.TypeString,
@@ -1067,7 +1010,6 @@ func resourceWirelessControllerVap() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
-				Computed:     true,
 			},
 			"address_group_policy": &schema.Schema{
 				Type:     schema.TypeString,
@@ -1092,7 +1034,6 @@ func resourceWirelessControllerVap() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"mac": &schema.Schema{
 							Type:     schema.TypeString,
@@ -1150,7 +1091,6 @@ func resourceWirelessControllerVap() *schema.Resource {
 			"beacon_advertising": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"osen": &schema.Schema{
 				Type:     schema.TypeString,
@@ -1365,15 +1305,15 @@ func flattenWirelessControllerVapMeshBackhaul(v interface{}, d *schema.ResourceD
 }
 
 func flattenWirelessControllerVapAtfWeight(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerVapMaxClients(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerVapMaxClientsAp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerVapSsid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1397,11 +1337,11 @@ func flattenWirelessControllerVapPmf(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenWirelessControllerVapPmfAssocComebackTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerVapPmfSaQueryRetryTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerVapBeaconProtection(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1417,11 +1357,11 @@ func flattenWirelessControllerVapMbo(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenWirelessControllerVapGasComebackDelay(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerVapGasFragmentationLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerVapMboCellDataConnPref(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1449,11 +1389,11 @@ func flattenWirelessControllerVapFastBssTransition(v interface{}, d *schema.Reso
 }
 
 func flattenWirelessControllerVapFtMobilityDomain(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerVapFtR0KeyLifetime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerVapFtOverDs(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1533,7 +1473,7 @@ func flattenWirelessControllerVapRadiusMacAuthServer(v interface{}, d *schema.Re
 }
 
 func flattenWirelessControllerVapRadiusMacAuthBlockInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerVapRadiusMacMpskAuth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1541,7 +1481,7 @@ func flattenWirelessControllerVapRadiusMacMpskAuth(v interface{}, d *schema.Reso
 }
 
 func flattenWirelessControllerVapRadiusMacMpskTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerVapRadiusMacAuthUsergroups(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -1595,19 +1535,7 @@ func flattenWirelessControllerVapEncrypt(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenWirelessControllerVapKeyindex(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenWirelessControllerVapKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenWirelessControllerVapPassphrase(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenWirelessControllerVapSaePassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerVapSaeH2EOnly(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1638,8 +1566,12 @@ func flattenWirelessControllerVapNasFilterRule(v interface{}, d *schema.Resource
 	return v
 }
 
-func flattenWirelessControllerVapAcctInterimInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+func flattenWirelessControllerVapDomainNameStripping(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
+}
+
+func flattenWirelessControllerVapAcctInterimInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerVapLocalStandalone(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1655,7 +1587,7 @@ func flattenWirelessControllerVapIp(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenWirelessControllerVapDhcpLeaseTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerVapLocalStandaloneDns(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1663,6 +1595,10 @@ func flattenWirelessControllerVapLocalStandaloneDns(v interface{}, d *schema.Res
 }
 
 func flattenWirelessControllerVapLocalStandaloneDnsIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerVapLocalLanPartition(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1840,7 +1776,7 @@ func flattenWirelessControllerVapIntraVapPrivacy(v interface{}, d *schema.Resour
 }
 
 func flattenWirelessControllerVapSchedule(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convmap2str(v, d.Get("schedule"), "name")
 }
 
 func flattenWirelessControllerVapLdpc(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1860,11 +1796,11 @@ func flattenWirelessControllerVapPortMacauth(v interface{}, d *schema.ResourceDa
 }
 
 func flattenWirelessControllerVapPortMacauthTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerVapPortMacauthReauthTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerVapBssColorPartial(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1880,7 +1816,7 @@ func flattenWirelessControllerVapMpsk(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenWirelessControllerVapMpskConcurrentClients(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerVapMpskKey(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -1913,8 +1849,7 @@ func flattenWirelessControllerVapMpskKey(v interface{}, d *schema.ResourceData, 
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "passphrase"
-		if cur_v, ok := i["passphrase"]; ok {
-			tmp["passphrase"] = flattenWirelessControllerVapMpskKeyPassphrase(cur_v, d, pre_append, sv)
+		if _, ok := i["passphrase"]; ok {
 			c := d.Get(pre_append).(string)
 			if c != "" {
 				tmp["passphrase"] = c
@@ -1946,10 +1881,6 @@ func flattenWirelessControllerVapMpskKey(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenWirelessControllerVapMpskKeyKeyName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenWirelessControllerVapMpskKeyPassphrase(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2016,7 +1947,7 @@ func flattenWirelessControllerVapNacProfile(v interface{}, d *schema.ResourceDat
 }
 
 func flattenWirelessControllerVapVlanid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerVapVlanAuto(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2039,15 +1970,7 @@ func flattenWirelessControllerVapCaptivePortalRadiusServer(v interface{}, d *sch
 	return v
 }
 
-func flattenWirelessControllerVapCaptivePortalRadiusSecret(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
 func flattenWirelessControllerVapCaptivePortalMacauthRadiusServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenWirelessControllerVapCaptivePortalMacauthRadiusSecret(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2056,11 +1979,11 @@ func flattenWirelessControllerVapCaptivePortalAcName(v interface{}, d *schema.Re
 }
 
 func flattenWirelessControllerVapCaptivePortalAuthTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerVapCaptivePortalSessionTimeoutInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerVapAlias(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2092,7 +2015,7 @@ func flattenWirelessControllerVapIpv6Rules(v interface{}, d *schema.ResourceData
 }
 
 func flattenWirelessControllerVapMeDisableThresh(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerVapMuMimo(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2171,7 +2094,7 @@ func flattenWirelessControllerVapVlanNameName(v interface{}, d *schema.ResourceD
 }
 
 func flattenWirelessControllerVapVlanNameVlanId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerVapVlanPooling(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2222,7 +2145,7 @@ func flattenWirelessControllerVapVlanPool(v interface{}, d *schema.ResourceData,
 }
 
 func flattenWirelessControllerVapVlanPoolId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerVapVlanPoolWtpGroup(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2250,7 +2173,7 @@ func flattenWirelessControllerVapPtkRekey(v interface{}, d *schema.ResourceData,
 }
 
 func flattenWirelessControllerVapPtkRekeyIntv(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerVapGtkRekey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2258,7 +2181,7 @@ func flattenWirelessControllerVapGtkRekey(v interface{}, d *schema.ResourceData,
 }
 
 func flattenWirelessControllerVapGtkRekeyIntv(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerVapEapReauth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2266,7 +2189,7 @@ func flattenWirelessControllerVapEapReauth(v interface{}, d *schema.ResourceData
 }
 
 func flattenWirelessControllerVapEapReauthIntv(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerVapRoamingAcctInterimUpdate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2294,11 +2217,11 @@ func flattenWirelessControllerVapSecondaryWagProfile(v interface{}, d *schema.Re
 }
 
 func flattenWirelessControllerVapTunnelEchoInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerVapTunnelFallbackInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerVapRates11A(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2450,7 +2373,7 @@ func flattenWirelessControllerVapMacFilterList(v interface{}, d *schema.Resource
 }
 
 func flattenWirelessControllerVapMacFilterListId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerVapMacFilterListMac(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2478,11 +2401,11 @@ func flattenWirelessControllerVapStickyClientThreshold6G(v interface{}, d *schem
 }
 
 func flattenWirelessControllerVapBstmRssiDisassocTimer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerVapBstmLoadBalancingDisassocTimer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerVapBstmDisassociationImminent(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2506,7 +2429,7 @@ func flattenWirelessControllerVapApplicationDscpMarking(v interface{}, d *schema
 }
 
 func flattenWirelessControllerVapApplicationReportIntv(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerVapL3Roaming(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2896,6 +2819,12 @@ func refreshObjectWirelessControllerVap(d *schema.ResourceData, o map[string]int
 		}
 	}
 
+	if err = d.Set("domain_name_stripping", flattenWirelessControllerVapDomainNameStripping(o["domain-name-stripping"], d, "domain_name_stripping", sv)); err != nil {
+		if !fortiAPIPatch(o["domain-name-stripping"]) {
+			return fmt.Errorf("Error reading domain_name_stripping: %v", err)
+		}
+	}
+
 	if err = d.Set("acct_interim_interval", flattenWirelessControllerVapAcctInterimInterval(o["acct-interim-interval"], d, "acct_interim_interval", sv)); err != nil {
 		if !fortiAPIPatch(o["acct-interim-interval"]) {
 			return fmt.Errorf("Error reading acct_interim_interval: %v", err)
@@ -2935,6 +2864,12 @@ func refreshObjectWirelessControllerVap(d *schema.ResourceData, o map[string]int
 	if err = d.Set("local_standalone_dns_ip", flattenWirelessControllerVapLocalStandaloneDnsIp(o["local-standalone-dns-ip"], d, "local_standalone_dns_ip", sv)); err != nil {
 		if !fortiAPIPatch(o["local-standalone-dns-ip"]) {
 			return fmt.Errorf("Error reading local_standalone_dns_ip: %v", err)
+		}
+	}
+
+	if err = d.Set("local_lan_partition", flattenWirelessControllerVapLocalLanPartition(o["local-lan-partition"], d, "local_lan_partition", sv)); err != nil {
+		if !fortiAPIPatch(o["local-lan-partition"]) {
+			return fmt.Errorf("Error reading local_lan_partition: %v", err)
 		}
 	}
 
@@ -3046,42 +2981,9 @@ func refreshObjectWirelessControllerVap(d *schema.ResourceData, o map[string]int
 		}
 	}
 
-	{
-		v := flattenWirelessControllerVapSchedule(o["schedule"], d, "schedule", sv)
-		vx := ""
-		bstring := false
-		new_version_map := map[string][]string{
-			">=": []string{"6.2.4"},
-		}
-		if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
-			l := v.([]interface{})
-			if len(l) > 0 {
-				for k, r := range l {
-					i := r.(map[string]interface{})
-					if _, ok := i["name"]; ok {
-						if xv, ok := i["name"].(string); ok {
-							vx += xv
-							if k < len(l)-1 {
-								vx += ", "
-							}
-						}
-					}
-				}
-			}
-			bstring = true
-		}
-		if bstring == true {
-			if err = d.Set("schedule", vx); err != nil {
-				if !fortiAPIPatch(o["schedule"]) {
-					return fmt.Errorf("Error reading schedule: %v", err)
-				}
-			}
-		} else {
-			if err = d.Set("schedule", v); err != nil {
-				if !fortiAPIPatch(o["schedule"]) {
-					return fmt.Errorf("Error reading schedule: %v", err)
-				}
-			}
+	if err = d.Set("schedule", flattenWirelessControllerVapSchedule(o["schedule"], d, "schedule", sv)); err != nil {
+		if !fortiAPIPatch(o["schedule"]) {
+			return fmt.Errorf("Error reading schedule: %v", err)
 		}
 	}
 
@@ -4010,6 +3912,10 @@ func expandWirelessControllerVapNasFilterRule(d *schema.ResourceData, v interfac
 	return v, nil
 }
 
+func expandWirelessControllerVapDomainNameStripping(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWirelessControllerVapAcctInterimInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -4035,6 +3941,10 @@ func expandWirelessControllerVapLocalStandaloneDns(d *schema.ResourceData, v int
 }
 
 func expandWirelessControllerVapLocalStandaloneDnsIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerVapLocalLanPartition(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -4181,7 +4091,25 @@ func expandWirelessControllerVapIntraVapPrivacy(d *schema.ResourceData, v interf
 }
 
 func expandWirelessControllerVapSchedule(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
+	new_version_map := map[string][]string{
+		">=": []string{"6.2.4"},
+	}
+	if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
+		vx := fmt.Sprintf("%v", v)
+		vxx := strings.Split(vx, ", ")
+
+		tmps := make([]map[string]interface{}, 0, len(vxx))
+
+		for _, xv := range vxx {
+			xtmp := make(map[string]interface{})
+			xtmp["name"] = xv
+
+			tmps = append(tmps, xtmp)
+		}
+		return tmps, nil
+	} else {
+		return v, nil
+	}
 }
 
 func expandWirelessControllerVapLdpc(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
@@ -4241,27 +4169,35 @@ func expandWirelessControllerVapMpskKey(d *schema.ResourceData, v interface{}, p
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "key_name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["key-name"], _ = expandWirelessControllerVapMpskKeyKeyName(d, i["key_name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["key-name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "passphrase"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["passphrase"], _ = expandWirelessControllerVapMpskKeyPassphrase(d, i["passphrase"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["passphrase"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "concurrent_clients"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["concurrent-clients"], _ = expandWirelessControllerVapMpskKeyConcurrentClients(d, i["concurrent_clients"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["concurrent-clients"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["comment"], _ = expandWirelessControllerVapMpskKeyComment(d, i["comment"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["comment"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mpsk_schedules"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["mpsk-schedules"], _ = expandWirelessControllerVapMpskKeyMpskSchedules(d, i["mpsk_schedules"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["mpsk-schedules"] = make([]string, 0)
 		}
 
@@ -4454,11 +4390,15 @@ func expandWirelessControllerVapVlanName(d *schema.ResourceData, v interface{}, 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandWirelessControllerVapVlanNameName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan_id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["vlan-id"], _ = expandWirelessControllerVapVlanNameVlanId(d, i["vlan_id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["vlan-id"] = nil
 		}
 
 		result = append(result, tmp)
@@ -4498,11 +4438,15 @@ func expandWirelessControllerVapVlanPool(d *schema.ResourceData, v interface{}, 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandWirelessControllerVapVlanPoolId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "wtp_group"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["wtp-group"], _ = expandWirelessControllerVapVlanPoolWtpGroup(d, i["wtp_group"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["wtp-group"] = nil
 		}
 
 		result = append(result, tmp)
@@ -4710,6 +4654,8 @@ func expandWirelessControllerVapMacFilterList(d *schema.ResourceData, v interfac
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandWirelessControllerVapMacFilterListId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mac"
@@ -4853,6 +4799,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["max-clients"] = t
 		}
+	} else if d.HasChange("max_clients") {
+		obj["max-clients"] = nil
 	}
 
 	if v, ok := d.GetOkExists("max_clients_ap"); ok {
@@ -4862,6 +4810,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["max-clients-ap"] = t
 		}
+	} else if d.HasChange("max_clients_ap") {
+		obj["max-clients-ap"] = nil
 	}
 
 	if v, ok := d.GetOk("ssid"); ok {
@@ -5060,6 +5010,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["sae-groups"] = t
 		}
+	} else if d.HasChange("sae_groups") {
+		obj["sae-groups"] = nil
 	}
 
 	if v, ok := d.GetOk("owe_groups"); ok {
@@ -5069,6 +5021,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["owe-groups"] = t
 		}
+	} else if d.HasChange("owe_groups") {
+		obj["owe-groups"] = nil
 	}
 
 	if v, ok := d.GetOk("owe_transition"); ok {
@@ -5087,6 +5041,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["owe-transition-ssid"] = t
 		}
+	} else if d.HasChange("owe_transition_ssid") {
+		obj["owe-transition-ssid"] = nil
 	}
 
 	if v, ok := d.GetOk("additional_akms"); ok {
@@ -5096,6 +5052,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["additional-akms"] = t
 		}
+	} else if d.HasChange("additional_akms") {
+		obj["additional-akms"] = nil
 	}
 
 	if v, ok := d.GetOk("eapol_key_retries"); ok {
@@ -5123,6 +5081,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["external-web"] = t
 		}
+	} else if d.HasChange("external_web") {
+		obj["external-web"] = nil
 	}
 
 	if v, ok := d.GetOk("external_web_format"); ok {
@@ -5141,6 +5101,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["external-logout"] = t
 		}
+	} else if d.HasChange("external_logout") {
+		obj["external-logout"] = nil
 	}
 
 	if v, ok := d.GetOk("mac_username_delimiter"); ok {
@@ -5213,6 +5175,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["radius-mac-auth-server"] = t
 		}
+	} else if d.HasChange("radius_mac_auth_server") {
+		obj["radius-mac-auth-server"] = nil
 	}
 
 	if v, ok := d.GetOk("radius_mac_auth_block_interval"); ok {
@@ -5222,6 +5186,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["radius-mac-auth-block-interval"] = t
 		}
+	} else if d.HasChange("radius_mac_auth_block_interval") {
+		obj["radius-mac-auth-block-interval"] = nil
 	}
 
 	if v, ok := d.GetOk("radius_mac_mpsk_auth"); ok {
@@ -5285,6 +5251,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["key"] = t
 		}
+	} else if d.HasChange("key") {
+		obj["key"] = nil
 	}
 
 	if v, ok := d.GetOk("passphrase"); ok {
@@ -5294,6 +5262,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["passphrase"] = t
 		}
+	} else if d.HasChange("passphrase") {
+		obj["passphrase"] = nil
 	}
 
 	if v, ok := d.GetOk("sae_password"); ok {
@@ -5303,6 +5273,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["sae-password"] = t
 		}
+	} else if d.HasChange("sae_password") {
+		obj["sae-password"] = nil
 	}
 
 	if v, ok := d.GetOk("sae_h2e_only"); ok {
@@ -5339,6 +5311,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["sae-private-key"] = t
 		}
+	} else if d.HasChange("sae_private_key") {
+		obj["sae-private-key"] = nil
 	}
 
 	if v, ok := d.GetOk("akm24_only"); ok {
@@ -5357,6 +5331,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["radius-server"] = t
 		}
+	} else if d.HasChange("radius_server") {
+		obj["radius-server"] = nil
 	}
 
 	if v, ok := d.GetOk("nas_filter_rule"); ok {
@@ -5368,6 +5344,15 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
+	if v, ok := d.GetOk("domain_name_stripping"); ok {
+		t, err := expandWirelessControllerVapDomainNameStripping(d, v, "domain_name_stripping", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["domain-name-stripping"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("acct_interim_interval"); ok {
 		t, err := expandWirelessControllerVapAcctInterimInterval(d, v, "acct_interim_interval", sv)
 		if err != nil {
@@ -5375,6 +5360,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["acct-interim-interval"] = t
 		}
+	} else if d.HasChange("acct_interim_interval") {
+		obj["acct-interim-interval"] = nil
 	}
 
 	if v, ok := d.GetOk("local_standalone"); ok {
@@ -5429,6 +5416,17 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["local-standalone-dns-ip"] = t
 		}
+	} else if d.HasChange("local_standalone_dns_ip") {
+		obj["local-standalone-dns-ip"] = nil
+	}
+
+	if v, ok := d.GetOk("local_lan_partition"); ok {
+		t, err := expandWirelessControllerVapLocalLanPartition(d, v, "local_lan_partition", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["local-lan-partition"] = t
+		}
 	}
 
 	if v, ok := d.GetOk("local_bridging"); ok {
@@ -5474,6 +5472,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["portal-message-override-group"] = t
 		}
+	} else if d.HasChange("portal_message_override_group") {
+		obj["portal-message-override-group"] = nil
 	}
 
 	if v, ok := d.GetOk("portal_message_overrides"); ok {
@@ -5510,6 +5510,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["security-exempt-list"] = t
 		}
+	} else if d.HasChange("security_exempt_list") {
+		obj["security-exempt-list"] = nil
 	}
 
 	if v, ok := d.GetOk("security_redirect_url"); ok {
@@ -5519,6 +5521,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["security-redirect-url"] = t
 		}
+	} else if d.HasChange("security_redirect_url") {
+		obj["security-redirect-url"] = nil
 	}
 
 	if v, ok := d.GetOk("auth_cert"); ok {
@@ -5528,6 +5532,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["auth-cert"] = t
 		}
+	} else if d.HasChange("auth_cert") {
+		obj["auth-cert"] = nil
 	}
 
 	if v, ok := d.GetOk("auth_portal_addr"); ok {
@@ -5537,6 +5543,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["auth-portal-addr"] = t
 		}
+	} else if d.HasChange("auth_portal_addr") {
+		obj["auth-portal-addr"] = nil
 	}
 
 	if v, ok := d.GetOk("intra_vap_privacy"); ok {
@@ -5553,26 +5561,10 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
-			new_version_map := map[string][]string{
-				">=": []string{"6.2.4"},
-			}
-			if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
-				vx := fmt.Sprintf("%v", t)
-				vxx := strings.Split(vx, ", ")
-
-				tmps := make([]map[string]interface{}, 0, len(vxx))
-
-				for _, xv := range vxx {
-					xtmp := make(map[string]interface{})
-					xtmp["name"] = xv
-
-					tmps = append(tmps, xtmp)
-				}
-				obj["schedule"] = tmps
-			} else {
-				obj["schedule"] = t
-			}
+			obj["schedule"] = t
 		}
+	} else if d.HasChange("schedule") {
+		obj["schedule"] = nil
 	}
 
 	if v, ok := d.GetOk("ldpc"); ok {
@@ -5645,6 +5637,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["mpsk-profile"] = t
 		}
+	} else if d.HasChange("mpsk_profile") {
+		obj["mpsk-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("mpsk"); ok {
@@ -5654,6 +5648,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["mpsk"] = t
 		}
+	} else if d.HasChange("mpsk") {
+		obj["mpsk"] = nil
 	}
 
 	if v, ok := d.GetOkExists("mpsk_concurrent_clients"); ok {
@@ -5663,6 +5659,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["mpsk-concurrent-clients"] = t
 		}
+	} else if d.HasChange("mpsk_concurrent_clients") {
+		obj["mpsk-concurrent-clients"] = nil
 	}
 
 	if v, ok := d.GetOk("mpsk_key"); ok || d.HasChange("mpsk_key") {
@@ -5699,6 +5697,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["nac-profile"] = t
 		}
+	} else if d.HasChange("nac_profile") {
+		obj["nac-profile"] = nil
 	}
 
 	if v, ok := d.GetOkExists("vlanid"); ok {
@@ -5708,6 +5708,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["vlanid"] = t
 		}
+	} else if d.HasChange("vlanid") {
+		obj["vlanid"] = nil
 	}
 
 	if v, ok := d.GetOk("vlan_auto"); ok {
@@ -5753,6 +5755,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["captive-portal-radius-server"] = t
 		}
+	} else if d.HasChange("captive_portal_radius_server") {
+		obj["captive-portal-radius-server"] = nil
 	}
 
 	if v, ok := d.GetOk("captive_portal_radius_secret"); ok {
@@ -5762,6 +5766,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["captive-portal-radius-secret"] = t
 		}
+	} else if d.HasChange("captive_portal_radius_secret") {
+		obj["captive-portal-radius-secret"] = nil
 	}
 
 	if v, ok := d.GetOk("captive_portal_macauth_radius_server"); ok {
@@ -5771,6 +5777,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["captive-portal-macauth-radius-server"] = t
 		}
+	} else if d.HasChange("captive_portal_macauth_radius_server") {
+		obj["captive-portal-macauth-radius-server"] = nil
 	}
 
 	if v, ok := d.GetOk("captive_portal_macauth_radius_secret"); ok {
@@ -5780,6 +5788,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["captive-portal-macauth-radius-secret"] = t
 		}
+	} else if d.HasChange("captive_portal_macauth_radius_secret") {
+		obj["captive-portal-macauth-radius-secret"] = nil
 	}
 
 	if v, ok := d.GetOk("captive_portal_ac_name"); ok {
@@ -5789,6 +5799,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["captive-portal-ac-name"] = t
 		}
+	} else if d.HasChange("captive_portal_ac_name") {
+		obj["captive-portal-ac-name"] = nil
 	}
 
 	if v, ok := d.GetOkExists("captive_portal_auth_timeout"); ok {
@@ -5798,6 +5810,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["captive-portal-auth-timeout"] = t
 		}
+	} else if d.HasChange("captive_portal_auth_timeout") {
+		obj["captive-portal-auth-timeout"] = nil
 	}
 
 	if v, ok := d.GetOkExists("captive_portal_session_timeout_interval"); ok {
@@ -5807,6 +5821,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["captive-portal-session-timeout-interval"] = t
 		}
+	} else if d.HasChange("captive_portal_session_timeout_interval") {
+		obj["captive-portal-session-timeout-interval"] = nil
 	}
 
 	if v, ok := d.GetOk("alias"); ok {
@@ -6077,6 +6093,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["qos-profile"] = t
 		}
+	} else if d.HasChange("qos_profile") {
+		obj["qos-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("hotspot20_profile"); ok {
@@ -6086,6 +6104,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["hotspot20-profile"] = t
 		}
+	} else if d.HasChange("hotspot20_profile") {
+		obj["hotspot20-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("access_control_list"); ok {
@@ -6095,6 +6115,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["access-control-list"] = t
 		}
+	} else if d.HasChange("access_control_list") {
+		obj["access-control-list"] = nil
 	}
 
 	if v, ok := d.GetOk("primary_wag_profile"); ok {
@@ -6104,6 +6126,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["primary-wag-profile"] = t
 		}
+	} else if d.HasChange("primary_wag_profile") {
+		obj["primary-wag-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("secondary_wag_profile"); ok {
@@ -6113,6 +6137,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["secondary-wag-profile"] = t
 		}
+	} else if d.HasChange("secondary_wag_profile") {
+		obj["secondary-wag-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("tunnel_echo_interval"); ok {
@@ -6140,6 +6166,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["rates-11a"] = t
 		}
+	} else if d.HasChange("rates_11a") {
+		obj["rates-11a"] = nil
 	}
 
 	if v, ok := d.GetOk("rates_11bg"); ok {
@@ -6149,6 +6177,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["rates-11bg"] = t
 		}
+	} else if d.HasChange("rates_11bg") {
+		obj["rates-11bg"] = nil
 	}
 
 	if v, ok := d.GetOk("rates_11n_ss12"); ok {
@@ -6158,6 +6188,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["rates-11n-ss12"] = t
 		}
+	} else if d.HasChange("rates_11n_ss12") {
+		obj["rates-11n-ss12"] = nil
 	}
 
 	if v, ok := d.GetOk("rates_11n_ss34"); ok {
@@ -6167,6 +6199,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["rates-11n-ss34"] = t
 		}
+	} else if d.HasChange("rates_11n_ss34") {
+		obj["rates-11n-ss34"] = nil
 	}
 
 	if v, ok := d.GetOk("rates_11ac_mcs_map"); ok {
@@ -6176,6 +6210,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["rates-11ac-mcs-map"] = t
 		}
+	} else if d.HasChange("rates_11ac_mcs_map") {
+		obj["rates-11ac-mcs-map"] = nil
 	}
 
 	if v, ok := d.GetOk("rates_11ax_mcs_map"); ok {
@@ -6185,6 +6221,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["rates-11ax-mcs-map"] = t
 		}
+	} else if d.HasChange("rates_11ax_mcs_map") {
+		obj["rates-11ax-mcs-map"] = nil
 	}
 
 	if v, ok := d.GetOk("rates_11be_mcs_map"); ok {
@@ -6194,6 +6232,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["rates-11be-mcs-map"] = t
 		}
+	} else if d.HasChange("rates_11be_mcs_map") {
+		obj["rates-11be-mcs-map"] = nil
 	}
 
 	if v, ok := d.GetOk("rates_11be_mcs_map_160"); ok {
@@ -6203,6 +6243,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["rates-11be-mcs-map-160"] = t
 		}
+	} else if d.HasChange("rates_11be_mcs_map_160") {
+		obj["rates-11be-mcs-map-160"] = nil
 	}
 
 	if v, ok := d.GetOk("rates_11be_mcs_map_320"); ok {
@@ -6212,6 +6254,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["rates-11be-mcs-map-320"] = t
 		}
+	} else if d.HasChange("rates_11be_mcs_map_320") {
+		obj["rates-11be-mcs-map-320"] = nil
 	}
 
 	if v, ok := d.GetOk("rates_11ac_ss12"); ok {
@@ -6221,6 +6265,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["rates-11ac-ss12"] = t
 		}
+	} else if d.HasChange("rates_11ac_ss12") {
+		obj["rates-11ac-ss12"] = nil
 	}
 
 	if v, ok := d.GetOk("rates_11ac_ss34"); ok {
@@ -6230,6 +6276,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["rates-11ac-ss34"] = t
 		}
+	} else if d.HasChange("rates_11ac_ss34") {
+		obj["rates-11ac-ss34"] = nil
 	}
 
 	if v, ok := d.GetOk("rates_11ax_ss12"); ok {
@@ -6239,6 +6287,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["rates-11ax-ss12"] = t
 		}
+	} else if d.HasChange("rates_11ax_ss12") {
+		obj["rates-11ax-ss12"] = nil
 	}
 
 	if v, ok := d.GetOk("rates_11ax_ss34"); ok {
@@ -6248,6 +6298,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["rates-11ax-ss34"] = t
 		}
+	} else if d.HasChange("rates_11ax_ss34") {
+		obj["rates-11ax-ss34"] = nil
 	}
 
 	if v, ok := d.GetOk("utm_profile"); ok {
@@ -6257,6 +6309,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["utm-profile"] = t
 		}
+	} else if d.HasChange("utm_profile") {
+		obj["utm-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("utm_status"); ok {
@@ -6284,6 +6338,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["ips-sensor"] = t
 		}
+	} else if d.HasChange("ips_sensor") {
+		obj["ips-sensor"] = nil
 	}
 
 	if v, ok := d.GetOk("application_list"); ok {
@@ -6293,6 +6349,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["application-list"] = t
 		}
+	} else if d.HasChange("application_list") {
+		obj["application-list"] = nil
 	}
 
 	if v, ok := d.GetOk("antivirus_profile"); ok {
@@ -6302,6 +6360,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["antivirus-profile"] = t
 		}
+	} else if d.HasChange("antivirus_profile") {
+		obj["antivirus-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("webfilter_profile"); ok {
@@ -6311,6 +6371,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["webfilter-profile"] = t
 		}
+	} else if d.HasChange("webfilter_profile") {
+		obj["webfilter-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("scan_botnet_connections"); ok {
@@ -6329,6 +6391,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["address-group"] = t
 		}
+	} else if d.HasChange("address_group") {
+		obj["address-group"] = nil
 	}
 
 	if v, ok := d.GetOk("address_group_policy"); ok {
@@ -6437,6 +6501,8 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["beacon-advertising"] = t
 		}
+	} else if d.HasChange("beacon_advertising") {
+		obj["beacon-advertising"] = nil
 	}
 
 	if v, ok := d.GetOk("osen"); ok {

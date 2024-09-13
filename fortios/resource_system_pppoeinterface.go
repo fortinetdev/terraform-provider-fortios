@@ -62,13 +62,17 @@ func resourceSystemPppoeInterface() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 64),
 				Optional:     true,
-				Computed:     true,
 			},
 			"password": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
 				Sensitive:    true,
+			},
+			"pppoe_egress_cos": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"auth_type": &schema.Schema{
 				Type:     schema.TypeString,
@@ -88,7 +92,6 @@ func resourceSystemPppoeInterface() *schema.Resource {
 			"idle_timeout": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"disc_retry_timeout": &schema.Schema{
 				Type:     schema.TypeInt,
@@ -104,13 +107,11 @@ func resourceSystemPppoeInterface() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ac_name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"lcp_echo_interval": &schema.Schema{
 				Type:     schema.TypeInt,
@@ -297,7 +298,7 @@ func flattenSystemPppoeInterfaceUsername(v interface{}, d *schema.ResourceData, 
 	return v
 }
 
-func flattenSystemPppoeInterfacePassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+func flattenSystemPppoeInterfacePppoeEgressCos(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -314,15 +315,15 @@ func flattenSystemPppoeInterfacePppoeUnnumberedNegotiate(v interface{}, d *schem
 }
 
 func flattenSystemPppoeInterfaceIdleTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemPppoeInterfaceDiscRetryTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemPppoeInterfacePadtRetryTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemPppoeInterfaceServiceName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -334,11 +335,11 @@ func flattenSystemPppoeInterfaceAcName(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenSystemPppoeInterfaceLcpEchoInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemPppoeInterfaceLcpMaxEchoFails(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectSystemPppoeInterface(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -371,6 +372,12 @@ func refreshObjectSystemPppoeInterface(d *schema.ResourceData, o map[string]inte
 	if err = d.Set("username", flattenSystemPppoeInterfaceUsername(o["username"], d, "username", sv)); err != nil {
 		if !fortiAPIPatch(o["username"]) {
 			return fmt.Errorf("Error reading username: %v", err)
+		}
+	}
+
+	if err = d.Set("pppoe_egress_cos", flattenSystemPppoeInterfacePppoeEgressCos(o["pppoe-egress-cos"], d, "pppoe_egress_cos", sv)); err != nil {
+		if !fortiAPIPatch(o["pppoe-egress-cos"]) {
+			return fmt.Errorf("Error reading pppoe_egress_cos: %v", err)
 		}
 	}
 
@@ -467,6 +474,10 @@ func expandSystemPppoeInterfacePassword(d *schema.ResourceData, v interface{}, p
 	return v, nil
 }
 
+func expandSystemPppoeInterfacePppoeEgressCos(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemPppoeInterfaceAuthType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -544,6 +555,8 @@ func getObjectSystemPppoeInterface(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["device"] = t
 		}
+	} else if d.HasChange("device") {
+		obj["device"] = nil
 	}
 
 	if v, ok := d.GetOk("username"); ok {
@@ -553,6 +566,8 @@ func getObjectSystemPppoeInterface(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["username"] = t
 		}
+	} else if d.HasChange("username") {
+		obj["username"] = nil
 	}
 
 	if v, ok := d.GetOk("password"); ok {
@@ -561,6 +576,17 @@ func getObjectSystemPppoeInterface(d *schema.ResourceData, sv string) (*map[stri
 			return &obj, err
 		} else if t != nil {
 			obj["password"] = t
+		}
+	} else if d.HasChange("password") {
+		obj["password"] = nil
+	}
+
+	if v, ok := d.GetOk("pppoe_egress_cos"); ok {
+		t, err := expandSystemPppoeInterfacePppoeEgressCos(d, v, "pppoe_egress_cos", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["pppoe-egress-cos"] = t
 		}
 	}
 
@@ -598,6 +624,8 @@ func getObjectSystemPppoeInterface(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["idle-timeout"] = t
 		}
+	} else if d.HasChange("idle_timeout") {
+		obj["idle-timeout"] = nil
 	}
 
 	if v, ok := d.GetOkExists("disc_retry_timeout"); ok {
@@ -625,6 +653,8 @@ func getObjectSystemPppoeInterface(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["service-name"] = t
 		}
+	} else if d.HasChange("service_name") {
+		obj["service-name"] = nil
 	}
 
 	if v, ok := d.GetOk("ac_name"); ok {
@@ -634,6 +664,8 @@ func getObjectSystemPppoeInterface(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["ac-name"] = t
 		}
+	} else if d.HasChange("ac_name") {
+		obj["ac-name"] = nil
 	}
 
 	if v, ok := d.GetOkExists("lcp_echo_interval"); ok {

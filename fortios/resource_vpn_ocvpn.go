@@ -71,7 +71,6 @@ func resourceVpnOcvpn() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -106,7 +105,6 @@ func resourceVpnOcvpn() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"nat": &schema.Schema{
 				Type:     schema.TypeString,
@@ -122,7 +120,6 @@ func resourceVpnOcvpn() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"inter_overlay": &schema.Schema{
 							Type:     schema.TypeString,
@@ -132,13 +129,11 @@ func resourceVpnOcvpn() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"name": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"assign_ip": &schema.Schema{
 							Type:     schema.TypeString,
@@ -163,7 +158,6 @@ func resourceVpnOcvpn() *schema.Resource {
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 									"type": &schema.Schema{
 										Type:     schema.TypeString,
@@ -179,7 +173,6 @@ func resourceVpnOcvpn() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 15),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -213,13 +206,11 @@ func resourceVpnOcvpn() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 35),
 										Optional:     true,
-										Computed:     true,
 									},
 									"auth_group": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 35),
 										Optional:     true,
-										Computed:     true,
 									},
 									"overlays": &schema.Schema{
 										Type:     schema.TypeSet,
@@ -230,7 +221,6 @@ func resourceVpnOcvpn() *schema.Resource {
 													Type:         schema.TypeString,
 													ValidateFunc: validation.StringLenBetween(0, 79),
 													Optional:     true,
-													Computed:     true,
 												},
 											},
 										},
@@ -443,7 +433,7 @@ func flattenVpnOcvpnIpAllocationBlock(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenVpnOcvpnPollInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVpnOcvpnAutoDiscovery(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -548,7 +538,7 @@ func flattenVpnOcvpnOverlaysInterOverlay(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenVpnOcvpnOverlaysId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVpnOcvpnOverlaysName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -621,7 +611,7 @@ func flattenVpnOcvpnOverlaysSubnets(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenVpnOcvpnOverlaysSubnetsId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVpnOcvpnOverlaysSubnetsType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -659,7 +649,6 @@ func flattenVpnOcvpnForticlientAccess(v interface{}, d *schema.ResourceData, pre
 
 	pre_append = pre + ".0." + "psksecret"
 	if _, ok := i["psksecret"]; ok {
-		result["psksecret"] = flattenVpnOcvpnForticlientAccessPsksecret(i["psksecret"], d, pre_append, sv)
 		c := d.Get(pre_append).(string)
 		if c != "" {
 			result["psksecret"] = c
@@ -676,10 +665,6 @@ func flattenVpnOcvpnForticlientAccess(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenVpnOcvpnForticlientAccessStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenVpnOcvpnForticlientAccessPsksecret(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1012,6 +997,8 @@ func expandVpnOcvpnOverlays(d *schema.ResourceData, v interface{}, pre string, s
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "overlay_name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["overlay-name"], _ = expandVpnOcvpnOverlaysOverlayName(d, i["overlay_name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["overlay-name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "inter_overlay"
@@ -1022,11 +1009,15 @@ func expandVpnOcvpnOverlays(d *schema.ResourceData, v interface{}, pre string, s
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandVpnOcvpnOverlaysId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandVpnOcvpnOverlaysName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "assign_ip"
@@ -1045,9 +1036,9 @@ func expandVpnOcvpnOverlays(d *schema.ResourceData, v interface{}, pre string, s
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "subnets"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["subnets"], _ = expandVpnOcvpnOverlaysSubnets(d, i["subnets"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["subnets"] = make([]string, 0)
 		}
 
@@ -1104,6 +1095,8 @@ func expandVpnOcvpnOverlaysSubnets(d *schema.ResourceData, v interface{}, pre st
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandVpnOcvpnOverlaysSubnetsId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
@@ -1119,6 +1112,8 @@ func expandVpnOcvpnOverlaysSubnets(d *schema.ResourceData, v interface{}, pre st
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["interface"], _ = expandVpnOcvpnOverlaysSubnetsInterface(d, i["interface"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["interface"] = nil
 		}
 
 		result = append(result, tmp)
@@ -1210,17 +1205,21 @@ func expandVpnOcvpnForticlientAccessAuthGroups(d *schema.ResourceData, v interfa
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandVpnOcvpnForticlientAccessAuthGroupsName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_group"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["auth-group"], _ = expandVpnOcvpnForticlientAccessAuthGroupsAuthGroup(d, i["auth_group"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["auth-group"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "overlays"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["overlays"], _ = expandVpnOcvpnForticlientAccessAuthGroupsOverlays(d, i["overlays"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["overlays"] = make([]string, 0)
 		}
 
@@ -1425,6 +1424,8 @@ func getObjectVpnOcvpn(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 				obj["eap-users"] = t
 			}
 		}
+	} else if d.HasChange("eap_users") {
+		obj["eap-users"] = nil
 	}
 
 	if v, ok := d.GetOk("nat"); ok {

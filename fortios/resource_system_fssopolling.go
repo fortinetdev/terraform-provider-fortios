@@ -181,14 +181,10 @@ func flattenSystemFssoPollingStatus(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenSystemFssoPollingListeningPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemFssoPollingAuthentication(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenSystemFssoPollingAuthPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -291,6 +287,8 @@ func getObjectSystemFssoPolling(d *schema.ResourceData, setArgNil bool, sv strin
 				obj["auth-password"] = t
 			}
 		}
+	} else if d.HasChange("auth_password") {
+		obj["auth-password"] = nil
 	}
 
 	return &obj, nil

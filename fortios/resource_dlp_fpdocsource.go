@@ -97,7 +97,6 @@ func resourceDlpFpDocSource() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 119),
 				Optional:     true,
-				Computed:     true,
 			},
 			"file_pattern": &schema.Schema{
 				Type:         schema.TypeString,
@@ -109,7 +108,6 @@ func resourceDlpFpDocSource() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"tod_hour": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -121,7 +119,6 @@ func resourceDlpFpDocSource() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 59),
 				Optional:     true,
-				Computed:     true,
 			},
 			"weekday": &schema.Schema{
 				Type:     schema.TypeString,
@@ -329,10 +326,6 @@ func flattenDlpFpDocSourceUsername(v interface{}, d *schema.ResourceData, pre st
 	return v
 }
 
-func flattenDlpFpDocSourcePassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
 func flattenDlpFpDocSourceFilePath(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -346,11 +339,11 @@ func flattenDlpFpDocSourceSensitivity(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenDlpFpDocSourceTodHour(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenDlpFpDocSourceTodMin(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenDlpFpDocSourceWeekday(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -358,7 +351,7 @@ func flattenDlpFpDocSourceWeekday(v interface{}, d *schema.ResourceData, pre str
 }
 
 func flattenDlpFpDocSourceDate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectDlpFpDocSource(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -575,6 +568,8 @@ func getObjectDlpFpDocSource(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["server"] = t
 		}
+	} else if d.HasChange("server") {
+		obj["server"] = nil
 	}
 
 	if v, ok := d.GetOk("period"); ok {
@@ -638,6 +633,8 @@ func getObjectDlpFpDocSource(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["username"] = t
 		}
+	} else if d.HasChange("username") {
+		obj["username"] = nil
 	}
 
 	if v, ok := d.GetOk("password"); ok {
@@ -647,6 +644,8 @@ func getObjectDlpFpDocSource(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["password"] = t
 		}
+	} else if d.HasChange("password") {
+		obj["password"] = nil
 	}
 
 	if v, ok := d.GetOk("file_path"); ok {
@@ -656,6 +655,8 @@ func getObjectDlpFpDocSource(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["file-path"] = t
 		}
+	} else if d.HasChange("file_path") {
+		obj["file-path"] = nil
 	}
 
 	if v, ok := d.GetOk("file_pattern"); ok {
@@ -674,6 +675,8 @@ func getObjectDlpFpDocSource(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["sensitivity"] = t
 		}
+	} else if d.HasChange("sensitivity") {
+		obj["sensitivity"] = nil
 	}
 
 	if v, ok := d.GetOkExists("tod_hour"); ok {
@@ -692,6 +695,8 @@ func getObjectDlpFpDocSource(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["tod-min"] = t
 		}
+	} else if d.HasChange("tod_min") {
+		obj["tod-min"] = nil
 	}
 
 	if v, ok := d.GetOk("weekday"); ok {

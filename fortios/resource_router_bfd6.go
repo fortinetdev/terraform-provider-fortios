@@ -50,7 +50,6 @@ func resourceRouterBfd6() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -63,7 +62,6 @@ func resourceRouterBfd6() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"src": &schema.Schema{
 							Type:     schema.TypeString,
@@ -346,8 +344,7 @@ func flattenRouterBfd6MultihopTemplate(v interface{}, d *schema.ResourceData, pr
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "md5_key"
-		if cur_v, ok := i["md5-key"]; ok {
-			tmp["md5_key"] = flattenRouterBfd6MultihopTemplateMd5Key(cur_v, d, pre_append, sv)
+		if _, ok := i["md5-key"]; ok {
 			c := d.Get(pre_append).(string)
 			if c != "" {
 				tmp["md5_key"] = c
@@ -364,7 +361,7 @@ func flattenRouterBfd6MultihopTemplate(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenRouterBfd6MultihopTemplateId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterBfd6MultihopTemplateSrc(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -376,22 +373,18 @@ func flattenRouterBfd6MultihopTemplateDst(v interface{}, d *schema.ResourceData,
 }
 
 func flattenRouterBfd6MultihopTemplateBfdDesiredMinTx(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterBfd6MultihopTemplateBfdRequiredMinRx(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterBfd6MultihopTemplateBfdDetectMult(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterBfd6MultihopTemplateAuthMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenRouterBfd6MultihopTemplateMd5Key(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -467,6 +460,8 @@ func expandRouterBfd6Neighbor(d *schema.ResourceData, v interface{}, pre string,
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["interface"], _ = expandRouterBfd6NeighborInterface(d, i["interface"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["interface"] = nil
 		}
 
 		result = append(result, tmp)
@@ -502,6 +497,8 @@ func expandRouterBfd6MultihopTemplate(d *schema.ResourceData, v interface{}, pre
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandRouterBfd6MultihopTemplateId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "src"
@@ -537,6 +534,8 @@ func expandRouterBfd6MultihopTemplate(d *schema.ResourceData, v interface{}, pre
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "md5_key"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["md5-key"], _ = expandRouterBfd6MultihopTemplateMd5Key(d, i["md5_key"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["md5-key"] = nil
 		}
 
 		result = append(result, tmp)

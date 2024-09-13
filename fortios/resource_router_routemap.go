@@ -46,7 +46,6 @@ func resourceRouterRouteMap() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
-				Computed:     true,
 			},
 			"rule": &schema.Schema{
 				Type:     schema.TypeList,
@@ -67,19 +66,16 @@ func resourceRouterRouteMap() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"match_community": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"match_extcommunity": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"match_community_exact": &schema.Schema{
 							Type:     schema.TypeString,
@@ -100,36 +96,30 @@ func resourceRouterRouteMap() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 						"match_ip_address": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"match_ip6_address": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"match_ip_nexthop": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"match_ip6_nexthop": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"match_metric": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"match_route_type": &schema.Schema{
 							Type:     schema.TypeString,
@@ -139,18 +129,15 @@ func resourceRouterRouteMap() *schema.Resource {
 						"match_tag": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"match_vrf": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 251),
 							Optional:     true,
-							Computed:     true,
 						},
 						"set_aggregator_as": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"set_aggregator_ip": &schema.Schema{
 							Type:     schema.TypeString,
@@ -171,7 +158,6 @@ func resourceRouterRouteMap() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -185,7 +171,6 @@ func resourceRouterRouteMap() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"set_community": &schema.Schema{
 							Type:     schema.TypeSet,
@@ -196,7 +181,6 @@ func resourceRouterRouteMap() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -210,31 +194,26 @@ func resourceRouterRouteMap() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 45),
 							Optional:     true,
-							Computed:     true,
 						},
 						"set_dampening_reuse": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 20000),
 							Optional:     true,
-							Computed:     true,
 						},
 						"set_dampening_suppress": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 20000),
 							Optional:     true,
-							Computed:     true,
 						},
 						"set_dampening_max_suppress": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"set_dampening_unreachability_half_life": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 45),
 							Optional:     true,
-							Computed:     true,
 						},
 						"set_extcommunity_rt": &schema.Schema{
 							Type:     schema.TypeSet,
@@ -245,7 +224,6 @@ func resourceRouterRouteMap() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -259,7 +237,6 @@ func resourceRouterRouteMap() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -267,47 +244,38 @@ func resourceRouterRouteMap() *schema.Resource {
 						"set_ip_nexthop": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"set_ip_prefsrc": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"set_vpnv4_nexthop": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"set_ip6_nexthop": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"set_ip6_nexthop_local": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"set_vpnv6_nexthop": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"set_vpnv6_nexthop_local": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"set_local_preference": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"set_metric": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"set_metric_type": &schema.Schema{
 							Type:     schema.TypeString,
@@ -317,7 +285,6 @@ func resourceRouterRouteMap() *schema.Resource {
 						"set_originator_id": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"set_origin": &schema.Schema{
 							Type:     schema.TypeString,
@@ -327,35 +294,29 @@ func resourceRouterRouteMap() *schema.Resource {
 						"set_tag": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"set_weight": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"set_flags": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 						"match_flags": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 						"set_route_tag": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"set_priority": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -817,7 +778,7 @@ func flattenRouterRouteMapRule(v interface{}, d *schema.ResourceData, pre string
 }
 
 func flattenRouterRouteMapRuleId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterRouteMapRuleAction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -869,7 +830,7 @@ func flattenRouterRouteMapRuleMatchIp6Nexthop(v interface{}, d *schema.ResourceD
 }
 
 func flattenRouterRouteMapRuleMatchMetric(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterRouteMapRuleMatchRouteType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -877,15 +838,15 @@ func flattenRouterRouteMapRuleMatchRouteType(v interface{}, d *schema.ResourceDa
 }
 
 func flattenRouterRouteMapRuleMatchTag(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterRouteMapRuleMatchVrf(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterRouteMapRuleSetAggregatorAs(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterRouteMapRuleSetAggregatorIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -993,23 +954,23 @@ func flattenRouterRouteMapRuleSetCommunityAdditive(v interface{}, d *schema.Reso
 }
 
 func flattenRouterRouteMapRuleSetDampeningReachabilityHalfLife(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterRouteMapRuleSetDampeningReuse(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterRouteMapRuleSetDampeningSuppress(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterRouteMapRuleSetDampeningMaxSuppress(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterRouteMapRuleSetDampeningUnreachabilityHalfLife(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterRouteMapRuleSetExtcommunityRt(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -1125,11 +1086,11 @@ func flattenRouterRouteMapRuleSetVpnv6NexthopLocal(v interface{}, d *schema.Reso
 }
 
 func flattenRouterRouteMapRuleSetLocalPreference(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterRouteMapRuleSetMetric(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterRouteMapRuleSetMetricType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1145,27 +1106,27 @@ func flattenRouterRouteMapRuleSetOrigin(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenRouterRouteMapRuleSetTag(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterRouteMapRuleSetWeight(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterRouteMapRuleSetFlags(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterRouteMapRuleMatchFlags(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterRouteMapRuleSetRouteTag(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterRouteMapRuleSetPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectRouterRouteMap(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -1249,16 +1210,22 @@ func expandRouterRouteMapRule(d *schema.ResourceData, v interface{}, pre string,
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_as_path"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["match-as-path"], _ = expandRouterRouteMapRuleMatchAsPath(d, i["match_as_path"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["match-as-path"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_community"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["match-community"], _ = expandRouterRouteMapRuleMatchCommunity(d, i["match_community"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["match-community"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_extcommunity"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["match-extcommunity"], _ = expandRouterRouteMapRuleMatchExtcommunity(d, i["match_extcommunity"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["match-extcommunity"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_community_exact"
@@ -1279,31 +1246,43 @@ func expandRouterRouteMapRule(d *schema.ResourceData, v interface{}, pre string,
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_interface"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["match-interface"], _ = expandRouterRouteMapRuleMatchInterface(d, i["match_interface"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["match-interface"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_ip_address"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["match-ip-address"], _ = expandRouterRouteMapRuleMatchIpAddress(d, i["match_ip_address"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["match-ip-address"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_ip6_address"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["match-ip6-address"], _ = expandRouterRouteMapRuleMatchIp6Address(d, i["match_ip6_address"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["match-ip6-address"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_ip_nexthop"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["match-ip-nexthop"], _ = expandRouterRouteMapRuleMatchIpNexthop(d, i["match_ip_nexthop"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["match-ip-nexthop"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_ip6_nexthop"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["match-ip6-nexthop"], _ = expandRouterRouteMapRuleMatchIp6Nexthop(d, i["match_ip6_nexthop"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["match-ip6-nexthop"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_metric"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["match-metric"], _ = expandRouterRouteMapRuleMatchMetric(d, i["match_metric"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["match-metric"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_route_type"
@@ -1314,16 +1293,22 @@ func expandRouterRouteMapRule(d *schema.ResourceData, v interface{}, pre string,
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_tag"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["match-tag"], _ = expandRouterRouteMapRuleMatchTag(d, i["match_tag"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["match-tag"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_vrf"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["match-vrf"], _ = expandRouterRouteMapRuleMatchVrf(d, i["match_vrf"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["match-vrf"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_aggregator_as"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["set-aggregator-as"], _ = expandRouterRouteMapRuleSetAggregatorAs(d, i["set_aggregator_as"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["set-aggregator-as"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_aggregator_ip"
@@ -1337,9 +1322,9 @@ func expandRouterRouteMapRule(d *schema.ResourceData, v interface{}, pre string,
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_aspath"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["set-aspath"], _ = expandRouterRouteMapRuleSetAspath(d, i["set_aspath"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["set-aspath"] = make([]string, 0)
 		}
 
@@ -1351,12 +1336,14 @@ func expandRouterRouteMapRule(d *schema.ResourceData, v interface{}, pre string,
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_community_delete"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["set-community-delete"], _ = expandRouterRouteMapRuleSetCommunityDelete(d, i["set_community_delete"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["set-community-delete"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_community"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["set-community"], _ = expandRouterRouteMapRuleSetCommunity(d, i["set_community"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["set-community"] = make([]string, 0)
 		}
 
@@ -1368,85 +1355,113 @@ func expandRouterRouteMapRule(d *schema.ResourceData, v interface{}, pre string,
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_dampening_reachability_half_life"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["set-dampening-reachability-half-life"], _ = expandRouterRouteMapRuleSetDampeningReachabilityHalfLife(d, i["set_dampening_reachability_half_life"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["set-dampening-reachability-half-life"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_dampening_reuse"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["set-dampening-reuse"], _ = expandRouterRouteMapRuleSetDampeningReuse(d, i["set_dampening_reuse"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["set-dampening-reuse"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_dampening_suppress"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["set-dampening-suppress"], _ = expandRouterRouteMapRuleSetDampeningSuppress(d, i["set_dampening_suppress"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["set-dampening-suppress"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_dampening_max_suppress"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["set-dampening-max-suppress"], _ = expandRouterRouteMapRuleSetDampeningMaxSuppress(d, i["set_dampening_max_suppress"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["set-dampening-max-suppress"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_dampening_unreachability_half_life"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["set-dampening-unreachability-half-life"], _ = expandRouterRouteMapRuleSetDampeningUnreachabilityHalfLife(d, i["set_dampening_unreachability_half_life"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["set-dampening-unreachability-half-life"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_extcommunity_rt"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["set-extcommunity-rt"], _ = expandRouterRouteMapRuleSetExtcommunityRt(d, i["set_extcommunity_rt"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["set-extcommunity-rt"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_extcommunity_soo"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["set-extcommunity-soo"], _ = expandRouterRouteMapRuleSetExtcommunitySoo(d, i["set_extcommunity_soo"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["set-extcommunity-soo"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_ip_nexthop"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["set-ip-nexthop"], _ = expandRouterRouteMapRuleSetIpNexthop(d, i["set_ip_nexthop"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["set-ip-nexthop"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_ip_prefsrc"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["set-ip-prefsrc"], _ = expandRouterRouteMapRuleSetIpPrefsrc(d, i["set_ip_prefsrc"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["set-ip-prefsrc"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_vpnv4_nexthop"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["set-vpnv4-nexthop"], _ = expandRouterRouteMapRuleSetVpnv4Nexthop(d, i["set_vpnv4_nexthop"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["set-vpnv4-nexthop"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_ip6_nexthop"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["set-ip6-nexthop"], _ = expandRouterRouteMapRuleSetIp6Nexthop(d, i["set_ip6_nexthop"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["set-ip6-nexthop"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_ip6_nexthop_local"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["set-ip6-nexthop-local"], _ = expandRouterRouteMapRuleSetIp6NexthopLocal(d, i["set_ip6_nexthop_local"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["set-ip6-nexthop-local"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_vpnv6_nexthop"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["set-vpnv6-nexthop"], _ = expandRouterRouteMapRuleSetVpnv6Nexthop(d, i["set_vpnv6_nexthop"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["set-vpnv6-nexthop"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_vpnv6_nexthop_local"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["set-vpnv6-nexthop-local"], _ = expandRouterRouteMapRuleSetVpnv6NexthopLocal(d, i["set_vpnv6_nexthop_local"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["set-vpnv6-nexthop-local"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_local_preference"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["set-local-preference"], _ = expandRouterRouteMapRuleSetLocalPreference(d, i["set_local_preference"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["set-local-preference"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_metric"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["set-metric"], _ = expandRouterRouteMapRuleSetMetric(d, i["set_metric"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["set-metric"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_metric_type"
@@ -1457,6 +1472,8 @@ func expandRouterRouteMapRule(d *schema.ResourceData, v interface{}, pre string,
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_originator_id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["set-originator-id"], _ = expandRouterRouteMapRuleSetOriginatorId(d, i["set_originator_id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["set-originator-id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_origin"
@@ -1467,31 +1484,43 @@ func expandRouterRouteMapRule(d *schema.ResourceData, v interface{}, pre string,
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_tag"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["set-tag"], _ = expandRouterRouteMapRuleSetTag(d, i["set_tag"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["set-tag"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_weight"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["set-weight"], _ = expandRouterRouteMapRuleSetWeight(d, i["set_weight"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["set-weight"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_flags"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["set-flags"], _ = expandRouterRouteMapRuleSetFlags(d, i["set_flags"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["set-flags"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_flags"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["match-flags"], _ = expandRouterRouteMapRuleMatchFlags(d, i["match_flags"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["match-flags"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_route_tag"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["set-route-tag"], _ = expandRouterRouteMapRuleSetRouteTag(d, i["set_route_tag"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["set-route-tag"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_priority"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["set-priority"], _ = expandRouterRouteMapRuleSetPriority(d, i["set_priority"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["set-priority"] = nil
 		}
 
 		result = append(result, tmp)
@@ -1817,6 +1846,8 @@ func getObjectRouterRouteMap(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["comments"] = t
 		}
+	} else if d.HasChange("comments") {
+		obj["comments"] = nil
 	}
 
 	if v, ok := d.GetOk("rule"); ok || d.HasChange("rule") {

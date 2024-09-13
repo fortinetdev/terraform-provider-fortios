@@ -86,6 +86,11 @@ func resourceLogSetting() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"local_in_policy_log": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"local_out": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -129,7 +134,6 @@ func resourceLogSetting() *schema.Resource {
 			"log_policy_name": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"faz_override": &schema.Schema{
 				Type:     schema.TypeString,
@@ -156,6 +160,11 @@ func resourceLogSetting() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"extended_utm_log": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"custom_log_fields": &schema.Schema{
 				Type:     schema.TypeSet,
 				Optional: true,
@@ -165,7 +174,6 @@ func resourceLogSetting() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -174,7 +182,6 @@ func resourceLogSetting() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 32),
 				Optional:     true,
-				Computed:     true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
@@ -344,6 +351,10 @@ func flattenLogSettingLocalInDenyBroadcast(v interface{}, d *schema.ResourceData
 	return v
 }
 
+func flattenLogSettingLocalInPolicyLog(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenLogSettingLocalOut(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -397,6 +408,10 @@ func flattenLogSettingRestApiGet(v interface{}, d *schema.ResourceData, pre stri
 }
 
 func flattenLogSettingLongLiveSessionStat(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenLogSettingExtendedUtmLog(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -515,6 +530,12 @@ func refreshObjectLogSetting(d *schema.ResourceData, o map[string]interface{}, s
 		}
 	}
 
+	if err = d.Set("local_in_policy_log", flattenLogSettingLocalInPolicyLog(o["local-in-policy-log"], d, "local_in_policy_log", sv)); err != nil {
+		if !fortiAPIPatch(o["local-in-policy-log"]) {
+			return fmt.Errorf("Error reading local_in_policy_log: %v", err)
+		}
+	}
+
 	if err = d.Set("local_out", flattenLogSettingLocalOut(o["local-out"], d, "local_out", sv)); err != nil {
 		if !fortiAPIPatch(o["local-out"]) {
 			return fmt.Errorf("Error reading local_out: %v", err)
@@ -599,6 +620,12 @@ func refreshObjectLogSetting(d *schema.ResourceData, o map[string]interface{}, s
 		}
 	}
 
+	if err = d.Set("extended_utm_log", flattenLogSettingExtendedUtmLog(o["extended-utm-log"], d, "extended_utm_log", sv)); err != nil {
+		if !fortiAPIPatch(o["extended-utm-log"]) {
+			return fmt.Errorf("Error reading extended_utm_log: %v", err)
+		}
+	}
+
 	if b_get_all_tables {
 		if err = d.Set("custom_log_fields", flattenLogSettingCustomLogFields(o["custom-log-fields"], d, "custom_log_fields", sv)); err != nil {
 			if !fortiAPIPatch(o["custom-log-fields"]) {
@@ -670,6 +697,10 @@ func expandLogSettingLocalInDenyBroadcast(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
+func expandLogSettingLocalInPolicyLog(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandLogSettingLocalOut(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -723,6 +754,10 @@ func expandLogSettingRestApiGet(d *schema.ResourceData, v interface{}, pre strin
 }
 
 func expandLogSettingLongLiveSessionStat(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogSettingExtendedUtmLog(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -891,6 +926,19 @@ func getObjectLogSetting(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		}
 	}
 
+	if v, ok := d.GetOk("local_in_policy_log"); ok {
+		if setArgNil {
+			obj["local-in-policy-log"] = nil
+		} else {
+			t, err := expandLogSettingLocalInPolicyLog(d, v, "local_in_policy_log", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["local-in-policy-log"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("local_out"); ok {
 		if setArgNil {
 			obj["local-out"] = nil
@@ -1006,6 +1054,8 @@ func getObjectLogSetting(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 				obj["log-policy-name"] = t
 			}
 		}
+	} else if d.HasChange("log_policy_name") {
+		obj["log-policy-name"] = nil
 	}
 
 	if v, ok := d.GetOk("faz_override"); ok {
@@ -1073,6 +1123,19 @@ func getObjectLogSetting(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		}
 	}
 
+	if v, ok := d.GetOk("extended_utm_log"); ok {
+		if setArgNil {
+			obj["extended-utm-log"] = nil
+		} else {
+			t, err := expandLogSettingExtendedUtmLog(d, v, "extended_utm_log", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["extended-utm-log"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("custom_log_fields"); ok || d.HasChange("custom_log_fields") {
 		if setArgNil {
 			obj["custom-log-fields"] = make([]struct{}, 0)
@@ -1097,6 +1160,8 @@ func getObjectLogSetting(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 				obj["anonymization-hash"] = t
 			}
 		}
+	} else if d.HasChange("anonymization_hash") {
+		obj["anonymization-hash"] = nil
 	}
 
 	return &obj, nil

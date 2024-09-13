@@ -245,7 +245,7 @@ func flattenSwitchControllerSnmpUserQueries(v interface{}, d *schema.ResourceDat
 }
 
 func flattenSwitchControllerSnmpUserQueryPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerSnmpUserSecurityLevel(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -256,15 +256,7 @@ func flattenSwitchControllerSnmpUserAuthProto(v interface{}, d *schema.ResourceD
 	return v
 }
 
-func flattenSwitchControllerSnmpUserAuthPwd(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
 func flattenSwitchControllerSnmpUserPrivProto(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenSwitchControllerSnmpUserPrivPwd(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -403,6 +395,8 @@ func getObjectSwitchControllerSnmpUser(d *schema.ResourceData, sv string) (*map[
 		} else if t != nil {
 			obj["auth-pwd"] = t
 		}
+	} else if d.HasChange("auth_pwd") {
+		obj["auth-pwd"] = nil
 	}
 
 	if v, ok := d.GetOk("priv_proto"); ok {
@@ -421,6 +415,8 @@ func getObjectSwitchControllerSnmpUser(d *schema.ResourceData, sv string) (*map[
 		} else if t != nil {
 			obj["priv-pwd"] = t
 		}
+	} else if d.HasChange("priv_pwd") {
+		obj["priv-pwd"] = nil
 	}
 
 	return &obj, nil

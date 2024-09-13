@@ -46,7 +46,6 @@ func resourceSystemGeoipOverride() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
-				Computed:     true,
 			},
 			"country_id": &schema.Schema{
 				Type:         schema.TypeString,
@@ -63,7 +62,6 @@ func resourceSystemGeoipOverride() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 						"start_ip": &schema.Schema{
 							Type:     schema.TypeString,
@@ -87,7 +85,6 @@ func resourceSystemGeoipOverride() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 						"start_ip": &schema.Schema{
 							Type:     schema.TypeString,
@@ -328,7 +325,7 @@ func flattenSystemGeoipOverrideIpRange(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenSystemGeoipOverrideIpRangeId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemGeoipOverrideIpRangeStartIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -388,7 +385,7 @@ func flattenSystemGeoipOverrideIp6Range(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenSystemGeoipOverrideIp6RangeId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemGeoipOverrideIp6RangeStartIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -496,6 +493,8 @@ func expandSystemGeoipOverrideIpRange(d *schema.ResourceData, v interface{}, pre
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSystemGeoipOverrideIpRangeId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "start_ip"
@@ -545,6 +544,8 @@ func expandSystemGeoipOverrideIp6Range(d *schema.ResourceData, v interface{}, pr
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSystemGeoipOverrideIp6RangeId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "start_ip"
@@ -596,6 +597,8 @@ func getObjectSystemGeoipOverride(d *schema.ResourceData, sv string) (*map[strin
 		} else if t != nil {
 			obj["description"] = t
 		}
+	} else if d.HasChange("description") {
+		obj["description"] = nil
 	}
 
 	if v, ok := d.GetOk("country_id"); ok {

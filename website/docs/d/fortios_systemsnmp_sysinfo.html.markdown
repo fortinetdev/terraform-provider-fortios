@@ -29,6 +29,7 @@ The following attributes are exported:
 * `trap_low_memory_threshold` - Memory usage when trap is sent.
 * `trap_log_full_threshold` - Log disk usage when trap is sent.
 * `append_index` - Enable/disable allowance of appending VDOM or interface index in some RFC tables.
+* `non_mgmt_vdom_query` - Enable/disable allowance of SNMPv3 query from non-management vdoms.
 * `trap_free_memory_threshold` - Free memory usage when trap is sent.
 * `trap_freeable_memory_threshold` - Freeable memory usage when trap is sent.
 

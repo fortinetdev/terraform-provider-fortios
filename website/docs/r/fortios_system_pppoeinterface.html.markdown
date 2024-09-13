@@ -38,6 +38,7 @@ The following arguments are supported:
 * `device` - (Required) Name for the physical interface.
 * `username` - User name.
 * `password` - Enter the password.
+* `pppoe_egress_cos` - CoS in VLAN tag for outgoing PPPoE/PPP packets. Valid values: `cos0`, `cos1`, `cos2`, `cos3`, `cos4`, `cos5`, `cos6`, `cos7`.
 * `auth_type` - PPP authentication type to use. Valid values: `auto`, `pap`, `chap`, `mschapv1`, `mschapv2`.
 * `ipunnumbered` - PPPoE unnumbered IP.
 * `pppoe_unnumbered_negotiate` - Enable/disable PPPoE unnumbered negotiation. Valid values: `enable`, `disable`.

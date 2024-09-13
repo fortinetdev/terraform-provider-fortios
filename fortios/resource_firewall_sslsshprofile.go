@@ -91,17 +91,14 @@ func resourceFirewallSslSshProfile() *schema.Resource {
 						"client_cert_request": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"unsupported_ssl": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"invalid_server_cert": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"untrusted_server_cert": &schema.Schema{
 							Type:     schema.TypeString,
@@ -151,7 +148,6 @@ func resourceFirewallSslSshProfile() *schema.Resource {
 						"ports": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -201,17 +197,14 @@ func resourceFirewallSslSshProfile() *schema.Resource {
 						"client_cert_request": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"unsupported_ssl": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"invalid_server_cert": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"untrusted_server_cert": &schema.Schema{
 							Type:     schema.TypeString,
@@ -261,7 +254,6 @@ func resourceFirewallSslSshProfile() *schema.Resource {
 						"ports": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -301,17 +293,14 @@ func resourceFirewallSslSshProfile() *schema.Resource {
 						"client_cert_request": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"unsupported_ssl": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"invalid_server_cert": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"untrusted_server_cert": &schema.Schema{
 							Type:     schema.TypeString,
@@ -351,7 +340,6 @@ func resourceFirewallSslSshProfile() *schema.Resource {
 						"ports": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -396,17 +384,14 @@ func resourceFirewallSslSshProfile() *schema.Resource {
 						"client_cert_request": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"unsupported_ssl": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"invalid_server_cert": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"untrusted_server_cert": &schema.Schema{
 							Type:     schema.TypeString,
@@ -441,7 +426,6 @@ func resourceFirewallSslSshProfile() *schema.Resource {
 						"ports": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -486,17 +470,14 @@ func resourceFirewallSslSshProfile() *schema.Resource {
 						"client_cert_request": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"unsupported_ssl": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"invalid_server_cert": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"untrusted_server_cert": &schema.Schema{
 							Type:     schema.TypeString,
@@ -531,7 +512,6 @@ func resourceFirewallSslSshProfile() *schema.Resource {
 						"ports": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -576,17 +556,14 @@ func resourceFirewallSslSshProfile() *schema.Resource {
 						"client_cert_request": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"unsupported_ssl": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"invalid_server_cert": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"untrusted_server_cert": &schema.Schema{
 							Type:     schema.TypeString,
@@ -621,7 +598,6 @@ func resourceFirewallSslSshProfile() *schema.Resource {
 						"ports": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -646,7 +622,6 @@ func resourceFirewallSslSshProfile() *schema.Resource {
 						"ssh_policy_check": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"ssh_tun_policy_check": &schema.Schema{
 							Type:     schema.TypeString,
@@ -765,7 +740,6 @@ func resourceFirewallSslSshProfile() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 512),
 							Optional:     true,
-							Computed:     true,
 						},
 						"type": &schema.Schema{
 							Type:     schema.TypeString,
@@ -776,31 +750,26 @@ func resourceFirewallSslSshProfile() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"address": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 						"address6": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 						"wildcard_fqdn": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 						"regex": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -814,13 +783,11 @@ func resourceFirewallSslSshProfile() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 						"sni": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -860,7 +827,6 @@ func resourceFirewallSslSshProfile() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"ip": &schema.Schema{
 							Type:     schema.TypeString,
@@ -900,32 +866,26 @@ func resourceFirewallSslSshProfile() *schema.Resource {
 						"https_client_cert_request": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"smtps_client_cert_request": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"pop3s_client_cert_request": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"imaps_client_cert_request": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"ftps_client_cert_request": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"ssl_other_client_cert_request": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -2445,7 +2405,7 @@ func flattenFirewallSslSshProfileSslExempt(v interface{}, d *schema.ResourceData
 }
 
 func flattenFirewallSslSshProfileSslExemptId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallSslSshProfileSslExemptType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2453,7 +2413,7 @@ func flattenFirewallSslSshProfileSslExemptType(v interface{}, d *schema.Resource
 }
 
 func flattenFirewallSslSshProfileSslExemptFortiguardCategory(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallSslSshProfileSslExemptAddress(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2540,7 +2500,7 @@ func flattenFirewallSslSshProfileUntrustedCaname(v interface{}, d *schema.Resour
 }
 
 func flattenFirewallSslSshProfileServerCert(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convmap2str(v, d.Get("server_cert"), "name")
 }
 
 func flattenFirewallSslSshProfileSslServer(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -2647,7 +2607,7 @@ func flattenFirewallSslSshProfileSslServer(v interface{}, d *schema.ResourceData
 }
 
 func flattenFirewallSslSshProfileSslServerId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallSslSshProfileSslServerIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2975,42 +2935,9 @@ func refreshObjectFirewallSslSshProfile(d *schema.ResourceData, o map[string]int
 		}
 	}
 
-	{
-		v := flattenFirewallSslSshProfileServerCert(o["server-cert"], d, "server_cert", sv)
-		vx := ""
-		bstring := false
-		new_version_map := map[string][]string{
-			">=": []string{"7.0.0"},
-		}
-		if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
-			l := v.([]interface{})
-			if len(l) > 0 {
-				for k, r := range l {
-					i := r.(map[string]interface{})
-					if _, ok := i["name"]; ok {
-						if xv, ok := i["name"].(string); ok {
-							vx += xv
-							if k < len(l)-1 {
-								vx += ", "
-							}
-						}
-					}
-				}
-			}
-			bstring = true
-		}
-		if bstring == true {
-			if err = d.Set("server_cert", vx); err != nil {
-				if !fortiAPIPatch(o["server-cert"]) {
-					return fmt.Errorf("Error reading server_cert: %v", err)
-				}
-			}
-		} else {
-			if err = d.Set("server_cert", v); err != nil {
-				if !fortiAPIPatch(o["server-cert"]) {
-					return fmt.Errorf("Error reading server_cert: %v", err)
-				}
-			}
+	if err = d.Set("server_cert", flattenFirewallSslSshProfileServerCert(o["server-cert"], d, "server_cert", sv)); err != nil {
+		if !fortiAPIPatch(o["server-cert"]) {
+			return fmt.Errorf("Error reading server_cert: %v", err)
 		}
 	}
 
@@ -4234,6 +4161,8 @@ func expandFirewallSslSshProfileSslExempt(d *schema.ResourceData, v interface{},
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandFirewallSslSshProfileSslExemptId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
@@ -4244,26 +4173,36 @@ func expandFirewallSslSshProfileSslExempt(d *schema.ResourceData, v interface{},
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "fortiguard_category"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["fortiguard-category"], _ = expandFirewallSslSshProfileSslExemptFortiguardCategory(d, i["fortiguard_category"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["fortiguard-category"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "address"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["address"], _ = expandFirewallSslSshProfileSslExemptAddress(d, i["address"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["address"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "address6"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["address6"], _ = expandFirewallSslSshProfileSslExemptAddress6(d, i["address6"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["address6"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "wildcard_fqdn"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["wildcard-fqdn"], _ = expandFirewallSslSshProfileSslExemptWildcardFqdn(d, i["wildcard_fqdn"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["wildcard-fqdn"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "regex"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["regex"], _ = expandFirewallSslSshProfileSslExemptRegex(d, i["regex"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["regex"] = nil
 		}
 
 		result = append(result, tmp)
@@ -4319,11 +4258,15 @@ func expandFirewallSslSshProfileEchOuterSni(d *schema.ResourceData, v interface{
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandFirewallSslSshProfileEchOuterSniName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sni"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["sni"], _ = expandFirewallSslSshProfileEchOuterSniSni(d, i["sni"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["sni"] = nil
 		}
 
 		result = append(result, tmp)
@@ -4359,7 +4302,25 @@ func expandFirewallSslSshProfileUntrustedCaname(d *schema.ResourceData, v interf
 }
 
 func expandFirewallSslSshProfileServerCert(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
+	new_version_map := map[string][]string{
+		">=": []string{"7.0.0"},
+	}
+	if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
+		vx := fmt.Sprintf("%v", v)
+		vxx := strings.Split(vx, ", ")
+
+		tmps := make([]map[string]interface{}, 0, len(vxx))
+
+		for _, xv := range vxx {
+			xtmp := make(map[string]interface{})
+			xtmp["name"] = xv
+
+			tmps = append(tmps, xtmp)
+		}
+		return tmps, nil
+	} else {
+		return v, nil
+	}
 }
 
 func expandFirewallSslSshProfileSslServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
@@ -4379,6 +4340,8 @@ func expandFirewallSslSshProfileSslServer(d *schema.ResourceData, v interface{},
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandFirewallSslSshProfileSslServerId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
@@ -4419,31 +4382,43 @@ func expandFirewallSslSshProfileSslServer(d *schema.ResourceData, v interface{},
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "https_client_cert_request"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["https-client-cert-request"], _ = expandFirewallSslSshProfileSslServerHttpsClientCertRequest(d, i["https_client_cert_request"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["https-client-cert-request"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "smtps_client_cert_request"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["smtps-client-cert-request"], _ = expandFirewallSslSshProfileSslServerSmtpsClientCertRequest(d, i["smtps_client_cert_request"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["smtps-client-cert-request"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pop3s_client_cert_request"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["pop3s-client-cert-request"], _ = expandFirewallSslSshProfileSslServerPop3SClientCertRequest(d, i["pop3s_client_cert_request"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["pop3s-client-cert-request"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "imaps_client_cert_request"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["imaps-client-cert-request"], _ = expandFirewallSslSshProfileSslServerImapsClientCertRequest(d, i["imaps_client_cert_request"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["imaps-client-cert-request"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ftps_client_cert_request"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["ftps-client-cert-request"], _ = expandFirewallSslSshProfileSslServerFtpsClientCertRequest(d, i["ftps_client_cert_request"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["ftps-client-cert-request"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ssl_other_client_cert_request"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["ssl-other-client-cert-request"], _ = expandFirewallSslSshProfileSslServerSslOtherClientCertRequest(d, i["ssl_other_client_cert_request"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["ssl-other-client-cert-request"] = nil
 		}
 
 		result = append(result, tmp)
@@ -4564,6 +4539,8 @@ func getObjectFirewallSslSshProfile(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
@@ -4573,6 +4550,8 @@ func getObjectFirewallSslSshProfile(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("ssl"); ok {
@@ -4742,25 +4721,7 @@ func getObjectFirewallSslSshProfile(d *schema.ResourceData, sv string) (*map[str
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
-			new_version_map := map[string][]string{
-				">=": []string{"7.0.0"},
-			}
-			if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
-				vx := fmt.Sprintf("%v", t)
-				vxx := strings.Split(vx, ", ")
-
-				tmps := make([]map[string]interface{}, 0, len(vxx))
-
-				for _, xv := range vxx {
-					xtmp := make(map[string]interface{})
-					xtmp["name"] = xv
-
-					tmps = append(tmps, xtmp)
-				}
-				obj["server-cert"] = tmps
-			} else {
-				obj["server-cert"] = t
-			}
+			obj["server-cert"] = t
 		}
 	}
 

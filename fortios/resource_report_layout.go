@@ -47,19 +47,16 @@ func resourceReportLayout() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
-				Computed:     true,
 			},
 			"subtitle": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
-				Computed:     true,
 			},
 			"description": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
-				Computed:     true,
 			},
 			"style_theme": &schema.Schema{
 				Type:         schema.TypeString,
@@ -89,7 +86,6 @@ func resourceReportLayout() *schema.Resource {
 			"time": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"cutoff_option": &schema.Schema{
 				Type:     schema.TypeString,
@@ -99,7 +95,6 @@ func resourceReportLayout() *schema.Resource {
 			"cutoff_time": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"email_send": &schema.Schema{
 				Type:     schema.TypeString,
@@ -110,7 +105,6 @@ func resourceReportLayout() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 511),
 				Optional:     true,
-				Computed:     true,
 			},
 			"max_pdf_report": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -133,17 +127,14 @@ func resourceReportLayout() *schema.Resource {
 						"column_break_before": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"page_break_before": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"options": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"header": &schema.Schema{
 							Type:     schema.TypeList,
@@ -156,7 +147,6 @@ func resourceReportLayout() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 71),
 										Optional:     true,
-										Computed:     true,
 									},
 									"header_item": &schema.Schema{
 										Type:     schema.TypeList,
@@ -166,13 +156,11 @@ func resourceReportLayout() *schema.Resource {
 												"id": &schema.Schema{
 													Type:     schema.TypeInt,
 													Optional: true,
-													Computed: true,
 												},
 												"description": &schema.Schema{
 													Type:         schema.TypeString,
 													ValidateFunc: validation.StringLenBetween(0, 63),
 													Optional:     true,
-													Computed:     true,
 												},
 												"type": &schema.Schema{
 													Type:     schema.TypeString,
@@ -183,19 +171,16 @@ func resourceReportLayout() *schema.Resource {
 													Type:         schema.TypeString,
 													ValidateFunc: validation.StringLenBetween(0, 71),
 													Optional:     true,
-													Computed:     true,
 												},
 												"content": &schema.Schema{
 													Type:         schema.TypeString,
 													ValidateFunc: validation.StringLenBetween(0, 511),
 													Optional:     true,
-													Computed:     true,
 												},
 												"img_src": &schema.Schema{
 													Type:         schema.TypeString,
 													ValidateFunc: validation.StringLenBetween(0, 127),
 													Optional:     true,
-													Computed:     true,
 												},
 											},
 										},
@@ -214,7 +199,6 @@ func resourceReportLayout() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 71),
 										Optional:     true,
-										Computed:     true,
 									},
 									"footer_item": &schema.Schema{
 										Type:     schema.TypeList,
@@ -224,13 +208,11 @@ func resourceReportLayout() *schema.Resource {
 												"id": &schema.Schema{
 													Type:     schema.TypeInt,
 													Optional: true,
-													Computed: true,
 												},
 												"description": &schema.Schema{
 													Type:         schema.TypeString,
 													ValidateFunc: validation.StringLenBetween(0, 63),
 													Optional:     true,
-													Computed:     true,
 												},
 												"type": &schema.Schema{
 													Type:     schema.TypeString,
@@ -241,19 +223,16 @@ func resourceReportLayout() *schema.Resource {
 													Type:         schema.TypeString,
 													ValidateFunc: validation.StringLenBetween(0, 71),
 													Optional:     true,
-													Computed:     true,
 												},
 												"content": &schema.Schema{
 													Type:         schema.TypeString,
 													ValidateFunc: validation.StringLenBetween(0, 511),
 													Optional:     true,
-													Computed:     true,
 												},
 												"img_src": &schema.Schema{
 													Type:         schema.TypeString,
 													ValidateFunc: validation.StringLenBetween(0, 127),
 													Optional:     true,
-													Computed:     true,
 												},
 											},
 										},
@@ -272,13 +251,11 @@ func resourceReportLayout() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"description": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"type": &schema.Schema{
 							Type:     schema.TypeString,
@@ -289,12 +266,10 @@ func resourceReportLayout() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 71),
 							Optional:     true,
-							Computed:     true,
 						},
 						"top_n": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"hide": &schema.Schema{
 							Type:     schema.TypeString,
@@ -309,19 +284,16 @@ func resourceReportLayout() *schema.Resource {
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 									"name": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 127),
 										Optional:     true,
-										Computed:     true,
 									},
 									"value": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 1023),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -335,13 +307,11 @@ func resourceReportLayout() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 511),
 							Optional:     true,
-							Computed:     true,
 						},
 						"img_src": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 127),
 							Optional:     true,
-							Computed:     true,
 						},
 						"list_component": &schema.Schema{
 							Type:     schema.TypeString,
@@ -356,13 +326,11 @@ func resourceReportLayout() *schema.Resource {
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 									"content": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 127),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -371,7 +339,6 @@ func resourceReportLayout() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 71),
 							Optional:     true,
-							Computed:     true,
 						},
 						"chart_options": &schema.Schema{
 							Type:     schema.TypeString,
@@ -382,43 +349,36 @@ func resourceReportLayout() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 11),
 							Optional:     true,
-							Computed:     true,
 						},
 						"drill_down_types": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 7),
 							Optional:     true,
-							Computed:     true,
 						},
 						"table_column_widths": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 179),
 							Optional:     true,
-							Computed:     true,
 						},
 						"table_caption_style": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 71),
 							Optional:     true,
-							Computed:     true,
 						},
 						"table_head_style": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 71),
 							Optional:     true,
-							Computed:     true,
 						},
 						"table_odd_row_style": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 71),
 							Optional:     true,
-							Computed:     true,
 						},
 						"table_even_row_style": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 71),
 							Optional:     true,
-							Computed:     true,
 						},
 						"misc_component": &schema.Schema{
 							Type:     schema.TypeString,
@@ -428,13 +388,11 @@ func resourceReportLayout() *schema.Resource {
 						"column": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"title": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 511),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -661,7 +619,7 @@ func flattenReportLayoutEmailRecipients(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenReportLayoutMaxPdfReport(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenReportLayoutPage(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -814,7 +772,7 @@ func flattenReportLayoutPageHeaderHeaderItem(v interface{}, d *schema.ResourceDa
 }
 
 func flattenReportLayoutPageHeaderHeaderItemId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenReportLayoutPageHeaderHeaderItemDescription(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -928,7 +886,7 @@ func flattenReportLayoutPageFooterFooterItem(v interface{}, d *schema.ResourceDa
 }
 
 func flattenReportLayoutPageFooterFooterItemId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenReportLayoutPageFooterFooterItemDescription(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1105,7 +1063,7 @@ func flattenReportLayoutBodyItem(v interface{}, d *schema.ResourceData, pre stri
 }
 
 func flattenReportLayoutBodyItemId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenReportLayoutBodyItemDescription(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1121,7 +1079,7 @@ func flattenReportLayoutBodyItemStyle(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenReportLayoutBodyItemTopN(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenReportLayoutBodyItemHide(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1177,7 +1135,7 @@ func flattenReportLayoutBodyItemParameters(v interface{}, d *schema.ResourceData
 }
 
 func flattenReportLayoutBodyItemParametersId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenReportLayoutBodyItemParametersName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1248,7 +1206,7 @@ func flattenReportLayoutBodyItemList(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenReportLayoutBodyItemListId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenReportLayoutBodyItemListContent(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1296,7 +1254,7 @@ func flattenReportLayoutBodyItemMiscComponent(v interface{}, d *schema.ResourceD
 }
 
 func flattenReportLayoutBodyItemColumn(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenReportLayoutBodyItemTitle(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1606,11 +1564,15 @@ func expandReportLayoutPageHeaderHeaderItem(d *schema.ResourceData, v interface{
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandReportLayoutPageHeaderHeaderItemId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["description"], _ = expandReportLayoutPageHeaderHeaderItemDescription(d, i["description"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["description"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
@@ -1621,16 +1583,22 @@ func expandReportLayoutPageHeaderHeaderItem(d *schema.ResourceData, v interface{
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "style"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["style"], _ = expandReportLayoutPageHeaderHeaderItemStyle(d, i["style"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["style"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "content"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["content"], _ = expandReportLayoutPageHeaderHeaderItemContent(d, i["content"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["content"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "img_src"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["img-src"], _ = expandReportLayoutPageHeaderHeaderItemImgSrc(d, i["img_src"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["img-src"] = nil
 		}
 
 		result = append(result, tmp)
@@ -1710,11 +1678,15 @@ func expandReportLayoutPageFooterFooterItem(d *schema.ResourceData, v interface{
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandReportLayoutPageFooterFooterItemId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["description"], _ = expandReportLayoutPageFooterFooterItemDescription(d, i["description"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["description"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
@@ -1725,16 +1697,22 @@ func expandReportLayoutPageFooterFooterItem(d *schema.ResourceData, v interface{
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "style"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["style"], _ = expandReportLayoutPageFooterFooterItemStyle(d, i["style"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["style"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "content"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["content"], _ = expandReportLayoutPageFooterFooterItemContent(d, i["content"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["content"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "img_src"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["img-src"], _ = expandReportLayoutPageFooterFooterItemImgSrc(d, i["img_src"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["img-src"] = nil
 		}
 
 		result = append(result, tmp)
@@ -1786,11 +1764,15 @@ func expandReportLayoutBodyItem(d *schema.ResourceData, v interface{}, pre strin
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandReportLayoutBodyItemId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["description"], _ = expandReportLayoutBodyItemDescription(d, i["description"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["description"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
@@ -1801,11 +1783,15 @@ func expandReportLayoutBodyItem(d *schema.ResourceData, v interface{}, pre strin
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "style"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["style"], _ = expandReportLayoutBodyItemStyle(d, i["style"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["style"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "top_n"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["top-n"], _ = expandReportLayoutBodyItemTopN(d, i["top_n"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["top-n"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "hide"
@@ -1814,9 +1800,9 @@ func expandReportLayoutBodyItem(d *schema.ResourceData, v interface{}, pre strin
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "parameters"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["parameters"], _ = expandReportLayoutBodyItemParameters(d, i["parameters"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["parameters"] = make([]string, 0)
 		}
 
@@ -1828,11 +1814,15 @@ func expandReportLayoutBodyItem(d *schema.ResourceData, v interface{}, pre strin
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "content"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["content"], _ = expandReportLayoutBodyItemContent(d, i["content"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["content"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "img_src"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["img-src"], _ = expandReportLayoutBodyItemImgSrc(d, i["img_src"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["img-src"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "list_component"
@@ -1841,15 +1831,17 @@ func expandReportLayoutBodyItem(d *schema.ResourceData, v interface{}, pre strin
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "list"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["list"], _ = expandReportLayoutBodyItemList(d, i["list"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["list"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "chart"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["chart"], _ = expandReportLayoutBodyItemChart(d, i["chart"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["chart"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "chart_options"
@@ -1860,36 +1852,50 @@ func expandReportLayoutBodyItem(d *schema.ResourceData, v interface{}, pre strin
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "drill_down_items"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["drill-down-items"], _ = expandReportLayoutBodyItemDrillDownItems(d, i["drill_down_items"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["drill-down-items"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "drill_down_types"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["drill-down-types"], _ = expandReportLayoutBodyItemDrillDownTypes(d, i["drill_down_types"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["drill-down-types"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "table_column_widths"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["table-column-widths"], _ = expandReportLayoutBodyItemTableColumnWidths(d, i["table_column_widths"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["table-column-widths"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "table_caption_style"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["table-caption-style"], _ = expandReportLayoutBodyItemTableCaptionStyle(d, i["table_caption_style"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["table-caption-style"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "table_head_style"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["table-head-style"], _ = expandReportLayoutBodyItemTableHeadStyle(d, i["table_head_style"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["table-head-style"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "table_odd_row_style"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["table-odd-row-style"], _ = expandReportLayoutBodyItemTableOddRowStyle(d, i["table_odd_row_style"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["table-odd-row-style"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "table_even_row_style"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["table-even-row-style"], _ = expandReportLayoutBodyItemTableEvenRowStyle(d, i["table_even_row_style"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["table-even-row-style"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "misc_component"
@@ -1900,11 +1906,15 @@ func expandReportLayoutBodyItem(d *schema.ResourceData, v interface{}, pre strin
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "column"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["column"], _ = expandReportLayoutBodyItemColumn(d, i["column"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["column"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "title"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["title"], _ = expandReportLayoutBodyItemTitle(d, i["title"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["title"] = nil
 		}
 
 		result = append(result, tmp)
@@ -1956,16 +1966,22 @@ func expandReportLayoutBodyItemParameters(d *schema.ResourceData, v interface{},
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandReportLayoutBodyItemParametersId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandReportLayoutBodyItemParametersName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["value"], _ = expandReportLayoutBodyItemParametersValue(d, i["value"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["value"] = nil
 		}
 
 		result = append(result, tmp)
@@ -2021,11 +2037,15 @@ func expandReportLayoutBodyItemList(d *schema.ResourceData, v interface{}, pre s
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandReportLayoutBodyItemListId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "content"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["content"], _ = expandReportLayoutBodyItemListContent(d, i["content"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["content"] = nil
 		}
 
 		result = append(result, tmp)
@@ -2111,6 +2131,8 @@ func getObjectReportLayout(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["title"] = t
 		}
+	} else if d.HasChange("title") {
+		obj["title"] = nil
 	}
 
 	if v, ok := d.GetOk("subtitle"); ok {
@@ -2120,6 +2142,8 @@ func getObjectReportLayout(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["subtitle"] = t
 		}
+	} else if d.HasChange("subtitle") {
+		obj["subtitle"] = nil
 	}
 
 	if v, ok := d.GetOk("description"); ok {
@@ -2129,6 +2153,8 @@ func getObjectReportLayout(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["description"] = t
 		}
+	} else if d.HasChange("description") {
+		obj["description"] = nil
 	}
 
 	if v, ok := d.GetOk("style_theme"); ok {
@@ -2138,6 +2164,8 @@ func getObjectReportLayout(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["style-theme"] = t
 		}
+	} else if d.HasChange("style_theme") {
+		obj["style-theme"] = nil
 	}
 
 	if v, ok := d.GetOk("options"); ok {
@@ -2183,6 +2211,8 @@ func getObjectReportLayout(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["time"] = t
 		}
+	} else if d.HasChange("time") {
+		obj["time"] = nil
 	}
 
 	if v, ok := d.GetOk("cutoff_option"); ok {
@@ -2201,6 +2231,8 @@ func getObjectReportLayout(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["cutoff-time"] = t
 		}
+	} else if d.HasChange("cutoff_time") {
+		obj["cutoff-time"] = nil
 	}
 
 	if v, ok := d.GetOk("email_send"); ok {
@@ -2219,6 +2251,8 @@ func getObjectReportLayout(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["email-recipients"] = t
 		}
+	} else if d.HasChange("email_recipients") {
+		obj["email-recipients"] = nil
 	}
 
 	if v, ok := d.GetOk("max_pdf_report"); ok {

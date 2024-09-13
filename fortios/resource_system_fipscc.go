@@ -184,7 +184,7 @@ func flattenSystemFipsCcEntropyToken(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenSystemFipsCcSelfTestPeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemFipsCcKeyGenerationSelfTest(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {

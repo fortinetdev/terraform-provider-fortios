@@ -101,7 +101,6 @@ func resourceRouterOspf() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"default_metric": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -112,6 +111,12 @@ func resourceRouterOspf() *schema.Resource {
 			"distance": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 255),
+				Optional:     true,
+				Computed:     true,
+			},
+			"lsa_refresh_interval": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 5),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -143,13 +148,11 @@ func resourceRouterOspf() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"distribute_route_map_in": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"restart_mode": &schema.Schema{
 				Type:     schema.TypeString,
@@ -241,7 +244,6 @@ func resourceRouterOspf() *schema.Resource {
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 									"prefix": &schema.Schema{
 										Type:     schema.TypeString,
@@ -275,7 +277,6 @@ func resourceRouterOspf() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 35),
 										Optional:     true,
-										Computed:     true,
 									},
 									"authentication": &schema.Schema{
 										Type:     schema.TypeString,
@@ -292,19 +293,16 @@ func resourceRouterOspf() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 35),
 										Optional:     true,
-										Computed:     true,
 									},
 									"md5_key": &schema.Schema{
 										Type:      schema.TypeString,
 										Optional:  true,
 										Sensitive: true,
-										Computed:  true,
 									},
 									"md5_keychain": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 35),
 										Optional:     true,
-										Computed:     true,
 									},
 									"dead_interval": &schema.Schema{
 										Type:         schema.TypeInt,
@@ -344,7 +342,6 @@ func resourceRouterOspf() *schema.Resource {
 													Type:         schema.TypeInt,
 													ValidateFunc: validation.IntBetween(1, 255),
 													Optional:     true,
-													Computed:     true,
 												},
 												"key_string": &schema.Schema{
 													Type:         schema.TypeString,
@@ -366,13 +363,11 @@ func resourceRouterOspf() *schema.Resource {
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 									"list": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 35),
 										Optional:     true,
-										Computed:     true,
 									},
 									"direction": &schema.Schema{
 										Type:     schema.TypeString,
@@ -394,7 +389,6 @@ func resourceRouterOspf() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"comments": &schema.Schema{
 							Type:         schema.TypeString,
@@ -405,9 +399,13 @@ func resourceRouterOspf() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 						"ip": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"linkdown_fast_failover": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -427,25 +425,21 @@ func resourceRouterOspf() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"md5_key": &schema.Schema{
 							Type:      schema.TypeString,
 							Optional:  true,
 							Sensitive: true,
-							Computed:  true,
 						},
 						"md5_keychain": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"prefix_length": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 32),
 							Optional:     true,
-							Computed:     true,
 						},
 						"retransmit_interval": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -463,7 +457,6 @@ func resourceRouterOspf() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 						"priority": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -475,19 +468,16 @@ func resourceRouterOspf() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 						"hello_interval": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 						"hello_multiplier": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(3, 10),
 							Optional:     true,
-							Computed:     true,
 						},
 						"database_filter_out": &schema.Schema{
 							Type:     schema.TypeString,
@@ -498,7 +488,6 @@ func resourceRouterOspf() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(576, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 						"mtu_ignore": &schema.Schema{
 							Type:     schema.TypeString,
@@ -535,7 +524,6 @@ func resourceRouterOspf() *schema.Resource {
 										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(1, 255),
 										Optional:     true,
-										Computed:     true,
 									},
 									"key_string": &schema.Schema{
 										Type:         schema.TypeString,
@@ -557,7 +545,6 @@ func resourceRouterOspf() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"prefix": &schema.Schema{
 							Type:     schema.TypeString,
@@ -585,7 +572,6 @@ func resourceRouterOspf() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"ip": &schema.Schema{
 							Type:     schema.TypeString,
@@ -602,7 +588,6 @@ func resourceRouterOspf() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 						"priority": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -622,7 +607,6 @@ func resourceRouterOspf() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -635,7 +619,6 @@ func resourceRouterOspf() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"prefix": &schema.Schema{
 							Type:     schema.TypeString,
@@ -645,7 +628,6 @@ func resourceRouterOspf() *schema.Resource {
 						"tag": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"advertise": &schema.Schema{
 							Type:     schema.TypeString,
@@ -663,13 +645,11 @@ func resourceRouterOspf() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"access_list": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"protocol": &schema.Schema{
 							Type:     schema.TypeString,
@@ -688,7 +668,6 @@ func resourceRouterOspf() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -699,13 +678,11 @@ func resourceRouterOspf() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 16777214),
 							Optional:     true,
-							Computed:     true,
 						},
 						"routemap": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"metric_type": &schema.Schema{
 							Type:     schema.TypeString,
@@ -715,7 +692,6 @@ func resourceRouterOspf() *schema.Resource {
 						"tag": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -853,19 +829,19 @@ func flattenRouterOspfAbrType(v interface{}, d *schema.ResourceData, pre string,
 }
 
 func flattenRouterOspfAutoCostRefBandwidth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspfDistanceExternal(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspfDistanceInterArea(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspfDistanceIntraArea(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspfDatabaseOverflow(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -873,11 +849,11 @@ func flattenRouterOspfDatabaseOverflow(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenRouterOspfDatabaseOverflowMaxLsas(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspfDatabaseOverflowTimeToRecover(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspfDefaultInformationOriginate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -885,7 +861,7 @@ func flattenRouterOspfDefaultInformationOriginate(v interface{}, d *schema.Resou
 }
 
 func flattenRouterOspfDefaultInformationMetric(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspfDefaultInformationMetricType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -897,11 +873,15 @@ func flattenRouterOspfDefaultInformationRouteMap(v interface{}, d *schema.Resour
 }
 
 func flattenRouterOspfDefaultMetric(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspfDistance(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
+}
+
+func flattenRouterOspfLsaRefreshInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
 }
 
 func flattenRouterOspfRfc1583Compatible(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -937,7 +917,7 @@ func flattenRouterOspfRestartMode(v interface{}, d *schema.ResourceData, pre str
 }
 
 func flattenRouterOspfRestartPeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspfRestartOnTopologyChange(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1065,7 +1045,7 @@ func flattenRouterOspfAreaAuthentication(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenRouterOspfAreaDefaultCost(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspfAreaNssaTranslatorRole(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1085,7 +1065,7 @@ func flattenRouterOspfAreaNssaDefaultInformationOriginate(v interface{}, d *sche
 }
 
 func flattenRouterOspfAreaNssaDefaultInformationOriginateMetric(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspfAreaNssaDefaultInformationOriginateMetricType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1159,7 +1139,7 @@ func flattenRouterOspfAreaRange(v interface{}, d *schema.ResourceData, pre strin
 }
 
 func flattenRouterOspfAreaRangeId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspfAreaRangePrefix(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1227,8 +1207,7 @@ func flattenRouterOspfAreaVirtualLink(v interface{}, d *schema.ResourceData, pre
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "authentication_key"
-		if cur_v, ok := i["authentication-key"]; ok {
-			tmp["authentication_key"] = flattenRouterOspfAreaVirtualLinkAuthenticationKey(cur_v, d, pre_append, sv)
+		if _, ok := i["authentication-key"]; ok {
 			c := d.Get(pre_append).(string)
 			if c != "" {
 				tmp["authentication_key"] = c
@@ -1241,8 +1220,7 @@ func flattenRouterOspfAreaVirtualLink(v interface{}, d *schema.ResourceData, pre
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "md5_key"
-		if cur_v, ok := i["md5-key"]; ok {
-			tmp["md5_key"] = flattenRouterOspfAreaVirtualLinkMd5Key(cur_v, d, pre_append, sv)
+		if _, ok := i["md5-key"]; ok {
 			c := d.Get(pre_append).(string)
 			if c != "" {
 				tmp["md5_key"] = c
@@ -1301,15 +1279,7 @@ func flattenRouterOspfAreaVirtualLinkAuthentication(v interface{}, d *schema.Res
 	return v
 }
 
-func flattenRouterOspfAreaVirtualLinkAuthenticationKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
 func flattenRouterOspfAreaVirtualLinkKeychain(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenRouterOspfAreaVirtualLinkMd5Key(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1318,19 +1288,19 @@ func flattenRouterOspfAreaVirtualLinkMd5Keychain(v interface{}, d *schema.Resour
 }
 
 func flattenRouterOspfAreaVirtualLinkDeadInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspfAreaVirtualLinkHelloInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspfAreaVirtualLinkRetransmitInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspfAreaVirtualLinkTransmitDelay(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspfAreaVirtualLinkPeer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1367,8 +1337,7 @@ func flattenRouterOspfAreaVirtualLinkMd5Keys(v interface{}, d *schema.ResourceDa
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "key_string"
-		if cur_v, ok := i["key-string"]; ok {
-			tmp["key_string"] = flattenRouterOspfAreaVirtualLinkMd5KeysKeyString(cur_v, d, pre_append, sv)
+		if _, ok := i["key-string"]; ok {
 			c := d.Get(pre_append).(string)
 			if c != "" {
 				tmp["key_string"] = c
@@ -1385,11 +1354,7 @@ func flattenRouterOspfAreaVirtualLinkMd5Keys(v interface{}, d *schema.ResourceDa
 }
 
 func flattenRouterOspfAreaVirtualLinkMd5KeysId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenRouterOspfAreaVirtualLinkMd5KeysKeyString(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspfAreaFilterList(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -1441,7 +1406,7 @@ func flattenRouterOspfAreaFilterList(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenRouterOspfAreaFilterListId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspfAreaFilterListList(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1496,14 +1461,18 @@ func flattenRouterOspfOspfInterface(v interface{}, d *schema.ResourceData, pre s
 			tmp["ip"] = flattenRouterOspfOspfInterfaceIp(cur_v, d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "linkdown_fast_failover"
+		if cur_v, ok := i["linkdown-fast-failover"]; ok {
+			tmp["linkdown_fast_failover"] = flattenRouterOspfOspfInterfaceLinkdownFastFailover(cur_v, d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "authentication"
 		if cur_v, ok := i["authentication"]; ok {
 			tmp["authentication"] = flattenRouterOspfOspfInterfaceAuthentication(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "authentication_key"
-		if cur_v, ok := i["authentication-key"]; ok {
-			tmp["authentication_key"] = flattenRouterOspfOspfInterfaceAuthenticationKey(cur_v, d, pre_append, sv)
+		if _, ok := i["authentication-key"]; ok {
 			c := d.Get(pre_append).(string)
 			if c != "" {
 				tmp["authentication_key"] = c
@@ -1516,8 +1485,7 @@ func flattenRouterOspfOspfInterface(v interface{}, d *schema.ResourceData, pre s
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "md5_key"
-		if cur_v, ok := i["md5-key"]; ok {
-			tmp["md5_key"] = flattenRouterOspfOspfInterfaceMd5Key(cur_v, d, pre_append, sv)
+		if _, ok := i["md5-key"]; ok {
 			c := d.Get(pre_append).(string)
 			if c != "" {
 				tmp["md5_key"] = c
@@ -1634,19 +1602,15 @@ func flattenRouterOspfOspfInterfaceIp(v interface{}, d *schema.ResourceData, pre
 	return v
 }
 
+func flattenRouterOspfOspfInterfaceLinkdownFastFailover(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenRouterOspfOspfInterfaceAuthentication(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenRouterOspfOspfInterfaceAuthenticationKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
 func flattenRouterOspfOspfInterfaceKeychain(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenRouterOspfOspfInterfaceMd5Key(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1655,35 +1619,35 @@ func flattenRouterOspfOspfInterfaceMd5Keychain(v interface{}, d *schema.Resource
 }
 
 func flattenRouterOspfOspfInterfacePrefixLength(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspfOspfInterfaceRetransmitInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspfOspfInterfaceTransmitDelay(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspfOspfInterfaceCost(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspfOspfInterfacePriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspfOspfInterfaceDeadInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspfOspfInterfaceHelloInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspfOspfInterfaceHelloMultiplier(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspfOspfInterfaceDatabaseFilterOut(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1691,7 +1655,7 @@ func flattenRouterOspfOspfInterfaceDatabaseFilterOut(v interface{}, d *schema.Re
 }
 
 func flattenRouterOspfOspfInterfaceMtu(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspfOspfInterfaceMtuIgnore(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1711,7 +1675,7 @@ func flattenRouterOspfOspfInterfaceStatus(v interface{}, d *schema.ResourceData,
 }
 
 func flattenRouterOspfOspfInterfaceResyncTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspfOspfInterfaceMd5Keys(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -1744,8 +1708,7 @@ func flattenRouterOspfOspfInterfaceMd5Keys(v interface{}, d *schema.ResourceData
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "key_string"
-		if cur_v, ok := i["key-string"]; ok {
-			tmp["key_string"] = flattenRouterOspfOspfInterfaceMd5KeysKeyString(cur_v, d, pre_append, sv)
+		if _, ok := i["key-string"]; ok {
 			c := d.Get(pre_append).(string)
 			if c != "" {
 				tmp["key_string"] = c
@@ -1762,11 +1725,7 @@ func flattenRouterOspfOspfInterfaceMd5Keys(v interface{}, d *schema.ResourceData
 }
 
 func flattenRouterOspfOspfInterfaceMd5KeysId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenRouterOspfOspfInterfaceMd5KeysKeyString(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspfNetwork(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -1823,7 +1782,7 @@ func flattenRouterOspfNetwork(v interface{}, d *schema.ResourceData, pre string,
 }
 
 func flattenRouterOspfNetworkId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspfNetworkPrefix(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1904,7 +1863,7 @@ func flattenRouterOspfNeighbor(v interface{}, d *schema.ResourceData, pre string
 }
 
 func flattenRouterOspfNeighborId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspfNeighborIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1912,15 +1871,15 @@ func flattenRouterOspfNeighborIp(v interface{}, d *schema.ResourceData, pre stri
 }
 
 func flattenRouterOspfNeighborPollInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspfNeighborCost(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspfNeighborPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspfPassiveInterface(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -2019,7 +1978,7 @@ func flattenRouterOspfSummaryAddress(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenRouterOspfSummaryAddressId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspfSummaryAddressPrefix(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2034,7 +1993,7 @@ func flattenRouterOspfSummaryAddressPrefix(v interface{}, d *schema.ResourceData
 }
 
 func flattenRouterOspfSummaryAddressTag(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspfSummaryAddressAdvertise(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2090,7 +2049,7 @@ func flattenRouterOspfDistributeList(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenRouterOspfDistributeListId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspfDistributeListAccessList(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2173,7 +2132,7 @@ func flattenRouterOspfRedistributeStatus(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenRouterOspfRedistributeMetric(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspfRedistributeRoutemap(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2185,7 +2144,7 @@ func flattenRouterOspfRedistributeMetricType(v interface{}, d *schema.ResourceDa
 }
 
 func flattenRouterOspfRedistributeTag(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectRouterOspf(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -2278,6 +2237,12 @@ func refreshObjectRouterOspf(d *schema.ResourceData, o map[string]interface{}, s
 	if err = d.Set("distance", flattenRouterOspfDistance(o["distance"], d, "distance", sv)); err != nil {
 		if !fortiAPIPatch(o["distance"]) {
 			return fmt.Errorf("Error reading distance: %v", err)
+		}
+	}
+
+	if err = d.Set("lsa_refresh_interval", flattenRouterOspfLsaRefreshInterval(o["lsa-refresh-interval"], d, "lsa_refresh_interval", sv)); err != nil {
+		if !fortiAPIPatch(o["lsa-refresh-interval"]) {
+			return fmt.Errorf("Error reading lsa_refresh_interval: %v", err)
 		}
 	}
 
@@ -2534,6 +2499,10 @@ func expandRouterOspfDistance(d *schema.ResourceData, v interface{}, pre string,
 	return v, nil
 }
 
+func expandRouterOspfLsaRefreshInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandRouterOspfRfc1583Compatible(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -2646,26 +2615,28 @@ func expandRouterOspfArea(d *schema.ResourceData, v interface{}, pre string, sv 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comments"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["comments"], _ = expandRouterOspfAreaComments(d, i["comments"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["comments"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "range"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["range"], _ = expandRouterOspfAreaRange(d, i["range"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["range"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "virtual_link"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["virtual-link"], _ = expandRouterOspfAreaVirtualLink(d, i["virtual_link"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["virtual-link"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_list"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["filter-list"], _ = expandRouterOspfAreaFilterList(d, i["filter_list"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["filter-list"] = make([]string, 0)
 		}
 
@@ -2742,6 +2713,8 @@ func expandRouterOspfAreaRange(d *schema.ResourceData, v interface{}, pre string
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandRouterOspfAreaRangeId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"
@@ -2809,6 +2782,8 @@ func expandRouterOspfAreaVirtualLink(d *schema.ResourceData, v interface{}, pre 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandRouterOspfAreaVirtualLinkName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "authentication"
@@ -2819,21 +2794,29 @@ func expandRouterOspfAreaVirtualLink(d *schema.ResourceData, v interface{}, pre 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "authentication_key"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["authentication-key"], _ = expandRouterOspfAreaVirtualLinkAuthenticationKey(d, i["authentication_key"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["authentication-key"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "keychain"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["keychain"], _ = expandRouterOspfAreaVirtualLinkKeychain(d, i["keychain"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["keychain"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "md5_key"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["md5-key"], _ = expandRouterOspfAreaVirtualLinkMd5Key(d, i["md5_key"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["md5-key"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "md5_keychain"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["md5-keychain"], _ = expandRouterOspfAreaVirtualLinkMd5Keychain(d, i["md5_keychain"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["md5-keychain"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dead_interval"
@@ -2862,9 +2845,9 @@ func expandRouterOspfAreaVirtualLink(d *schema.ResourceData, v interface{}, pre 
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "md5_keys"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["md5-keys"], _ = expandRouterOspfAreaVirtualLinkMd5Keys(d, i["md5_keys"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["md5-keys"] = make([]string, 0)
 		}
 
@@ -2937,11 +2920,15 @@ func expandRouterOspfAreaVirtualLinkMd5Keys(d *schema.ResourceData, v interface{
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandRouterOspfAreaVirtualLinkMd5KeysId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "key_string"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["key-string"], _ = expandRouterOspfAreaVirtualLinkMd5KeysKeyString(d, i["key_string"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["key-string"] = nil
 		}
 
 		result = append(result, tmp)
@@ -2977,11 +2964,15 @@ func expandRouterOspfAreaFilterList(d *schema.ResourceData, v interface{}, pre s
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandRouterOspfAreaFilterListId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "list"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["list"], _ = expandRouterOspfAreaFilterListList(d, i["list"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["list"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "direction"
@@ -3026,21 +3017,32 @@ func expandRouterOspfOspfInterface(d *schema.ResourceData, v interface{}, pre st
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandRouterOspfOspfInterfaceName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comments"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["comments"], _ = expandRouterOspfOspfInterfaceComments(d, i["comments"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["comments"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["interface"], _ = expandRouterOspfOspfInterfaceInterface(d, i["interface"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["interface"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["ip"], _ = expandRouterOspfOspfInterfaceIp(d, i["ip"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "linkdown_fast_failover"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["linkdown-fast-failover"], _ = expandRouterOspfOspfInterfaceLinkdownFastFailover(d, i["linkdown_fast_failover"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "authentication"
@@ -3051,26 +3053,36 @@ func expandRouterOspfOspfInterface(d *schema.ResourceData, v interface{}, pre st
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "authentication_key"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["authentication-key"], _ = expandRouterOspfOspfInterfaceAuthenticationKey(d, i["authentication_key"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["authentication-key"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "keychain"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["keychain"], _ = expandRouterOspfOspfInterfaceKeychain(d, i["keychain"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["keychain"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "md5_key"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["md5-key"], _ = expandRouterOspfOspfInterfaceMd5Key(d, i["md5_key"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["md5-key"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "md5_keychain"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["md5-keychain"], _ = expandRouterOspfOspfInterfaceMd5Keychain(d, i["md5_keychain"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["md5-keychain"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_length"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["prefix-length"], _ = expandRouterOspfOspfInterfacePrefixLength(d, i["prefix_length"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["prefix-length"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "retransmit_interval"
@@ -3086,6 +3098,8 @@ func expandRouterOspfOspfInterface(d *schema.ResourceData, v interface{}, pre st
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "cost"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["cost"], _ = expandRouterOspfOspfInterfaceCost(d, i["cost"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["cost"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
@@ -3096,16 +3110,22 @@ func expandRouterOspfOspfInterface(d *schema.ResourceData, v interface{}, pre st
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dead_interval"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["dead-interval"], _ = expandRouterOspfOspfInterfaceDeadInterval(d, i["dead_interval"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["dead-interval"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "hello_interval"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["hello-interval"], _ = expandRouterOspfOspfInterfaceHelloInterval(d, i["hello_interval"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["hello-interval"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "hello_multiplier"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["hello-multiplier"], _ = expandRouterOspfOspfInterfaceHelloMultiplier(d, i["hello_multiplier"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["hello-multiplier"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "database_filter_out"
@@ -3116,6 +3136,8 @@ func expandRouterOspfOspfInterface(d *schema.ResourceData, v interface{}, pre st
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mtu"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["mtu"], _ = expandRouterOspfOspfInterfaceMtu(d, i["mtu"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["mtu"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mtu_ignore"
@@ -3144,9 +3166,9 @@ func expandRouterOspfOspfInterface(d *schema.ResourceData, v interface{}, pre st
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "md5_keys"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["md5-keys"], _ = expandRouterOspfOspfInterfaceMd5Keys(d, i["md5_keys"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["md5-keys"] = make([]string, 0)
 		}
 
@@ -3171,6 +3193,10 @@ func expandRouterOspfOspfInterfaceInterface(d *schema.ResourceData, v interface{
 }
 
 func expandRouterOspfOspfInterfaceIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterOspfOspfInterfaceLinkdownFastFailover(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3271,11 +3297,15 @@ func expandRouterOspfOspfInterfaceMd5Keys(d *schema.ResourceData, v interface{},
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandRouterOspfOspfInterfaceMd5KeysId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "key_string"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["key-string"], _ = expandRouterOspfOspfInterfaceMd5KeysKeyString(d, i["key_string"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["key-string"] = nil
 		}
 
 		result = append(result, tmp)
@@ -3311,6 +3341,8 @@ func expandRouterOspfNetwork(d *schema.ResourceData, v interface{}, pre string, 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandRouterOspfNetworkId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"
@@ -3326,6 +3358,8 @@ func expandRouterOspfNetwork(d *schema.ResourceData, v interface{}, pre string, 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comments"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["comments"], _ = expandRouterOspfNetworkComments(d, i["comments"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["comments"] = nil
 		}
 
 		result = append(result, tmp)
@@ -3369,6 +3403,8 @@ func expandRouterOspfNeighbor(d *schema.ResourceData, v interface{}, pre string,
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandRouterOspfNeighborId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
@@ -3384,6 +3420,8 @@ func expandRouterOspfNeighbor(d *schema.ResourceData, v interface{}, pre string,
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "cost"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["cost"], _ = expandRouterOspfNeighborCost(d, i["cost"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["cost"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
@@ -3464,6 +3502,8 @@ func expandRouterOspfSummaryAddress(d *schema.ResourceData, v interface{}, pre s
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandRouterOspfSummaryAddressId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"
@@ -3474,6 +3514,8 @@ func expandRouterOspfSummaryAddress(d *schema.ResourceData, v interface{}, pre s
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tag"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["tag"], _ = expandRouterOspfSummaryAddressTag(d, i["tag"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["tag"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "advertise"
@@ -3522,11 +3564,15 @@ func expandRouterOspfDistributeList(d *schema.ResourceData, v interface{}, pre s
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandRouterOspfDistributeListId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "access_list"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["access-list"], _ = expandRouterOspfDistributeListAccessList(d, i["access_list"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["access-list"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
@@ -3571,6 +3617,8 @@ func expandRouterOspfRedistribute(d *schema.ResourceData, v interface{}, pre str
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandRouterOspfRedistributeName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
@@ -3589,6 +3637,8 @@ func expandRouterOspfRedistribute(d *schema.ResourceData, v interface{}, pre str
 			} else {
 				tmp["metric"], _ = expandRouterOspfRedistributeMetric(d, i["metric"], pre_append, sv)
 			}
+		} else if d.HasChange(pre_append) {
+			tmp["metric"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "routemap"
@@ -3598,6 +3648,8 @@ func expandRouterOspfRedistribute(d *schema.ResourceData, v interface{}, pre str
 			} else {
 				tmp["routemap"], _ = expandRouterOspfRedistributeRoutemap(d, i["routemap"], pre_append, sv)
 			}
+		} else if d.HasChange(pre_append) {
+			tmp["routemap"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "metric_type"
@@ -3616,6 +3668,8 @@ func expandRouterOspfRedistribute(d *schema.ResourceData, v interface{}, pre str
 			} else {
 				tmp["tag"], _ = expandRouterOspfRedistributeTag(d, i["tag"], pre_append, sv)
 			}
+		} else if d.HasChange(pre_append) {
+			tmp["tag"] = nil
 		}
 
 		result = append(result, tmp)
@@ -3807,6 +3861,8 @@ func getObjectRouterOspf(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 				obj["default-information-route-map"] = t
 			}
 		}
+	} else if d.HasChange("default_information_route_map") {
+		obj["default-information-route-map"] = nil
 	}
 
 	if v, ok := d.GetOk("default_metric"); ok {
@@ -3831,6 +3887,19 @@ func getObjectRouterOspf(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 				return &obj, err
 			} else if t != nil {
 				obj["distance"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOkExists("lsa_refresh_interval"); ok {
+		if setArgNil {
+			obj["lsa-refresh-interval"] = nil
+		} else {
+			t, err := expandRouterOspfLsaRefreshInterval(d, v, "lsa_refresh_interval", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["lsa-refresh-interval"] = t
 			}
 		}
 	}
@@ -3911,6 +3980,8 @@ func getObjectRouterOspf(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 				obj["distribute-list-in"] = t
 			}
 		}
+	} else if d.HasChange("distribute_list_in") {
+		obj["distribute-list-in"] = nil
 	}
 
 	if v, ok := d.GetOk("distribute_route_map_in"); ok {
@@ -3924,6 +3995,8 @@ func getObjectRouterOspf(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 				obj["distribute-route-map-in"] = t
 			}
 		}
+	} else if d.HasChange("distribute_route_map_in") {
+		obj["distribute-route-map-in"] = nil
 	}
 
 	if v, ok := d.GetOk("restart_mode"); ok {

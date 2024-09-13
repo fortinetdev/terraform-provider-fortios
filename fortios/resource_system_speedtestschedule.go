@@ -57,7 +57,6 @@ func resourceSystemSpeedTestSchedule() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"mode": &schema.Schema{
 				Type:     schema.TypeString,
@@ -73,7 +72,6 @@ func resourceSystemSpeedTestSchedule() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 31),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -114,25 +112,21 @@ func resourceSystemSpeedTestSchedule() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 16776000),
 				Optional:     true,
-				Computed:     true,
 			},
 			"update_inbandwidth_minimum": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 16776000),
 				Optional:     true,
-				Computed:     true,
 			},
 			"update_outbandwidth_maximum": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 16776000),
 				Optional:     true,
-				Computed:     true,
 			},
 			"update_outbandwidth_minimum": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 16776000),
 				Optional:     true,
-				Computed:     true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
@@ -366,11 +360,11 @@ func flattenSystemSpeedTestScheduleDynamicServer(v interface{}, d *schema.Resour
 }
 
 func flattenSystemSpeedTestScheduleCtrlPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSpeedTestScheduleServerPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSpeedTestScheduleUpdateShaper(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -386,19 +380,19 @@ func flattenSystemSpeedTestScheduleUpdateOutbandwidth(v interface{}, d *schema.R
 }
 
 func flattenSystemSpeedTestScheduleUpdateInbandwidthMaximum(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSpeedTestScheduleUpdateInbandwidthMinimum(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSpeedTestScheduleUpdateOutbandwidthMaximum(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSpeedTestScheduleUpdateOutbandwidthMinimum(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectSystemSpeedTestSchedule(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -650,6 +644,8 @@ func getObjectSystemSpeedTestSchedule(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["server-name"] = t
 		}
+	} else if d.HasChange("server_name") {
+		obj["server-name"] = nil
 	}
 
 	if v, ok := d.GetOk("mode"); ok {
@@ -731,6 +727,8 @@ func getObjectSystemSpeedTestSchedule(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["update-inbandwidth-maximum"] = t
 		}
+	} else if d.HasChange("update_inbandwidth_maximum") {
+		obj["update-inbandwidth-maximum"] = nil
 	}
 
 	if v, ok := d.GetOkExists("update_inbandwidth_minimum"); ok {
@@ -740,6 +738,8 @@ func getObjectSystemSpeedTestSchedule(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["update-inbandwidth-minimum"] = t
 		}
+	} else if d.HasChange("update_inbandwidth_minimum") {
+		obj["update-inbandwidth-minimum"] = nil
 	}
 
 	if v, ok := d.GetOkExists("update_outbandwidth_maximum"); ok {
@@ -749,6 +749,8 @@ func getObjectSystemSpeedTestSchedule(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["update-outbandwidth-maximum"] = t
 		}
+	} else if d.HasChange("update_outbandwidth_maximum") {
+		obj["update-outbandwidth-maximum"] = nil
 	}
 
 	if v, ok := d.GetOkExists("update_outbandwidth_minimum"); ok {
@@ -758,6 +760,8 @@ func getObjectSystemSpeedTestSchedule(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["update-outbandwidth-minimum"] = t
 		}
+	} else if d.HasChange("update_outbandwidth_minimum") {
+		obj["update-outbandwidth-minimum"] = nil
 	}
 
 	return &obj, nil

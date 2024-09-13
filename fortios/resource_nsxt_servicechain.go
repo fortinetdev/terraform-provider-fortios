@@ -47,7 +47,6 @@ func resourceNsxtServiceChain() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"service_index": &schema.Schema{
 				Type:     schema.TypeList,
@@ -58,7 +57,6 @@ func resourceNsxtServiceChain() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"reverse_index": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -70,13 +68,11 @@ func resourceNsxtServiceChain() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"vd": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 31),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -247,7 +243,7 @@ func resourceNsxtServiceChainRead(d *schema.ResourceData, m interface{}) error {
 }
 
 func flattenNsxtServiceChainId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenNsxtServiceChainName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -308,11 +304,11 @@ func flattenNsxtServiceChainServiceIndex(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenNsxtServiceChainServiceIndexId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenNsxtServiceChainServiceIndexReverseIndex(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenNsxtServiceChainServiceIndexName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -394,6 +390,8 @@ func expandNsxtServiceChainServiceIndex(d *schema.ResourceData, v interface{}, p
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandNsxtServiceChainServiceIndexId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "reverse_index"
@@ -404,11 +402,15 @@ func expandNsxtServiceChainServiceIndex(d *schema.ResourceData, v interface{}, p
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandNsxtServiceChainServiceIndexName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vd"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["vd"], _ = expandNsxtServiceChainServiceIndexVd(d, i["vd"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["vd"] = nil
 		}
 
 		result = append(result, tmp)
@@ -454,6 +456,8 @@ func getObjectNsxtServiceChain(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("service_index"); ok || d.HasChange("service_index") {

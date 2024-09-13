@@ -46,7 +46,6 @@ func resourceFirewallPolicy64() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"uuid": &schema.Schema{
 				Type:     schema.TypeString,
@@ -72,7 +71,6 @@ func resourceFirewallPolicy64() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -86,7 +84,6 @@ func resourceFirewallPolicy64() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -115,7 +112,6 @@ func resourceFirewallPolicy64() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -139,19 +135,16 @@ func resourceFirewallPolicy64() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"traffic_shaper_reverse": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"per_ip_shaper": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"fixedport": &schema.Schema{
 				Type:     schema.TypeString,
@@ -172,7 +165,6 @@ func resourceFirewallPolicy64() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -181,13 +173,11 @@ func resourceFirewallPolicy64() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"tcp_mss_receiver": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"comments": &schema.Schema{
 				Type:         schema.TypeString,
@@ -360,7 +350,7 @@ func resourceFirewallPolicy64Read(d *schema.ResourceData, m interface{}) error {
 }
 
 func flattenFirewallPolicy64Policyid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallPolicy64Name(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -592,11 +582,11 @@ func flattenFirewallPolicy64PoolnameName(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenFirewallPolicy64TcpMssSender(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallPolicy64TcpMssReceiver(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallPolicy64Comments(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1006,6 +996,8 @@ func getObjectFirewallPolicy64(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("uuid"); ok {
@@ -1024,6 +1016,8 @@ func getObjectFirewallPolicy64(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["srcintf"] = t
 		}
+	} else if d.HasChange("srcintf") {
+		obj["srcintf"] = nil
 	}
 
 	if v, ok := d.GetOk("dstintf"); ok {
@@ -1033,6 +1027,8 @@ func getObjectFirewallPolicy64(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["dstintf"] = t
 		}
+	} else if d.HasChange("dstintf") {
+		obj["dstintf"] = nil
 	}
 
 	if v, ok := d.GetOk("srcaddr"); ok || d.HasChange("srcaddr") {
@@ -1078,6 +1074,8 @@ func getObjectFirewallPolicy64(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["schedule"] = t
 		}
+	} else if d.HasChange("schedule") {
+		obj["schedule"] = nil
 	}
 
 	if v, ok := d.GetOk("service"); ok || d.HasChange("service") {
@@ -1123,6 +1121,8 @@ func getObjectFirewallPolicy64(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["traffic-shaper"] = t
 		}
+	} else if d.HasChange("traffic_shaper") {
+		obj["traffic-shaper"] = nil
 	}
 
 	if v, ok := d.GetOk("traffic_shaper_reverse"); ok {
@@ -1132,6 +1132,8 @@ func getObjectFirewallPolicy64(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["traffic-shaper-reverse"] = t
 		}
+	} else if d.HasChange("traffic_shaper_reverse") {
+		obj["traffic-shaper-reverse"] = nil
 	}
 
 	if v, ok := d.GetOk("per_ip_shaper"); ok {
@@ -1141,6 +1143,8 @@ func getObjectFirewallPolicy64(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["per-ip-shaper"] = t
 		}
+	} else if d.HasChange("per_ip_shaper") {
+		obj["per-ip-shaper"] = nil
 	}
 
 	if v, ok := d.GetOk("fixedport"); ok {
@@ -1177,6 +1181,8 @@ func getObjectFirewallPolicy64(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["tcp-mss-sender"] = t
 		}
+	} else if d.HasChange("tcp_mss_sender") {
+		obj["tcp-mss-sender"] = nil
 	}
 
 	if v, ok := d.GetOkExists("tcp_mss_receiver"); ok {
@@ -1186,6 +1192,8 @@ func getObjectFirewallPolicy64(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["tcp-mss-receiver"] = t
 		}
+	} else if d.HasChange("tcp_mss_receiver") {
+		obj["tcp-mss-receiver"] = nil
 	}
 
 	if v, ok := d.GetOk("comments"); ok {
@@ -1195,6 +1203,8 @@ func getObjectFirewallPolicy64(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["comments"] = t
 		}
+	} else if d.HasChange("comments") {
+		obj["comments"] = nil
 	}
 
 	return &obj, nil

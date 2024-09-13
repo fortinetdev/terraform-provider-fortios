@@ -47,7 +47,6 @@ func resourceUserSaml() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"entity_id": &schema.Schema{
 				Type:         schema.TypeString,
@@ -63,7 +62,6 @@ func resourceUserSaml() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"idp_entity_id": &schema.Schema{
 				Type:         schema.TypeString,
@@ -79,24 +77,26 @@ func resourceUserSaml() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"idp_cert": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Required:     true,
 			},
+			"scim_client": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+			},
 			"user_name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"group_name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"digest_method": &schema.Schema{
 				Type:     schema.TypeString,
@@ -330,6 +330,10 @@ func flattenUserSamlIdpCert(v interface{}, d *schema.ResourceData, pre string, s
 	return v
 }
 
+func flattenUserSamlScimClient(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenUserSamlUserName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -347,7 +351,7 @@ func flattenUserSamlLimitRelaystate(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenUserSamlClockTolerance(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserSamlAuthUrl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -424,6 +428,12 @@ func refreshObjectUserSaml(d *schema.ResourceData, o map[string]interface{}, sv 
 	if err = d.Set("idp_cert", flattenUserSamlIdpCert(o["idp-cert"], d, "idp_cert", sv)); err != nil {
 		if !fortiAPIPatch(o["idp-cert"]) {
 			return fmt.Errorf("Error reading idp_cert: %v", err)
+		}
+	}
+
+	if err = d.Set("scim_client", flattenUserSamlScimClient(o["scim-client"], d, "scim_client", sv)); err != nil {
+		if !fortiAPIPatch(o["scim-client"]) {
+			return fmt.Errorf("Error reading scim_client: %v", err)
 		}
 	}
 
@@ -532,6 +542,10 @@ func expandUserSamlIdpCert(d *schema.ResourceData, v interface{}, pre string, sv
 	return v, nil
 }
 
+func expandUserSamlScimClient(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandUserSamlUserName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -591,6 +605,8 @@ func getObjectUserSaml(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["cert"] = t
 		}
+	} else if d.HasChange("cert") {
+		obj["cert"] = nil
 	}
 
 	if v, ok := d.GetOk("entity_id"); ok {
@@ -600,6 +616,8 @@ func getObjectUserSaml(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["entity-id"] = t
 		}
+	} else if d.HasChange("entity_id") {
+		obj["entity-id"] = nil
 	}
 
 	if v, ok := d.GetOk("single_sign_on_url"); ok {
@@ -609,6 +627,8 @@ func getObjectUserSaml(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["single-sign-on-url"] = t
 		}
+	} else if d.HasChange("single_sign_on_url") {
+		obj["single-sign-on-url"] = nil
 	}
 
 	if v, ok := d.GetOk("single_logout_url"); ok {
@@ -618,6 +638,8 @@ func getObjectUserSaml(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["single-logout-url"] = t
 		}
+	} else if d.HasChange("single_logout_url") {
+		obj["single-logout-url"] = nil
 	}
 
 	if v, ok := d.GetOk("idp_entity_id"); ok {
@@ -627,6 +649,8 @@ func getObjectUserSaml(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["idp-entity-id"] = t
 		}
+	} else if d.HasChange("idp_entity_id") {
+		obj["idp-entity-id"] = nil
 	}
 
 	if v, ok := d.GetOk("idp_single_sign_on_url"); ok {
@@ -636,6 +660,8 @@ func getObjectUserSaml(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["idp-single-sign-on-url"] = t
 		}
+	} else if d.HasChange("idp_single_sign_on_url") {
+		obj["idp-single-sign-on-url"] = nil
 	}
 
 	if v, ok := d.GetOk("idp_single_logout_url"); ok {
@@ -645,6 +671,8 @@ func getObjectUserSaml(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["idp-single-logout-url"] = t
 		}
+	} else if d.HasChange("idp_single_logout_url") {
+		obj["idp-single-logout-url"] = nil
 	}
 
 	if v, ok := d.GetOk("idp_cert"); ok {
@@ -654,6 +682,19 @@ func getObjectUserSaml(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["idp-cert"] = t
 		}
+	} else if d.HasChange("idp_cert") {
+		obj["idp-cert"] = nil
+	}
+
+	if v, ok := d.GetOk("scim_client"); ok {
+		t, err := expandUserSamlScimClient(d, v, "scim_client", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["scim-client"] = t
+		}
+	} else if d.HasChange("scim_client") {
+		obj["scim-client"] = nil
 	}
 
 	if v, ok := d.GetOk("user_name"); ok {
@@ -663,6 +704,8 @@ func getObjectUserSaml(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["user-name"] = t
 		}
+	} else if d.HasChange("user_name") {
+		obj["user-name"] = nil
 	}
 
 	if v, ok := d.GetOk("group_name"); ok {
@@ -672,6 +715,8 @@ func getObjectUserSaml(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["group-name"] = t
 		}
+	} else if d.HasChange("group_name") {
+		obj["group-name"] = nil
 	}
 
 	if v, ok := d.GetOk("digest_method"); ok {
@@ -708,6 +753,8 @@ func getObjectUserSaml(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["auth-url"] = t
 		}
+	} else if d.HasChange("auth_url") {
+		obj["auth-url"] = nil
 	}
 
 	if v, ok := d.GetOk("adfs_claim"); ok {

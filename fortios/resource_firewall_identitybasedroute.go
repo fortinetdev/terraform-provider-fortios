@@ -45,7 +45,6 @@ func resourceFirewallIdentityBasedRoute() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
-				Computed:     true,
 			},
 			"rule": &schema.Schema{
 				Type:     schema.TypeList,
@@ -55,7 +54,6 @@ func resourceFirewallIdentityBasedRoute() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"gateway": &schema.Schema{
 							Type:     schema.TypeString,
@@ -66,7 +64,6 @@ func resourceFirewallIdentityBasedRoute() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"groups": &schema.Schema{
 							Type:     schema.TypeSet,
@@ -77,7 +74,6 @@ func resourceFirewallIdentityBasedRoute() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -312,7 +308,7 @@ func flattenFirewallIdentityBasedRouteRule(v interface{}, d *schema.ResourceData
 }
 
 func flattenFirewallIdentityBasedRouteRuleId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallIdentityBasedRouteRuleGateway(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -436,6 +432,8 @@ func expandFirewallIdentityBasedRouteRule(d *schema.ResourceData, v interface{},
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandFirewallIdentityBasedRouteRuleId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "gateway"
@@ -446,12 +444,14 @@ func expandFirewallIdentityBasedRouteRule(d *schema.ResourceData, v interface{},
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "device"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["device"], _ = expandFirewallIdentityBasedRouteRuleDevice(d, i["device"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["device"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "groups"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["groups"], _ = expandFirewallIdentityBasedRouteRuleGroups(d, i["groups"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["groups"] = make([]string, 0)
 		}
 
@@ -513,6 +513,8 @@ func getObjectFirewallIdentityBasedRoute(d *schema.ResourceData, sv string) (*ma
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("comments"); ok {
@@ -522,6 +524,8 @@ func getObjectFirewallIdentityBasedRoute(d *schema.ResourceData, sv string) (*ma
 		} else if t != nil {
 			obj["comments"] = t
 		}
+	} else if d.HasChange("comments") {
+		obj["comments"] = nil
 	}
 
 	if v, ok := d.GetOk("rule"); ok || d.HasChange("rule") {

@@ -47,53 +47,44 @@ func resourceSwitchControllerVlan() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 32),
 				Optional:     true,
-				Computed:     true,
 			},
 			"vlanid": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 4094),
 				Optional:     true,
-				Computed:     true,
 			},
 			"comments": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"color": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 32),
 				Optional:     true,
-				Computed:     true,
 			},
 			"security": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"auth": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"radius_server": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"usergroup": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"portal_message_override_group": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"portal_message_overrides": &schema.Schema{
 				Type:     schema.TypeList,
@@ -106,25 +97,21 @@ func resourceSwitchControllerVlan() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"auth_reject_page": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"auth_login_page": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"auth_login_failed_page": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -138,7 +125,6 @@ func resourceSwitchControllerVlan() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -317,7 +303,7 @@ func flattenSwitchControllerVlanVdom(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenSwitchControllerVlanVlanid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerVlanComments(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -325,7 +311,7 @@ func flattenSwitchControllerVlanComments(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenSwitchControllerVlanColor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerVlanSecurity(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -652,6 +638,8 @@ func expandSwitchControllerVlanSelectedUsergroups(d *schema.ResourceData, v inte
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandSwitchControllerVlanSelectedUsergroupsName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		result = append(result, tmp)
@@ -685,6 +673,8 @@ func getObjectSwitchControllerVlan(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["vdom"] = t
 		}
+	} else if d.HasChange("vdom") {
+		obj["vdom"] = nil
 	}
 
 	if v, ok := d.GetOk("vlanid"); ok {
@@ -694,6 +684,8 @@ func getObjectSwitchControllerVlan(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["vlanid"] = t
 		}
+	} else if d.HasChange("vlanid") {
+		obj["vlanid"] = nil
 	}
 
 	if v, ok := d.GetOk("comments"); ok {
@@ -703,6 +695,8 @@ func getObjectSwitchControllerVlan(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["comments"] = t
 		}
+	} else if d.HasChange("comments") {
+		obj["comments"] = nil
 	}
 
 	if v, ok := d.GetOkExists("color"); ok {
@@ -712,6 +706,8 @@ func getObjectSwitchControllerVlan(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["color"] = t
 		}
+	} else if d.HasChange("color") {
+		obj["color"] = nil
 	}
 
 	if v, ok := d.GetOk("security"); ok {
@@ -721,6 +717,8 @@ func getObjectSwitchControllerVlan(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["security"] = t
 		}
+	} else if d.HasChange("security") {
+		obj["security"] = nil
 	}
 
 	if v, ok := d.GetOk("auth"); ok {
@@ -730,6 +728,8 @@ func getObjectSwitchControllerVlan(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["auth"] = t
 		}
+	} else if d.HasChange("auth") {
+		obj["auth"] = nil
 	}
 
 	if v, ok := d.GetOk("radius_server"); ok {
@@ -739,6 +739,8 @@ func getObjectSwitchControllerVlan(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["radius-server"] = t
 		}
+	} else if d.HasChange("radius_server") {
+		obj["radius-server"] = nil
 	}
 
 	if v, ok := d.GetOk("usergroup"); ok {
@@ -748,6 +750,8 @@ func getObjectSwitchControllerVlan(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["usergroup"] = t
 		}
+	} else if d.HasChange("usergroup") {
+		obj["usergroup"] = nil
 	}
 
 	if v, ok := d.GetOk("portal_message_override_group"); ok {
@@ -757,6 +761,8 @@ func getObjectSwitchControllerVlan(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["portal-message-override-group"] = t
 		}
+	} else if d.HasChange("portal_message_override_group") {
+		obj["portal-message-override-group"] = nil
 	}
 
 	if v, ok := d.GetOk("portal_message_overrides"); ok {

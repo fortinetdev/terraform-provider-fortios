@@ -69,23 +69,19 @@ func resourceVpnIpsecManualkey() *schema.Resource {
 				Type:      schema.TypeString,
 				Optional:  true,
 				Sensitive: true,
-				Computed:  true,
 			},
 			"enckey": &schema.Schema{
 				Type:      schema.TypeString,
 				Optional:  true,
 				Sensitive: true,
-				Computed:  true,
 			},
 			"localspi": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"remotespi": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"npu_offload": &schema.Schema{
 				Type:     schema.TypeString,
@@ -271,14 +267,6 @@ func flattenVpnIpsecManualkeyEncryption(v interface{}, d *schema.ResourceData, p
 	return v
 }
 
-func flattenVpnIpsecManualkeyAuthkey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenVpnIpsecManualkeyEnckey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
 func flattenVpnIpsecManualkeyLocalspi(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -420,6 +408,8 @@ func getObjectVpnIpsecManualkey(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["interface"] = t
 		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
 	}
 
 	if v, ok := d.GetOk("remote_gw"); ok {
@@ -465,6 +455,8 @@ func getObjectVpnIpsecManualkey(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["authkey"] = t
 		}
+	} else if d.HasChange("authkey") {
+		obj["authkey"] = nil
 	}
 
 	if v, ok := d.GetOk("enckey"); ok {
@@ -474,6 +466,8 @@ func getObjectVpnIpsecManualkey(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["enckey"] = t
 		}
+	} else if d.HasChange("enckey") {
+		obj["enckey"] = nil
 	}
 
 	if v, ok := d.GetOk("localspi"); ok {
@@ -483,6 +477,8 @@ func getObjectVpnIpsecManualkey(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["localspi"] = t
 		}
+	} else if d.HasChange("localspi") {
+		obj["localspi"] = nil
 	}
 
 	if v, ok := d.GetOk("remotespi"); ok {
@@ -492,6 +488,8 @@ func getObjectVpnIpsecManualkey(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["remotespi"] = t
 		}
+	} else if d.HasChange("remotespi") {
+		obj["remotespi"] = nil
 	}
 
 	if v, ok := d.GetOk("npu_offload"); ok {

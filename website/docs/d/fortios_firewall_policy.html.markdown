@@ -120,6 +120,7 @@ The following attributes are exported:
 * `ssl_ssh_profile` - Name of an existing SSL SSH profile.
 * `logtraffic` - Enable or disable logging. Log all sessions or security profile sessions.
 * `logtraffic_start` - Record logs when a session starts.
+* `log_http_transaction` - Enable/disable HTTP transaction log.
 * `capture_packet` - Enable/disable capture packets.
 * `auto_asic_offload` - Enable/disable policy traffic ASIC offloading.
 * `np_acceleration` - Enable/disable UTM Network Processor acceleration.
@@ -210,6 +211,7 @@ The following attributes are exported:
 * `scan_botnet_connections` - Block or monitor connections to Botnet servers or disable Botnet scanning.
 * `dsri` - Enable DSRI to ignore HTTP server responses.
 * `radius_mac_auth_bypass` - Enable MAC authentication bypass. The bypassed MAC address must be received from RADIUS server.
+* `radius_ip_auth_bypass` - Enable IP authentication bypass. The bypassed IP address must be received from RADIUS server.
 * `delay_tcp_npu_session` - Enable TCP NPU session delay to guarantee packet order of 3-way handshake.
 * `vlan_filter` - Set VLAN filters.
 * `sgt_check` - Enable/disable security group tags (SGT) check.

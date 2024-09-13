@@ -47,7 +47,6 @@ func resourceCasbSaasApplication() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 36),
 				Optional:     true,
-				Computed:     true,
 			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
@@ -63,13 +62,11 @@ func resourceCasbSaasApplication() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
-				Computed:     true,
 			},
 			"description": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"domains": &schema.Schema{
 				Type:     schema.TypeSet,
@@ -80,7 +77,6 @@ func resourceCasbSaasApplication() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 127),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -457,6 +453,8 @@ func getObjectCasbSaasApplication(d *schema.ResourceData, sv string) (*map[strin
 		} else if t != nil {
 			obj["uuid"] = t
 		}
+	} else if d.HasChange("uuid") {
+		obj["uuid"] = nil
 	}
 
 	if v, ok := d.GetOk("status"); ok {
@@ -484,6 +482,8 @@ func getObjectCasbSaasApplication(d *schema.ResourceData, sv string) (*map[strin
 		} else if t != nil {
 			obj["casb-name"] = t
 		}
+	} else if d.HasChange("casb_name") {
+		obj["casb-name"] = nil
 	}
 
 	if v, ok := d.GetOk("description"); ok {
@@ -493,6 +493,8 @@ func getObjectCasbSaasApplication(d *schema.ResourceData, sv string) (*map[strin
 		} else if t != nil {
 			obj["description"] = t
 		}
+	} else if d.HasChange("description") {
+		obj["description"] = nil
 	}
 
 	if v, ok := d.GetOk("domains"); ok || d.HasChange("domains") {

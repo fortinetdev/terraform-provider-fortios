@@ -61,7 +61,6 @@ func resourceApplicationGroup() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -74,7 +73,6 @@ func resourceApplicationGroup() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -87,7 +85,6 @@ func resourceApplicationGroup() *schema.Resource {
 						"level": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -333,7 +330,7 @@ func flattenApplicationGroupApplication(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenApplicationGroupApplicationId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenApplicationGroupCategory(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -375,7 +372,7 @@ func flattenApplicationGroupCategory(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenApplicationGroupCategoryId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenApplicationGroupRisk(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -417,7 +414,7 @@ func flattenApplicationGroupRisk(v interface{}, d *schema.ResourceData, pre stri
 }
 
 func flattenApplicationGroupRiskLevel(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenApplicationGroupProtocols(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -689,6 +686,8 @@ func getObjectApplicationGroup(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("type"); ok {

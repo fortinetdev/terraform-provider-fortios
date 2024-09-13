@@ -301,7 +301,11 @@ func (r *Request) buildURL(vdom, token string) string {
 
 	param_list := []string{}
 	if vdom != "" {
-		param_list = append(param_list, "vdom="+vdom)
+		if vdom == "global" {
+			param_list = append(param_list, "scope=global")
+		} else {
+			param_list = append(param_list, "vdom="+vdom)
+		}
 	}
 
 	if token != "" {

@@ -54,12 +54,10 @@ func resourceLogFortiguardSetting() *schema.Resource {
 			"upload_day": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"upload_time": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"priority": &schema.Schema{
 				Type:     schema.TypeString,
@@ -70,7 +68,6 @@ func resourceLogFortiguardSetting() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 100000),
 				Optional:     true,
-				Computed:     true,
 			},
 			"access_config": &schema.Schema{
 				Type:     schema.TypeString,
@@ -107,7 +104,6 @@ func resourceLogFortiguardSetting() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -252,7 +248,7 @@ func flattenLogFortiguardSettingPriority(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenLogFortiguardSettingMaxLogRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenLogFortiguardSettingAccessConfig(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -268,7 +264,7 @@ func flattenLogFortiguardSettingSslMinProtoVersion(v interface{}, d *schema.Reso
 }
 
 func flattenLogFortiguardSettingConnTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenLogFortiguardSettingSourceIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -488,6 +484,8 @@ func getObjectLogFortiguardSetting(d *schema.ResourceData, setArgNil bool, sv st
 				obj["upload-day"] = t
 			}
 		}
+	} else if d.HasChange("upload_day") {
+		obj["upload-day"] = nil
 	}
 
 	if v, ok := d.GetOk("upload_time"); ok {
@@ -501,6 +499,8 @@ func getObjectLogFortiguardSetting(d *schema.ResourceData, setArgNil bool, sv st
 				obj["upload-time"] = t
 			}
 		}
+	} else if d.HasChange("upload_time") {
+		obj["upload-time"] = nil
 	}
 
 	if v, ok := d.GetOk("priority"); ok {
@@ -527,6 +527,8 @@ func getObjectLogFortiguardSetting(d *schema.ResourceData, setArgNil bool, sv st
 				obj["max-log-rate"] = t
 			}
 		}
+	} else if d.HasChange("max_log_rate") {
+		obj["max-log-rate"] = nil
 	}
 
 	if v, ok := d.GetOk("access_config"); ok {
@@ -618,6 +620,8 @@ func getObjectLogFortiguardSetting(d *schema.ResourceData, setArgNil bool, sv st
 				obj["interface"] = t
 			}
 		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
 	}
 
 	return &obj, nil

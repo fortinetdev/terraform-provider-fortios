@@ -65,11 +65,11 @@ func resourceSystemSshConfig() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"ssh_hsk": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 		},
 	}
@@ -209,10 +209,6 @@ func flattenSystemSshConfigSshHskOverride(v interface{}, d *schema.ResourceData,
 	return v
 }
 
-func flattenSystemSshConfigSshHskPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
 func flattenSystemSshConfigSshHsk(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -247,12 +243,6 @@ func refreshObjectSystemSshConfig(d *schema.ResourceData, o map[string]interface
 	if err = d.Set("ssh_hsk_override", flattenSystemSshConfigSshHskOverride(o["ssh-hsk-override"], d, "ssh_hsk_override", sv)); err != nil {
 		if !fortiAPIPatch(o["ssh-hsk-override"]) {
 			return fmt.Errorf("Error reading ssh_hsk_override: %v", err)
-		}
-	}
-
-	if err = d.Set("ssh_hsk_password", flattenSystemSshConfigSshHskPassword(o["ssh-hsk-password"], d, "ssh_hsk_password", sv)); err != nil {
-		if !fortiAPIPatch(o["ssh-hsk-password"]) {
-			return fmt.Errorf("Error reading ssh_hsk_password: %v", err)
 		}
 	}
 
@@ -378,6 +368,8 @@ func getObjectSystemSshConfig(d *schema.ResourceData, setArgNil bool, sv string)
 				obj["ssh-hsk-password"] = t
 			}
 		}
+	} else if d.HasChange("ssh_hsk_password") {
+		obj["ssh-hsk-password"] = nil
 	}
 
 	if v, ok := d.GetOk("ssh_hsk"); ok {
@@ -391,6 +383,8 @@ func getObjectSystemSshConfig(d *schema.ResourceData, setArgNil bool, sv string)
 				obj["ssh-hsk"] = t
 			}
 		}
+	} else if d.HasChange("ssh_hsk") {
+		obj["ssh-hsk"] = nil
 	}
 
 	return &obj, nil

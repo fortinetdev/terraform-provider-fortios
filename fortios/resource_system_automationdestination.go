@@ -57,7 +57,6 @@ func resourceSystemAutomationDestination() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 31),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -66,7 +65,6 @@ func resourceSystemAutomationDestination() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
@@ -284,7 +282,7 @@ func flattenSystemAutomationDestinationDestinationName(v interface{}, d *schema.
 }
 
 func flattenSystemAutomationDestinationHaGroupId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectSystemAutomationDestination(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -416,6 +414,8 @@ func getObjectSystemAutomationDestination(d *schema.ResourceData, sv string) (*m
 		} else if t != nil {
 			obj["ha-group-id"] = t
 		}
+	} else if d.HasChange("ha_group_id") {
+		obj["ha-group-id"] = nil
 	}
 
 	return &obj, nil

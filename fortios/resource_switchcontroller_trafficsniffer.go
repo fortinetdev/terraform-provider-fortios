@@ -60,7 +60,6 @@ func resourceSwitchControllerTrafficSniffer() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -79,7 +78,6 @@ func resourceSwitchControllerTrafficSniffer() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -93,13 +91,11 @@ func resourceSwitchControllerTrafficSniffer() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 16),
 							Optional:     true,
-							Computed:     true,
 						},
 						"description": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"in_ports": &schema.Schema{
 							Type:     schema.TypeSet,
@@ -110,7 +106,6 @@ func resourceSwitchControllerTrafficSniffer() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -124,7 +119,6 @@ func resourceSwitchControllerTrafficSniffer() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -623,6 +617,8 @@ func expandSwitchControllerTrafficSnifferTargetMac(d *schema.ResourceData, v int
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["description"], _ = expandSwitchControllerTrafficSnifferTargetMacDescription(d, i["description"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["description"] = nil
 		}
 
 		result = append(result, tmp)
@@ -663,6 +659,8 @@ func expandSwitchControllerTrafficSnifferTargetIp(d *schema.ResourceData, v inte
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["description"], _ = expandSwitchControllerTrafficSnifferTargetIpDescription(d, i["description"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["description"] = nil
 		}
 
 		result = append(result, tmp)
@@ -698,24 +696,28 @@ func expandSwitchControllerTrafficSnifferTargetPort(d *schema.ResourceData, v in
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "switch_id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["switch-id"], _ = expandSwitchControllerTrafficSnifferTargetPortSwitchId(d, i["switch_id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["switch-id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["description"], _ = expandSwitchControllerTrafficSnifferTargetPortDescription(d, i["description"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["description"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "in_ports"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["in-ports"], _ = expandSwitchControllerTrafficSnifferTargetPortInPorts(d, i["in_ports"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["in-ports"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "out_ports"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["out-ports"], _ = expandSwitchControllerTrafficSnifferTargetPortOutPorts(d, i["out_ports"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["out-ports"] = make([]string, 0)
 		}
 

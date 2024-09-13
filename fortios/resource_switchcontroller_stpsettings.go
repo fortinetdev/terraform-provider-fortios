@@ -40,18 +40,15 @@ func resourceSwitchControllerStpSettings() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 31),
 				Optional:     true,
-				Computed:     true,
 			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"revision": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"hello_time": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -210,27 +207,27 @@ func flattenSwitchControllerStpSettingsStatus(v interface{}, d *schema.ResourceD
 }
 
 func flattenSwitchControllerStpSettingsRevision(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerStpSettingsHelloTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerStpSettingsForwardTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerStpSettingsMaxAge(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerStpSettingsMaxHops(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerStpSettingsPendingTimer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectSwitchControllerStpSettings(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -339,6 +336,8 @@ func getObjectSwitchControllerStpSettings(d *schema.ResourceData, setArgNil bool
 				obj["name"] = t
 			}
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("status"); ok {
@@ -352,6 +351,8 @@ func getObjectSwitchControllerStpSettings(d *schema.ResourceData, setArgNil bool
 				obj["status"] = t
 			}
 		}
+	} else if d.HasChange("status") {
+		obj["status"] = nil
 	}
 
 	if v, ok := d.GetOkExists("revision"); ok {
@@ -365,6 +366,8 @@ func getObjectSwitchControllerStpSettings(d *schema.ResourceData, setArgNil bool
 				obj["revision"] = t
 			}
 		}
+	} else if d.HasChange("revision") {
+		obj["revision"] = nil
 	}
 
 	if v, ok := d.GetOk("hello_time"); ok {

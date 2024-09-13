@@ -261,6 +261,8 @@ func getObjectEndpointControlForticlientRegistrationSync(d *schema.ResourceData,
 		} else if t != nil {
 			obj["peer-ip"] = t
 		}
+	} else if d.HasChange("peer_ip") {
+		obj["peer-ip"] = nil
 	}
 
 	return &obj, nil

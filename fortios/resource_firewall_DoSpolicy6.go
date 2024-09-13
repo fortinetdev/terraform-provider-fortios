@@ -52,7 +52,6 @@ func resourceFirewallDosPolicy6() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"comments": &schema.Schema{
 				Type:         schema.TypeString,
@@ -73,7 +72,6 @@ func resourceFirewallDosPolicy6() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -87,7 +85,6 @@ func resourceFirewallDosPolicy6() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -101,7 +98,6 @@ func resourceFirewallDosPolicy6() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -115,7 +111,6 @@ func resourceFirewallDosPolicy6() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -150,12 +145,10 @@ func resourceFirewallDosPolicy6() *schema.Resource {
 						"threshold": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"thresholddefault": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -326,7 +319,7 @@ func resourceFirewallDosPolicy6Read(d *schema.ResourceData, m interface{}) error
 }
 
 func flattenFirewallDosPolicy6Policyid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallDosPolicy6Status(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -578,11 +571,11 @@ func flattenFirewallDosPolicy6AnomalyQuarantineLog(v interface{}, d *schema.Reso
 }
 
 func flattenFirewallDosPolicy6AnomalyThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallDosPolicy6AnomalyThresholdDefault(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectFirewallDosPolicy6(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -818,6 +811,8 @@ func expandFirewallDosPolicy6Anomaly(d *schema.ResourceData, v interface{}, pre 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandFirewallDosPolicy6AnomalyName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
@@ -853,11 +848,15 @@ func expandFirewallDosPolicy6Anomaly(d *schema.ResourceData, v interface{}, pre 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "threshold"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["threshold"], _ = expandFirewallDosPolicy6AnomalyThreshold(d, i["threshold"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["threshold"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "thresholddefault"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["threshold(default)"], _ = expandFirewallDosPolicy6AnomalyThresholdDefault(d, i["thresholddefault"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["threshold(default)"] = nil
 		}
 
 		result = append(result, tmp)
@@ -932,6 +931,8 @@ func getObjectFirewallDosPolicy6(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("comments"); ok {
@@ -941,6 +942,8 @@ func getObjectFirewallDosPolicy6(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["comments"] = t
 		}
+	} else if d.HasChange("comments") {
+		obj["comments"] = nil
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
@@ -950,6 +953,8 @@ func getObjectFirewallDosPolicy6(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["interface"] = t
 		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
 	}
 
 	if v, ok := d.GetOk("srcaddr"); ok || d.HasChange("srcaddr") {

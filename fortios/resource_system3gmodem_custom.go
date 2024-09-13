@@ -46,40 +46,33 @@ func resourceSystem3GModemCustom() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"model": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"vendor_id": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"product_id": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"class_id": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"init_string": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
-				Computed:     true,
 			},
 			"modeswitch_string": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -237,7 +230,7 @@ func resourceSystem3GModemCustomRead(d *schema.ResourceData, m interface{}) erro
 }
 
 func flattenSystem3GModemCustomId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystem3GModemCustomVendor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -379,6 +372,8 @@ func getObjectSystem3GModemCustom(d *schema.ResourceData, sv string) (*map[strin
 		} else if t != nil {
 			obj["vendor"] = t
 		}
+	} else if d.HasChange("vendor") {
+		obj["vendor"] = nil
 	}
 
 	if v, ok := d.GetOk("model"); ok {
@@ -388,6 +383,8 @@ func getObjectSystem3GModemCustom(d *schema.ResourceData, sv string) (*map[strin
 		} else if t != nil {
 			obj["model"] = t
 		}
+	} else if d.HasChange("model") {
+		obj["model"] = nil
 	}
 
 	if v, ok := d.GetOk("vendor_id"); ok {
@@ -397,6 +394,8 @@ func getObjectSystem3GModemCustom(d *schema.ResourceData, sv string) (*map[strin
 		} else if t != nil {
 			obj["vendor-id"] = t
 		}
+	} else if d.HasChange("vendor_id") {
+		obj["vendor-id"] = nil
 	}
 
 	if v, ok := d.GetOk("product_id"); ok {
@@ -406,6 +405,8 @@ func getObjectSystem3GModemCustom(d *schema.ResourceData, sv string) (*map[strin
 		} else if t != nil {
 			obj["product-id"] = t
 		}
+	} else if d.HasChange("product_id") {
+		obj["product-id"] = nil
 	}
 
 	if v, ok := d.GetOk("class_id"); ok {
@@ -415,6 +416,8 @@ func getObjectSystem3GModemCustom(d *schema.ResourceData, sv string) (*map[strin
 		} else if t != nil {
 			obj["class-id"] = t
 		}
+	} else if d.HasChange("class_id") {
+		obj["class-id"] = nil
 	}
 
 	if v, ok := d.GetOk("init_string"); ok {
@@ -424,6 +427,8 @@ func getObjectSystem3GModemCustom(d *schema.ResourceData, sv string) (*map[strin
 		} else if t != nil {
 			obj["init-string"] = t
 		}
+	} else if d.HasChange("init_string") {
+		obj["init-string"] = nil
 	}
 
 	if v, ok := d.GetOk("modeswitch_string"); ok {
@@ -433,6 +438,8 @@ func getObjectSystem3GModemCustom(d *schema.ResourceData, sv string) (*map[strin
 		} else if t != nil {
 			obj["modeswitch-string"] = t
 		}
+	} else if d.HasChange("modeswitch_string") {
+		obj["modeswitch-string"] = nil
 	}
 
 	return &obj, nil

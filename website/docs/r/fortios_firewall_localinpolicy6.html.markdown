@@ -57,6 +57,7 @@ The following arguments are supported:
 * `schedule` - (Required) Schedule object from available options.
 * `status` - Enable/disable this local-in policy. Valid values: `enable`, `disable`.
 * `virtual_patch` - Enable/disable the virtual patching feature. Valid values: `enable`, `disable`.
+* `logtraffic` - Enable/disable local-in traffic logging. Valid values: `enable`, `disable`.
 * `comments` - Comment.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
 * `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 

@@ -62,7 +62,6 @@ func resourceSystemClusterSync() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -76,7 +75,6 @@ func resourceSystemClusterSync() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -136,13 +134,11 @@ func resourceSystemClusterSync() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 						"dstintf": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 						"srcaddr": &schema.Schema{
 							Type:     schema.TypeString,
@@ -172,7 +168,6 @@ func resourceSystemClusterSync() *schema.Resource {
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 									"src_port_range": &schema.Schema{
 										Type:     schema.TypeString,
@@ -356,7 +351,7 @@ func resourceSystemClusterSyncRead(d *schema.ResourceData, m interface{}) error 
 }
 
 func flattenSystemClusterSyncSyncId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemClusterSyncPeervd(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -452,11 +447,11 @@ func flattenSystemClusterSyncDownIntfsBeforeSessSyncName(v interface{}, d *schem
 }
 
 func flattenSystemClusterSyncHbInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemClusterSyncHbLostThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemClusterSyncIpsecTunnelSync(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -468,11 +463,11 @@ func flattenSystemClusterSyncIkeMonitor(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenSystemClusterSyncIkeMonitorInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemClusterSyncIkeHeartbeatInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemClusterSyncSecondaryAddIpsecRoutes(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -618,7 +613,7 @@ func flattenSystemClusterSyncSessionSyncFilterCustomService(v interface{}, d *sc
 }
 
 func flattenSystemClusterSyncSessionSyncFilterCustomServiceId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemClusterSyncSessionSyncFilterCustomServiceSrcPortRange(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -946,6 +941,8 @@ func expandSystemClusterSyncSessionSyncFilterCustomService(d *schema.ResourceDat
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSystemClusterSyncSessionSyncFilterCustomServiceId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "src_port_range"

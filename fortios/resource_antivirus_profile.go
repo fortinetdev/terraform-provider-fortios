@@ -51,7 +51,6 @@ func resourceAntivirusProfile() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"feature_set": &schema.Schema{
 				Type:     schema.TypeString,
@@ -72,7 +71,6 @@ func resourceAntivirusProfile() *schema.Resource {
 			"inspection_mode": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"ftgd_analytics": &schema.Schema{
 				Type:     schema.TypeString,
@@ -88,22 +86,18 @@ func resourceAntivirusProfile() *schema.Resource {
 			"analytics_ignore_filetype": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"analytics_accept_filetype": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"analytics_wl_filetype": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"analytics_bl_filetype": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"analytics_db": &schema.Schema{
 				Type:     schema.TypeString,
@@ -130,17 +124,14 @@ func resourceAntivirusProfile() *schema.Resource {
 						"options": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"archive_block": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"archive_log": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"emulator": &schema.Schema{
 							Type:     schema.TypeString,
@@ -205,17 +196,14 @@ func resourceAntivirusProfile() *schema.Resource {
 						"options": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"archive_block": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"archive_log": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"emulator": &schema.Schema{
 							Type:     schema.TypeString,
@@ -270,17 +258,14 @@ func resourceAntivirusProfile() *schema.Resource {
 						"options": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"archive_block": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"archive_log": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"emulator": &schema.Schema{
 							Type:     schema.TypeString,
@@ -345,17 +330,14 @@ func resourceAntivirusProfile() *schema.Resource {
 						"options": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"archive_block": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"archive_log": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"emulator": &schema.Schema{
 							Type:     schema.TypeString,
@@ -420,17 +402,14 @@ func resourceAntivirusProfile() *schema.Resource {
 						"options": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"archive_block": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"archive_log": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"emulator": &schema.Schema{
 							Type:     schema.TypeString,
@@ -495,17 +474,14 @@ func resourceAntivirusProfile() *schema.Resource {
 						"options": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"archive_block": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"archive_log": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"emulator": &schema.Schema{
 							Type:     schema.TypeString,
@@ -565,17 +541,14 @@ func resourceAntivirusProfile() *schema.Resource {
 						"options": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"archive_block": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"archive_log": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"emulator": &schema.Schema{
 							Type:     schema.TypeString,
@@ -630,17 +603,14 @@ func resourceAntivirusProfile() *schema.Resource {
 						"options": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"archive_block": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"archive_log": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"emulator": &schema.Schema{
 							Type:     schema.TypeString,
@@ -695,17 +665,14 @@ func resourceAntivirusProfile() *schema.Resource {
 						"options": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"archive_block": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"archive_log": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"emulator": &schema.Schema{
 							Type:     schema.TypeString,
@@ -755,27 +722,22 @@ func resourceAntivirusProfile() *schema.Resource {
 						"options": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"archive_block": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"archive_log": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"emulator": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"outbreak_prevention": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -832,6 +794,11 @@ func resourceAntivirusProfile() *schema.Resource {
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"analytics_suspicious": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"original_file_destination": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -949,7 +916,6 @@ func resourceAntivirusProfile() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -1195,7 +1161,7 @@ func flattenAntivirusProfileFortisandboxMode(v interface{}, d *schema.ResourceDa
 }
 
 func flattenAntivirusProfileFortisandboxMaxUpload(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenAntivirusProfileInspectionMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1207,23 +1173,23 @@ func flattenAntivirusProfileFtgdAnalytics(v interface{}, d *schema.ResourceData,
 }
 
 func flattenAntivirusProfileAnalyticsMaxUpload(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenAntivirusProfileAnalyticsIgnoreFiletype(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenAntivirusProfileAnalyticsAcceptFiletype(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenAntivirusProfileAnalyticsWlFiletype(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenAntivirusProfileAnalyticsBlFiletype(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenAntivirusProfileAnalyticsDb(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2461,6 +2427,11 @@ func flattenAntivirusProfileContentDisarm(v interface{}, d *schema.ResourceData,
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
+	pre_append = pre + ".0." + "analytics_suspicious"
+	if _, ok := i["analytics-suspicious"]; ok {
+		result["analytics_suspicious"] = flattenAntivirusProfileContentDisarmAnalyticsSuspicious(i["analytics-suspicious"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "original_file_destination"
 	if _, ok := i["original-file-destination"]; ok {
 		result["original_file_destination"] = flattenAntivirusProfileContentDisarmOriginalFileDestination(i["original-file-destination"], d, pre_append, sv)
@@ -2558,6 +2529,10 @@ func flattenAntivirusProfileContentDisarm(v interface{}, d *schema.ResourceData,
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
+}
+
+func flattenAntivirusProfileContentDisarmAnalyticsSuspicious(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
 }
 
 func flattenAntivirusProfileContentDisarmOriginalFileDestination(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -4322,6 +4297,10 @@ func expandAntivirusProfileContentDisarm(d *schema.ResourceData, v interface{}, 
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
+	pre_append = pre + ".0." + "analytics_suspicious"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["analytics-suspicious"], _ = expandAntivirusProfileContentDisarmAnalyticsSuspicious(d, i["analytics_suspicious"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "original_file_destination"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["original-file-destination"], _ = expandAntivirusProfileContentDisarmOriginalFileDestination(d, i["original_file_destination"], pre_append, sv)
@@ -4400,6 +4379,10 @@ func expandAntivirusProfileContentDisarm(d *schema.ResourceData, v interface{}, 
 	}
 
 	return result, nil
+}
+
+func expandAntivirusProfileContentDisarmAnalyticsSuspicious(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
 }
 
 func expandAntivirusProfileContentDisarmOriginalFileDestination(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
@@ -4577,6 +4560,8 @@ func getObjectAntivirusProfile(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("replacemsg_group"); ok {
@@ -4586,6 +4571,8 @@ func getObjectAntivirusProfile(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["replacemsg-group"] = t
 		}
+	} else if d.HasChange("replacemsg_group") {
+		obj["replacemsg-group"] = nil
 	}
 
 	if v, ok := d.GetOk("feature_set"); ok {
@@ -4622,6 +4609,8 @@ func getObjectAntivirusProfile(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["inspection-mode"] = t
 		}
+	} else if d.HasChange("inspection_mode") {
+		obj["inspection-mode"] = nil
 	}
 
 	if v, ok := d.GetOk("ftgd_analytics"); ok {
@@ -4649,6 +4638,8 @@ func getObjectAntivirusProfile(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["analytics-ignore-filetype"] = t
 		}
+	} else if d.HasChange("analytics_ignore_filetype") {
+		obj["analytics-ignore-filetype"] = nil
 	}
 
 	if v, ok := d.GetOkExists("analytics_accept_filetype"); ok {
@@ -4658,6 +4649,8 @@ func getObjectAntivirusProfile(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["analytics-accept-filetype"] = t
 		}
+	} else if d.HasChange("analytics_accept_filetype") {
+		obj["analytics-accept-filetype"] = nil
 	}
 
 	if v, ok := d.GetOkExists("analytics_wl_filetype"); ok {
@@ -4667,6 +4660,8 @@ func getObjectAntivirusProfile(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["analytics-wl-filetype"] = t
 		}
+	} else if d.HasChange("analytics_wl_filetype") {
+		obj["analytics-wl-filetype"] = nil
 	}
 
 	if v, ok := d.GetOkExists("analytics_bl_filetype"); ok {
@@ -4676,6 +4671,8 @@ func getObjectAntivirusProfile(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["analytics-bl-filetype"] = t
 		}
+	} else if d.HasChange("analytics_bl_filetype") {
+		obj["analytics-bl-filetype"] = nil
 	}
 
 	if v, ok := d.GetOk("analytics_db"); ok {

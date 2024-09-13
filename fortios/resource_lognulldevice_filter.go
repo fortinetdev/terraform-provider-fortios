@@ -66,6 +66,11 @@ func resourceLogNullDeviceFilter() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"http_transaction": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"anomaly": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -74,12 +79,10 @@ func resourceLogNullDeviceFilter() *schema.Resource {
 			"netscan_discovery": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"netscan_vulnerability": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"voip": &schema.Schema{
 				Type:     schema.TypeString,
@@ -104,7 +107,6 @@ func resourceLogNullDeviceFilter() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"category": &schema.Schema{
 							Type:     schema.TypeString,
@@ -115,7 +117,6 @@ func resourceLogNullDeviceFilter() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 1023),
 							Optional:     true,
-							Computed:     true,
 						},
 						"filter_type": &schema.Schema{
 							Type:     schema.TypeString,
@@ -128,18 +129,15 @@ func resourceLogNullDeviceFilter() *schema.Resource {
 			"dns": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"ssh": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"filter": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 1023),
 				Optional:     true,
-				Computed:     true,
 			},
 			"filter_type": &schema.Schema{
 				Type:     schema.TypeString,
@@ -298,6 +296,10 @@ func flattenLogNullDeviceFilterZtnaTraffic(v interface{}, d *schema.ResourceData
 	return v
 }
 
+func flattenLogNullDeviceFilterHttpTransaction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenLogNullDeviceFilterAnomaly(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -376,7 +378,7 @@ func flattenLogNullDeviceFilterFreeStyle(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenLogNullDeviceFilterFreeStyleId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenLogNullDeviceFilterFreeStyleCategory(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -449,6 +451,12 @@ func refreshObjectLogNullDeviceFilter(d *schema.ResourceData, o map[string]inter
 	if err = d.Set("ztna_traffic", flattenLogNullDeviceFilterZtnaTraffic(o["ztna-traffic"], d, "ztna_traffic", sv)); err != nil {
 		if !fortiAPIPatch(o["ztna-traffic"]) {
 			return fmt.Errorf("Error reading ztna_traffic: %v", err)
+		}
+	}
+
+	if err = d.Set("http_transaction", flattenLogNullDeviceFilterHttpTransaction(o["http-transaction"], d, "http_transaction", sv)); err != nil {
+		if !fortiAPIPatch(o["http-transaction"]) {
+			return fmt.Errorf("Error reading http_transaction: %v", err)
 		}
 	}
 
@@ -561,6 +569,10 @@ func expandLogNullDeviceFilterZtnaTraffic(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
+func expandLogNullDeviceFilterHttpTransaction(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandLogNullDeviceFilterAnomaly(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -602,6 +614,8 @@ func expandLogNullDeviceFilterFreeStyle(d *schema.ResourceData, v interface{}, p
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandLogNullDeviceFilterFreeStyleId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
@@ -612,6 +626,8 @@ func expandLogNullDeviceFilterFreeStyle(d *schema.ResourceData, v interface{}, p
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["filter"], _ = expandLogNullDeviceFilterFreeStyleFilter(d, i["filter"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["filter"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_type"
@@ -740,6 +756,19 @@ func getObjectLogNullDeviceFilter(d *schema.ResourceData, setArgNil bool, sv str
 		}
 	}
 
+	if v, ok := d.GetOk("http_transaction"); ok {
+		if setArgNil {
+			obj["http-transaction"] = nil
+		} else {
+			t, err := expandLogNullDeviceFilterHttpTransaction(d, v, "http_transaction", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["http-transaction"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("anomaly"); ok {
 		if setArgNil {
 			obj["anomaly"] = nil
@@ -764,6 +793,8 @@ func getObjectLogNullDeviceFilter(d *schema.ResourceData, setArgNil bool, sv str
 				obj["netscan-discovery"] = t
 			}
 		}
+	} else if d.HasChange("netscan_discovery") {
+		obj["netscan-discovery"] = nil
 	}
 
 	if v, ok := d.GetOk("netscan_vulnerability"); ok {
@@ -777,6 +808,8 @@ func getObjectLogNullDeviceFilter(d *schema.ResourceData, setArgNil bool, sv str
 				obj["netscan-vulnerability"] = t
 			}
 		}
+	} else if d.HasChange("netscan_vulnerability") {
+		obj["netscan-vulnerability"] = nil
 	}
 
 	if v, ok := d.GetOk("voip"); ok {
@@ -842,6 +875,8 @@ func getObjectLogNullDeviceFilter(d *schema.ResourceData, setArgNil bool, sv str
 				obj["dns"] = t
 			}
 		}
+	} else if d.HasChange("dns") {
+		obj["dns"] = nil
 	}
 
 	if v, ok := d.GetOk("ssh"); ok {
@@ -855,6 +890,8 @@ func getObjectLogNullDeviceFilter(d *schema.ResourceData, setArgNil bool, sv str
 				obj["ssh"] = t
 			}
 		}
+	} else if d.HasChange("ssh") {
+		obj["ssh"] = nil
 	}
 
 	if v, ok := d.GetOk("filter"); ok {
@@ -868,6 +905,8 @@ func getObjectLogNullDeviceFilter(d *schema.ResourceData, setArgNil bool, sv str
 				obj["filter"] = t
 			}
 		}
+	} else if d.HasChange("filter") {
+		obj["filter"] = nil
 	}
 
 	if v, ok := d.GetOk("filter_type"); ok {

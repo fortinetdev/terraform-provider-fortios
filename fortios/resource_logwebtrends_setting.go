@@ -45,7 +45,6 @@ func resourceLogWebtrendsSetting() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -232,6 +231,8 @@ func getObjectLogWebtrendsSetting(d *schema.ResourceData, setArgNil bool, sv str
 				obj["server"] = t
 			}
 		}
+	} else if d.HasChange("server") {
+		obj["server"] = nil
 	}
 
 	return &obj, nil

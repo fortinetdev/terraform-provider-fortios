@@ -67,47 +67,38 @@ func resourceIpsRule() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"severity": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"location": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"os": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"application": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"service": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"rule_id": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"rev": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"date": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"metadata": &schema.Schema{
 				Type:     schema.TypeList,
@@ -117,17 +108,14 @@ func resourceIpsRule() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"metaid": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"valueid": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -342,15 +330,15 @@ func flattenIpsRuleService(v interface{}, d *schema.ResourceData, pre string, sv
 }
 
 func flattenIpsRuleRuleId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenIpsRuleRev(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenIpsRuleDate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenIpsRuleMetadata(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -402,15 +390,15 @@ func flattenIpsRuleMetadata(v interface{}, d *schema.ResourceData, pre string, s
 }
 
 func flattenIpsRuleMetadataId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenIpsRuleMetadataMetaid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenIpsRuleMetadataValueid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectIpsRule(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -604,16 +592,22 @@ func expandIpsRuleMetadata(d *schema.ResourceData, v interface{}, pre string, sv
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandIpsRuleMetadataId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "metaid"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["metaid"], _ = expandIpsRuleMetadataMetaid(d, i["metaid"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["metaid"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "valueid"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["valueid"], _ = expandIpsRuleMetadataValueid(d, i["valueid"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["valueid"] = nil
 		}
 
 		result = append(result, tmp)
@@ -691,6 +685,8 @@ func getObjectIpsRule(d *schema.ResourceData, sv string) (*map[string]interface{
 		} else if t != nil {
 			obj["group"] = t
 		}
+	} else if d.HasChange("group") {
+		obj["group"] = nil
 	}
 
 	if v, ok := d.GetOk("severity"); ok {
@@ -700,6 +696,8 @@ func getObjectIpsRule(d *schema.ResourceData, sv string) (*map[string]interface{
 		} else if t != nil {
 			obj["severity"] = t
 		}
+	} else if d.HasChange("severity") {
+		obj["severity"] = nil
 	}
 
 	if v, ok := d.GetOk("location"); ok {
@@ -709,6 +707,8 @@ func getObjectIpsRule(d *schema.ResourceData, sv string) (*map[string]interface{
 		} else if t != nil {
 			obj["location"] = t
 		}
+	} else if d.HasChange("location") {
+		obj["location"] = nil
 	}
 
 	if v, ok := d.GetOk("os"); ok {
@@ -718,6 +718,8 @@ func getObjectIpsRule(d *schema.ResourceData, sv string) (*map[string]interface{
 		} else if t != nil {
 			obj["os"] = t
 		}
+	} else if d.HasChange("os") {
+		obj["os"] = nil
 	}
 
 	if v, ok := d.GetOk("application"); ok {
@@ -727,6 +729,8 @@ func getObjectIpsRule(d *schema.ResourceData, sv string) (*map[string]interface{
 		} else if t != nil {
 			obj["application"] = t
 		}
+	} else if d.HasChange("application") {
+		obj["application"] = nil
 	}
 
 	if v, ok := d.GetOk("service"); ok {
@@ -736,6 +740,8 @@ func getObjectIpsRule(d *schema.ResourceData, sv string) (*map[string]interface{
 		} else if t != nil {
 			obj["service"] = t
 		}
+	} else if d.HasChange("service") {
+		obj["service"] = nil
 	}
 
 	if v, ok := d.GetOkExists("rule_id"); ok {
@@ -745,6 +751,8 @@ func getObjectIpsRule(d *schema.ResourceData, sv string) (*map[string]interface{
 		} else if t != nil {
 			obj["rule-id"] = t
 		}
+	} else if d.HasChange("rule_id") {
+		obj["rule-id"] = nil
 	}
 
 	if v, ok := d.GetOkExists("rev"); ok {
@@ -754,6 +762,8 @@ func getObjectIpsRule(d *schema.ResourceData, sv string) (*map[string]interface{
 		} else if t != nil {
 			obj["rev"] = t
 		}
+	} else if d.HasChange("rev") {
+		obj["rev"] = nil
 	}
 
 	if v, ok := d.GetOkExists("date"); ok {
@@ -763,6 +773,8 @@ func getObjectIpsRule(d *schema.ResourceData, sv string) (*map[string]interface{
 		} else if t != nil {
 			obj["date"] = t
 		}
+	} else if d.HasChange("date") {
+		obj["date"] = nil
 	}
 
 	if v, ok := d.GetOk("metadata"); ok || d.HasChange("metadata") {

@@ -40,19 +40,16 @@ func resourceFirewallShaperTrafficShaper() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"guaranteed_bandwidth": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 80000000),
 				Optional:     true,
-				Computed:     true,
 			},
 			"maximum_bandwidth": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 80000000),
 				Optional:     true,
-				Computed:     true,
 			},
 			"bandwidth_unit": &schema.Schema{
 				Type:     schema.TypeString,
@@ -77,7 +74,6 @@ func resourceFirewallShaperTrafficShaper() *schema.Resource {
 			"diffservcode": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"dscp_marking_method": &schema.Schema{
 				Type:     schema.TypeString,
@@ -88,7 +84,6 @@ func resourceFirewallShaperTrafficShaper() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 80000000),
 				Optional:     true,
-				Computed:     true,
 			},
 			"exceed_dscp": &schema.Schema{
 				Type:     schema.TypeString,
@@ -129,12 +124,10 @@ func resourceFirewallShaperTrafficShaper() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 100),
 				Optional:     true,
-				Computed:     true,
 			},
 			"exceed_class_id": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 		},
 	}
@@ -296,11 +289,11 @@ func flattenFirewallShaperTrafficShaperName(v interface{}, d *schema.ResourceDat
 }
 
 func flattenFirewallShaperTrafficShaperGuaranteedBandwidth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallShaperTrafficShaperMaximumBandwidth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallShaperTrafficShaperBandwidthUnit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -328,7 +321,7 @@ func flattenFirewallShaperTrafficShaperDscpMarkingMethod(v interface{}, d *schem
 }
 
 func flattenFirewallShaperTrafficShaperExceedBandwidth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallShaperTrafficShaperExceedDscp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -360,11 +353,11 @@ func flattenFirewallShaperTrafficShaperMaximumCos(v interface{}, d *schema.Resou
 }
 
 func flattenFirewallShaperTrafficShaperOverhead(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallShaperTrafficShaperExceedClassId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectFirewallShaperTrafficShaper(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -579,6 +572,8 @@ func getObjectFirewallShaperTrafficShaper(d *schema.ResourceData, sv string) (*m
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOkExists("guaranteed_bandwidth"); ok {
@@ -588,6 +583,8 @@ func getObjectFirewallShaperTrafficShaper(d *schema.ResourceData, sv string) (*m
 		} else if t != nil {
 			obj["guaranteed-bandwidth"] = t
 		}
+	} else if d.HasChange("guaranteed_bandwidth") {
+		obj["guaranteed-bandwidth"] = nil
 	}
 
 	if v, ok := d.GetOkExists("maximum_bandwidth"); ok {
@@ -597,6 +594,8 @@ func getObjectFirewallShaperTrafficShaper(d *schema.ResourceData, sv string) (*m
 		} else if t != nil {
 			obj["maximum-bandwidth"] = t
 		}
+	} else if d.HasChange("maximum_bandwidth") {
+		obj["maximum-bandwidth"] = nil
 	}
 
 	if v, ok := d.GetOk("bandwidth_unit"); ok {
@@ -642,6 +641,8 @@ func getObjectFirewallShaperTrafficShaper(d *schema.ResourceData, sv string) (*m
 		} else if t != nil {
 			obj["diffservcode"] = t
 		}
+	} else if d.HasChange("diffservcode") {
+		obj["diffservcode"] = nil
 	}
 
 	if v, ok := d.GetOk("dscp_marking_method"); ok {
@@ -660,6 +661,8 @@ func getObjectFirewallShaperTrafficShaper(d *schema.ResourceData, sv string) (*m
 		} else if t != nil {
 			obj["exceed-bandwidth"] = t
 		}
+	} else if d.HasChange("exceed_bandwidth") {
+		obj["exceed-bandwidth"] = nil
 	}
 
 	if v, ok := d.GetOk("exceed_dscp"); ok {
@@ -732,6 +735,8 @@ func getObjectFirewallShaperTrafficShaper(d *schema.ResourceData, sv string) (*m
 		} else if t != nil {
 			obj["overhead"] = t
 		}
+	} else if d.HasChange("overhead") {
+		obj["overhead"] = nil
 	}
 
 	if v, ok := d.GetOkExists("exceed_class_id"); ok {
@@ -741,6 +746,8 @@ func getObjectFirewallShaperTrafficShaper(d *schema.ResourceData, sv string) (*m
 		} else if t != nil {
 			obj["exceed-class-id"] = t
 		}
+	} else if d.HasChange("exceed_class_id") {
+		obj["exceed-class-id"] = nil
 	}
 
 	return &obj, nil

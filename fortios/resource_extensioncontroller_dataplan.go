@@ -56,25 +56,21 @@ func resourceExtensionControllerDataplan() *schema.Resource {
 			"slot": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"iccid": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 31),
 				Optional:     true,
-				Computed:     true,
 			},
 			"carrier": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 31),
 				Optional:     true,
-				Computed:     true,
 			},
 			"apn": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"auth_type": &schema.Schema{
 				Type:     schema.TypeString,
@@ -85,12 +81,12 @@ func resourceExtensionControllerDataplan() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
-				Computed:     true,
 			},
 			"password": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 64),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"pdn": &schema.Schema{
 				Type:     schema.TypeString,
@@ -113,13 +109,11 @@ func resourceExtensionControllerDataplan() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 102400000),
 				Optional:     true,
-				Computed:     true,
 			},
 			"monthly_fee": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 1000000),
 				Optional:     true,
-				Computed:     true,
 			},
 			"billing_date": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -136,7 +130,6 @@ func resourceExtensionControllerDataplan() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 32),
 				Optional:     true,
-				Computed:     true,
 			},
 			"private_network": &schema.Schema{
 				Type:     schema.TypeString,
@@ -334,32 +327,28 @@ func flattenExtensionControllerDataplanUsername(v interface{}, d *schema.Resourc
 	return v
 }
 
-func flattenExtensionControllerDataplanPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
 func flattenExtensionControllerDataplanPdn(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
 func flattenExtensionControllerDataplanSignalThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenExtensionControllerDataplanSignalPeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenExtensionControllerDataplanCapacity(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenExtensionControllerDataplanMonthlyFee(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenExtensionControllerDataplanBillingDate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenExtensionControllerDataplanOverage(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -367,7 +356,7 @@ func flattenExtensionControllerDataplanOverage(v interface{}, d *schema.Resource
 }
 
 func flattenExtensionControllerDataplanPreferredSubnet(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenExtensionControllerDataplanPrivateNetwork(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -428,12 +417,6 @@ func refreshObjectExtensionControllerDataplan(d *schema.ResourceData, o map[stri
 	if err = d.Set("username", flattenExtensionControllerDataplanUsername(o["username"], d, "username", sv)); err != nil {
 		if !fortiAPIPatch(o["username"]) {
 			return fmt.Errorf("Error reading username: %v", err)
-		}
-	}
-
-	if err = d.Set("password", flattenExtensionControllerDataplanPassword(o["password"], d, "password", sv)); err != nil {
-		if !fortiAPIPatch(o["password"]) {
-			return fmt.Errorf("Error reading password: %v", err)
 		}
 	}
 
@@ -613,6 +596,8 @@ func getObjectExtensionControllerDataplan(d *schema.ResourceData, sv string) (*m
 		} else if t != nil {
 			obj["slot"] = t
 		}
+	} else if d.HasChange("slot") {
+		obj["slot"] = nil
 	}
 
 	if v, ok := d.GetOk("iccid"); ok {
@@ -622,6 +607,8 @@ func getObjectExtensionControllerDataplan(d *schema.ResourceData, sv string) (*m
 		} else if t != nil {
 			obj["iccid"] = t
 		}
+	} else if d.HasChange("iccid") {
+		obj["iccid"] = nil
 	}
 
 	if v, ok := d.GetOk("carrier"); ok {
@@ -631,6 +618,8 @@ func getObjectExtensionControllerDataplan(d *schema.ResourceData, sv string) (*m
 		} else if t != nil {
 			obj["carrier"] = t
 		}
+	} else if d.HasChange("carrier") {
+		obj["carrier"] = nil
 	}
 
 	if v, ok := d.GetOk("apn"); ok {
@@ -640,6 +629,8 @@ func getObjectExtensionControllerDataplan(d *schema.ResourceData, sv string) (*m
 		} else if t != nil {
 			obj["apn"] = t
 		}
+	} else if d.HasChange("apn") {
+		obj["apn"] = nil
 	}
 
 	if v, ok := d.GetOk("auth_type"); ok {
@@ -658,6 +649,8 @@ func getObjectExtensionControllerDataplan(d *schema.ResourceData, sv string) (*m
 		} else if t != nil {
 			obj["username"] = t
 		}
+	} else if d.HasChange("username") {
+		obj["username"] = nil
 	}
 
 	if v, ok := d.GetOk("password"); ok {
@@ -667,6 +660,8 @@ func getObjectExtensionControllerDataplan(d *schema.ResourceData, sv string) (*m
 		} else if t != nil {
 			obj["password"] = t
 		}
+	} else if d.HasChange("password") {
+		obj["password"] = nil
 	}
 
 	if v, ok := d.GetOk("pdn"); ok {
@@ -703,6 +698,8 @@ func getObjectExtensionControllerDataplan(d *schema.ResourceData, sv string) (*m
 		} else if t != nil {
 			obj["capacity"] = t
 		}
+	} else if d.HasChange("capacity") {
+		obj["capacity"] = nil
 	}
 
 	if v, ok := d.GetOkExists("monthly_fee"); ok {
@@ -712,6 +709,8 @@ func getObjectExtensionControllerDataplan(d *schema.ResourceData, sv string) (*m
 		} else if t != nil {
 			obj["monthly-fee"] = t
 		}
+	} else if d.HasChange("monthly_fee") {
+		obj["monthly-fee"] = nil
 	}
 
 	if v, ok := d.GetOk("billing_date"); ok {
@@ -739,6 +738,8 @@ func getObjectExtensionControllerDataplan(d *schema.ResourceData, sv string) (*m
 		} else if t != nil {
 			obj["preferred-subnet"] = t
 		}
+	} else if d.HasChange("preferred_subnet") {
+		obj["preferred-subnet"] = nil
 	}
 
 	if v, ok := d.GetOk("private_network"); ok {

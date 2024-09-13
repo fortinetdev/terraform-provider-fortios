@@ -47,7 +47,6 @@ func resourceSystemSsoForticloudAdmin() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"vdom": &schema.Schema{
 				Type:     schema.TypeSet,
@@ -58,7 +57,6 @@ func resourceSystemSsoForticloudAdmin() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -379,6 +377,8 @@ func getObjectSystemSsoForticloudAdmin(d *schema.ResourceData, sv string) (*map[
 		} else if t != nil {
 			obj["accprofile"] = t
 		}
+	} else if d.HasChange("accprofile") {
+		obj["accprofile"] = nil
 	}
 
 	if v, ok := d.GetOk("vdom"); ok || d.HasChange("vdom") {

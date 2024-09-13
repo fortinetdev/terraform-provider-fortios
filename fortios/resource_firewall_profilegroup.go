@@ -45,127 +45,106 @@ func resourceFirewallProfileGroup() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"webfilter_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"dnsfilter_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"emailfilter_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"dlp_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"spamfilter_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"dlp_sensor": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"file_filter_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ips_sensor": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"application_list": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"voip_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ips_voip_filter": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"sctp_filter_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"diameter_filter_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"virtual_patch_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"icap_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"cifs_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"videofilter_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"waf_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ssh_filter_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"casb_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"profile_protocol_options": &schema.Schema{
 				Type:         schema.TypeString,
@@ -692,6 +671,8 @@ func getObjectFirewallProfileGroup(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("av_profile"); ok {
@@ -701,6 +682,8 @@ func getObjectFirewallProfileGroup(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["av-profile"] = t
 		}
+	} else if d.HasChange("av_profile") {
+		obj["av-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("webfilter_profile"); ok {
@@ -710,6 +693,8 @@ func getObjectFirewallProfileGroup(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["webfilter-profile"] = t
 		}
+	} else if d.HasChange("webfilter_profile") {
+		obj["webfilter-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("dnsfilter_profile"); ok {
@@ -719,6 +704,8 @@ func getObjectFirewallProfileGroup(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["dnsfilter-profile"] = t
 		}
+	} else if d.HasChange("dnsfilter_profile") {
+		obj["dnsfilter-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("emailfilter_profile"); ok {
@@ -728,6 +715,8 @@ func getObjectFirewallProfileGroup(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["emailfilter-profile"] = t
 		}
+	} else if d.HasChange("emailfilter_profile") {
+		obj["emailfilter-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("dlp_profile"); ok {
@@ -737,6 +726,8 @@ func getObjectFirewallProfileGroup(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["dlp-profile"] = t
 		}
+	} else if d.HasChange("dlp_profile") {
+		obj["dlp-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("spamfilter_profile"); ok {
@@ -746,6 +737,8 @@ func getObjectFirewallProfileGroup(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["spamfilter-profile"] = t
 		}
+	} else if d.HasChange("spamfilter_profile") {
+		obj["spamfilter-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("dlp_sensor"); ok {
@@ -755,6 +748,8 @@ func getObjectFirewallProfileGroup(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["dlp-sensor"] = t
 		}
+	} else if d.HasChange("dlp_sensor") {
+		obj["dlp-sensor"] = nil
 	}
 
 	if v, ok := d.GetOk("file_filter_profile"); ok {
@@ -764,6 +759,8 @@ func getObjectFirewallProfileGroup(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["file-filter-profile"] = t
 		}
+	} else if d.HasChange("file_filter_profile") {
+		obj["file-filter-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("ips_sensor"); ok {
@@ -773,6 +770,8 @@ func getObjectFirewallProfileGroup(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["ips-sensor"] = t
 		}
+	} else if d.HasChange("ips_sensor") {
+		obj["ips-sensor"] = nil
 	}
 
 	if v, ok := d.GetOk("application_list"); ok {
@@ -782,6 +781,8 @@ func getObjectFirewallProfileGroup(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["application-list"] = t
 		}
+	} else if d.HasChange("application_list") {
+		obj["application-list"] = nil
 	}
 
 	if v, ok := d.GetOk("voip_profile"); ok {
@@ -791,6 +792,8 @@ func getObjectFirewallProfileGroup(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["voip-profile"] = t
 		}
+	} else if d.HasChange("voip_profile") {
+		obj["voip-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("ips_voip_filter"); ok {
@@ -800,6 +803,8 @@ func getObjectFirewallProfileGroup(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["ips-voip-filter"] = t
 		}
+	} else if d.HasChange("ips_voip_filter") {
+		obj["ips-voip-filter"] = nil
 	}
 
 	if v, ok := d.GetOk("sctp_filter_profile"); ok {
@@ -809,6 +814,8 @@ func getObjectFirewallProfileGroup(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["sctp-filter-profile"] = t
 		}
+	} else if d.HasChange("sctp_filter_profile") {
+		obj["sctp-filter-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("diameter_filter_profile"); ok {
@@ -818,6 +825,8 @@ func getObjectFirewallProfileGroup(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["diameter-filter-profile"] = t
 		}
+	} else if d.HasChange("diameter_filter_profile") {
+		obj["diameter-filter-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("virtual_patch_profile"); ok {
@@ -827,6 +836,8 @@ func getObjectFirewallProfileGroup(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["virtual-patch-profile"] = t
 		}
+	} else if d.HasChange("virtual_patch_profile") {
+		obj["virtual-patch-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("icap_profile"); ok {
@@ -836,6 +847,8 @@ func getObjectFirewallProfileGroup(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["icap-profile"] = t
 		}
+	} else if d.HasChange("icap_profile") {
+		obj["icap-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("cifs_profile"); ok {
@@ -845,6 +858,8 @@ func getObjectFirewallProfileGroup(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["cifs-profile"] = t
 		}
+	} else if d.HasChange("cifs_profile") {
+		obj["cifs-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("videofilter_profile"); ok {
@@ -854,6 +869,8 @@ func getObjectFirewallProfileGroup(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["videofilter-profile"] = t
 		}
+	} else if d.HasChange("videofilter_profile") {
+		obj["videofilter-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("waf_profile"); ok {
@@ -863,6 +880,8 @@ func getObjectFirewallProfileGroup(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["waf-profile"] = t
 		}
+	} else if d.HasChange("waf_profile") {
+		obj["waf-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("ssh_filter_profile"); ok {
@@ -872,6 +891,8 @@ func getObjectFirewallProfileGroup(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["ssh-filter-profile"] = t
 		}
+	} else if d.HasChange("ssh_filter_profile") {
+		obj["ssh-filter-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("casb_profile"); ok {
@@ -881,6 +902,8 @@ func getObjectFirewallProfileGroup(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["casb-profile"] = t
 		}
+	} else if d.HasChange("casb_profile") {
+		obj["casb-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("profile_protocol_options"); ok {

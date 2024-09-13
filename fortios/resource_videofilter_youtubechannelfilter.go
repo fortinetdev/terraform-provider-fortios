@@ -46,7 +46,6 @@ func resourceVideofilterYoutubeChannelFilter() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"comment": &schema.Schema{
 				Type:         schema.TypeString,
@@ -66,7 +65,6 @@ func resourceVideofilterYoutubeChannelFilter() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"comment": &schema.Schema{
 							Type:         schema.TypeString,
@@ -82,7 +80,6 @@ func resourceVideofilterYoutubeChannelFilter() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -263,7 +260,7 @@ func resourceVideofilterYoutubeChannelFilterRead(d *schema.ResourceData, m inter
 }
 
 func flattenVideofilterYoutubeChannelFilterId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVideofilterYoutubeChannelFilterName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -332,7 +329,7 @@ func flattenVideofilterYoutubeChannelFilterEntries(v interface{}, d *schema.Reso
 }
 
 func flattenVideofilterYoutubeChannelFilterEntriesId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVideofilterYoutubeChannelFilterEntriesComment(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -458,11 +455,15 @@ func expandVideofilterYoutubeChannelFilterEntries(d *schema.ResourceData, v inte
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandVideofilterYoutubeChannelFilterEntriesId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["comment"], _ = expandVideofilterYoutubeChannelFilterEntriesComment(d, i["comment"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["comment"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
@@ -473,6 +474,8 @@ func expandVideofilterYoutubeChannelFilterEntries(d *schema.ResourceData, v inte
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "channel_id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["channel-id"], _ = expandVideofilterYoutubeChannelFilterEntriesChannelId(d, i["channel_id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["channel-id"] = nil
 		}
 
 		result = append(result, tmp)
@@ -526,6 +529,8 @@ func getObjectVideofilterYoutubeChannelFilter(d *schema.ResourceData, sv string)
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
@@ -535,6 +540,8 @@ func getObjectVideofilterYoutubeChannelFilter(d *schema.ResourceData, sv string)
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("default_action"); ok {

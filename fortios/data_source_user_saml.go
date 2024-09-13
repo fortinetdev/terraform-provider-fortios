@@ -64,6 +64,10 @@ func dataSourceUserSaml() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"scim_client": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"user_name": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -187,6 +191,10 @@ func dataSourceFlattenUserSamlIdpCert(v interface{}, d *schema.ResourceData, pre
 	return v
 }
 
+func dataSourceFlattenUserSamlScimClient(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenUserSamlUserName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -281,6 +289,12 @@ func dataSourceRefreshObjectUserSaml(d *schema.ResourceData, o map[string]interf
 	if err = d.Set("idp_cert", dataSourceFlattenUserSamlIdpCert(o["idp-cert"], d, "idp_cert")); err != nil {
 		if !fortiAPIPatch(o["idp-cert"]) {
 			return fmt.Errorf("Error reading idp_cert: %v", err)
+		}
+	}
+
+	if err = d.Set("scim_client", dataSourceFlattenUserSamlScimClient(o["scim-client"], d, "scim_client")); err != nil {
+		if !fortiAPIPatch(o["scim-client"]) {
+			return fmt.Errorf("Error reading scim_client: %v", err)
 		}
 	}
 

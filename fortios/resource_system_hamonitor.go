@@ -176,11 +176,11 @@ func flattenSystemHaMonitorMonitorVlan(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenSystemHaMonitorVlanHbInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemHaMonitorVlanHbLostThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectSystemHaMonitor(d *schema.ResourceData, o map[string]interface{}, sv string) error {

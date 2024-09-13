@@ -62,7 +62,6 @@ func resourceFirewallPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -76,7 +75,6 @@ func resourceFirewallPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -90,7 +88,6 @@ func resourceFirewallPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -104,7 +101,6 @@ func resourceFirewallPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -118,7 +114,6 @@ func resourceFirewallPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -132,7 +127,6 @@ func resourceFirewallPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -156,7 +150,6 @@ func resourceFirewallPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -170,7 +163,6 @@ func resourceFirewallPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -189,7 +181,6 @@ func resourceFirewallPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -208,7 +199,6 @@ func resourceFirewallPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -221,7 +211,6 @@ func resourceFirewallPolicy() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -235,7 +224,6 @@ func resourceFirewallPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -249,7 +237,6 @@ func resourceFirewallPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -263,7 +250,6 @@ func resourceFirewallPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -277,7 +263,6 @@ func resourceFirewallPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -296,7 +281,6 @@ func resourceFirewallPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -309,7 +293,6 @@ func resourceFirewallPolicy() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -323,7 +306,6 @@ func resourceFirewallPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -337,7 +319,6 @@ func resourceFirewallPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -351,7 +332,6 @@ func resourceFirewallPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -365,7 +345,6 @@ func resourceFirewallPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -387,7 +366,6 @@ func resourceFirewallPolicy() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -406,7 +384,6 @@ func resourceFirewallPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -420,7 +397,6 @@ func resourceFirewallPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -434,7 +410,6 @@ func resourceFirewallPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -448,7 +423,6 @@ func resourceFirewallPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -467,7 +441,6 @@ func resourceFirewallPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -481,7 +454,6 @@ func resourceFirewallPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -495,7 +467,6 @@ func resourceFirewallPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -509,7 +480,6 @@ func resourceFirewallPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -537,7 +507,6 @@ func resourceFirewallPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -610,7 +579,6 @@ func resourceFirewallPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -827,6 +795,11 @@ func resourceFirewallPolicy() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"log_http_transaction": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"capture_packet": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -905,7 +878,6 @@ func resourceFirewallPolicy() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -918,7 +890,6 @@ func resourceFirewallPolicy() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -931,7 +902,6 @@ func resourceFirewallPolicy() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -945,7 +915,6 @@ func resourceFirewallPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -974,7 +943,6 @@ func resourceFirewallPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -1013,7 +981,6 @@ func resourceFirewallPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -1027,7 +994,6 @@ func resourceFirewallPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -1098,7 +1064,6 @@ func resourceFirewallPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -1129,7 +1094,6 @@ func resourceFirewallPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -1143,7 +1107,6 @@ func resourceFirewallPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -1157,7 +1120,6 @@ func resourceFirewallPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 511),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -1171,7 +1133,6 @@ func resourceFirewallPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -1295,7 +1256,6 @@ func resourceFirewallPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -1378,7 +1338,6 @@ func resourceFirewallPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -1393,6 +1352,11 @@ func resourceFirewallPolicy() *schema.Resource {
 				Computed: true,
 			},
 			"radius_mac_auth_bypass": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"radius_ip_auth_bypass": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -1419,7 +1383,6 @@ func resourceFirewallPolicy() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -1590,7 +1553,7 @@ func resourceFirewallPolicyRead(d *schema.ResourceData, m interface{}) error {
 }
 
 func flattenFirewallPolicyPolicyid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallPolicyName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2076,7 +2039,7 @@ func flattenFirewallPolicyInternetServiceId(v interface{}, d *schema.ResourceDat
 }
 
 func flattenFirewallPolicyInternetServiceIdId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallPolicyInternetServiceGroup(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -2332,7 +2295,7 @@ func flattenFirewallPolicyInternetServiceSrcId(v interface{}, d *schema.Resource
 }
 
 func flattenFirewallPolicyInternetServiceSrcIdId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallPolicyInternetServiceSrcGroup(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -2504,7 +2467,7 @@ func flattenFirewallPolicyInternetServiceSrcCustomGroupName(v interface{}, d *sc
 }
 
 func flattenFirewallPolicyReputationMinimum(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallPolicyReputationDirection(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2550,7 +2513,7 @@ func flattenFirewallPolicySrcVendorMac(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenFirewallPolicySrcVendorMacId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallPolicyInternetService6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2898,7 +2861,7 @@ func flattenFirewallPolicyInternetService6SrcCustomGroupName(v interface{}, d *s
 }
 
 func flattenFirewallPolicyReputationMinimum6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallPolicyReputationDirection6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -3209,6 +3172,10 @@ func flattenFirewallPolicyLogtrafficStart(v interface{}, d *schema.ResourceData,
 	return v
 }
 
+func flattenFirewallPolicyLogHttpTransaction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallPolicyCapturePacket(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -3304,7 +3271,7 @@ func flattenFirewallPolicyApplication(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenFirewallPolicyApplicationId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallPolicyAppCategory(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -3346,7 +3313,7 @@ func flattenFirewallPolicyAppCategory(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenFirewallPolicyAppCategoryId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallPolicyUrlCategory(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -3388,7 +3355,7 @@ func flattenFirewallPolicyUrlCategory(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenFirewallPolicyUrlCategoryId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallPolicyAppGroup(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -3592,15 +3559,15 @@ func flattenFirewallPolicyPoolname6Name(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenFirewallPolicySessionTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallPolicyVlanCosFwd(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallPolicyVlanCosRev(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallPolicyInbound(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -3917,11 +3884,11 @@ func flattenFirewallPolicyDiffservcodeRev(v interface{}, d *schema.ResourceData,
 }
 
 func flattenFirewallPolicyTcpMssSender(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallPolicyTcpMssReceiver(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallPolicyComments(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -4108,6 +4075,10 @@ func flattenFirewallPolicyRadiusMacAuthBypass(v interface{}, d *schema.ResourceD
 	return v
 }
 
+func flattenFirewallPolicyRadiusIpAuthBypass(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallPolicyDelayTcpNpuSession(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -4159,7 +4130,7 @@ func flattenFirewallPolicySgt(v interface{}, d *schema.ResourceData, pre string,
 }
 
 func flattenFirewallPolicySgtId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -5097,6 +5068,12 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("log_http_transaction", flattenFirewallPolicyLogHttpTransaction(o["log-http-transaction"], d, "log_http_transaction", sv)); err != nil {
+		if !fortiAPIPatch(o["log-http-transaction"]) {
+			return fmt.Errorf("Error reading log_http_transaction: %v", err)
+		}
+	}
+
 	if err = d.Set("capture_packet", flattenFirewallPolicyCapturePacket(o["capture-packet"], d, "capture_packet", sv)); err != nil {
 		if !fortiAPIPatch(o["capture-packet"]) {
 			return fmt.Errorf("Error reading capture_packet: %v", err)
@@ -5341,24 +5318,9 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	{
-		v := flattenFirewallPolicySessionTtl(o["session-ttl"], d, "session_ttl", sv)
-		new_version_map := map[string][]string{
-			">=": []string{"6.2.4"},
-		}
-		if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
-			if vx, ok := v.(string); ok {
-				vxx, err := strconv.Atoi(vx)
-				if err == nil {
-					v = vxx
-				}
-			}
-		}
-
-		if err = d.Set("session_ttl", v); err != nil {
-			if !fortiAPIPatch(o["session-ttl"]) {
-				return fmt.Errorf("Error reading session_ttl: %v", err)
-			}
+	if err = d.Set("session_ttl", flattenFirewallPolicySessionTtl(o["session-ttl"], d, "session_ttl", sv)); err != nil {
+		if !fortiAPIPatch(o["session-ttl"]) {
+			return fmt.Errorf("Error reading session_ttl: %v", err)
 		}
 	}
 
@@ -5789,6 +5751,12 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 	if err = d.Set("radius_mac_auth_bypass", flattenFirewallPolicyRadiusMacAuthBypass(o["radius-mac-auth-bypass"], d, "radius_mac_auth_bypass", sv)); err != nil {
 		if !fortiAPIPatch(o["radius-mac-auth-bypass"]) {
 			return fmt.Errorf("Error reading radius_mac_auth_bypass: %v", err)
+		}
+	}
+
+	if err = d.Set("radius_ip_auth_bypass", flattenFirewallPolicyRadiusIpAuthBypass(o["radius-ip-auth-bypass"], d, "radius_ip_auth_bypass", sv)); err != nil {
+		if !fortiAPIPatch(o["radius-ip-auth-bypass"]) {
+			return fmt.Errorf("Error reading radius_ip_auth_bypass: %v", err)
 		}
 	}
 
@@ -7007,6 +6975,10 @@ func expandFirewallPolicyLogtrafficStart(d *schema.ResourceData, v interface{}, 
 	return v, nil
 }
 
+func expandFirewallPolicyLogHttpTransaction(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallPolicyCapturePacket(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -7292,7 +7264,7 @@ func expandFirewallPolicyPoolname6Name(d *schema.ResourceData, v interface{}, pr
 }
 
 func expandFirewallPolicySessionTtl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
+	return convintf2i(v), nil
 }
 
 func expandFirewallPolicyVlanCosFwd(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
@@ -7480,6 +7452,8 @@ func expandFirewallPolicyDevices(d *schema.ResourceData, v interface{}, pre stri
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandFirewallPolicyDevicesName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		result = append(result, tmp)
@@ -7703,6 +7677,10 @@ func expandFirewallPolicyDsri(d *schema.ResourceData, v interface{}, pre string,
 }
 
 func expandFirewallPolicyRadiusMacAuthBypass(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallPolicyRadiusIpAuthBypass(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -8241,6 +8219,8 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["schedule"] = t
 		}
+	} else if d.HasChange("schedule") {
+		obj["schedule"] = nil
 	}
 
 	if v, ok := d.GetOk("schedule_timeout"); ok {
@@ -8714,6 +8694,15 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		}
 	}
 
+	if v, ok := d.GetOk("log_http_transaction"); ok {
+		t, err := expandFirewallPolicyLogHttpTransaction(d, v, "log_http_transaction", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["log-http-transaction"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("capture_packet"); ok {
 		t, err := expandFirewallPolicyCapturePacket(d, v, "capture_packet", sv)
 		if err != nil {
@@ -8992,14 +8981,7 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
-			new_version_map := map[string][]string{
-				">=": []string{"6.2.4"},
-			}
-			if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
-				obj["session-ttl"] = fmt.Sprintf("%v", t)
-			} else {
-				obj["session-ttl"] = t
-			}
+			obj["session-ttl"] = t
 		}
 	} else if d.HasChange("session_ttl") {
 		obj["session-ttl"] = nil
@@ -9578,6 +9560,15 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 			return &obj, err
 		} else if t != nil {
 			obj["radius-mac-auth-bypass"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("radius_ip_auth_bypass"); ok {
+		t, err := expandFirewallPolicyRadiusIpAuthBypass(d, v, "radius_ip_auth_bypass", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["radius-ip-auth-bypass"] = t
 		}
 	}
 

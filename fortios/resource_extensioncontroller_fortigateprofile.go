@@ -65,19 +65,16 @@ func resourceExtensionControllerFortigateProfile() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 						"backhaul_interface": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 						"backhaul_ip": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -247,7 +244,7 @@ func flattenExtensionControllerFortigateProfileName(v interface{}, d *schema.Res
 }
 
 func flattenExtensionControllerFortigateProfileId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenExtensionControllerFortigateProfileExtension(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {

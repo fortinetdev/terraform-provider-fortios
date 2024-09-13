@@ -231,11 +231,7 @@ func flattenUserKrbKeytabPrincipal(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenUserKrbKeytabLdapServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenUserKrbKeytabKeytab(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convmap2str(v, d.Get("ldap_server"), "name")
 }
 
 func refreshObjectUserKrbKeytab(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -259,42 +255,9 @@ func refreshObjectUserKrbKeytab(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
-	{
-		v := flattenUserKrbKeytabLdapServer(o["ldap-server"], d, "ldap_server", sv)
-		vx := ""
-		bstring := false
-		new_version_map := map[string][]string{
-			">=": []string{"6.4.10"},
-		}
-		if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
-			l := v.([]interface{})
-			if len(l) > 0 {
-				for k, r := range l {
-					i := r.(map[string]interface{})
-					if _, ok := i["name"]; ok {
-						if xv, ok := i["name"].(string); ok {
-							vx += xv
-							if k < len(l)-1 {
-								vx += ", "
-							}
-						}
-					}
-				}
-			}
-			bstring = true
-		}
-		if bstring == true {
-			if err = d.Set("ldap_server", vx); err != nil {
-				if !fortiAPIPatch(o["ldap-server"]) {
-					return fmt.Errorf("Error reading ldap_server: %v", err)
-				}
-			}
-		} else {
-			if err = d.Set("ldap_server", v); err != nil {
-				if !fortiAPIPatch(o["ldap-server"]) {
-					return fmt.Errorf("Error reading ldap_server: %v", err)
-				}
-			}
+	if err = d.Set("ldap_server", flattenUserKrbKeytabLdapServer(o["ldap-server"], d, "ldap_server", sv)); err != nil {
+		if !fortiAPIPatch(o["ldap-server"]) {
+			return fmt.Errorf("Error reading ldap_server: %v", err)
 		}
 	}
 
@@ -320,7 +283,25 @@ func expandUserKrbKeytabPrincipal(d *schema.ResourceData, v interface{}, pre str
 }
 
 func expandUserKrbKeytabLdapServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
+	new_version_map := map[string][]string{
+		">=": []string{"6.4.10"},
+	}
+	if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
+		vx := fmt.Sprintf("%v", v)
+		vxx := strings.Split(vx, ", ")
+
+		tmps := make([]map[string]interface{}, 0, len(vxx))
+
+		for _, xv := range vxx {
+			xtmp := make(map[string]interface{})
+			xtmp["name"] = xv
+
+			tmps = append(tmps, xtmp)
+		}
+		return tmps, nil
+	} else {
+		return v, nil
+	}
 }
 
 func expandUserKrbKeytabKeytab(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
@@ -355,6 +336,8 @@ func getObjectUserKrbKeytab(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["principal"] = t
 		}
+	} else if d.HasChange("principal") {
+		obj["principal"] = nil
 	}
 
 	if v, ok := d.GetOk("ldap_server"); ok {
@@ -362,26 +345,10 @@ func getObjectUserKrbKeytab(d *schema.ResourceData, sv string) (*map[string]inte
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
-			new_version_map := map[string][]string{
-				">=": []string{"6.4.10"},
-			}
-			if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
-				vx := fmt.Sprintf("%v", t)
-				vxx := strings.Split(vx, ", ")
-
-				tmps := make([]map[string]interface{}, 0, len(vxx))
-
-				for _, xv := range vxx {
-					xtmp := make(map[string]interface{})
-					xtmp["name"] = xv
-
-					tmps = append(tmps, xtmp)
-				}
-				obj["ldap-server"] = tmps
-			} else {
-				obj["ldap-server"] = t
-			}
+			obj["ldap-server"] = t
 		}
+	} else if d.HasChange("ldap_server") {
+		obj["ldap-server"] = nil
 	}
 
 	if v, ok := d.GetOk("keytab"); ok {
@@ -391,6 +358,8 @@ func getObjectUserKrbKeytab(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["keytab"] = t
 		}
+	} else if d.HasChange("keytab") {
+		obj["keytab"] = nil
 	}
 
 	return &obj, nil

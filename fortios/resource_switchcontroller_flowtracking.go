@@ -61,7 +61,6 @@ func resourceSwitchControllerFlowTracking() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"ip": &schema.Schema{
 							Type:     schema.TypeString,
@@ -72,7 +71,6 @@ func resourceSwitchControllerFlowTracking() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 						"transport": &schema.Schema{
 							Type:     schema.TypeString,
@@ -91,7 +89,6 @@ func resourceSwitchControllerFlowTracking() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"transport": &schema.Schema{
 				Type:     schema.TypeString,
@@ -165,7 +162,6 @@ func resourceSwitchControllerFlowTracking() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"ip": &schema.Schema{
 							Type:     schema.TypeString,
@@ -308,7 +304,7 @@ func flattenSwitchControllerFlowTrackingSampleMode(v interface{}, d *schema.Reso
 }
 
 func flattenSwitchControllerFlowTrackingSampleRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerFlowTrackingFormat(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -377,7 +373,7 @@ func flattenSwitchControllerFlowTrackingCollectorsIp(v interface{}, d *schema.Re
 }
 
 func flattenSwitchControllerFlowTrackingCollectorsPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerFlowTrackingCollectorsTransport(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -389,7 +385,7 @@ func flattenSwitchControllerFlowTrackingCollectorIp(v interface{}, d *schema.Res
 }
 
 func flattenSwitchControllerFlowTrackingCollectorPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerFlowTrackingTransport(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -401,39 +397,39 @@ func flattenSwitchControllerFlowTrackingLevel(v interface{}, d *schema.ResourceD
 }
 
 func flattenSwitchControllerFlowTrackingMaxExportPktSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerFlowTrackingTemplateExportPeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerFlowTrackingTimeoutGeneral(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerFlowTrackingTimeoutIcmp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerFlowTrackingTimeoutMax(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerFlowTrackingTimeoutTcp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerFlowTrackingTimeoutTcpFin(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerFlowTrackingTimeoutTcpRst(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerFlowTrackingTimeoutUdp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerFlowTrackingAggregates(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -480,7 +476,7 @@ func flattenSwitchControllerFlowTrackingAggregates(v interface{}, d *schema.Reso
 }
 
 func flattenSwitchControllerFlowTrackingAggregatesId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerFlowTrackingAggregatesIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -669,6 +665,8 @@ func expandSwitchControllerFlowTrackingCollectors(d *schema.ResourceData, v inte
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandSwitchControllerFlowTrackingCollectorsName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
@@ -679,6 +677,8 @@ func expandSwitchControllerFlowTrackingCollectors(d *schema.ResourceData, v inte
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["port"], _ = expandSwitchControllerFlowTrackingCollectorsPort(d, i["port"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["port"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "transport"
@@ -779,6 +779,8 @@ func expandSwitchControllerFlowTrackingAggregates(d *schema.ResourceData, v inte
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSwitchControllerFlowTrackingAggregatesId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
@@ -881,6 +883,8 @@ func getObjectSwitchControllerFlowTracking(d *schema.ResourceData, setArgNil boo
 				obj["collector-port"] = t
 			}
 		}
+	} else if d.HasChange("collector_port") {
+		obj["collector-port"] = nil
 	}
 
 	if v, ok := d.GetOk("transport"); ok {

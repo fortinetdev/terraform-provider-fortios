@@ -45,19 +45,16 @@ func resourceSystemAutoupdateTunneling() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"port": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"username": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 49),
 				Optional:     true,
-				Computed:     true,
 			},
 			"password": &schema.Schema{
 				Type:         schema.TypeString,
@@ -192,14 +189,10 @@ func flattenSystemAutoupdateTunnelingAddress(v interface{}, d *schema.ResourceDa
 }
 
 func flattenSystemAutoupdateTunnelingPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemAutoupdateTunnelingUsername(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenSystemAutoupdateTunnelingPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -286,6 +279,8 @@ func getObjectSystemAutoupdateTunneling(d *schema.ResourceData, setArgNil bool, 
 				obj["address"] = t
 			}
 		}
+	} else if d.HasChange("address") {
+		obj["address"] = nil
 	}
 
 	if v, ok := d.GetOkExists("port"); ok {
@@ -299,6 +294,8 @@ func getObjectSystemAutoupdateTunneling(d *schema.ResourceData, setArgNil bool, 
 				obj["port"] = t
 			}
 		}
+	} else if d.HasChange("port") {
+		obj["port"] = nil
 	}
 
 	if v, ok := d.GetOk("username"); ok {
@@ -312,6 +309,8 @@ func getObjectSystemAutoupdateTunneling(d *schema.ResourceData, setArgNil bool, 
 				obj["username"] = t
 			}
 		}
+	} else if d.HasChange("username") {
+		obj["username"] = nil
 	}
 
 	if v, ok := d.GetOk("password"); ok {
@@ -325,6 +324,8 @@ func getObjectSystemAutoupdateTunneling(d *schema.ResourceData, setArgNil bool, 
 				obj["password"] = t
 			}
 		}
+	} else if d.HasChange("password") {
+		obj["password"] = nil
 	}
 
 	return &obj, nil

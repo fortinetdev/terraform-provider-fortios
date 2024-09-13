@@ -47,7 +47,6 @@ func resourceSwitchControllerPtpProfile() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"mode": &schema.Schema{
 				Type:     schema.TypeString,
@@ -251,7 +250,7 @@ func flattenSwitchControllerPtpProfileTransport(v interface{}, d *schema.Resourc
 }
 
 func flattenSwitchControllerPtpProfileDomain(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerPtpProfilePdelayReqInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -359,6 +358,8 @@ func getObjectSwitchControllerPtpProfile(d *schema.ResourceData, sv string) (*ma
 		} else if t != nil {
 			obj["description"] = t
 		}
+	} else if d.HasChange("description") {
+		obj["description"] = nil
 	}
 
 	if v, ok := d.GetOk("mode"); ok {

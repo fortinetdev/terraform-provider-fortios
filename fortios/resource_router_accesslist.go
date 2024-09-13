@@ -46,7 +46,6 @@ func resourceRouterAccessList() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
-				Computed:     true,
 			},
 			"rule": &schema.Schema{
 				Type:     schema.TypeList,
@@ -56,7 +55,6 @@ func resourceRouterAccessList() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"action": &schema.Schema{
 							Type:     schema.TypeString,
@@ -66,12 +64,10 @@ func resourceRouterAccessList() *schema.Resource {
 						"prefix": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"wildcard": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"exact_match": &schema.Schema{
 							Type:     schema.TypeString,
@@ -323,7 +319,7 @@ func flattenRouterAccessListRule(v interface{}, d *schema.ResourceData, pre stri
 }
 
 func flattenRouterAccessListRuleId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterAccessListRuleAction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -343,7 +339,7 @@ func flattenRouterAccessListRuleExactMatch(v interface{}, d *schema.ResourceData
 }
 
 func flattenRouterAccessListRuleFlags(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectRouterAccessList(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -417,6 +413,8 @@ func expandRouterAccessListRule(d *schema.ResourceData, v interface{}, pre strin
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandRouterAccessListRuleId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
@@ -427,11 +425,15 @@ func expandRouterAccessListRule(d *schema.ResourceData, v interface{}, pre strin
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["prefix"], _ = expandRouterAccessListRulePrefix(d, i["prefix"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["prefix"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "wildcard"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["wildcard"], _ = expandRouterAccessListRuleWildcard(d, i["wildcard"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["wildcard"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "exact_match"
@@ -495,6 +497,8 @@ func getObjectRouterAccessList(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["comments"] = t
 		}
+	} else if d.HasChange("comments") {
+		obj["comments"] = nil
 	}
 
 	if v, ok := d.GetOk("rule"); ok || d.HasChange("rule") {

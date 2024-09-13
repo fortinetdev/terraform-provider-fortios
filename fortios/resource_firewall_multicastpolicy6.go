@@ -56,7 +56,6 @@ func resourceFirewallMulticastPolicy6() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"logtraffic": &schema.Schema{
 				Type:     schema.TypeString,
@@ -82,7 +81,6 @@ func resourceFirewallMulticastPolicy6() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -96,7 +94,6 @@ func resourceFirewallMulticastPolicy6() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -110,7 +107,6 @@ func resourceFirewallMulticastPolicy6() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"start_port": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -133,7 +129,6 @@ func resourceFirewallMulticastPolicy6() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"auto_asic_offload": &schema.Schema{
 				Type:     schema.TypeString,
@@ -311,7 +306,7 @@ func resourceFirewallMulticastPolicy6Read(d *schema.ResourceData, m interface{})
 }
 
 func flattenFirewallMulticastPolicy6Id(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallMulticastPolicy6Uuid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -427,15 +422,15 @@ func flattenFirewallMulticastPolicy6Action(v interface{}, d *schema.ResourceData
 }
 
 func flattenFirewallMulticastPolicy6Protocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallMulticastPolicy6StartPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallMulticastPolicy6EndPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallMulticastPolicy6UtmStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -747,6 +742,8 @@ func getObjectFirewallMulticastPolicy6(d *schema.ResourceData, sv string) (*map[
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("logtraffic"); ok {
@@ -765,6 +762,8 @@ func getObjectFirewallMulticastPolicy6(d *schema.ResourceData, sv string) (*map[
 		} else if t != nil {
 			obj["srcintf"] = t
 		}
+	} else if d.HasChange("srcintf") {
+		obj["srcintf"] = nil
 	}
 
 	if v, ok := d.GetOk("dstintf"); ok {
@@ -774,6 +773,8 @@ func getObjectFirewallMulticastPolicy6(d *schema.ResourceData, sv string) (*map[
 		} else if t != nil {
 			obj["dstintf"] = t
 		}
+	} else if d.HasChange("dstintf") {
+		obj["dstintf"] = nil
 	}
 
 	if v, ok := d.GetOk("srcaddr"); ok || d.HasChange("srcaddr") {
@@ -810,6 +811,8 @@ func getObjectFirewallMulticastPolicy6(d *schema.ResourceData, sv string) (*map[
 		} else if t != nil {
 			obj["protocol"] = t
 		}
+	} else if d.HasChange("protocol") {
+		obj["protocol"] = nil
 	}
 
 	if v, ok := d.GetOkExists("start_port"); ok {
@@ -846,6 +849,8 @@ func getObjectFirewallMulticastPolicy6(d *schema.ResourceData, sv string) (*map[
 		} else if t != nil {
 			obj["ips-sensor"] = t
 		}
+	} else if d.HasChange("ips_sensor") {
+		obj["ips-sensor"] = nil
 	}
 
 	if v, ok := d.GetOk("auto_asic_offload"); ok {
@@ -864,6 +869,8 @@ func getObjectFirewallMulticastPolicy6(d *schema.ResourceData, sv string) (*map[
 		} else if t != nil {
 			obj["comments"] = t
 		}
+	} else if d.HasChange("comments") {
+		obj["comments"] = nil
 	}
 
 	return &obj, nil

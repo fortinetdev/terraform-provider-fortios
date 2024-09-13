@@ -60,7 +60,6 @@ func resourceLogFortianalyzerCloudSetting() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -69,7 +68,6 @@ func resourceLogFortianalyzerCloudSetting() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"access_config": &schema.Schema{
 				Type:     schema.TypeString,
@@ -113,13 +111,11 @@ func resourceLogFortianalyzerCloudSetting() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"source_ip": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"upload_option": &schema.Schema{
 				Type:     schema.TypeString,
@@ -134,12 +130,10 @@ func resourceLogFortianalyzerCloudSetting() *schema.Resource {
 			"upload_day": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"upload_time": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"priority": &schema.Schema{
 				Type:     schema.TypeString,
@@ -150,7 +144,6 @@ func resourceLogFortianalyzerCloudSetting() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 100000),
 				Optional:     true,
-				Computed:     true,
 			},
 			"interface_select_method": &schema.Schema{
 				Type:     schema.TypeString,
@@ -161,7 +154,6 @@ func resourceLogFortianalyzerCloudSetting() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
@@ -366,15 +358,15 @@ func flattenLogFortianalyzerCloudSettingSslMinProtoVersion(v interface{}, d *sch
 }
 
 func flattenLogFortianalyzerCloudSettingConnTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenLogFortianalyzerCloudSettingMonitorKeepalivePeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenLogFortianalyzerCloudSettingMonitorFailureRetryPeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenLogFortianalyzerCloudSettingCertificate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -406,7 +398,7 @@ func flattenLogFortianalyzerCloudSettingPriority(v interface{}, d *schema.Resour
 }
 
 func flattenLogFortianalyzerCloudSettingMaxLogRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenLogFortianalyzerCloudSettingInterfaceSelectMethod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -755,6 +747,8 @@ func getObjectLogFortianalyzerCloudSetting(d *schema.ResourceData, setArgNil boo
 				obj["preshared-key"] = t
 			}
 		}
+	} else if d.HasChange("preshared_key") {
+		obj["preshared-key"] = nil
 	}
 
 	if v, ok := d.GetOk("access_config"); ok {
@@ -859,6 +853,8 @@ func getObjectLogFortianalyzerCloudSetting(d *schema.ResourceData, setArgNil boo
 				obj["certificate"] = t
 			}
 		}
+	} else if d.HasChange("certificate") {
+		obj["certificate"] = nil
 	}
 
 	if v, ok := d.GetOk("source_ip"); ok {
@@ -872,6 +868,8 @@ func getObjectLogFortianalyzerCloudSetting(d *schema.ResourceData, setArgNil boo
 				obj["source-ip"] = t
 			}
 		}
+	} else if d.HasChange("source_ip") {
+		obj["source-ip"] = nil
 	}
 
 	if v, ok := d.GetOk("upload_option"); ok {
@@ -911,6 +909,8 @@ func getObjectLogFortianalyzerCloudSetting(d *schema.ResourceData, setArgNil boo
 				obj["upload-day"] = t
 			}
 		}
+	} else if d.HasChange("upload_day") {
+		obj["upload-day"] = nil
 	}
 
 	if v, ok := d.GetOk("upload_time"); ok {
@@ -924,6 +924,8 @@ func getObjectLogFortianalyzerCloudSetting(d *schema.ResourceData, setArgNil boo
 				obj["upload-time"] = t
 			}
 		}
+	} else if d.HasChange("upload_time") {
+		obj["upload-time"] = nil
 	}
 
 	if v, ok := d.GetOk("priority"); ok {
@@ -950,6 +952,8 @@ func getObjectLogFortianalyzerCloudSetting(d *schema.ResourceData, setArgNil boo
 				obj["max-log-rate"] = t
 			}
 		}
+	} else if d.HasChange("max_log_rate") {
+		obj["max-log-rate"] = nil
 	}
 
 	if v, ok := d.GetOk("interface_select_method"); ok {
@@ -976,6 +980,8 @@ func getObjectLogFortianalyzerCloudSetting(d *schema.ResourceData, setArgNil boo
 				obj["interface"] = t
 			}
 		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
 	}
 
 	return &obj, nil

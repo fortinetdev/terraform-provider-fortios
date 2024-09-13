@@ -40,133 +40,113 @@ func resourceRouterSetting() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"hostname": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 14),
+				Optional:     true,
+			},
+			"kernel_route_distance": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 255),
 				Optional:     true,
 				Computed:     true,
 			},
 			"ospf_debug_lsa_flags": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"ospf_debug_nfsm_flags": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"ospf_debug_packet_flags": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"ospf_debug_events_flags": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"ospf_debug_route_flags": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"ospf_debug_ifsm_flags": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"ospf_debug_nsm_flags": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"rip_debug_flags": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"bgp_debug_flags": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"igmp_debug_flags": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"pimdm_debug_flags": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"pimsm_debug_simple_flags": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"pimsm_debug_timer_flags": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"pimsm_debug_joinprune_flags": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"imi_debug_flags": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"isis_debug_flags": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"ospf6_debug_lsa_flags": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"ospf6_debug_nfsm_flags": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"ospf6_debug_packet_flags": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"ospf6_debug_events_flags": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"ospf6_debug_route_flags": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"ospf6_debug_ifsm_flags": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"ospf6_debug_nsm_flags": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"ripng_debug_flags": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 		},
 	}
@@ -294,6 +274,10 @@ func flattenRouterSettingHostname(v interface{}, d *schema.ResourceData, pre str
 	return v
 }
 
+func flattenRouterSettingKernelRouteDistance(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
 func flattenRouterSettingOspfDebugLsaFlags(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -402,6 +386,12 @@ func refreshObjectRouterSetting(d *schema.ResourceData, o map[string]interface{}
 	if err = d.Set("hostname", flattenRouterSettingHostname(o["hostname"], d, "hostname", sv)); err != nil {
 		if !fortiAPIPatch(o["hostname"]) {
 			return fmt.Errorf("Error reading hostname: %v", err)
+		}
+	}
+
+	if err = d.Set("kernel_route_distance", flattenRouterSettingKernelRouteDistance(o["kernel-route-distance"], d, "kernel_route_distance", sv)); err != nil {
+		if !fortiAPIPatch(o["kernel-route-distance"]) {
+			return fmt.Errorf("Error reading kernel_route_distance: %v", err)
 		}
 	}
 
@@ -566,6 +556,10 @@ func expandRouterSettingHostname(d *schema.ResourceData, v interface{}, pre stri
 	return v, nil
 }
 
+func expandRouterSettingKernelRouteDistance(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandRouterSettingOspfDebugLsaFlags(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -676,6 +670,8 @@ func getObjectRouterSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 				obj["show-filter"] = t
 			}
 		}
+	} else if d.HasChange("show_filter") {
+		obj["show-filter"] = nil
 	}
 
 	if v, ok := d.GetOk("hostname"); ok {
@@ -687,6 +683,21 @@ func getObjectRouterSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 				return &obj, err
 			} else if t != nil {
 				obj["hostname"] = t
+			}
+		}
+	} else if d.HasChange("hostname") {
+		obj["hostname"] = nil
+	}
+
+	if v, ok := d.GetOkExists("kernel_route_distance"); ok {
+		if setArgNil {
+			obj["kernel-route-distance"] = nil
+		} else {
+			t, err := expandRouterSettingKernelRouteDistance(d, v, "kernel_route_distance", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["kernel-route-distance"] = t
 			}
 		}
 	}
@@ -702,6 +713,8 @@ func getObjectRouterSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 				obj["ospf_debug_lsa_flags"] = t
 			}
 		}
+	} else if d.HasChange("ospf_debug_lsa_flags") {
+		obj["ospf_debug_lsa_flags"] = nil
 	}
 
 	if v, ok := d.GetOk("ospf_debug_nfsm_flags"); ok {
@@ -715,6 +728,8 @@ func getObjectRouterSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 				obj["ospf_debug_nfsm_flags"] = t
 			}
 		}
+	} else if d.HasChange("ospf_debug_nfsm_flags") {
+		obj["ospf_debug_nfsm_flags"] = nil
 	}
 
 	if v, ok := d.GetOk("ospf_debug_packet_flags"); ok {
@@ -728,6 +743,8 @@ func getObjectRouterSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 				obj["ospf_debug_packet_flags"] = t
 			}
 		}
+	} else if d.HasChange("ospf_debug_packet_flags") {
+		obj["ospf_debug_packet_flags"] = nil
 	}
 
 	if v, ok := d.GetOk("ospf_debug_events_flags"); ok {
@@ -741,6 +758,8 @@ func getObjectRouterSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 				obj["ospf_debug_events_flags"] = t
 			}
 		}
+	} else if d.HasChange("ospf_debug_events_flags") {
+		obj["ospf_debug_events_flags"] = nil
 	}
 
 	if v, ok := d.GetOk("ospf_debug_route_flags"); ok {
@@ -754,6 +773,8 @@ func getObjectRouterSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 				obj["ospf_debug_route_flags"] = t
 			}
 		}
+	} else if d.HasChange("ospf_debug_route_flags") {
+		obj["ospf_debug_route_flags"] = nil
 	}
 
 	if v, ok := d.GetOk("ospf_debug_ifsm_flags"); ok {
@@ -767,6 +788,8 @@ func getObjectRouterSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 				obj["ospf_debug_ifsm_flags"] = t
 			}
 		}
+	} else if d.HasChange("ospf_debug_ifsm_flags") {
+		obj["ospf_debug_ifsm_flags"] = nil
 	}
 
 	if v, ok := d.GetOk("ospf_debug_nsm_flags"); ok {
@@ -780,6 +803,8 @@ func getObjectRouterSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 				obj["ospf_debug_nsm_flags"] = t
 			}
 		}
+	} else if d.HasChange("ospf_debug_nsm_flags") {
+		obj["ospf_debug_nsm_flags"] = nil
 	}
 
 	if v, ok := d.GetOk("rip_debug_flags"); ok {
@@ -793,6 +818,8 @@ func getObjectRouterSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 				obj["rip_debug_flags"] = t
 			}
 		}
+	} else if d.HasChange("rip_debug_flags") {
+		obj["rip_debug_flags"] = nil
 	}
 
 	if v, ok := d.GetOk("bgp_debug_flags"); ok {
@@ -806,6 +833,8 @@ func getObjectRouterSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 				obj["bgp_debug_flags"] = t
 			}
 		}
+	} else if d.HasChange("bgp_debug_flags") {
+		obj["bgp_debug_flags"] = nil
 	}
 
 	if v, ok := d.GetOk("igmp_debug_flags"); ok {
@@ -819,6 +848,8 @@ func getObjectRouterSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 				obj["igmp_debug_flags"] = t
 			}
 		}
+	} else if d.HasChange("igmp_debug_flags") {
+		obj["igmp_debug_flags"] = nil
 	}
 
 	if v, ok := d.GetOk("pimdm_debug_flags"); ok {
@@ -832,6 +863,8 @@ func getObjectRouterSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 				obj["pimdm_debug_flags"] = t
 			}
 		}
+	} else if d.HasChange("pimdm_debug_flags") {
+		obj["pimdm_debug_flags"] = nil
 	}
 
 	if v, ok := d.GetOk("pimsm_debug_simple_flags"); ok {
@@ -845,6 +878,8 @@ func getObjectRouterSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 				obj["pimsm_debug_simple_flags"] = t
 			}
 		}
+	} else if d.HasChange("pimsm_debug_simple_flags") {
+		obj["pimsm_debug_simple_flags"] = nil
 	}
 
 	if v, ok := d.GetOk("pimsm_debug_timer_flags"); ok {
@@ -858,6 +893,8 @@ func getObjectRouterSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 				obj["pimsm_debug_timer_flags"] = t
 			}
 		}
+	} else if d.HasChange("pimsm_debug_timer_flags") {
+		obj["pimsm_debug_timer_flags"] = nil
 	}
 
 	if v, ok := d.GetOk("pimsm_debug_joinprune_flags"); ok {
@@ -871,6 +908,8 @@ func getObjectRouterSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 				obj["pimsm_debug_joinprune_flags"] = t
 			}
 		}
+	} else if d.HasChange("pimsm_debug_joinprune_flags") {
+		obj["pimsm_debug_joinprune_flags"] = nil
 	}
 
 	if v, ok := d.GetOk("imi_debug_flags"); ok {
@@ -884,6 +923,8 @@ func getObjectRouterSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 				obj["imi_debug_flags"] = t
 			}
 		}
+	} else if d.HasChange("imi_debug_flags") {
+		obj["imi_debug_flags"] = nil
 	}
 
 	if v, ok := d.GetOk("isis_debug_flags"); ok {
@@ -897,6 +938,8 @@ func getObjectRouterSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 				obj["isis_debug_flags"] = t
 			}
 		}
+	} else if d.HasChange("isis_debug_flags") {
+		obj["isis_debug_flags"] = nil
 	}
 
 	if v, ok := d.GetOk("ospf6_debug_lsa_flags"); ok {
@@ -910,6 +953,8 @@ func getObjectRouterSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 				obj["ospf6_debug_lsa_flags"] = t
 			}
 		}
+	} else if d.HasChange("ospf6_debug_lsa_flags") {
+		obj["ospf6_debug_lsa_flags"] = nil
 	}
 
 	if v, ok := d.GetOk("ospf6_debug_nfsm_flags"); ok {
@@ -923,6 +968,8 @@ func getObjectRouterSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 				obj["ospf6_debug_nfsm_flags"] = t
 			}
 		}
+	} else if d.HasChange("ospf6_debug_nfsm_flags") {
+		obj["ospf6_debug_nfsm_flags"] = nil
 	}
 
 	if v, ok := d.GetOk("ospf6_debug_packet_flags"); ok {
@@ -936,6 +983,8 @@ func getObjectRouterSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 				obj["ospf6_debug_packet_flags"] = t
 			}
 		}
+	} else if d.HasChange("ospf6_debug_packet_flags") {
+		obj["ospf6_debug_packet_flags"] = nil
 	}
 
 	if v, ok := d.GetOk("ospf6_debug_events_flags"); ok {
@@ -949,6 +998,8 @@ func getObjectRouterSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 				obj["ospf6_debug_events_flags"] = t
 			}
 		}
+	} else if d.HasChange("ospf6_debug_events_flags") {
+		obj["ospf6_debug_events_flags"] = nil
 	}
 
 	if v, ok := d.GetOk("ospf6_debug_route_flags"); ok {
@@ -962,6 +1013,8 @@ func getObjectRouterSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 				obj["ospf6_debug_route_flags"] = t
 			}
 		}
+	} else if d.HasChange("ospf6_debug_route_flags") {
+		obj["ospf6_debug_route_flags"] = nil
 	}
 
 	if v, ok := d.GetOk("ospf6_debug_ifsm_flags"); ok {
@@ -975,6 +1028,8 @@ func getObjectRouterSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 				obj["ospf6_debug_ifsm_flags"] = t
 			}
 		}
+	} else if d.HasChange("ospf6_debug_ifsm_flags") {
+		obj["ospf6_debug_ifsm_flags"] = nil
 	}
 
 	if v, ok := d.GetOk("ospf6_debug_nsm_flags"); ok {
@@ -988,6 +1043,8 @@ func getObjectRouterSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 				obj["ospf6_debug_nsm_flags"] = t
 			}
 		}
+	} else if d.HasChange("ospf6_debug_nsm_flags") {
+		obj["ospf6_debug_nsm_flags"] = nil
 	}
 
 	if v, ok := d.GetOk("ripng_debug_flags"); ok {
@@ -1001,6 +1058,8 @@ func getObjectRouterSetting(d *schema.ResourceData, setArgNil bool, sv string) (
 				obj["ripng_debug_flags"] = t
 			}
 		}
+	} else if d.HasChange("ripng_debug_flags") {
+		obj["ripng_debug_flags"] = nil
 	}
 
 	return &obj, nil

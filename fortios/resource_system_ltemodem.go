@@ -45,7 +45,6 @@ func resourceSystemLteModem() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
-				Computed:     true,
 			},
 			"authtype": &schema.Schema{
 				Type:     schema.TypeString,
@@ -56,18 +55,17 @@ func resourceSystemLteModem() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"passwd": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"apn": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
-				Computed:     true,
 			},
 			"modem_port": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -90,7 +88,6 @@ func resourceSystemLteModem() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -226,16 +223,12 @@ func flattenSystemLteModemUsername(v interface{}, d *schema.ResourceData, pre st
 	return v
 }
 
-func flattenSystemLteModemPasswd(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
 func flattenSystemLteModemApn(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
 func flattenSystemLteModemModemPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemLteModemMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -243,7 +236,7 @@ func flattenSystemLteModemMode(v interface{}, d *schema.ResourceData, pre string
 }
 
 func flattenSystemLteModemHolddownTimer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemLteModemInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -274,12 +267,6 @@ func refreshObjectSystemLteModem(d *schema.ResourceData, o map[string]interface{
 	if err = d.Set("username", flattenSystemLteModemUsername(o["username"], d, "username", sv)); err != nil {
 		if !fortiAPIPatch(o["username"]) {
 			return fmt.Errorf("Error reading username: %v", err)
-		}
-	}
-
-	if err = d.Set("passwd", flattenSystemLteModemPasswd(o["passwd"], d, "passwd", sv)); err != nil {
-		if !fortiAPIPatch(o["passwd"]) {
-			return fmt.Errorf("Error reading passwd: %v", err)
 		}
 	}
 
@@ -389,6 +376,8 @@ func getObjectSystemLteModem(d *schema.ResourceData, setArgNil bool, sv string) 
 				obj["extra-init"] = t
 			}
 		}
+	} else if d.HasChange("extra_init") {
+		obj["extra-init"] = nil
 	}
 
 	if v, ok := d.GetOk("authtype"); ok {
@@ -415,6 +404,8 @@ func getObjectSystemLteModem(d *schema.ResourceData, setArgNil bool, sv string) 
 				obj["username"] = t
 			}
 		}
+	} else if d.HasChange("username") {
+		obj["username"] = nil
 	}
 
 	if v, ok := d.GetOk("passwd"); ok {
@@ -428,6 +419,8 @@ func getObjectSystemLteModem(d *schema.ResourceData, setArgNil bool, sv string) 
 				obj["passwd"] = t
 			}
 		}
+	} else if d.HasChange("passwd") {
+		obj["passwd"] = nil
 	}
 
 	if v, ok := d.GetOk("apn"); ok {
@@ -441,6 +434,8 @@ func getObjectSystemLteModem(d *schema.ResourceData, setArgNil bool, sv string) 
 				obj["apn"] = t
 			}
 		}
+	} else if d.HasChange("apn") {
+		obj["apn"] = nil
 	}
 
 	if v, ok := d.GetOkExists("modem_port"); ok {
@@ -493,6 +488,8 @@ func getObjectSystemLteModem(d *schema.ResourceData, setArgNil bool, sv string) 
 				obj["interface"] = t
 			}
 		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
 	}
 
 	return &obj, nil

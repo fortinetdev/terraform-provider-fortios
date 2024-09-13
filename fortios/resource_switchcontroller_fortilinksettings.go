@@ -47,7 +47,6 @@ func resourceSwitchControllerFortilinkSettings() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"inactive_timer": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -76,7 +75,6 @@ func resourceSwitchControllerFortilinkSettings() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 						"bounce_nac_port": &schema.Schema{
 							Type:     schema.TypeString,
@@ -92,7 +90,6 @@ func resourceSwitchControllerFortilinkSettings() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 						"nac_segment_vlans": &schema.Schema{
 							Type:     schema.TypeSet,
@@ -103,7 +100,6 @@ func resourceSwitchControllerFortilinkSettings() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -112,13 +108,11 @@ func resourceSwitchControllerFortilinkSettings() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"member_change": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -292,7 +286,7 @@ func flattenSwitchControllerFortilinkSettingsFortilink(v interface{}, d *schema.
 }
 
 func flattenSwitchControllerFortilinkSettingsInactiveTimer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerFortilinkSettingsLinkDownFlush(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -414,7 +408,7 @@ func flattenSwitchControllerFortilinkSettingsNacPortsParentKey(v interface{}, d 
 }
 
 func flattenSwitchControllerFortilinkSettingsNacPortsMemberChange(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectSwitchControllerFortilinkSettings(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -616,6 +610,8 @@ func getObjectSwitchControllerFortilinkSettings(d *schema.ResourceData, sv strin
 		} else if t != nil {
 			obj["fortilink"] = t
 		}
+	} else if d.HasChange("fortilink") {
+		obj["fortilink"] = nil
 	}
 
 	if v, ok := d.GetOk("inactive_timer"); ok {

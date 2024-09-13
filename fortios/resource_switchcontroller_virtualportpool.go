@@ -47,7 +47,6 @@ func resourceSwitchControllerVirtualPortPool() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -263,6 +262,8 @@ func getObjectSwitchControllerVirtualPortPool(d *schema.ResourceData, sv string)
 		} else if t != nil {
 			obj["description"] = t
 		}
+	} else if d.HasChange("description") {
+		obj["description"] = nil
 	}
 
 	return &obj, nil

@@ -40,13 +40,11 @@ func resourceAuthenticationSetting() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"sso_auth_scheme": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"update_time": &schema.Schema{
 				Type:     schema.TypeString,
@@ -94,13 +92,11 @@ func resourceAuthenticationSetting() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"captive_portal6": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"cert_auth": &schema.Schema{
 				Type:     schema.TypeString,
@@ -111,7 +107,6 @@ func resourceAuthenticationSetting() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"cert_captive_portal_ip": &schema.Schema{
 				Type:     schema.TypeString,
@@ -150,7 +145,6 @@ func resourceAuthenticationSetting() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -164,7 +158,6 @@ func resourceAuthenticationSetting() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -318,11 +311,11 @@ func flattenAuthenticationSettingIpAuthCookie(v interface{}, d *schema.ResourceD
 }
 
 func flattenAuthenticationSettingCookieMaxAge(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenAuthenticationSettingCookieRefreshDiv(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenAuthenticationSettingCaptivePortalType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -358,11 +351,11 @@ func flattenAuthenticationSettingCertCaptivePortalIp(v interface{}, d *schema.Re
 }
 
 func flattenAuthenticationSettingCertCaptivePortalPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenAuthenticationSettingCaptivePortalPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenAuthenticationSettingAuthHttps(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -370,7 +363,7 @@ func flattenAuthenticationSettingAuthHttps(v interface{}, d *schema.ResourceData
 }
 
 func flattenAuthenticationSettingCaptivePortalSslPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenAuthenticationSettingUserCertCa(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -767,6 +760,8 @@ func getObjectAuthenticationSetting(d *schema.ResourceData, setArgNil bool, sv s
 				obj["active-auth-scheme"] = t
 			}
 		}
+	} else if d.HasChange("active_auth_scheme") {
+		obj["active-auth-scheme"] = nil
 	}
 
 	if v, ok := d.GetOk("sso_auth_scheme"); ok {
@@ -780,6 +775,8 @@ func getObjectAuthenticationSetting(d *schema.ResourceData, setArgNil bool, sv s
 				obj["sso-auth-scheme"] = t
 			}
 		}
+	} else if d.HasChange("sso_auth_scheme") {
+		obj["sso-auth-scheme"] = nil
 	}
 
 	if v, ok := d.GetOk("update_time"); ok {
@@ -897,6 +894,8 @@ func getObjectAuthenticationSetting(d *schema.ResourceData, setArgNil bool, sv s
 				obj["captive-portal"] = t
 			}
 		}
+	} else if d.HasChange("captive_portal") {
+		obj["captive-portal"] = nil
 	}
 
 	if v, ok := d.GetOk("captive_portal6"); ok {
@@ -910,6 +909,8 @@ func getObjectAuthenticationSetting(d *schema.ResourceData, setArgNil bool, sv s
 				obj["captive-portal6"] = t
 			}
 		}
+	} else if d.HasChange("captive_portal6") {
+		obj["captive-portal6"] = nil
 	}
 
 	if v, ok := d.GetOk("cert_auth"); ok {
@@ -936,6 +937,8 @@ func getObjectAuthenticationSetting(d *schema.ResourceData, setArgNil bool, sv s
 				obj["cert-captive-portal"] = t
 			}
 		}
+	} else if d.HasChange("cert_captive_portal") {
+		obj["cert-captive-portal"] = nil
 	}
 
 	if v, ok := d.GetOk("cert_captive_portal_ip"); ok {

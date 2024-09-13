@@ -88,12 +88,10 @@ func resourceWebProxyGlobal() *schema.Resource {
 			"tunnel_non_http": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"unknown_http_version": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"forward_server_affinity_timeout": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -111,7 +109,6 @@ func resourceWebProxyGlobal() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"learn_client_ip": &schema.Schema{
 				Type:     schema.TypeString,
@@ -126,7 +123,6 @@ func resourceWebProxyGlobal() *schema.Resource {
 			"learn_client_ip_from_header": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"learn_client_ip_srcaddr": &schema.Schema{
 				Type:     schema.TypeSet,
@@ -137,7 +133,6 @@ func resourceWebProxyGlobal() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -151,7 +146,6 @@ func resourceWebProxyGlobal() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -159,12 +153,10 @@ func resourceWebProxyGlobal() *schema.Resource {
 			"src_affinity_exempt_addr": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"src_affinity_exempt_addr6": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"policy_category_deep_inspect": &schema.Schema{
 				Type:     schema.TypeString,
@@ -340,11 +332,11 @@ func flattenWebProxyGlobalProxyFqdn(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenWebProxyGlobalMaxRequestLength(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWebProxyGlobalMaxMessageLength(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWebProxyGlobalStrictWebCheck(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -364,11 +356,11 @@ func flattenWebProxyGlobalUnknownHttpVersion(v interface{}, d *schema.ResourceDa
 }
 
 func flattenWebProxyGlobalForwardServerAffinityTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWebProxyGlobalMaxWafBodyCacheLength(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWebProxyGlobalWebproxyProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -976,6 +968,8 @@ func getObjectWebProxyGlobal(d *schema.ResourceData, setArgNil bool, sv string) 
 				obj["tunnel-non-http"] = t
 			}
 		}
+	} else if d.HasChange("tunnel_non_http") {
+		obj["tunnel-non-http"] = nil
 	}
 
 	if v, ok := d.GetOk("unknown_http_version"); ok {
@@ -989,6 +983,8 @@ func getObjectWebProxyGlobal(d *schema.ResourceData, setArgNil bool, sv string) 
 				obj["unknown-http-version"] = t
 			}
 		}
+	} else if d.HasChange("unknown_http_version") {
+		obj["unknown-http-version"] = nil
 	}
 
 	if v, ok := d.GetOk("forward_server_affinity_timeout"); ok {
@@ -1028,6 +1024,8 @@ func getObjectWebProxyGlobal(d *schema.ResourceData, setArgNil bool, sv string) 
 				obj["webproxy-profile"] = t
 			}
 		}
+	} else if d.HasChange("webproxy_profile") {
+		obj["webproxy-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("learn_client_ip"); ok {
@@ -1067,6 +1065,8 @@ func getObjectWebProxyGlobal(d *schema.ResourceData, setArgNil bool, sv string) 
 				obj["learn-client-ip-from-header"] = t
 			}
 		}
+	} else if d.HasChange("learn_client_ip_from_header") {
+		obj["learn-client-ip-from-header"] = nil
 	}
 
 	if v, ok := d.GetOk("learn_client_ip_srcaddr"); ok || d.HasChange("learn_client_ip_srcaddr") {
@@ -1106,6 +1106,8 @@ func getObjectWebProxyGlobal(d *schema.ResourceData, setArgNil bool, sv string) 
 				obj["src-affinity-exempt-addr"] = t
 			}
 		}
+	} else if d.HasChange("src_affinity_exempt_addr") {
+		obj["src-affinity-exempt-addr"] = nil
 	}
 
 	if v, ok := d.GetOk("src_affinity_exempt_addr6"); ok {
@@ -1119,6 +1121,8 @@ func getObjectWebProxyGlobal(d *schema.ResourceData, setArgNil bool, sv string) 
 				obj["src-affinity-exempt-addr6"] = t
 			}
 		}
+	} else if d.HasChange("src_affinity_exempt_addr6") {
+		obj["src-affinity-exempt-addr6"] = nil
 	}
 
 	if v, ok := d.GetOk("policy_category_deep_inspect"); ok {

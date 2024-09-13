@@ -47,25 +47,21 @@ func resourceVpnCertificateOcspServer() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
-				Computed:     true,
 			},
 			"cert": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
-				Computed:     true,
 			},
 			"secondary_url": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
-				Computed:     true,
 			},
 			"secondary_cert": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
-				Computed:     true,
 			},
 			"unavail_action": &schema.Schema{
 				Type:     schema.TypeString,
@@ -361,6 +357,8 @@ func getObjectVpnCertificateOcspServer(d *schema.ResourceData, sv string) (*map[
 		} else if t != nil {
 			obj["url"] = t
 		}
+	} else if d.HasChange("url") {
+		obj["url"] = nil
 	}
 
 	if v, ok := d.GetOk("cert"); ok {
@@ -370,6 +368,8 @@ func getObjectVpnCertificateOcspServer(d *schema.ResourceData, sv string) (*map[
 		} else if t != nil {
 			obj["cert"] = t
 		}
+	} else if d.HasChange("cert") {
+		obj["cert"] = nil
 	}
 
 	if v, ok := d.GetOk("secondary_url"); ok {
@@ -379,6 +379,8 @@ func getObjectVpnCertificateOcspServer(d *schema.ResourceData, sv string) (*map[
 		} else if t != nil {
 			obj["secondary-url"] = t
 		}
+	} else if d.HasChange("secondary_url") {
+		obj["secondary-url"] = nil
 	}
 
 	if v, ok := d.GetOk("secondary_cert"); ok {
@@ -388,6 +390,8 @@ func getObjectVpnCertificateOcspServer(d *schema.ResourceData, sv string) (*map[
 		} else if t != nil {
 			obj["secondary-cert"] = t
 		}
+	} else if d.HasChange("secondary_cert") {
+		obj["secondary-cert"] = nil
 	}
 
 	if v, ok := d.GetOk("unavail_action"); ok {

@@ -280,6 +280,8 @@ func getObjectRouterAuthPath(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["device"] = t
 		}
+	} else if d.HasChange("device") {
+		obj["device"] = nil
 	}
 
 	if v, ok := d.GetOk("gateway"); ok {

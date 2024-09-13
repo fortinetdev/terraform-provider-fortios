@@ -68,7 +68,6 @@ func resourceSystemApiUser() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -77,13 +76,11 @@ func resourceSystemApiUser() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"cors_allow_origin": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 269),
 				Optional:     true,
-				Computed:     true,
 			},
 			"peer_auth": &schema.Schema{
 				Type:     schema.TypeString,
@@ -94,7 +91,6 @@ func resourceSystemApiUser() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"trusthost": &schema.Schema{
 				Type:     schema.TypeList,
@@ -104,7 +100,6 @@ func resourceSystemApiUser() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"type": &schema.Schema{
 							Type:     schema.TypeString,
@@ -297,10 +292,6 @@ func flattenSystemApiUserComments(v interface{}, d *schema.ResourceData, pre str
 	return v
 }
 
-func flattenSystemApiUserApiKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
 func flattenSystemApiUserAccprofile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -417,7 +408,7 @@ func flattenSystemApiUserTrusthost(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenSystemApiUserTrusthostId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemApiUserTrusthostType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -608,6 +599,8 @@ func expandSystemApiUserTrusthost(d *schema.ResourceData, v interface{}, pre str
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSystemApiUserTrusthostId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
@@ -668,6 +661,8 @@ func getObjectSystemApiUser(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["comments"] = t
 		}
+	} else if d.HasChange("comments") {
+		obj["comments"] = nil
 	}
 
 	if v, ok := d.GetOk("api_key"); ok {
@@ -677,6 +672,8 @@ func getObjectSystemApiUser(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["api-key"] = t
 		}
+	} else if d.HasChange("api_key") {
+		obj["api-key"] = nil
 	}
 
 	if v, ok := d.GetOk("accprofile"); ok {
@@ -686,6 +683,8 @@ func getObjectSystemApiUser(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["accprofile"] = t
 		}
+	} else if d.HasChange("accprofile") {
+		obj["accprofile"] = nil
 	}
 
 	if v, ok := d.GetOk("vdom"); ok || d.HasChange("vdom") {
@@ -704,6 +703,8 @@ func getObjectSystemApiUser(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["schedule"] = t
 		}
+	} else if d.HasChange("schedule") {
+		obj["schedule"] = nil
 	}
 
 	if v, ok := d.GetOk("cors_allow_origin"); ok {
@@ -713,6 +714,8 @@ func getObjectSystemApiUser(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["cors-allow-origin"] = t
 		}
+	} else if d.HasChange("cors_allow_origin") {
+		obj["cors-allow-origin"] = nil
 	}
 
 	if v, ok := d.GetOk("peer_auth"); ok {
@@ -731,6 +734,8 @@ func getObjectSystemApiUser(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["peer-group"] = t
 		}
+	} else if d.HasChange("peer_group") {
+		obj["peer-group"] = nil
 	}
 
 	if v, ok := d.GetOk("trusthost"); ok || d.HasChange("trusthost") {

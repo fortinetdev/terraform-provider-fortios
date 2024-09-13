@@ -40,13 +40,11 @@ func resourceSystemStandaloneCluster() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"group_member_id": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"layer2_connection": &schema.Schema{
 				Type:     schema.TypeString,
@@ -56,7 +54,6 @@ func resourceSystemStandaloneCluster() *schema.Resource {
 			"session_sync_dev": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"encryption": &schema.Schema{
 				Type:     schema.TypeString,
@@ -81,7 +78,6 @@ func resourceSystemStandaloneCluster() *schema.Resource {
 						"sync_id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"peervd": &schema.Schema{
 							Type:         schema.TypeString,
@@ -103,7 +99,6 @@ func resourceSystemStandaloneCluster() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -117,7 +112,6 @@ func resourceSystemStandaloneCluster() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -155,13 +149,11 @@ func resourceSystemStandaloneCluster() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 15),
 										Optional:     true,
-										Computed:     true,
 									},
 									"dstintf": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 15),
 										Optional:     true,
-										Computed:     true,
 									},
 									"srcaddr": &schema.Schema{
 										Type:     schema.TypeString,
@@ -191,7 +183,6 @@ func resourceSystemStandaloneCluster() *schema.Resource {
 												"id": &schema.Schema{
 													Type:     schema.TypeInt,
 													Optional: true,
-													Computed: true,
 												},
 												"src_port_range": &schema.Schema{
 													Type:     schema.TypeString,
@@ -208,6 +199,32 @@ func resourceSystemStandaloneCluster() *schema.Resource {
 									},
 								},
 							},
+						},
+					},
+				},
+			},
+			"monitor_interface": &schema.Schema{
+				Type:     schema.TypeSet,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+						},
+					},
+				},
+			},
+			"pingsvr_monitor_interface": &schema.Schema{
+				Type:     schema.TypeSet,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
 						},
 					},
 				},
@@ -341,11 +358,11 @@ func resourceSystemStandaloneClusterRead(d *schema.ResourceData, m interface{}) 
 }
 
 func flattenSystemStandaloneClusterStandaloneGroupId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemStandaloneClusterGroupMemberId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemStandaloneClusterLayer2Connection(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -357,10 +374,6 @@ func flattenSystemStandaloneClusterSessionSyncDev(v interface{}, d *schema.Resou
 }
 
 func flattenSystemStandaloneClusterEncryption(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenSystemStandaloneClusterPsksecret(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -452,7 +465,7 @@ func flattenSystemStandaloneClusterClusterPeer(v interface{}, d *schema.Resource
 }
 
 func flattenSystemStandaloneClusterClusterPeerSyncId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemStandaloneClusterClusterPeerPeervd(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -548,11 +561,11 @@ func flattenSystemStandaloneClusterClusterPeerDownIntfsBeforeSessSyncName(v inte
 }
 
 func flattenSystemStandaloneClusterClusterPeerHbInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemStandaloneClusterClusterPeerHbLostThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemStandaloneClusterClusterPeerIpsecTunnelSync(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -698,7 +711,7 @@ func flattenSystemStandaloneClusterClusterPeerSessionSyncFilterCustomService(v i
 }
 
 func flattenSystemStandaloneClusterClusterPeerSessionSyncFilterCustomServiceId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemStandaloneClusterClusterPeerSessionSyncFilterCustomServiceSrcPortRange(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -706,6 +719,90 @@ func flattenSystemStandaloneClusterClusterPeerSessionSyncFilterCustomServiceSrcP
 }
 
 func flattenSystemStandaloneClusterClusterPeerSessionSyncFilterCustomServiceDstPortRange(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemStandaloneClusterMonitorInterface(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemStandaloneClusterMonitorInterfaceName(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenSystemStandaloneClusterMonitorInterfaceName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemStandaloneClusterPingsvrMonitorInterface(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemStandaloneClusterPingsvrMonitorInterfaceName(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenSystemStandaloneClusterPingsvrMonitorInterfaceName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -770,6 +867,38 @@ func refreshObjectSystemStandaloneCluster(d *schema.ResourceData, o map[string]i
 		}
 	}
 
+	if b_get_all_tables {
+		if err = d.Set("monitor_interface", flattenSystemStandaloneClusterMonitorInterface(o["monitor-interface"], d, "monitor_interface", sv)); err != nil {
+			if !fortiAPIPatch(o["monitor-interface"]) {
+				return fmt.Errorf("Error reading monitor_interface: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("monitor_interface"); ok {
+			if err = d.Set("monitor_interface", flattenSystemStandaloneClusterMonitorInterface(o["monitor-interface"], d, "monitor_interface", sv)); err != nil {
+				if !fortiAPIPatch(o["monitor-interface"]) {
+					return fmt.Errorf("Error reading monitor_interface: %v", err)
+				}
+			}
+		}
+	}
+
+	if b_get_all_tables {
+		if err = d.Set("pingsvr_monitor_interface", flattenSystemStandaloneClusterPingsvrMonitorInterface(o["pingsvr-monitor-interface"], d, "pingsvr_monitor_interface", sv)); err != nil {
+			if !fortiAPIPatch(o["pingsvr-monitor-interface"]) {
+				return fmt.Errorf("Error reading pingsvr_monitor_interface: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("pingsvr_monitor_interface"); ok {
+			if err = d.Set("pingsvr_monitor_interface", flattenSystemStandaloneClusterPingsvrMonitorInterface(o["pingsvr-monitor-interface"], d, "pingsvr_monitor_interface", sv)); err != nil {
+				if !fortiAPIPatch(o["pingsvr-monitor-interface"]) {
+					return fmt.Errorf("Error reading pingsvr_monitor_interface: %v", err)
+				}
+			}
+		}
+	}
+
 	return nil
 }
 
@@ -824,6 +953,8 @@ func expandSystemStandaloneClusterClusterPeer(d *schema.ResourceData, v interfac
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sync_id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["sync-id"], _ = expandSystemStandaloneClusterClusterPeerSyncId(d, i["sync_id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["sync-id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "peervd"
@@ -837,16 +968,16 @@ func expandSystemStandaloneClusterClusterPeer(d *schema.ResourceData, v interfac
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "syncvd"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["syncvd"], _ = expandSystemStandaloneClusterClusterPeerSyncvd(d, i["syncvd"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["syncvd"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "down_intfs_before_sess_sync"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["down-intfs-before-sess-sync"], _ = expandSystemStandaloneClusterClusterPeerDownIntfsBeforeSessSync(d, i["down_intfs_before_sess_sync"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["down-intfs-before-sess-sync"] = make([]string, 0)
 		}
 
@@ -873,7 +1004,7 @@ func expandSystemStandaloneClusterClusterPeer(d *schema.ResourceData, v interfac
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "session_sync_filter"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["session-sync-filter"], _ = expandSystemStandaloneClusterClusterPeerSessionSyncFilter(d, i["session_sync_filter"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["session-sync-filter"] = make([]string, 0)
 		}
 
@@ -1054,6 +1185,8 @@ func expandSystemStandaloneClusterClusterPeerSessionSyncFilterCustomService(d *s
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSystemStandaloneClusterClusterPeerSessionSyncFilterCustomServiceId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "src_port_range"
@@ -1086,6 +1219,62 @@ func expandSystemStandaloneClusterClusterPeerSessionSyncFilterCustomServiceDstPo
 	return v, nil
 }
 
+func expandSystemStandaloneClusterMonitorInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.(*schema.Set).List()
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		tmp["name"], _ = expandSystemStandaloneClusterMonitorInterfaceName(d, i["name"], pre_append, sv)
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemStandaloneClusterMonitorInterfaceName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemStandaloneClusterPingsvrMonitorInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.(*schema.Set).List()
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		tmp["name"], _ = expandSystemStandaloneClusterPingsvrMonitorInterfaceName(d, i["name"], pre_append, sv)
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemStandaloneClusterPingsvrMonitorInterfaceName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectSystemStandaloneCluster(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
@@ -1100,6 +1289,8 @@ func getObjectSystemStandaloneCluster(d *schema.ResourceData, setArgNil bool, sv
 				obj["standalone-group-id"] = t
 			}
 		}
+	} else if d.HasChange("standalone_group_id") {
+		obj["standalone-group-id"] = nil
 	}
 
 	if v, ok := d.GetOkExists("group_member_id"); ok {
@@ -1113,6 +1304,8 @@ func getObjectSystemStandaloneCluster(d *schema.ResourceData, setArgNil bool, sv
 				obj["group-member-id"] = t
 			}
 		}
+	} else if d.HasChange("group_member_id") {
+		obj["group-member-id"] = nil
 	}
 
 	if v, ok := d.GetOk("layer2_connection"); ok {
@@ -1139,6 +1332,8 @@ func getObjectSystemStandaloneCluster(d *schema.ResourceData, setArgNil bool, sv
 				obj["session-sync-dev"] = t
 			}
 		}
+	} else if d.HasChange("session_sync_dev") {
+		obj["session-sync-dev"] = nil
 	}
 
 	if v, ok := d.GetOk("encryption"); ok {
@@ -1165,6 +1360,8 @@ func getObjectSystemStandaloneCluster(d *schema.ResourceData, setArgNil bool, sv
 				obj["psksecret"] = t
 			}
 		}
+	} else if d.HasChange("psksecret") {
+		obj["psksecret"] = nil
 	}
 
 	if v, ok := d.GetOk("asymmetric_traffic_control"); ok {
@@ -1189,6 +1386,32 @@ func getObjectSystemStandaloneCluster(d *schema.ResourceData, setArgNil bool, sv
 				return &obj, err
 			} else if t != nil {
 				obj["cluster-peer"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("monitor_interface"); ok || d.HasChange("monitor_interface") {
+		if setArgNil {
+			obj["monitor-interface"] = make([]struct{}, 0)
+		} else {
+			t, err := expandSystemStandaloneClusterMonitorInterface(d, v, "monitor_interface", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["monitor-interface"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("pingsvr_monitor_interface"); ok || d.HasChange("pingsvr_monitor_interface") {
+		if setArgNil {
+			obj["pingsvr-monitor-interface"] = make([]struct{}, 0)
+		} else {
+			t, err := expandSystemStandaloneClusterPingsvrMonitorInterface(d, v, "pingsvr_monitor_interface", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["pingsvr-monitor-interface"] = t
 			}
 		}
 	}

@@ -61,17 +61,14 @@ func resourceSystemWccp() *schema.Resource {
 			"server_list": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"router_list": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"ports_defined": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"server_type": &schema.Schema{
 				Type:     schema.TypeString,
@@ -81,7 +78,6 @@ func resourceSystemWccp() *schema.Resource {
 			"ports": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"authentication": &schema.Schema{
 				Type:     schema.TypeString,
@@ -118,19 +114,16 @@ func resourceSystemWccp() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"protocol": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"assignment_weight": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"assignment_bucket_format": &schema.Schema{
 				Type:     schema.TypeString,
@@ -352,10 +345,6 @@ func flattenSystemWccpAuthentication(v interface{}, d *schema.ResourceData, pre 
 	return v
 }
 
-func flattenSystemWccpPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
 func flattenSystemWccpForwardMethod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -373,15 +362,15 @@ func flattenSystemWccpPrimaryHash(v interface{}, d *schema.ResourceData, pre str
 }
 
 func flattenSystemWccpPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemWccpProtocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemWccpAssignmentWeight(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemWccpAssignmentBucketFormat(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -686,6 +675,8 @@ func getObjectSystemWccp(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["server-list"] = t
 		}
+	} else if d.HasChange("server_list") {
+		obj["server-list"] = nil
 	}
 
 	if v, ok := d.GetOk("router_list"); ok {
@@ -695,6 +686,8 @@ func getObjectSystemWccp(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["router-list"] = t
 		}
+	} else if d.HasChange("router_list") {
+		obj["router-list"] = nil
 	}
 
 	if v, ok := d.GetOk("ports_defined"); ok {
@@ -704,6 +697,8 @@ func getObjectSystemWccp(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["ports-defined"] = t
 		}
+	} else if d.HasChange("ports_defined") {
+		obj["ports-defined"] = nil
 	}
 
 	if v, ok := d.GetOk("server_type"); ok {
@@ -722,6 +717,8 @@ func getObjectSystemWccp(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["ports"] = t
 		}
+	} else if d.HasChange("ports") {
+		obj["ports"] = nil
 	}
 
 	if v, ok := d.GetOk("authentication"); ok {
@@ -740,6 +737,8 @@ func getObjectSystemWccp(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["password"] = t
 		}
+	} else if d.HasChange("password") {
+		obj["password"] = nil
 	}
 
 	if v, ok := d.GetOk("forward_method"); ok {
@@ -785,6 +784,8 @@ func getObjectSystemWccp(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["priority"] = t
 		}
+	} else if d.HasChange("priority") {
+		obj["priority"] = nil
 	}
 
 	if v, ok := d.GetOkExists("protocol"); ok {
@@ -794,6 +795,8 @@ func getObjectSystemWccp(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["protocol"] = t
 		}
+	} else if d.HasChange("protocol") {
+		obj["protocol"] = nil
 	}
 
 	if v, ok := d.GetOkExists("assignment_weight"); ok {
@@ -803,6 +806,8 @@ func getObjectSystemWccp(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["assignment-weight"] = t
 		}
+	} else if d.HasChange("assignment_weight") {
+		obj["assignment-weight"] = nil
 	}
 
 	if v, ok := d.GetOk("assignment_bucket_format"); ok {

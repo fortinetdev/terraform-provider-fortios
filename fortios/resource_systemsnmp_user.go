@@ -78,12 +78,10 @@ func resourceSystemSnmpUser() *schema.Resource {
 			"notify_hosts": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"notify_hosts6": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"source_ip": &schema.Schema{
 				Type:     schema.TypeString,
@@ -109,7 +107,6 @@ func resourceSystemSnmpUser() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 32),
 				Optional:     true,
-				Computed:     true,
 			},
 			"vdoms": &schema.Schema{
 				Type:     schema.TypeSet,
@@ -120,7 +117,6 @@ func resourceSystemSnmpUser() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -151,6 +147,16 @@ func resourceSystemSnmpUser() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
 				Sensitive:    true,
+			},
+			"interface_select_method": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"interface": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 15),
+				Optional:     true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
@@ -330,11 +336,11 @@ func flattenSystemSnmpUserTrapStatus(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenSystemSnmpUserTrapLport(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSnmpUserTrapRport(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSnmpUserQueries(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -342,7 +348,7 @@ func flattenSystemSnmpUserQueries(v interface{}, d *schema.ResourceData, pre str
 }
 
 func flattenSystemSnmpUserQueryPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSnmpUserNotifyHosts(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -423,15 +429,15 @@ func flattenSystemSnmpUserAuthProto(v interface{}, d *schema.ResourceData, pre s
 	return v
 }
 
-func flattenSystemSnmpUserAuthPwd(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
 func flattenSystemSnmpUserPrivProto(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemSnmpUserPrivPwd(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+func flattenSystemSnmpUserInterfaceSelectMethod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSnmpUserInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -562,6 +568,18 @@ func refreshObjectSystemSnmpUser(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("interface_select_method", flattenSystemSnmpUserInterfaceSelectMethod(o["interface-select-method"], d, "interface_select_method", sv)); err != nil {
+		if !fortiAPIPatch(o["interface-select-method"]) {
+			return fmt.Errorf("Error reading interface_select_method: %v", err)
+		}
+	}
+
+	if err = d.Set("interface", flattenSystemSnmpUserInterface(o["interface"], d, "interface", sv)); err != nil {
+		if !fortiAPIPatch(o["interface"]) {
+			return fmt.Errorf("Error reading interface: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -675,6 +693,14 @@ func expandSystemSnmpUserPrivPwd(d *schema.ResourceData, v interface{}, pre stri
 	return v, nil
 }
 
+func expandSystemSnmpUserInterfaceSelectMethod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSnmpUserInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectSystemSnmpUser(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
@@ -748,6 +774,8 @@ func getObjectSystemSnmpUser(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["notify-hosts"] = t
 		}
+	} else if d.HasChange("notify_hosts") {
+		obj["notify-hosts"] = nil
 	}
 
 	if v, ok := d.GetOk("notify_hosts6"); ok {
@@ -757,6 +785,8 @@ func getObjectSystemSnmpUser(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["notify-hosts6"] = t
 		}
+	} else if d.HasChange("notify_hosts6") {
+		obj["notify-hosts6"] = nil
 	}
 
 	if v, ok := d.GetOk("source_ip"); ok {
@@ -802,6 +832,8 @@ func getObjectSystemSnmpUser(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["mib-view"] = t
 		}
+	} else if d.HasChange("mib_view") {
+		obj["mib-view"] = nil
 	}
 
 	if v, ok := d.GetOk("vdoms"); ok || d.HasChange("vdoms") {
@@ -838,6 +870,8 @@ func getObjectSystemSnmpUser(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["auth-pwd"] = t
 		}
+	} else if d.HasChange("auth_pwd") {
+		obj["auth-pwd"] = nil
 	}
 
 	if v, ok := d.GetOk("priv_proto"); ok {
@@ -856,6 +890,28 @@ func getObjectSystemSnmpUser(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["priv-pwd"] = t
 		}
+	} else if d.HasChange("priv_pwd") {
+		obj["priv-pwd"] = nil
+	}
+
+	if v, ok := d.GetOk("interface_select_method"); ok {
+		t, err := expandSystemSnmpUserInterfaceSelectMethod(d, v, "interface_select_method", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["interface-select-method"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("interface"); ok {
+		t, err := expandSystemSnmpUserInterface(d, v, "interface", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["interface"] = t
+		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
 	}
 
 	return &obj, nil

@@ -54,66 +54,55 @@ func resourceSystemAlarm() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"period": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"admin_auth_failure_threshold": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 1024),
 							Optional:     true,
-							Computed:     true,
 						},
 						"admin_auth_lockout_threshold": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 1024),
 							Optional:     true,
-							Computed:     true,
 						},
 						"user_auth_failure_threshold": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 1024),
 							Optional:     true,
-							Computed:     true,
 						},
 						"user_auth_lockout_threshold": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 1024),
 							Optional:     true,
-							Computed:     true,
 						},
 						"replay_attempt_threshold": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 1024),
 							Optional:     true,
-							Computed:     true,
 						},
 						"self_test_failure_threshold": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 1),
 							Optional:     true,
-							Computed:     true,
 						},
 						"log_full_warning_threshold": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 1024),
 							Optional:     true,
-							Computed:     true,
 						},
 						"encryption_failure_threshold": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 1024),
 							Optional:     true,
-							Computed:     true,
 						},
 						"decryption_failure_threshold": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 1024),
 							Optional:     true,
-							Computed:     true,
 						},
 						"fw_policy_violations": &schema.Schema{
 							Type:     schema.TypeList,
@@ -123,13 +112,11 @@ func resourceSystemAlarm() *schema.Resource {
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 									"threshold": &schema.Schema{
 										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 1024),
 										Optional:     true,
-										Computed:     true,
 									},
 									"src_ip": &schema.Schema{
 										Type:     schema.TypeString,
@@ -145,13 +132,11 @@ func resourceSystemAlarm() *schema.Resource {
 										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 65535),
 										Optional:     true,
-										Computed:     true,
 									},
 									"dst_port": &schema.Schema{
 										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 65535),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -159,13 +144,11 @@ func resourceSystemAlarm() *schema.Resource {
 						"fw_policy_id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"fw_policy_id_threshold": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 1024),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -410,47 +393,47 @@ func flattenSystemAlarmGroups(v interface{}, d *schema.ResourceData, pre string,
 }
 
 func flattenSystemAlarmGroupsId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemAlarmGroupsPeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemAlarmGroupsAdminAuthFailureThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemAlarmGroupsAdminAuthLockoutThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemAlarmGroupsUserAuthFailureThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemAlarmGroupsUserAuthLockoutThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemAlarmGroupsReplayAttemptThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemAlarmGroupsSelfTestFailureThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemAlarmGroupsLogFullWarningThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemAlarmGroupsEncryptionFailureThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemAlarmGroupsDecryptionFailureThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemAlarmGroupsFwPolicyViolations(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -517,11 +500,11 @@ func flattenSystemAlarmGroupsFwPolicyViolations(v interface{}, d *schema.Resourc
 }
 
 func flattenSystemAlarmGroupsFwPolicyViolationsId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemAlarmGroupsFwPolicyViolationsThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemAlarmGroupsFwPolicyViolationsSrcIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -533,19 +516,19 @@ func flattenSystemAlarmGroupsFwPolicyViolationsDstIp(v interface{}, d *schema.Re
 }
 
 func flattenSystemAlarmGroupsFwPolicyViolationsSrcPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemAlarmGroupsFwPolicyViolationsDstPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemAlarmGroupsFwPolicyId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemAlarmGroupsFwPolicyIdThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectSystemAlarm(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -619,73 +602,99 @@ func expandSystemAlarmGroups(d *schema.ResourceData, v interface{}, pre string, 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSystemAlarmGroupsId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "period"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["period"], _ = expandSystemAlarmGroupsPeriod(d, i["period"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["period"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "admin_auth_failure_threshold"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["admin-auth-failure-threshold"], _ = expandSystemAlarmGroupsAdminAuthFailureThreshold(d, i["admin_auth_failure_threshold"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["admin-auth-failure-threshold"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "admin_auth_lockout_threshold"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["admin-auth-lockout-threshold"], _ = expandSystemAlarmGroupsAdminAuthLockoutThreshold(d, i["admin_auth_lockout_threshold"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["admin-auth-lockout-threshold"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "user_auth_failure_threshold"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["user-auth-failure-threshold"], _ = expandSystemAlarmGroupsUserAuthFailureThreshold(d, i["user_auth_failure_threshold"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["user-auth-failure-threshold"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "user_auth_lockout_threshold"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["user-auth-lockout-threshold"], _ = expandSystemAlarmGroupsUserAuthLockoutThreshold(d, i["user_auth_lockout_threshold"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["user-auth-lockout-threshold"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "replay_attempt_threshold"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["replay-attempt-threshold"], _ = expandSystemAlarmGroupsReplayAttemptThreshold(d, i["replay_attempt_threshold"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["replay-attempt-threshold"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "self_test_failure_threshold"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["self-test-failure-threshold"], _ = expandSystemAlarmGroupsSelfTestFailureThreshold(d, i["self_test_failure_threshold"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["self-test-failure-threshold"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "log_full_warning_threshold"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["log-full-warning-threshold"], _ = expandSystemAlarmGroupsLogFullWarningThreshold(d, i["log_full_warning_threshold"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["log-full-warning-threshold"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "encryption_failure_threshold"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["encryption-failure-threshold"], _ = expandSystemAlarmGroupsEncryptionFailureThreshold(d, i["encryption_failure_threshold"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["encryption-failure-threshold"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "decryption_failure_threshold"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["decryption-failure-threshold"], _ = expandSystemAlarmGroupsDecryptionFailureThreshold(d, i["decryption_failure_threshold"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["decryption-failure-threshold"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "fw_policy_violations"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["fw-policy-violations"], _ = expandSystemAlarmGroupsFwPolicyViolations(d, i["fw_policy_violations"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["fw-policy-violations"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "fw_policy_id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["fw-policy-id"], _ = expandSystemAlarmGroupsFwPolicyId(d, i["fw_policy_id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["fw-policy-id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "fw_policy_id_threshold"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["fw-policy-id-threshold"], _ = expandSystemAlarmGroupsFwPolicyIdThreshold(d, i["fw_policy_id_threshold"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["fw-policy-id-threshold"] = nil
 		}
 
 		result = append(result, tmp)
@@ -757,11 +766,15 @@ func expandSystemAlarmGroupsFwPolicyViolations(d *schema.ResourceData, v interfa
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSystemAlarmGroupsFwPolicyViolationsId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "threshold"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["threshold"], _ = expandSystemAlarmGroupsFwPolicyViolationsThreshold(d, i["threshold"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["threshold"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "src_ip"
@@ -777,11 +790,15 @@ func expandSystemAlarmGroupsFwPolicyViolations(d *schema.ResourceData, v interfa
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "src_port"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["src-port"], _ = expandSystemAlarmGroupsFwPolicyViolationsSrcPort(d, i["src_port"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["src-port"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst_port"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["dst-port"], _ = expandSystemAlarmGroupsFwPolicyViolationsDstPort(d, i["dst_port"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["dst-port"] = nil
 		}
 
 		result = append(result, tmp)

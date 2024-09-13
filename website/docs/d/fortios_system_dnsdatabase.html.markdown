@@ -37,6 +37,7 @@ The following attributes are exported:
 * `forwarder6` - Forwarder IPv6 address.
 * `source_ip` - Source IP for forwarding to DNS server.
 * `source_ip6` - IPv6 source IP address for forwarding to DNS server.
+* `source_ip_interface` - IP address of the specified interface as the source IP address.
 * `rr_max` - Maximum number of resource records (10 - 65536, 0 means infinite).
 * `dns_entry` - DNS entry. The structure of `dns_entry` block is documented below.
 

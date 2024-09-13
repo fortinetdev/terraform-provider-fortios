@@ -46,7 +46,6 @@ func resourceEmailfilterMheader() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"comment": &schema.Schema{
 				Type:         schema.TypeString,
@@ -66,19 +65,16 @@ func resourceEmailfilterMheader() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"fieldname": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"fieldbody": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 127),
 							Optional:     true,
-							Computed:     true,
 						},
 						"pattern_type": &schema.Schema{
 							Type:     schema.TypeString,
@@ -259,7 +255,7 @@ func resourceEmailfilterMheaderRead(d *schema.ResourceData, m interface{}) error
 }
 
 func flattenEmailfilterMheaderId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenEmailfilterMheaderName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -338,7 +334,7 @@ func flattenEmailfilterMheaderEntriesStatus(v interface{}, d *schema.ResourceDat
 }
 
 func flattenEmailfilterMheaderEntriesId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenEmailfilterMheaderEntriesFieldname(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -443,16 +439,22 @@ func expandEmailfilterMheaderEntries(d *schema.ResourceData, v interface{}, pre 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandEmailfilterMheaderEntriesId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "fieldname"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["fieldname"], _ = expandEmailfilterMheaderEntriesFieldname(d, i["fieldname"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["fieldname"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "fieldbody"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["fieldbody"], _ = expandEmailfilterMheaderEntriesFieldbody(d, i["fieldbody"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["fieldbody"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern_type"
@@ -516,6 +518,8 @@ func getObjectEmailfilterMheader(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
@@ -525,6 +529,8 @@ func getObjectEmailfilterMheader(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("entries"); ok || d.HasChange("entries") {

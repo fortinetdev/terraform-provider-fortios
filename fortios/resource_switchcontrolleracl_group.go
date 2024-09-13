@@ -51,7 +51,6 @@ func resourceSwitchControllerAclGroup() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -264,7 +263,7 @@ func flattenSwitchControllerAclGroupIngress(v interface{}, d *schema.ResourceDat
 }
 
 func flattenSwitchControllerAclGroupIngressId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectSwitchControllerAclGroup(d *schema.ResourceData, o map[string]interface{}, sv string) error {

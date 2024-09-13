@@ -57,13 +57,11 @@ func resourceWebProxyUrlMatch() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"fast_fallback": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"cache_exemption": &schema.Schema{
 				Type:     schema.TypeString,
@@ -368,6 +366,8 @@ func getObjectWebProxyUrlMatch(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["url-pattern"] = t
 		}
+	} else if d.HasChange("url_pattern") {
+		obj["url-pattern"] = nil
 	}
 
 	if v, ok := d.GetOk("forward_server"); ok {
@@ -377,6 +377,8 @@ func getObjectWebProxyUrlMatch(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["forward-server"] = t
 		}
+	} else if d.HasChange("forward_server") {
+		obj["forward-server"] = nil
 	}
 
 	if v, ok := d.GetOk("fast_fallback"); ok {
@@ -386,6 +388,8 @@ func getObjectWebProxyUrlMatch(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["fast-fallback"] = t
 		}
+	} else if d.HasChange("fast_fallback") {
+		obj["fast-fallback"] = nil
 	}
 
 	if v, ok := d.GetOk("cache_exemption"); ok {
@@ -404,6 +408,8 @@ func getObjectWebProxyUrlMatch(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	return &obj, nil

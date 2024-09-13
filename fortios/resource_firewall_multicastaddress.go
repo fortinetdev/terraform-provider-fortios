@@ -40,7 +40,6 @@ func resourceFirewallMulticastAddress() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
-				Computed:     true,
 			},
 			"type": &schema.Schema{
 				Type:     schema.TypeString,
@@ -70,19 +69,16 @@ func resourceFirewallMulticastAddress() *schema.Resource {
 			"visibility": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"associated_interface": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"color": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 32),
 				Optional:     true,
-				Computed:     true,
 			},
 			"tagging": &schema.Schema{
 				Type:     schema.TypeList,
@@ -93,13 +89,11 @@ func resourceFirewallMulticastAddress() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"category": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"tags": &schema.Schema{
 							Type:     schema.TypeSet,
@@ -110,7 +104,6 @@ func resourceFirewallMulticastAddress() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -323,7 +316,7 @@ func flattenFirewallMulticastAddressAssociatedInterface(v interface{}, d *schema
 }
 
 func flattenFirewallMulticastAddressColor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallMulticastAddressTagging(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -565,17 +558,21 @@ func expandFirewallMulticastAddressTagging(d *schema.ResourceData, v interface{}
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandFirewallMulticastAddressTaggingName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["category"], _ = expandFirewallMulticastAddressTaggingCategory(d, i["category"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["category"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tags"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["tags"], _ = expandFirewallMulticastAddressTaggingTags(d, i["tags"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["tags"] = make([]string, 0)
 		}
 
@@ -633,6 +630,8 @@ func getObjectFirewallMulticastAddress(d *schema.ResourceData, sv string) (*map[
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("type"); ok {
@@ -678,6 +677,8 @@ func getObjectFirewallMulticastAddress(d *schema.ResourceData, sv string) (*map[
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("visibility"); ok {
@@ -687,6 +688,8 @@ func getObjectFirewallMulticastAddress(d *schema.ResourceData, sv string) (*map[
 		} else if t != nil {
 			obj["visibility"] = t
 		}
+	} else if d.HasChange("visibility") {
+		obj["visibility"] = nil
 	}
 
 	if v, ok := d.GetOk("associated_interface"); ok {
@@ -696,6 +699,8 @@ func getObjectFirewallMulticastAddress(d *schema.ResourceData, sv string) (*map[
 		} else if t != nil {
 			obj["associated-interface"] = t
 		}
+	} else if d.HasChange("associated_interface") {
+		obj["associated-interface"] = nil
 	}
 
 	if v, ok := d.GetOkExists("color"); ok {
@@ -705,6 +710,8 @@ func getObjectFirewallMulticastAddress(d *schema.ResourceData, sv string) (*map[
 		} else if t != nil {
 			obj["color"] = t
 		}
+	} else if d.HasChange("color") {
+		obj["color"] = nil
 	}
 
 	if v, ok := d.GetOk("tagging"); ok || d.HasChange("tagging") {

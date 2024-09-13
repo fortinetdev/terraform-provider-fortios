@@ -69,7 +69,6 @@ func resourceSystemManagementTunnel() *schema.Resource {
 			"serial_number": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 		},
 	}
@@ -391,6 +390,8 @@ func getObjectSystemManagementTunnel(d *schema.ResourceData, setArgNil bool, sv 
 				obj["serial-number"] = t
 			}
 		}
+	} else if d.HasChange("serial_number") {
+		obj["serial-number"] = nil
 	}
 
 	return &obj, nil

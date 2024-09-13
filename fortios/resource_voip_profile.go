@@ -92,7 +92,6 @@ func resourceVoipProfile() *schema.Resource {
 						"register_rate": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"register_rate_track": &schema.Schema{
 							Type:     schema.TypeString,
@@ -102,7 +101,6 @@ func resourceVoipProfile() *schema.Resource {
 						"invite_rate": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"invite_rate_track": &schema.Schema{
 							Type:     schema.TypeString,
@@ -112,7 +110,6 @@ func resourceVoipProfile() *schema.Resource {
 						"max_dialogs": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"max_line_length": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -134,7 +131,6 @@ func resourceVoipProfile() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 10080),
 							Optional:     true,
-							Computed:     true,
 						},
 						"block_ack": &schema.Schema{
 							Type:     schema.TypeString,
@@ -244,7 +240,6 @@ func resourceVoipProfile() *schema.Resource {
 						"subscribe_rate": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"subscribe_rate_track": &schema.Schema{
 							Type:     schema.TypeString,
@@ -254,7 +249,6 @@ func resourceVoipProfile() *schema.Resource {
 						"message_rate": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"message_rate_track": &schema.Schema{
 							Type:     schema.TypeString,
@@ -264,7 +258,6 @@ func resourceVoipProfile() *schema.Resource {
 						"notify_rate": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"notify_rate_track": &schema.Schema{
 							Type:     schema.TypeString,
@@ -274,7 +267,6 @@ func resourceVoipProfile() *schema.Resource {
 						"refer_rate": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"refer_rate_track": &schema.Schema{
 							Type:     schema.TypeString,
@@ -284,7 +276,6 @@ func resourceVoipProfile() *schema.Resource {
 						"update_rate": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"update_rate_track": &schema.Schema{
 							Type:     schema.TypeString,
@@ -294,7 +285,6 @@ func resourceVoipProfile() *schema.Resource {
 						"options_rate": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"options_rate_track": &schema.Schema{
 							Type:     schema.TypeString,
@@ -304,7 +294,6 @@ func resourceVoipProfile() *schema.Resource {
 						"ack_rate": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"ack_rate_track": &schema.Schema{
 							Type:     schema.TypeString,
@@ -314,7 +303,6 @@ func resourceVoipProfile() *schema.Resource {
 						"prack_rate": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"prack_rate_track": &schema.Schema{
 							Type:     schema.TypeString,
@@ -324,7 +312,6 @@ func resourceVoipProfile() *schema.Resource {
 						"info_rate": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"info_rate_track": &schema.Schema{
 							Type:     schema.TypeString,
@@ -334,7 +321,6 @@ func resourceVoipProfile() *schema.Resource {
 						"publish_rate": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"publish_rate_track": &schema.Schema{
 							Type:     schema.TypeString,
@@ -344,7 +330,6 @@ func resourceVoipProfile() *schema.Resource {
 						"bye_rate": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"bye_rate_track": &schema.Schema{
 							Type:     schema.TypeString,
@@ -354,7 +339,6 @@ func resourceVoipProfile() *schema.Resource {
 						"cancel_rate": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"cancel_rate_track": &schema.Schema{
 							Type:     schema.TypeString,
@@ -379,7 +363,6 @@ func resourceVoipProfile() *schema.Resource {
 						"max_idle_dialogs": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"block_geo_red_options": &schema.Schema{
 							Type:     schema.TypeString,
@@ -409,7 +392,6 @@ func resourceVoipProfile() *schema.Resource {
 						"max_body_length": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"unknown_header": &schema.Schema{
 							Type:     schema.TypeString,
@@ -621,25 +603,21 @@ func resourceVoipProfile() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"ssl_server_certificate": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"ssl_auth_client": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"ssl_auth_server": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -680,7 +658,6 @@ func resourceVoipProfile() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -706,7 +683,6 @@ func resourceVoipProfile() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 						"max_msg_size_action": &schema.Schema{
 							Type:     schema.TypeString,
@@ -1501,7 +1477,7 @@ func flattenVoipProfileSipStrictRegister(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenVoipProfileSipRegisterRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVoipProfileSipRegisterRateTrack(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1509,7 +1485,7 @@ func flattenVoipProfileSipRegisterRateTrack(v interface{}, d *schema.ResourceDat
 }
 
 func flattenVoipProfileSipInviteRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVoipProfileSipInviteRateTrack(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1517,11 +1493,11 @@ func flattenVoipProfileSipInviteRateTrack(v interface{}, d *schema.ResourceData,
 }
 
 func flattenVoipProfileSipMaxDialogs(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVoipProfileSipMaxLineLength(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVoipProfileSipBlockLongLines(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1533,7 +1509,7 @@ func flattenVoipProfileSipBlockUnknown(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenVoipProfileSipCallKeepalive(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVoipProfileSipBlockAck(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1621,7 +1597,7 @@ func flattenVoipProfileSipNatTrace(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenVoipProfileSipSubscribeRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVoipProfileSipSubscribeRateTrack(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1629,7 +1605,7 @@ func flattenVoipProfileSipSubscribeRateTrack(v interface{}, d *schema.ResourceDa
 }
 
 func flattenVoipProfileSipMessageRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVoipProfileSipMessageRateTrack(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1637,7 +1613,7 @@ func flattenVoipProfileSipMessageRateTrack(v interface{}, d *schema.ResourceData
 }
 
 func flattenVoipProfileSipNotifyRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVoipProfileSipNotifyRateTrack(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1645,7 +1621,7 @@ func flattenVoipProfileSipNotifyRateTrack(v interface{}, d *schema.ResourceData,
 }
 
 func flattenVoipProfileSipReferRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVoipProfileSipReferRateTrack(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1653,7 +1629,7 @@ func flattenVoipProfileSipReferRateTrack(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenVoipProfileSipUpdateRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVoipProfileSipUpdateRateTrack(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1661,7 +1637,7 @@ func flattenVoipProfileSipUpdateRateTrack(v interface{}, d *schema.ResourceData,
 }
 
 func flattenVoipProfileSipOptionsRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVoipProfileSipOptionsRateTrack(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1669,7 +1645,7 @@ func flattenVoipProfileSipOptionsRateTrack(v interface{}, d *schema.ResourceData
 }
 
 func flattenVoipProfileSipAckRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVoipProfileSipAckRateTrack(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1677,7 +1653,7 @@ func flattenVoipProfileSipAckRateTrack(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenVoipProfileSipPrackRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVoipProfileSipPrackRateTrack(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1685,7 +1661,7 @@ func flattenVoipProfileSipPrackRateTrack(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenVoipProfileSipInfoRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVoipProfileSipInfoRateTrack(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1693,7 +1669,7 @@ func flattenVoipProfileSipInfoRateTrack(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenVoipProfileSipPublishRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVoipProfileSipPublishRateTrack(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1701,7 +1677,7 @@ func flattenVoipProfileSipPublishRateTrack(v interface{}, d *schema.ResourceData
 }
 
 func flattenVoipProfileSipByeRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVoipProfileSipByeRateTrack(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1709,7 +1685,7 @@ func flattenVoipProfileSipByeRateTrack(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenVoipProfileSipCancelRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVoipProfileSipCancelRateTrack(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1729,7 +1705,7 @@ func flattenVoipProfileSipContactFixup(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenVoipProfileSipMaxIdleDialogs(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVoipProfileSipBlockGeoRedOptions(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1753,7 +1729,7 @@ func flattenVoipProfileSipContentTypeRegex(v interface{}, d *schema.ResourceData
 }
 
 func flattenVoipProfileSipMaxBodyLength(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVoipProfileSipUnknownHeader(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1885,7 +1861,7 @@ func flattenVoipProfileSipMalformedHeaderSdpM(v interface{}, d *schema.ResourceD
 }
 
 func flattenVoipProfileSipProvisionalInviteExpiryTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVoipProfileSipIpsRtp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2000,7 +1976,7 @@ func flattenVoipProfileSccpLogViolations(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenVoipProfileSccpMaxCalls(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVoipProfileMsrp(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -2045,7 +2021,7 @@ func flattenVoipProfileMsrpLogViolations(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenVoipProfileMsrpMaxMsgSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVoipProfileMsrpMaxMsgSizeAction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -3218,6 +3194,8 @@ func getObjectVoipProfile(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("sip"); ok {

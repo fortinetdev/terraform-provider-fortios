@@ -39,6 +39,7 @@ The following arguments are supported:
 * `domain` - Domain name suffix for the IP addresses that the DHCP server assigns to clients.
 * `subnet` - (Required) Subnet or subnet-id if the IP mode is delegated.
 * `interface` - (Required) DHCP server can assign IP configurations to clients connected to this interface.
+* `options` - DHCPv6 options. The structure of `options` block is documented below.
 * `option1` - Option 1.
 * `option2` - Option 2.
 * `option3` - Option 3.
@@ -52,6 +53,20 @@ The following arguments are supported:
 * `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
+The `options` block supports:
+
+* `id` - ID.
+* `code` - DHCPv6 option code.
+* `type` - DHCPv6 option type. Valid values: `hex`, `string`, `ip6`, `fqdn`.
+* `value` - DHCPv6 option value (hexadecimal value must be even).
+* `ip6` - DHCP option IP6s.
+* `vci_match` - Enable/disable vendor class option matching. When enabled only DHCP requests with a matching VCI are served with this option. Valid values: `disable`, `enable`.
+* `vci_string` - One or more VCI strings in quotes separated by spaces. The structure of `vci_string` block is documented below.
+
+The `vci_string` block supports:
+
+* `vci_string` - VCI strings.
+
 The `prefix_range` block supports:
 
 * `id` - ID.
@@ -64,6 +79,12 @@ The `ip_range` block supports:
 * `id` - ID.
 * `start_ip` - Start of IP range.
 * `end_ip` - End of IP range.
+* `vci_match` - Enable/disable vendor class option matching. When enabled only DHCP requests with a matching VC are served with this range. Valid values: `disable`, `enable`.
+* `vci_string` - One or more VCI strings in quotes separated by spaces. The structure of `vci_string` block is documented below.
+
+The `vci_string` block supports:
+
+* `vci_string` - VCI strings.
 
 
 ## Attribute Reference

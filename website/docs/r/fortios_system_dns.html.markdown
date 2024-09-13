@@ -45,6 +45,7 @@ The following arguments are supported:
 * `dns_cache_ttl` - Duration in seconds that the DNS cache retains information.
 * `cache_notfound_responses` - Enable/disable response from the DNS server when a record is not in cache. Valid values: `disable`, `enable`.
 * `source_ip` - IP address used by the DNS server as its source IP.
+* `root_servers` - Configure up to two preferred servers that serve the DNS root zone (default uses all 13 root servers).
 * `interface_select_method` - Specify how to select outgoing interface to reach server. Valid values: `auto`, `sdwan`, `specify`.
 * `interface` - Specify outgoing interface to reach server.
 * `server_select_method` - Specify how configured servers are prioritized. Valid values: `least-rtt`, `failover`.
@@ -54,6 +55,8 @@ The following arguments are supported:
 * `fqdn_cache_ttl` - FQDN cache time to live in seconds (0 - 86400, default = 0).
 * `fqdn_max_refresh` - FQDN cache maximum refresh time in seconds (3600 - 86400, default = 3600).
 * `fqdn_min_refresh` - FQDN cache minimum refresh time in seconds (10 - 3600, default = 60).
+* `hostname_ttl` - TTL of hostname table entries (60 - 86400).
+* `hostname_limit` - Limit of the number of hostname table entries (0 - 50000).
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
 * `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.

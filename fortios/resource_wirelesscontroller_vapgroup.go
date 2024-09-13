@@ -56,7 +56,6 @@ func resourceWirelessControllerVapGroup() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -377,6 +376,8 @@ func getObjectWirelessControllerVapGroup(d *schema.ResourceData, sv string) (*ma
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("vaps"); ok || d.HasChange("vaps") {

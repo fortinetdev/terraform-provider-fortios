@@ -92,6 +92,10 @@ func dataSourceSystemDnsDatabase() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"source_ip_interface": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"rr_max": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
@@ -248,6 +252,10 @@ func dataSourceFlattenSystemDnsDatabaseSourceIp(v interface{}, d *schema.Resourc
 }
 
 func dataSourceFlattenSystemDnsDatabaseSourceIp6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemDnsDatabaseSourceIpInterface(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -459,6 +467,12 @@ func dataSourceRefreshObjectSystemDnsDatabase(d *schema.ResourceData, o map[stri
 	if err = d.Set("source_ip6", dataSourceFlattenSystemDnsDatabaseSourceIp6(o["source-ip6"], d, "source_ip6")); err != nil {
 		if !fortiAPIPatch(o["source-ip6"]) {
 			return fmt.Errorf("Error reading source_ip6: %v", err)
+		}
+	}
+
+	if err = d.Set("source_ip_interface", dataSourceFlattenSystemDnsDatabaseSourceIpInterface(o["source-ip-interface"], d, "source_ip_interface")); err != nil {
+		if !fortiAPIPatch(o["source-ip-interface"]) {
+			return fmt.Errorf("Error reading source_ip_interface: %v", err)
 		}
 	}
 

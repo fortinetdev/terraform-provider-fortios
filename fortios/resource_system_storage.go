@@ -254,7 +254,7 @@ func flattenSystemStorageMediaStatus(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenSystemStorageOrder(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemStoragePartition(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -266,7 +266,7 @@ func flattenSystemStorageDevice(v interface{}, d *schema.ResourceData, pre strin
 }
 
 func flattenSystemStorageSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemStorageUsage(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {

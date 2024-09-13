@@ -47,7 +47,6 @@ func resourceUserRadius() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"secret": &schema.Schema{
 				Type:         schema.TypeString,
@@ -59,7 +58,6 @@ func resourceUserRadius() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"secondary_secret": &schema.Schema{
 				Type:         schema.TypeString,
@@ -71,7 +69,6 @@ func resourceUserRadius() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"tertiary_secret": &schema.Schema{
 				Type:         schema.TypeString,
@@ -125,13 +122,11 @@ func resourceUserRadius() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"acct_interim_interval": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(60, 86400),
 				Optional:     true,
-				Computed:     true,
 			},
 			"radius_coa": &schema.Schema{
 				Type:     schema.TypeString,
@@ -142,7 +137,6 @@ func resourceUserRadius() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"h3c_compatibility": &schema.Schema{
 				Type:     schema.TypeString,
@@ -158,7 +152,11 @@ func resourceUserRadius() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
+			},
+			"source_ip_interface": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 15),
+				Optional:     true,
 			},
 			"username_case_sensitive": &schema.Schema{
 				Type:     schema.TypeString,
@@ -168,7 +166,6 @@ func resourceUserRadius() *schema.Resource {
 			"group_override_attr_type": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"class": &schema.Schema{
 				Type:     schema.TypeSet,
@@ -179,7 +176,6 @@ func resourceUserRadius() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -229,12 +225,10 @@ func resourceUserRadius() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"switch_controller_service_type": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"transport_protocol": &schema.Schema{
 				Type:     schema.TypeString,
@@ -250,13 +244,11 @@ func resourceUserRadius() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
-				Computed:     true,
 			},
 			"client_cert": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"server_identity_check": &schema.Schema{
 				Type:     schema.TypeString,
@@ -308,7 +300,6 @@ func resourceUserRadius() *schema.Resource {
 			"rsso_endpoint_block_attribute": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"sso_attribute": &schema.Schema{
 				Type:     schema.TypeString,
@@ -320,7 +311,6 @@ func resourceUserRadius() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
 				Sensitive:    true,
-				Computed:     true,
 			},
 			"sso_attribute_value_override": &schema.Schema{
 				Type:     schema.TypeString,
@@ -335,7 +325,6 @@ func resourceUserRadius() *schema.Resource {
 			"rsso_log_period": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"rsso_log_flags": &schema.Schema{
 				Type:     schema.TypeString,
@@ -365,7 +354,6 @@ func resourceUserRadius() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -376,7 +364,6 @@ func resourceUserRadius() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"secret": &schema.Schema{
 							Type:         schema.TypeString,
@@ -388,13 +375,11 @@ func resourceUserRadius() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 						"source_ip": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"interface_select_method": &schema.Schema{
 							Type:     schema.TypeString,
@@ -405,7 +390,6 @@ func resourceUserRadius() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -583,15 +567,7 @@ func flattenUserRadiusServer(v interface{}, d *schema.ResourceData, pre string, 
 	return v
 }
 
-func flattenUserRadiusSecret(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
 func flattenUserRadiusSecondaryServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenUserRadiusSecondarySecret(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -599,16 +575,12 @@ func flattenUserRadiusTertiaryServer(v interface{}, d *schema.ResourceData, pre 
 	return v
 }
 
-func flattenUserRadiusTertiarySecret(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
 func flattenUserRadiusTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserRadiusStatusTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserRadiusAllUsergroup(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -640,7 +612,7 @@ func flattenUserRadiusNasId(v interface{}, d *schema.ResourceData, pre string, s
 }
 
 func flattenUserRadiusAcctInterimInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserRadiusRadiusCoa(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -648,7 +620,7 @@ func flattenUserRadiusRadiusCoa(v interface{}, d *schema.ResourceData, pre strin
 }
 
 func flattenUserRadiusRadiusPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserRadiusH3CCompatibility(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -660,6 +632,10 @@ func flattenUserRadiusAuthType(v interface{}, d *schema.ResourceData, pre string
 }
 
 func flattenUserRadiusSourceIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserRadiusSourceIpInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -738,7 +714,7 @@ func flattenUserRadiusAcctAllServers(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenUserRadiusSwitchControllerAcctFastFramedipDetect(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserRadiusInterfaceSelectMethod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -786,7 +762,7 @@ func flattenUserRadiusRsso(v interface{}, d *schema.ResourceData, pre string, sv
 }
 
 func flattenUserRadiusRssoRadiusServerPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserRadiusRssoRadiusResponse(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -794,10 +770,6 @@ func flattenUserRadiusRssoRadiusResponse(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenUserRadiusRssoValidateRequestSecret(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenUserRadiusRssoSecret(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -813,20 +785,16 @@ func flattenUserRadiusSsoAttribute(v interface{}, d *schema.ResourceData, pre st
 	return v
 }
 
-func flattenUserRadiusSsoAttributeKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
 func flattenUserRadiusSsoAttributeValueOverride(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
 func flattenUserRadiusRssoContextTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserRadiusRssoLogPeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserRadiusRssoLogFlags(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -885,8 +853,7 @@ func flattenUserRadiusAccountingServer(v interface{}, d *schema.ResourceData, pr
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "secret"
-		if cur_v, ok := i["secret"]; ok {
-			tmp["secret"] = flattenUserRadiusAccountingServerSecret(cur_v, d, pre_append, sv)
+		if _, ok := i["secret"]; ok {
 			c := d.Get(pre_append).(string)
 			if c != "" {
 				tmp["secret"] = c
@@ -923,7 +890,7 @@ func flattenUserRadiusAccountingServer(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenUserRadiusAccountingServerId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserRadiusAccountingServerStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -934,12 +901,8 @@ func flattenUserRadiusAccountingServerServer(v interface{}, d *schema.ResourceDa
 	return v
 }
 
-func flattenUserRadiusAccountingServerSecret(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
 func flattenUserRadiusAccountingServerPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserRadiusAccountingServerSourceIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1074,6 +1037,12 @@ func refreshObjectUserRadius(d *schema.ResourceData, o map[string]interface{}, s
 	if err = d.Set("source_ip", flattenUserRadiusSourceIp(o["source-ip"], d, "source_ip", sv)); err != nil {
 		if !fortiAPIPatch(o["source-ip"]) {
 			return fmt.Errorf("Error reading source_ip: %v", err)
+		}
+	}
+
+	if err = d.Set("source_ip_interface", flattenUserRadiusSourceIpInterface(o["source-ip-interface"], d, "source_ip_interface", sv)); err != nil {
+		if !fortiAPIPatch(o["source-ip-interface"]) {
+			return fmt.Errorf("Error reading source_ip_interface: %v", err)
 		}
 	}
 
@@ -1404,6 +1373,10 @@ func expandUserRadiusSourceIp(d *schema.ResourceData, v interface{}, pre string,
 	return v, nil
 }
 
+func expandUserRadiusSourceIpInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandUserRadiusUsernameCaseSensitive(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -1589,6 +1562,8 @@ func expandUserRadiusAccountingServer(d *schema.ResourceData, v interface{}, pre
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandUserRadiusAccountingServerId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
@@ -1599,21 +1574,29 @@ func expandUserRadiusAccountingServer(d *schema.ResourceData, v interface{}, pre
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "server"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["server"], _ = expandUserRadiusAccountingServerServer(d, i["server"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["server"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "secret"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["secret"], _ = expandUserRadiusAccountingServerSecret(d, i["secret"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["secret"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["port"], _ = expandUserRadiusAccountingServerPort(d, i["port"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["port"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_ip"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["source-ip"], _ = expandUserRadiusAccountingServerSourceIp(d, i["source_ip"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["source-ip"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_select_method"
@@ -1624,6 +1607,8 @@ func expandUserRadiusAccountingServer(d *schema.ResourceData, v interface{}, pre
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["interface"], _ = expandUserRadiusAccountingServerInterface(d, i["interface"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["interface"] = nil
 		}
 
 		result = append(result, tmp)
@@ -1685,6 +1670,8 @@ func getObjectUserRadius(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["server"] = t
 		}
+	} else if d.HasChange("server") {
+		obj["server"] = nil
 	}
 
 	if v, ok := d.GetOk("secret"); ok {
@@ -1694,6 +1681,8 @@ func getObjectUserRadius(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["secret"] = t
 		}
+	} else if d.HasChange("secret") {
+		obj["secret"] = nil
 	}
 
 	if v, ok := d.GetOk("secondary_server"); ok {
@@ -1703,6 +1692,8 @@ func getObjectUserRadius(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["secondary-server"] = t
 		}
+	} else if d.HasChange("secondary_server") {
+		obj["secondary-server"] = nil
 	}
 
 	if v, ok := d.GetOk("secondary_secret"); ok {
@@ -1712,6 +1703,8 @@ func getObjectUserRadius(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["secondary-secret"] = t
 		}
+	} else if d.HasChange("secondary_secret") {
+		obj["secondary-secret"] = nil
 	}
 
 	if v, ok := d.GetOk("tertiary_server"); ok {
@@ -1721,6 +1714,8 @@ func getObjectUserRadius(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["tertiary-server"] = t
 		}
+	} else if d.HasChange("tertiary_server") {
+		obj["tertiary-server"] = nil
 	}
 
 	if v, ok := d.GetOk("tertiary_secret"); ok {
@@ -1730,6 +1725,8 @@ func getObjectUserRadius(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["tertiary-secret"] = t
 		}
+	} else if d.HasChange("tertiary_secret") {
+		obj["tertiary-secret"] = nil
 	}
 
 	if v, ok := d.GetOk("timeout"); ok {
@@ -1811,6 +1808,8 @@ func getObjectUserRadius(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["nas-id"] = t
 		}
+	} else if d.HasChange("nas_id") {
+		obj["nas-id"] = nil
 	}
 
 	if v, ok := d.GetOk("acct_interim_interval"); ok {
@@ -1820,6 +1819,8 @@ func getObjectUserRadius(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["acct-interim-interval"] = t
 		}
+	} else if d.HasChange("acct_interim_interval") {
+		obj["acct-interim-interval"] = nil
 	}
 
 	if v, ok := d.GetOk("radius_coa"); ok {
@@ -1838,6 +1839,8 @@ func getObjectUserRadius(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["radius-port"] = t
 		}
+	} else if d.HasChange("radius_port") {
+		obj["radius-port"] = nil
 	}
 
 	if v, ok := d.GetOk("h3c_compatibility"); ok {
@@ -1865,6 +1868,19 @@ func getObjectUserRadius(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["source-ip"] = t
 		}
+	} else if d.HasChange("source_ip") {
+		obj["source-ip"] = nil
+	}
+
+	if v, ok := d.GetOk("source_ip_interface"); ok {
+		t, err := expandUserRadiusSourceIpInterface(d, v, "source_ip_interface", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["source-ip-interface"] = t
+		}
+	} else if d.HasChange("source_ip_interface") {
+		obj["source-ip-interface"] = nil
 	}
 
 	if v, ok := d.GetOk("username_case_sensitive"); ok {
@@ -1883,6 +1899,8 @@ func getObjectUserRadius(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["group-override-attr-type"] = t
 		}
+	} else if d.HasChange("group_override_attr_type") {
+		obj["group-override-attr-type"] = nil
 	}
 
 	if v, ok := d.GetOk("class"); ok || d.HasChange("class") {
@@ -1973,6 +1991,8 @@ func getObjectUserRadius(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["interface"] = t
 		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
 	}
 
 	if v, ok := d.GetOk("switch_controller_service_type"); ok {
@@ -1982,6 +2002,8 @@ func getObjectUserRadius(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["switch-controller-service-type"] = t
 		}
+	} else if d.HasChange("switch_controller_service_type") {
+		obj["switch-controller-service-type"] = nil
 	}
 
 	if v, ok := d.GetOk("transport_protocol"); ok {
@@ -2009,6 +2031,8 @@ func getObjectUserRadius(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["ca-cert"] = t
 		}
+	} else if d.HasChange("ca_cert") {
+		obj["ca-cert"] = nil
 	}
 
 	if v, ok := d.GetOk("client_cert"); ok {
@@ -2018,6 +2042,8 @@ func getObjectUserRadius(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["client-cert"] = t
 		}
+	} else if d.HasChange("client_cert") {
+		obj["client-cert"] = nil
 	}
 
 	if v, ok := d.GetOk("server_identity_check"); ok {
@@ -2090,6 +2116,8 @@ func getObjectUserRadius(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["rsso-secret"] = t
 		}
+	} else if d.HasChange("rsso_secret") {
+		obj["rsso-secret"] = nil
 	}
 
 	if v, ok := d.GetOk("rsso_endpoint_attribute"); ok {
@@ -2108,6 +2136,8 @@ func getObjectUserRadius(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["rsso-endpoint-block-attribute"] = t
 		}
+	} else if d.HasChange("rsso_endpoint_block_attribute") {
+		obj["rsso-endpoint-block-attribute"] = nil
 	}
 
 	if v, ok := d.GetOk("sso_attribute"); ok {
@@ -2126,6 +2156,8 @@ func getObjectUserRadius(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["sso-attribute-key"] = t
 		}
+	} else if d.HasChange("sso_attribute_key") {
+		obj["sso-attribute-key"] = nil
 	}
 
 	if v, ok := d.GetOk("sso_attribute_value_override"); ok {
@@ -2153,6 +2185,8 @@ func getObjectUserRadius(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["rsso-log-period"] = t
 		}
+	} else if d.HasChange("rsso_log_period") {
+		obj["rsso-log-period"] = nil
 	}
 
 	if v, ok := d.GetOk("rsso_log_flags"); ok {

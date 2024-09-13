@@ -45,13 +45,11 @@ func resourceFirewallInternetServiceAppend() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"append_port": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -176,11 +174,11 @@ func flattenFirewallInternetServiceAppendAddrMode(v interface{}, d *schema.Resou
 }
 
 func flattenFirewallInternetServiceAppendMatchPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallInternetServiceAppendAppendPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectFirewallInternetServiceAppend(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -252,6 +250,8 @@ func getObjectFirewallInternetServiceAppend(d *schema.ResourceData, setArgNil bo
 				obj["match-port"] = t
 			}
 		}
+	} else if d.HasChange("match_port") {
+		obj["match-port"] = nil
 	}
 
 	if v, ok := d.GetOkExists("append_port"); ok {
@@ -265,6 +265,8 @@ func getObjectFirewallInternetServiceAppend(d *schema.ResourceData, setArgNil bo
 				obj["append-port"] = t
 			}
 		}
+	} else if d.HasChange("append_port") {
+		obj["append-port"] = nil
 	}
 
 	return &obj, nil

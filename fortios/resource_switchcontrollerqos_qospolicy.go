@@ -51,13 +51,11 @@ func resourceSwitchControllerQosQosPolicy() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"trust_ip_dscp_map": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"queue_policy": &schema.Schema{
 				Type:         schema.TypeString,
@@ -225,7 +223,7 @@ func flattenSwitchControllerQosQosPolicyName(v interface{}, d *schema.ResourceDa
 }
 
 func flattenSwitchControllerQosQosPolicyDefaultCos(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerQosQosPolicyTrustDot1PMap(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -321,6 +319,8 @@ func getObjectSwitchControllerQosQosPolicy(d *schema.ResourceData, sv string) (*
 		} else if t != nil {
 			obj["default-cos"] = t
 		}
+	} else if d.HasChange("default_cos") {
+		obj["default-cos"] = nil
 	}
 
 	if v, ok := d.GetOk("trust_dot1p_map"); ok {
@@ -330,6 +330,8 @@ func getObjectSwitchControllerQosQosPolicy(d *schema.ResourceData, sv string) (*
 		} else if t != nil {
 			obj["trust-dot1p-map"] = t
 		}
+	} else if d.HasChange("trust_dot1p_map") {
+		obj["trust-dot1p-map"] = nil
 	}
 
 	if v, ok := d.GetOk("trust_ip_dscp_map"); ok {
@@ -339,6 +341,8 @@ func getObjectSwitchControllerQosQosPolicy(d *schema.ResourceData, sv string) (*
 		} else if t != nil {
 			obj["trust-ip-dscp-map"] = t
 		}
+	} else if d.HasChange("trust_ip_dscp_map") {
+		obj["trust-ip-dscp-map"] = nil
 	}
 
 	if v, ok := d.GetOk("queue_policy"); ok {

@@ -262,6 +262,8 @@ func getObjectSystemSmsServer(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["mail-server"] = t
 		}
+	} else if d.HasChange("mail_server") {
+		obj["mail-server"] = nil
 	}
 
 	return &obj, nil

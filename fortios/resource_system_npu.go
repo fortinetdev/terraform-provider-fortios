@@ -60,12 +60,10 @@ func resourceSystemNpu() *schema.Resource {
 			"ipsec_enc_subengine_mask": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"ipsec_dec_subengine_mask": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"np6_cps_optimization_mode": &schema.Schema{
 				Type:     schema.TypeString,
@@ -717,6 +715,8 @@ func getObjectSystemNpu(d *schema.ResourceData, setArgNil bool, sv string) (*map
 				obj["ipsec-enc-subengine-mask"] = t
 			}
 		}
+	} else if d.HasChange("ipsec_enc_subengine_mask") {
+		obj["ipsec-enc-subengine-mask"] = nil
 	}
 
 	if v, ok := d.GetOk("ipsec_dec_subengine_mask"); ok {
@@ -730,6 +730,8 @@ func getObjectSystemNpu(d *schema.ResourceData, setArgNil bool, sv string) (*map
 				obj["ipsec-dec-subengine-mask"] = t
 			}
 		}
+	} else if d.HasChange("ipsec_dec_subengine_mask") {
+		obj["ipsec-dec-subengine-mask"] = nil
 	}
 
 	if v, ok := d.GetOk("np6_cps_optimization_mode"); ok {

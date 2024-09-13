@@ -41,6 +41,11 @@ func resourceFirewallAddress6Template() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Required:     true,
 			},
+			"uuid": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"ip6": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
@@ -58,19 +63,16 @@ func resourceFirewallAddress6Template() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"name": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"bits": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 16),
 							Optional:     true,
-							Computed:     true,
 						},
 						"exclusive": &schema.Schema{
 							Type:     schema.TypeString,
@@ -86,13 +88,11 @@ func resourceFirewallAddress6Template() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 63),
 										Optional:     true,
-										Computed:     true,
 									},
 									"value": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 35),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -274,12 +274,16 @@ func flattenFirewallAddress6TemplateName(v interface{}, d *schema.ResourceData, 
 	return v
 }
 
+func flattenFirewallAddress6TemplateUuid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallAddress6TemplateIp6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
 func flattenFirewallAddress6TemplateSubnetSegmentCount(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallAddress6TemplateSubnetSegment(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -341,7 +345,7 @@ func flattenFirewallAddress6TemplateSubnetSegment(v interface{}, d *schema.Resou
 }
 
 func flattenFirewallAddress6TemplateSubnetSegmentId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallAddress6TemplateSubnetSegmentName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -349,7 +353,7 @@ func flattenFirewallAddress6TemplateSubnetSegmentName(v interface{}, d *schema.R
 }
 
 func flattenFirewallAddress6TemplateSubnetSegmentBits(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallAddress6TemplateSubnetSegmentExclusive(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -426,6 +430,12 @@ func refreshObjectFirewallAddress6Template(d *schema.ResourceData, o map[string]
 		}
 	}
 
+	if err = d.Set("uuid", flattenFirewallAddress6TemplateUuid(o["uuid"], d, "uuid", sv)); err != nil {
+		if !fortiAPIPatch(o["uuid"]) {
+			return fmt.Errorf("Error reading uuid: %v", err)
+		}
+	}
+
 	if err = d.Set("ip6", flattenFirewallAddress6TemplateIp6(o["ip6"], d, "ip6", sv)); err != nil {
 		if !fortiAPIPatch(o["ip6"]) {
 			return fmt.Errorf("Error reading ip6: %v", err)
@@ -473,6 +483,10 @@ func expandFirewallAddress6TemplateName(d *schema.ResourceData, v interface{}, p
 	return v, nil
 }
 
+func expandFirewallAddress6TemplateUuid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallAddress6TemplateIp6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -498,16 +512,22 @@ func expandFirewallAddress6TemplateSubnetSegment(d *schema.ResourceData, v inter
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandFirewallAddress6TemplateSubnetSegmentId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandFirewallAddress6TemplateSubnetSegmentName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "bits"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["bits"], _ = expandFirewallAddress6TemplateSubnetSegmentBits(d, i["bits"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["bits"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "exclusive"
@@ -516,9 +536,9 @@ func expandFirewallAddress6TemplateSubnetSegment(d *schema.ResourceData, v inter
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "values"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["values"], _ = expandFirewallAddress6TemplateSubnetSegmentValues(d, i["values"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["values"] = make([]string, 0)
 		}
 
@@ -563,11 +583,15 @@ func expandFirewallAddress6TemplateSubnetSegmentValues(d *schema.ResourceData, v
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandFirewallAddress6TemplateSubnetSegmentValuesName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["value"], _ = expandFirewallAddress6TemplateSubnetSegmentValuesValue(d, i["value"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["value"] = nil
 		}
 
 		result = append(result, tmp)
@@ -600,6 +624,17 @@ func getObjectFirewallAddress6Template(d *schema.ResourceData, sv string) (*map[
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
+	}
+
+	if v, ok := d.GetOk("uuid"); ok {
+		t, err := expandFirewallAddress6TemplateUuid(d, v, "uuid", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["uuid"] = t
+		}
 	}
 
 	if v, ok := d.GetOk("ip6"); ok {
@@ -618,6 +653,8 @@ func getObjectFirewallAddress6Template(d *schema.ResourceData, sv string) (*map[
 		} else if t != nil {
 			obj["subnet-segment-count"] = t
 		}
+	} else if d.HasChange("subnet_segment_count") {
+		obj["subnet-segment-count"] = nil
 	}
 
 	if v, ok := d.GetOk("subnet_segment"); ok || d.HasChange("subnet_segment") {

@@ -51,7 +51,6 @@ func resourceSystemIke() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 32),
 				Optional:     true,
-				Computed:     true,
 			},
 			"dh_mode": &schema.Schema{
 				Type:     schema.TypeString,
@@ -95,7 +94,6 @@ func resourceSystemIke() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 50000),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -121,7 +119,6 @@ func resourceSystemIke() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 50000),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -147,7 +144,6 @@ func resourceSystemIke() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 50000),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -173,7 +169,6 @@ func resourceSystemIke() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 50000),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -199,7 +194,6 @@ func resourceSystemIke() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 50000),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -225,7 +219,6 @@ func resourceSystemIke() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 50000),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -251,7 +244,6 @@ func resourceSystemIke() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 50000),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -277,7 +269,6 @@ func resourceSystemIke() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 50000),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -303,7 +294,6 @@ func resourceSystemIke() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 50000),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -329,7 +319,6 @@ func resourceSystemIke() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 50000),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -355,7 +344,6 @@ func resourceSystemIke() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 50000),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -381,7 +369,6 @@ func resourceSystemIke() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 50000),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -407,7 +394,6 @@ func resourceSystemIke() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 50000),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -433,7 +419,6 @@ func resourceSystemIke() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 50000),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -459,7 +444,6 @@ func resourceSystemIke() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 50000),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -485,7 +469,6 @@ func resourceSystemIke() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 50000),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -511,7 +494,6 @@ func resourceSystemIke() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 50000),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -640,7 +622,7 @@ func resourceSystemIkeRead(d *schema.ResourceData, m interface{}) error {
 }
 
 func flattenSystemIkeEmbryonicLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemIkeDhMultiprocess(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -648,7 +630,7 @@ func flattenSystemIkeDhMultiprocess(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenSystemIkeDhWorkerCount(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemIkeDhMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -660,7 +642,7 @@ func flattenSystemIkeDhKeypairCache(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenSystemIkeDhKeypairCount(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemIkeDhKeypairThrottle(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -704,7 +686,7 @@ func flattenSystemIkeDhGroup1KeypairCache(v interface{}, d *schema.ResourceData,
 }
 
 func flattenSystemIkeDhGroup1KeypairCount(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemIkeDhGroup2(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -744,7 +726,7 @@ func flattenSystemIkeDhGroup2KeypairCache(v interface{}, d *schema.ResourceData,
 }
 
 func flattenSystemIkeDhGroup2KeypairCount(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemIkeDhGroup5(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -784,7 +766,7 @@ func flattenSystemIkeDhGroup5KeypairCache(v interface{}, d *schema.ResourceData,
 }
 
 func flattenSystemIkeDhGroup5KeypairCount(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemIkeDhGroup14(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -824,7 +806,7 @@ func flattenSystemIkeDhGroup14KeypairCache(v interface{}, d *schema.ResourceData
 }
 
 func flattenSystemIkeDhGroup14KeypairCount(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemIkeDhGroup15(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -864,7 +846,7 @@ func flattenSystemIkeDhGroup15KeypairCache(v interface{}, d *schema.ResourceData
 }
 
 func flattenSystemIkeDhGroup15KeypairCount(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemIkeDhGroup16(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -904,7 +886,7 @@ func flattenSystemIkeDhGroup16KeypairCache(v interface{}, d *schema.ResourceData
 }
 
 func flattenSystemIkeDhGroup16KeypairCount(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemIkeDhGroup17(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -944,7 +926,7 @@ func flattenSystemIkeDhGroup17KeypairCache(v interface{}, d *schema.ResourceData
 }
 
 func flattenSystemIkeDhGroup17KeypairCount(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemIkeDhGroup18(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -984,7 +966,7 @@ func flattenSystemIkeDhGroup18KeypairCache(v interface{}, d *schema.ResourceData
 }
 
 func flattenSystemIkeDhGroup18KeypairCount(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemIkeDhGroup19(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -1024,7 +1006,7 @@ func flattenSystemIkeDhGroup19KeypairCache(v interface{}, d *schema.ResourceData
 }
 
 func flattenSystemIkeDhGroup19KeypairCount(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemIkeDhGroup20(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -1064,7 +1046,7 @@ func flattenSystemIkeDhGroup20KeypairCache(v interface{}, d *schema.ResourceData
 }
 
 func flattenSystemIkeDhGroup20KeypairCount(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemIkeDhGroup21(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -1104,7 +1086,7 @@ func flattenSystemIkeDhGroup21KeypairCache(v interface{}, d *schema.ResourceData
 }
 
 func flattenSystemIkeDhGroup21KeypairCount(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemIkeDhGroup27(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -1144,7 +1126,7 @@ func flattenSystemIkeDhGroup27KeypairCache(v interface{}, d *schema.ResourceData
 }
 
 func flattenSystemIkeDhGroup27KeypairCount(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemIkeDhGroup28(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -1184,7 +1166,7 @@ func flattenSystemIkeDhGroup28KeypairCache(v interface{}, d *schema.ResourceData
 }
 
 func flattenSystemIkeDhGroup28KeypairCount(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemIkeDhGroup29(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -1224,7 +1206,7 @@ func flattenSystemIkeDhGroup29KeypairCache(v interface{}, d *schema.ResourceData
 }
 
 func flattenSystemIkeDhGroup29KeypairCount(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemIkeDhGroup30(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -1264,7 +1246,7 @@ func flattenSystemIkeDhGroup30KeypairCache(v interface{}, d *schema.ResourceData
 }
 
 func flattenSystemIkeDhGroup30KeypairCount(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemIkeDhGroup31(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -1304,7 +1286,7 @@ func flattenSystemIkeDhGroup31KeypairCache(v interface{}, d *schema.ResourceData
 }
 
 func flattenSystemIkeDhGroup31KeypairCount(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemIkeDhGroup32(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -1344,7 +1326,7 @@ func flattenSystemIkeDhGroup32KeypairCache(v interface{}, d *schema.ResourceData
 }
 
 func flattenSystemIkeDhGroup32KeypairCount(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectSystemIke(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -2597,6 +2579,8 @@ func getObjectSystemIke(d *schema.ResourceData, setArgNil bool, sv string) (*map
 				obj["dh-worker-count"] = t
 			}
 		}
+	} else if d.HasChange("dh_worker_count") {
+		obj["dh-worker-count"] = nil
 	}
 
 	if v, ok := d.GetOk("dh_mode"); ok {

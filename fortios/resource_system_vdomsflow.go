@@ -49,7 +49,6 @@ func resourceSystemVdomSflow() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"collector_ip": &schema.Schema{
 							Type:     schema.TypeString,
@@ -76,7 +75,6 @@ func resourceSystemVdomSflow() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -106,7 +104,6 @@ func resourceSystemVdomSflow() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
@@ -304,7 +301,7 @@ func flattenSystemVdomSflowCollectors(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenSystemVdomSflowCollectorsId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVdomSflowCollectorsCollectorIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -312,7 +309,7 @@ func flattenSystemVdomSflowCollectorsCollectorIp(v interface{}, d *schema.Resour
 }
 
 func flattenSystemVdomSflowCollectorsCollectorPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVdomSflowCollectorsSourceIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -332,7 +329,7 @@ func flattenSystemVdomSflowCollectorIp(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenSystemVdomSflowCollectorPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVdomSflowSourceIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -438,6 +435,8 @@ func expandSystemVdomSflowCollectors(d *schema.ResourceData, v interface{}, pre 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSystemVdomSflowCollectorsId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "collector_ip"
@@ -463,6 +462,8 @@ func expandSystemVdomSflowCollectors(d *schema.ResourceData, v interface{}, pre 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["interface"], _ = expandSystemVdomSflowCollectorsInterface(d, i["interface"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["interface"] = nil
 		}
 
 		result = append(result, tmp)
@@ -609,6 +610,8 @@ func getObjectSystemVdomSflow(d *schema.ResourceData, setArgNil bool, sv string)
 				obj["interface"] = t
 			}
 		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
 	}
 
 	return &obj, nil

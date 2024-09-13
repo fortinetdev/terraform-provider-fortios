@@ -46,19 +46,16 @@ func resourceExtensionControllerExtenderVap() *schema.Resource {
 			"type": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"ssid": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 32),
 				Optional:     true,
-				Computed:     true,
 			},
 			"max_clients": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 512),
 				Optional:     true,
-				Computed:     true,
 			},
 			"broadcast_ssid": &schema.Schema{
 				Type:     schema.TypeString,
@@ -106,29 +103,28 @@ func resourceExtensionControllerExtenderVap() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 59),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"sae_password": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 124),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"auth_server_address": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"auth_server_port": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"auth_server_secret": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ip_address": &schema.Schema{
 				Type:     schema.TypeString,
@@ -148,7 +144,6 @@ func resourceExtensionControllerExtenderVap() *schema.Resource {
 			"allowaccess": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 		},
 	}
@@ -318,7 +313,7 @@ func flattenExtensionControllerExtenderVapSsid(v interface{}, d *schema.Resource
 }
 
 func flattenExtensionControllerExtenderVapMaxClients(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenExtensionControllerExtenderVapBroadcastSsid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -330,11 +325,11 @@ func flattenExtensionControllerExtenderVapSecurity(v interface{}, d *schema.Reso
 }
 
 func flattenExtensionControllerExtenderVapDtim(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenExtensionControllerExtenderVapRtsThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenExtensionControllerExtenderVapPmf(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -353,20 +348,12 @@ func flattenExtensionControllerExtenderVapMuMimo(v interface{}, d *schema.Resour
 	return v
 }
 
-func flattenExtensionControllerExtenderVapPassphrase(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenExtensionControllerExtenderVapSaePassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
 func flattenExtensionControllerExtenderVapAuthServerAddress(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
 func flattenExtensionControllerExtenderVapAuthServerPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenExtensionControllerExtenderVapAuthServerSecret(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -461,18 +448,6 @@ func refreshObjectExtensionControllerExtenderVap(d *schema.ResourceData, o map[s
 	if err = d.Set("mu_mimo", flattenExtensionControllerExtenderVapMuMimo(o["mu-mimo"], d, "mu_mimo", sv)); err != nil {
 		if !fortiAPIPatch(o["mu-mimo"]) {
 			return fmt.Errorf("Error reading mu_mimo: %v", err)
-		}
-	}
-
-	if err = d.Set("passphrase", flattenExtensionControllerExtenderVapPassphrase(o["passphrase"], d, "passphrase", sv)); err != nil {
-		if !fortiAPIPatch(o["passphrase"]) {
-			return fmt.Errorf("Error reading passphrase: %v", err)
-		}
-	}
-
-	if err = d.Set("sae_password", flattenExtensionControllerExtenderVapSaePassword(o["sae-password"], d, "sae_password", sv)); err != nil {
-		if !fortiAPIPatch(o["sae-password"]) {
-			return fmt.Errorf("Error reading sae_password: %v", err)
 		}
 	}
 
@@ -630,6 +605,8 @@ func getObjectExtensionControllerExtenderVap(d *schema.ResourceData, sv string) 
 		} else if t != nil {
 			obj["type"] = t
 		}
+	} else if d.HasChange("type") {
+		obj["type"] = nil
 	}
 
 	if v, ok := d.GetOk("ssid"); ok {
@@ -639,6 +616,8 @@ func getObjectExtensionControllerExtenderVap(d *schema.ResourceData, sv string) 
 		} else if t != nil {
 			obj["ssid"] = t
 		}
+	} else if d.HasChange("ssid") {
+		obj["ssid"] = nil
 	}
 
 	if v, ok := d.GetOkExists("max_clients"); ok {
@@ -648,6 +627,8 @@ func getObjectExtensionControllerExtenderVap(d *schema.ResourceData, sv string) 
 		} else if t != nil {
 			obj["max-clients"] = t
 		}
+	} else if d.HasChange("max_clients") {
+		obj["max-clients"] = nil
 	}
 
 	if v, ok := d.GetOk("broadcast_ssid"); ok {
@@ -729,6 +710,8 @@ func getObjectExtensionControllerExtenderVap(d *schema.ResourceData, sv string) 
 		} else if t != nil {
 			obj["passphrase"] = t
 		}
+	} else if d.HasChange("passphrase") {
+		obj["passphrase"] = nil
 	}
 
 	if v, ok := d.GetOk("sae_password"); ok {
@@ -738,6 +721,8 @@ func getObjectExtensionControllerExtenderVap(d *schema.ResourceData, sv string) 
 		} else if t != nil {
 			obj["sae-password"] = t
 		}
+	} else if d.HasChange("sae_password") {
+		obj["sae-password"] = nil
 	}
 
 	if v, ok := d.GetOk("auth_server_address"); ok {
@@ -747,6 +732,8 @@ func getObjectExtensionControllerExtenderVap(d *schema.ResourceData, sv string) 
 		} else if t != nil {
 			obj["auth-server-address"] = t
 		}
+	} else if d.HasChange("auth_server_address") {
+		obj["auth-server-address"] = nil
 	}
 
 	if v, ok := d.GetOk("auth_server_port"); ok {
@@ -756,6 +743,8 @@ func getObjectExtensionControllerExtenderVap(d *schema.ResourceData, sv string) 
 		} else if t != nil {
 			obj["auth-server-port"] = t
 		}
+	} else if d.HasChange("auth_server_port") {
+		obj["auth-server-port"] = nil
 	}
 
 	if v, ok := d.GetOk("auth_server_secret"); ok {
@@ -765,6 +754,8 @@ func getObjectExtensionControllerExtenderVap(d *schema.ResourceData, sv string) 
 		} else if t != nil {
 			obj["auth-server-secret"] = t
 		}
+	} else if d.HasChange("auth_server_secret") {
+		obj["auth-server-secret"] = nil
 	}
 
 	if v, ok := d.GetOk("ip_address"); ok {
@@ -801,6 +792,8 @@ func getObjectExtensionControllerExtenderVap(d *schema.ResourceData, sv string) 
 		} else if t != nil {
 			obj["allowaccess"] = t
 		}
+	} else if d.HasChange("allowaccess") {
+		obj["allowaccess"] = nil
 	}
 
 	return &obj, nil

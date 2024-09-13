@@ -46,7 +46,6 @@ func resourceSwitchControllerAclIngress() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"action": &schema.Schema{
 				Type:     schema.TypeList,
@@ -99,7 +98,6 @@ func resourceSwitchControllerAclIngress() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 4094),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -265,7 +263,7 @@ func resourceSwitchControllerAclIngressRead(d *schema.ResourceData, m interface{
 }
 
 func flattenSwitchControllerAclIngressId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerAclIngressDescription(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -372,7 +370,7 @@ func flattenSwitchControllerAclIngressClassifierSrcMac(v interface{}, d *schema.
 }
 
 func flattenSwitchControllerAclIngressClassifierVlan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectSwitchControllerAclIngress(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -548,6 +546,8 @@ func getObjectSwitchControllerAclIngress(d *schema.ResourceData, sv string) (*ma
 		} else if t != nil {
 			obj["description"] = t
 		}
+	} else if d.HasChange("description") {
+		obj["description"] = nil
 	}
 
 	if v, ok := d.GetOk("action"); ok {

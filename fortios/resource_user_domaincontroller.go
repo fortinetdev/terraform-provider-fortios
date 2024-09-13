@@ -47,18 +47,17 @@ func resourceUserDomainController() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"username": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 64),
 				Optional:     true,
-				Computed:     true,
 			},
 			"password": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"ip_address": &schema.Schema{
 				Type:     schema.TypeString,
@@ -89,7 +88,6 @@ func resourceUserDomainController() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"interface_select_method": &schema.Schema{
 				Type:     schema.TypeString,
@@ -100,7 +98,6 @@ func resourceUserDomainController() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"extra_server": &schema.Schema{
 				Type:     schema.TypeList,
@@ -111,7 +108,6 @@ func resourceUserDomainController() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 100),
 							Optional:     true,
-							Computed:     true,
 						},
 						"ip_address": &schema.Schema{
 							Type:     schema.TypeString,
@@ -133,7 +129,6 @@ func resourceUserDomainController() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -142,13 +137,11 @@ func resourceUserDomainController() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"replication_port": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ldap_server": &schema.Schema{
 				Type:     schema.TypeString,
@@ -179,7 +172,6 @@ func resourceUserDomainController() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"adlds_ip_address": &schema.Schema{
 				Type:     schema.TypeString,
@@ -374,10 +366,6 @@ func flattenUserDomainControllerUsername(v interface{}, d *schema.ResourceData, 
 	return v
 }
 
-func flattenUserDomainControllerPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
 func flattenUserDomainControllerIpAddress(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -387,7 +375,7 @@ func flattenUserDomainControllerIp6(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenUserDomainControllerPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserDomainControllerSourceIpAddress(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -399,7 +387,7 @@ func flattenUserDomainControllerSourceIp6(v interface{}, d *schema.ResourceData,
 }
 
 func flattenUserDomainControllerSourcePort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserDomainControllerInterfaceSelectMethod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -469,7 +457,7 @@ func flattenUserDomainControllerExtraServer(v interface{}, d *schema.ResourceDat
 }
 
 func flattenUserDomainControllerExtraServerId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserDomainControllerExtraServerIpAddress(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -477,7 +465,7 @@ func flattenUserDomainControllerExtraServerIpAddress(v interface{}, d *schema.Re
 }
 
 func flattenUserDomainControllerExtraServerPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserDomainControllerExtraServerSourceIpAddress(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -485,7 +473,7 @@ func flattenUserDomainControllerExtraServerSourceIpAddress(v interface{}, d *sch
 }
 
 func flattenUserDomainControllerExtraServerSourcePort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserDomainControllerDomainName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -493,11 +481,11 @@ func flattenUserDomainControllerDomainName(v interface{}, d *schema.ResourceData
 }
 
 func flattenUserDomainControllerReplicationPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserDomainControllerLdapServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convmap2str(v, d.Get("ldap_server"), "name")
 }
 
 func flattenUserDomainControllerChangeDetection(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -505,7 +493,7 @@ func flattenUserDomainControllerChangeDetection(v interface{}, d *schema.Resourc
 }
 
 func flattenUserDomainControllerChangeDetectionPeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserDomainControllerDnsSrvLookup(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -529,7 +517,7 @@ func flattenUserDomainControllerAdldsIp6(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenUserDomainControllerAdldsPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectUserDomainController(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -556,12 +544,6 @@ func refreshObjectUserDomainController(d *schema.ResourceData, o map[string]inte
 	if err = d.Set("username", flattenUserDomainControllerUsername(o["username"], d, "username", sv)); err != nil {
 		if !fortiAPIPatch(o["username"]) {
 			return fmt.Errorf("Error reading username: %v", err)
-		}
-	}
-
-	if err = d.Set("password", flattenUserDomainControllerPassword(o["password"], d, "password", sv)); err != nil {
-		if !fortiAPIPatch(o["password"]) {
-			return fmt.Errorf("Error reading password: %v", err)
 		}
 	}
 
@@ -641,42 +623,9 @@ func refreshObjectUserDomainController(d *schema.ResourceData, o map[string]inte
 		}
 	}
 
-	{
-		v := flattenUserDomainControllerLdapServer(o["ldap-server"], d, "ldap_server", sv)
-		vx := ""
-		bstring := false
-		new_version_map := map[string][]string{
-			">=": []string{"6.4.10"},
-		}
-		if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
-			l := v.([]interface{})
-			if len(l) > 0 {
-				for k, r := range l {
-					i := r.(map[string]interface{})
-					if _, ok := i["name"]; ok {
-						if xv, ok := i["name"].(string); ok {
-							vx += xv
-							if k < len(l)-1 {
-								vx += ", "
-							}
-						}
-					}
-				}
-			}
-			bstring = true
-		}
-		if bstring == true {
-			if err = d.Set("ldap_server", vx); err != nil {
-				if !fortiAPIPatch(o["ldap-server"]) {
-					return fmt.Errorf("Error reading ldap_server: %v", err)
-				}
-			}
-		} else {
-			if err = d.Set("ldap_server", v); err != nil {
-				if !fortiAPIPatch(o["ldap-server"]) {
-					return fmt.Errorf("Error reading ldap_server: %v", err)
-				}
-			}
+	if err = d.Set("ldap_server", flattenUserDomainControllerLdapServer(o["ldap-server"], d, "ldap_server", sv)); err != nil {
+		if !fortiAPIPatch(o["ldap-server"]) {
+			return fmt.Errorf("Error reading ldap_server: %v", err)
 		}
 	}
 
@@ -802,6 +751,8 @@ func expandUserDomainControllerExtraServer(d *schema.ResourceData, v interface{}
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandUserDomainControllerExtraServerId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip_address"
@@ -822,6 +773,8 @@ func expandUserDomainControllerExtraServer(d *schema.ResourceData, v interface{}
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_port"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["source-port"], _ = expandUserDomainControllerExtraServerSourcePort(d, i["source_port"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["source-port"] = nil
 		}
 
 		result = append(result, tmp)
@@ -861,7 +814,25 @@ func expandUserDomainControllerReplicationPort(d *schema.ResourceData, v interfa
 }
 
 func expandUserDomainControllerLdapServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
+	new_version_map := map[string][]string{
+		">=": []string{"6.4.10"},
+	}
+	if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
+		vx := fmt.Sprintf("%v", v)
+		vxx := strings.Split(vx, ", ")
+
+		tmps := make([]map[string]interface{}, 0, len(vxx))
+
+		for _, xv := range vxx {
+			xtmp := make(map[string]interface{})
+			xtmp["name"] = xv
+
+			tmps = append(tmps, xtmp)
+		}
+		return tmps, nil
+	} else {
+		return v, nil
+	}
 }
 
 func expandUserDomainControllerChangeDetection(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
@@ -915,6 +886,8 @@ func getObjectUserDomainController(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["hostname"] = t
 		}
+	} else if d.HasChange("hostname") {
+		obj["hostname"] = nil
 	}
 
 	if v, ok := d.GetOk("username"); ok {
@@ -924,6 +897,8 @@ func getObjectUserDomainController(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["username"] = t
 		}
+	} else if d.HasChange("username") {
+		obj["username"] = nil
 	}
 
 	if v, ok := d.GetOk("password"); ok {
@@ -933,6 +908,8 @@ func getObjectUserDomainController(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["password"] = t
 		}
+	} else if d.HasChange("password") {
+		obj["password"] = nil
 	}
 
 	if v, ok := d.GetOk("ip_address"); ok {
@@ -987,6 +964,8 @@ func getObjectUserDomainController(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["source-port"] = t
 		}
+	} else if d.HasChange("source_port") {
+		obj["source-port"] = nil
 	}
 
 	if v, ok := d.GetOk("interface_select_method"); ok {
@@ -1005,6 +984,8 @@ func getObjectUserDomainController(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["interface"] = t
 		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
 	}
 
 	if v, ok := d.GetOk("extra_server"); ok || d.HasChange("extra_server") {
@@ -1023,6 +1004,8 @@ func getObjectUserDomainController(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["domain-name"] = t
 		}
+	} else if d.HasChange("domain_name") {
+		obj["domain-name"] = nil
 	}
 
 	if v, ok := d.GetOkExists("replication_port"); ok {
@@ -1032,6 +1015,8 @@ func getObjectUserDomainController(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["replication-port"] = t
 		}
+	} else if d.HasChange("replication_port") {
+		obj["replication-port"] = nil
 	}
 
 	if v, ok := d.GetOk("ldap_server"); ok {
@@ -1039,26 +1024,10 @@ func getObjectUserDomainController(d *schema.ResourceData, sv string) (*map[stri
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
-			new_version_map := map[string][]string{
-				">=": []string{"6.4.10"},
-			}
-			if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
-				vx := fmt.Sprintf("%v", t)
-				vxx := strings.Split(vx, ", ")
-
-				tmps := make([]map[string]interface{}, 0, len(vxx))
-
-				for _, xv := range vxx {
-					xtmp := make(map[string]interface{})
-					xtmp["name"] = xv
-
-					tmps = append(tmps, xtmp)
-				}
-				obj["ldap-server"] = tmps
-			} else {
-				obj["ldap-server"] = t
-			}
+			obj["ldap-server"] = t
 		}
+	} else if d.HasChange("ldap_server") {
+		obj["ldap-server"] = nil
 	}
 
 	if v, ok := d.GetOk("change_detection"); ok {
@@ -1104,6 +1073,8 @@ func getObjectUserDomainController(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["adlds-dn"] = t
 		}
+	} else if d.HasChange("adlds_dn") {
+		obj["adlds-dn"] = nil
 	}
 
 	if v, ok := d.GetOk("adlds_ip_address"); ok {

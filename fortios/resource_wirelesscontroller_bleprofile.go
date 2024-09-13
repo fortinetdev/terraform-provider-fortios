@@ -47,12 +47,10 @@ func resourceWirelessControllerBleProfile() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"advertising": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"ibeacon_uuid": &schema.Schema{
 				Type:         schema.TypeString,
@@ -319,11 +317,11 @@ func flattenWirelessControllerBleProfileIbeaconUuid(v interface{}, d *schema.Res
 }
 
 func flattenWirelessControllerBleProfileMajorId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerBleProfileMinorId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerBleProfileEddystoneNamespace(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -347,7 +345,7 @@ func flattenWirelessControllerBleProfileTxpower(v interface{}, d *schema.Resourc
 }
 
 func flattenWirelessControllerBleProfileBeaconInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerBleProfileBleScanning(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -363,19 +361,19 @@ func flattenWirelessControllerBleProfileScanThreshold(v interface{}, d *schema.R
 }
 
 func flattenWirelessControllerBleProfileScanPeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerBleProfileScanTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerBleProfileScanInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerBleProfileScanWindow(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectWirelessControllerBleProfile(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -599,6 +597,8 @@ func getObjectWirelessControllerBleProfile(d *schema.ResourceData, sv string) (*
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("advertising"); ok {
@@ -608,6 +608,8 @@ func getObjectWirelessControllerBleProfile(d *schema.ResourceData, sv string) (*
 		} else if t != nil {
 			obj["advertising"] = t
 		}
+	} else if d.HasChange("advertising") {
+		obj["advertising"] = nil
 	}
 
 	if v, ok := d.GetOk("ibeacon_uuid"); ok {

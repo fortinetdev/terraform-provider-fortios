@@ -49,7 +49,6 @@ func resourceAntivirusSettings() *schema.Resource {
 			"default_db": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"grayware": &schema.Schema{
 				Type:     schema.TypeString,
@@ -60,7 +59,6 @@ func resourceAntivirusSettings() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(30, 3600),
 				Optional:     true,
-				Computed:     true,
 			},
 			"cache_infected_result": &schema.Schema{
 				Type:     schema.TypeString,
@@ -207,7 +205,7 @@ func flattenAntivirusSettingsGrayware(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenAntivirusSettingsOverrideTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenAntivirusSettingsCacheInfectedResult(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -340,6 +338,8 @@ func getObjectAntivirusSettings(d *schema.ResourceData, setArgNil bool, sv strin
 				obj["default-db"] = t
 			}
 		}
+	} else if d.HasChange("default_db") {
+		obj["default-db"] = nil
 	}
 
 	if v, ok := d.GetOk("grayware"); ok {
@@ -366,6 +366,8 @@ func getObjectAntivirusSettings(d *schema.ResourceData, setArgNil bool, sv strin
 				obj["override-timeout"] = t
 			}
 		}
+	} else if d.HasChange("override_timeout") {
+		obj["override-timeout"] = nil
 	}
 
 	if v, ok := d.GetOk("cache_infected_result"); ok {

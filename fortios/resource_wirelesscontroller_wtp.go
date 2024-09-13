@@ -46,7 +46,6 @@ func resourceWirelessControllerWtp() *schema.Resource {
 			"index": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"uuid": &schema.Schema{
 				Type:     schema.TypeString,
@@ -62,19 +61,16 @@ func resourceWirelessControllerWtp() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"location": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"region": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"region_x": &schema.Schema{
 				Type:         schema.TypeString,
@@ -92,7 +88,6 @@ func resourceWirelessControllerWtp() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"firmware_provision_latest": &schema.Schema{
 				Type:     schema.TypeString,
@@ -107,31 +102,26 @@ func resourceWirelessControllerWtp() *schema.Resource {
 			"wtp_mode": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"apcfg_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"bonjour_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ble_major_id": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ble_minor_id": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"override_led_state": &schema.Schema{
 				Type:     schema.TypeString,
@@ -167,13 +157,11 @@ func resourceWirelessControllerWtp() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(576, 1500),
 				Optional:     true,
-				Computed:     true,
 			},
 			"tun_mtu_downlink": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(576, 1500),
 				Optional:     true,
-				Computed:     true,
 			},
 			"override_split_tunnel": &schema.Schema{
 				Type:     schema.TypeString,
@@ -198,7 +186,6 @@ func resourceWirelessControllerWtp() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"dest_ip": &schema.Schema{
 							Type:     schema.TypeString,
@@ -229,7 +216,6 @@ func resourceWirelessControllerWtp() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 						"port1_mode": &schema.Schema{
 							Type:     schema.TypeString,
@@ -240,7 +226,6 @@ func resourceWirelessControllerWtp() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 						"port2_mode": &schema.Schema{
 							Type:     schema.TypeString,
@@ -251,7 +236,6 @@ func resourceWirelessControllerWtp() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 						"port3_mode": &schema.Schema{
 							Type:     schema.TypeString,
@@ -262,7 +246,6 @@ func resourceWirelessControllerWtp() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 						"port4_mode": &schema.Schema{
 							Type:     schema.TypeString,
@@ -273,7 +256,6 @@ func resourceWirelessControllerWtp() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 						"port5_mode": &schema.Schema{
 							Type:     schema.TypeString,
@@ -284,7 +266,6 @@ func resourceWirelessControllerWtp() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 						"port6_mode": &schema.Schema{
 							Type:     schema.TypeString,
@@ -295,7 +276,6 @@ func resourceWirelessControllerWtp() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 						"port7_mode": &schema.Schema{
 							Type:     schema.TypeString,
@@ -306,7 +286,6 @@ func resourceWirelessControllerWtp() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 						"port8_mode": &schema.Schema{
 							Type:     schema.TypeString,
@@ -317,7 +296,6 @@ func resourceWirelessControllerWtp() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 						"port_esl_mode": &schema.Schema{
 							Type:     schema.TypeString,
@@ -328,7 +306,6 @@ func resourceWirelessControllerWtp() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -341,7 +318,6 @@ func resourceWirelessControllerWtp() *schema.Resource {
 			"allowaccess": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"override_login_passwd_change": &schema.Schema{
 				Type:     schema.TypeString,
@@ -370,7 +346,6 @@ func resourceWirelessControllerWtp() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 2),
 							Optional:     true,
-							Computed:     true,
 						},
 						"override_band": &schema.Schema{
 							Type:     schema.TypeString,
@@ -380,17 +355,14 @@ func resourceWirelessControllerWtp() *schema.Resource {
 						"band": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"override_analysis": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"spectrum_analysis": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"override_txpower": &schema.Schema{
 							Type:     schema.TypeString,
@@ -454,7 +426,6 @@ func resourceWirelessControllerWtp() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 35),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -473,7 +444,6 @@ func resourceWirelessControllerWtp() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 3),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -497,7 +467,6 @@ func resourceWirelessControllerWtp() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 2),
 							Optional:     true,
-							Computed:     true,
 						},
 						"override_band": &schema.Schema{
 							Type:     schema.TypeString,
@@ -507,17 +476,14 @@ func resourceWirelessControllerWtp() *schema.Resource {
 						"band": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"override_analysis": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"spectrum_analysis": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"override_txpower": &schema.Schema{
 							Type:     schema.TypeString,
@@ -581,7 +547,6 @@ func resourceWirelessControllerWtp() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 35),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -600,7 +565,6 @@ func resourceWirelessControllerWtp() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 3),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -628,17 +592,14 @@ func resourceWirelessControllerWtp() *schema.Resource {
 						"band": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"override_analysis": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"spectrum_analysis": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"override_txpower": &schema.Schema{
 							Type:     schema.TypeString,
@@ -702,7 +663,6 @@ func resourceWirelessControllerWtp() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 35),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -721,7 +681,6 @@ func resourceWirelessControllerWtp() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 3),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -749,17 +708,14 @@ func resourceWirelessControllerWtp() *schema.Resource {
 						"band": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"override_analysis": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"spectrum_analysis": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"override_txpower": &schema.Schema{
 							Type:     schema.TypeString,
@@ -823,7 +779,6 @@ func resourceWirelessControllerWtp() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 35),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -842,7 +797,6 @@ func resourceWirelessControllerWtp() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 3),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -874,13 +828,11 @@ func resourceWirelessControllerWtp() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 19),
 				Optional:     true,
-				Computed:     true,
 			},
 			"coordinate_longitude": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 19),
 				Optional:     true,
-				Computed:     true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
@@ -1052,7 +1004,7 @@ func flattenWirelessControllerWtpWtpId(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenWirelessControllerWtpIndex(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerWtpUuid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1108,11 +1060,11 @@ func flattenWirelessControllerWtpBonjourProfile(v interface{}, d *schema.Resourc
 }
 
 func flattenWirelessControllerWtpBleMajorId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerWtpBleMinorId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerWtpOverrideLedState(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1140,11 +1092,11 @@ func flattenWirelessControllerWtpIpFragmentPreventing(v interface{}, d *schema.R
 }
 
 func flattenWirelessControllerWtpTunMtuUplink(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerWtpTunMtuDownlink(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerWtpOverrideSplitTunnel(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1203,7 +1155,7 @@ func flattenWirelessControllerWtpSplitTunnelingAcl(v interface{}, d *schema.Reso
 }
 
 func flattenWirelessControllerWtpSplitTunnelingAclId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerWtpSplitTunnelingAclDestIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1430,10 +1382,6 @@ func flattenWirelessControllerWtpLoginPasswdChange(v interface{}, d *schema.Reso
 	return v
 }
 
-func flattenWirelessControllerWtpLoginPasswd(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
 func flattenWirelessControllerWtpRadio1(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -1543,7 +1491,7 @@ func flattenWirelessControllerWtpRadio1(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenWirelessControllerWtpRadio1RadioId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerWtpRadio1OverrideBand(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1571,11 +1519,11 @@ func flattenWirelessControllerWtpRadio1AutoPowerLevel(v interface{}, d *schema.R
 }
 
 func flattenWirelessControllerWtpRadio1AutoPowerHigh(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerWtpRadio1AutoPowerLow(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerWtpRadio1AutoPowerTarget(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1587,11 +1535,11 @@ func flattenWirelessControllerWtpRadio1PowerMode(v interface{}, d *schema.Resour
 }
 
 func flattenWirelessControllerWtpRadio1PowerLevel(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerWtpRadio1PowerValue(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerWtpRadio1OverrideVaps(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1803,7 +1751,7 @@ func flattenWirelessControllerWtpRadio2(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenWirelessControllerWtpRadio2RadioId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerWtpRadio2OverrideBand(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1831,11 +1779,11 @@ func flattenWirelessControllerWtpRadio2AutoPowerLevel(v interface{}, d *schema.R
 }
 
 func flattenWirelessControllerWtpRadio2AutoPowerHigh(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerWtpRadio2AutoPowerLow(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerWtpRadio2AutoPowerTarget(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1847,11 +1795,11 @@ func flattenWirelessControllerWtpRadio2PowerMode(v interface{}, d *schema.Resour
 }
 
 func flattenWirelessControllerWtpRadio2PowerLevel(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerWtpRadio2PowerValue(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerWtpRadio2OverrideVaps(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2082,11 +2030,11 @@ func flattenWirelessControllerWtpRadio3AutoPowerLevel(v interface{}, d *schema.R
 }
 
 func flattenWirelessControllerWtpRadio3AutoPowerHigh(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerWtpRadio3AutoPowerLow(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerWtpRadio3AutoPowerTarget(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2098,11 +2046,11 @@ func flattenWirelessControllerWtpRadio3PowerMode(v interface{}, d *schema.Resour
 }
 
 func flattenWirelessControllerWtpRadio3PowerLevel(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerWtpRadio3PowerValue(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerWtpRadio3OverrideVaps(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2333,11 +2281,11 @@ func flattenWirelessControllerWtpRadio4AutoPowerLevel(v interface{}, d *schema.R
 }
 
 func flattenWirelessControllerWtpRadio4AutoPowerHigh(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerWtpRadio4AutoPowerLow(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerWtpRadio4AutoPowerTarget(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2349,11 +2297,11 @@ func flattenWirelessControllerWtpRadio4PowerMode(v interface{}, d *schema.Resour
 }
 
 func flattenWirelessControllerWtpRadio4PowerLevel(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerWtpRadio4PowerValue(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerWtpRadio4OverrideVaps(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2947,6 +2895,8 @@ func expandWirelessControllerWtpSplitTunnelingAcl(d *schema.ResourceData, v inte
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandWirelessControllerWtpSplitTunnelingAclId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dest_ip"
@@ -4063,6 +4013,8 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["index"] = t
 		}
+	} else if d.HasChange("index") {
+		obj["index"] = nil
 	}
 
 	if v, ok := d.GetOk("uuid"); ok {
@@ -4090,6 +4042,8 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("location"); ok {
@@ -4099,6 +4053,8 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["location"] = t
 		}
+	} else if d.HasChange("location") {
+		obj["location"] = nil
 	}
 
 	if v, ok := d.GetOk("region"); ok {
@@ -4108,6 +4064,8 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["region"] = t
 		}
+	} else if d.HasChange("region") {
+		obj["region"] = nil
 	}
 
 	if v, ok := d.GetOk("region_x"); ok {
@@ -4135,6 +4093,8 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["firmware-provision"] = t
 		}
+	} else if d.HasChange("firmware_provision") {
+		obj["firmware-provision"] = nil
 	}
 
 	if v, ok := d.GetOk("firmware_provision_latest"); ok {
@@ -4153,6 +4113,8 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["wtp-profile"] = t
 		}
+	} else if d.HasChange("wtp_profile") {
+		obj["wtp-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("wtp_mode"); ok {
@@ -4162,6 +4124,8 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["wtp-mode"] = t
 		}
+	} else if d.HasChange("wtp_mode") {
+		obj["wtp-mode"] = nil
 	}
 
 	if v, ok := d.GetOk("apcfg_profile"); ok {
@@ -4171,6 +4135,8 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["apcfg-profile"] = t
 		}
+	} else if d.HasChange("apcfg_profile") {
+		obj["apcfg-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("bonjour_profile"); ok {
@@ -4180,6 +4146,8 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["bonjour-profile"] = t
 		}
+	} else if d.HasChange("bonjour_profile") {
+		obj["bonjour-profile"] = nil
 	}
 
 	if v, ok := d.GetOkExists("ble_major_id"); ok {
@@ -4189,6 +4157,8 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["ble-major-id"] = t
 		}
+	} else if d.HasChange("ble_major_id") {
+		obj["ble-major-id"] = nil
 	}
 
 	if v, ok := d.GetOkExists("ble_minor_id"); ok {
@@ -4198,6 +4168,8 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["ble-minor-id"] = t
 		}
+	} else if d.HasChange("ble_minor_id") {
+		obj["ble-minor-id"] = nil
 	}
 
 	if v, ok := d.GetOk("override_led_state"); ok {
@@ -4261,6 +4233,8 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["tun-mtu-uplink"] = t
 		}
+	} else if d.HasChange("tun_mtu_uplink") {
+		obj["tun-mtu-uplink"] = nil
 	}
 
 	if v, ok := d.GetOk("tun_mtu_downlink"); ok {
@@ -4270,6 +4244,8 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["tun-mtu-downlink"] = t
 		}
+	} else if d.HasChange("tun_mtu_downlink") {
+		obj["tun-mtu-downlink"] = nil
 	}
 
 	if v, ok := d.GetOk("override_split_tunnel"); ok {
@@ -4342,6 +4318,8 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["allowaccess"] = t
 		}
+	} else if d.HasChange("allowaccess") {
+		obj["allowaccess"] = nil
 	}
 
 	if v, ok := d.GetOk("override_login_passwd_change"); ok {
@@ -4369,6 +4347,8 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["login-passwd"] = t
 		}
+	} else if d.HasChange("login_passwd") {
+		obj["login-passwd"] = nil
 	}
 
 	if v, ok := d.GetOk("radio_1"); ok {
@@ -4441,6 +4421,8 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["coordinate-latitude"] = t
 		}
+	} else if d.HasChange("coordinate_latitude") {
+		obj["coordinate-latitude"] = nil
 	}
 
 	if v, ok := d.GetOk("coordinate_longitude"); ok {
@@ -4450,6 +4432,8 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["coordinate-longitude"] = t
 		}
+	} else if d.HasChange("coordinate_longitude") {
+		obj["coordinate-longitude"] = nil
 	}
 
 	return &obj, nil

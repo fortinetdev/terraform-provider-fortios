@@ -209,7 +209,7 @@ func resourceFirewallSslSettingRead(d *schema.ResourceData, m interface{}) error
 }
 
 func flattenFirewallSslSettingProxyConnectTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallSslSettingSslDhBits(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -225,27 +225,27 @@ func flattenFirewallSslSettingNoMatchingCipherAction(v interface{}, d *schema.Re
 }
 
 func flattenFirewallSslSettingCertCacheCapacity(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallSslSettingCertCacheTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallSslSettingSessionCacheCapacity(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallSslSettingSessionCacheTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallSslSettingKxpQueueThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallSslSettingSslQueueThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallSslSettingAbbreviateHandshake(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {

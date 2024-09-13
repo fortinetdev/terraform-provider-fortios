@@ -46,7 +46,6 @@ func resourceSystemDscpBasedPriority() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"priority": &schema.Schema{
 				Type:     schema.TypeString,
@@ -209,11 +208,11 @@ func resourceSystemDscpBasedPriorityRead(d *schema.ResourceData, m interface{}) 
 }
 
 func flattenSystemDscpBasedPriorityId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemDscpBasedPriorityDs(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemDscpBasedPriorityPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -281,6 +280,8 @@ func getObjectSystemDscpBasedPriority(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["ds"] = t
 		}
+	} else if d.HasChange("ds") {
+		obj["ds"] = nil
 	}
 
 	if v, ok := d.GetOk("priority"); ok {

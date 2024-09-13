@@ -59,13 +59,11 @@ func resourceDnsfilterDomainFilter() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"domain": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 511),
 							Optional:     true,
-							Computed:     true,
 						},
 						"type": &schema.Schema{
 							Type:     schema.TypeString,
@@ -251,7 +249,7 @@ func resourceDnsfilterDomainFilterRead(d *schema.ResourceData, m interface{}) er
 }
 
 func flattenDnsfilterDomainFilterId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenDnsfilterDomainFilterName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -321,7 +319,7 @@ func flattenDnsfilterDomainFilterEntries(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenDnsfilterDomainFilterEntriesId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenDnsfilterDomainFilterEntriesDomain(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -421,11 +419,15 @@ func expandDnsfilterDomainFilterEntries(d *schema.ResourceData, v interface{}, p
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandDnsfilterDomainFilterEntriesId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "domain"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["domain"], _ = expandDnsfilterDomainFilterEntriesDomain(d, i["domain"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["domain"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
@@ -490,6 +492,8 @@ func getObjectDnsfilterDomainFilter(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
@@ -499,6 +503,8 @@ func getObjectDnsfilterDomainFilter(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("entries"); ok || d.HasChange("entries") {

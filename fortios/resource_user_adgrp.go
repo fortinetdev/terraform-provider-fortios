@@ -46,18 +46,15 @@ func resourceUserAdgrp() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"connector_source": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 		},
 	}
@@ -227,7 +224,7 @@ func flattenUserAdgrpConnectorSource(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenUserAdgrpId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectUserAdgrp(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -301,6 +298,8 @@ func getObjectUserAdgrp(d *schema.ResourceData, sv string) (*map[string]interfac
 		} else if t != nil {
 			obj["server-name"] = t
 		}
+	} else if d.HasChange("server_name") {
+		obj["server-name"] = nil
 	}
 
 	if v, ok := d.GetOk("connector_source"); ok {
@@ -310,6 +309,8 @@ func getObjectUserAdgrp(d *schema.ResourceData, sv string) (*map[string]interfac
 		} else if t != nil {
 			obj["connector-source"] = t
 		}
+	} else if d.HasChange("connector_source") {
+		obj["connector-source"] = nil
 	}
 
 	if v, ok := d.GetOkExists("fosid"); ok {
@@ -319,6 +320,8 @@ func getObjectUserAdgrp(d *schema.ResourceData, sv string) (*map[string]interfac
 		} else if t != nil {
 			obj["id"] = t
 		}
+	} else if d.HasChange("fosid") {
+		obj["id"] = nil
 	}
 
 	return &obj, nil

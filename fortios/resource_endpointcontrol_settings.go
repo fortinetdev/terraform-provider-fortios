@@ -44,7 +44,6 @@ func resourceEndpointControlSettings() *schema.Resource {
 			"forticlient_reg_key_enforce": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"forticlient_reg_key": &schema.Schema{
 				Type:         schema.TypeString,
@@ -56,74 +55,61 @@ func resourceEndpointControlSettings() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 180),
 				Optional:     true,
-				Computed:     true,
 			},
 			"download_custom_link": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
-				Computed:     true,
 			},
 			"download_location": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"forticlient_offline_grace": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"forticlient_offline_grace_interval": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(60, 600),
 				Optional:     true,
-				Computed:     true,
 			},
 			"forticlient_keepalive_interval": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(20, 300),
 				Optional:     true,
-				Computed:     true,
 			},
 			"forticlient_sys_update_interval": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(30, 1440),
 				Optional:     true,
-				Computed:     true,
 			},
 			"forticlient_avdb_update_interval": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 24),
 				Optional:     true,
-				Computed:     true,
 			},
 			"forticlient_warning_interval": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 24),
 				Optional:     true,
-				Computed:     true,
 			},
 			"forticlient_user_avatar": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"forticlient_disconnect_unsupported_client": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"forticlient_dereg_unsupported_client": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"forticlient_ems_rest_api_call_timeout": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(500, 30000),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -251,12 +237,8 @@ func flattenEndpointControlSettingsForticlientRegKeyEnforce(v interface{}, d *sc
 	return v
 }
 
-func flattenEndpointControlSettingsForticlientRegKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
 func flattenEndpointControlSettingsForticlientRegTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenEndpointControlSettingsDownloadCustomLink(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -272,23 +254,23 @@ func flattenEndpointControlSettingsForticlientOfflineGrace(v interface{}, d *sch
 }
 
 func flattenEndpointControlSettingsForticlientOfflineGraceInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenEndpointControlSettingsForticlientKeepaliveInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenEndpointControlSettingsForticlientSysUpdateInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenEndpointControlSettingsForticlientAvdbUpdateInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenEndpointControlSettingsForticlientWarningInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenEndpointControlSettingsForticlientUserAvatar(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -304,7 +286,7 @@ func flattenEndpointControlSettingsForticlientDeregUnsupportedClient(v interface
 }
 
 func flattenEndpointControlSettingsForticlientEmsRestApiCallTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectEndpointControlSettings(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -500,6 +482,8 @@ func getObjectEndpointControlSettings(d *schema.ResourceData, setArgNil bool, sv
 				obj["forticlient-reg-key-enforce"] = t
 			}
 		}
+	} else if d.HasChange("forticlient_reg_key_enforce") {
+		obj["forticlient-reg-key-enforce"] = nil
 	}
 
 	if v, ok := d.GetOk("forticlient_reg_key"); ok {
@@ -513,6 +497,8 @@ func getObjectEndpointControlSettings(d *schema.ResourceData, setArgNil bool, sv
 				obj["forticlient-reg-key"] = t
 			}
 		}
+	} else if d.HasChange("forticlient_reg_key") {
+		obj["forticlient-reg-key"] = nil
 	}
 
 	if v, ok := d.GetOkExists("forticlient_reg_timeout"); ok {
@@ -526,6 +512,8 @@ func getObjectEndpointControlSettings(d *schema.ResourceData, setArgNil bool, sv
 				obj["forticlient-reg-timeout"] = t
 			}
 		}
+	} else if d.HasChange("forticlient_reg_timeout") {
+		obj["forticlient-reg-timeout"] = nil
 	}
 
 	if v, ok := d.GetOk("download_custom_link"); ok {
@@ -539,6 +527,8 @@ func getObjectEndpointControlSettings(d *schema.ResourceData, setArgNil bool, sv
 				obj["download-custom-link"] = t
 			}
 		}
+	} else if d.HasChange("download_custom_link") {
+		obj["download-custom-link"] = nil
 	}
 
 	if v, ok := d.GetOk("download_location"); ok {
@@ -552,6 +542,8 @@ func getObjectEndpointControlSettings(d *schema.ResourceData, setArgNil bool, sv
 				obj["download-location"] = t
 			}
 		}
+	} else if d.HasChange("download_location") {
+		obj["download-location"] = nil
 	}
 
 	if v, ok := d.GetOk("forticlient_offline_grace"); ok {
@@ -565,6 +557,8 @@ func getObjectEndpointControlSettings(d *schema.ResourceData, setArgNil bool, sv
 				obj["forticlient-offline-grace"] = t
 			}
 		}
+	} else if d.HasChange("forticlient_offline_grace") {
+		obj["forticlient-offline-grace"] = nil
 	}
 
 	if v, ok := d.GetOk("forticlient_offline_grace_interval"); ok {
@@ -578,6 +572,8 @@ func getObjectEndpointControlSettings(d *schema.ResourceData, setArgNil bool, sv
 				obj["forticlient-offline-grace-interval"] = t
 			}
 		}
+	} else if d.HasChange("forticlient_offline_grace_interval") {
+		obj["forticlient-offline-grace-interval"] = nil
 	}
 
 	if v, ok := d.GetOk("forticlient_keepalive_interval"); ok {
@@ -591,6 +587,8 @@ func getObjectEndpointControlSettings(d *schema.ResourceData, setArgNil bool, sv
 				obj["forticlient-keepalive-interval"] = t
 			}
 		}
+	} else if d.HasChange("forticlient_keepalive_interval") {
+		obj["forticlient-keepalive-interval"] = nil
 	}
 
 	if v, ok := d.GetOk("forticlient_sys_update_interval"); ok {
@@ -604,6 +602,8 @@ func getObjectEndpointControlSettings(d *schema.ResourceData, setArgNil bool, sv
 				obj["forticlient-sys-update-interval"] = t
 			}
 		}
+	} else if d.HasChange("forticlient_sys_update_interval") {
+		obj["forticlient-sys-update-interval"] = nil
 	}
 
 	if v, ok := d.GetOkExists("forticlient_avdb_update_interval"); ok {
@@ -617,6 +617,8 @@ func getObjectEndpointControlSettings(d *schema.ResourceData, setArgNil bool, sv
 				obj["forticlient-avdb-update-interval"] = t
 			}
 		}
+	} else if d.HasChange("forticlient_avdb_update_interval") {
+		obj["forticlient-avdb-update-interval"] = nil
 	}
 
 	if v, ok := d.GetOkExists("forticlient_warning_interval"); ok {
@@ -630,6 +632,8 @@ func getObjectEndpointControlSettings(d *schema.ResourceData, setArgNil bool, sv
 				obj["forticlient-warning-interval"] = t
 			}
 		}
+	} else if d.HasChange("forticlient_warning_interval") {
+		obj["forticlient-warning-interval"] = nil
 	}
 
 	if v, ok := d.GetOk("forticlient_user_avatar"); ok {
@@ -643,6 +647,8 @@ func getObjectEndpointControlSettings(d *schema.ResourceData, setArgNil bool, sv
 				obj["forticlient-user-avatar"] = t
 			}
 		}
+	} else if d.HasChange("forticlient_user_avatar") {
+		obj["forticlient-user-avatar"] = nil
 	}
 
 	if v, ok := d.GetOk("forticlient_disconnect_unsupported_client"); ok {
@@ -656,6 +662,8 @@ func getObjectEndpointControlSettings(d *schema.ResourceData, setArgNil bool, sv
 				obj["forticlient-disconnect-unsupported-client"] = t
 			}
 		}
+	} else if d.HasChange("forticlient_disconnect_unsupported_client") {
+		obj["forticlient-disconnect-unsupported-client"] = nil
 	}
 
 	if v, ok := d.GetOk("forticlient_dereg_unsupported_client"); ok {
@@ -669,6 +677,8 @@ func getObjectEndpointControlSettings(d *schema.ResourceData, setArgNil bool, sv
 				obj["forticlient-dereg-unsupported-client"] = t
 			}
 		}
+	} else if d.HasChange("forticlient_dereg_unsupported_client") {
+		obj["forticlient-dereg-unsupported-client"] = nil
 	}
 
 	if v, ok := d.GetOk("forticlient_ems_rest_api_call_timeout"); ok {
@@ -682,6 +692,8 @@ func getObjectEndpointControlSettings(d *schema.ResourceData, setArgNil bool, sv
 				obj["forticlient-ems-rest-api-call-timeout"] = t
 			}
 		}
+	} else if d.HasChange("forticlient_ems_rest_api_call_timeout") {
+		obj["forticlient-ems-rest-api-call-timeout"] = nil
 	}
 
 	return &obj, nil

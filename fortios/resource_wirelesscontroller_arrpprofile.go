@@ -168,7 +168,6 @@ func resourceWirelessControllerArrpProfile() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -347,43 +346,43 @@ func flattenWirelessControllerArrpProfileComment(v interface{}, d *schema.Resour
 }
 
 func flattenWirelessControllerArrpProfileSelectionPeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerArrpProfileMonitorPeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerArrpProfileWeightManagedAp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerArrpProfileWeightRogueAp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerArrpProfileWeightNoiseFloor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerArrpProfileWeightChannelLoad(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerArrpProfileWeightSpectralRssi(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerArrpProfileWeightWeatherChannel(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerArrpProfileWeightDfsChannel(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerArrpProfileThresholdAp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerArrpProfileThresholdNoiseFloor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -391,7 +390,7 @@ func flattenWirelessControllerArrpProfileThresholdNoiseFloor(v interface{}, d *s
 }
 
 func flattenWirelessControllerArrpProfileThresholdChannelLoad(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerArrpProfileThresholdSpectralRssi(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -399,11 +398,11 @@ func flattenWirelessControllerArrpProfileThresholdSpectralRssi(v interface{}, d 
 }
 
 func flattenWirelessControllerArrpProfileThresholdTxRetries(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerArrpProfileThresholdRxErrors(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerArrpProfileIncludeWeatherChannel(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -419,7 +418,7 @@ func flattenWirelessControllerArrpProfileOverrideDarrpOptimize(v interface{}, d 
 }
 
 func flattenWirelessControllerArrpProfileDarrpOptimize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerArrpProfileDarrpOptimizeSchedules(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -755,6 +754,8 @@ func getObjectWirelessControllerArrpProfile(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOkExists("selection_period"); ok {

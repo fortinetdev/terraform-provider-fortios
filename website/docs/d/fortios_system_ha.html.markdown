@@ -26,6 +26,8 @@ The following attributes are exported:
 * `password` - Cluster password. Must be the same for all members.
 * `key` - key
 * `hbdev` - Heartbeat interfaces. Must be the same for all members.
+* `auto_virtual_mac_interface` - The physical interface that will be assigned an auto-generated virtual MAC address. The structure of `auto_virtual_mac_interface` block is documented below.
+* `backup_hbdev` - Backup heartbeat interfaces. Must be the same for all members. The structure of `backup_hbdev` block is documented below.
 * `unicast_hb` - Enable/disable unicast heartbeat.
 * `unicast_hb_peerip` - Unicast heartbeat peer IP.
 * `unicast_hb_netmask` - Unicast heartbeat netmask.
@@ -101,8 +103,17 @@ The following attributes are exported:
 * `memory_failover_sample_rate` - Rate at which memory usage is sampled in order to measure memory usage in seconds (1 - 60, default = 1).
 * `memory_failover_flip_timeout` - Time to wait between subsequent memory based failovers in minutes (6 - 2147483647, default = 6).
 * `failover_hold_time` - Time to wait before failover (0 - 300 sec, default = 0), to avoid flip.
+* `check_secondary_dev_health` - Enable/disable secondary dev health check for session load-balance in HA A-A mode.
 * `ipsec_phase2_proposal` - IPsec phase2 proposal.
 * `inter_cluster_session_sync` - Enable/disable synchronization of sessions among HA clusters.
+
+The `auto_virtual_mac_interface` block contains:
+
+* `interface_name` - Interface name.
+
+The `backup_hbdev` block contains:
+
+* `name` - Interface name.
 
 The `ha_mgmt_interfaces` block contains:
 

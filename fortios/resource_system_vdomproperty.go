@@ -47,102 +47,82 @@ func resourceSystemVdomProperty() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
-				Computed:     true,
 			},
 			"snmp_index": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"session": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"ipsec_phase1": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"ipsec_phase2": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"ipsec_phase1_interface": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"ipsec_phase2_interface": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"dialup_tunnel": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"firewall_policy": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"firewall_address": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"firewall_addrgrp": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"custom_service": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"service_group": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"onetime_schedule": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"recurring_schedule": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"user": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"user_group": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"sslvpn": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"proxy": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"log_disk_quota": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 		},
 	}
@@ -308,7 +288,7 @@ func flattenSystemVdomPropertyDescription(v interface{}, d *schema.ResourceData,
 }
 
 func flattenSystemVdomPropertySnmpIndex(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVdomPropertySession(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -624,6 +604,8 @@ func getObjectSystemVdomProperty(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["description"] = t
 		}
+	} else if d.HasChange("description") {
+		obj["description"] = nil
 	}
 
 	if v, ok := d.GetOkExists("snmp_index"); ok {
@@ -633,6 +615,8 @@ func getObjectSystemVdomProperty(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["snmp-index"] = t
 		}
+	} else if d.HasChange("snmp_index") {
+		obj["snmp-index"] = nil
 	}
 
 	if v, ok := d.GetOk("session"); ok {
@@ -642,6 +626,8 @@ func getObjectSystemVdomProperty(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["session"] = t
 		}
+	} else if d.HasChange("session") {
+		obj["session"] = nil
 	}
 
 	if v, ok := d.GetOk("ipsec_phase1"); ok {
@@ -651,6 +637,8 @@ func getObjectSystemVdomProperty(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["ipsec-phase1"] = t
 		}
+	} else if d.HasChange("ipsec_phase1") {
+		obj["ipsec-phase1"] = nil
 	}
 
 	if v, ok := d.GetOk("ipsec_phase2"); ok {
@@ -660,6 +648,8 @@ func getObjectSystemVdomProperty(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["ipsec-phase2"] = t
 		}
+	} else if d.HasChange("ipsec_phase2") {
+		obj["ipsec-phase2"] = nil
 	}
 
 	if v, ok := d.GetOk("ipsec_phase1_interface"); ok {
@@ -669,6 +659,8 @@ func getObjectSystemVdomProperty(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["ipsec-phase1-interface"] = t
 		}
+	} else if d.HasChange("ipsec_phase1_interface") {
+		obj["ipsec-phase1-interface"] = nil
 	}
 
 	if v, ok := d.GetOk("ipsec_phase2_interface"); ok {
@@ -678,6 +670,8 @@ func getObjectSystemVdomProperty(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["ipsec-phase2-interface"] = t
 		}
+	} else if d.HasChange("ipsec_phase2_interface") {
+		obj["ipsec-phase2-interface"] = nil
 	}
 
 	if v, ok := d.GetOk("dialup_tunnel"); ok {
@@ -687,6 +681,8 @@ func getObjectSystemVdomProperty(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["dialup-tunnel"] = t
 		}
+	} else if d.HasChange("dialup_tunnel") {
+		obj["dialup-tunnel"] = nil
 	}
 
 	if v, ok := d.GetOk("firewall_policy"); ok {
@@ -696,6 +692,8 @@ func getObjectSystemVdomProperty(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["firewall-policy"] = t
 		}
+	} else if d.HasChange("firewall_policy") {
+		obj["firewall-policy"] = nil
 	}
 
 	if v, ok := d.GetOk("firewall_address"); ok {
@@ -705,6 +703,8 @@ func getObjectSystemVdomProperty(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["firewall-address"] = t
 		}
+	} else if d.HasChange("firewall_address") {
+		obj["firewall-address"] = nil
 	}
 
 	if v, ok := d.GetOk("firewall_addrgrp"); ok {
@@ -714,6 +714,8 @@ func getObjectSystemVdomProperty(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["firewall-addrgrp"] = t
 		}
+	} else if d.HasChange("firewall_addrgrp") {
+		obj["firewall-addrgrp"] = nil
 	}
 
 	if v, ok := d.GetOk("custom_service"); ok {
@@ -723,6 +725,8 @@ func getObjectSystemVdomProperty(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["custom-service"] = t
 		}
+	} else if d.HasChange("custom_service") {
+		obj["custom-service"] = nil
 	}
 
 	if v, ok := d.GetOk("service_group"); ok {
@@ -732,6 +736,8 @@ func getObjectSystemVdomProperty(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["service-group"] = t
 		}
+	} else if d.HasChange("service_group") {
+		obj["service-group"] = nil
 	}
 
 	if v, ok := d.GetOk("onetime_schedule"); ok {
@@ -741,6 +747,8 @@ func getObjectSystemVdomProperty(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["onetime-schedule"] = t
 		}
+	} else if d.HasChange("onetime_schedule") {
+		obj["onetime-schedule"] = nil
 	}
 
 	if v, ok := d.GetOk("recurring_schedule"); ok {
@@ -750,6 +758,8 @@ func getObjectSystemVdomProperty(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["recurring-schedule"] = t
 		}
+	} else if d.HasChange("recurring_schedule") {
+		obj["recurring-schedule"] = nil
 	}
 
 	if v, ok := d.GetOk("user"); ok {
@@ -759,6 +769,8 @@ func getObjectSystemVdomProperty(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["user"] = t
 		}
+	} else if d.HasChange("user") {
+		obj["user"] = nil
 	}
 
 	if v, ok := d.GetOk("user_group"); ok {
@@ -768,6 +780,8 @@ func getObjectSystemVdomProperty(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["user-group"] = t
 		}
+	} else if d.HasChange("user_group") {
+		obj["user-group"] = nil
 	}
 
 	if v, ok := d.GetOk("sslvpn"); ok {
@@ -777,6 +791,8 @@ func getObjectSystemVdomProperty(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["sslvpn"] = t
 		}
+	} else if d.HasChange("sslvpn") {
+		obj["sslvpn"] = nil
 	}
 
 	if v, ok := d.GetOk("proxy"); ok {
@@ -786,6 +802,8 @@ func getObjectSystemVdomProperty(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["proxy"] = t
 		}
+	} else if d.HasChange("proxy") {
+		obj["proxy"] = nil
 	}
 
 	if v, ok := d.GetOk("log_disk_quota"); ok {
@@ -795,6 +813,8 @@ func getObjectSystemVdomProperty(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["log-disk-quota"] = t
 		}
+	} else if d.HasChange("log_disk_quota") {
+		obj["log-disk-quota"] = nil
 	}
 
 	return &obj, nil

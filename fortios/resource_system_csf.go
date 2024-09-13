@@ -50,7 +50,6 @@ func resourceSystemCsf() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"source_ip": &schema.Schema{
 				Type:     schema.TypeString,
@@ -66,7 +65,6 @@ func resourceSystemCsf() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"upstream_ip": &schema.Schema{
 				Type:     schema.TypeString,
@@ -119,13 +117,11 @@ func resourceSystemCsf() *schema.Resource {
 			"management_ip": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"management_port": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"authorization_request_type": &schema.Schema{
 				Type:     schema.TypeString,
@@ -136,7 +132,6 @@ func resourceSystemCsf() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"fabric_workers": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -149,11 +144,15 @@ func resourceSystemCsf() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"legacy_authentication": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"downstream_accprofile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"fixed_key": &schema.Schema{
 				Type:         schema.TypeString,
@@ -170,7 +169,6 @@ func resourceSystemCsf() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"authorization_type": &schema.Schema{
 							Type:     schema.TypeString,
@@ -181,7 +179,6 @@ func resourceSystemCsf() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 19),
 							Optional:     true,
-							Computed:     true,
 						},
 						"certificate": &schema.Schema{
 							Type:         schema.TypeString,
@@ -197,7 +194,6 @@ func resourceSystemCsf() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 19),
 							Optional:     true,
-							Computed:     true,
 						},
 						"downstream_authorization": &schema.Schema{
 							Type:     schema.TypeString,
@@ -208,7 +204,6 @@ func resourceSystemCsf() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 1024),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -222,13 +217,11 @@ func resourceSystemCsf() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 19),
 							Optional:     true,
-							Computed:     true,
 						},
 						"accprofile": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"configuration_write_access": &schema.Schema{
 							Type:     schema.TypeString,
@@ -244,7 +237,6 @@ func resourceSystemCsf() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -282,7 +274,6 @@ func resourceSystemCsf() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"device_ip": &schema.Schema{
 							Type:     schema.TypeString,
@@ -303,13 +294,11 @@ func resourceSystemCsf() *schema.Resource {
 						"device_type": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"login": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
 							Optional:     true,
-							Computed:     true,
 						},
 						"password": &schema.Schema{
 							Type:         schema.TypeString,
@@ -477,14 +466,10 @@ func flattenSystemCsfUpstreamIp(v interface{}, d *schema.ResourceData, pre strin
 }
 
 func flattenSystemCsfUpstreamPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemCsfGroupName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenSystemCsfGroupPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -513,7 +498,7 @@ func flattenSystemCsfManagementIp(v interface{}, d *schema.ResourceData, pre str
 }
 
 func flattenSystemCsfManagementPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemCsfAuthorizationRequestType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -525,18 +510,18 @@ func flattenSystemCsfCertificate(v interface{}, d *schema.ResourceData, pre stri
 }
 
 func flattenSystemCsfFabricWorkers(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemCsfDownstreamAccess(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemCsfDownstreamAccprofile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+func flattenSystemCsfLegacyAuthentication(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemCsfFixedKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+func flattenSystemCsfDownstreamAccprofile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -642,7 +627,7 @@ func flattenSystemCsfTrustedListDownstreamAuthorization(v interface{}, d *schema
 }
 
 func flattenSystemCsfTrustedListIndex(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemCsfFabricConnector(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -761,11 +746,11 @@ func flattenSystemCsfFileMgmt(v interface{}, d *schema.ResourceData, pre string,
 }
 
 func flattenSystemCsfFileQuota(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemCsfFileQuotaWarning(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemCsfFabricDevice(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -808,8 +793,7 @@ func flattenSystemCsfFabricDevice(v interface{}, d *schema.ResourceData, pre str
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "access_token"
-		if cur_v, ok := i["access-token"]; ok {
-			tmp["access_token"] = flattenSystemCsfFabricDeviceAccessToken(cur_v, d, pre_append, sv)
+		if _, ok := i["access-token"]; ok {
 			c := d.Get(pre_append).(string)
 			if c != "" {
 				tmp["access_token"] = c
@@ -827,8 +811,7 @@ func flattenSystemCsfFabricDevice(v interface{}, d *schema.ResourceData, pre str
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "password"
-		if cur_v, ok := i["password"]; ok {
-			tmp["password"] = flattenSystemCsfFabricDevicePassword(cur_v, d, pre_append, sv)
+		if _, ok := i["password"]; ok {
 			c := d.Get(pre_append).(string)
 			if c != "" {
 				tmp["password"] = c
@@ -853,11 +836,7 @@ func flattenSystemCsfFabricDeviceDeviceIp(v interface{}, d *schema.ResourceData,
 }
 
 func flattenSystemCsfFabricDeviceHttpsPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenSystemCsfFabricDeviceAccessToken(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemCsfFabricDeviceDeviceType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -865,10 +844,6 @@ func flattenSystemCsfFabricDeviceDeviceType(v interface{}, d *schema.ResourceDat
 }
 
 func flattenSystemCsfFabricDeviceLogin(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenSystemCsfFabricDevicePassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -998,6 +973,12 @@ func refreshObjectSystemCsf(d *schema.ResourceData, o map[string]interface{}, sv
 	if err = d.Set("downstream_access", flattenSystemCsfDownstreamAccess(o["downstream-access"], d, "downstream_access", sv)); err != nil {
 		if !fortiAPIPatch(o["downstream-access"]) {
 			return fmt.Errorf("Error reading downstream_access: %v", err)
+		}
+	}
+
+	if err = d.Set("legacy_authentication", flattenSystemCsfLegacyAuthentication(o["legacy-authentication"], d, "legacy_authentication", sv)); err != nil {
+		if !fortiAPIPatch(o["legacy-authentication"]) {
+			return fmt.Errorf("Error reading legacy_authentication: %v", err)
 		}
 	}
 
@@ -1172,6 +1153,10 @@ func expandSystemCsfDownstreamAccess(d *schema.ResourceData, v interface{}, pre 
 	return v, nil
 }
 
+func expandSystemCsfLegacyAuthentication(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemCsfDownstreamAccprofile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -1197,6 +1182,8 @@ func expandSystemCsfTrustedList(d *schema.ResourceData, v interface{}, pre strin
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandSystemCsfTrustedListName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "authorization_type"
@@ -1207,11 +1194,15 @@ func expandSystemCsfTrustedList(d *schema.ResourceData, v interface{}, pre strin
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "serial"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["serial"], _ = expandSystemCsfTrustedListSerial(d, i["serial"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["serial"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "certificate"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["certificate"], _ = expandSystemCsfTrustedListCertificate(d, i["certificate"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["certificate"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
@@ -1222,6 +1213,8 @@ func expandSystemCsfTrustedList(d *schema.ResourceData, v interface{}, pre strin
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ha_members"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["ha-members"], _ = expandSystemCsfTrustedListHaMembers(d, i["ha_members"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["ha-members"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "downstream_authorization"
@@ -1232,6 +1225,8 @@ func expandSystemCsfTrustedList(d *schema.ResourceData, v interface{}, pre strin
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "index"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["index"], _ = expandSystemCsfTrustedListIndex(d, i["index"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["index"] = nil
 		}
 
 		result = append(result, tmp)
@@ -1291,11 +1286,15 @@ func expandSystemCsfFabricConnector(d *schema.ResourceData, v interface{}, pre s
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "serial"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["serial"], _ = expandSystemCsfFabricConnectorSerial(d, i["serial"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["serial"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "accprofile"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["accprofile"], _ = expandSystemCsfFabricConnectorAccprofile(d, i["accprofile"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["accprofile"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "configuration_write_access"
@@ -1304,9 +1303,9 @@ func expandSystemCsfFabricConnector(d *schema.ResourceData, v interface{}, pre s
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vdom"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["vdom"], _ = expandSystemCsfFabricConnectorVdom(d, i["vdom"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["vdom"] = make([]string, 0)
 		}
 
@@ -1391,6 +1390,8 @@ func expandSystemCsfFabricDevice(d *schema.ResourceData, v interface{}, pre stri
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandSystemCsfFabricDeviceName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "device_ip"
@@ -1406,21 +1407,29 @@ func expandSystemCsfFabricDevice(d *schema.ResourceData, v interface{}, pre stri
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "access_token"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["access-token"], _ = expandSystemCsfFabricDeviceAccessToken(d, i["access_token"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["access-token"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "device_type"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["device-type"], _ = expandSystemCsfFabricDeviceDeviceType(d, i["device_type"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["device-type"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "login"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["login"], _ = expandSystemCsfFabricDeviceLogin(d, i["login"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["login"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "password"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["password"], _ = expandSystemCsfFabricDevicePassword(d, i["password"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["password"] = nil
 		}
 
 		result = append(result, tmp)
@@ -1499,6 +1508,8 @@ func getObjectSystemCsf(d *schema.ResourceData, setArgNil bool, sv string) (*map
 				obj["upstream"] = t
 			}
 		}
+	} else if d.HasChange("upstream") {
+		obj["upstream"] = nil
 	}
 
 	if v, ok := d.GetOk("source_ip"); ok {
@@ -1538,6 +1549,8 @@ func getObjectSystemCsf(d *schema.ResourceData, setArgNil bool, sv string) (*map
 				obj["upstream-interface"] = t
 			}
 		}
+	} else if d.HasChange("upstream_interface") {
+		obj["upstream-interface"] = nil
 	}
 
 	if v, ok := d.GetOk("upstream_ip"); ok {
@@ -1590,6 +1603,8 @@ func getObjectSystemCsf(d *schema.ResourceData, setArgNil bool, sv string) (*map
 				obj["group-password"] = t
 			}
 		}
+	} else if d.HasChange("group_password") {
+		obj["group-password"] = nil
 	}
 
 	if v, ok := d.GetOk("accept_auth_by_cert"); ok {
@@ -1668,6 +1683,8 @@ func getObjectSystemCsf(d *schema.ResourceData, setArgNil bool, sv string) (*map
 				obj["management-ip"] = t
 			}
 		}
+	} else if d.HasChange("management_ip") {
+		obj["management-ip"] = nil
 	}
 
 	if v, ok := d.GetOkExists("management_port"); ok {
@@ -1681,6 +1698,8 @@ func getObjectSystemCsf(d *schema.ResourceData, setArgNil bool, sv string) (*map
 				obj["management-port"] = t
 			}
 		}
+	} else if d.HasChange("management_port") {
+		obj["management-port"] = nil
 	}
 
 	if v, ok := d.GetOk("authorization_request_type"); ok {
@@ -1707,6 +1726,8 @@ func getObjectSystemCsf(d *schema.ResourceData, setArgNil bool, sv string) (*map
 				obj["certificate"] = t
 			}
 		}
+	} else if d.HasChange("certificate") {
+		obj["certificate"] = nil
 	}
 
 	if v, ok := d.GetOk("fabric_workers"); ok {
@@ -1735,6 +1756,19 @@ func getObjectSystemCsf(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		}
 	}
 
+	if v, ok := d.GetOk("legacy_authentication"); ok {
+		if setArgNil {
+			obj["legacy-authentication"] = nil
+		} else {
+			t, err := expandSystemCsfLegacyAuthentication(d, v, "legacy_authentication", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["legacy-authentication"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("downstream_accprofile"); ok {
 		if setArgNil {
 			obj["downstream-accprofile"] = nil
@@ -1746,6 +1780,8 @@ func getObjectSystemCsf(d *schema.ResourceData, setArgNil bool, sv string) (*map
 				obj["downstream-accprofile"] = t
 			}
 		}
+	} else if d.HasChange("downstream_accprofile") {
+		obj["downstream-accprofile"] = nil
 	}
 
 	if v, ok := d.GetOk("fixed_key"); ok {
@@ -1759,6 +1795,8 @@ func getObjectSystemCsf(d *schema.ResourceData, setArgNil bool, sv string) (*map
 				obj["fixed-key"] = t
 			}
 		}
+	} else if d.HasChange("fixed_key") {
+		obj["fixed-key"] = nil
 	}
 
 	if v, ok := d.GetOk("trusted_list"); ok || d.HasChange("trusted_list") {

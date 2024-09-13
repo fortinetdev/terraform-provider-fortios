@@ -37,6 +37,7 @@ resource "fortios_firewall_address6template" "trname" {
 The following arguments are supported:
 
 * `name` - (Required) IPv6 address template name.
+* `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `ip6` - (Required) IPv6 address prefix.
 * `subnet_segment_count` - (Required) Number of IPv6 subnet segments.
 * `subnet_segment` - IPv6 subnet segments. The structure of `subnet_segment` block is documented below.

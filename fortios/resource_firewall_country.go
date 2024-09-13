@@ -40,13 +40,11 @@ func resourceFirewallCountry() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"region": &schema.Schema{
 				Type:     schema.TypeSet,
@@ -57,7 +55,6 @@ func resourceFirewallCountry() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -228,7 +225,7 @@ func resourceFirewallCountryRead(d *schema.ResourceData, m interface{}) error {
 }
 
 func flattenFirewallCountryId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallCountryName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -274,7 +271,7 @@ func flattenFirewallCountryRegion(v interface{}, d *schema.ResourceData, pre str
 }
 
 func flattenFirewallCountryRegionId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectFirewallCountry(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -369,6 +366,8 @@ func getObjectFirewallCountry(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["id"] = t
 		}
+	} else if d.HasChange("fosid") {
+		obj["id"] = nil
 	}
 
 	if v, ok := d.GetOk("name"); ok {
@@ -378,6 +377,8 @@ func getObjectFirewallCountry(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("region"); ok || d.HasChange("region") {

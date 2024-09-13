@@ -211,7 +211,7 @@ func resourceSystemProxyArpRead(d *schema.ResourceData, m interface{}) error {
 }
 
 func flattenSystemProxyArpId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemProxyArpInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -297,6 +297,8 @@ func getObjectSystemProxyArp(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["interface"] = t
 		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
 	}
 
 	if v, ok := d.GetOk("ip"); ok {

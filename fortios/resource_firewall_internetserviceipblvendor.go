@@ -39,13 +39,11 @@ func resourceFirewallInternetServiceIpblVendor() *schema.Resource {
 			"fosid": &schema.Schema{
 				Type: schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"name": &schema.Schema{
 				Type: schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional: true,
-				Computed: true,
 			},
 		},
 	}
@@ -204,7 +202,7 @@ func resourceFirewallInternetServiceIpblVendorRead(d *schema.ResourceData, m int
 
 
 func flattenFirewallInternetServiceIpblVendorId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallInternetServiceIpblVendorName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -261,6 +259,8 @@ func getObjectFirewallInternetServiceIpblVendor(d *schema.ResourceData, sv strin
 		} else if t != nil {
 			obj["id"] = t
 		}
+    } else if d.HasChange("fosid") {
+		obj["id"] = nil
 	}
 
 
@@ -271,6 +271,8 @@ func getObjectFirewallInternetServiceIpblVendor(d *schema.ResourceData, sv strin
 		} else if t != nil {
 			obj["name"] = t
 		}
+    } else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 

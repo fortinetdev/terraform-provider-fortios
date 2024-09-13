@@ -21,6 +21,7 @@ The following attributes are exported:
 
 * `name` - Schedule group name.
 * `member` - Schedules added to the schedule group. The structure of `member` block is documented below.
+* `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `color` - Color of icon on the GUI.
 * `fabric_object` - Security Fabric global object setting.
 

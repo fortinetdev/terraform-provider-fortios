@@ -68,7 +68,6 @@ func resourceWafProfile() *schema.Resource {
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 									"status": &schema.Schema{
 										Type:     schema.TypeString,
@@ -101,7 +100,6 @@ func resourceWafProfile() *schema.Resource {
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 								},
 							},
@@ -114,7 +112,6 @@ func resourceWafProfile() *schema.Resource {
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 								},
 							},
@@ -134,7 +131,6 @@ func resourceWafProfile() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 35),
 										Optional:     true,
-										Computed:     true,
 									},
 									"status": &schema.Schema{
 										Type:     schema.TypeString,
@@ -170,12 +166,10 @@ func resourceWafProfile() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 511),
 										Optional:     true,
-										Computed:     true,
 									},
 									"target": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
 									},
 								},
 							},
@@ -633,13 +627,11 @@ func resourceWafProfile() *schema.Resource {
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 									"pattern": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 511),
 										Optional:     true,
-										Computed:     true,
 									},
 									"regex": &schema.Schema{
 										Type:     schema.TypeString,
@@ -650,7 +642,6 @@ func resourceWafProfile() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 									"header_length": &schema.Schema{
 										Type:     schema.TypeString,
@@ -748,7 +739,6 @@ func resourceWafProfile() *schema.Resource {
 						"default_allowed_methods": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"method_policy": &schema.Schema{
 							Type:     schema.TypeList,
@@ -758,13 +748,11 @@ func resourceWafProfile() *schema.Resource {
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 									"pattern": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 511),
 										Optional:     true,
-										Computed:     true,
 									},
 									"regex": &schema.Schema{
 										Type:     schema.TypeString,
@@ -775,12 +763,10 @@ func resourceWafProfile() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 									"allowed_methods": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
 									},
 								},
 							},
@@ -819,7 +805,6 @@ func resourceWafProfile() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -833,7 +818,6 @@ func resourceWafProfile() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -849,13 +833,11 @@ func resourceWafProfile() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"address": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 						"action": &schema.Schema{
 							Type:     schema.TypeString,
@@ -880,19 +862,16 @@ func resourceWafProfile() *schema.Resource {
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 									"srcaddr": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 									"pattern": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 511),
 										Optional:     true,
-										Computed:     true,
 									},
 									"regex": &schema.Schema{
 										Type:     schema.TypeString,
@@ -1189,7 +1168,7 @@ func flattenWafProfileSignatureMainClass(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenWafProfileSignatureMainClassId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWafProfileSignatureMainClassStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1247,7 +1226,7 @@ func flattenWafProfileSignatureDisabledSubClass(v interface{}, d *schema.Resourc
 }
 
 func flattenWafProfileSignatureDisabledSubClassId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWafProfileSignatureDisabledSignature(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -1289,11 +1268,11 @@ func flattenWafProfileSignatureDisabledSignature(v interface{}, d *schema.Resour
 }
 
 func flattenWafProfileSignatureDisabledSignatureId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWafProfileSignatureCreditCardDetectionThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWafProfileSignatureCustomSignature(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -1536,7 +1515,7 @@ func flattenWafProfileConstraintHeaderLengthStatus(v interface{}, d *schema.Reso
 }
 
 func flattenWafProfileConstraintHeaderLengthLength(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWafProfileConstraintHeaderLengthAction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1594,7 +1573,7 @@ func flattenWafProfileConstraintContentLengthStatus(v interface{}, d *schema.Res
 }
 
 func flattenWafProfileConstraintContentLengthLength(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWafProfileConstraintContentLengthAction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1652,7 +1631,7 @@ func flattenWafProfileConstraintParamLengthStatus(v interface{}, d *schema.Resou
 }
 
 func flattenWafProfileConstraintParamLengthLength(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWafProfileConstraintParamLengthAction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1710,7 +1689,7 @@ func flattenWafProfileConstraintLineLengthStatus(v interface{}, d *schema.Resour
 }
 
 func flattenWafProfileConstraintLineLengthLength(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWafProfileConstraintLineLengthAction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1768,7 +1747,7 @@ func flattenWafProfileConstraintUrlParamLengthStatus(v interface{}, d *schema.Re
 }
 
 func flattenWafProfileConstraintUrlParamLengthLength(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWafProfileConstraintUrlParamLengthAction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2022,7 +2001,7 @@ func flattenWafProfileConstraintMaxCookieStatus(v interface{}, d *schema.Resourc
 }
 
 func flattenWafProfileConstraintMaxCookieMaxCookie(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWafProfileConstraintMaxCookieAction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2080,7 +2059,7 @@ func flattenWafProfileConstraintMaxHeaderLineStatus(v interface{}, d *schema.Res
 }
 
 func flattenWafProfileConstraintMaxHeaderLineMaxHeaderLine(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWafProfileConstraintMaxHeaderLineAction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2138,7 +2117,7 @@ func flattenWafProfileConstraintMaxUrlParamStatus(v interface{}, d *schema.Resou
 }
 
 func flattenWafProfileConstraintMaxUrlParamMaxUrlParam(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWafProfileConstraintMaxUrlParamAction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2196,7 +2175,7 @@ func flattenWafProfileConstraintMaxRangeSegmentStatus(v interface{}, d *schema.R
 }
 
 func flattenWafProfileConstraintMaxRangeSegmentMaxRangeSegment(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWafProfileConstraintMaxRangeSegmentAction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2330,7 +2309,7 @@ func flattenWafProfileConstraintException(v interface{}, d *schema.ResourceData,
 }
 
 func flattenWafProfileConstraintExceptionId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWafProfileConstraintExceptionPattern(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2510,7 +2489,7 @@ func flattenWafProfileMethodMethodPolicy(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenWafProfileMethodMethodPolicyId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWafProfileMethodMethodPolicyPattern(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2727,7 +2706,7 @@ func flattenWafProfileUrlAccess(v interface{}, d *schema.ResourceData, pre strin
 }
 
 func flattenWafProfileUrlAccessId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWafProfileUrlAccessAddress(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2805,7 +2784,7 @@ func flattenWafProfileUrlAccessAccessPattern(v interface{}, d *schema.ResourceDa
 }
 
 func flattenWafProfileUrlAccessAccessPatternId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWafProfileUrlAccessAccessPatternSrcaddr(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -3021,6 +3000,8 @@ func expandWafProfileSignatureMainClass(d *schema.ResourceData, v interface{}, p
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandWafProfileSignatureMainClassId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
@@ -3148,6 +3129,8 @@ func expandWafProfileSignatureCustomSignature(d *schema.ResourceData, v interfac
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandWafProfileSignatureCustomSignatureName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
@@ -3183,11 +3166,15 @@ func expandWafProfileSignatureCustomSignature(d *schema.ResourceData, v interfac
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["pattern"], _ = expandWafProfileSignatureCustomSignaturePattern(d, i["pattern"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["pattern"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "target"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["target"], _ = expandWafProfileSignatureCustomSignatureTarget(d, i["target"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["target"] = nil
 		}
 
 		result = append(result, tmp)
@@ -4019,11 +4006,15 @@ func expandWafProfileConstraintException(d *schema.ResourceData, v interface{}, 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandWafProfileConstraintExceptionId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["pattern"], _ = expandWafProfileConstraintExceptionPattern(d, i["pattern"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["pattern"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "regex"
@@ -4034,6 +4025,8 @@ func expandWafProfileConstraintException(d *schema.ResourceData, v interface{}, 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "address"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["address"], _ = expandWafProfileConstraintExceptionAddress(d, i["address"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["address"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "header_length"
@@ -4246,11 +4239,15 @@ func expandWafProfileMethodMethodPolicy(d *schema.ResourceData, v interface{}, p
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandWafProfileMethodMethodPolicyId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["pattern"], _ = expandWafProfileMethodMethodPolicyPattern(d, i["pattern"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["pattern"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "regex"
@@ -4261,11 +4258,15 @@ func expandWafProfileMethodMethodPolicy(d *schema.ResourceData, v interface{}, p
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "address"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["address"], _ = expandWafProfileMethodMethodPolicyAddress(d, i["address"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["address"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "allowed_methods"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["allowed-methods"], _ = expandWafProfileMethodMethodPolicyAllowedMethods(d, i["allowed_methods"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["allowed-methods"] = nil
 		}
 
 		result = append(result, tmp)
@@ -4419,11 +4420,15 @@ func expandWafProfileUrlAccess(d *schema.ResourceData, v interface{}, pre string
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandWafProfileUrlAccessId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "address"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["address"], _ = expandWafProfileUrlAccessAddress(d, i["address"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["address"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
@@ -4442,9 +4447,9 @@ func expandWafProfileUrlAccess(d *schema.ResourceData, v interface{}, pre string
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "access_pattern"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["access-pattern"], _ = expandWafProfileUrlAccessAccessPattern(d, i["access_pattern"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["access-pattern"] = make([]string, 0)
 		}
 
@@ -4493,16 +4498,22 @@ func expandWafProfileUrlAccessAccessPattern(d *schema.ResourceData, v interface{
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandWafProfileUrlAccessAccessPatternId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "srcaddr"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["srcaddr"], _ = expandWafProfileUrlAccessAccessPatternSrcaddr(d, i["srcaddr"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["srcaddr"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["pattern"], _ = expandWafProfileUrlAccessAccessPatternPattern(d, i["pattern"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["pattern"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "regex"
@@ -4629,6 +4640,8 @@ func getObjectWafProfile(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	return &obj, nil

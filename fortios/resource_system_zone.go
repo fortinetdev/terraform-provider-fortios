@@ -52,13 +52,11 @@ func resourceSystemZone() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"category": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"tags": &schema.Schema{
 							Type:     schema.TypeSet,
@@ -69,7 +67,6 @@ func resourceSystemZone() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -81,7 +78,6 @@ func resourceSystemZone() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
-				Computed:     true,
 			},
 			"intrazone": &schema.Schema{
 				Type:     schema.TypeString,
@@ -97,7 +93,6 @@ func resourceSystemZone() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -508,17 +503,21 @@ func expandSystemZoneTagging(d *schema.ResourceData, v interface{}, pre string, 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandSystemZoneTaggingName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["category"], _ = expandSystemZoneTaggingCategory(d, i["category"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["category"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tags"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["tags"], _ = expandSystemZoneTaggingTags(d, i["tags"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["tags"] = make([]string, 0)
 		}
 
@@ -630,6 +629,8 @@ func getObjectSystemZone(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["description"] = t
 		}
+	} else if d.HasChange("description") {
+		obj["description"] = nil
 	}
 
 	if v, ok := d.GetOk("intrazone"); ok {

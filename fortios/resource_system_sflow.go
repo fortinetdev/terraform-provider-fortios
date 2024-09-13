@@ -44,7 +44,6 @@ func resourceSystemSflow() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"collector_ip": &schema.Schema{
 							Type:     schema.TypeString,
@@ -71,7 +70,6 @@ func resourceSystemSflow() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -100,7 +98,6 @@ func resourceSystemSflow() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
@@ -294,7 +291,7 @@ func flattenSystemSflowCollectors(v interface{}, d *schema.ResourceData, pre str
 }
 
 func flattenSystemSflowCollectorsId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSflowCollectorsCollectorIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -302,7 +299,7 @@ func flattenSystemSflowCollectorsCollectorIp(v interface{}, d *schema.ResourceDa
 }
 
 func flattenSystemSflowCollectorsCollectorPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSflowCollectorsSourceIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -322,7 +319,7 @@ func flattenSystemSflowCollectorIp(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenSystemSflowCollectorPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSflowSourceIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -418,6 +415,8 @@ func expandSystemSflowCollectors(d *schema.ResourceData, v interface{}, pre stri
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSystemSflowCollectorsId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "collector_ip"
@@ -443,6 +442,8 @@ func expandSystemSflowCollectors(d *schema.ResourceData, v interface{}, pre stri
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["interface"], _ = expandSystemSflowCollectorsInterface(d, i["interface"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["interface"] = nil
 		}
 
 		result = append(result, tmp)
@@ -576,6 +577,8 @@ func getObjectSystemSflow(d *schema.ResourceData, setArgNil bool, sv string) (*m
 				obj["interface"] = t
 			}
 		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
 	}
 
 	return &obj, nil

@@ -46,7 +46,6 @@ func resourceCertificateRemote() *schema.Resource {
 			"remote": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"range": &schema.Schema{
 				Type:     schema.TypeString,
@@ -300,6 +299,8 @@ func getObjectCertificateRemote(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["remote"] = t
 		}
+	} else if d.HasChange("remote") {
+		obj["remote"] = nil
 	}
 
 	if v, ok := d.GetOk("range"); ok {

@@ -54,7 +54,6 @@ func resourceVpnL2Tp() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"enforce_ipsec": &schema.Schema{
 				Type:     schema.TypeString,
@@ -223,15 +222,15 @@ func flattenVpnL2TpEnforceIpsec(v interface{}, d *schema.ResourceData, pre strin
 }
 
 func flattenVpnL2TpLcpEchoInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVpnL2TpLcpMaxEchoFails(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVpnL2TpHelloInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVpnL2TpCompress(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -393,6 +392,8 @@ func getObjectVpnL2Tp(d *schema.ResourceData, setArgNil bool, sv string) (*map[s
 				obj["usrgrp"] = t
 			}
 		}
+	} else if d.HasChange("usrgrp") {
+		obj["usrgrp"] = nil
 	}
 
 	if v, ok := d.GetOk("enforce_ipsec"); ok {

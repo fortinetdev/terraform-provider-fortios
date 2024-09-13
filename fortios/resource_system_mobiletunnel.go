@@ -94,7 +94,6 @@ func resourceSystemMobileTunnel() *schema.Resource {
 				Type:      schema.TypeString,
 				Optional:  true,
 				Sensitive: true,
-				Computed:  true,
 			},
 			"hash_algorithm": &schema.Schema{
 				Type:     schema.TypeString,
@@ -112,13 +111,11 @@ func resourceSystemMobileTunnel() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"interface": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 						"prefix": &schema.Schema{
 							Type:     schema.TypeString,
@@ -314,30 +311,26 @@ func flattenSystemMobileTunnelHomeAddress(v interface{}, d *schema.ResourceData,
 }
 
 func flattenSystemMobileTunnelRenewInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemMobileTunnelLifetime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemMobileTunnelRegInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemMobileTunnelRegRetry(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemMobileTunnelNMhaeSpi(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemMobileTunnelNMhaeKeyType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenSystemMobileTunnelNMhaeKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -398,7 +391,7 @@ func flattenSystemMobileTunnelNetwork(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenSystemMobileTunnelNetworkId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemMobileTunnelNetworkInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -601,11 +594,15 @@ func expandSystemMobileTunnelNetwork(d *schema.ResourceData, v interface{}, pre 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSystemMobileTunnelNetworkId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["interface"], _ = expandSystemMobileTunnelNetworkInterface(d, i["interface"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["interface"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"
@@ -661,6 +658,8 @@ func getObjectSystemMobileTunnel(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["roaming-interface"] = t
 		}
+	} else if d.HasChange("roaming_interface") {
+		obj["roaming-interface"] = nil
 	}
 
 	if v, ok := d.GetOk("home_agent"); ok {
@@ -742,6 +741,8 @@ func getObjectSystemMobileTunnel(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["n-mhae-key"] = t
 		}
+	} else if d.HasChange("n_mhae_key") {
+		obj["n-mhae-key"] = nil
 	}
 
 	if v, ok := d.GetOk("hash_algorithm"); ok {

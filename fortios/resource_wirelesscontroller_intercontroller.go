@@ -77,7 +77,6 @@ func resourceWirelessControllerInterController() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"peer_ip": &schema.Schema{
 							Type:     schema.TypeString,
@@ -234,20 +233,16 @@ func flattenWirelessControllerInterControllerL3Roaming(v interface{}, d *schema.
 	return v
 }
 
-func flattenWirelessControllerInterControllerInterControllerKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
 func flattenWirelessControllerInterControllerInterControllerPri(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
 func flattenWirelessControllerInterControllerFastFailoverMax(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerInterControllerFastFailoverWait(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerInterControllerInterControllerPeer(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -304,7 +299,7 @@ func flattenWirelessControllerInterControllerInterControllerPeer(v interface{}, 
 }
 
 func flattenWirelessControllerInterControllerInterControllerPeerId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerInterControllerInterControllerPeerPeerIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -312,7 +307,7 @@ func flattenWirelessControllerInterControllerInterControllerPeerPeerIp(v interfa
 }
 
 func flattenWirelessControllerInterControllerInterControllerPeerPeerPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerInterControllerInterControllerPeerPeerPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -424,6 +419,8 @@ func expandWirelessControllerInterControllerInterControllerPeer(d *schema.Resour
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandWirelessControllerInterControllerInterControllerPeerId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "peer_ip"
@@ -505,6 +502,8 @@ func getObjectWirelessControllerInterController(d *schema.ResourceData, setArgNi
 				obj["inter-controller-key"] = t
 			}
 		}
+	} else if d.HasChange("inter_controller_key") {
+		obj["inter-controller-key"] = nil
 	}
 
 	if v, ok := d.GetOk("inter_controller_pri"); ok {

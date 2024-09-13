@@ -45,7 +45,6 @@ func resourceSystemVneTunnel() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ssl_certificate": &schema.Schema{
 				Type:         schema.TypeString,
@@ -78,7 +77,6 @@ func resourceSystemVneTunnel() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 511),
 				Optional:     true,
-				Computed:     true,
 			},
 			"mode": &schema.Schema{
 				Type:     schema.TypeString,
@@ -89,12 +87,12 @@ func resourceSystemVneTunnel() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 64),
 				Optional:     true,
-				Computed:     true,
 			},
 			"http_password": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 		},
 	}
@@ -226,10 +224,6 @@ func flattenSystemVneTunnelSslCertificate(v interface{}, d *schema.ResourceData,
 	return v
 }
 
-func flattenSystemVneTunnelBmrHostname(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
 func flattenSystemVneTunnelAutoAsicOffload(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -251,10 +245,6 @@ func flattenSystemVneTunnelMode(v interface{}, d *schema.ResourceData, pre strin
 }
 
 func flattenSystemVneTunnelHttpUsername(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenSystemVneTunnelHttpPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -312,12 +302,6 @@ func refreshObjectSystemVneTunnel(d *schema.ResourceData, o map[string]interface
 	if err = d.Set("http_username", flattenSystemVneTunnelHttpUsername(o["http-username"], d, "http_username", sv)); err != nil {
 		if !fortiAPIPatch(o["http-username"]) {
 			return fmt.Errorf("Error reading http_username: %v", err)
-		}
-	}
-
-	if err = d.Set("http_password", flattenSystemVneTunnelHttpPassword(o["http-password"], d, "http_password", sv)); err != nil {
-		if !fortiAPIPatch(o["http-password"]) {
-			return fmt.Errorf("Error reading http_password: %v", err)
 		}
 	}
 
@@ -401,6 +385,8 @@ func getObjectSystemVneTunnel(d *schema.ResourceData, setArgNil bool, sv string)
 				obj["interface"] = t
 			}
 		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
 	}
 
 	if v, ok := d.GetOk("ssl_certificate"); ok {
@@ -427,6 +413,8 @@ func getObjectSystemVneTunnel(d *schema.ResourceData, setArgNil bool, sv string)
 				obj["bmr-hostname"] = t
 			}
 		}
+	} else if d.HasChange("bmr_hostname") {
+		obj["bmr-hostname"] = nil
 	}
 
 	if v, ok := d.GetOk("auto_asic_offload"); ok {
@@ -479,6 +467,8 @@ func getObjectSystemVneTunnel(d *schema.ResourceData, setArgNil bool, sv string)
 				obj["update-url"] = t
 			}
 		}
+	} else if d.HasChange("update_url") {
+		obj["update-url"] = nil
 	}
 
 	if v, ok := d.GetOk("mode"); ok {
@@ -505,6 +495,8 @@ func getObjectSystemVneTunnel(d *schema.ResourceData, setArgNil bool, sv string)
 				obj["http-username"] = t
 			}
 		}
+	} else if d.HasChange("http_username") {
+		obj["http-username"] = nil
 	}
 
 	if v, ok := d.GetOk("http_password"); ok {
@@ -518,6 +510,8 @@ func getObjectSystemVneTunnel(d *schema.ResourceData, setArgNil bool, sv string)
 				obj["http-password"] = t
 			}
 		}
+	} else if d.HasChange("http_password") {
+		obj["http-password"] = nil
 	}
 
 	return &obj, nil

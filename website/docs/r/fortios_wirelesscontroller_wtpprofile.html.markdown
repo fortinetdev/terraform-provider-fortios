@@ -143,10 +143,12 @@ The `radio_1` block supports:
 * `dtim` - Delivery Traffic Indication Map (DTIM) period (1 - 255, default = 1). Set higher to save battery life of WiFi client in power-save mode.
 * `beacon_interval` - Beacon interval. The time between beacon frames in milliseconds. Actual range of beacon interval depends on the AP platform type (default = 100).
 * `n80211d` - Enable/disable 802.11d countryie(default = enable). Valid values: `enable`, `disable`.
+* `n80211mc` - Enable/disable 802.11mc responder mode (default = disable). Valid values: `enable`, `disable`.
 * `rts_threshold` - Maximum packet size for RTS transmissions, specifying the maximum size of a data packet before RTS/CTS (256 - 2346 bytes, default = 2346).
 * `frag_threshold` - Maximum packet size that can be sent without fragmentation (800 - 2346 bytes, default = 2346).
 * `ap_sniffer_bufsize` - Sniffer buffer size (1 - 32 MB, default = 16).
 * `ap_sniffer_chan` - Channel on which to operate the sniffer (default = 6).
+* `ap_sniffer_chan_width` - Channel bandwidth for sniffer. Valid values: `320MHz`, `240MHz`, `160MHz`, `80MHz`, `40MHz`, `20MHz`.
 * `ap_sniffer_addr` - MAC address to monitor.
 * `ap_sniffer_mgmt_beacon` - Enable/disable sniffer on WiFi management Beacon frames (default = enable). Valid values: `enable`, `disable`.
 * `ap_sniffer_mgmt_probe` - Enable/disable sniffer on WiFi management probe frames (default = enable). Valid values: `enable`, `disable`.
@@ -235,10 +237,12 @@ The `radio_2` block supports:
 * `dtim` - Delivery Traffic Indication Map (DTIM) period (1 - 255, default = 1). Set higher to save battery life of WiFi client in power-save mode.
 * `beacon_interval` - Beacon interval. The time between beacon frames in milliseconds. Actual range of beacon interval depends on the AP platform type (default = 100).
 * `n80211d` - Enable/disable 802.11d countryie(default = enable). Valid values: `enable`, `disable`.
+* `n80211mc` - Enable/disable 802.11mc responder mode (default = disable). Valid values: `enable`, `disable`.
 * `rts_threshold` - Maximum packet size for RTS transmissions, specifying the maximum size of a data packet before RTS/CTS (256 - 2346 bytes, default = 2346).
 * `frag_threshold` - Maximum packet size that can be sent without fragmentation (800 - 2346 bytes, default = 2346).
 * `ap_sniffer_bufsize` - Sniffer buffer size (1 - 32 MB, default = 16).
 * `ap_sniffer_chan` - Channel on which to operate the sniffer (default = 6).
+* `ap_sniffer_chan_width` - Channel bandwidth for sniffer. Valid values: `320MHz`, `240MHz`, `160MHz`, `80MHz`, `40MHz`, `20MHz`.
 * `ap_sniffer_addr` - MAC address to monitor.
 * `ap_sniffer_mgmt_beacon` - Enable/disable sniffer on WiFi management Beacon frames (default = enable). Valid values: `enable`, `disable`.
 * `ap_sniffer_mgmt_probe` - Enable/disable sniffer on WiFi management probe frames (default = enable). Valid values: `enable`, `disable`.
@@ -326,10 +330,12 @@ The `radio_3` block supports:
 * `dtim` - Delivery Traffic Indication Map (DTIM) period (1 - 255, default = 1). Set higher to save battery life of WiFi client in power-save mode.
 * `beacon_interval` - Beacon interval. The time between beacon frames in milliseconds. Actual range of beacon interval depends on the AP platform type (default = 100).
 * `n80211d` - Enable/disable 802.11d countryie(default = enable). Valid values: `enable`, `disable`.
+* `n80211mc` - Enable/disable 802.11mc responder mode (default = disable). Valid values: `enable`, `disable`.
 * `rts_threshold` - Maximum packet size for RTS transmissions, specifying the maximum size of a data packet before RTS/CTS (256 - 2346 bytes, default = 2346).
 * `frag_threshold` - Maximum packet size that can be sent without fragmentation (800 - 2346 bytes, default = 2346).
 * `ap_sniffer_bufsize` - Sniffer buffer size (1 - 32 MB, default = 16).
 * `ap_sniffer_chan` - Channel on which to operate the sniffer (default = 6).
+* `ap_sniffer_chan_width` - Channel bandwidth for sniffer. Valid values: `320MHz`, `240MHz`, `160MHz`, `80MHz`, `40MHz`, `20MHz`.
 * `ap_sniffer_addr` - MAC address to monitor.
 * `ap_sniffer_mgmt_beacon` - Enable/disable sniffer on WiFi management Beacon frames (default = enable). Valid values: `enable`, `disable`.
 * `ap_sniffer_mgmt_probe` - Enable/disable sniffer on WiFi management probe frames (default = enable). Valid values: `enable`, `disable`.
@@ -417,10 +423,12 @@ The `radio_4` block supports:
 * `dtim` - Delivery Traffic Indication Map (DTIM) period (1 - 255, default = 1). Set higher to save battery life of WiFi client in power-save mode.
 * `beacon_interval` - Beacon interval. The time between beacon frames in milliseconds. Actual range of beacon interval depends on the AP platform type (default = 100).
 * `n80211d` - Enable/disable 802.11d countryie(default = enable). Valid values: `enable`, `disable`.
+* `n80211mc` - Enable/disable 802.11mc responder mode (default = disable). Valid values: `enable`, `disable`.
 * `rts_threshold` - Maximum packet size for RTS transmissions, specifying the maximum size of a data packet before RTS/CTS (256 - 2346 bytes, default = 2346).
 * `frag_threshold` - Maximum packet size that can be sent without fragmentation (800 - 2346 bytes, default = 2346).
 * `ap_sniffer_bufsize` - Sniffer buffer size (1 - 32 MB, default = 16).
 * `ap_sniffer_chan` - Channel on which to operate the sniffer (default = 6).
+* `ap_sniffer_chan_width` - Channel bandwidth for sniffer. Valid values: `320MHz`, `240MHz`, `160MHz`, `80MHz`, `40MHz`, `20MHz`.
 * `ap_sniffer_addr` - MAC address to monitor.
 * `ap_sniffer_mgmt_beacon` - Enable/disable sniffer on WiFi management Beacon frames (default = enable). Valid values: `enable`, `disable`.
 * `ap_sniffer_mgmt_probe` - Enable/disable sniffer on WiFi management probe frames (default = enable). Valid values: `enable`, `disable`.
@@ -505,7 +513,7 @@ The `lbs` block supports:
 * `polestar` - Enable/disable PoleStar BLE NAO Track Real Time Location Service (RTLS) support (default = disable). Valid values: `enable`, `disable`.
 * `polestar_protocol` - Select the protocol to report Measurements, Advertising Data, or Location Data to NAO Cloud. (default = WSS). Valid values: `WSS`.
 * `polestar_server_fqdn` - FQDN of PoleStar Nao Track Server (default = ws.nao-cloud.com).
-* `polestar_server_path` - Path of PoleStar Nao Track Server (default = /v1/token/<access_token>/pst-v2).
+* `polestar_server_path` - Path of PoleStar Nao Track Server. On FortiOS versions 7.4.1-7.4.4: default = /v1/token/<access_token>/pst-v2. On FortiOS versions >= 7.6.0: default = /v1/token/<access_token>/pst-v2-fortinet.
 * `polestar_server_token` - Access Token of PoleStar Nao Track Server.
 * `polestar_server_port` - Port of PoleStar Nao Track Server (default = 443).
 * `polestar_accumulation_interval` - Time that measurements should be accumulated in seconds (default = 2).

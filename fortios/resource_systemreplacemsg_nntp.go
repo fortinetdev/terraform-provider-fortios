@@ -50,12 +50,10 @@ func resourceSystemReplacemsgNntp() *schema.Resource {
 			"header": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"format": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 		},
 	}
@@ -271,6 +269,8 @@ func getObjectSystemReplacemsgNntp(d *schema.ResourceData, setArgNil bool, sv st
 				obj["buffer"] = t
 			}
 		}
+	} else if d.HasChange("buffer") {
+		obj["buffer"] = nil
 	}
 
 	if v, ok := d.GetOk("header"); ok {
@@ -284,6 +284,8 @@ func getObjectSystemReplacemsgNntp(d *schema.ResourceData, setArgNil bool, sv st
 				obj["header"] = t
 			}
 		}
+	} else if d.HasChange("header") {
+		obj["header"] = nil
 	}
 
 	if v, ok := d.GetOk("format"); ok {
@@ -297,6 +299,8 @@ func getObjectSystemReplacemsgNntp(d *schema.ResourceData, setArgNil bool, sv st
 				obj["format"] = t
 			}
 		}
+	} else if d.HasChange("format") {
+		obj["format"] = nil
 	}
 
 	return &obj, nil

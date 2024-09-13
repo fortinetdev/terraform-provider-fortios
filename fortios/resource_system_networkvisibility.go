@@ -199,11 +199,11 @@ func flattenSystemNetworkVisibilityDestinationHostnameVisibility(v interface{}, 
 }
 
 func flattenSystemNetworkVisibilityHostnameTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemNetworkVisibilityHostnameLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemNetworkVisibilityDestinationLocation(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {

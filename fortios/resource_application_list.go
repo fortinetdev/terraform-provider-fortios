@@ -51,7 +51,6 @@ func resourceApplicationList() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"extended_log": &schema.Schema{
 				Type:     schema.TypeString,
@@ -96,12 +95,10 @@ func resourceApplicationList() *schema.Resource {
 			"p2p_block_list": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"p2p_black_list": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"deep_app_inspection": &schema.Schema{
 				Type:     schema.TypeString,
@@ -121,7 +118,6 @@ func resourceApplicationList() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"risk": &schema.Schema{
 							Type:     schema.TypeSet,
@@ -131,7 +127,6 @@ func resourceApplicationList() *schema.Resource {
 									"level": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 								},
 							},
@@ -144,7 +139,6 @@ func resourceApplicationList() *schema.Resource {
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 								},
 							},
@@ -157,7 +151,6 @@ func resourceApplicationList() *schema.Resource {
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 								},
 							},
@@ -170,7 +163,6 @@ func resourceApplicationList() *schema.Resource {
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 								},
 							},
@@ -208,7 +200,6 @@ func resourceApplicationList() *schema.Resource {
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 								},
 							},
@@ -221,7 +212,6 @@ func resourceApplicationList() *schema.Resource {
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 									"members": &schema.Schema{
 										Type:     schema.TypeList,
@@ -231,19 +221,16 @@ func resourceApplicationList() *schema.Resource {
 												"id": &schema.Schema{
 													Type:     schema.TypeInt,
 													Optional: true,
-													Computed: true,
 												},
 												"name": &schema.Schema{
 													Type:         schema.TypeString,
 													ValidateFunc: validation.StringLenBetween(0, 31),
 													Optional:     true,
-													Computed:     true,
 												},
 												"value": &schema.Schema{
 													Type:         schema.TypeString,
 													ValidateFunc: validation.StringLenBetween(0, 199),
 													Optional:     true,
-													Computed:     true,
 												},
 											},
 										},
@@ -252,7 +239,6 @@ func resourceApplicationList() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 63),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -276,7 +262,6 @@ func resourceApplicationList() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 						"rate_duration": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -297,25 +282,21 @@ func resourceApplicationList() *schema.Resource {
 						"session_ttl": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"shaper": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"shaper_reverse": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"per_ip_shaper": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"quarantine": &schema.Schema{
 							Type:     schema.TypeString,
@@ -348,18 +329,15 @@ func resourceApplicationList() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"port": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 						"services": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"violation_action": &schema.Schema{
 							Type:     schema.TypeString,
@@ -758,7 +736,7 @@ func flattenApplicationListEntries(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenApplicationListEntriesId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenApplicationListEntriesRisk(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -800,7 +778,7 @@ func flattenApplicationListEntriesRisk(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenApplicationListEntriesRiskLevel(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenApplicationListEntriesCategory(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -842,7 +820,7 @@ func flattenApplicationListEntriesCategory(v interface{}, d *schema.ResourceData
 }
 
 func flattenApplicationListEntriesCategoryId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenApplicationListEntriesSubCategory(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -884,7 +862,7 @@ func flattenApplicationListEntriesSubCategory(v interface{}, d *schema.ResourceD
 }
 
 func flattenApplicationListEntriesSubCategoryId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenApplicationListEntriesApplication(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -926,7 +904,7 @@ func flattenApplicationListEntriesApplication(v interface{}, d *schema.ResourceD
 }
 
 func flattenApplicationListEntriesApplicationId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenApplicationListEntriesProtocols(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -988,7 +966,7 @@ func flattenApplicationListEntriesExclusion(v interface{}, d *schema.ResourceDat
 }
 
 func flattenApplicationListEntriesExclusionId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenApplicationListEntriesParameters(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -1040,7 +1018,7 @@ func flattenApplicationListEntriesParameters(v interface{}, d *schema.ResourceDa
 }
 
 func flattenApplicationListEntriesParametersId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenApplicationListEntriesParametersMembers(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -1092,7 +1070,7 @@ func flattenApplicationListEntriesParametersMembers(v interface{}, d *schema.Res
 }
 
 func flattenApplicationListEntriesParametersMembersId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenApplicationListEntriesParametersMembersName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1120,11 +1098,11 @@ func flattenApplicationListEntriesLogPacket(v interface{}, d *schema.ResourceDat
 }
 
 func flattenApplicationListEntriesRateCount(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenApplicationListEntriesRateDuration(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenApplicationListEntriesRateMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1136,7 +1114,7 @@ func flattenApplicationListEntriesRateTrack(v interface{}, d *schema.ResourceDat
 }
 
 func flattenApplicationListEntriesSessionTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenApplicationListEntriesShaper(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1221,11 +1199,11 @@ func flattenApplicationListDefaultNetworkServices(v interface{}, d *schema.Resou
 }
 
 func flattenApplicationListDefaultNetworkServicesId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenApplicationListDefaultNetworkServicesPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenApplicationListDefaultNetworkServicesServices(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1459,33 +1437,35 @@ func expandApplicationListEntries(d *schema.ResourceData, v interface{}, pre str
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandApplicationListEntriesId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "risk"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["risk"], _ = expandApplicationListEntriesRisk(d, i["risk"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["risk"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["category"], _ = expandApplicationListEntriesCategory(d, i["category"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["category"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sub_category"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["sub-category"], _ = expandApplicationListEntriesSubCategory(d, i["sub_category"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["sub-category"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "application"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["application"], _ = expandApplicationListEntriesApplication(d, i["application"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["application"] = make([]string, 0)
 		}
 
@@ -1515,16 +1495,16 @@ func expandApplicationListEntries(d *schema.ResourceData, v interface{}, pre str
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "exclusion"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["exclusion"], _ = expandApplicationListEntriesExclusion(d, i["exclusion"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["exclusion"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "parameters"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["parameters"], _ = expandApplicationListEntriesParameters(d, i["parameters"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["parameters"] = make([]string, 0)
 		}
 
@@ -1546,6 +1526,8 @@ func expandApplicationListEntries(d *schema.ResourceData, v interface{}, pre str
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rate_count"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["rate-count"], _ = expandApplicationListEntriesRateCount(d, i["rate_count"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["rate-count"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rate_duration"
@@ -1566,21 +1548,29 @@ func expandApplicationListEntries(d *schema.ResourceData, v interface{}, pre str
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "session_ttl"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["session-ttl"], _ = expandApplicationListEntriesSessionTtl(d, i["session_ttl"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["session-ttl"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "shaper"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["shaper"], _ = expandApplicationListEntriesShaper(d, i["shaper"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["shaper"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "shaper_reverse"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["shaper-reverse"], _ = expandApplicationListEntriesShaperReverse(d, i["shaper_reverse"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["shaper-reverse"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "per_ip_shaper"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["per-ip-shaper"], _ = expandApplicationListEntriesPerIpShaper(d, i["per_ip_shaper"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["per-ip-shaper"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "quarantine"
@@ -1787,18 +1777,22 @@ func expandApplicationListEntriesParameters(d *schema.ResourceData, v interface{
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandApplicationListEntriesParametersId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "members"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["members"], _ = expandApplicationListEntriesParametersMembers(d, i["members"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["members"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["value"], _ = expandApplicationListEntriesParametersValue(d, i["value"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["value"] = nil
 		}
 
 		result = append(result, tmp)
@@ -1830,16 +1824,22 @@ func expandApplicationListEntriesParametersMembers(d *schema.ResourceData, v int
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandApplicationListEntriesParametersMembersId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandApplicationListEntriesParametersMembersName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["value"], _ = expandApplicationListEntriesParametersMembersValue(d, i["value"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["value"] = nil
 		}
 
 		result = append(result, tmp)
@@ -1943,16 +1943,22 @@ func expandApplicationListDefaultNetworkServices(d *schema.ResourceData, v inter
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandApplicationListDefaultNetworkServicesId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["port"], _ = expandApplicationListDefaultNetworkServicesPort(d, i["port"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["port"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "services"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["services"], _ = expandApplicationListDefaultNetworkServicesServices(d, i["services"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["services"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "violation_action"
@@ -2003,6 +2009,8 @@ func getObjectApplicationList(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("replacemsg_group"); ok {
@@ -2012,6 +2020,8 @@ func getObjectApplicationList(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["replacemsg-group"] = t
 		}
+	} else if d.HasChange("replacemsg_group") {
+		obj["replacemsg-group"] = nil
 	}
 
 	if v, ok := d.GetOk("extended_log"); ok {
@@ -2093,6 +2103,8 @@ func getObjectApplicationList(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["p2p-block-list"] = t
 		}
+	} else if d.HasChange("p2p_block_list") {
+		obj["p2p-block-list"] = nil
 	}
 
 	if v, ok := d.GetOk("p2p_black_list"); ok {
@@ -2102,6 +2114,8 @@ func getObjectApplicationList(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["p2p-black-list"] = t
 		}
+	} else if d.HasChange("p2p_black_list") {
+		obj["p2p-black-list"] = nil
 	}
 
 	if v, ok := d.GetOk("deep_app_inspection"); ok {

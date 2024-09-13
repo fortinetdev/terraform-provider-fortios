@@ -58,13 +58,11 @@ func resourceApplicationCustom() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"signature": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 4095),
 				Optional:     true,
-				Computed:     true,
 			},
 			"category": &schema.Schema{
 				Type:     schema.TypeInt,
@@ -73,22 +71,18 @@ func resourceApplicationCustom() *schema.Resource {
 			"protocol": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"technology": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"behavior": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"vendor": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 		},
 	}
@@ -254,7 +248,7 @@ func flattenApplicationCustomName(v interface{}, d *schema.ResourceData, pre str
 }
 
 func flattenApplicationCustomId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenApplicationCustomComment(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -266,7 +260,7 @@ func flattenApplicationCustomSignature(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenApplicationCustomCategory(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenApplicationCustomProtocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -434,6 +428,8 @@ func getObjectApplicationCustom(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("signature"); ok {
@@ -443,6 +439,8 @@ func getObjectApplicationCustom(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["signature"] = t
 		}
+	} else if d.HasChange("signature") {
+		obj["signature"] = nil
 	}
 
 	if v, ok := d.GetOkExists("category"); ok {
@@ -452,6 +450,8 @@ func getObjectApplicationCustom(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["category"] = t
 		}
+	} else if d.HasChange("category") {
+		obj["category"] = nil
 	}
 
 	if v, ok := d.GetOk("protocol"); ok {
@@ -461,6 +461,8 @@ func getObjectApplicationCustom(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["protocol"] = t
 		}
+	} else if d.HasChange("protocol") {
+		obj["protocol"] = nil
 	}
 
 	if v, ok := d.GetOk("technology"); ok {
@@ -470,6 +472,8 @@ func getObjectApplicationCustom(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["technology"] = t
 		}
+	} else if d.HasChange("technology") {
+		obj["technology"] = nil
 	}
 
 	if v, ok := d.GetOk("behavior"); ok {
@@ -479,6 +483,8 @@ func getObjectApplicationCustom(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["behavior"] = t
 		}
+	} else if d.HasChange("behavior") {
+		obj["behavior"] = nil
 	}
 
 	if v, ok := d.GetOk("vendor"); ok {
@@ -488,6 +494,8 @@ func getObjectApplicationCustom(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["vendor"] = t
 		}
+	} else if d.HasChange("vendor") {
+		obj["vendor"] = nil
 	}
 
 	return &obj, nil

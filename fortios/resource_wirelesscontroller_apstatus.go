@@ -51,7 +51,6 @@ func resourceWirelessControllerApStatus() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 32),
 				Optional:     true,
-				Computed:     true,
 			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
@@ -214,7 +213,7 @@ func resourceWirelessControllerApStatusRead(d *schema.ResourceData, m interface{
 }
 
 func flattenWirelessControllerApStatusId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerApStatusBssid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -309,6 +308,8 @@ func getObjectWirelessControllerApStatus(d *schema.ResourceData, sv string) (*ma
 		} else if t != nil {
 			obj["ssid"] = t
 		}
+	} else if d.HasChange("ssid") {
+		obj["ssid"] = nil
 	}
 
 	if v, ok := d.GetOk("status"); ok {

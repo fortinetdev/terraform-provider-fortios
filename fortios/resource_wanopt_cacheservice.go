@@ -66,19 +66,16 @@ func resourceWanoptCacheService() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"auth_type": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"encode_type": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"priority": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -103,19 +100,16 @@ func resourceWanoptCacheService() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"auth_type": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"encode_type": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"priority": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -338,15 +332,15 @@ func flattenWanoptCacheServiceDstPeerDeviceId(v interface{}, d *schema.ResourceD
 }
 
 func flattenWanoptCacheServiceDstPeerAuthType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWanoptCacheServiceDstPeerEncodeType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWanoptCacheServiceDstPeerPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWanoptCacheServiceDstPeerIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -416,15 +410,15 @@ func flattenWanoptCacheServiceSrcPeerDeviceId(v interface{}, d *schema.ResourceD
 }
 
 func flattenWanoptCacheServiceSrcPeerAuthType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWanoptCacheServiceSrcPeerEncodeType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWanoptCacheServiceSrcPeerPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWanoptCacheServiceSrcPeerIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -538,16 +532,22 @@ func expandWanoptCacheServiceDstPeer(d *schema.ResourceData, v interface{}, pre 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "device_id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["device-id"], _ = expandWanoptCacheServiceDstPeerDeviceId(d, i["device_id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["device-id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_type"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["auth-type"], _ = expandWanoptCacheServiceDstPeerAuthType(d, i["auth_type"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["auth-type"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "encode_type"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["encode-type"], _ = expandWanoptCacheServiceDstPeerEncodeType(d, i["encode_type"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["encode-type"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
@@ -605,16 +605,22 @@ func expandWanoptCacheServiceSrcPeer(d *schema.ResourceData, v interface{}, pre 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "device_id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["device-id"], _ = expandWanoptCacheServiceSrcPeerDeviceId(d, i["device_id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["device-id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_type"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["auth-type"], _ = expandWanoptCacheServiceSrcPeerAuthType(d, i["auth_type"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["auth-type"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "encode_type"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["encode-type"], _ = expandWanoptCacheServiceSrcPeerEncodeType(d, i["encode_type"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["encode-type"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"

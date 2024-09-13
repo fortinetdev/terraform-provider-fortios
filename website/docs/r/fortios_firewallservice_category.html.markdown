@@ -22,6 +22,7 @@ resource "fortios_firewallservice_category" "trname" {
 The following arguments are supported:
 
 * `name` - Service category name.
+* `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `comment` - Comment.
 * `fabric_object` - Security Fabric global object setting. Valid values: `enable`, `disable`.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.

@@ -45,7 +45,6 @@ func resourceWebfilterFtgdLocalCat() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(140, 191),
 				Optional:     true,
-				Computed:     true,
 			},
 			"desc": &schema.Schema{
 				Type:         schema.TypeString,
@@ -214,7 +213,7 @@ func flattenWebfilterFtgdLocalCatStatus(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenWebfilterFtgdLocalCatId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWebfilterFtgdLocalCatDesc(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -282,6 +281,8 @@ func getObjectWebfilterFtgdLocalCat(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["id"] = t
 		}
+	} else if d.HasChange("fosid") {
+		obj["id"] = nil
 	}
 
 	if v, ok := d.GetOk("desc"); ok {

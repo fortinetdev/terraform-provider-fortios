@@ -336,6 +336,8 @@ func getObjectSystemIpipTunnel(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["interface"] = t
 		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
 	}
 
 	if v, ok := d.GetOk("remote_gw"); ok {

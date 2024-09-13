@@ -59,34 +59,28 @@ func resourceSpamfilterMheader() *schema.Resource {
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"fieldname": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"fieldbody": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 127),
 							Optional:     true,
-							Computed:     true,
 						},
 						"pattern_type": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"action": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -257,7 +251,7 @@ func resourceSpamfilterMheaderRead(d *schema.ResourceData, m interface{}) error 
 }
 
 func flattenSpamfilterMheaderId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSpamfilterMheaderName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -336,7 +330,7 @@ func flattenSpamfilterMheaderEntriesStatus(v interface{}, d *schema.ResourceData
 }
 
 func flattenSpamfilterMheaderEntriesId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSpamfilterMheaderEntriesFieldname(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -436,31 +430,43 @@ func expandSpamfilterMheaderEntries(d *schema.ResourceData, v interface{}, pre s
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["status"], _ = expandSpamfilterMheaderEntriesStatus(d, i["status"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["status"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSpamfilterMheaderEntriesId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "fieldname"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["fieldname"], _ = expandSpamfilterMheaderEntriesFieldname(d, i["fieldname"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["fieldname"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "fieldbody"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["fieldbody"], _ = expandSpamfilterMheaderEntriesFieldbody(d, i["fieldbody"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["fieldbody"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern_type"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["pattern-type"], _ = expandSpamfilterMheaderEntriesPatternType(d, i["pattern_type"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["pattern-type"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["action"], _ = expandSpamfilterMheaderEntriesAction(d, i["action"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["action"] = nil
 		}
 
 		result = append(result, tmp)
@@ -514,6 +520,8 @@ func getObjectSpamfilterMheader(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
@@ -523,6 +531,8 @@ func getObjectSpamfilterMheader(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("entries"); ok || d.HasChange("entries") {

@@ -68,7 +68,6 @@ func resourceWanoptAuthGroup() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -233,10 +232,6 @@ func flattenWanoptAuthGroupAuthMethod(v interface{}, d *schema.ResourceData, pre
 	return v
 }
 
-func flattenWanoptAuthGroupPsk(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
 func flattenWanoptAuthGroupCert(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -343,6 +338,8 @@ func getObjectWanoptAuthGroup(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["psk"] = t
 		}
+	} else if d.HasChange("psk") {
+		obj["psk"] = nil
 	}
 
 	if v, ok := d.GetOk("cert"); ok {
@@ -352,6 +349,8 @@ func getObjectWanoptAuthGroup(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["cert"] = t
 		}
+	} else if d.HasChange("cert") {
+		obj["cert"] = nil
 	}
 
 	if v, ok := d.GetOk("peer_accept"); ok {
@@ -370,6 +369,8 @@ func getObjectWanoptAuthGroup(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["peer"] = t
 		}
+	} else if d.HasChange("peer") {
+		obj["peer"] = nil
 	}
 
 	return &obj, nil

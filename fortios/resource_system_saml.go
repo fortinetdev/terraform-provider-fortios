@@ -55,13 +55,11 @@ func resourceSystemSaml() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"cert": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"binding_protocol": &schema.Schema{
 				Type:     schema.TypeString,
@@ -72,55 +70,46 @@ func resourceSystemSaml() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"entity_id": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"single_sign_on_url": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"single_logout_url": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"idp_entity_id": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"idp_single_sign_on_url": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"idp_single_logout_url": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"idp_cert": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"server_address": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"tolerance": &schema.Schema{
 				Type:     schema.TypeInt,
@@ -141,13 +130,11 @@ func resourceSystemSaml() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"prefix": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"sp_binding_protocol": &schema.Schema{
 							Type:     schema.TypeString,
@@ -158,49 +145,41 @@ func resourceSystemSaml() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"sp_entity_id": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"sp_single_sign_on_url": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"sp_single_logout_url": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"sp_portal_url": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"idp_entity_id": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"idp_single_sign_on_url": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"idp_single_logout_url": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"assertion_attributes": &schema.Schema{
 							Type:     schema.TypeList,
@@ -211,7 +190,6 @@ func resourceSystemSaml() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 35),
 										Optional:     true,
-										Computed:     true,
 									},
 									"type": &schema.Schema{
 										Type:     schema.TypeString,
@@ -413,11 +391,11 @@ func flattenSystemSamlServerAddress(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenSystemSamlTolerance(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSamlLife(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSamlServiceProviders(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -829,11 +807,15 @@ func expandSystemSamlServiceProviders(d *schema.ResourceData, v interface{}, pre
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandSystemSamlServiceProvidersName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["prefix"], _ = expandSystemSamlServiceProvidersPrefix(d, i["prefix"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["prefix"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sp_binding_protocol"
@@ -844,47 +826,63 @@ func expandSystemSamlServiceProviders(d *schema.ResourceData, v interface{}, pre
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sp_cert"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["sp-cert"], _ = expandSystemSamlServiceProvidersSpCert(d, i["sp_cert"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["sp-cert"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sp_entity_id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["sp-entity-id"], _ = expandSystemSamlServiceProvidersSpEntityId(d, i["sp_entity_id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["sp-entity-id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sp_single_sign_on_url"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["sp-single-sign-on-url"], _ = expandSystemSamlServiceProvidersSpSingleSignOnUrl(d, i["sp_single_sign_on_url"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["sp-single-sign-on-url"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sp_single_logout_url"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["sp-single-logout-url"], _ = expandSystemSamlServiceProvidersSpSingleLogoutUrl(d, i["sp_single_logout_url"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["sp-single-logout-url"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sp_portal_url"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["sp-portal-url"], _ = expandSystemSamlServiceProvidersSpPortalUrl(d, i["sp_portal_url"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["sp-portal-url"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "idp_entity_id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["idp-entity-id"], _ = expandSystemSamlServiceProvidersIdpEntityId(d, i["idp_entity_id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["idp-entity-id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "idp_single_sign_on_url"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["idp-single-sign-on-url"], _ = expandSystemSamlServiceProvidersIdpSingleSignOnUrl(d, i["idp_single_sign_on_url"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["idp-single-sign-on-url"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "idp_single_logout_url"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["idp-single-logout-url"], _ = expandSystemSamlServiceProvidersIdpSingleLogoutUrl(d, i["idp_single_logout_url"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["idp-single-logout-url"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "assertion_attributes"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["assertion-attributes"], _ = expandSystemSamlServiceProvidersAssertionAttributes(d, i["assertion_attributes"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["assertion-attributes"] = make([]string, 0)
 		}
 
@@ -957,6 +955,8 @@ func expandSystemSamlServiceProvidersAssertionAttributes(d *schema.ResourceData,
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandSystemSamlServiceProvidersAssertionAttributesName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
@@ -1033,6 +1033,8 @@ func getObjectSystemSaml(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 				obj["default-profile"] = t
 			}
 		}
+	} else if d.HasChange("default_profile") {
+		obj["default-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("cert"); ok {
@@ -1046,6 +1048,8 @@ func getObjectSystemSaml(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 				obj["cert"] = t
 			}
 		}
+	} else if d.HasChange("cert") {
+		obj["cert"] = nil
 	}
 
 	if v, ok := d.GetOk("binding_protocol"); ok {
@@ -1072,6 +1076,8 @@ func getObjectSystemSaml(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 				obj["portal-url"] = t
 			}
 		}
+	} else if d.HasChange("portal_url") {
+		obj["portal-url"] = nil
 	}
 
 	if v, ok := d.GetOk("entity_id"); ok {
@@ -1085,6 +1091,8 @@ func getObjectSystemSaml(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 				obj["entity-id"] = t
 			}
 		}
+	} else if d.HasChange("entity_id") {
+		obj["entity-id"] = nil
 	}
 
 	if v, ok := d.GetOk("single_sign_on_url"); ok {
@@ -1098,6 +1106,8 @@ func getObjectSystemSaml(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 				obj["single-sign-on-url"] = t
 			}
 		}
+	} else if d.HasChange("single_sign_on_url") {
+		obj["single-sign-on-url"] = nil
 	}
 
 	if v, ok := d.GetOk("single_logout_url"); ok {
@@ -1111,6 +1121,8 @@ func getObjectSystemSaml(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 				obj["single-logout-url"] = t
 			}
 		}
+	} else if d.HasChange("single_logout_url") {
+		obj["single-logout-url"] = nil
 	}
 
 	if v, ok := d.GetOk("idp_entity_id"); ok {
@@ -1124,6 +1136,8 @@ func getObjectSystemSaml(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 				obj["idp-entity-id"] = t
 			}
 		}
+	} else if d.HasChange("idp_entity_id") {
+		obj["idp-entity-id"] = nil
 	}
 
 	if v, ok := d.GetOk("idp_single_sign_on_url"); ok {
@@ -1137,6 +1151,8 @@ func getObjectSystemSaml(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 				obj["idp-single-sign-on-url"] = t
 			}
 		}
+	} else if d.HasChange("idp_single_sign_on_url") {
+		obj["idp-single-sign-on-url"] = nil
 	}
 
 	if v, ok := d.GetOk("idp_single_logout_url"); ok {
@@ -1150,6 +1166,8 @@ func getObjectSystemSaml(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 				obj["idp-single-logout-url"] = t
 			}
 		}
+	} else if d.HasChange("idp_single_logout_url") {
+		obj["idp-single-logout-url"] = nil
 	}
 
 	if v, ok := d.GetOk("idp_cert"); ok {
@@ -1163,6 +1181,8 @@ func getObjectSystemSaml(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 				obj["idp-cert"] = t
 			}
 		}
+	} else if d.HasChange("idp_cert") {
+		obj["idp-cert"] = nil
 	}
 
 	if v, ok := d.GetOk("server_address"); ok {
@@ -1176,6 +1196,8 @@ func getObjectSystemSaml(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 				obj["server-address"] = t
 			}
 		}
+	} else if d.HasChange("server_address") {
+		obj["server-address"] = nil
 	}
 
 	if v, ok := d.GetOkExists("tolerance"); ok {

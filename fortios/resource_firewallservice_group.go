@@ -55,7 +55,6 @@ func resourceFirewallServiceGroup() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -74,7 +73,6 @@ func resourceFirewallServiceGroup() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 32),
 				Optional:     true,
-				Computed:     true,
 			},
 			"fabric_object": &schema.Schema{
 				Type:     schema.TypeString,
@@ -305,7 +303,7 @@ func flattenFirewallServiceGroupComment(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenFirewallServiceGroupColor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallServiceGroupFabricObject(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -444,6 +442,8 @@ func getObjectFirewallServiceGroup(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("uuid"); ok {
@@ -480,6 +480,8 @@ func getObjectFirewallServiceGroup(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOkExists("color"); ok {
@@ -489,6 +491,8 @@ func getObjectFirewallServiceGroup(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["color"] = t
 		}
+	} else if d.HasChange("color") {
+		obj["color"] = nil
 	}
 
 	if v, ok := d.GetOk("fabric_object"); ok {

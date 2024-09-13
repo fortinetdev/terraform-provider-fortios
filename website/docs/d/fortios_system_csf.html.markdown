@@ -40,6 +40,7 @@ The following attributes are exported:
 * `certificate` - Certificate.
 * `fabric_workers` - Number of worker processes for Security Fabric daemon.
 * `downstream_access` - Enable/disable downstream device access to this device's configuration and data.
+* `legacy_authentication` - Enable/disable legacy authentication.
 * `downstream_accprofile` - Default access profile for requests from downstream devices.
 * `fixed_key` - Auto-generated fixed key used when this device is the root. (Will automatically be generated if not set.)
 * `trusted_list` - Pre-authorized and blocked security fabric nodes. The structure of `trusted_list` block is documented below.

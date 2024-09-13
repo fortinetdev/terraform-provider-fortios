@@ -45,19 +45,16 @@ func resourceSystemModem() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
-				Computed:     true,
 			},
 			"network_init": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
-				Computed:     true,
 			},
 			"lockdown_lac": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
-				Computed:     true,
 			},
 			"mode": &schema.Schema{
 				Type:     schema.TypeString,
@@ -89,7 +86,6 @@ func resourceSystemModem() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 10),
 				Optional:     true,
-				Computed:     true,
 			},
 			"holddown_timer": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -107,12 +103,10 @@ func resourceSystemModem() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"wireless_port": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"dont_send_cr1": &schema.Schema{
 				Type:     schema.TypeString,
@@ -123,30 +117,27 @@ func resourceSystemModem() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"dial_cmd1": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"username1": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"passwd1": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"extra_init1": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
-				Computed:     true,
 			},
 			"peer_modem1": &schema.Schema{
 				Type:     schema.TypeString,
@@ -172,30 +163,27 @@ func resourceSystemModem() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"dial_cmd2": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"username2": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"passwd2": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"extra_init2": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
-				Computed:     true,
 			},
 			"peer_modem2": &schema.Schema{
 				Type:     schema.TypeString,
@@ -221,30 +209,27 @@ func resourceSystemModem() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"dial_cmd3": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"username3": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"passwd3": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"extra_init3": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
-				Computed:     true,
 			},
 			"peer_modem3": &schema.Schema{
 				Type:     schema.TypeString,
@@ -285,7 +270,6 @@ func resourceSystemModem() *schema.Resource {
 			"priority": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 		},
 	}
@@ -434,7 +418,7 @@ func flattenSystemModemDialOnDemand(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenSystemModemIdleTimer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemModemRedial(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -442,15 +426,15 @@ func flattenSystemModemRedial(v interface{}, d *schema.ResourceData, pre string,
 }
 
 func flattenSystemModemReset(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemModemHolddownTimer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemModemConnectTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemModemInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -458,7 +442,7 @@ func flattenSystemModemInterface(v interface{}, d *schema.ResourceData, pre stri
 }
 
 func flattenSystemModemWirelessPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemModemDontSendCr1(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -474,10 +458,6 @@ func flattenSystemModemDialCmd1(v interface{}, d *schema.ResourceData, pre strin
 }
 
 func flattenSystemModemUsername1(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenSystemModemPasswd1(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -513,10 +493,6 @@ func flattenSystemModemUsername2(v interface{}, d *schema.ResourceData, pre stri
 	return v
 }
 
-func flattenSystemModemPasswd2(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
 func flattenSystemModemExtraInit2(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -549,10 +525,6 @@ func flattenSystemModemUsername3(v interface{}, d *schema.ResourceData, pre stri
 	return v
 }
 
-func flattenSystemModemPasswd3(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
 func flattenSystemModemExtraInit3(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -582,11 +554,11 @@ func flattenSystemModemAction(v interface{}, d *schema.ResourceData, pre string,
 }
 
 func flattenSystemModemDistance(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemModemPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectSystemModem(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -700,12 +672,6 @@ func refreshObjectSystemModem(d *schema.ResourceData, o map[string]interface{}, 
 		}
 	}
 
-	if err = d.Set("passwd1", flattenSystemModemPasswd1(o["passwd1"], d, "passwd1", sv)); err != nil {
-		if !fortiAPIPatch(o["passwd1"]) {
-			return fmt.Errorf("Error reading passwd1: %v", err)
-		}
-	}
-
 	if err = d.Set("extra_init1", flattenSystemModemExtraInit1(o["extra-init1"], d, "extra_init1", sv)); err != nil {
 		if !fortiAPIPatch(o["extra-init1"]) {
 			return fmt.Errorf("Error reading extra_init1: %v", err)
@@ -754,12 +720,6 @@ func refreshObjectSystemModem(d *schema.ResourceData, o map[string]interface{}, 
 		}
 	}
 
-	if err = d.Set("passwd2", flattenSystemModemPasswd2(o["passwd2"], d, "passwd2", sv)); err != nil {
-		if !fortiAPIPatch(o["passwd2"]) {
-			return fmt.Errorf("Error reading passwd2: %v", err)
-		}
-	}
-
 	if err = d.Set("extra_init2", flattenSystemModemExtraInit2(o["extra-init2"], d, "extra_init2", sv)); err != nil {
 		if !fortiAPIPatch(o["extra-init2"]) {
 			return fmt.Errorf("Error reading extra_init2: %v", err)
@@ -805,12 +765,6 @@ func refreshObjectSystemModem(d *schema.ResourceData, o map[string]interface{}, 
 	if err = d.Set("username3", flattenSystemModemUsername3(o["username3"], d, "username3", sv)); err != nil {
 		if !fortiAPIPatch(o["username3"]) {
 			return fmt.Errorf("Error reading username3: %v", err)
-		}
-	}
-
-	if err = d.Set("passwd3", flattenSystemModemPasswd3(o["passwd3"], d, "passwd3", sv)); err != nil {
-		if !fortiAPIPatch(o["passwd3"]) {
-			return fmt.Errorf("Error reading passwd3: %v", err)
 		}
 	}
 
@@ -1088,6 +1042,8 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 				obj["pin-init"] = t
 			}
 		}
+	} else if d.HasChange("pin_init") {
+		obj["pin-init"] = nil
 	}
 
 	if v, ok := d.GetOk("network_init"); ok {
@@ -1101,6 +1057,8 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 				obj["network-init"] = t
 			}
 		}
+	} else if d.HasChange("network_init") {
+		obj["network-init"] = nil
 	}
 
 	if v, ok := d.GetOk("lockdown_lac"); ok {
@@ -1114,6 +1072,8 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 				obj["lockdown-lac"] = t
 			}
 		}
+	} else if d.HasChange("lockdown_lac") {
+		obj["lockdown-lac"] = nil
 	}
 
 	if v, ok := d.GetOk("mode"); ok {
@@ -1192,6 +1152,8 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 				obj["reset"] = t
 			}
 		}
+	} else if d.HasChange("reset") {
+		obj["reset"] = nil
 	}
 
 	if v, ok := d.GetOk("holddown_timer"); ok {
@@ -1231,6 +1193,8 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 				obj["interface"] = t
 			}
 		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
 	}
 
 	if v, ok := d.GetOkExists("wireless_port"); ok {
@@ -1244,6 +1208,8 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 				obj["wireless-port"] = t
 			}
 		}
+	} else if d.HasChange("wireless_port") {
+		obj["wireless-port"] = nil
 	}
 
 	if v, ok := d.GetOk("dont_send_cr1"); ok {
@@ -1270,6 +1236,8 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 				obj["phone1"] = t
 			}
 		}
+	} else if d.HasChange("phone1") {
+		obj["phone1"] = nil
 	}
 
 	if v, ok := d.GetOk("dial_cmd1"); ok {
@@ -1283,6 +1251,8 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 				obj["dial-cmd1"] = t
 			}
 		}
+	} else if d.HasChange("dial_cmd1") {
+		obj["dial-cmd1"] = nil
 	}
 
 	if v, ok := d.GetOk("username1"); ok {
@@ -1296,6 +1266,8 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 				obj["username1"] = t
 			}
 		}
+	} else if d.HasChange("username1") {
+		obj["username1"] = nil
 	}
 
 	if v, ok := d.GetOk("passwd1"); ok {
@@ -1309,6 +1281,8 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 				obj["passwd1"] = t
 			}
 		}
+	} else if d.HasChange("passwd1") {
+		obj["passwd1"] = nil
 	}
 
 	if v, ok := d.GetOk("extra_init1"); ok {
@@ -1322,6 +1296,8 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 				obj["extra-init1"] = t
 			}
 		}
+	} else if d.HasChange("extra_init1") {
+		obj["extra-init1"] = nil
 	}
 
 	if v, ok := d.GetOk("peer_modem1"); ok {
@@ -1387,6 +1363,8 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 				obj["phone2"] = t
 			}
 		}
+	} else if d.HasChange("phone2") {
+		obj["phone2"] = nil
 	}
 
 	if v, ok := d.GetOk("dial_cmd2"); ok {
@@ -1400,6 +1378,8 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 				obj["dial-cmd2"] = t
 			}
 		}
+	} else if d.HasChange("dial_cmd2") {
+		obj["dial-cmd2"] = nil
 	}
 
 	if v, ok := d.GetOk("username2"); ok {
@@ -1413,6 +1393,8 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 				obj["username2"] = t
 			}
 		}
+	} else if d.HasChange("username2") {
+		obj["username2"] = nil
 	}
 
 	if v, ok := d.GetOk("passwd2"); ok {
@@ -1426,6 +1408,8 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 				obj["passwd2"] = t
 			}
 		}
+	} else if d.HasChange("passwd2") {
+		obj["passwd2"] = nil
 	}
 
 	if v, ok := d.GetOk("extra_init2"); ok {
@@ -1439,6 +1423,8 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 				obj["extra-init2"] = t
 			}
 		}
+	} else if d.HasChange("extra_init2") {
+		obj["extra-init2"] = nil
 	}
 
 	if v, ok := d.GetOk("peer_modem2"); ok {
@@ -1504,6 +1490,8 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 				obj["phone3"] = t
 			}
 		}
+	} else if d.HasChange("phone3") {
+		obj["phone3"] = nil
 	}
 
 	if v, ok := d.GetOk("dial_cmd3"); ok {
@@ -1517,6 +1505,8 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 				obj["dial-cmd3"] = t
 			}
 		}
+	} else if d.HasChange("dial_cmd3") {
+		obj["dial-cmd3"] = nil
 	}
 
 	if v, ok := d.GetOk("username3"); ok {
@@ -1530,6 +1520,8 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 				obj["username3"] = t
 			}
 		}
+	} else if d.HasChange("username3") {
+		obj["username3"] = nil
 	}
 
 	if v, ok := d.GetOk("passwd3"); ok {
@@ -1543,6 +1535,8 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 				obj["passwd3"] = t
 			}
 		}
+	} else if d.HasChange("passwd3") {
+		obj["passwd3"] = nil
 	}
 
 	if v, ok := d.GetOk("extra_init3"); ok {
@@ -1556,6 +1550,8 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 				obj["extra-init3"] = t
 			}
 		}
+	} else if d.HasChange("extra_init3") {
+		obj["extra-init3"] = nil
 	}
 
 	if v, ok := d.GetOk("peer_modem3"); ok {
@@ -1660,6 +1656,8 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 				obj["priority"] = t
 			}
 		}
+	} else if d.HasChange("priority") {
+		obj["priority"] = nil
 	}
 
 	return &obj, nil

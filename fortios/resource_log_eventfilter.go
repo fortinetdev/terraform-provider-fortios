@@ -84,7 +84,6 @@ func resourceLogEventfilter() *schema.Resource {
 			"compliance_check": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"security_rating": &schema.Schema{
 				Type:     schema.TypeString,
@@ -639,6 +638,8 @@ func getObjectLogEventfilter(d *schema.ResourceData, setArgNil bool, sv string) 
 				obj["compliance-check"] = t
 			}
 		}
+	} else if d.HasChange("compliance_check") {
+		obj["compliance-check"] = nil
 	}
 
 	if v, ok := d.GetOk("security_rating"); ok {

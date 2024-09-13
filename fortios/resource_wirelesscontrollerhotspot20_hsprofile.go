@@ -108,19 +108,16 @@ func resourceWirelessControllerHotspot20HsProfile() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"domain_name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"osu_ssid": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"gas_comeback_delay": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -159,55 +156,46 @@ func resourceWirelessControllerHotspot20HsProfile() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"venue_url": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"roaming_consortium": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"nai_realm": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"oper_friendly_name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"oper_icon": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"advice_of_charge": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"osu_provider_nai": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"terms_and_conditions": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"osu_provider": &schema.Schema{
 				Type:     schema.TypeSet,
@@ -218,7 +206,6 @@ func resourceWirelessControllerHotspot20HsProfile() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -227,37 +214,55 @@ func resourceWirelessControllerHotspot20HsProfile() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"network_auth": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"n3gpp_plmn": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"conn_cap": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"qos_map": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ip_addr_type": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
+			},
+			"wba_open_roaming": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"wba_financial_clearing_provider": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 127),
+				Optional:     true,
+			},
+			"wba_data_clearing_provider": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 127),
+				Optional:     true,
+			},
+			"wba_charging_currency": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 3),
+				Optional:     true,
+			},
+			"wba_charging_rate": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
@@ -429,7 +434,7 @@ func flattenWirelessControllerHotspot20HsProfileName(v interface{}, d *schema.Re
 }
 
 func flattenWirelessControllerHotspot20HsProfileRelease(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerHotspot20HsProfileAccessNetworkType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -477,7 +482,7 @@ func flattenWirelessControllerHotspot20HsProfilePameBi(v interface{}, d *schema.
 }
 
 func flattenWirelessControllerHotspot20HsProfileAnqpDomainId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerHotspot20HsProfileDomainName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -489,11 +494,11 @@ func flattenWirelessControllerHotspot20HsProfileOsuSsid(v interface{}, d *schema
 }
 
 func flattenWirelessControllerHotspot20HsProfileGasComebackDelay(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerHotspot20HsProfileGasFragmentationLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerHotspot20HsProfileDgaf(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -501,7 +506,7 @@ func flattenWirelessControllerHotspot20HsProfileDgaf(v interface{}, d *schema.Re
 }
 
 func flattenWirelessControllerHotspot20HsProfileDeauthRequestTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerHotspot20HsProfileWnmSleepMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -612,6 +617,26 @@ func flattenWirelessControllerHotspot20HsProfileQosMap(v interface{}, d *schema.
 
 func flattenWirelessControllerHotspot20HsProfileIpAddrType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
+}
+
+func flattenWirelessControllerHotspot20HsProfileWbaOpenRoaming(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerHotspot20HsProfileWbaFinancialClearingProvider(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerHotspot20HsProfileWbaDataClearingProvider(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerHotspot20HsProfileWbaChargingCurrency(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerHotspot20HsProfileWbaChargingRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
 }
 
 func refreshObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -861,6 +886,36 @@ func refreshObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, o
 		}
 	}
 
+	if err = d.Set("wba_open_roaming", flattenWirelessControllerHotspot20HsProfileWbaOpenRoaming(o["wba-open-roaming"], d, "wba_open_roaming", sv)); err != nil {
+		if !fortiAPIPatch(o["wba-open-roaming"]) {
+			return fmt.Errorf("Error reading wba_open_roaming: %v", err)
+		}
+	}
+
+	if err = d.Set("wba_financial_clearing_provider", flattenWirelessControllerHotspot20HsProfileWbaFinancialClearingProvider(o["wba-financial-clearing-provider"], d, "wba_financial_clearing_provider", sv)); err != nil {
+		if !fortiAPIPatch(o["wba-financial-clearing-provider"]) {
+			return fmt.Errorf("Error reading wba_financial_clearing_provider: %v", err)
+		}
+	}
+
+	if err = d.Set("wba_data_clearing_provider", flattenWirelessControllerHotspot20HsProfileWbaDataClearingProvider(o["wba-data-clearing-provider"], d, "wba_data_clearing_provider", sv)); err != nil {
+		if !fortiAPIPatch(o["wba-data-clearing-provider"]) {
+			return fmt.Errorf("Error reading wba_data_clearing_provider: %v", err)
+		}
+	}
+
+	if err = d.Set("wba_charging_currency", flattenWirelessControllerHotspot20HsProfileWbaChargingCurrency(o["wba-charging-currency"], d, "wba_charging_currency", sv)); err != nil {
+		if !fortiAPIPatch(o["wba-charging-currency"]) {
+			return fmt.Errorf("Error reading wba_charging_currency: %v", err)
+		}
+	}
+
+	if err = d.Set("wba_charging_rate", flattenWirelessControllerHotspot20HsProfileWbaChargingRate(o["wba-charging-rate"], d, "wba_charging_rate", sv)); err != nil {
+		if !fortiAPIPatch(o["wba-charging-rate"]) {
+			return fmt.Errorf("Error reading wba_charging_rate: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -1046,6 +1101,26 @@ func expandWirelessControllerHotspot20HsProfileIpAddrType(d *schema.ResourceData
 	return v, nil
 }
 
+func expandWirelessControllerHotspot20HsProfileWbaOpenRoaming(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerHotspot20HsProfileWbaFinancialClearingProvider(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerHotspot20HsProfileWbaDataClearingProvider(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerHotspot20HsProfileWbaChargingCurrency(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerHotspot20HsProfileWbaChargingRate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
@@ -1173,6 +1248,8 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 		} else if t != nil {
 			obj["anqp-domain-id"] = t
 		}
+	} else if d.HasChange("anqp_domain_id") {
+		obj["anqp-domain-id"] = nil
 	}
 
 	if v, ok := d.GetOk("domain_name"); ok {
@@ -1182,6 +1259,8 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 		} else if t != nil {
 			obj["domain-name"] = t
 		}
+	} else if d.HasChange("domain_name") {
+		obj["domain-name"] = nil
 	}
 
 	if v, ok := d.GetOk("osu_ssid"); ok {
@@ -1191,6 +1270,8 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 		} else if t != nil {
 			obj["osu-ssid"] = t
 		}
+	} else if d.HasChange("osu_ssid") {
+		obj["osu-ssid"] = nil
 	}
 
 	if v, ok := d.GetOk("gas_comeback_delay"); ok {
@@ -1254,6 +1335,8 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 		} else if t != nil {
 			obj["venue-name"] = t
 		}
+	} else if d.HasChange("venue_name") {
+		obj["venue-name"] = nil
 	}
 
 	if v, ok := d.GetOk("venue_url"); ok {
@@ -1263,6 +1346,8 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 		} else if t != nil {
 			obj["venue-url"] = t
 		}
+	} else if d.HasChange("venue_url") {
+		obj["venue-url"] = nil
 	}
 
 	if v, ok := d.GetOk("roaming_consortium"); ok {
@@ -1272,6 +1357,8 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 		} else if t != nil {
 			obj["roaming-consortium"] = t
 		}
+	} else if d.HasChange("roaming_consortium") {
+		obj["roaming-consortium"] = nil
 	}
 
 	if v, ok := d.GetOk("nai_realm"); ok {
@@ -1281,6 +1368,8 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 		} else if t != nil {
 			obj["nai-realm"] = t
 		}
+	} else if d.HasChange("nai_realm") {
+		obj["nai-realm"] = nil
 	}
 
 	if v, ok := d.GetOk("oper_friendly_name"); ok {
@@ -1290,6 +1379,8 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 		} else if t != nil {
 			obj["oper-friendly-name"] = t
 		}
+	} else if d.HasChange("oper_friendly_name") {
+		obj["oper-friendly-name"] = nil
 	}
 
 	if v, ok := d.GetOk("oper_icon"); ok {
@@ -1299,6 +1390,8 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 		} else if t != nil {
 			obj["oper-icon"] = t
 		}
+	} else if d.HasChange("oper_icon") {
+		obj["oper-icon"] = nil
 	}
 
 	if v, ok := d.GetOk("advice_of_charge"); ok {
@@ -1308,6 +1401,8 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 		} else if t != nil {
 			obj["advice-of-charge"] = t
 		}
+	} else if d.HasChange("advice_of_charge") {
+		obj["advice-of-charge"] = nil
 	}
 
 	if v, ok := d.GetOk("osu_provider_nai"); ok {
@@ -1317,6 +1412,8 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 		} else if t != nil {
 			obj["osu-provider-nai"] = t
 		}
+	} else if d.HasChange("osu_provider_nai") {
+		obj["osu-provider-nai"] = nil
 	}
 
 	if v, ok := d.GetOk("terms_and_conditions"); ok {
@@ -1326,6 +1423,8 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 		} else if t != nil {
 			obj["terms-and-conditions"] = t
 		}
+	} else if d.HasChange("terms_and_conditions") {
+		obj["terms-and-conditions"] = nil
 	}
 
 	if v, ok := d.GetOk("osu_provider"); ok || d.HasChange("osu_provider") {
@@ -1344,6 +1443,8 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 		} else if t != nil {
 			obj["wan-metrics"] = t
 		}
+	} else if d.HasChange("wan_metrics") {
+		obj["wan-metrics"] = nil
 	}
 
 	if v, ok := d.GetOk("network_auth"); ok {
@@ -1353,6 +1454,8 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 		} else if t != nil {
 			obj["network-auth"] = t
 		}
+	} else if d.HasChange("network_auth") {
+		obj["network-auth"] = nil
 	}
 
 	if v, ok := d.GetOk("n3gpp_plmn"); ok {
@@ -1362,6 +1465,8 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 		} else if t != nil {
 			obj["3gpp-plmn"] = t
 		}
+	} else if d.HasChange("n3gpp_plmn") {
+		obj["3gpp-plmn"] = nil
 	}
 
 	if v, ok := d.GetOk("conn_cap"); ok {
@@ -1371,6 +1476,8 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 		} else if t != nil {
 			obj["conn-cap"] = t
 		}
+	} else if d.HasChange("conn_cap") {
+		obj["conn-cap"] = nil
 	}
 
 	if v, ok := d.GetOk("qos_map"); ok {
@@ -1380,6 +1487,8 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 		} else if t != nil {
 			obj["qos-map"] = t
 		}
+	} else if d.HasChange("qos_map") {
+		obj["qos-map"] = nil
 	}
 
 	if v, ok := d.GetOk("ip_addr_type"); ok {
@@ -1389,6 +1498,61 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData, sv st
 		} else if t != nil {
 			obj["ip-addr-type"] = t
 		}
+	} else if d.HasChange("ip_addr_type") {
+		obj["ip-addr-type"] = nil
+	}
+
+	if v, ok := d.GetOk("wba_open_roaming"); ok {
+		t, err := expandWirelessControllerHotspot20HsProfileWbaOpenRoaming(d, v, "wba_open_roaming", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["wba-open-roaming"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("wba_financial_clearing_provider"); ok {
+		t, err := expandWirelessControllerHotspot20HsProfileWbaFinancialClearingProvider(d, v, "wba_financial_clearing_provider", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["wba-financial-clearing-provider"] = t
+		}
+	} else if d.HasChange("wba_financial_clearing_provider") {
+		obj["wba-financial-clearing-provider"] = nil
+	}
+
+	if v, ok := d.GetOk("wba_data_clearing_provider"); ok {
+		t, err := expandWirelessControllerHotspot20HsProfileWbaDataClearingProvider(d, v, "wba_data_clearing_provider", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["wba-data-clearing-provider"] = t
+		}
+	} else if d.HasChange("wba_data_clearing_provider") {
+		obj["wba-data-clearing-provider"] = nil
+	}
+
+	if v, ok := d.GetOk("wba_charging_currency"); ok {
+		t, err := expandWirelessControllerHotspot20HsProfileWbaChargingCurrency(d, v, "wba_charging_currency", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["wba-charging-currency"] = t
+		}
+	} else if d.HasChange("wba_charging_currency") {
+		obj["wba-charging-currency"] = nil
+	}
+
+	if v, ok := d.GetOkExists("wba_charging_rate"); ok {
+		t, err := expandWirelessControllerHotspot20HsProfileWbaChargingRate(d, v, "wba_charging_rate", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["wba-charging-rate"] = t
+		}
+	} else if d.HasChange("wba_charging_rate") {
+		obj["wba-charging-rate"] = nil
 	}
 
 	return &obj, nil

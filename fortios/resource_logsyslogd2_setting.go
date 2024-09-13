@@ -45,7 +45,6 @@ func resourceLogSyslogd2Setting() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
-				Computed:     true,
 			},
 			"mode": &schema.Schema{
 				Type:     schema.TypeString,
@@ -63,11 +62,15 @@ func resourceLogSyslogd2Setting() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"source_ip_interface": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 15),
+				Optional:     true,
+			},
 			"source_ip": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"format": &schema.Schema{
 				Type:     schema.TypeString,
@@ -83,7 +86,6 @@ func resourceLogSyslogd2Setting() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 100000),
 				Optional:     true,
-				Computed:     true,
 			},
 			"enc_algorithm": &schema.Schema{
 				Type:     schema.TypeString,
@@ -99,7 +101,6 @@ func resourceLogSyslogd2Setting() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"custom_field_name": &schema.Schema{
 				Type:     schema.TypeList,
@@ -110,19 +111,16 @@ func resourceLogSyslogd2Setting() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"name": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"custom": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -136,12 +134,10 @@ func resourceLogSyslogd2Setting() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"syslog_type": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
@@ -284,10 +280,14 @@ func flattenLogSyslogd2SettingMode(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenLogSyslogd2SettingPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenLogSyslogd2SettingFacility(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenLogSyslogd2SettingSourceIpInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -304,7 +304,7 @@ func flattenLogSyslogd2SettingPriority(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenLogSyslogd2SettingMaxLogRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenLogSyslogd2SettingEncAlgorithm(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -368,7 +368,7 @@ func flattenLogSyslogd2SettingCustomFieldName(v interface{}, d *schema.ResourceD
 }
 
 func flattenLogSyslogd2SettingCustomFieldNameId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenLogSyslogd2SettingCustomFieldNameName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -388,7 +388,7 @@ func flattenLogSyslogd2SettingInterface(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenLogSyslogd2SettingSyslogType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectLogSyslogd2Setting(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -427,6 +427,12 @@ func refreshObjectLogSyslogd2Setting(d *schema.ResourceData, o map[string]interf
 	if err = d.Set("facility", flattenLogSyslogd2SettingFacility(o["facility"], d, "facility", sv)); err != nil {
 		if !fortiAPIPatch(o["facility"]) {
 			return fmt.Errorf("Error reading facility: %v", err)
+		}
+	}
+
+	if err = d.Set("source_ip_interface", flattenLogSyslogd2SettingSourceIpInterface(o["source-ip-interface"], d, "source_ip_interface", sv)); err != nil {
+		if !fortiAPIPatch(o["source-ip-interface"]) {
+			return fmt.Errorf("Error reading source_ip_interface: %v", err)
 		}
 	}
 
@@ -535,6 +541,10 @@ func expandLogSyslogd2SettingFacility(d *schema.ResourceData, v interface{}, pre
 	return v, nil
 }
 
+func expandLogSyslogd2SettingSourceIpInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandLogSyslogd2SettingSourceIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -580,16 +590,22 @@ func expandLogSyslogd2SettingCustomFieldName(d *schema.ResourceData, v interface
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandLogSyslogd2SettingCustomFieldNameId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandLogSyslogd2SettingCustomFieldNameName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "custom"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["custom"], _ = expandLogSyslogd2SettingCustomFieldNameCustom(d, i["custom"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["custom"] = nil
 		}
 
 		result = append(result, tmp)
@@ -651,6 +667,8 @@ func getObjectLogSyslogd2Setting(d *schema.ResourceData, setArgNil bool, sv stri
 				obj["server"] = t
 			}
 		}
+	} else if d.HasChange("server") {
+		obj["server"] = nil
 	}
 
 	if v, ok := d.GetOk("mode"); ok {
@@ -692,6 +710,21 @@ func getObjectLogSyslogd2Setting(d *schema.ResourceData, setArgNil bool, sv stri
 		}
 	}
 
+	if v, ok := d.GetOk("source_ip_interface"); ok {
+		if setArgNil {
+			obj["source-ip-interface"] = nil
+		} else {
+			t, err := expandLogSyslogd2SettingSourceIpInterface(d, v, "source_ip_interface", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["source-ip-interface"] = t
+			}
+		}
+	} else if d.HasChange("source_ip_interface") {
+		obj["source-ip-interface"] = nil
+	}
+
 	if v, ok := d.GetOk("source_ip"); ok {
 		if setArgNil {
 			obj["source-ip"] = nil
@@ -703,6 +736,8 @@ func getObjectLogSyslogd2Setting(d *schema.ResourceData, setArgNil bool, sv stri
 				obj["source-ip"] = t
 			}
 		}
+	} else if d.HasChange("source_ip") {
+		obj["source-ip"] = nil
 	}
 
 	if v, ok := d.GetOk("format"); ok {
@@ -742,6 +777,8 @@ func getObjectLogSyslogd2Setting(d *schema.ResourceData, setArgNil bool, sv stri
 				obj["max-log-rate"] = t
 			}
 		}
+	} else if d.HasChange("max_log_rate") {
+		obj["max-log-rate"] = nil
 	}
 
 	if v, ok := d.GetOk("enc_algorithm"); ok {
@@ -781,6 +818,8 @@ func getObjectLogSyslogd2Setting(d *schema.ResourceData, setArgNil bool, sv stri
 				obj["certificate"] = t
 			}
 		}
+	} else if d.HasChange("certificate") {
+		obj["certificate"] = nil
 	}
 
 	if v, ok := d.GetOk("custom_field_name"); ok || d.HasChange("custom_field_name") {
@@ -820,6 +859,8 @@ func getObjectLogSyslogd2Setting(d *schema.ResourceData, setArgNil bool, sv stri
 				obj["interface"] = t
 			}
 		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
 	}
 
 	if v, ok := d.GetOkExists("syslog_type"); ok {
@@ -833,6 +874,8 @@ func getObjectLogSyslogd2Setting(d *schema.ResourceData, setArgNil bool, sv stri
 				obj["syslog-type"] = t
 			}
 		}
+	} else if d.HasChange("syslog_type") {
+		obj["syslog-type"] = nil
 	}
 
 	return &obj, nil

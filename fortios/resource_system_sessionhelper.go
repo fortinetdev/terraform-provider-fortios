@@ -212,7 +212,7 @@ func resourceSystemSessionHelperRead(d *schema.ResourceData, m interface{}) erro
 }
 
 func flattenSystemSessionHelperId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSessionHelperName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -220,11 +220,11 @@ func flattenSystemSessionHelperName(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenSystemSessionHelperProtocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSessionHelperPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectSystemSessionHelper(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -298,6 +298,8 @@ func getObjectSystemSessionHelper(d *schema.ResourceData, sv string) (*map[strin
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOkExists("protocol"); ok {
@@ -307,6 +309,8 @@ func getObjectSystemSessionHelper(d *schema.ResourceData, sv string) (*map[strin
 		} else if t != nil {
 			obj["protocol"] = t
 		}
+	} else if d.HasChange("protocol") {
+		obj["protocol"] = nil
 	}
 
 	if v, ok := d.GetOk("port"); ok {
@@ -316,6 +320,8 @@ func getObjectSystemSessionHelper(d *schema.ResourceData, sv string) (*map[strin
 		} else if t != nil {
 			obj["port"] = t
 		}
+	} else if d.HasChange("port") {
+		obj["port"] = nil
 	}
 
 	return &obj, nil

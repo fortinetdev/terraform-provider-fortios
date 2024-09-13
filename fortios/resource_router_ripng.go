@@ -51,7 +51,6 @@ func resourceRouterRipng() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"distance": &schema.Schema{
 				Type:     schema.TypeList,
@@ -61,13 +60,11 @@ func resourceRouterRipng() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"distance": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"prefix6": &schema.Schema{
 							Type:     schema.TypeString,
@@ -78,7 +75,6 @@ func resourceRouterRipng() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -91,7 +87,6 @@ func resourceRouterRipng() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -107,13 +102,11 @@ func resourceRouterRipng() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"interface": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -126,7 +119,6 @@ func resourceRouterRipng() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"ip6": &schema.Schema{
 							Type:     schema.TypeString,
@@ -137,7 +129,6 @@ func resourceRouterRipng() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -150,7 +141,6 @@ func resourceRouterRipng() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"prefix": &schema.Schema{
 							Type:     schema.TypeString,
@@ -168,7 +158,6 @@ func resourceRouterRipng() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"prefix6": &schema.Schema{
 							Type:     schema.TypeString,
@@ -186,7 +175,6 @@ func resourceRouterRipng() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -202,19 +190,16 @@ func resourceRouterRipng() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"offset": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 16),
 							Optional:     true,
-							Computed:     true,
 						},
 						"interface": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -228,7 +213,6 @@ func resourceRouterRipng() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -242,7 +226,6 @@ func resourceRouterRipng() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -253,13 +236,11 @@ func resourceRouterRipng() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 16),
 							Optional:     true,
-							Computed:     true,
 						},
 						"routemap": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -288,7 +269,6 @@ func resourceRouterRipng() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"split_horizon_status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -442,11 +422,11 @@ func flattenRouterRipngDefaultInformationOriginate(v interface{}, d *schema.Reso
 }
 
 func flattenRouterRipngDefaultMetric(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterRipngMaxOutMetric(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterRipngDistance(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -503,11 +483,11 @@ func flattenRouterRipngDistance(v interface{}, d *schema.ResourceData, pre strin
 }
 
 func flattenRouterRipngDistanceId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterRipngDistanceDistance(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterRipngDistancePrefix6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -577,7 +557,7 @@ func flattenRouterRipngDistributeList(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenRouterRipngDistributeListId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterRipngDistributeListStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -645,7 +625,7 @@ func flattenRouterRipngNeighbor(v interface{}, d *schema.ResourceData, pre strin
 }
 
 func flattenRouterRipngNeighborId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterRipngNeighborIp6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -700,7 +680,7 @@ func flattenRouterRipngNetwork(v interface{}, d *schema.ResourceData, pre string
 }
 
 func flattenRouterRipngNetworkId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterRipngNetworkPrefix(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -751,7 +731,7 @@ func flattenRouterRipngAggregateAddress(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenRouterRipngAggregateAddressId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterRipngAggregateAddressPrefix6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -822,7 +802,7 @@ func flattenRouterRipngOffsetList(v interface{}, d *schema.ResourceData, pre str
 }
 
 func flattenRouterRipngOffsetListId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterRipngOffsetListStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -838,7 +818,7 @@ func flattenRouterRipngOffsetListAccessList6(v interface{}, d *schema.ResourceDa
 }
 
 func flattenRouterRipngOffsetListOffset(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterRipngOffsetListInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -949,7 +929,7 @@ func flattenRouterRipngRedistributeStatus(v interface{}, d *schema.ResourceData,
 }
 
 func flattenRouterRipngRedistributeMetric(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterRipngRedistributeRoutemap(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -957,15 +937,15 @@ func flattenRouterRipngRedistributeRoutemap(v interface{}, d *schema.ResourceDat
 }
 
 func flattenRouterRipngUpdateTimer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterRipngTimeoutTimer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterRipngGarbageTimer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterRipngInterface(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -1034,7 +1014,7 @@ func flattenRouterRipngInterfaceSplitHorizon(v interface{}, d *schema.ResourceDa
 }
 
 func flattenRouterRipngInterfaceFlags(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectRouterRipng(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -1264,11 +1244,15 @@ func expandRouterRipngDistance(d *schema.ResourceData, v interface{}, pre string
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandRouterRipngDistanceId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "distance"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["distance"], _ = expandRouterRipngDistanceDistance(d, i["distance"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["distance"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix6"
@@ -1279,6 +1263,8 @@ func expandRouterRipngDistance(d *schema.ResourceData, v interface{}, pre string
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "access_list6"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["access-list6"], _ = expandRouterRipngDistanceAccessList6(d, i["access_list6"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["access-list6"] = nil
 		}
 
 		result = append(result, tmp)
@@ -1322,6 +1308,8 @@ func expandRouterRipngDistributeList(d *schema.ResourceData, v interface{}, pre 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandRouterRipngDistributeListId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
@@ -1337,11 +1325,15 @@ func expandRouterRipngDistributeList(d *schema.ResourceData, v interface{}, pre 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "listname"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["listname"], _ = expandRouterRipngDistributeListListname(d, i["listname"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["listname"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["interface"], _ = expandRouterRipngDistributeListInterface(d, i["interface"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["interface"] = nil
 		}
 
 		result = append(result, tmp)
@@ -1389,6 +1381,8 @@ func expandRouterRipngNeighbor(d *schema.ResourceData, v interface{}, pre string
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandRouterRipngNeighborId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip6"
@@ -1399,6 +1393,8 @@ func expandRouterRipngNeighbor(d *schema.ResourceData, v interface{}, pre string
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["interface"], _ = expandRouterRipngNeighborInterface(d, i["interface"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["interface"] = nil
 		}
 
 		result = append(result, tmp)
@@ -1438,6 +1434,8 @@ func expandRouterRipngNetwork(d *schema.ResourceData, v interface{}, pre string,
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandRouterRipngNetworkId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"
@@ -1478,6 +1476,8 @@ func expandRouterRipngAggregateAddress(d *schema.ResourceData, v interface{}, pr
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandRouterRipngAggregateAddressId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix6"
@@ -1518,6 +1518,8 @@ func expandRouterRipngOffsetList(d *schema.ResourceData, v interface{}, pre stri
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandRouterRipngOffsetListId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
@@ -1533,16 +1535,22 @@ func expandRouterRipngOffsetList(d *schema.ResourceData, v interface{}, pre stri
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "access_list6"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["access-list6"], _ = expandRouterRipngOffsetListAccessList6(d, i["access_list6"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["access-list6"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "offset"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["offset"], _ = expandRouterRipngOffsetListOffset(d, i["offset"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["offset"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["interface"], _ = expandRouterRipngOffsetListInterface(d, i["interface"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["interface"] = nil
 		}
 
 		result = append(result, tmp)
@@ -1622,6 +1630,8 @@ func expandRouterRipngRedistribute(d *schema.ResourceData, v interface{}, pre st
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandRouterRipngRedistributeName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
@@ -1632,11 +1642,15 @@ func expandRouterRipngRedistribute(d *schema.ResourceData, v interface{}, pre st
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "metric"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["metric"], _ = expandRouterRipngRedistributeMetric(d, i["metric"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["metric"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "routemap"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["routemap"], _ = expandRouterRipngRedistributeRoutemap(d, i["routemap"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["routemap"] = nil
 		}
 
 		result = append(result, tmp)
@@ -1692,6 +1706,8 @@ func expandRouterRipngInterface(d *schema.ResourceData, v interface{}, pre strin
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandRouterRipngInterfaceName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "split_horizon_status"
@@ -1773,6 +1789,8 @@ func getObjectRouterRipng(d *schema.ResourceData, setArgNil bool, sv string) (*m
 				obj["max-out-metric"] = t
 			}
 		}
+	} else if d.HasChange("max_out_metric") {
+		obj["max-out-metric"] = nil
 	}
 
 	if v, ok := d.GetOk("distance"); ok || d.HasChange("distance") {

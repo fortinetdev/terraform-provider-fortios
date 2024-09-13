@@ -40,7 +40,6 @@ func resourceFirewallAddress6() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
-				Computed:     true,
 			},
 			"uuid": &schema.Schema{
 				Type:     schema.TypeString,
@@ -55,7 +54,6 @@ func resourceFirewallAddress6() *schema.Resource {
 			"route_tag": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"macaddr": &schema.Schema{
 				Type:     schema.TypeSet,
@@ -66,7 +64,6 @@ func resourceFirewallAddress6() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 127),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -85,7 +82,6 @@ func resourceFirewallAddress6() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ip6": &schema.Schema{
 				Type:     schema.TypeString,
@@ -106,30 +102,25 @@ func resourceFirewallAddress6() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"country": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 2),
 				Optional:     true,
-				Computed:     true,
 			},
 			"cache_ttl": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 86400),
 				Optional:     true,
-				Computed:     true,
 			},
 			"visibility": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"color": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 32),
 				Optional:     true,
-				Computed:     true,
 			},
 			"obj_id": &schema.Schema{
 				Type:         schema.TypeString,
@@ -145,7 +136,6 @@ func resourceFirewallAddress6() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 89),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -159,13 +149,11 @@ func resourceFirewallAddress6() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"category": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"tags": &schema.Schema{
 							Type:     schema.TypeSet,
@@ -176,7 +164,6 @@ func resourceFirewallAddress6() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -193,7 +180,6 @@ func resourceFirewallAddress6() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"subnet_segment": &schema.Schema{
 				Type:     schema.TypeList,
@@ -204,7 +190,6 @@ func resourceFirewallAddress6() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"type": &schema.Schema{
 							Type:     schema.TypeString,
@@ -215,7 +200,6 @@ func resourceFirewallAddress6() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -234,19 +218,16 @@ func resourceFirewallAddress6() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"epg_name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"sdn_tag": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"fabric_object": &schema.Schema{
 				Type:     schema.TypeString,
@@ -431,7 +412,7 @@ func flattenFirewallAddress6Type(v interface{}, d *schema.ResourceData, pre stri
 }
 
 func flattenFirewallAddress6RouteTag(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallAddress6Macaddr(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -509,7 +490,7 @@ func flattenFirewallAddress6Country(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenFirewallAddress6CacheTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallAddress6Visibility(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -517,7 +498,7 @@ func flattenFirewallAddress6Visibility(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenFirewallAddress6Color(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallAddress6ObjId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1091,6 +1072,8 @@ func expandFirewallAddress6List(d *schema.ResourceData, v interface{}, pre strin
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["ip"], _ = expandFirewallAddress6ListIp(d, i["ip"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["ip"] = nil
 		}
 
 		result = append(result, tmp)
@@ -1122,17 +1105,21 @@ func expandFirewallAddress6Tagging(d *schema.ResourceData, v interface{}, pre st
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandFirewallAddress6TaggingName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["category"], _ = expandFirewallAddress6TaggingCategory(d, i["category"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["category"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tags"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["tags"], _ = expandFirewallAddress6TaggingTags(d, i["tags"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["tags"] = make([]string, 0)
 		}
 
@@ -1205,6 +1192,8 @@ func expandFirewallAddress6SubnetSegment(d *schema.ResourceData, v interface{}, 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandFirewallAddress6SubnetSegmentName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
@@ -1215,6 +1204,8 @@ func expandFirewallAddress6SubnetSegment(d *schema.ResourceData, v interface{}, 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["value"], _ = expandFirewallAddress6SubnetSegmentValue(d, i["value"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["value"] = nil
 		}
 
 		result = append(result, tmp)
@@ -1271,6 +1262,8 @@ func getObjectFirewallAddress6(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("uuid"); ok {
@@ -1298,6 +1291,8 @@ func getObjectFirewallAddress6(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["route-tag"] = t
 		}
+	} else if d.HasChange("route_tag") {
+		obj["route-tag"] = nil
 	}
 
 	if v, ok := d.GetOk("macaddr"); ok || d.HasChange("macaddr") {
@@ -1334,6 +1329,8 @@ func getObjectFirewallAddress6(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["sdn"] = t
 		}
+	} else if d.HasChange("sdn") {
+		obj["sdn"] = nil
 	}
 
 	if v, ok := d.GetOk("ip6"); ok {
@@ -1370,6 +1367,8 @@ func getObjectFirewallAddress6(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["fqdn"] = t
 		}
+	} else if d.HasChange("fqdn") {
+		obj["fqdn"] = nil
 	}
 
 	if v, ok := d.GetOk("country"); ok {
@@ -1379,6 +1378,8 @@ func getObjectFirewallAddress6(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["country"] = t
 		}
+	} else if d.HasChange("country") {
+		obj["country"] = nil
 	}
 
 	if v, ok := d.GetOkExists("cache_ttl"); ok {
@@ -1388,6 +1389,8 @@ func getObjectFirewallAddress6(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["cache-ttl"] = t
 		}
+	} else if d.HasChange("cache_ttl") {
+		obj["cache-ttl"] = nil
 	}
 
 	if v, ok := d.GetOk("visibility"); ok {
@@ -1397,6 +1400,8 @@ func getObjectFirewallAddress6(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["visibility"] = t
 		}
+	} else if d.HasChange("visibility") {
+		obj["visibility"] = nil
 	}
 
 	if v, ok := d.GetOkExists("color"); ok {
@@ -1406,6 +1411,8 @@ func getObjectFirewallAddress6(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["color"] = t
 		}
+	} else if d.HasChange("color") {
+		obj["color"] = nil
 	}
 
 	if v, ok := d.GetOk("obj_id"); ok {
@@ -1415,6 +1422,8 @@ func getObjectFirewallAddress6(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["obj-id"] = t
 		}
+	} else if d.HasChange("obj_id") {
+		obj["obj-id"] = nil
 	}
 
 	if v, ok := d.GetOk("list"); ok || d.HasChange("list") {
@@ -1442,6 +1451,8 @@ func getObjectFirewallAddress6(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("template"); ok {
@@ -1451,6 +1462,8 @@ func getObjectFirewallAddress6(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["template"] = t
 		}
+	} else if d.HasChange("template") {
+		obj["template"] = nil
 	}
 
 	if v, ok := d.GetOk("subnet_segment"); ok || d.HasChange("subnet_segment") {
@@ -1487,6 +1500,8 @@ func getObjectFirewallAddress6(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["tenant"] = t
 		}
+	} else if d.HasChange("tenant") {
+		obj["tenant"] = nil
 	}
 
 	if v, ok := d.GetOk("epg_name"); ok {
@@ -1496,6 +1511,8 @@ func getObjectFirewallAddress6(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["epg-name"] = t
 		}
+	} else if d.HasChange("epg_name") {
+		obj["epg-name"] = nil
 	}
 
 	if v, ok := d.GetOk("sdn_tag"); ok {
@@ -1505,6 +1522,8 @@ func getObjectFirewallAddress6(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["sdn-tag"] = t
 		}
+	} else if d.HasChange("sdn_tag") {
+		obj["sdn-tag"] = nil
 	}
 
 	if v, ok := d.GetOk("fabric_object"); ok {

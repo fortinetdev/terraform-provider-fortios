@@ -104,6 +104,10 @@ func dataSourceSystemDns() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"root_servers": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"interface_select_method": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -137,6 +141,14 @@ func dataSourceSystemDns() *schema.Resource {
 				Computed: true,
 			},
 			"fqdn_min_refresh": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"hostname_ttl": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"hostname_limit": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
@@ -302,6 +314,10 @@ func dataSourceFlattenSystemDnsSourceIp(v interface{}, d *schema.ResourceData, p
 	return v
 }
 
+func dataSourceFlattenSystemDnsRootServers(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemDnsInterfaceSelectMethod(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -335,6 +351,14 @@ func dataSourceFlattenSystemDnsFqdnMaxRefresh(v interface{}, d *schema.ResourceD
 }
 
 func dataSourceFlattenSystemDnsFqdnMinRefresh(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemDnsHostnameTtl(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemDnsHostnameLimit(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -431,6 +455,12 @@ func dataSourceRefreshObjectSystemDns(d *schema.ResourceData, o map[string]inter
 		}
 	}
 
+	if err = d.Set("root_servers", dataSourceFlattenSystemDnsRootServers(o["root-servers"], d, "root_servers")); err != nil {
+		if !fortiAPIPatch(o["root-servers"]) {
+			return fmt.Errorf("Error reading root_servers: %v", err)
+		}
+	}
+
 	if err = d.Set("interface_select_method", dataSourceFlattenSystemDnsInterfaceSelectMethod(o["interface-select-method"], d, "interface_select_method")); err != nil {
 		if !fortiAPIPatch(o["interface-select-method"]) {
 			return fmt.Errorf("Error reading interface_select_method: %v", err)
@@ -482,6 +512,18 @@ func dataSourceRefreshObjectSystemDns(d *schema.ResourceData, o map[string]inter
 	if err = d.Set("fqdn_min_refresh", dataSourceFlattenSystemDnsFqdnMinRefresh(o["fqdn-min-refresh"], d, "fqdn_min_refresh")); err != nil {
 		if !fortiAPIPatch(o["fqdn-min-refresh"]) {
 			return fmt.Errorf("Error reading fqdn_min_refresh: %v", err)
+		}
+	}
+
+	if err = d.Set("hostname_ttl", dataSourceFlattenSystemDnsHostnameTtl(o["hostname-ttl"], d, "hostname_ttl")); err != nil {
+		if !fortiAPIPatch(o["hostname-ttl"]) {
+			return fmt.Errorf("Error reading hostname_ttl: %v", err)
+		}
+	}
+
+	if err = d.Set("hostname_limit", dataSourceFlattenSystemDnsHostnameLimit(o["hostname-limit"], d, "hostname_limit")); err != nil {
+		if !fortiAPIPatch(o["hostname-limit"]) {
+			return fmt.Errorf("Error reading hostname_limit: %v", err)
 		}
 	}
 

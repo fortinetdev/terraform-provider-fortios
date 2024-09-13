@@ -40,7 +40,6 @@ func resourceFirewallIppool() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
-				Computed:     true,
 			},
 			"type": &schema.Schema{
 				Type:     schema.TypeString,
@@ -57,13 +56,13 @@ func resourceFirewallIppool() *schema.Resource {
 			},
 			"startport": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(5117, 65533),
+				ValidateFunc: validation.IntBetween(1024, 65535),
 				Optional:     true,
 				Computed:     true,
 			},
 			"endport": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(5117, 65533),
+				ValidateFunc: validation.IntBetween(1024, 65535),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -86,7 +85,6 @@ func resourceFirewallIppool() *schema.Resource {
 			"port_per_user": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"num_blocks_per_user": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -104,7 +102,6 @@ func resourceFirewallIppool() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(600, 86400),
 				Optional:     true,
-				Computed:     true,
 			},
 			"permit_any_host": &schema.Schema{
 				Type:     schema.TypeString,
@@ -120,13 +117,11 @@ func resourceFirewallIppool() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"associated_interface": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"comments": &schema.Schema{
 				Type:         schema.TypeString,
@@ -139,6 +134,37 @@ func resourceFirewallIppool() *schema.Resource {
 				Computed: true,
 			},
 			"add_nat64_route": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"source_prefix6": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"client_prefix_length": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1, 128),
+				Optional:     true,
+				Computed:     true,
+			},
+			"tcp_session_quota": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 2097000),
+				Optional:     true,
+			},
+			"udp_session_quota": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 2097000),
+				Optional:     true,
+			},
+			"icmp_session_quota": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 2097000),
+				Optional:     true,
+			},
+			"privileged_port_use_pba": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -320,11 +346,11 @@ func flattenFirewallIppoolEndip(v interface{}, d *schema.ResourceData, pre strin
 }
 
 func flattenFirewallIppoolStartport(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallIppoolEndport(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallIppoolSourceStartip(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -336,23 +362,23 @@ func flattenFirewallIppoolSourceEndip(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenFirewallIppoolBlockSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallIppoolPortPerUser(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallIppoolNumBlocksPerUser(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallIppoolPbaTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallIppoolPbaInterimLog(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallIppoolPermitAnyHost(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -380,6 +406,30 @@ func flattenFirewallIppoolNat64(v interface{}, d *schema.ResourceData, pre strin
 }
 
 func flattenFirewallIppoolAddNat64Route(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallIppoolSourcePrefix6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallIppoolClientPrefixLength(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenFirewallIppoolTcpSessionQuota(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenFirewallIppoolUdpSessionQuota(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenFirewallIppoolIcmpSessionQuota(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenFirewallIppoolPrivilegedPortUsePba(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -510,6 +560,42 @@ func refreshObjectFirewallIppool(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("source_prefix6", flattenFirewallIppoolSourcePrefix6(o["source-prefix6"], d, "source_prefix6", sv)); err != nil {
+		if !fortiAPIPatch(o["source-prefix6"]) {
+			return fmt.Errorf("Error reading source_prefix6: %v", err)
+		}
+	}
+
+	if err = d.Set("client_prefix_length", flattenFirewallIppoolClientPrefixLength(o["client-prefix-length"], d, "client_prefix_length", sv)); err != nil {
+		if !fortiAPIPatch(o["client-prefix-length"]) {
+			return fmt.Errorf("Error reading client_prefix_length: %v", err)
+		}
+	}
+
+	if err = d.Set("tcp_session_quota", flattenFirewallIppoolTcpSessionQuota(o["tcp-session-quota"], d, "tcp_session_quota", sv)); err != nil {
+		if !fortiAPIPatch(o["tcp-session-quota"]) {
+			return fmt.Errorf("Error reading tcp_session_quota: %v", err)
+		}
+	}
+
+	if err = d.Set("udp_session_quota", flattenFirewallIppoolUdpSessionQuota(o["udp-session-quota"], d, "udp_session_quota", sv)); err != nil {
+		if !fortiAPIPatch(o["udp-session-quota"]) {
+			return fmt.Errorf("Error reading udp_session_quota: %v", err)
+		}
+	}
+
+	if err = d.Set("icmp_session_quota", flattenFirewallIppoolIcmpSessionQuota(o["icmp-session-quota"], d, "icmp_session_quota", sv)); err != nil {
+		if !fortiAPIPatch(o["icmp-session-quota"]) {
+			return fmt.Errorf("Error reading icmp_session_quota: %v", err)
+		}
+	}
+
+	if err = d.Set("privileged_port_use_pba", flattenFirewallIppoolPrivilegedPortUsePba(o["privileged-port-use-pba"], d, "privileged_port_use_pba", sv)); err != nil {
+		if !fortiAPIPatch(o["privileged-port-use-pba"]) {
+			return fmt.Errorf("Error reading privileged_port_use_pba: %v", err)
+		}
+	}
+
 	if err = d.Set("subnet_broadcast_in_ippool", flattenFirewallIppoolSubnetBroadcastInIppool(o["subnet-broadcast-in-ippool"], d, "subnet_broadcast_in_ippool", sv)); err != nil {
 		if !fortiAPIPatch(o["subnet-broadcast-in-ippool"]) {
 			return fmt.Errorf("Error reading subnet_broadcast_in_ippool: %v", err)
@@ -605,6 +691,30 @@ func expandFirewallIppoolAddNat64Route(d *schema.ResourceData, v interface{}, pr
 	return v, nil
 }
 
+func expandFirewallIppoolSourcePrefix6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallIppoolClientPrefixLength(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallIppoolTcpSessionQuota(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallIppoolUdpSessionQuota(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallIppoolIcmpSessionQuota(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallIppoolPrivilegedPortUsePba(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallIppoolSubnetBroadcastInIppool(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -619,6 +729,8 @@ func getObjectFirewallIppool(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("type"); ok {
@@ -700,6 +812,8 @@ func getObjectFirewallIppool(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["port-per-user"] = t
 		}
+	} else if d.HasChange("port_per_user") {
+		obj["port-per-user"] = nil
 	}
 
 	if v, ok := d.GetOk("num_blocks_per_user"); ok {
@@ -727,6 +841,8 @@ func getObjectFirewallIppool(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["pba-interim-log"] = t
 		}
+	} else if d.HasChange("pba_interim_log") {
+		obj["pba-interim-log"] = nil
 	}
 
 	if v, ok := d.GetOk("permit_any_host"); ok {
@@ -754,6 +870,8 @@ func getObjectFirewallIppool(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["arp-intf"] = t
 		}
+	} else if d.HasChange("arp_intf") {
+		obj["arp-intf"] = nil
 	}
 
 	if v, ok := d.GetOk("associated_interface"); ok {
@@ -763,6 +881,8 @@ func getObjectFirewallIppool(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["associated-interface"] = t
 		}
+	} else if d.HasChange("associated_interface") {
+		obj["associated-interface"] = nil
 	}
 
 	if v, ok := d.GetOk("comments"); ok {
@@ -772,6 +892,8 @@ func getObjectFirewallIppool(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["comments"] = t
 		}
+	} else if d.HasChange("comments") {
+		obj["comments"] = nil
 	}
 
 	if v, ok := d.GetOk("nat64"); ok {
@@ -789,6 +911,66 @@ func getObjectFirewallIppool(d *schema.ResourceData, sv string) (*map[string]int
 			return &obj, err
 		} else if t != nil {
 			obj["add-nat64-route"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("source_prefix6"); ok {
+		t, err := expandFirewallIppoolSourcePrefix6(d, v, "source_prefix6", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["source-prefix6"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("client_prefix_length"); ok {
+		t, err := expandFirewallIppoolClientPrefixLength(d, v, "client_prefix_length", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["client-prefix-length"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("tcp_session_quota"); ok {
+		t, err := expandFirewallIppoolTcpSessionQuota(d, v, "tcp_session_quota", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["tcp-session-quota"] = t
+		}
+	} else if d.HasChange("tcp_session_quota") {
+		obj["tcp-session-quota"] = nil
+	}
+
+	if v, ok := d.GetOkExists("udp_session_quota"); ok {
+		t, err := expandFirewallIppoolUdpSessionQuota(d, v, "udp_session_quota", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["udp-session-quota"] = t
+		}
+	} else if d.HasChange("udp_session_quota") {
+		obj["udp-session-quota"] = nil
+	}
+
+	if v, ok := d.GetOkExists("icmp_session_quota"); ok {
+		t, err := expandFirewallIppoolIcmpSessionQuota(d, v, "icmp_session_quota", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["icmp-session-quota"] = t
+		}
+	} else if d.HasChange("icmp_session_quota") {
+		obj["icmp-session-quota"] = nil
+	}
+
+	if v, ok := d.GetOk("privileged_port_use_pba"); ok {
+		t, err := expandFirewallIppoolPrivilegedPortUsePba(d, v, "privileged_port_use_pba", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["privileged-port-use-pba"] = t
 		}
 	}
 

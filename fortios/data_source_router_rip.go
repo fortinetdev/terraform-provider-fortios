@@ -784,15 +784,6 @@ func dataSourceFlattenRouterRipInterface(v interface{}, d *schema.ResourceData, 
 			tmp["auth_mode"] = dataSourceFlattenRouterRipInterfaceAuthMode(i["auth-mode"], d, pre_append)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_string"
-		if _, ok := i["auth-string"]; ok {
-			tmp["auth_string"] = dataSourceFlattenRouterRipInterfaceAuthString(i["auth-string"], d, pre_append)
-			c := d.Get(pre_append).(string)
-			if c != "" {
-				tmp["auth_string"] = c
-			}
-		}
-
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "receive_version"
 		if _, ok := i["receive-version"]; ok {
 			tmp["receive_version"] = dataSourceFlattenRouterRipInterfaceReceiveVersion(i["receive-version"], d, pre_append)

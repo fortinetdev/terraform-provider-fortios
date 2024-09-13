@@ -40,7 +40,6 @@ func resourceFirewallSshHostKey() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
@@ -76,7 +75,6 @@ func resourceFirewallSshHostKey() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"public_key": &schema.Schema{
 				Type:         schema.TypeString,
@@ -264,14 +262,10 @@ func flattenFirewallSshHostKeyIp(v interface{}, d *schema.ResourceData, pre stri
 }
 
 func flattenFirewallSshHostKeyPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallSshHostKeyHostname(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenFirewallSshHostKeyPublicKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -381,6 +375,8 @@ func getObjectFirewallSshHostKey(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("status"); ok {
@@ -444,6 +440,8 @@ func getObjectFirewallSshHostKey(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["hostname"] = t
 		}
+	} else if d.HasChange("hostname") {
+		obj["hostname"] = nil
 	}
 
 	if v, ok := d.GetOk("public_key"); ok {
@@ -453,6 +451,8 @@ func getObjectFirewallSshHostKey(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["public-key"] = t
 		}
+	} else if d.HasChange("public_key") {
+		obj["public-key"] = nil
 	}
 
 	return &obj, nil

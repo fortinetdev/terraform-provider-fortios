@@ -19,7 +19,7 @@ The following arguments are supported:
 * `mesh_backhaul` - Enable/disable using this VAP as a WiFi mesh backhaul (default = disable). This entry is only available when security is set to a WPA type or open. Valid values: `enable`, `disable`.
 * `atf_weight` - Airtime weight in percentage (default = 20).
 * `max_clients` - Maximum number of clients that can connect simultaneously to the VAP (default = 0, meaning no limitation).
-* `max_clients_ap` - Maximum number of clients that can connect simultaneously to each radio (default = 0, meaning no limitation).
+* `max_clients_ap` - Maximum number of clients that can connect simultaneously to the VAP per AP radio (default = 0, meaning no limitation).
 * `ssid` - IEEE 802.11 service set identifier (SSID) for the wireless interface. Users who wish to use the wireless network must configure their computers to access this SSID name.
 * `broadcast_ssid` - Enable/disable broadcasting the SSID (default = enable). Valid values: `enable`, `disable`.
 * `security_obsolete_option` - Enable/disable obsolete security options. Valid values: `enable`, `disable`.
@@ -61,13 +61,13 @@ The following arguments are supported:
 * `radius_mac_auth_server` - RADIUS-based MAC authentication server.
 * `radius_mac_auth_block_interval` - Don't send RADIUS MAC auth request again if the client has been rejected within specific interval (0 or 30 - 864000 seconds, default = 0, 0 to disable blocking).
 * `radius_mac_mpsk_auth` - Enable/disable RADIUS-based MAC authentication of clients for MPSK authentication (default = disable). Valid values: `enable`, `disable`.
-* `radius_mac_mpsk_timeout` - RADIUS MAC MPSK cache timeout interval (1800 - 864000, default = 86400).
+* `radius_mac_mpsk_timeout` - RADIUS MAC MPSK cache timeout interval (default = 86400). On FortiOS versions 7.0.2-7.0.8, 7.2.0: 1800 - 864000. On FortiOS versions 7.0.9-7.0.15, >= 7.2.1: 0 or 300 - 864000, 0 to disable caching.
 * `radius_mac_auth_usergroups` - Selective user groups that are permitted for RADIUS mac authentication. The structure of `radius_mac_auth_usergroups` block is documented below.
 * `auth` - Authentication protocol.
 * `encrypt` - Encryption protocol to use (only available when security is set to a WPA type). Valid values: `TKIP`, `AES`, `TKIP-AES`.
 * `keyindex` - WEP key index (1 - 4).
 * `key` - WEP Key.
-* `passphrase` - WPA pre-shard key (PSK) to be used to authenticate WiFi users.
+* `passphrase` - WPA pre-shared key (PSK) to be used to authenticate WiFi users.
 * `sae_password` - WPA3 SAE password to be used to authenticate WiFi users.
 * `sae_h2e_only` - Use hash-to-element-only mechanism for PWE derivation (default = disable). Valid values: `enable`, `disable`.
 * `sae_hnp_only` - Use hunting-and-pecking-only mechanism for PWE derivation (default = disable). Valid values: `enable`, `disable`.
@@ -76,6 +76,7 @@ The following arguments are supported:
 * `akm24_only` - WPA3 SAE using group-dependent hash only (default = disable). Valid values: `disable`, `enable`.
 * `radius_server` - RADIUS server to be used to authenticate WiFi users.
 * `nas_filter_rule` - Enable/disable NAS filter rule support (default = disable). Valid values: `enable`, `disable`.
+* `domain_name_stripping` - Enable/disable stripping domain name from identity (default = disable). Valid values: `disable`, `enable`.
 * `acct_interim_interval` - WiFi RADIUS accounting interim interval (60 - 86400 sec, default = 0).
 * `local_standalone` - Enable/disable AP local standalone (default = disable). Valid values: `enable`, `disable`.
 * `local_standalone_nat` - Enable/disable AP local standalone NAT mode. Valid values: `enable`, `disable`.
@@ -83,6 +84,7 @@ The following arguments are supported:
 * `dhcp_lease_time` - DHCP lease time in seconds for NAT IP address.
 * `local_standalone_dns` - Enable/disable AP local standalone DNS. Valid values: `enable`, `disable`.
 * `local_standalone_dns_ip` - IPv4 addresses for the local standalone DNS.
+* `local_lan_partition` - Enable/disable segregating client traffic to local LAN side (default = disable). Valid values: `enable`, `disable`.
 * `local_bridging` - Enable/disable bridging of wireless and Ethernet interfaces on the FortiAP (default = disable). Valid values: `enable`, `disable`.
 * `local_lan` - Allow/deny traffic destined for a Class A, B, or C private IP address (default = allow). Valid values: `allow`, `deny`.
 * `local_authentication` - Enable/disable AP local authentication. Valid values: `enable`, `disable`.
@@ -105,8 +107,8 @@ The following arguments are supported:
 * `port_macauth_reauth_timeout` - LAN port MAC authentication re-authentication timeout value (default = 7200 sec).
 * `bss_color_partial` - Enable/disable 802.11ax partial BSS color (default = enable). Valid values: `enable`, `disable`.
 * `mpsk_profile` - MPSK profile name.
-* `mpsk` - Enable/disable multiple pre-shared keys (PSKs.) Valid values: `enable`, `disable`.
-* `mpsk_concurrent_clients` - Number of pre-shared keys (PSKs) to allow if multiple pre-shared keys are enabled.
+* `mpsk` - Enable/disable multiple PSK authentication. Valid values: `enable`, `disable`.
+* `mpsk_concurrent_clients` - Maximum number of concurrent clients that connect using the same passphrase in multiple PSK authentication (0 - 65535, default = 0, meaning no limitation).
 * `mpsk_key` - Pre-shared keys that can be used to connect to this virtual access point. The structure of `mpsk_key` block is documented below.
 * `split_tunneling` - Enable/disable split tunneling (default = disable). Valid values: `enable`, `disable`.
 * `nac` - Enable/disable network access control. Valid values: `enable`, `disable`.
@@ -237,7 +239,7 @@ The `mpsk_schedules` block supports:
 The `vlan_name` block supports:
 
 * `name` - VLAN name.
-* `vlan_id` - VLAN ID.
+* `vlan_id` - VLAN IDs (maximum 8 VLAN IDs).
 
 The `vlan_pool` block supports:
 

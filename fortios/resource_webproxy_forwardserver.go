@@ -62,7 +62,6 @@ func resourceWebProxyForwardServer() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"port": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -90,7 +89,6 @@ func resourceWebProxyForwardServer() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 64),
 				Optional:     true,
-				Computed:     true,
 			},
 			"password": &schema.Schema{
 				Type:         schema.TypeString,
@@ -102,7 +100,6 @@ func resourceWebProxyForwardServer() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"masquerade": &schema.Schema{
 				Type:     schema.TypeString,
@@ -285,7 +282,7 @@ func flattenWebProxyForwardServerFqdn(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenWebProxyForwardServerPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWebProxyForwardServerHealthcheck(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -301,10 +298,6 @@ func flattenWebProxyForwardServerServerDownOption(v interface{}, d *schema.Resou
 }
 
 func flattenWebProxyForwardServerUsername(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenWebProxyForwardServerPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -498,6 +491,8 @@ func getObjectWebProxyForwardServer(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["fqdn"] = t
 		}
+	} else if d.HasChange("fqdn") {
+		obj["fqdn"] = nil
 	}
 
 	if v, ok := d.GetOk("port"); ok {
@@ -543,6 +538,8 @@ func getObjectWebProxyForwardServer(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["username"] = t
 		}
+	} else if d.HasChange("username") {
+		obj["username"] = nil
 	}
 
 	if v, ok := d.GetOk("password"); ok {
@@ -552,6 +549,8 @@ func getObjectWebProxyForwardServer(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["password"] = t
 		}
+	} else if d.HasChange("password") {
+		obj["password"] = nil
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
@@ -561,6 +560,8 @@ func getObjectWebProxyForwardServer(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("masquerade"); ok {

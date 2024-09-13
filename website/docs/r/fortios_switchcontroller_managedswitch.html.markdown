@@ -119,6 +119,7 @@ The `ports` block supports:
 * `fortilink_port` - FortiLink uplink port.
 * `link_status` - Port link status. Valid values: `up`, `down`.
 * `poe_capable` - PoE capable.
+* `pd_capable` - Powered device capable.
 * `stacking_port` - Stacking port.
 * `p2p_port` - General peer to peer tunnel port.
 * `mclag_icl_port` - MCLAG-ICL port.
@@ -194,6 +195,8 @@ The `ports` block supports:
 * `export_to` - Export managed-switch port to a tenant VDOM.
 * `mac_addr` - Port/Trunk MAC.
 * `allow_arp_monitor` - Enable/Disable allow ARP monitor. Valid values: `disable`, `enable`.
+* `qnq` - 802.1AD VLANs in the VDom.
+* `log_mac_event` - Enable/disable logging for dynamic MAC address events. Valid values: `disable`, `enable`.
 * `port_selection_criteria` - Algorithm for aggregate port selection. Valid values: `src-mac`, `dst-mac`, `src-dst-mac`, `src-ip`, `dst-ip`, `src-dst-ip`.
 * `description` - Description for port.
 * `lacp_speed` - end Link Aggregation Control Protocol (LACP) messages every 30 seconds (slow) or every second (fast). Valid values: `slow`, `fast`.
@@ -299,7 +302,7 @@ The `snmp_community` block supports:
 * `trap_v2c_status` - Enable/disable SNMP v2c traps. Valid values: `disable`, `enable`.
 * `trap_v2c_lport` - SNMP v2c trap local port (default = 162).
 * `trap_v2c_rport` - SNMP v2c trap remote port (default = 162).
-* `events` - SNMP notifications (traps) to send. Valid values: `cpu-high`, `mem-low`, `log-full`, `intf-ip`, `ent-conf-change`.
+* `events` - SNMP notifications (traps) to send.
 
 The `hosts` block supports:
 
@@ -340,7 +343,7 @@ The `remote_log` block supports:
 The `storm_control` block supports:
 
 * `local_override` - Enable to override global FortiSwitch storm control settings for this FortiSwitch. Valid values: `enable`, `disable`.
-* `rate` - Rate in packets per second at which storm control drops excess traffic, default=500. On FortiOS versions 6.2.0-7.2.8: 1 - 10000000. On FortiOS versions >= 7.4.0: 0-10000000, drop-all=0.
+* `rate` - Rate in packets per second at which storm control drops excess traffic, default=500. On FortiOS versions 6.2.0-7.2.9: 1 - 10000000. On FortiOS versions >= 7.4.0: 0-10000000, drop-all=0.
 * `unknown_unicast` - Enable/disable storm control to drop unknown unicast traffic. Valid values: `enable`, `disable`.
 * `unknown_multicast` - Enable/disable storm control to drop unknown multicast traffic. Valid values: `enable`, `disable`.
 * `broadcast` - Enable/disable storm control to drop broadcast traffic. Valid values: `enable`, `disable`.

@@ -47,13 +47,11 @@ func resourceCifsDomainController() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"username": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 64),
 				Optional:     true,
-				Computed:     true,
 			},
 			"password": &schema.Schema{
 				Type:         schema.TypeString,
@@ -65,7 +63,6 @@ func resourceCifsDomainController() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ip": &schema.Schema{
 				Type:     schema.TypeString,
@@ -244,12 +241,8 @@ func flattenCifsDomainControllerUsername(v interface{}, d *schema.ResourceData, 
 	return v
 }
 
-func flattenCifsDomainControllerPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
 func flattenCifsDomainControllerPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenCifsDomainControllerIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -355,6 +348,8 @@ func getObjectCifsDomainController(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["domain-name"] = t
 		}
+	} else if d.HasChange("domain_name") {
+		obj["domain-name"] = nil
 	}
 
 	if v, ok := d.GetOk("username"); ok {
@@ -364,6 +359,8 @@ func getObjectCifsDomainController(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["username"] = t
 		}
+	} else if d.HasChange("username") {
+		obj["username"] = nil
 	}
 
 	if v, ok := d.GetOk("password"); ok {
@@ -373,6 +370,8 @@ func getObjectCifsDomainController(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["password"] = t
 		}
+	} else if d.HasChange("password") {
+		obj["password"] = nil
 	}
 
 	if v, ok := d.GetOkExists("port"); ok {
@@ -382,6 +381,8 @@ func getObjectCifsDomainController(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["port"] = t
 		}
+	} else if d.HasChange("port") {
+		obj["port"] = nil
 	}
 
 	if v, ok := d.GetOk("ip"); ok {

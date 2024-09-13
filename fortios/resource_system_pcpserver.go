@@ -50,18 +50,15 @@ func resourceSystemPcpServer() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 						"description": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 127),
 							Optional:     true,
-							Computed:     true,
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"client_subnet": &schema.Schema{
 							Type:     schema.TypeSet,
@@ -72,7 +69,6 @@ func resourceSystemPcpServer() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -81,7 +77,6 @@ func resourceSystemPcpServer() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"arp_reply": &schema.Schema{
 							Type:     schema.TypeString,
@@ -91,12 +86,10 @@ func resourceSystemPcpServer() *schema.Resource {
 						"extip": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"extport": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"minimal_lifetime": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -114,7 +107,6 @@ func resourceSystemPcpServer() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 						"mapping_filter_limit": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -141,7 +133,6 @@ func resourceSystemPcpServer() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -166,7 +157,6 @@ func resourceSystemPcpServer() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -175,7 +165,6 @@ func resourceSystemPcpServer() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 3600),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -449,7 +438,7 @@ func flattenSystemPcpServerPoolsDescription(v interface{}, d *schema.ResourceDat
 }
 
 func flattenSystemPcpServerPoolsId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemPcpServerPoolsClientSubnet(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -511,19 +500,19 @@ func flattenSystemPcpServerPoolsExtport(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenSystemPcpServerPoolsMinimalLifetime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemPcpServerPoolsMaximalLifetime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemPcpServerPoolsClientMappingLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemPcpServerPoolsMappingFilterLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemPcpServerPoolsAllowOpcode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -581,7 +570,7 @@ func flattenSystemPcpServerPoolsMulticastAnnouncement(v interface{}, d *schema.R
 }
 
 func flattenSystemPcpServerPoolsAnnouncementCount(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemPcpServerPoolsIntlIntf(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -627,7 +616,7 @@ func flattenSystemPcpServerPoolsIntlIntfInterfaceName(v interface{}, d *schema.R
 }
 
 func flattenSystemPcpServerPoolsRecycleDelay(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectSystemPcpServer(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -691,28 +680,36 @@ func expandSystemPcpServerPools(d *schema.ResourceData, v interface{}, pre strin
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandSystemPcpServerPoolsName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["description"], _ = expandSystemPcpServerPoolsDescription(d, i["description"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["description"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSystemPcpServerPoolsId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "client_subnet"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["client-subnet"], _ = expandSystemPcpServerPoolsClientSubnet(d, i["client_subnet"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["client-subnet"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ext_intf"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["ext-intf"], _ = expandSystemPcpServerPoolsExtIntf(d, i["ext_intf"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["ext-intf"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "arp_reply"
@@ -723,11 +720,15 @@ func expandSystemPcpServerPools(d *schema.ResourceData, v interface{}, pre strin
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "extip"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["extip"], _ = expandSystemPcpServerPoolsExtip(d, i["extip"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["extip"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "extport"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["extport"], _ = expandSystemPcpServerPoolsExtport(d, i["extport"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["extport"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "minimal_lifetime"
@@ -743,6 +744,8 @@ func expandSystemPcpServerPools(d *schema.ResourceData, v interface{}, pre strin
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "client_mapping_limit"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["client-mapping-limit"], _ = expandSystemPcpServerPoolsClientMappingLimit(d, i["client_mapping_limit"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["client-mapping-limit"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mapping_filter_limit"
@@ -761,9 +764,9 @@ func expandSystemPcpServerPools(d *schema.ResourceData, v interface{}, pre strin
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "third_party_subnet"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["third-party-subnet"], _ = expandSystemPcpServerPoolsThirdPartySubnet(d, i["third_party_subnet"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["third-party-subnet"] = make([]string, 0)
 		}
 
@@ -778,15 +781,17 @@ func expandSystemPcpServerPools(d *schema.ResourceData, v interface{}, pre strin
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "intl_intf"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["intl-intf"], _ = expandSystemPcpServerPoolsIntlIntf(d, i["intl_intf"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["intl-intf"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "recycle_delay"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["recycle-delay"], _ = expandSystemPcpServerPoolsRecycleDelay(d, i["recycle_delay"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["recycle-delay"] = nil
 		}
 
 		result = append(result, tmp)

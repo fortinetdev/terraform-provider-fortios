@@ -84,6 +84,10 @@ func dataSourceRouterOspf() *schema.Resource {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+			"lsa_refresh_interval": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
 			"rfc1583_compatible": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -317,6 +321,10 @@ func dataSourceRouterOspf() *schema.Resource {
 							Computed: true,
 						},
 						"ip": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"linkdown_fast_failover": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -656,6 +664,10 @@ func dataSourceFlattenRouterOspfDistance(v interface{}, d *schema.ResourceData, 
 	return v
 }
 
+func dataSourceFlattenRouterOspfLsaRefreshInterval(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenRouterOspfRfc1583Compatible(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -961,27 +973,9 @@ func dataSourceFlattenRouterOspfAreaVirtualLink(v interface{}, d *schema.Resourc
 			tmp["authentication"] = dataSourceFlattenRouterOspfAreaVirtualLinkAuthentication(i["authentication"], d, pre_append)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "authentication_key"
-		if _, ok := i["authentication-key"]; ok {
-			tmp["authentication_key"] = dataSourceFlattenRouterOspfAreaVirtualLinkAuthenticationKey(i["authentication-key"], d, pre_append)
-			c := d.Get(pre_append).(string)
-			if c != "" {
-				tmp["authentication_key"] = c
-			}
-		}
-
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "keychain"
 		if _, ok := i["keychain"]; ok {
 			tmp["keychain"] = dataSourceFlattenRouterOspfAreaVirtualLinkKeychain(i["keychain"], d, pre_append)
-		}
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "md5_key"
-		if _, ok := i["md5-key"]; ok {
-			tmp["md5_key"] = dataSourceFlattenRouterOspfAreaVirtualLinkMd5Key(i["md5-key"], d, pre_append)
-			c := d.Get(pre_append).(string)
-			if c != "" {
-				tmp["md5_key"] = c
-			}
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "md5_keychain"
@@ -1095,15 +1089,6 @@ func dataSourceFlattenRouterOspfAreaVirtualLinkMd5Keys(v interface{}, d *schema.
 			tmp["id"] = dataSourceFlattenRouterOspfAreaVirtualLinkMd5KeysId(i["id"], d, pre_append)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "key_string"
-		if _, ok := i["key-string"]; ok {
-			tmp["key_string"] = dataSourceFlattenRouterOspfAreaVirtualLinkMd5KeysKeyString(i["key-string"], d, pre_append)
-			c := d.Get(pre_append).(string)
-			if c != "" {
-				tmp["key_string"] = c
-			}
-		}
-
 		result = append(result, tmp)
 
 		con += 1
@@ -1213,32 +1198,19 @@ func dataSourceFlattenRouterOspfOspfInterface(v interface{}, d *schema.ResourceD
 			tmp["ip"] = dataSourceFlattenRouterOspfOspfInterfaceIp(i["ip"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "linkdown_fast_failover"
+		if _, ok := i["linkdown-fast-failover"]; ok {
+			tmp["linkdown_fast_failover"] = dataSourceFlattenRouterOspfOspfInterfaceLinkdownFastFailover(i["linkdown-fast-failover"], d, pre_append)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "authentication"
 		if _, ok := i["authentication"]; ok {
 			tmp["authentication"] = dataSourceFlattenRouterOspfOspfInterfaceAuthentication(i["authentication"], d, pre_append)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "authentication_key"
-		if _, ok := i["authentication-key"]; ok {
-			tmp["authentication_key"] = dataSourceFlattenRouterOspfOspfInterfaceAuthenticationKey(i["authentication-key"], d, pre_append)
-			c := d.Get(pre_append).(string)
-			if c != "" {
-				tmp["authentication_key"] = c
-			}
-		}
-
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "keychain"
 		if _, ok := i["keychain"]; ok {
 			tmp["keychain"] = dataSourceFlattenRouterOspfOspfInterfaceKeychain(i["keychain"], d, pre_append)
-		}
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "md5_key"
-		if _, ok := i["md5-key"]; ok {
-			tmp["md5_key"] = dataSourceFlattenRouterOspfOspfInterfaceMd5Key(i["md5-key"], d, pre_append)
-			c := d.Get(pre_append).(string)
-			if c != "" {
-				tmp["md5_key"] = c
-			}
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "md5_keychain"
@@ -1350,6 +1322,10 @@ func dataSourceFlattenRouterOspfOspfInterfaceIp(v interface{}, d *schema.Resourc
 	return v
 }
 
+func dataSourceFlattenRouterOspfOspfInterfaceLinkdownFastFailover(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenRouterOspfOspfInterfaceAuthentication(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -1452,15 +1428,6 @@ func dataSourceFlattenRouterOspfOspfInterfaceMd5Keys(v interface{}, d *schema.Re
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
 			tmp["id"] = dataSourceFlattenRouterOspfOspfInterfaceMd5KeysId(i["id"], d, pre_append)
-		}
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "key_string"
-		if _, ok := i["key-string"]; ok {
-			tmp["key_string"] = dataSourceFlattenRouterOspfOspfInterfaceMd5KeysKeyString(i["key-string"], d, pre_append)
-			c := d.Get(pre_append).(string)
-			if c != "" {
-				tmp["key_string"] = c
-			}
 		}
 
 		result = append(result, tmp)
@@ -1946,6 +1913,12 @@ func dataSourceRefreshObjectRouterOspf(d *schema.ResourceData, o map[string]inte
 	if err = d.Set("distance", dataSourceFlattenRouterOspfDistance(o["distance"], d, "distance")); err != nil {
 		if !fortiAPIPatch(o["distance"]) {
 			return fmt.Errorf("Error reading distance: %v", err)
+		}
+	}
+
+	if err = d.Set("lsa_refresh_interval", dataSourceFlattenRouterOspfLsaRefreshInterval(o["lsa-refresh-interval"], d, "lsa_refresh_interval")); err != nil {
+		if !fortiAPIPatch(o["lsa-refresh-interval"]) {
+			return fmt.Errorf("Error reading lsa_refresh_interval: %v", err)
 		}
 	}
 

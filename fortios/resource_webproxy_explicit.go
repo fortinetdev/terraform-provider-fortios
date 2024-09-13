@@ -59,7 +59,6 @@ func resourceWebProxyExplicit() *schema.Resource {
 			"http_incoming_port": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"http_connection_mode": &schema.Schema{
 				Type:     schema.TypeString,
@@ -69,7 +68,6 @@ func resourceWebProxyExplicit() *schema.Resource {
 			"https_incoming_port": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"secure_web_proxy_cert": &schema.Schema{
 				Type:     schema.TypeSet,
@@ -108,12 +106,10 @@ func resourceWebProxyExplicit() *schema.Resource {
 			"ftp_incoming_port": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"socks_incoming_port": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"incoming_ip": &schema.Schema{
 				Type:     schema.TypeString,
@@ -123,7 +119,6 @@ func resourceWebProxyExplicit() *schema.Resource {
 			"outgoing_ip": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"ipv6_status": &schema.Schema{
 				Type:     schema.TypeString,
@@ -138,7 +133,6 @@ func resourceWebProxyExplicit() *schema.Resource {
 			"outgoing_ip6": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"strict_guest": &schema.Schema{
 				Type:     schema.TypeString,
@@ -184,12 +178,10 @@ func resourceWebProxyExplicit() *schema.Resource {
 			"pac_file_url": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"pac_file_server_port": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"pac_file_through_https": &schema.Schema{
 				Type:     schema.TypeString,
@@ -205,7 +197,6 @@ func resourceWebProxyExplicit() *schema.Resource {
 			"pac_file_data": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"pac_policy": &schema.Schema{
 				Type:     schema.TypeList,
@@ -216,7 +207,6 @@ func resourceWebProxyExplicit() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 100),
 							Optional:     true,
-							Computed:     true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -232,7 +222,6 @@ func resourceWebProxyExplicit() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -246,7 +235,6 @@ func resourceWebProxyExplicit() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -260,7 +248,6 @@ func resourceWebProxyExplicit() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -274,7 +261,6 @@ func resourceWebProxyExplicit() *schema.Resource {
 						"pac_file_data": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"comments": &schema.Schema{
 							Type:         schema.TypeString,
@@ -662,7 +648,7 @@ func flattenWebProxyExplicitPacPolicy(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenWebProxyExplicitPacPolicyPolicyid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWebProxyExplicitPacPolicyStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1232,6 +1218,8 @@ func expandWebProxyExplicitPacPolicy(d *schema.ResourceData, v interface{}, pre 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "policyid"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["policyid"], _ = expandWebProxyExplicitPacPolicyPolicyid(d, i["policyid"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["policyid"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
@@ -1240,23 +1228,23 @@ func expandWebProxyExplicitPacPolicy(d *schema.ResourceData, v interface{}, pre 
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "srcaddr"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["srcaddr"], _ = expandWebProxyExplicitPacPolicySrcaddr(d, i["srcaddr"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["srcaddr"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "srcaddr6"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["srcaddr6"], _ = expandWebProxyExplicitPacPolicySrcaddr6(d, i["srcaddr6"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["srcaddr6"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dstaddr"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["dstaddr"], _ = expandWebProxyExplicitPacPolicyDstaddr(d, i["dstaddr"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["dstaddr"] = make([]string, 0)
 		}
 
@@ -1268,11 +1256,15 @@ func expandWebProxyExplicitPacPolicy(d *schema.ResourceData, v interface{}, pre 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pac_file_data"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["pac-file-data"], _ = expandWebProxyExplicitPacPolicyPacFileData(d, i["pac_file_data"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["pac-file-data"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comments"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["comments"], _ = expandWebProxyExplicitPacPolicyComments(d, i["comments"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["comments"] = nil
 		}
 
 		result = append(result, tmp)
@@ -1461,6 +1453,8 @@ func getObjectWebProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 				obj["http-incoming-port"] = t
 			}
 		}
+	} else if d.HasChange("http_incoming_port") {
+		obj["http-incoming-port"] = nil
 	}
 
 	if v, ok := d.GetOk("http_connection_mode"); ok {
@@ -1487,6 +1481,8 @@ func getObjectWebProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 				obj["https-incoming-port"] = t
 			}
 		}
+	} else if d.HasChange("https_incoming_port") {
+		obj["https-incoming-port"] = nil
 	}
 
 	if v, ok := d.GetOk("secure_web_proxy_cert"); ok || d.HasChange("secure_web_proxy_cert") {
@@ -1565,6 +1561,8 @@ func getObjectWebProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 				obj["ftp-incoming-port"] = t
 			}
 		}
+	} else if d.HasChange("ftp_incoming_port") {
+		obj["ftp-incoming-port"] = nil
 	}
 
 	if v, ok := d.GetOk("socks_incoming_port"); ok {
@@ -1578,6 +1576,8 @@ func getObjectWebProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 				obj["socks-incoming-port"] = t
 			}
 		}
+	} else if d.HasChange("socks_incoming_port") {
+		obj["socks-incoming-port"] = nil
 	}
 
 	if v, ok := d.GetOk("incoming_ip"); ok {
@@ -1604,6 +1604,8 @@ func getObjectWebProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 				obj["outgoing-ip"] = t
 			}
 		}
+	} else if d.HasChange("outgoing_ip") {
+		obj["outgoing-ip"] = nil
 	}
 
 	if v, ok := d.GetOk("ipv6_status"); ok {
@@ -1643,6 +1645,8 @@ func getObjectWebProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 				obj["outgoing-ip6"] = t
 			}
 		}
+	} else if d.HasChange("outgoing_ip6") {
+		obj["outgoing-ip6"] = nil
 	}
 
 	if v, ok := d.GetOk("strict_guest"); ok {
@@ -1760,6 +1764,8 @@ func getObjectWebProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 				obj["pac-file-url"] = t
 			}
 		}
+	} else if d.HasChange("pac_file_url") {
+		obj["pac-file-url"] = nil
 	}
 
 	if v, ok := d.GetOk("pac_file_server_port"); ok {
@@ -1773,6 +1779,8 @@ func getObjectWebProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 				obj["pac-file-server-port"] = t
 			}
 		}
+	} else if d.HasChange("pac_file_server_port") {
+		obj["pac-file-server-port"] = nil
 	}
 
 	if v, ok := d.GetOk("pac_file_through_https"); ok {
@@ -1812,6 +1820,8 @@ func getObjectWebProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 				obj["pac-file-data"] = t
 			}
 		}
+	} else if d.HasChange("pac_file_data") {
+		obj["pac-file-data"] = nil
 	}
 
 	if v, ok := d.GetOk("pac_policy"); ok || d.HasChange("pac_policy") {

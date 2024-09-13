@@ -39,7 +39,6 @@ func resourceRouterMulticast() *schema.Resource {
 			"route_threshold": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"route_limit": &schema.Schema{
 				Type:     schema.TypeInt,
@@ -74,13 +73,11 @@ func resourceRouterMulticast() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"accept_source_list": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"bsr_candidate": &schema.Schema{
 							Type:     schema.TypeString,
@@ -91,13 +88,11 @@ func resourceRouterMulticast() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 						"bsr_priority": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"bsr_hash": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -119,7 +114,6 @@ func resourceRouterMulticast() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"cisco_crp_prefix": &schema.Schema{
 							Type:     schema.TypeString,
@@ -145,7 +139,6 @@ func resourceRouterMulticast() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 						"register_source_ip": &schema.Schema{
 							Type:     schema.TypeString,
@@ -179,7 +172,6 @@ func resourceRouterMulticast() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"ssm": &schema.Schema{
 							Type:     schema.TypeString,
@@ -190,13 +182,11 @@ func resourceRouterMulticast() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"register_rate_limit": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 						"pim_use_sdwan": &schema.Schema{
 							Type:     schema.TypeString,
@@ -211,7 +201,6 @@ func resourceRouterMulticast() *schema.Resource {
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 									"ip_address": &schema.Schema{
 										Type:     schema.TypeString,
@@ -222,7 +211,6 @@ func resourceRouterMulticast() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 35),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -239,7 +227,6 @@ func resourceRouterMulticast() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 						"ttl_threshold": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -266,7 +253,6 @@ func resourceRouterMulticast() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"hello_interval": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -311,7 +297,6 @@ func resourceRouterMulticast() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"rp_candidate_priority": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -329,13 +314,11 @@ func resourceRouterMulticast() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"static_group": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"rpf_nbr_fail_back": &schema.Schema{
 							Type:     schema.TypeString,
@@ -346,7 +329,6 @@ func resourceRouterMulticast() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"join_group": &schema.Schema{
 							Type:     schema.TypeList,
@@ -372,7 +354,6 @@ func resourceRouterMulticast() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 35),
 										Optional:     true,
-										Computed:     true,
 									},
 									"version": &schema.Schema{
 										Type:     schema.TypeString,
@@ -383,7 +364,6 @@ func resourceRouterMulticast() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 35),
 										Optional:     true,
-										Computed:     true,
 									},
 									"last_member_query_interval": &schema.Schema{
 										Type:         schema.TypeInt,
@@ -555,11 +535,11 @@ func resourceRouterMulticastRead(d *schema.ResourceData, m interface{}) error {
 }
 
 func flattenRouterMulticastRouteThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterMulticastRouteLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterMulticastMulticastRouting(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -715,11 +695,11 @@ func flattenRouterMulticastPimSmGlobal(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenRouterMulticastPimSmGlobalMessageInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterMulticastPimSmGlobalJoinPruneHoldtime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterMulticastPimSmGlobalAcceptRegisterList(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -739,11 +719,11 @@ func flattenRouterMulticastPimSmGlobalBsrInterface(v interface{}, d *schema.Reso
 }
 
 func flattenRouterMulticastPimSmGlobalBsrPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterMulticastPimSmGlobalBsrHash(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterMulticastPimSmGlobalBsrAllowQuickRefresh(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -783,15 +763,15 @@ func flattenRouterMulticastPimSmGlobalRegisterSourceIp(v interface{}, d *schema.
 }
 
 func flattenRouterMulticastPimSmGlobalRegisterSupression(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterMulticastPimSmGlobalNullRegisterRetries(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterMulticastPimSmGlobalRpRegisterKeepalive(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterMulticastPimSmGlobalSptThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -811,7 +791,7 @@ func flattenRouterMulticastPimSmGlobalSsmRange(v interface{}, d *schema.Resource
 }
 
 func flattenRouterMulticastPimSmGlobalRegisterRateLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterMulticastPimSmGlobalPimUseSdwan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -867,7 +847,7 @@ func flattenRouterMulticastPimSmGlobalRpAddress(v interface{}, d *schema.Resourc
 }
 
 func flattenRouterMulticastPimSmGlobalRpAddressId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterMulticastPimSmGlobalRpAddressIpAddress(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1026,7 +1006,7 @@ func flattenRouterMulticastInterfaceName(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenRouterMulticastInterfaceTtlThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterMulticastInterfacePimMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1046,11 +1026,11 @@ func flattenRouterMulticastInterfaceNeighbourFilter(v interface{}, d *schema.Res
 }
 
 func flattenRouterMulticastInterfaceHelloInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterMulticastInterfaceHelloHoldtime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterMulticastInterfaceCiscoExcludeGenid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1058,15 +1038,15 @@ func flattenRouterMulticastInterfaceCiscoExcludeGenid(v interface{}, d *schema.R
 }
 
 func flattenRouterMulticastInterfaceDrPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterMulticastInterfacePropagationDelay(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterMulticastInterfaceStateRefreshInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterMulticastInterfaceRpCandidate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1078,11 +1058,11 @@ func flattenRouterMulticastInterfaceRpCandidateGroup(v interface{}, d *schema.Re
 }
 
 func flattenRouterMulticastInterfaceRpCandidatePriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterMulticastInterfaceRpCandidateInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterMulticastInterfaceMulticastFlow(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1214,23 +1194,23 @@ func flattenRouterMulticastInterfaceIgmpImmediateLeaveGroup(v interface{}, d *sc
 }
 
 func flattenRouterMulticastInterfaceIgmpLastMemberQueryInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterMulticastInterfaceIgmpLastMemberQueryCount(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterMulticastInterfaceIgmpQueryMaxResponseTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterMulticastInterfaceIgmpQueryInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterMulticastInterfaceIgmpQueryTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterMulticastInterfaceIgmpRouterAlertCheck(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1670,6 +1650,8 @@ func expandRouterMulticastPimSmGlobalRpAddress(d *schema.ResourceData, v interfa
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandRouterMulticastPimSmGlobalRpAddressId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip_address"
@@ -1680,6 +1662,8 @@ func expandRouterMulticastPimSmGlobalRpAddress(d *schema.ResourceData, v interfa
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "group"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["group"], _ = expandRouterMulticastPimSmGlobalRpAddressGroup(d, i["group"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["group"] = nil
 		}
 
 		result = append(result, tmp)
@@ -1719,6 +1703,8 @@ func expandRouterMulticastInterface(d *schema.ResourceData, v interface{}, pre s
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandRouterMulticastInterfaceName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ttl_threshold"
@@ -1744,6 +1730,8 @@ func expandRouterMulticastInterface(d *schema.ResourceData, v interface{}, pre s
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "neighbour_filter"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["neighbour-filter"], _ = expandRouterMulticastInterfaceNeighbourFilter(d, i["neighbour_filter"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["neighbour-filter"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "hello_interval"
@@ -1784,6 +1772,8 @@ func expandRouterMulticastInterface(d *schema.ResourceData, v interface{}, pre s
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rp_candidate_group"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["rp-candidate-group"], _ = expandRouterMulticastInterfaceRpCandidateGroup(d, i["rp_candidate_group"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["rp-candidate-group"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rp_candidate_priority"
@@ -1799,11 +1789,15 @@ func expandRouterMulticastInterface(d *schema.ResourceData, v interface{}, pre s
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "multicast_flow"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["multicast-flow"], _ = expandRouterMulticastInterfaceMulticastFlow(d, i["multicast_flow"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["multicast-flow"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "static_group"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["static-group"], _ = expandRouterMulticastInterfaceStaticGroup(d, i["static_group"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["static-group"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rpf_nbr_fail_back"
@@ -1814,19 +1808,21 @@ func expandRouterMulticastInterface(d *schema.ResourceData, v interface{}, pre s
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rpf_nbr_fail_back_filter"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["rpf-nbr-fail-back-filter"], _ = expandRouterMulticastInterfaceRpfNbrFailBackFilter(d, i["rpf_nbr_fail_back_filter"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["rpf-nbr-fail-back-filter"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "join_group"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["join-group"], _ = expandRouterMulticastInterfaceJoinGroup(d, i["join_group"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["join-group"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "igmp"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["igmp"], _ = expandRouterMulticastInterfaceIgmp(d, i["igmp"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["igmp"] = make([]string, 0)
 		}
 
@@ -2049,6 +2045,8 @@ func getObjectRouterMulticast(d *schema.ResourceData, setArgNil bool, sv string)
 				obj["route-threshold"] = t
 			}
 		}
+	} else if d.HasChange("route_threshold") {
+		obj["route-threshold"] = nil
 	}
 
 	if v, ok := d.GetOk("route_limit"); ok {

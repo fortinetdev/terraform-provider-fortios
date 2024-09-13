@@ -39,7 +39,6 @@ func resourceSystemSessionTtl() *schema.Resource {
 			"default": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"port": &schema.Schema{
 				Type:     schema.TypeList,
@@ -50,30 +49,25 @@ func resourceSystemSessionTtl() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 						"protocol": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"start_port": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 						"end_port": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 						"timeout": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"refresh_direction": &schema.Schema{
 							Type:     schema.TypeString,
@@ -279,19 +273,19 @@ func flattenSystemSessionTtlPort(v interface{}, d *schema.ResourceData, pre stri
 }
 
 func flattenSystemSessionTtlPortId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSessionTtlPortProtocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSessionTtlPortStartPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSessionTtlPortEndPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSessionTtlPortTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -363,26 +357,36 @@ func expandSystemSessionTtlPort(d *schema.ResourceData, v interface{}, pre strin
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSystemSessionTtlPortId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["protocol"], _ = expandSystemSessionTtlPortProtocol(d, i["protocol"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["protocol"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "start_port"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["start-port"], _ = expandSystemSessionTtlPortStartPort(d, i["start_port"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["start-port"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "end_port"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["end-port"], _ = expandSystemSessionTtlPortEndPort(d, i["end_port"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["end-port"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "timeout"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["timeout"], _ = expandSystemSessionTtlPortTimeout(d, i["timeout"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["timeout"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "refresh_direction"
@@ -436,6 +440,8 @@ func getObjectSystemSessionTtl(d *schema.ResourceData, setArgNil bool, sv string
 				obj["default"] = t
 			}
 		}
+	} else if d.HasChange("default") {
+		obj["default"] = nil
 	}
 
 	if v, ok := d.GetOk("port"); ok || d.HasChange("port") {

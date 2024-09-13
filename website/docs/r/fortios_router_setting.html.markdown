@@ -23,6 +23,7 @@ The following arguments are supported:
 
 * `show_filter` - Prefix-list as filter for showing routes.
 * `hostname` - Hostname for this virtual domain router.
+* `kernel_route_distance` - Administrative distance for routes learned from kernel (0 - 255).
 * `ospf_debug_lsa_flags` - ospf_debug_lsa_flags
 * `ospf_debug_nfsm_flags` - ospf_debug_nfsm_flags
 * `ospf_debug_packet_flags` - ospf_debug_packet_flags

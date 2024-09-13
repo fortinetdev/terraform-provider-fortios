@@ -17,8 +17,10 @@ The following arguments are supported:
 * `status` - Enable/disable remote syslog logging. Valid values: `enable`, `disable`.
 * `server` - Address of remote syslog server.
 * `mode` - Remote syslog logging over UDP/Reliable TCP. Valid values: `udp`, `legacy-reliable`, `reliable`.
+* `use_management_vdom` - Enable/disable use of management VDOM as source VDOM for logs sent to syslog server. Valid values: `enable`, `disable`.
 * `port` - Server listen port.
 * `facility` - Remote syslog facility. Valid values: `kernel`, `user`, `mail`, `daemon`, `auth`, `syslog`, `lpr`, `news`, `uucp`, `cron`, `authpriv`, `ftp`, `ntp`, `audit`, `alert`, `clock`, `local0`, `local1`, `local2`, `local3`, `local4`, `local5`, `local6`, `local7`.
+* `source_ip_interface` - Source interface of syslog.
 * `source_ip` - Source IP address of syslog.
 * `format` - Log format.
 * `priority` - Set log transmission priority. Valid values: `default`, `low`.

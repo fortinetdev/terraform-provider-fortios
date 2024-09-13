@@ -40,7 +40,6 @@ func resourceFirewallWildcardFqdnGroup() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
-				Computed:     true,
 			},
 			"uuid": &schema.Schema{
 				Type:     schema.TypeString,
@@ -56,7 +55,6 @@ func resourceFirewallWildcardFqdnGroup() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -65,7 +63,6 @@ func resourceFirewallWildcardFqdnGroup() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 32),
 				Optional:     true,
-				Computed:     true,
 			},
 			"comment": &schema.Schema{
 				Type:         schema.TypeString,
@@ -75,7 +72,6 @@ func resourceFirewallWildcardFqdnGroup() *schema.Resource {
 			"visibility": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
@@ -293,7 +289,7 @@ func flattenFirewallWildcardFqdnGroupMemberName(v interface{}, d *schema.Resourc
 }
 
 func flattenFirewallWildcardFqdnGroupColor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallWildcardFqdnGroupComment(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -426,6 +422,8 @@ func getObjectFirewallWildcardFqdnGroup(d *schema.ResourceData, sv string) (*map
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("uuid"); ok {
@@ -453,6 +451,8 @@ func getObjectFirewallWildcardFqdnGroup(d *schema.ResourceData, sv string) (*map
 		} else if t != nil {
 			obj["color"] = t
 		}
+	} else if d.HasChange("color") {
+		obj["color"] = nil
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
@@ -462,6 +462,8 @@ func getObjectFirewallWildcardFqdnGroup(d *schema.ResourceData, sv string) (*map
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("visibility"); ok {
@@ -471,6 +473,8 @@ func getObjectFirewallWildcardFqdnGroup(d *schema.ResourceData, sv string) (*map
 		} else if t != nil {
 			obj["visibility"] = t
 		}
+	} else if d.HasChange("visibility") {
+		obj["visibility"] = nil
 	}
 
 	return &obj, nil

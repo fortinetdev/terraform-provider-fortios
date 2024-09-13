@@ -143,7 +143,7 @@ The following arguments are supported:
 * `send_deny_packet` - Enable to send a reply when a session is denied or blocked by a firewall policy. Valid values: `disable`, `enable`.
 * `firewall_session_dirty` - How to handle sessions if the configuration of this firewall policy changes. Valid values: `check-all`, `check-new`.
 * `status` - Enable or disable this policy. Valid values: `enable`, `disable`.
-* `schedule` - Schedule name.(Default is `always`)
+* `schedule` - Schedule name.
 * `schedule_timeout` - Enable to force current sessions to end when the schedule object times out. Disable allows them to end from inactivity. Valid values: `enable`, `disable`.
 * `policy_expiry` - Enable/disable policy expiry. Valid values: `enable`, `disable`.
 * `policy_expiry_date` - Policy expiry date (YYYY-MM-DD HH:MM:SS).
@@ -191,6 +191,7 @@ The following arguments are supported:
 * `ssl_ssh_profile` - Name of an existing SSL SSH profile.
 * `logtraffic` - Enable or disable logging. Log all sessions or security profile sessions. Valid values: `all`, `utm`, `disable`.
 * `logtraffic_start` - Record logs when a session starts. Valid values: `enable`, `disable`.
+* `log_http_transaction` - Enable/disable HTTP transaction log. Valid values: `enable`, `disable`.
 * `capture_packet` - Enable/disable capture packets. Valid values: `enable`, `disable`.
 * `auto_asic_offload` - Enable/disable policy traffic ASIC offloading. Valid values: `enable`, `disable`.
 * `np_acceleration` - Enable/disable UTM Network Processor acceleration. Valid values: `enable`, `disable`.
@@ -281,6 +282,7 @@ The following arguments are supported:
 * `scan_botnet_connections` - Block or monitor connections to Botnet servers or disable Botnet scanning. Valid values: `disable`, `block`, `monitor`.
 * `dsri` - Enable DSRI to ignore HTTP server responses. Valid values: `enable`, `disable`.
 * `radius_mac_auth_bypass` - Enable MAC authentication bypass. The bypassed MAC address must be received from RADIUS server. Valid values: `enable`, `disable`.
+* `radius_ip_auth_bypass` - Enable IP authentication bypass. The bypassed IP address must be received from RADIUS server. Valid values: `enable`, `disable`.
 * `delay_tcp_npu_session` - Enable TCP NPU session delay to guarantee packet order of 3-way handshake. Valid values: `enable`, `disable`.
 * `vlan_filter` - Set VLAN filters.
 * `sgt_check` - Enable/disable security group tags (SGT) check. Valid values: `enable`, `disable`.

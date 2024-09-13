@@ -280,6 +280,8 @@ func getObjectSystemCustomLanguage(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["filename"] = t
 		}
+	} else if d.HasChange("filename") {
+		obj["filename"] = nil
 	}
 
 	if v, ok := d.GetOk("comments"); ok {
@@ -289,6 +291,8 @@ func getObjectSystemCustomLanguage(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["comments"] = t
 		}
+	} else if d.HasChange("comments") {
+		obj["comments"] = nil
 	}
 
 	return &obj, nil

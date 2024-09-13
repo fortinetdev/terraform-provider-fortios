@@ -54,13 +54,11 @@ func resourceSwitchControllerQuarantine() *schema.Resource {
 						"entry_id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"description": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"tag": &schema.Schema{
 							Type:     schema.TypeSet,
@@ -71,7 +69,6 @@ func resourceSwitchControllerQuarantine() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 63),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -269,7 +266,7 @@ func flattenSwitchControllerQuarantineTargetsMac(v interface{}, d *schema.Resour
 }
 
 func flattenSwitchControllerQuarantineTargetsEntryId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerQuarantineTargetsDescription(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -384,17 +381,21 @@ func expandSwitchControllerQuarantineTargets(d *schema.ResourceData, v interface
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "entry_id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["entry-id"], _ = expandSwitchControllerQuarantineTargetsEntryId(d, i["entry_id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["entry-id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["description"], _ = expandSwitchControllerQuarantineTargetsDescription(d, i["description"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["description"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tag"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["tag"], _ = expandSwitchControllerQuarantineTargetsTag(d, i["tag"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["tag"] = make([]string, 0)
 		}
 

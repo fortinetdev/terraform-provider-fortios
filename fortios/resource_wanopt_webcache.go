@@ -45,7 +45,6 @@ func resourceWanoptWebcache() *schema.Resource {
 			"neg_resp_time": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"fresh_factor": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -245,27 +244,27 @@ func resourceWanoptWebcacheRead(d *schema.ResourceData, m interface{}) error {
 }
 
 func flattenWanoptWebcacheMaxObjectSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWanoptWebcacheNegRespTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWanoptWebcacheFreshFactor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWanoptWebcacheMaxTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWanoptWebcacheMinTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWanoptWebcacheDefaultTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWanoptWebcacheIgnoreIms(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -521,6 +520,8 @@ func getObjectWanoptWebcache(d *schema.ResourceData, setArgNil bool, sv string) 
 				obj["neg-resp-time"] = t
 			}
 		}
+	} else if d.HasChange("neg_resp_time") {
+		obj["neg-resp-time"] = nil
 	}
 
 	if v, ok := d.GetOk("fresh_factor"); ok {

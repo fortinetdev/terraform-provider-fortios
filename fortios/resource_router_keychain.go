@@ -50,24 +50,20 @@ func resourceRouterKeyChain() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"accept_lifetime": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"send_lifetime": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"key_string": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 60),
 							Optional:     true,
 							Sensitive:    true,
-							Computed:     true,
 						},
 						"algorithm": &schema.Schema{
 							Type:     schema.TypeString,
@@ -272,26 +268,7 @@ func flattenRouterKeyChainKey(v interface{}, d *schema.ResourceData, pre string,
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
-			v := flattenRouterKeyChainKeyId(cur_v, d, pre_append, sv)
-			vx := 0
-			bstring := false
-			new_version_map := map[string][]string{
-				">=": []string{"6.2.4"},
-			}
-			if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
-				if vi, ok := v.(string); ok {
-					var err error
-					vx, err = strconv.Atoi(vi)
-					if err == nil {
-						bstring = true
-					}
-				}
-			}
-			if bstring == true {
-				tmp["id"] = vx
-			} else {
-				tmp["id"] = v
-			}
+			tmp["id"] = flattenRouterKeyChainKeyId(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "accept_lifetime"
@@ -305,8 +282,7 @@ func flattenRouterKeyChainKey(v interface{}, d *schema.ResourceData, pre string,
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "key_string"
-		if cur_v, ok := i["key-string"]; ok {
-			tmp["key_string"] = flattenRouterKeyChainKeyKeyString(cur_v, d, pre_append, sv)
+		if _, ok := i["key-string"]; ok {
 			c := d.Get(pre_append).(string)
 			if c != "" {
 				tmp["key_string"] = c
@@ -328,7 +304,7 @@ func flattenRouterKeyChainKey(v interface{}, d *schema.ResourceData, pre string,
 }
 
 func flattenRouterKeyChainKeyId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterKeyChainKeyAcceptLifetime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -336,10 +312,6 @@ func flattenRouterKeyChainKeyAcceptLifetime(v interface{}, d *schema.ResourceDat
 }
 
 func flattenRouterKeyChainKeySendLifetime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenRouterKeyChainKeyKeyString(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -407,38 +379,30 @@ func expandRouterKeyChainKey(d *schema.ResourceData, v interface{}, pre string, 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-
-			bstring := false
-			t, _ := expandRouterKeyChainKeyId(d, i["id"], pre_append, sv)
-			if t != nil {
-				new_version_map := map[string][]string{
-					">=": []string{"6.2.4"},
-				}
-				if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
-					bstring = true
-				}
-			}
-
-			if bstring == true {
-				tmp["id"] = fmt.Sprintf("%v", t)
-			} else {
-				tmp["id"] = t
-			}
+			tmp["id"], _ = expandRouterKeyChainKeyId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "accept_lifetime"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["accept-lifetime"], _ = expandRouterKeyChainKeyAcceptLifetime(d, i["accept_lifetime"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["accept-lifetime"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "send_lifetime"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["send-lifetime"], _ = expandRouterKeyChainKeySendLifetime(d, i["send_lifetime"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["send-lifetime"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "key_string"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["key-string"], _ = expandRouterKeyChainKeyKeyString(d, i["key_string"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["key-string"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "algorithm"
@@ -455,7 +419,7 @@ func expandRouterKeyChainKey(d *schema.ResourceData, v interface{}, pre string, 
 }
 
 func expandRouterKeyChainKeyId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
+	return convintf2i(v), nil
 }
 
 func expandRouterKeyChainKeyAcceptLifetime(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {

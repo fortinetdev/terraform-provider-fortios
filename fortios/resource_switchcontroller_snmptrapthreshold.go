@@ -170,15 +170,15 @@ func resourceSwitchControllerSnmpTrapThresholdRead(d *schema.ResourceData, m int
 }
 
 func flattenSwitchControllerSnmpTrapThresholdTrapHighCpuThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerSnmpTrapThresholdTrapLowMemoryThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerSnmpTrapThresholdTrapLogFullThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectSwitchControllerSnmpTrapThreshold(d *schema.ResourceData, o map[string]interface{}, sv string) error {

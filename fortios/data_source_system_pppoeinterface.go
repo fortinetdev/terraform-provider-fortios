@@ -53,6 +53,10 @@ func dataSourceSystemPppoeInterface() *schema.Resource {
 				Sensitive: true,
 				Computed:  true,
 			},
+			"pppoe_egress_cos": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"auth_type": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -164,6 +168,10 @@ func dataSourceFlattenSystemPppoeInterfacePassword(v interface{}, d *schema.Reso
 	return v
 }
 
+func dataSourceFlattenSystemPppoeInterfacePppoeEgressCos(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemPppoeInterfaceAuthType(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -234,6 +242,12 @@ func dataSourceRefreshObjectSystemPppoeInterface(d *schema.ResourceData, o map[s
 	if err = d.Set("username", dataSourceFlattenSystemPppoeInterfaceUsername(o["username"], d, "username")); err != nil {
 		if !fortiAPIPatch(o["username"]) {
 			return fmt.Errorf("Error reading username: %v", err)
+		}
+	}
+
+	if err = d.Set("pppoe_egress_cos", dataSourceFlattenSystemPppoeInterfacePppoeEgressCos(o["pppoe-egress-cos"], d, "pppoe_egress_cos")); err != nil {
+		if !fortiAPIPatch(o["pppoe-egress-cos"]) {
+			return fmt.Errorf("Error reading pppoe_egress_cos: %v", err)
 		}
 	}
 

@@ -61,7 +61,6 @@ func resourceFirewallLocalInPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -70,7 +69,6 @@ func resourceFirewallLocalInPolicy() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"srcaddr": &schema.Schema{
 				Type:     schema.TypeSet,
@@ -81,7 +79,6 @@ func resourceFirewallLocalInPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -100,7 +97,6 @@ func resourceFirewallLocalInPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -119,7 +115,6 @@ func resourceFirewallLocalInPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -133,7 +128,6 @@ func resourceFirewallLocalInPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -147,7 +141,6 @@ func resourceFirewallLocalInPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -161,7 +154,6 @@ func resourceFirewallLocalInPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -185,7 +177,6 @@ func resourceFirewallLocalInPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -211,6 +202,11 @@ func resourceFirewallLocalInPolicy() *schema.Resource {
 				Computed: true,
 			},
 			"virtual_patch": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"logtraffic": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -386,7 +382,7 @@ func resourceFirewallLocalInPolicyRead(d *schema.ResourceData, m interface{}) er
 }
 
 func flattenFirewallLocalInPolicyPolicyid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallLocalInPolicyUuid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -773,6 +769,10 @@ func flattenFirewallLocalInPolicyVirtualPatch(v interface{}, d *schema.ResourceD
 	return v
 }
 
+func flattenFirewallLocalInPolicyLogtraffic(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallLocalInPolicyComments(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -993,6 +993,12 @@ func refreshObjectFirewallLocalInPolicy(d *schema.ResourceData, o map[string]int
 	if err = d.Set("virtual_patch", flattenFirewallLocalInPolicyVirtualPatch(o["virtual-patch"], d, "virtual_patch", sv)); err != nil {
 		if !fortiAPIPatch(o["virtual-patch"]) {
 			return fmt.Errorf("Error reading virtual_patch: %v", err)
+		}
+	}
+
+	if err = d.Set("logtraffic", flattenFirewallLocalInPolicyLogtraffic(o["logtraffic"], d, "logtraffic", sv)); err != nil {
+		if !fortiAPIPatch(o["logtraffic"]) {
+			return fmt.Errorf("Error reading logtraffic: %v", err)
 		}
 	}
 
@@ -1287,6 +1293,10 @@ func expandFirewallLocalInPolicyVirtualPatch(d *schema.ResourceData, v interface
 	return v, nil
 }
 
+func expandFirewallLocalInPolicyLogtraffic(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallLocalInPolicyComments(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -1357,6 +1367,8 @@ func getObjectFirewallLocalInPolicy(d *schema.ResourceData, sv string) (*map[str
 				obj["intf"] = t
 			}
 		}
+	} else if d.HasChange("intf") {
+		obj["intf"] = nil
 	}
 
 	if v, ok := d.GetOk("srcaddr"); ok || d.HasChange("srcaddr") {
@@ -1483,6 +1495,8 @@ func getObjectFirewallLocalInPolicy(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["schedule"] = t
 		}
+	} else if d.HasChange("schedule") {
+		obj["schedule"] = nil
 	}
 
 	if v, ok := d.GetOk("status"); ok {
@@ -1503,6 +1517,15 @@ func getObjectFirewallLocalInPolicy(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
+	if v, ok := d.GetOk("logtraffic"); ok {
+		t, err := expandFirewallLocalInPolicyLogtraffic(d, v, "logtraffic", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["logtraffic"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("comments"); ok {
 		t, err := expandFirewallLocalInPolicyComments(d, v, "comments", sv)
 		if err != nil {
@@ -1510,6 +1533,8 @@ func getObjectFirewallLocalInPolicy(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["comments"] = t
 		}
+	} else if d.HasChange("comments") {
+		obj["comments"] = nil
 	}
 
 	return &obj, nil

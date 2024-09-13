@@ -33,6 +33,7 @@ The `collectors` block contains:
 * `collector_ip` - Collector IP.
 * `collector_port` - NetFlow collector port number.
 * `source_ip` - Source IP address for communication with the NetFlow agent.
+* `source_ip_interface` - Name of the interface used to determine the source IP for exporting packets.
 * `interface_select_method` - Specify how to select outgoing interface to reach server.
 * `interface` - Specify outgoing interface to reach server.
 

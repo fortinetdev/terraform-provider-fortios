@@ -241,7 +241,7 @@ func flattenSystemGeneveInterface(v interface{}, d *schema.ResourceData, pre str
 }
 
 func flattenSystemGeneveVni(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemGeneveType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -261,7 +261,7 @@ func flattenSystemGeneveRemoteIp6(v interface{}, d *schema.ResourceData, pre str
 }
 
 func flattenSystemGeneveDstport(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectSystemGeneve(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -375,6 +375,8 @@ func getObjectSystemGeneve(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["interface"] = t
 		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
 	}
 
 	if v, ok := d.GetOkExists("vni"); ok {
@@ -384,6 +386,8 @@ func getObjectSystemGeneve(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["vni"] = t
 		}
+	} else if d.HasChange("vni") {
+		obj["vni"] = nil
 	}
 
 	if v, ok := d.GetOk("type"); ok {

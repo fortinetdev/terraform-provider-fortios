@@ -62,13 +62,11 @@ func resourceUserCertificate() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 64),
 				Optional:     true,
-				Computed:     true,
 			},
 			"issuer": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -230,7 +228,7 @@ func flattenUserCertificateName(v interface{}, d *schema.ResourceData, pre strin
 }
 
 func flattenUserCertificateId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserCertificateStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -367,6 +365,8 @@ func getObjectUserCertificate(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["common-name"] = t
 		}
+	} else if d.HasChange("common_name") {
+		obj["common-name"] = nil
 	}
 
 	if v, ok := d.GetOk("issuer"); ok {
@@ -376,6 +376,8 @@ func getObjectUserCertificate(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["issuer"] = t
 		}
+	} else if d.HasChange("issuer") {
+		obj["issuer"] = nil
 	}
 
 	return &obj, nil

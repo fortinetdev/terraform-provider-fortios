@@ -77,13 +77,11 @@ func resourceRouterIsis() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"auth_keychain_l2": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"auth_sendonly_l1": &schema.Schema{
 				Type:     schema.TypeString,
@@ -127,12 +125,10 @@ func resourceRouterIsis() *schema.Resource {
 			"spf_interval_exp_l1": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"spf_interval_exp_l2": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"dynamic_hostname": &schema.Schema{
 				Type:     schema.TypeString,
@@ -157,13 +153,11 @@ func resourceRouterIsis() *schema.Resource {
 			"overload_bit_suppress": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"overload_bit_on_startup": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(5, 86400),
 				Optional:     true,
-				Computed:     true,
 			},
 			"default_originate": &schema.Schema{
 				Type:     schema.TypeString,
@@ -189,7 +183,6 @@ func resourceRouterIsis() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"redistribute_l2": &schema.Schema{
 				Type:     schema.TypeString,
@@ -200,7 +193,6 @@ func resourceRouterIsis() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"redistribute6_l1": &schema.Schema{
 				Type:     schema.TypeString,
@@ -211,7 +203,6 @@ func resourceRouterIsis() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"redistribute6_l2": &schema.Schema{
 				Type:     schema.TypeString,
@@ -222,7 +213,6 @@ func resourceRouterIsis() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"isis_net": &schema.Schema{
 				Type:     schema.TypeList,
@@ -232,12 +222,10 @@ func resourceRouterIsis() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"net": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -251,7 +239,6 @@ func resourceRouterIsis() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -266,7 +253,6 @@ func resourceRouterIsis() *schema.Resource {
 						"network_type": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"circuit_type": &schema.Schema{
 							Type:     schema.TypeString,
@@ -365,13 +351,11 @@ func resourceRouterIsis() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"auth_keychain_l2": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"auth_send_only_l1": &schema.Schema{
 							Type:     schema.TypeString,
@@ -413,7 +397,6 @@ func resourceRouterIsis() *schema.Resource {
 						"mesh_group_id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -426,7 +409,6 @@ func resourceRouterIsis() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"prefix": &schema.Schema{
 							Type:     schema.TypeString,
@@ -449,7 +431,6 @@ func resourceRouterIsis() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"prefix6": &schema.Schema{
 							Type:     schema.TypeString,
@@ -473,7 +454,6 @@ func resourceRouterIsis() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -483,7 +463,6 @@ func resourceRouterIsis() *schema.Resource {
 						"metric": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"metric_type": &schema.Schema{
 							Type:     schema.TypeString,
@@ -499,7 +478,6 @@ func resourceRouterIsis() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -513,7 +491,6 @@ func resourceRouterIsis() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -523,7 +500,6 @@ func resourceRouterIsis() *schema.Resource {
 						"metric": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"metric_type": &schema.Schema{
 							Type:     schema.TypeString,
@@ -539,7 +515,6 @@ func resourceRouterIsis() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -692,14 +667,6 @@ func flattenRouterIsisAuthModeL2(v interface{}, d *schema.ResourceData, pre stri
 	return v
 }
 
-func flattenRouterIsisAuthPasswordL1(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenRouterIsisAuthPasswordL2(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
 func flattenRouterIsisAuthKeychainL1(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -721,19 +688,19 @@ func flattenRouterIsisIgnoreLspErrors(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenRouterIsisLspGenIntervalL1(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterIsisLspGenIntervalL2(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterIsisLspRefreshInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterIsisMaxLspLifetime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterIsisSpfIntervalExpL1(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -765,7 +732,7 @@ func flattenRouterIsisOverloadBitSuppress(v interface{}, d *schema.ResourceData,
 }
 
 func flattenRouterIsisOverloadBitOnStartup(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterIsisDefaultOriginate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -856,7 +823,7 @@ func flattenRouterIsisIsisNet(v interface{}, d *schema.ResourceData, pre string,
 }
 
 func flattenRouterIsisIsisNetId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterIsisIsisNetNet(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -978,8 +945,7 @@ func flattenRouterIsisIsisInterface(v interface{}, d *schema.ResourceData, pre s
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_password_l1"
-		if cur_v, ok := i["auth-password-l1"]; ok {
-			tmp["auth_password_l1"] = flattenRouterIsisIsisInterfaceAuthPasswordL1(cur_v, d, pre_append, sv)
+		if _, ok := i["auth-password-l1"]; ok {
 			c := d.Get(pre_append).(string)
 			if c != "" {
 				tmp["auth_password_l1"] = c
@@ -987,8 +953,7 @@ func flattenRouterIsisIsisInterface(v interface{}, d *schema.ResourceData, pre s
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_password_l2"
-		if cur_v, ok := i["auth-password-l2"]; ok {
-			tmp["auth_password_l2"] = flattenRouterIsisIsisInterfaceAuthPasswordL2(cur_v, d, pre_append, sv)
+		if _, ok := i["auth-password-l2"]; ok {
 			c := d.Get(pre_append).(string)
 			if c != "" {
 				tmp["auth_password_l2"] = c
@@ -1075,27 +1040,27 @@ func flattenRouterIsisIsisInterfaceCircuitType(v interface{}, d *schema.Resource
 }
 
 func flattenRouterIsisIsisInterfaceCsnpIntervalL1(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterIsisIsisInterfaceCsnpIntervalL2(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterIsisIsisInterfaceHelloIntervalL1(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterIsisIsisInterfaceHelloIntervalL2(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterIsisIsisInterfaceHelloMultiplierL1(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterIsisIsisInterfaceHelloMultiplierL2(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterIsisIsisInterfaceHelloPadding(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1103,35 +1068,27 @@ func flattenRouterIsisIsisInterfaceHelloPadding(v interface{}, d *schema.Resourc
 }
 
 func flattenRouterIsisIsisInterfaceLspInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterIsisIsisInterfaceLspRetransmitInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterIsisIsisInterfaceMetricL1(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterIsisIsisInterfaceMetricL2(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterIsisIsisInterfaceWideMetricL1(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterIsisIsisInterfaceWideMetricL2(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenRouterIsisIsisInterfaceAuthPasswordL1(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenRouterIsisIsisInterfaceAuthPasswordL2(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterIsisIsisInterfaceAuthKeychainL1(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1159,11 +1116,11 @@ func flattenRouterIsisIsisInterfaceAuthModeL2(v interface{}, d *schema.ResourceD
 }
 
 func flattenRouterIsisIsisInterfacePriorityL1(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterIsisIsisInterfacePriorityL2(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterIsisIsisInterfaceMeshGroup(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1171,7 +1128,7 @@ func flattenRouterIsisIsisInterfaceMeshGroup(v interface{}, d *schema.ResourceDa
 }
 
 func flattenRouterIsisIsisInterfaceMeshGroupId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterIsisSummaryAddress(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -1223,7 +1180,7 @@ func flattenRouterIsisSummaryAddress(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenRouterIsisSummaryAddressId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterIsisSummaryAddressPrefix(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1290,7 +1247,7 @@ func flattenRouterIsisSummaryAddress6(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenRouterIsisSummaryAddress6Id(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterIsisSummaryAddress6Prefix6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1373,7 +1330,7 @@ func flattenRouterIsisRedistributeStatus(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenRouterIsisRedistributeMetric(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterIsisRedistributeMetricType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1460,7 +1417,7 @@ func flattenRouterIsisRedistribute6Status(v interface{}, d *schema.ResourceData,
 }
 
 func flattenRouterIsisRedistribute6Metric(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterIsisRedistribute6MetricType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1944,11 +1901,15 @@ func expandRouterIsisIsisNet(d *schema.ResourceData, v interface{}, pre string, 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandRouterIsisIsisNetId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "net"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["net"], _ = expandRouterIsisIsisNetNet(d, i["net"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["net"] = nil
 		}
 
 		result = append(result, tmp)
@@ -1984,6 +1945,8 @@ func expandRouterIsisIsisInterface(d *schema.ResourceData, v interface{}, pre st
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandRouterIsisIsisInterfaceName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
@@ -1999,6 +1962,8 @@ func expandRouterIsisIsisInterface(d *schema.ResourceData, v interface{}, pre st
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "network_type"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["network-type"], _ = expandRouterIsisIsisInterfaceNetworkType(d, i["network_type"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["network-type"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "circuit_type"
@@ -2074,21 +2039,29 @@ func expandRouterIsisIsisInterface(d *schema.ResourceData, v interface{}, pre st
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_password_l1"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["auth-password-l1"], _ = expandRouterIsisIsisInterfaceAuthPasswordL1(d, i["auth_password_l1"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["auth-password-l1"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_password_l2"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["auth-password-l2"], _ = expandRouterIsisIsisInterfaceAuthPasswordL2(d, i["auth_password_l2"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["auth-password-l2"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_keychain_l1"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["auth-keychain-l1"], _ = expandRouterIsisIsisInterfaceAuthKeychainL1(d, i["auth_keychain_l1"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["auth-keychain-l1"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_keychain_l2"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["auth-keychain-l2"], _ = expandRouterIsisIsisInterfaceAuthKeychainL2(d, i["auth_keychain_l2"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["auth-keychain-l2"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_send_only_l1"
@@ -2129,6 +2102,8 @@ func expandRouterIsisIsisInterface(d *schema.ResourceData, v interface{}, pre st
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mesh_group_id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["mesh-group-id"], _ = expandRouterIsisIsisInterfaceMeshGroupId(d, i["mesh_group_id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["mesh-group-id"] = nil
 		}
 
 		result = append(result, tmp)
@@ -2276,6 +2251,8 @@ func expandRouterIsisSummaryAddress(d *schema.ResourceData, v interface{}, pre s
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandRouterIsisSummaryAddressId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"
@@ -2325,6 +2302,8 @@ func expandRouterIsisSummaryAddress6(d *schema.ResourceData, v interface{}, pre 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandRouterIsisSummaryAddress6Id(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix6"
@@ -2374,6 +2353,8 @@ func expandRouterIsisRedistribute(d *schema.ResourceData, v interface{}, pre str
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["protocol"], _ = expandRouterIsisRedistributeProtocol(d, i["protocol"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["protocol"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
@@ -2384,6 +2365,8 @@ func expandRouterIsisRedistribute(d *schema.ResourceData, v interface{}, pre str
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "metric"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["metric"], _ = expandRouterIsisRedistributeMetric(d, i["metric"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["metric"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "metric_type"
@@ -2399,6 +2382,8 @@ func expandRouterIsisRedistribute(d *schema.ResourceData, v interface{}, pre str
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "routemap"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["routemap"], _ = expandRouterIsisRedistributeRoutemap(d, i["routemap"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["routemap"] = nil
 		}
 
 		result = append(result, tmp)
@@ -2450,6 +2435,8 @@ func expandRouterIsisRedistribute6(d *schema.ResourceData, v interface{}, pre st
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["protocol"], _ = expandRouterIsisRedistribute6Protocol(d, i["protocol"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["protocol"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
@@ -2460,6 +2447,8 @@ func expandRouterIsisRedistribute6(d *schema.ResourceData, v interface{}, pre st
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "metric"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["metric"], _ = expandRouterIsisRedistribute6Metric(d, i["metric"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["metric"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "metric_type"
@@ -2475,6 +2464,8 @@ func expandRouterIsisRedistribute6(d *schema.ResourceData, v interface{}, pre st
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "routemap"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["routemap"], _ = expandRouterIsisRedistribute6Routemap(d, i["routemap"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["routemap"] = nil
 		}
 
 		result = append(result, tmp)
@@ -2588,6 +2579,8 @@ func getObjectRouterIsis(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 				obj["auth-password-l1"] = t
 			}
 		}
+	} else if d.HasChange("auth_password_l1") {
+		obj["auth-password-l1"] = nil
 	}
 
 	if v, ok := d.GetOk("auth_password_l2"); ok {
@@ -2601,6 +2594,8 @@ func getObjectRouterIsis(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 				obj["auth-password-l2"] = t
 			}
 		}
+	} else if d.HasChange("auth_password_l2") {
+		obj["auth-password-l2"] = nil
 	}
 
 	if v, ok := d.GetOk("auth_keychain_l1"); ok {
@@ -2614,6 +2609,8 @@ func getObjectRouterIsis(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 				obj["auth-keychain-l1"] = t
 			}
 		}
+	} else if d.HasChange("auth_keychain_l1") {
+		obj["auth-keychain-l1"] = nil
 	}
 
 	if v, ok := d.GetOk("auth_keychain_l2"); ok {
@@ -2627,6 +2624,8 @@ func getObjectRouterIsis(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 				obj["auth-keychain-l2"] = t
 			}
 		}
+	} else if d.HasChange("auth_keychain_l2") {
+		obj["auth-keychain-l2"] = nil
 	}
 
 	if v, ok := d.GetOk("auth_sendonly_l1"); ok {
@@ -2731,6 +2730,8 @@ func getObjectRouterIsis(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 				obj["spf-interval-exp-l1"] = t
 			}
 		}
+	} else if d.HasChange("spf_interval_exp_l1") {
+		obj["spf-interval-exp-l1"] = nil
 	}
 
 	if v, ok := d.GetOk("spf_interval_exp_l2"); ok {
@@ -2744,6 +2745,8 @@ func getObjectRouterIsis(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 				obj["spf-interval-exp-l2"] = t
 			}
 		}
+	} else if d.HasChange("spf_interval_exp_l2") {
+		obj["spf-interval-exp-l2"] = nil
 	}
 
 	if v, ok := d.GetOk("dynamic_hostname"); ok {
@@ -2809,6 +2812,8 @@ func getObjectRouterIsis(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 				obj["overload-bit-suppress"] = t
 			}
 		}
+	} else if d.HasChange("overload_bit_suppress") {
+		obj["overload-bit-suppress"] = nil
 	}
 
 	if v, ok := d.GetOk("overload_bit_on_startup"); ok {
@@ -2822,6 +2827,8 @@ func getObjectRouterIsis(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 				obj["overload-bit-on-startup"] = t
 			}
 		}
+	} else if d.HasChange("overload_bit_on_startup") {
+		obj["overload-bit-on-startup"] = nil
 	}
 
 	if v, ok := d.GetOk("default_originate"); ok {
@@ -2887,6 +2894,8 @@ func getObjectRouterIsis(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 				obj["redistribute-l1-list"] = t
 			}
 		}
+	} else if d.HasChange("redistribute_l1_list") {
+		obj["redistribute-l1-list"] = nil
 	}
 
 	if v, ok := d.GetOk("redistribute_l2"); ok {
@@ -2913,6 +2922,8 @@ func getObjectRouterIsis(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 				obj["redistribute-l2-list"] = t
 			}
 		}
+	} else if d.HasChange("redistribute_l2_list") {
+		obj["redistribute-l2-list"] = nil
 	}
 
 	if v, ok := d.GetOk("redistribute6_l1"); ok {
@@ -2939,6 +2950,8 @@ func getObjectRouterIsis(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 				obj["redistribute6-l1-list"] = t
 			}
 		}
+	} else if d.HasChange("redistribute6_l1_list") {
+		obj["redistribute6-l1-list"] = nil
 	}
 
 	if v, ok := d.GetOk("redistribute6_l2"); ok {
@@ -2965,6 +2978,8 @@ func getObjectRouterIsis(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 				obj["redistribute6-l2-list"] = t
 			}
 		}
+	} else if d.HasChange("redistribute6_l2_list") {
+		obj["redistribute6-l2-list"] = nil
 	}
 
 	if v, ok := d.GetOk("isis_net"); ok || d.HasChange("isis_net") {

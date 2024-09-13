@@ -62,7 +62,6 @@ func resourceSystemFtmPush() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
-				Computed:     true,
 			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
@@ -192,7 +191,7 @@ func flattenSystemFtmPushProxy(v interface{}, d *schema.ResourceData, pre string
 }
 
 func flattenSystemFtmPushServerPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemFtmPushServerCert(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -349,6 +348,8 @@ func getObjectSystemFtmPush(d *schema.ResourceData, setArgNil bool, sv string) (
 				obj["server"] = t
 			}
 		}
+	} else if d.HasChange("server") {
+		obj["server"] = nil
 	}
 
 	if v, ok := d.GetOk("status"); ok {

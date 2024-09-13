@@ -75,13 +75,11 @@ func resourceSystemPtp() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"server_interface_name": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 						"delay_mechanism": &schema.Schema{
 							Type:     schema.TypeString,
@@ -232,7 +230,7 @@ func flattenSystemPtpDelayMechanism(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenSystemPtpRequestInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemPtpInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -292,7 +290,7 @@ func flattenSystemPtpServerInterface(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenSystemPtpServerInterfaceId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemPtpServerInterfaceServerInterfaceName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -414,11 +412,15 @@ func expandSystemPtpServerInterface(d *schema.ResourceData, v interface{}, pre s
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSystemPtpServerInterfaceId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "server_interface_name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["server-interface-name"], _ = expandSystemPtpServerInterfaceServerInterfaceName(d, i["server_interface_name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["server-interface-name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "delay_mechanism"
@@ -512,6 +514,8 @@ func getObjectSystemPtp(d *schema.ResourceData, setArgNil bool, sv string) (*map
 				obj["interface"] = t
 			}
 		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
 	}
 
 	if v, ok := d.GetOk("server_mode"); ok {

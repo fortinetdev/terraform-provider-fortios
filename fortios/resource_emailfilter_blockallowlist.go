@@ -46,7 +46,6 @@ func resourceEmailfilterBlockAllowList() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"comment": &schema.Schema{
 				Type:         schema.TypeString,
@@ -66,7 +65,6 @@ func resourceEmailfilterBlockAllowList() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"type": &schema.Schema{
 							Type:     schema.TypeString,
@@ -102,13 +100,11 @@ func resourceEmailfilterBlockAllowList() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 127),
 							Optional:     true,
-							Computed:     true,
 						},
 						"email_pattern": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 127),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -279,7 +275,7 @@ func resourceEmailfilterBlockAllowListRead(d *schema.ResourceData, m interface{}
 }
 
 func flattenEmailfilterBlockAllowListId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenEmailfilterBlockAllowListName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -378,7 +374,7 @@ func flattenEmailfilterBlockAllowListEntriesStatus(v interface{}, d *schema.Reso
 }
 
 func flattenEmailfilterBlockAllowListEntriesId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenEmailfilterBlockAllowListEntriesType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -506,6 +502,8 @@ func expandEmailfilterBlockAllowListEntries(d *schema.ResourceData, v interface{
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandEmailfilterBlockAllowListEntriesId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
@@ -541,11 +539,15 @@ func expandEmailfilterBlockAllowListEntries(d *schema.ResourceData, v interface{
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["pattern"], _ = expandEmailfilterBlockAllowListEntriesPattern(d, i["pattern"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["pattern"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "email_pattern"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["email-pattern"], _ = expandEmailfilterBlockAllowListEntriesEmailPattern(d, i["email_pattern"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["email-pattern"] = nil
 		}
 
 		result = append(result, tmp)
@@ -615,6 +617,8 @@ func getObjectEmailfilterBlockAllowList(d *schema.ResourceData, sv string) (*map
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
@@ -624,6 +628,8 @@ func getObjectEmailfilterBlockAllowList(d *schema.ResourceData, sv string) (*map
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("entries"); ok || d.HasChange("entries") {

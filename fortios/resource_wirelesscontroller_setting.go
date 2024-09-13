@@ -40,7 +40,6 @@ func resourceWirelessControllerSetting() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"country": &schema.Schema{
 				Type:     schema.TypeString,
@@ -81,13 +80,11 @@ func resourceWirelessControllerSetting() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 						"ssid_pattern": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 33),
 							Optional:     true,
-							Computed:     true,
 						},
 						"action": &schema.Schema{
 							Type:     schema.TypeString,
@@ -140,7 +137,6 @@ func resourceWirelessControllerSetting() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -350,7 +346,7 @@ func flattenWirelessControllerSettingOffendingSsid(v interface{}, d *schema.Reso
 }
 
 func flattenWirelessControllerSettingOffendingSsidId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerSettingOffendingSsidSsidPattern(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -362,15 +358,15 @@ func flattenWirelessControllerSettingOffendingSsidAction(v interface{}, d *schem
 }
 
 func flattenWirelessControllerSettingDeviceWeight(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerSettingDeviceHoldoff(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerSettingDeviceIdle(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerSettingFirmwareProvisionOnAuthorization(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -382,7 +378,7 @@ func flattenWirelessControllerSettingRollingWtpUpgrade(v interface{}, d *schema.
 }
 
 func flattenWirelessControllerSettingDarrpOptimize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerSettingDarrpOptimizeSchedules(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -600,11 +596,15 @@ func expandWirelessControllerSettingOffendingSsid(d *schema.ResourceData, v inte
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandWirelessControllerSettingOffendingSsidId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ssid_pattern"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["ssid-pattern"], _ = expandWirelessControllerSettingOffendingSsidSsidPattern(d, i["ssid_pattern"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["ssid-pattern"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
@@ -698,6 +698,8 @@ func getObjectWirelessControllerSetting(d *schema.ResourceData, setArgNil bool, 
 				obj["account-id"] = t
 			}
 		}
+	} else if d.HasChange("account_id") {
+		obj["account-id"] = nil
 	}
 
 	if v, ok := d.GetOk("country"); ok {

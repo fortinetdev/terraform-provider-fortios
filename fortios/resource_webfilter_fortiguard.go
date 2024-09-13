@@ -101,7 +101,6 @@ func resourceWebfilterFortiguard() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(576, 10000),
 				Optional:     true,
-				Computed:     true,
 			},
 			"embed_image": &schema.Schema{
 				Type:     schema.TypeString,
@@ -112,7 +111,6 @@ func resourceWebfilterFortiguard() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -241,27 +239,27 @@ func flattenWebfilterFortiguardCachePrefixMatch(v interface{}, d *schema.Resourc
 }
 
 func flattenWebfilterFortiguardCacheMemPermille(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWebfilterFortiguardCacheMemPercent(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWebfilterFortiguardOvrdAuthPortHttp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWebfilterFortiguardOvrdAuthPortHttps(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWebfilterFortiguardOvrdAuthPortHttpsFlow(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWebfilterFortiguardOvrdAuthPortWarning(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWebfilterFortiguardOvrdAuthHttps(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -277,7 +275,7 @@ func flattenWebfilterFortiguardClosePorts(v interface{}, d *schema.ResourceData,
 }
 
 func flattenWebfilterFortiguardRequestPacketSizeLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWebfilterFortiguardEmbedImage(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -285,7 +283,7 @@ func flattenWebfilterFortiguardEmbedImage(v interface{}, d *schema.ResourceData,
 }
 
 func flattenWebfilterFortiguardOvrdAuthPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectWebfilterFortiguard(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -597,6 +595,8 @@ func getObjectWebfilterFortiguard(d *schema.ResourceData, setArgNil bool, sv str
 				obj["request-packet-size-limit"] = t
 			}
 		}
+	} else if d.HasChange("request_packet_size_limit") {
+		obj["request-packet-size-limit"] = nil
 	}
 
 	if v, ok := d.GetOk("embed_image"); ok {
@@ -623,6 +623,8 @@ func getObjectWebfilterFortiguard(d *schema.ResourceData, setArgNil bool, sv str
 				obj["ovrd-auth-port"] = t
 			}
 		}
+	} else if d.HasChange("ovrd_auth_port") {
+		obj["ovrd-auth-port"] = nil
 	}
 
 	return &obj, nil

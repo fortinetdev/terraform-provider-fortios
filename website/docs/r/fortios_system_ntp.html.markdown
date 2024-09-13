@@ -47,7 +47,7 @@ The `ntpserver` block supports:
 * `id` - NTP server ID.
 * `server` - IP address or hostname of the NTP Server.
 * `ntpv3` - Enable to use NTPv3 instead of NTPv4. Valid values: `enable`, `disable`.
-* `authentication` - Enable/disable MD5/SHA1 authentication. Valid values: `enable`, `disable`.
+* `authentication` - Enable/disable authentication. Valid values: `enable`, `disable`.
 * `key_type` - Select NTP authentication type. Valid values: `MD5`, `SHA1`, `SHA256`.
 * `key` - Key for authentication. On FortiOS versions 6.2.0: MD5(NTPv3)/SHA1(NTPv4). On FortiOS versions >= 7.4.4: MD5(NTPv3)/SHA1(NTPv4)/SHA256(NTPv4).
 * `key_id` - Key ID for authentication.

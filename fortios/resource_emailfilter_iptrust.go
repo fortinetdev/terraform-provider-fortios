@@ -46,7 +46,6 @@ func resourceEmailfilterIptrust() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"comment": &schema.Schema{
 				Type:         schema.TypeString,
@@ -66,7 +65,6 @@ func resourceEmailfilterIptrust() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"addr_type": &schema.Schema{
 							Type:     schema.TypeString,
@@ -252,7 +250,7 @@ func resourceEmailfilterIptrustRead(d *schema.ResourceData, m interface{}) error
 }
 
 func flattenEmailfilterIptrustId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenEmailfilterIptrustName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -326,7 +324,7 @@ func flattenEmailfilterIptrustEntriesStatus(v interface{}, d *schema.ResourceDat
 }
 
 func flattenEmailfilterIptrustEntriesId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenEmailfilterIptrustEntriesAddrType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -434,6 +432,8 @@ func expandEmailfilterIptrustEntries(d *schema.ResourceData, v interface{}, pre 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandEmailfilterIptrustEntriesId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr_type"
@@ -498,6 +498,8 @@ func getObjectEmailfilterIptrust(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
@@ -507,6 +509,8 @@ func getObjectEmailfilterIptrust(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("entries"); ok || d.HasChange("entries") {

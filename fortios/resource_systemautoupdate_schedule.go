@@ -279,6 +279,8 @@ func getObjectSystemAutoupdateSchedule(d *schema.ResourceData, setArgNil bool, s
 				obj["time"] = t
 			}
 		}
+	} else if d.HasChange("time") {
+		obj["time"] = nil
 	}
 
 	if v, ok := d.GetOk("day"); ok {

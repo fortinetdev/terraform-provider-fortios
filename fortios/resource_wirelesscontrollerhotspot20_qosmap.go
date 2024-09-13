@@ -52,19 +52,16 @@ func resourceWirelessControllerHotspot20QosMap() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 21),
 							Optional:     true,
-							Computed:     true,
 						},
 						"dscp": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"up": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 7),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -78,13 +75,11 @@ func resourceWirelessControllerHotspot20QosMap() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 8),
 							Optional:     true,
-							Computed:     true,
 						},
 						"up": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 7),
 							Optional:     true,
-							Computed:     true,
 						},
 						"low": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -319,15 +314,15 @@ func flattenWirelessControllerHotspot20QosMapDscpExcept(v interface{}, d *schema
 }
 
 func flattenWirelessControllerHotspot20QosMapDscpExceptIndex(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerHotspot20QosMapDscpExceptDscp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerHotspot20QosMapDscpExceptUp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerHotspot20QosMapDscpRange(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -384,19 +379,19 @@ func flattenWirelessControllerHotspot20QosMapDscpRange(v interface{}, d *schema.
 }
 
 func flattenWirelessControllerHotspot20QosMapDscpRangeIndex(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerHotspot20QosMapDscpRangeUp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerHotspot20QosMapDscpRangeLow(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerHotspot20QosMapDscpRangeHigh(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectWirelessControllerHotspot20QosMap(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -476,16 +471,22 @@ func expandWirelessControllerHotspot20QosMapDscpExcept(d *schema.ResourceData, v
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "index"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["index"], _ = expandWirelessControllerHotspot20QosMapDscpExceptIndex(d, i["index"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["index"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dscp"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["dscp"], _ = expandWirelessControllerHotspot20QosMapDscpExceptDscp(d, i["dscp"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["dscp"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "up"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["up"], _ = expandWirelessControllerHotspot20QosMapDscpExceptUp(d, i["up"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["up"] = nil
 		}
 
 		result = append(result, tmp)
@@ -525,11 +526,15 @@ func expandWirelessControllerHotspot20QosMapDscpRange(d *schema.ResourceData, v 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "index"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["index"], _ = expandWirelessControllerHotspot20QosMapDscpRangeIndex(d, i["index"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["index"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "up"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["up"], _ = expandWirelessControllerHotspot20QosMapDscpRangeUp(d, i["up"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["up"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "low"

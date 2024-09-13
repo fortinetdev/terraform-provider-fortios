@@ -47,7 +47,6 @@ func resourceSwitchControllerCustomCommand() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"command": &schema.Schema{
 				Type:         schema.TypeString,
@@ -282,6 +281,8 @@ func getObjectSwitchControllerCustomCommand(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["description"] = t
 		}
+	} else if d.HasChange("description") {
+		obj["description"] = nil
 	}
 
 	if v, ok := d.GetOk("command"); ok {
@@ -291,6 +292,8 @@ func getObjectSwitchControllerCustomCommand(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["command"] = t
 		}
+	} else if d.HasChange("command") {
+		obj["command"] = nil
 	}
 
 	return &obj, nil

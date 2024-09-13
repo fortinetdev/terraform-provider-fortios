@@ -52,19 +52,16 @@ func resourceWirelessControllerHotspot20AnqpRoamingConsortium() *schema.Resource
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 10),
 							Optional:     true,
-							Computed:     true,
 						},
 						"oi": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 10),
 							Optional:     true,
-							Computed:     true,
 						},
 						"comment": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -287,7 +284,7 @@ func flattenWirelessControllerHotspot20AnqpRoamingConsortiumOiList(v interface{}
 }
 
 func flattenWirelessControllerHotspot20AnqpRoamingConsortiumOiListIndex(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerHotspot20AnqpRoamingConsortiumOiListOi(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -359,16 +356,22 @@ func expandWirelessControllerHotspot20AnqpRoamingConsortiumOiList(d *schema.Reso
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "index"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["index"], _ = expandWirelessControllerHotspot20AnqpRoamingConsortiumOiListIndex(d, i["index"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["index"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "oi"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["oi"], _ = expandWirelessControllerHotspot20AnqpRoamingConsortiumOiListOi(d, i["oi"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["oi"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["comment"], _ = expandWirelessControllerHotspot20AnqpRoamingConsortiumOiListComment(d, i["comment"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["comment"] = nil
 		}
 
 		result = append(result, tmp)

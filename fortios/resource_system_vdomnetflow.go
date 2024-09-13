@@ -50,13 +50,11 @@ func resourceSystemVdomNetflow() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 6),
 							Optional:     true,
-							Computed:     true,
 						},
 						"collector_ip": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"collector_port": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -68,7 +66,11 @@ func resourceSystemVdomNetflow() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
+						},
+						"source_ip_interface": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 15),
+							Optional:     true,
 						},
 						"interface_select_method": &schema.Schema{
 							Type:     schema.TypeString,
@@ -79,7 +81,6 @@ func resourceSystemVdomNetflow() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -109,7 +110,6 @@ func resourceSystemVdomNetflow() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
@@ -287,6 +287,11 @@ func flattenSystemVdomNetflowCollectors(v interface{}, d *schema.ResourceData, p
 			tmp["source_ip"] = flattenSystemVdomNetflowCollectorsSourceIp(cur_v, d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_ip_interface"
+		if cur_v, ok := i["source-ip-interface"]; ok {
+			tmp["source_ip_interface"] = flattenSystemVdomNetflowCollectorsSourceIpInterface(cur_v, d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_select_method"
 		if cur_v, ok := i["interface-select-method"]; ok {
 			tmp["interface_select_method"] = flattenSystemVdomNetflowCollectorsInterfaceSelectMethod(cur_v, d, pre_append, sv)
@@ -307,7 +312,7 @@ func flattenSystemVdomNetflowCollectors(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenSystemVdomNetflowCollectorsId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVdomNetflowCollectorsCollectorIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -315,10 +320,14 @@ func flattenSystemVdomNetflowCollectorsCollectorIp(v interface{}, d *schema.Reso
 }
 
 func flattenSystemVdomNetflowCollectorsCollectorPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVdomNetflowCollectorsSourceIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemVdomNetflowCollectorsSourceIpInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -335,7 +344,7 @@ func flattenSystemVdomNetflowCollectorIp(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenSystemVdomNetflowCollectorPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVdomNetflowSourceIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -441,11 +450,15 @@ func expandSystemVdomNetflowCollectors(d *schema.ResourceData, v interface{}, pr
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSystemVdomNetflowCollectorsId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "collector_ip"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["collector-ip"], _ = expandSystemVdomNetflowCollectorsCollectorIp(d, i["collector_ip"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["collector-ip"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "collector_port"
@@ -456,6 +469,15 @@ func expandSystemVdomNetflowCollectors(d *schema.ResourceData, v interface{}, pr
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_ip"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["source-ip"], _ = expandSystemVdomNetflowCollectorsSourceIp(d, i["source_ip"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["source-ip"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_ip_interface"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["source-ip-interface"], _ = expandSystemVdomNetflowCollectorsSourceIpInterface(d, i["source_ip_interface"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["source-ip-interface"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_select_method"
@@ -466,6 +488,8 @@ func expandSystemVdomNetflowCollectors(d *schema.ResourceData, v interface{}, pr
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["interface"], _ = expandSystemVdomNetflowCollectorsInterface(d, i["interface"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["interface"] = nil
 		}
 
 		result = append(result, tmp)
@@ -489,6 +513,10 @@ func expandSystemVdomNetflowCollectorsCollectorPort(d *schema.ResourceData, v in
 }
 
 func expandSystemVdomNetflowCollectorsSourceIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemVdomNetflowCollectorsSourceIpInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -612,6 +640,8 @@ func getObjectSystemVdomNetflow(d *schema.ResourceData, setArgNil bool, sv strin
 				obj["interface"] = t
 			}
 		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
 	}
 
 	return &obj, nil

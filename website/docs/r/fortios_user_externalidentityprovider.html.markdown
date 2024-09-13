@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_user_externalidentityprovider
-Configure external identity provider. Applies to FortiOS Version `7.2.8,7.4.2,7.4.3,7.4.4`.
+Configure external identity provider. Applies to FortiOS Version `7.2.8,7.2.9,7.4.2,7.4.3,7.4.4,7.6.0`.
 
 ## Argument Reference
 

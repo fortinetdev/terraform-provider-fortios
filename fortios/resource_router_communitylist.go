@@ -59,19 +59,16 @@ func resourceRouterCommunityList() *schema.Resource {
 						"action": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"regexp": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"match": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -303,7 +300,7 @@ func flattenRouterCommunityListRule(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenRouterCommunityListRuleId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterCommunityListRuleAction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -394,16 +391,22 @@ func expandRouterCommunityListRule(d *schema.ResourceData, v interface{}, pre st
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["action"], _ = expandRouterCommunityListRuleAction(d, i["action"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["action"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "regexp"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["regexp"], _ = expandRouterCommunityListRuleRegexp(d, i["regexp"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["regexp"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "match"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["match"], _ = expandRouterCommunityListRuleMatch(d, i["match"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["match"] = nil
 		}
 
 		result = append(result, tmp)

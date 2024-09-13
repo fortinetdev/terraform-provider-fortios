@@ -45,7 +45,6 @@ func resourceSystemDedicatedMgmt() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"default_gateway": &schema.Schema{
 				Type:     schema.TypeString,
@@ -327,6 +326,8 @@ func getObjectSystemDedicatedMgmt(d *schema.ResourceData, setArgNil bool, sv str
 				obj["interface"] = t
 			}
 		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
 	}
 
 	if v, ok := d.GetOk("default_gateway"); ok {

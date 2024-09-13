@@ -40,49 +40,41 @@ func resourceFirewallSshSetting() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"untrusted_caname": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"hostkey_rsa2048": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"hostkey_dsa1024": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"hostkey_ecdsa256": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"hostkey_ecdsa384": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"hostkey_ecdsa521": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"hostkey_ed25519": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"host_trusted_checking": &schema.Schema{
 				Type:     schema.TypeString,
@@ -359,6 +351,8 @@ func getObjectFirewallSshSetting(d *schema.ResourceData, setArgNil bool, sv stri
 				obj["caname"] = t
 			}
 		}
+	} else if d.HasChange("caname") {
+		obj["caname"] = nil
 	}
 
 	if v, ok := d.GetOk("untrusted_caname"); ok {
@@ -372,6 +366,8 @@ func getObjectFirewallSshSetting(d *schema.ResourceData, setArgNil bool, sv stri
 				obj["untrusted-caname"] = t
 			}
 		}
+	} else if d.HasChange("untrusted_caname") {
+		obj["untrusted-caname"] = nil
 	}
 
 	if v, ok := d.GetOk("hostkey_rsa2048"); ok {
@@ -385,6 +381,8 @@ func getObjectFirewallSshSetting(d *schema.ResourceData, setArgNil bool, sv stri
 				obj["hostkey-rsa2048"] = t
 			}
 		}
+	} else if d.HasChange("hostkey_rsa2048") {
+		obj["hostkey-rsa2048"] = nil
 	}
 
 	if v, ok := d.GetOk("hostkey_dsa1024"); ok {
@@ -398,6 +396,8 @@ func getObjectFirewallSshSetting(d *schema.ResourceData, setArgNil bool, sv stri
 				obj["hostkey-dsa1024"] = t
 			}
 		}
+	} else if d.HasChange("hostkey_dsa1024") {
+		obj["hostkey-dsa1024"] = nil
 	}
 
 	if v, ok := d.GetOk("hostkey_ecdsa256"); ok {
@@ -411,6 +411,8 @@ func getObjectFirewallSshSetting(d *schema.ResourceData, setArgNil bool, sv stri
 				obj["hostkey-ecdsa256"] = t
 			}
 		}
+	} else if d.HasChange("hostkey_ecdsa256") {
+		obj["hostkey-ecdsa256"] = nil
 	}
 
 	if v, ok := d.GetOk("hostkey_ecdsa384"); ok {
@@ -424,6 +426,8 @@ func getObjectFirewallSshSetting(d *schema.ResourceData, setArgNil bool, sv stri
 				obj["hostkey-ecdsa384"] = t
 			}
 		}
+	} else if d.HasChange("hostkey_ecdsa384") {
+		obj["hostkey-ecdsa384"] = nil
 	}
 
 	if v, ok := d.GetOk("hostkey_ecdsa521"); ok {
@@ -437,6 +441,8 @@ func getObjectFirewallSshSetting(d *schema.ResourceData, setArgNil bool, sv stri
 				obj["hostkey-ecdsa521"] = t
 			}
 		}
+	} else if d.HasChange("hostkey_ecdsa521") {
+		obj["hostkey-ecdsa521"] = nil
 	}
 
 	if v, ok := d.GetOk("hostkey_ed25519"); ok {
@@ -450,6 +456,8 @@ func getObjectFirewallSshSetting(d *schema.ResourceData, setArgNil bool, sv stri
 				obj["hostkey-ed25519"] = t
 			}
 		}
+	} else if d.HasChange("hostkey_ed25519") {
+		obj["hostkey-ed25519"] = nil
 	}
 
 	if v, ok := d.GetOk("host_trusted_checking"); ok {

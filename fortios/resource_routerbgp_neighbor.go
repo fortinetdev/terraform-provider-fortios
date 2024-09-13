@@ -106,22 +106,18 @@ func resourceRouterbgpNeighbor() *schema.Resource {
 			"attribute_unchanged": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"attribute_unchanged6": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"attribute_unchanged_vpnv4": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"attribute_unchanged_vpnv6": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"activate": &schema.Schema{
 				Type:     schema.TypeString,
@@ -392,67 +388,56 @@ func resourceRouterbgpNeighbor() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"default_originate_routemap6": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"description": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"distribute_list_in": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"distribute_list_in6": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"distribute_list_in_vpnv4": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"distribute_list_in_vpnv6": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"distribute_list_out": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"distribute_list_out6": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"distribute_list_out_vpnv4": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"distribute_list_out_vpnv6": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ebgp_multihop_ttl": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -464,80 +449,66 @@ func resourceRouterbgpNeighbor() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"filter_list_in6": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"filter_list_in_vpnv4": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"filter_list_in_vpnv6": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"filter_list_out": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"filter_list_out6": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"filter_list_out_vpnv4": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"filter_list_out_vpnv6": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"interface": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"maximum_prefix": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"maximum_prefix6": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"maximum_prefix_vpnv4": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"maximum_prefix_vpnv6": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"maximum_prefix_evpn": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"maximum_prefix_threshold": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -598,59 +569,49 @@ func resourceRouterbgpNeighbor() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"prefix_list_in6": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"prefix_list_in_vpnv4": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"prefix_list_in_vpnv6": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"prefix_list_out": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"prefix_list_out6": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"prefix_list_out_vpnv4": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"prefix_list_out_vpnv6": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"remote_as": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"local_as": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"local_as_no_prepend": &schema.Schema{
 				Type:     schema.TypeString,
@@ -666,91 +627,76 @@ func resourceRouterbgpNeighbor() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"route_map_in": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"route_map_in6": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"route_map_in_vpnv4": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"route_map_in_vpnv6": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"route_map_in_evpn": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"route_map_out": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"route_map_out_preferable": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"route_map_out6": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"route_map_out6_preferable": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"route_map_out_vpnv4": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"route_map_out_vpnv6": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"route_map_out_vpnv4_preferable": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"route_map_out_vpnv6_preferable": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"route_map_out_evpn": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"send_community": &schema.Schema{
 				Type:     schema.TypeString,
@@ -799,19 +745,16 @@ func resourceRouterbgpNeighbor() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"unsuppress_map6": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"update_source": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"weight": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -823,7 +766,6 @@ func resourceRouterbgpNeighbor() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 3600),
 				Optional:     true,
-				Computed:     true,
 			},
 			"additional_path": &schema.Schema{
 				Type:     schema.TypeString,
@@ -879,7 +821,6 @@ func resourceRouterbgpNeighbor() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"conditional_advertise": &schema.Schema{
 				Type:     schema.TypeList,
@@ -890,12 +831,10 @@ func resourceRouterbgpNeighbor() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"condition_routemap": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"condition_type": &schema.Schema{
 							Type:     schema.TypeString,
@@ -914,12 +853,10 @@ func resourceRouterbgpNeighbor() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"condition_routemap": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"condition_type": &schema.Schema{
 							Type:     schema.TypeString,
@@ -1099,7 +1036,7 @@ func flattenRouterbgpNeighborIp(v interface{}, d *schema.ResourceData, pre strin
 }
 
 func flattenRouterbgpNeighborAdvertisementInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterbgpNeighborAllowasInEnable(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1123,23 +1060,23 @@ func flattenRouterbgpNeighborAllowasInEnableEvpn(v interface{}, d *schema.Resour
 }
 
 func flattenRouterbgpNeighborAllowasIn(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterbgpNeighborAllowasIn6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterbgpNeighborAllowasInVpnv4(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterbgpNeighborAllowasInVpnv6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterbgpNeighborAllowasInEvpn(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterbgpNeighborAttributeUnchanged(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1415,7 +1352,7 @@ func flattenRouterbgpNeighborDistributeListOutVpnv6(v interface{}, d *schema.Res
 }
 
 func flattenRouterbgpNeighborEbgpMultihopTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterbgpNeighborFilterListIn(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1455,43 +1392,43 @@ func flattenRouterbgpNeighborInterface(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenRouterbgpNeighborMaximumPrefix(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterbgpNeighborMaximumPrefix6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterbgpNeighborMaximumPrefixVpnv4(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterbgpNeighborMaximumPrefixVpnv6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterbgpNeighborMaximumPrefixEvpn(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterbgpNeighborMaximumPrefixThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterbgpNeighborMaximumPrefixThreshold6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterbgpNeighborMaximumPrefixThresholdVpnv4(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterbgpNeighborMaximumPrefixThresholdVpnv6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterbgpNeighborMaximumPrefixThresholdEvpn(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterbgpNeighborMaximumPrefixWarningOnly(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1547,11 +1484,11 @@ func flattenRouterbgpNeighborPrefixListOutVpnv6(v interface{}, d *schema.Resourc
 }
 
 func flattenRouterbgpNeighborRemoteAs(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterbgpNeighborLocalAs(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterbgpNeighborLocalAsNoPrepend(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1563,7 +1500,7 @@ func flattenRouterbgpNeighborLocalAsReplaceAs(v interface{}, d *schema.ResourceD
 }
 
 func flattenRouterbgpNeighborRetainStaleTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterbgpNeighborRouteMapIn(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1643,15 +1580,15 @@ func flattenRouterbgpNeighborSendCommunityEvpn(v interface{}, d *schema.Resource
 }
 
 func flattenRouterbgpNeighborKeepAliveTimer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterbgpNeighborHoldtimeTimer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterbgpNeighborConnectTimer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterbgpNeighborUnsuppressMap(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1667,11 +1604,11 @@ func flattenRouterbgpNeighborUpdateSource(v interface{}, d *schema.ResourceData,
 }
 
 func flattenRouterbgpNeighborWeight(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterbgpNeighborRestartTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterbgpNeighborAdditionalPath(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1691,23 +1628,19 @@ func flattenRouterbgpNeighborAdditionalPathVpnv6(v interface{}, d *schema.Resour
 }
 
 func flattenRouterbgpNeighborAdvAdditionalPath(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterbgpNeighborAdvAdditionalPath6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterbgpNeighborAdvAdditionalPathVpnv4(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterbgpNeighborAdvAdditionalPathVpnv6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenRouterbgpNeighborPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterbgpNeighborAuthOptions(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1745,34 +1678,7 @@ func flattenRouterbgpNeighborConditionalAdvertise(v interface{}, d *schema.Resou
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "condition_routemap"
 		if cur_v, ok := i["condition-routemap"]; ok {
-			v := flattenRouterbgpNeighborConditionalAdvertiseConditionRoutemap(cur_v, d, pre_append, sv)
-			vx := ""
-			bstring := false
-			new_version_map := map[string][]string{
-				">=": []string{"7.0.4"},
-			}
-			if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
-				l := v.([]interface{})
-				if len(l) > 0 {
-					for k, r := range l {
-						i := r.(map[string]interface{})
-						if _, ok := i["name"]; ok {
-							if xv, ok := i["name"].(string); ok {
-								vx += xv
-								if k < len(l)-1 {
-									vx += ", "
-								}
-							}
-						}
-					}
-					bstring = true
-				}
-			}
-			if bstring == true {
-				tmp["condition_routemap"] = vx
-			} else {
-				tmp["condition_routemap"] = v
-			}
+			tmp["condition_routemap"] = flattenRouterbgpNeighborConditionalAdvertiseConditionRoutemap(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "condition_type"
@@ -1794,7 +1700,7 @@ func flattenRouterbgpNeighborConditionalAdvertiseAdvertiseRoutemap(v interface{}
 }
 
 func flattenRouterbgpNeighborConditionalAdvertiseConditionRoutemap(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convmap2str(v, d.Get("condition_routemap"), "name")
 }
 
 func flattenRouterbgpNeighborConditionalAdvertiseConditionType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1832,34 +1738,7 @@ func flattenRouterbgpNeighborConditionalAdvertise6(v interface{}, d *schema.Reso
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "condition_routemap"
 		if cur_v, ok := i["condition-routemap"]; ok {
-			v := flattenRouterbgpNeighborConditionalAdvertise6ConditionRoutemap(cur_v, d, pre_append, sv)
-			vx := ""
-			bstring := false
-			new_version_map := map[string][]string{
-				">=": []string{"7.0.4"},
-			}
-			if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
-				l := v.([]interface{})
-				if len(l) > 0 {
-					for k, r := range l {
-						i := r.(map[string]interface{})
-						if _, ok := i["name"]; ok {
-							if xv, ok := i["name"].(string); ok {
-								vx += xv
-								if k < len(l)-1 {
-									vx += ", "
-								}
-							}
-						}
-					}
-					bstring = true
-				}
-			}
-			if bstring == true {
-				tmp["condition_routemap"] = vx
-			} else {
-				tmp["condition_routemap"] = v
-			}
+			tmp["condition_routemap"] = flattenRouterbgpNeighborConditionalAdvertise6ConditionRoutemap(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "condition_type"
@@ -1881,7 +1760,7 @@ func flattenRouterbgpNeighborConditionalAdvertise6AdvertiseRoutemap(v interface{
 }
 
 func flattenRouterbgpNeighborConditionalAdvertise6ConditionRoutemap(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convmap2str(v, d.Get("condition_routemap"), "name")
 }
 
 func flattenRouterbgpNeighborConditionalAdvertise6ConditionType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2575,45 +2454,15 @@ func refreshObjectRouterbgpNeighbor(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
-	{
-		v := flattenRouterbgpNeighborRemoteAs(o["remote-as"], d, "remote_as", sv)
-		new_version_map := map[string][]string{
-			">=": []string{"7.2.1"},
-		}
-		if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
-			if vx, ok := v.(string); ok {
-				vxx, err := strconv.Atoi(vx)
-				if err == nil {
-					v = vxx
-				}
-			}
-		}
-
-		if err = d.Set("remote_as", v); err != nil {
-			if !fortiAPIPatch(o["remote-as"]) {
-				return fmt.Errorf("Error reading remote_as: %v", err)
-			}
+	if err = d.Set("remote_as", flattenRouterbgpNeighborRemoteAs(o["remote-as"], d, "remote_as", sv)); err != nil {
+		if !fortiAPIPatch(o["remote-as"]) {
+			return fmt.Errorf("Error reading remote_as: %v", err)
 		}
 	}
 
-	{
-		v := flattenRouterbgpNeighborLocalAs(o["local-as"], d, "local_as", sv)
-		new_version_map := map[string][]string{
-			">=": []string{"7.2.1"},
-		}
-		if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
-			if vx, ok := v.(string); ok {
-				vxx, err := strconv.Atoi(vx)
-				if err == nil {
-					v = vxx
-				}
-			}
-		}
-
-		if err = d.Set("local_as", v); err != nil {
-			if !fortiAPIPatch(o["local-as"]) {
-				return fmt.Errorf("Error reading local_as: %v", err)
-			}
+	if err = d.Set("local_as", flattenRouterbgpNeighborLocalAs(o["local-as"], d, "local_as", sv)); err != nil {
+		if !fortiAPIPatch(o["local-as"]) {
+			return fmt.Errorf("Error reading local_as: %v", err)
 		}
 	}
 
@@ -3345,11 +3194,11 @@ func expandRouterbgpNeighborPrefixListOutVpnv6(d *schema.ResourceData, v interfa
 }
 
 func expandRouterbgpNeighborRemoteAs(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
+	return convintf2i(v), nil
 }
 
 func expandRouterbgpNeighborLocalAs(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
+	return convintf2i(v), nil
 }
 
 func expandRouterbgpNeighborLocalAsNoPrepend(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
@@ -3529,38 +3378,15 @@ func expandRouterbgpNeighborConditionalAdvertise(d *schema.ResourceData, v inter
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "advertise_routemap"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["advertise-routemap"], _ = expandRouterbgpNeighborConditionalAdvertiseAdvertiseRoutemap(d, i["advertise_routemap"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["advertise-routemap"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "condition_routemap"
 		if _, ok := d.GetOk(pre_append); ok {
-			bstring := false
-			t, _ := expandRouterbgpNeighborConditionalAdvertiseConditionRoutemap(d, i["condition_routemap"], pre_append, sv)
-			if t != nil {
-				new_version_map := map[string][]string{
-					">=": []string{"7.0.4"},
-				}
-				if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
-					bstring = true
-				}
-			}
-
-			if bstring == true {
-				vx := fmt.Sprintf("%v", t)
-				vx = strings.Replace(vx, "\"", "", -1)
-				vxx := strings.Split(vx, " ")
-
-				tmps := make([]map[string]interface{}, 0, len(vxx))
-
-				for _, xv := range vxx {
-					xtmp := make(map[string]interface{})
-					xtmp["name"] = xv
-
-					tmps = append(tmps, xtmp)
-				}
-				tmp["condition-routemap"] = tmps
-			} else {
-				tmp["condition-routemap"] = t
-			}
+			tmp["condition-routemap"], _ = expandRouterbgpNeighborConditionalAdvertiseConditionRoutemap(d, i["condition_routemap"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["condition-routemap"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "condition_type"
@@ -3581,7 +3407,25 @@ func expandRouterbgpNeighborConditionalAdvertiseAdvertiseRoutemap(d *schema.Reso
 }
 
 func expandRouterbgpNeighborConditionalAdvertiseConditionRoutemap(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
+	new_version_map := map[string][]string{
+		">=": []string{"7.0.4"},
+	}
+	if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
+		vx := fmt.Sprintf("%v", v)
+		vxx := strings.Split(vx, ", ")
+
+		tmps := make([]map[string]interface{}, 0, len(vxx))
+
+		for _, xv := range vxx {
+			xtmp := make(map[string]interface{})
+			xtmp["name"] = xv
+
+			tmps = append(tmps, xtmp)
+		}
+		return tmps, nil
+	} else {
+		return v, nil
+	}
 }
 
 func expandRouterbgpNeighborConditionalAdvertiseConditionType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
@@ -3605,38 +3449,15 @@ func expandRouterbgpNeighborConditionalAdvertise6(d *schema.ResourceData, v inte
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "advertise_routemap"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["advertise-routemap"], _ = expandRouterbgpNeighborConditionalAdvertise6AdvertiseRoutemap(d, i["advertise_routemap"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["advertise-routemap"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "condition_routemap"
 		if _, ok := d.GetOk(pre_append); ok {
-			bstring := false
-			t, _ := expandRouterbgpNeighborConditionalAdvertise6ConditionRoutemap(d, i["condition_routemap"], pre_append, sv)
-			if t != nil {
-				new_version_map := map[string][]string{
-					">=": []string{"7.0.4"},
-				}
-				if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
-					bstring = true
-				}
-			}
-
-			if bstring == true {
-				vx := fmt.Sprintf("%v", t)
-				vx = strings.Replace(vx, "\"", "", -1)
-				vxx := strings.Split(vx, " ")
-
-				tmps := make([]map[string]interface{}, 0, len(vxx))
-
-				for _, xv := range vxx {
-					xtmp := make(map[string]interface{})
-					xtmp["name"] = xv
-
-					tmps = append(tmps, xtmp)
-				}
-				tmp["condition-routemap"] = tmps
-			} else {
-				tmp["condition-routemap"] = t
-			}
+			tmp["condition-routemap"], _ = expandRouterbgpNeighborConditionalAdvertise6ConditionRoutemap(d, i["condition_routemap"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["condition-routemap"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "condition_type"
@@ -3657,7 +3478,25 @@ func expandRouterbgpNeighborConditionalAdvertise6AdvertiseRoutemap(d *schema.Res
 }
 
 func expandRouterbgpNeighborConditionalAdvertise6ConditionRoutemap(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
+	new_version_map := map[string][]string{
+		">=": []string{"7.0.4"},
+	}
+	if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
+		vx := fmt.Sprintf("%v", v)
+		vxx := strings.Split(vx, ", ")
+
+		tmps := make([]map[string]interface{}, 0, len(vxx))
+
+		for _, xv := range vxx {
+			xtmp := make(map[string]interface{})
+			xtmp["name"] = xv
+
+			tmps = append(tmps, xtmp)
+		}
+		return tmps, nil
+	} else {
+		return v, nil
+	}
 }
 
 func expandRouterbgpNeighborConditionalAdvertise6ConditionType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
@@ -3782,6 +3621,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["attribute-unchanged"] = t
 		}
+	} else if d.HasChange("attribute_unchanged") {
+		obj["attribute-unchanged"] = nil
 	}
 
 	if v, ok := d.GetOk("attribute_unchanged6"); ok {
@@ -3791,6 +3632,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["attribute-unchanged6"] = t
 		}
+	} else if d.HasChange("attribute_unchanged6") {
+		obj["attribute-unchanged6"] = nil
 	}
 
 	if v, ok := d.GetOk("attribute_unchanged_vpnv4"); ok {
@@ -3800,6 +3643,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["attribute-unchanged-vpnv4"] = t
 		}
+	} else if d.HasChange("attribute_unchanged_vpnv4") {
+		obj["attribute-unchanged-vpnv4"] = nil
 	}
 
 	if v, ok := d.GetOk("attribute_unchanged_vpnv6"); ok {
@@ -3809,6 +3654,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["attribute-unchanged-vpnv6"] = t
 		}
+	} else if d.HasChange("attribute_unchanged_vpnv6") {
+		obj["attribute-unchanged-vpnv6"] = nil
 	}
 
 	if v, ok := d.GetOk("activate"); ok {
@@ -4295,6 +4142,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["default-originate-routemap"] = t
 		}
+	} else if d.HasChange("default_originate_routemap") {
+		obj["default-originate-routemap"] = nil
 	}
 
 	if v, ok := d.GetOk("default_originate_routemap6"); ok {
@@ -4304,6 +4153,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["default-originate-routemap6"] = t
 		}
+	} else if d.HasChange("default_originate_routemap6") {
+		obj["default-originate-routemap6"] = nil
 	}
 
 	if v, ok := d.GetOk("description"); ok {
@@ -4313,6 +4164,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["description"] = t
 		}
+	} else if d.HasChange("description") {
+		obj["description"] = nil
 	}
 
 	if v, ok := d.GetOk("distribute_list_in"); ok {
@@ -4322,6 +4175,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["distribute-list-in"] = t
 		}
+	} else if d.HasChange("distribute_list_in") {
+		obj["distribute-list-in"] = nil
 	}
 
 	if v, ok := d.GetOk("distribute_list_in6"); ok {
@@ -4331,6 +4186,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["distribute-list-in6"] = t
 		}
+	} else if d.HasChange("distribute_list_in6") {
+		obj["distribute-list-in6"] = nil
 	}
 
 	if v, ok := d.GetOk("distribute_list_in_vpnv4"); ok {
@@ -4340,6 +4197,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["distribute-list-in-vpnv4"] = t
 		}
+	} else if d.HasChange("distribute_list_in_vpnv4") {
+		obj["distribute-list-in-vpnv4"] = nil
 	}
 
 	if v, ok := d.GetOk("distribute_list_in_vpnv6"); ok {
@@ -4349,6 +4208,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["distribute-list-in-vpnv6"] = t
 		}
+	} else if d.HasChange("distribute_list_in_vpnv6") {
+		obj["distribute-list-in-vpnv6"] = nil
 	}
 
 	if v, ok := d.GetOk("distribute_list_out"); ok {
@@ -4358,6 +4219,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["distribute-list-out"] = t
 		}
+	} else if d.HasChange("distribute_list_out") {
+		obj["distribute-list-out"] = nil
 	}
 
 	if v, ok := d.GetOk("distribute_list_out6"); ok {
@@ -4367,6 +4230,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["distribute-list-out6"] = t
 		}
+	} else if d.HasChange("distribute_list_out6") {
+		obj["distribute-list-out6"] = nil
 	}
 
 	if v, ok := d.GetOk("distribute_list_out_vpnv4"); ok {
@@ -4376,6 +4241,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["distribute-list-out-vpnv4"] = t
 		}
+	} else if d.HasChange("distribute_list_out_vpnv4") {
+		obj["distribute-list-out-vpnv4"] = nil
 	}
 
 	if v, ok := d.GetOk("distribute_list_out_vpnv6"); ok {
@@ -4385,6 +4252,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["distribute-list-out-vpnv6"] = t
 		}
+	} else if d.HasChange("distribute_list_out_vpnv6") {
+		obj["distribute-list-out-vpnv6"] = nil
 	}
 
 	if v, ok := d.GetOk("ebgp_multihop_ttl"); ok {
@@ -4403,6 +4272,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["filter-list-in"] = t
 		}
+	} else if d.HasChange("filter_list_in") {
+		obj["filter-list-in"] = nil
 	}
 
 	if v, ok := d.GetOk("filter_list_in6"); ok {
@@ -4412,6 +4283,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["filter-list-in6"] = t
 		}
+	} else if d.HasChange("filter_list_in6") {
+		obj["filter-list-in6"] = nil
 	}
 
 	if v, ok := d.GetOk("filter_list_in_vpnv4"); ok {
@@ -4421,6 +4294,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["filter-list-in-vpnv4"] = t
 		}
+	} else if d.HasChange("filter_list_in_vpnv4") {
+		obj["filter-list-in-vpnv4"] = nil
 	}
 
 	if v, ok := d.GetOk("filter_list_in_vpnv6"); ok {
@@ -4430,6 +4305,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["filter-list-in-vpnv6"] = t
 		}
+	} else if d.HasChange("filter_list_in_vpnv6") {
+		obj["filter-list-in-vpnv6"] = nil
 	}
 
 	if v, ok := d.GetOk("filter_list_out"); ok {
@@ -4439,6 +4316,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["filter-list-out"] = t
 		}
+	} else if d.HasChange("filter_list_out") {
+		obj["filter-list-out"] = nil
 	}
 
 	if v, ok := d.GetOk("filter_list_out6"); ok {
@@ -4448,6 +4327,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["filter-list-out6"] = t
 		}
+	} else if d.HasChange("filter_list_out6") {
+		obj["filter-list-out6"] = nil
 	}
 
 	if v, ok := d.GetOk("filter_list_out_vpnv4"); ok {
@@ -4457,6 +4338,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["filter-list-out-vpnv4"] = t
 		}
+	} else if d.HasChange("filter_list_out_vpnv4") {
+		obj["filter-list-out-vpnv4"] = nil
 	}
 
 	if v, ok := d.GetOk("filter_list_out_vpnv6"); ok {
@@ -4466,6 +4349,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["filter-list-out-vpnv6"] = t
 		}
+	} else if d.HasChange("filter_list_out_vpnv6") {
+		obj["filter-list-out-vpnv6"] = nil
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
@@ -4475,6 +4360,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["interface"] = t
 		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
 	}
 
 	if v, ok := d.GetOk("maximum_prefix"); ok {
@@ -4484,6 +4371,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["maximum-prefix"] = t
 		}
+	} else if d.HasChange("maximum_prefix") {
+		obj["maximum-prefix"] = nil
 	}
 
 	if v, ok := d.GetOk("maximum_prefix6"); ok {
@@ -4493,6 +4382,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["maximum-prefix6"] = t
 		}
+	} else if d.HasChange("maximum_prefix6") {
+		obj["maximum-prefix6"] = nil
 	}
 
 	if v, ok := d.GetOk("maximum_prefix_vpnv4"); ok {
@@ -4502,6 +4393,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["maximum-prefix-vpnv4"] = t
 		}
+	} else if d.HasChange("maximum_prefix_vpnv4") {
+		obj["maximum-prefix-vpnv4"] = nil
 	}
 
 	if v, ok := d.GetOk("maximum_prefix_vpnv6"); ok {
@@ -4511,6 +4404,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["maximum-prefix-vpnv6"] = t
 		}
+	} else if d.HasChange("maximum_prefix_vpnv6") {
+		obj["maximum-prefix-vpnv6"] = nil
 	}
 
 	if v, ok := d.GetOk("maximum_prefix_evpn"); ok {
@@ -4520,6 +4415,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["maximum-prefix-evpn"] = t
 		}
+	} else if d.HasChange("maximum_prefix_evpn") {
+		obj["maximum-prefix-evpn"] = nil
 	}
 
 	if v, ok := d.GetOk("maximum_prefix_threshold"); ok {
@@ -4619,6 +4516,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["prefix-list-in"] = t
 		}
+	} else if d.HasChange("prefix_list_in") {
+		obj["prefix-list-in"] = nil
 	}
 
 	if v, ok := d.GetOk("prefix_list_in6"); ok {
@@ -4628,6 +4527,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["prefix-list-in6"] = t
 		}
+	} else if d.HasChange("prefix_list_in6") {
+		obj["prefix-list-in6"] = nil
 	}
 
 	if v, ok := d.GetOk("prefix_list_in_vpnv4"); ok {
@@ -4637,6 +4538,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["prefix-list-in-vpnv4"] = t
 		}
+	} else if d.HasChange("prefix_list_in_vpnv4") {
+		obj["prefix-list-in-vpnv4"] = nil
 	}
 
 	if v, ok := d.GetOk("prefix_list_in_vpnv6"); ok {
@@ -4646,6 +4549,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["prefix-list-in-vpnv6"] = t
 		}
+	} else if d.HasChange("prefix_list_in_vpnv6") {
+		obj["prefix-list-in-vpnv6"] = nil
 	}
 
 	if v, ok := d.GetOk("prefix_list_out"); ok {
@@ -4655,6 +4560,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["prefix-list-out"] = t
 		}
+	} else if d.HasChange("prefix_list_out") {
+		obj["prefix-list-out"] = nil
 	}
 
 	if v, ok := d.GetOk("prefix_list_out6"); ok {
@@ -4664,6 +4571,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["prefix-list-out6"] = t
 		}
+	} else if d.HasChange("prefix_list_out6") {
+		obj["prefix-list-out6"] = nil
 	}
 
 	if v, ok := d.GetOk("prefix_list_out_vpnv4"); ok {
@@ -4673,6 +4582,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["prefix-list-out-vpnv4"] = t
 		}
+	} else if d.HasChange("prefix_list_out_vpnv4") {
+		obj["prefix-list-out-vpnv4"] = nil
 	}
 
 	if v, ok := d.GetOk("prefix_list_out_vpnv6"); ok {
@@ -4682,6 +4593,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["prefix-list-out-vpnv6"] = t
 		}
+	} else if d.HasChange("prefix_list_out_vpnv6") {
+		obj["prefix-list-out-vpnv6"] = nil
 	}
 
 	if v, ok := d.GetOk("remote_as"); ok {
@@ -4689,15 +4602,10 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
-			new_version_map := map[string][]string{
-				">=": []string{"7.2.1"},
-			}
-			if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
-				obj["remote-as"] = fmt.Sprintf("%v", t)
-			} else {
-				obj["remote-as"] = t
-			}
+			obj["remote-as"] = t
 		}
+	} else if d.HasChange("remote_as") {
+		obj["remote-as"] = nil
 	}
 
 	if v, ok := d.GetOkExists("local_as"); ok {
@@ -4705,15 +4613,10 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
-			new_version_map := map[string][]string{
-				">=": []string{"7.2.1"},
-			}
-			if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
-				obj["local-as"] = fmt.Sprintf("%v", t)
-			} else {
-				obj["local-as"] = t
-			}
+			obj["local-as"] = t
 		}
+	} else if d.HasChange("local_as") {
+		obj["local-as"] = nil
 	}
 
 	if v, ok := d.GetOk("local_as_no_prepend"); ok {
@@ -4741,6 +4644,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["retain-stale-time"] = t
 		}
+	} else if d.HasChange("retain_stale_time") {
+		obj["retain-stale-time"] = nil
 	}
 
 	if v, ok := d.GetOk("route_map_in"); ok {
@@ -4750,6 +4655,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["route-map-in"] = t
 		}
+	} else if d.HasChange("route_map_in") {
+		obj["route-map-in"] = nil
 	}
 
 	if v, ok := d.GetOk("route_map_in6"); ok {
@@ -4759,6 +4666,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["route-map-in6"] = t
 		}
+	} else if d.HasChange("route_map_in6") {
+		obj["route-map-in6"] = nil
 	}
 
 	if v, ok := d.GetOk("route_map_in_vpnv4"); ok {
@@ -4768,6 +4677,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["route-map-in-vpnv4"] = t
 		}
+	} else if d.HasChange("route_map_in_vpnv4") {
+		obj["route-map-in-vpnv4"] = nil
 	}
 
 	if v, ok := d.GetOk("route_map_in_vpnv6"); ok {
@@ -4777,6 +4688,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["route-map-in-vpnv6"] = t
 		}
+	} else if d.HasChange("route_map_in_vpnv6") {
+		obj["route-map-in-vpnv6"] = nil
 	}
 
 	if v, ok := d.GetOk("route_map_in_evpn"); ok {
@@ -4786,6 +4699,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["route-map-in-evpn"] = t
 		}
+	} else if d.HasChange("route_map_in_evpn") {
+		obj["route-map-in-evpn"] = nil
 	}
 
 	if v, ok := d.GetOk("route_map_out"); ok {
@@ -4795,6 +4710,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["route-map-out"] = t
 		}
+	} else if d.HasChange("route_map_out") {
+		obj["route-map-out"] = nil
 	}
 
 	if v, ok := d.GetOk("route_map_out_preferable"); ok {
@@ -4804,6 +4721,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["route-map-out-preferable"] = t
 		}
+	} else if d.HasChange("route_map_out_preferable") {
+		obj["route-map-out-preferable"] = nil
 	}
 
 	if v, ok := d.GetOk("route_map_out6"); ok {
@@ -4813,6 +4732,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["route-map-out6"] = t
 		}
+	} else if d.HasChange("route_map_out6") {
+		obj["route-map-out6"] = nil
 	}
 
 	if v, ok := d.GetOk("route_map_out6_preferable"); ok {
@@ -4822,6 +4743,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["route-map-out6-preferable"] = t
 		}
+	} else if d.HasChange("route_map_out6_preferable") {
+		obj["route-map-out6-preferable"] = nil
 	}
 
 	if v, ok := d.GetOk("route_map_out_vpnv4"); ok {
@@ -4831,6 +4754,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["route-map-out-vpnv4"] = t
 		}
+	} else if d.HasChange("route_map_out_vpnv4") {
+		obj["route-map-out-vpnv4"] = nil
 	}
 
 	if v, ok := d.GetOk("route_map_out_vpnv6"); ok {
@@ -4840,6 +4765,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["route-map-out-vpnv6"] = t
 		}
+	} else if d.HasChange("route_map_out_vpnv6") {
+		obj["route-map-out-vpnv6"] = nil
 	}
 
 	if v, ok := d.GetOk("route_map_out_vpnv4_preferable"); ok {
@@ -4849,6 +4776,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["route-map-out-vpnv4-preferable"] = t
 		}
+	} else if d.HasChange("route_map_out_vpnv4_preferable") {
+		obj["route-map-out-vpnv4-preferable"] = nil
 	}
 
 	if v, ok := d.GetOk("route_map_out_vpnv6_preferable"); ok {
@@ -4858,6 +4787,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["route-map-out-vpnv6-preferable"] = t
 		}
+	} else if d.HasChange("route_map_out_vpnv6_preferable") {
+		obj["route-map-out-vpnv6-preferable"] = nil
 	}
 
 	if v, ok := d.GetOk("route_map_out_evpn"); ok {
@@ -4867,6 +4798,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["route-map-out-evpn"] = t
 		}
+	} else if d.HasChange("route_map_out_evpn") {
+		obj["route-map-out-evpn"] = nil
 	}
 
 	if v, ok := d.GetOk("send_community"); ok {
@@ -4948,6 +4881,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["unsuppress-map"] = t
 		}
+	} else if d.HasChange("unsuppress_map") {
+		obj["unsuppress-map"] = nil
 	}
 
 	if v, ok := d.GetOk("unsuppress_map6"); ok {
@@ -4957,6 +4892,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["unsuppress-map6"] = t
 		}
+	} else if d.HasChange("unsuppress_map6") {
+		obj["unsuppress-map6"] = nil
 	}
 
 	if v, ok := d.GetOk("update_source"); ok {
@@ -4966,6 +4903,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["update-source"] = t
 		}
+	} else if d.HasChange("update_source") {
+		obj["update-source"] = nil
 	}
 
 	if v, ok := d.GetOkExists("weight"); ok {
@@ -4984,6 +4923,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["restart-time"] = t
 		}
+	} else if d.HasChange("restart_time") {
+		obj["restart-time"] = nil
 	}
 
 	if v, ok := d.GetOk("additional_path"); ok {
@@ -5065,6 +5006,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["password"] = t
 		}
+	} else if d.HasChange("password") {
+		obj["password"] = nil
 	}
 
 	if v, ok := d.GetOk("auth_options"); ok {
@@ -5074,6 +5017,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["auth-options"] = t
 		}
+	} else if d.HasChange("auth_options") {
+		obj["auth-options"] = nil
 	}
 
 	if v, ok := d.GetOk("conditional_advertise"); ok || d.HasChange("conditional_advertise") {

@@ -160,6 +160,8 @@ The following attributes are exported:
 * `memory_use_threshold_red` - Threshold at which memory usage forces the FortiGate to enter conserve mode (% of total RAM, default = 88).
 * `memory_use_threshold_green` - Threshold at which memory usage forces the FortiGate to exit conserve mode (% of total RAM, default = 82).
 * `ip_fragment_mem_thresholds` - Maximum memory (MB) used to reassemble IPv4/IPv6 fragments.
+* `ip_fragment_timeout` - Timeout value in seconds for any fragment not being reassembled
+* `ipv6_fragment_timeout` - Timeout value in seconds for any IPv6 fragment not being reassembled
 * `cpu_use_threshold` - Threshold at which CPU usage is reported. (% of total CPU, default = 90).
 * `log_single_cpu_high` - Enable/disable logging the event of a single CPU core reaching CPU usage threshold.
 * `check_reset_range` - Configure ICMP error message verification. You can either apply strict RST range checking or disable it.
@@ -219,6 +221,7 @@ The following attributes are exported:
 * `switch_controller_reserved_network` - Enable reserved network subnet for controlled switches. This is available when the switch controller is enabled.
 * `dnsproxy_worker_count` - DNS proxy worker count.
 * `url_filter_count` - URL filter daemon count.
+* `httpd_max_worker_count` - Maximum number of simultaneous HTTP requests that will be served. This number may affect GUI and REST API performance (0 - 128, default = 0 means let system decide).
 * `proxy_worker_count` - Proxy worker count.
 * `scanunit_count` - Number of scanunits. The range and the default depend on the number of CPUs. Only available on FortiGate units with multiple CPUs.
 * `proxy_hardware_acceleration` - Enable/disable email proxy hardware acceleration.
@@ -256,6 +259,7 @@ The following attributes are exported:
 * `wad_source_affinity` - Enable/disable dispatching traffic to WAD workers based on source affinity.
 * `wad_memory_change_granularity` - Minimum percentage change in system memory usage detected by the wad daemon prior to adjusting TCP window size for any active connection.
 * `login_timestamp` - Enable/disable login time recording.
+* `ip_conflict_detection` - Enable/disable logging of IPv4 address conflict detection.
 * `miglogd_children` - Number of logging (miglogd) processes to be allowed to run. Higher number can reduce performance; lower number can slow log processing time. No logs will be dropped or lost if the number is changed.
 * `special_file_23_support` - Enable/disable IPS detection of HIBUN format files when using Data Leak Protection.
 * `log_uuid_policy` - Enable/disable insertion of policy UUIDs to traffic logs.
@@ -315,9 +319,16 @@ The following attributes are exported:
 * `internet_service_download_list` - Configure which on-demand Internet Service IDs are to be downloaded. The structure of `internet_service_download_list` block is documented below.
 * `early_tcp_npu_session` - Enable/disable early TCP NPU session.
 * `npu_neighbor_update` - Enable/disable sending of probing packets to update neighbors for offloaded sessions.
+* `delay_tcp_npu_session` - Enable TCP NPU session delay to guarantee packet order of 3-way handshake.
 * `interface_subnet_usage` - Enable/disable allowing use of interface-subnet setting in firewall addresses (default = enable).
 * `sflowd_max_children_num` - Maximum number of sflowd child processes allowed to run.
 * `fortigslb_integration` - Enable/disable integration with the FortiGSLB cloud service.
+* `user_history_password_threshold` - Maximum number of previous passwords saved per admin/user (3 - 15, default = 3).
+* `auth_session_auto_backup` - Enable/disable automatic and periodic backup of authentication sessions (default = disable). Sessions are restored upon bootup.
+* `auth_session_auto_backup_interval` - Configure automatic authentication session backup interval in minutes (default = 15).
+* `scim_https_port` - SCIM port (0 - 65535, default = 44559).
+* `scim_http_port` - SCIM http port (0 - 65535, default = 44558).
+* `scim_server_cert` - Server certificate that the FortiGate uses for SCIM connections.
 
 The `internet_service_download_list` block contains:
 

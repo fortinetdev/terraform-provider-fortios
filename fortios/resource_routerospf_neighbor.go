@@ -57,7 +57,6 @@ func resourceRouterospfNeighbor() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"priority": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -221,7 +220,7 @@ func resourceRouterospfNeighborRead(d *schema.ResourceData, m interface{}) error
 }
 
 func flattenRouterospfNeighborId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterospfNeighborIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -229,15 +228,15 @@ func flattenRouterospfNeighborIp(v interface{}, d *schema.ResourceData, pre stri
 }
 
 func flattenRouterospfNeighborPollInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterospfNeighborCost(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterospfNeighborPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectRouterospfNeighbor(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -339,6 +338,8 @@ func getObjectRouterospfNeighbor(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["cost"] = t
 		}
+	} else if d.HasChange("cost") {
+		obj["cost"] = nil
 	}
 
 	if v, ok := d.GetOkExists("priority"); ok {

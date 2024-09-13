@@ -69,7 +69,6 @@ func resourceLogDiskSetting() *schema.Resource {
 			"roll_time": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"diskfull": &schema.Schema{
 				Type:     schema.TypeString,
@@ -79,17 +78,14 @@ func resourceLogDiskSetting() *schema.Resource {
 			"log_quota": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"dlp_archive_quota": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"report_quota": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"maximum_log_age": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -127,7 +123,6 @@ func resourceLogDiskSetting() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"uploadpass": &schema.Schema{
 				Type:         schema.TypeString,
@@ -139,7 +134,6 @@ func resourceLogDiskSetting() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"uploadtype": &schema.Schema{
 				Type:     schema.TypeString,
@@ -193,7 +187,6 @@ func resourceLogDiskSetting() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -322,11 +315,11 @@ func flattenLogDiskSettingIpsArchive(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenLogDiskSettingMaxLogFileSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenLogDiskSettingMaxPolicyPacketCaptureSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenLogDiskSettingRollSchedule(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -346,19 +339,19 @@ func flattenLogDiskSettingDiskfull(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenLogDiskSettingLogQuota(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenLogDiskSettingDlpArchiveQuota(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenLogDiskSettingReportQuota(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenLogDiskSettingMaximumLogAge(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenLogDiskSettingUpload(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -374,7 +367,7 @@ func flattenLogDiskSettingUploadip(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenLogDiskSettingUploadport(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenLogDiskSettingSourceIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -382,10 +375,6 @@ func flattenLogDiskSettingSourceIp(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenLogDiskSettingUploaduser(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenLogDiskSettingUploadpass(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -414,15 +403,15 @@ func flattenLogDiskSettingUploadSslConn(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenLogDiskSettingFullFirstWarningThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenLogDiskSettingFullSecondWarningThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenLogDiskSettingFullFinalWarningThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenLogDiskSettingInterfaceSelectMethod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -831,6 +820,8 @@ func getObjectLogDiskSetting(d *schema.ResourceData, setArgNil bool, sv string) 
 				obj["roll-time"] = t
 			}
 		}
+	} else if d.HasChange("roll_time") {
+		obj["roll-time"] = nil
 	}
 
 	if v, ok := d.GetOk("diskfull"); ok {
@@ -857,6 +848,8 @@ func getObjectLogDiskSetting(d *schema.ResourceData, setArgNil bool, sv string) 
 				obj["log-quota"] = t
 			}
 		}
+	} else if d.HasChange("log_quota") {
+		obj["log-quota"] = nil
 	}
 
 	if v, ok := d.GetOkExists("dlp_archive_quota"); ok {
@@ -870,6 +863,8 @@ func getObjectLogDiskSetting(d *schema.ResourceData, setArgNil bool, sv string) 
 				obj["dlp-archive-quota"] = t
 			}
 		}
+	} else if d.HasChange("dlp_archive_quota") {
+		obj["dlp-archive-quota"] = nil
 	}
 
 	if v, ok := d.GetOkExists("report_quota"); ok {
@@ -883,6 +878,8 @@ func getObjectLogDiskSetting(d *schema.ResourceData, setArgNil bool, sv string) 
 				obj["report-quota"] = t
 			}
 		}
+	} else if d.HasChange("report_quota") {
+		obj["report-quota"] = nil
 	}
 
 	if v, ok := d.GetOkExists("maximum_log_age"); ok {
@@ -974,6 +971,8 @@ func getObjectLogDiskSetting(d *schema.ResourceData, setArgNil bool, sv string) 
 				obj["uploaduser"] = t
 			}
 		}
+	} else if d.HasChange("uploaduser") {
+		obj["uploaduser"] = nil
 	}
 
 	if v, ok := d.GetOk("uploadpass"); ok {
@@ -987,6 +986,8 @@ func getObjectLogDiskSetting(d *schema.ResourceData, setArgNil bool, sv string) 
 				obj["uploadpass"] = t
 			}
 		}
+	} else if d.HasChange("uploadpass") {
+		obj["uploadpass"] = nil
 	}
 
 	if v, ok := d.GetOk("uploaddir"); ok {
@@ -1000,6 +1001,8 @@ func getObjectLogDiskSetting(d *schema.ResourceData, setArgNil bool, sv string) 
 				obj["uploaddir"] = t
 			}
 		}
+	} else if d.HasChange("uploaddir") {
+		obj["uploaddir"] = nil
 	}
 
 	if v, ok := d.GetOk("uploadtype"); ok {
@@ -1130,6 +1133,8 @@ func getObjectLogDiskSetting(d *schema.ResourceData, setArgNil bool, sv string) 
 				obj["interface"] = t
 			}
 		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
 	}
 
 	return &obj, nil

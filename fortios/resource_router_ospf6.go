@@ -72,7 +72,6 @@ func resourceRouterOspf6() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"default_metric": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -87,7 +86,6 @@ func resourceRouterOspf6() *schema.Resource {
 			"spf_timers": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"bfd": &schema.Schema{
 				Type:     schema.TypeString,
@@ -191,7 +189,6 @@ func resourceRouterOspf6() *schema.Resource {
 									"spi": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 									"auth_key": &schema.Schema{
 										Type:         schema.TypeString,
@@ -216,7 +213,6 @@ func resourceRouterOspf6() *schema.Resource {
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 									"prefix6": &schema.Schema{
 										Type:     schema.TypeString,
@@ -240,7 +236,6 @@ func resourceRouterOspf6() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 35),
 										Optional:     true,
-										Computed:     true,
 									},
 									"dead_interval": &schema.Schema{
 										Type:         schema.TypeInt,
@@ -300,7 +295,6 @@ func resourceRouterOspf6() *schema.Resource {
 												"spi": &schema.Schema{
 													Type:     schema.TypeInt,
 													Optional: true,
-													Computed: true,
 												},
 												"auth_key": &schema.Schema{
 													Type:         schema.TypeString,
@@ -332,7 +326,6 @@ func resourceRouterOspf6() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"area_id": &schema.Schema{
 							Type:     schema.TypeString,
@@ -343,7 +336,6 @@ func resourceRouterOspf6() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 						"retransmit_interval": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -361,7 +353,6 @@ func resourceRouterOspf6() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 						"priority": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -373,13 +364,11 @@ func resourceRouterOspf6() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 						"hello_interval": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -400,7 +389,6 @@ func resourceRouterOspf6() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(576, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 						"mtu_ignore": &schema.Schema{
 							Type:     schema.TypeString,
@@ -436,7 +424,6 @@ func resourceRouterOspf6() *schema.Resource {
 									"spi": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 									"auth_key": &schema.Schema{
 										Type:         schema.TypeString,
@@ -473,7 +460,6 @@ func resourceRouterOspf6() *schema.Resource {
 										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 65535),
 										Optional:     true,
-										Computed:     true,
 									},
 									"priority": &schema.Schema{
 										Type:         schema.TypeInt,
@@ -496,7 +482,6 @@ func resourceRouterOspf6() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -507,13 +492,11 @@ func resourceRouterOspf6() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 16777214),
 							Optional:     true,
-							Computed:     true,
 						},
 						"routemap": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"metric_type": &schema.Schema{
 							Type:     schema.TypeString,
@@ -532,7 +515,6 @@ func resourceRouterOspf6() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -545,7 +527,6 @@ func resourceRouterOspf6() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"prefix6": &schema.Schema{
 							Type:     schema.TypeString,
@@ -560,7 +541,6 @@ func resourceRouterOspf6() *schema.Resource {
 						"tag": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -698,7 +678,7 @@ func flattenRouterOspf6AbrType(v interface{}, d *schema.ResourceData, pre string
 }
 
 func flattenRouterOspf6AutoCostRefBandwidth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspf6DefaultInformationOriginate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -710,7 +690,7 @@ func flattenRouterOspf6LogNeighbourChanges(v interface{}, d *schema.ResourceData
 }
 
 func flattenRouterOspf6DefaultInformationMetric(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspf6DefaultInformationMetricType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -722,7 +702,7 @@ func flattenRouterOspf6DefaultInformationRouteMap(v interface{}, d *schema.Resou
 }
 
 func flattenRouterOspf6DefaultMetric(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspf6RouterId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -742,7 +722,7 @@ func flattenRouterOspf6RestartMode(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenRouterOspf6RestartPeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspf6RestartOnTopologyChange(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -867,7 +847,7 @@ func flattenRouterOspf6AreaId(v interface{}, d *schema.ResourceData, pre string,
 }
 
 func flattenRouterOspf6AreaDefaultCost(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspf6AreaNssaTranslatorRole(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -887,7 +867,7 @@ func flattenRouterOspf6AreaNssaDefaultInformationOriginate(v interface{}, d *sch
 }
 
 func flattenRouterOspf6AreaNssaDefaultInformationOriginateMetric(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspf6AreaNssaDefaultInformationOriginateMetricType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -903,7 +883,7 @@ func flattenRouterOspf6AreaAuthentication(v interface{}, d *schema.ResourceData,
 }
 
 func flattenRouterOspf6AreaKeyRolloverInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspf6AreaIpsecAuthAlg(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -944,8 +924,7 @@ func flattenRouterOspf6AreaIpsecKeys(v interface{}, d *schema.ResourceData, pre 
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_key"
-		if cur_v, ok := i["auth-key"]; ok {
-			tmp["auth_key"] = flattenRouterOspf6AreaIpsecKeysAuthKey(cur_v, d, pre_append, sv)
+		if _, ok := i["auth-key"]; ok {
 			c := d.Get(pre_append).(string)
 			if c != "" {
 				tmp["auth_key"] = c
@@ -953,8 +932,7 @@ func flattenRouterOspf6AreaIpsecKeys(v interface{}, d *schema.ResourceData, pre 
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "enc_key"
-		if cur_v, ok := i["enc-key"]; ok {
-			tmp["enc_key"] = flattenRouterOspf6AreaIpsecKeysEncKey(cur_v, d, pre_append, sv)
+		if _, ok := i["enc-key"]; ok {
 			c := d.Get(pre_append).(string)
 			if c != "" {
 				tmp["enc_key"] = c
@@ -971,15 +949,7 @@ func flattenRouterOspf6AreaIpsecKeys(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenRouterOspf6AreaIpsecKeysSpi(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenRouterOspf6AreaIpsecKeysAuthKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenRouterOspf6AreaIpsecKeysEncKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspf6AreaRange(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -1031,7 +1001,7 @@ func flattenRouterOspf6AreaRange(v interface{}, d *schema.ResourceData, pre stri
 }
 
 func flattenRouterOspf6AreaRangeId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspf6AreaRangePrefix6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1135,19 +1105,19 @@ func flattenRouterOspf6AreaVirtualLinkName(v interface{}, d *schema.ResourceData
 }
 
 func flattenRouterOspf6AreaVirtualLinkDeadInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspf6AreaVirtualLinkHelloInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspf6AreaVirtualLinkRetransmitInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspf6AreaVirtualLinkTransmitDelay(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspf6AreaVirtualLinkPeer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1159,7 +1129,7 @@ func flattenRouterOspf6AreaVirtualLinkAuthentication(v interface{}, d *schema.Re
 }
 
 func flattenRouterOspf6AreaVirtualLinkKeyRolloverInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspf6AreaVirtualLinkIpsecAuthAlg(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1200,8 +1170,7 @@ func flattenRouterOspf6AreaVirtualLinkIpsecKeys(v interface{}, d *schema.Resourc
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_key"
-		if cur_v, ok := i["auth-key"]; ok {
-			tmp["auth_key"] = flattenRouterOspf6AreaVirtualLinkIpsecKeysAuthKey(cur_v, d, pre_append, sv)
+		if _, ok := i["auth-key"]; ok {
 			c := d.Get(pre_append).(string)
 			if c != "" {
 				tmp["auth_key"] = c
@@ -1209,8 +1178,7 @@ func flattenRouterOspf6AreaVirtualLinkIpsecKeys(v interface{}, d *schema.Resourc
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "enc_key"
-		if cur_v, ok := i["enc-key"]; ok {
-			tmp["enc_key"] = flattenRouterOspf6AreaVirtualLinkIpsecKeysEncKey(cur_v, d, pre_append, sv)
+		if _, ok := i["enc-key"]; ok {
 			c := d.Get(pre_append).(string)
 			if c != "" {
 				tmp["enc_key"] = c
@@ -1227,15 +1195,7 @@ func flattenRouterOspf6AreaVirtualLinkIpsecKeys(v interface{}, d *schema.Resourc
 }
 
 func flattenRouterOspf6AreaVirtualLinkIpsecKeysSpi(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenRouterOspf6AreaVirtualLinkIpsecKeysAuthKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenRouterOspf6AreaVirtualLinkIpsecKeysEncKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspf6Ospf6Interface(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -1384,27 +1344,27 @@ func flattenRouterOspf6Ospf6InterfaceInterface(v interface{}, d *schema.Resource
 }
 
 func flattenRouterOspf6Ospf6InterfaceRetransmitInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspf6Ospf6InterfaceTransmitDelay(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspf6Ospf6InterfaceCost(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspf6Ospf6InterfacePriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspf6Ospf6InterfaceDeadInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspf6Ospf6InterfaceHelloInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspf6Ospf6InterfaceStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1420,7 +1380,7 @@ func flattenRouterOspf6Ospf6InterfaceBfd(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenRouterOspf6Ospf6InterfaceMtu(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspf6Ospf6InterfaceMtuIgnore(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1432,7 +1392,7 @@ func flattenRouterOspf6Ospf6InterfaceAuthentication(v interface{}, d *schema.Res
 }
 
 func flattenRouterOspf6Ospf6InterfaceKeyRolloverInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspf6Ospf6InterfaceIpsecAuthAlg(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1473,8 +1433,7 @@ func flattenRouterOspf6Ospf6InterfaceIpsecKeys(v interface{}, d *schema.Resource
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_key"
-		if cur_v, ok := i["auth-key"]; ok {
-			tmp["auth_key"] = flattenRouterOspf6Ospf6InterfaceIpsecKeysAuthKey(cur_v, d, pre_append, sv)
+		if _, ok := i["auth-key"]; ok {
 			c := d.Get(pre_append).(string)
 			if c != "" {
 				tmp["auth_key"] = c
@@ -1482,8 +1441,7 @@ func flattenRouterOspf6Ospf6InterfaceIpsecKeys(v interface{}, d *schema.Resource
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "enc_key"
-		if cur_v, ok := i["enc-key"]; ok {
-			tmp["enc_key"] = flattenRouterOspf6Ospf6InterfaceIpsecKeysEncKey(cur_v, d, pre_append, sv)
+		if _, ok := i["enc-key"]; ok {
 			c := d.Get(pre_append).(string)
 			if c != "" {
 				tmp["enc_key"] = c
@@ -1500,15 +1458,7 @@ func flattenRouterOspf6Ospf6InterfaceIpsecKeys(v interface{}, d *schema.Resource
 }
 
 func flattenRouterOspf6Ospf6InterfaceIpsecKeysSpi(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenRouterOspf6Ospf6InterfaceIpsecKeysAuthKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenRouterOspf6Ospf6InterfaceIpsecKeysEncKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspf6Ospf6InterfaceNeighbor(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -1569,15 +1519,15 @@ func flattenRouterOspf6Ospf6InterfaceNeighborIp6(v interface{}, d *schema.Resour
 }
 
 func flattenRouterOspf6Ospf6InterfaceNeighborPollInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspf6Ospf6InterfaceNeighborCost(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspf6Ospf6InterfaceNeighborPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspf6Redistribute(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -1647,7 +1597,7 @@ func flattenRouterOspf6RedistributeStatus(v interface{}, d *schema.ResourceData,
 }
 
 func flattenRouterOspf6RedistributeMetric(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspf6RedistributeRoutemap(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1754,7 +1704,7 @@ func flattenRouterOspf6SummaryAddress(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenRouterOspf6SummaryAddressId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterOspf6SummaryAddressPrefix6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1766,7 +1716,7 @@ func flattenRouterOspf6SummaryAddressAdvertise(v interface{}, d *schema.Resource
 }
 
 func flattenRouterOspf6SummaryAddressTag(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectRouterOspf6(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -2087,23 +2037,23 @@ func expandRouterOspf6Area(d *schema.ResourceData, v interface{}, pre string, sv
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ipsec_keys"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["ipsec-keys"], _ = expandRouterOspf6AreaIpsecKeys(d, i["ipsec_keys"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["ipsec-keys"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "range"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["range"], _ = expandRouterOspf6AreaRange(d, i["range"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["range"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "virtual_link"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["virtual-link"], _ = expandRouterOspf6AreaVirtualLink(d, i["virtual_link"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["virtual-link"] = make([]string, 0)
 		}
 
@@ -2184,16 +2134,22 @@ func expandRouterOspf6AreaIpsecKeys(d *schema.ResourceData, v interface{}, pre s
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "spi"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["spi"], _ = expandRouterOspf6AreaIpsecKeysSpi(d, i["spi"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["spi"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_key"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["auth-key"], _ = expandRouterOspf6AreaIpsecKeysAuthKey(d, i["auth_key"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["auth-key"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "enc_key"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["enc-key"], _ = expandRouterOspf6AreaIpsecKeysEncKey(d, i["enc_key"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["enc-key"] = nil
 		}
 
 		result = append(result, tmp)
@@ -2233,6 +2189,8 @@ func expandRouterOspf6AreaRange(d *schema.ResourceData, v interface{}, pre strin
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandRouterOspf6AreaRangeId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix6"
@@ -2282,6 +2240,8 @@ func expandRouterOspf6AreaVirtualLink(d *schema.ResourceData, v interface{}, pre
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandRouterOspf6AreaVirtualLinkName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dead_interval"
@@ -2330,9 +2290,9 @@ func expandRouterOspf6AreaVirtualLink(d *schema.ResourceData, v interface{}, pre
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ipsec_keys"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["ipsec-keys"], _ = expandRouterOspf6AreaVirtualLinkIpsecKeys(d, i["ipsec_keys"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["ipsec-keys"] = make([]string, 0)
 		}
 
@@ -2401,16 +2361,22 @@ func expandRouterOspf6AreaVirtualLinkIpsecKeys(d *schema.ResourceData, v interfa
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "spi"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["spi"], _ = expandRouterOspf6AreaVirtualLinkIpsecKeysSpi(d, i["spi"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["spi"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_key"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["auth-key"], _ = expandRouterOspf6AreaVirtualLinkIpsecKeysAuthKey(d, i["auth_key"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["auth-key"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "enc_key"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["enc-key"], _ = expandRouterOspf6AreaVirtualLinkIpsecKeysEncKey(d, i["enc_key"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["enc-key"] = nil
 		}
 
 		result = append(result, tmp)
@@ -2450,6 +2416,8 @@ func expandRouterOspf6Ospf6Interface(d *schema.ResourceData, v interface{}, pre 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandRouterOspf6Ospf6InterfaceName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "area_id"
@@ -2460,6 +2428,8 @@ func expandRouterOspf6Ospf6Interface(d *schema.ResourceData, v interface{}, pre 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["interface"], _ = expandRouterOspf6Ospf6InterfaceInterface(d, i["interface"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["interface"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "retransmit_interval"
@@ -2475,6 +2445,8 @@ func expandRouterOspf6Ospf6Interface(d *schema.ResourceData, v interface{}, pre 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "cost"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["cost"], _ = expandRouterOspf6Ospf6InterfaceCost(d, i["cost"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["cost"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
@@ -2485,11 +2457,15 @@ func expandRouterOspf6Ospf6Interface(d *schema.ResourceData, v interface{}, pre 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dead_interval"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["dead-interval"], _ = expandRouterOspf6Ospf6InterfaceDeadInterval(d, i["dead_interval"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["dead-interval"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "hello_interval"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["hello-interval"], _ = expandRouterOspf6Ospf6InterfaceHelloInterval(d, i["hello_interval"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["hello-interval"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
@@ -2510,6 +2486,8 @@ func expandRouterOspf6Ospf6Interface(d *schema.ResourceData, v interface{}, pre 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mtu"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["mtu"], _ = expandRouterOspf6Ospf6InterfaceMtu(d, i["mtu"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["mtu"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mtu_ignore"
@@ -2538,16 +2516,16 @@ func expandRouterOspf6Ospf6Interface(d *schema.ResourceData, v interface{}, pre 
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ipsec_keys"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["ipsec-keys"], _ = expandRouterOspf6Ospf6InterfaceIpsecKeys(d, i["ipsec_keys"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["ipsec-keys"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "neighbor"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["neighbor"], _ = expandRouterOspf6Ospf6InterfaceNeighbor(d, i["neighbor"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["neighbor"] = make([]string, 0)
 		}
 
@@ -2648,16 +2626,22 @@ func expandRouterOspf6Ospf6InterfaceIpsecKeys(d *schema.ResourceData, v interfac
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "spi"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["spi"], _ = expandRouterOspf6Ospf6InterfaceIpsecKeysSpi(d, i["spi"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["spi"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_key"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["auth-key"], _ = expandRouterOspf6Ospf6InterfaceIpsecKeysAuthKey(d, i["auth_key"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["auth-key"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "enc_key"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["enc-key"], _ = expandRouterOspf6Ospf6InterfaceIpsecKeysEncKey(d, i["enc_key"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["enc-key"] = nil
 		}
 
 		result = append(result, tmp)
@@ -2707,6 +2691,8 @@ func expandRouterOspf6Ospf6InterfaceNeighbor(d *schema.ResourceData, v interface
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "cost"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["cost"], _ = expandRouterOspf6Ospf6InterfaceNeighborCost(d, i["cost"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["cost"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
@@ -2755,6 +2741,8 @@ func expandRouterOspf6Redistribute(d *schema.ResourceData, v interface{}, pre st
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandRouterOspf6RedistributeName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
@@ -2765,11 +2753,15 @@ func expandRouterOspf6Redistribute(d *schema.ResourceData, v interface{}, pre st
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "metric"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["metric"], _ = expandRouterOspf6RedistributeMetric(d, i["metric"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["metric"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "routemap"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["routemap"], _ = expandRouterOspf6RedistributeRoutemap(d, i["routemap"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["routemap"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "metric_type"
@@ -2850,6 +2842,8 @@ func expandRouterOspf6SummaryAddress(d *schema.ResourceData, v interface{}, pre 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandRouterOspf6SummaryAddressId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix6"
@@ -2865,6 +2859,8 @@ func expandRouterOspf6SummaryAddress(d *schema.ResourceData, v interface{}, pre 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tag"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["tag"], _ = expandRouterOspf6SummaryAddressTag(d, i["tag"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["tag"] = nil
 		}
 
 		result = append(result, tmp)
@@ -2983,6 +2979,8 @@ func getObjectRouterOspf6(d *schema.ResourceData, setArgNil bool, sv string) (*m
 				obj["default-information-route-map"] = t
 			}
 		}
+	} else if d.HasChange("default_information_route_map") {
+		obj["default-information-route-map"] = nil
 	}
 
 	if v, ok := d.GetOk("default_metric"); ok {
@@ -3022,6 +3020,8 @@ func getObjectRouterOspf6(d *schema.ResourceData, setArgNil bool, sv string) (*m
 				obj["spf-timers"] = t
 			}
 		}
+	} else if d.HasChange("spf_timers") {
+		obj["spf-timers"] = nil
 	}
 
 	if v, ok := d.GetOk("bfd"); ok {

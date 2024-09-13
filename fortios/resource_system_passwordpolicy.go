@@ -56,31 +56,26 @@ func resourceSystemPasswordPolicy() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 128),
 				Optional:     true,
-				Computed:     true,
 			},
 			"min_upper_case_letter": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 128),
 				Optional:     true,
-				Computed:     true,
 			},
 			"min_non_alphanumeric": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 128),
 				Optional:     true,
-				Computed:     true,
 			},
 			"min_number": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 128),
 				Optional:     true,
-				Computed:     true,
 			},
 			"min_change_characters": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 128),
 				Optional:     true,
-				Computed:     true,
 			},
 			"change_4_characters": &schema.Schema{
 				Type:     schema.TypeString,
@@ -102,6 +97,11 @@ func resourceSystemPasswordPolicy() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
+			},
+			"reuse_password_limit": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 20),
+				Optional:     true,
 			},
 		},
 	}
@@ -230,27 +230,27 @@ func flattenSystemPasswordPolicyApplyTo(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenSystemPasswordPolicyMinimumLength(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemPasswordPolicyMinLowerCaseLetter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemPasswordPolicyMinUpperCaseLetter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemPasswordPolicyMinNonAlphanumeric(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemPasswordPolicyMinNumber(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemPasswordPolicyMinChangeCharacters(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemPasswordPolicyChange4Characters(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -262,11 +262,15 @@ func flattenSystemPasswordPolicyExpireStatus(v interface{}, d *schema.ResourceDa
 }
 
 func flattenSystemPasswordPolicyExpireDay(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemPasswordPolicyReusePassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
+}
+
+func flattenSystemPasswordPolicyReusePasswordLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
 }
 
 func refreshObjectSystemPasswordPolicy(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -344,6 +348,12 @@ func refreshObjectSystemPasswordPolicy(d *schema.ResourceData, o map[string]inte
 		}
 	}
 
+	if err = d.Set("reuse_password_limit", flattenSystemPasswordPolicyReusePasswordLimit(o["reuse-password-limit"], d, "reuse_password_limit", sv)); err != nil {
+		if !fortiAPIPatch(o["reuse-password-limit"]) {
+			return fmt.Errorf("Error reading reuse_password_limit: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -401,6 +411,10 @@ func expandSystemPasswordPolicyReusePassword(d *schema.ResourceData, v interface
 	return v, nil
 }
 
+func expandSystemPasswordPolicyReusePasswordLimit(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectSystemPasswordPolicy(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
@@ -454,6 +468,8 @@ func getObjectSystemPasswordPolicy(d *schema.ResourceData, setArgNil bool, sv st
 				obj["min-lower-case-letter"] = t
 			}
 		}
+	} else if d.HasChange("min_lower_case_letter") {
+		obj["min-lower-case-letter"] = nil
 	}
 
 	if v, ok := d.GetOkExists("min_upper_case_letter"); ok {
@@ -467,6 +483,8 @@ func getObjectSystemPasswordPolicy(d *schema.ResourceData, setArgNil bool, sv st
 				obj["min-upper-case-letter"] = t
 			}
 		}
+	} else if d.HasChange("min_upper_case_letter") {
+		obj["min-upper-case-letter"] = nil
 	}
 
 	if v, ok := d.GetOkExists("min_non_alphanumeric"); ok {
@@ -480,6 +498,8 @@ func getObjectSystemPasswordPolicy(d *schema.ResourceData, setArgNil bool, sv st
 				obj["min-non-alphanumeric"] = t
 			}
 		}
+	} else if d.HasChange("min_non_alphanumeric") {
+		obj["min-non-alphanumeric"] = nil
 	}
 
 	if v, ok := d.GetOkExists("min_number"); ok {
@@ -493,6 +513,8 @@ func getObjectSystemPasswordPolicy(d *schema.ResourceData, setArgNil bool, sv st
 				obj["min-number"] = t
 			}
 		}
+	} else if d.HasChange("min_number") {
+		obj["min-number"] = nil
 	}
 
 	if v, ok := d.GetOkExists("min_change_characters"); ok {
@@ -506,6 +528,8 @@ func getObjectSystemPasswordPolicy(d *schema.ResourceData, setArgNil bool, sv st
 				obj["min-change-characters"] = t
 			}
 		}
+	} else if d.HasChange("min_change_characters") {
+		obj["min-change-characters"] = nil
 	}
 
 	if v, ok := d.GetOk("change_4_characters"); ok {
@@ -558,6 +582,21 @@ func getObjectSystemPasswordPolicy(d *schema.ResourceData, setArgNil bool, sv st
 				obj["reuse-password"] = t
 			}
 		}
+	}
+
+	if v, ok := d.GetOkExists("reuse_password_limit"); ok {
+		if setArgNil {
+			obj["reuse-password-limit"] = nil
+		} else {
+			t, err := expandSystemPasswordPolicyReusePasswordLimit(d, v, "reuse_password_limit", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["reuse-password-limit"] = t
+			}
+		}
+	} else if d.HasChange("reuse_password_limit") {
+		obj["reuse-password-limit"] = nil
 	}
 
 	return &obj, nil

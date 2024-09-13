@@ -47,13 +47,11 @@ func resourceDlpExactDataMatch() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 32),
 				Optional:     true,
-				Computed:     true,
 			},
 			"data": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"columns": &schema.Schema{
 				Type:     schema.TypeList,
@@ -64,13 +62,11 @@ func resourceDlpExactDataMatch() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 32),
 							Optional:     true,
-							Computed:     true,
 						},
 						"type": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"optional": &schema.Schema{
 							Type:     schema.TypeString,
@@ -250,7 +246,7 @@ func flattenDlpExactDataMatchName(v interface{}, d *schema.ResourceData, pre str
 }
 
 func flattenDlpExactDataMatchOptional(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenDlpExactDataMatchData(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -306,7 +302,7 @@ func flattenDlpExactDataMatchColumns(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenDlpExactDataMatchColumnsIndex(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenDlpExactDataMatchColumnsType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -398,11 +394,15 @@ func expandDlpExactDataMatchColumns(d *schema.ResourceData, v interface{}, pre s
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "index"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["index"], _ = expandDlpExactDataMatchColumnsIndex(d, i["index"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["index"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["type"], _ = expandDlpExactDataMatchColumnsType(d, i["type"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["type"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "optional"
@@ -449,6 +449,8 @@ func getObjectDlpExactDataMatch(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["optional"] = t
 		}
+	} else if d.HasChange("optional") {
+		obj["optional"] = nil
 	}
 
 	if v, ok := d.GetOk("data"); ok {
@@ -458,6 +460,8 @@ func getObjectDlpExactDataMatch(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["data"] = t
 		}
+	} else if d.HasChange("data") {
+		obj["data"] = nil
 	}
 
 	if v, ok := d.GetOk("columns"); ok || d.HasChange("columns") {

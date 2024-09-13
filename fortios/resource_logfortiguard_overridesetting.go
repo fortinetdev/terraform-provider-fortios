@@ -59,12 +59,10 @@ func resourceLogFortiguardOverrideSetting() *schema.Resource {
 			"upload_day": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"upload_time": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"priority": &schema.Schema{
 				Type:     schema.TypeString,
@@ -75,7 +73,6 @@ func resourceLogFortiguardOverrideSetting() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 100000),
 				Optional:     true,
-				Computed:     true,
 			},
 			"access_config": &schema.Schema{
 				Type:     schema.TypeString,
@@ -229,7 +226,7 @@ func flattenLogFortiguardOverrideSettingPriority(v interface{}, d *schema.Resour
 }
 
 func flattenLogFortiguardOverrideSettingMaxLogRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenLogFortiguardOverrideSettingAccessConfig(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -404,6 +401,8 @@ func getObjectLogFortiguardOverrideSetting(d *schema.ResourceData, setArgNil boo
 				obj["upload-day"] = t
 			}
 		}
+	} else if d.HasChange("upload_day") {
+		obj["upload-day"] = nil
 	}
 
 	if v, ok := d.GetOk("upload_time"); ok {
@@ -417,6 +416,8 @@ func getObjectLogFortiguardOverrideSetting(d *schema.ResourceData, setArgNil boo
 				obj["upload-time"] = t
 			}
 		}
+	} else if d.HasChange("upload_time") {
+		obj["upload-time"] = nil
 	}
 
 	if v, ok := d.GetOk("priority"); ok {
@@ -443,6 +444,8 @@ func getObjectLogFortiguardOverrideSetting(d *schema.ResourceData, setArgNil boo
 				obj["max-log-rate"] = t
 			}
 		}
+	} else if d.HasChange("max_log_rate") {
+		obj["max-log-rate"] = nil
 	}
 
 	if v, ok := d.GetOk("access_config"); ok {

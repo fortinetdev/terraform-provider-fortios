@@ -84,7 +84,6 @@ func resourceWirelessControllerApcfgProfile() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"type": &schema.Schema{
 							Type:     schema.TypeString,
@@ -95,13 +94,11 @@ func resourceWirelessControllerApcfgProfile() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"value": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 127),
 							Optional:     true,
-							Computed:     true,
 						},
 						"passwd_value": &schema.Schema{
 							Type:         schema.TypeString,
@@ -294,7 +291,7 @@ func flattenWirelessControllerApcfgProfileAcType(v interface{}, d *schema.Resour
 }
 
 func flattenWirelessControllerApcfgProfileAcTimer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerApcfgProfileAcIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -302,7 +299,7 @@ func flattenWirelessControllerApcfgProfileAcIp(v interface{}, d *schema.Resource
 }
 
 func flattenWirelessControllerApcfgProfileAcPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerApcfgProfileCommandList(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -350,8 +347,7 @@ func flattenWirelessControllerApcfgProfileCommandList(v interface{}, d *schema.R
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "passwd_value"
-		if cur_v, ok := i["passwd-value"]; ok {
-			tmp["passwd_value"] = flattenWirelessControllerApcfgProfileCommandListPasswdValue(cur_v, d, pre_append, sv)
+		if _, ok := i["passwd-value"]; ok {
 			c := d.Get(pre_append).(string)
 			if c != "" {
 				tmp["passwd_value"] = c
@@ -368,7 +364,7 @@ func flattenWirelessControllerApcfgProfileCommandList(v interface{}, d *schema.R
 }
 
 func flattenWirelessControllerApcfgProfileCommandListId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerApcfgProfileCommandListType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -380,10 +376,6 @@ func flattenWirelessControllerApcfgProfileCommandListName(v interface{}, d *sche
 }
 
 func flattenWirelessControllerApcfgProfileCommandListValue(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenWirelessControllerApcfgProfileCommandListPasswdValue(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -508,6 +500,8 @@ func expandWirelessControllerApcfgProfileCommandList(d *schema.ResourceData, v i
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandWirelessControllerApcfgProfileCommandListId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
@@ -518,16 +512,22 @@ func expandWirelessControllerApcfgProfileCommandList(d *schema.ResourceData, v i
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandWirelessControllerApcfgProfileCommandListName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["value"], _ = expandWirelessControllerApcfgProfileCommandListValue(d, i["value"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["value"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "passwd_value"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["passwd-value"], _ = expandWirelessControllerApcfgProfileCommandListPasswdValue(d, i["passwd_value"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["passwd-value"] = nil
 		}
 
 		result = append(result, tmp)
@@ -586,6 +586,8 @@ func getObjectWirelessControllerApcfgProfile(d *schema.ResourceData, sv string) 
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("ac_type"); ok {

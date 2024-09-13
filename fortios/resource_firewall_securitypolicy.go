@@ -51,7 +51,6 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"comments": &schema.Schema{
 				Type:         schema.TypeString,
@@ -67,7 +66,6 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -81,7 +79,6 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -95,7 +92,6 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -109,7 +105,6 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -123,7 +118,6 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -137,7 +131,6 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -151,7 +144,6 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -170,7 +162,6 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -204,7 +195,6 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -217,7 +207,6 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -236,7 +225,6 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -250,7 +238,6 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -264,7 +251,6 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -283,7 +269,6 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -296,7 +281,6 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -315,7 +299,6 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -329,7 +312,6 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -343,7 +325,6 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -362,7 +343,6 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -381,7 +361,6 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -395,7 +374,6 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -409,7 +387,6 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -428,7 +405,6 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -447,7 +423,6 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -461,7 +436,6 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -475,7 +449,6 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -494,7 +467,6 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -518,7 +490,6 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
@@ -548,7 +519,6 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 			"logtraffic_start": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"profile_type": &schema.Schema{
 				Type:     schema.TypeString,
@@ -559,7 +529,6 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"profile_protocol_options": &schema.Schema{
 				Type:         schema.TypeString,
@@ -577,115 +546,96 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"webfilter_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"dnsfilter_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"emailfilter_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"dlp_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"dlp_sensor": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"file_filter_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ips_sensor": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"application_list": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"voip_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ips_voip_filter": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"sctp_filter_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"diameter_filter_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"virtual_patch_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"icap_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"cifs_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"videofilter_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ssh_filter_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"casb_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"application": &schema.Schema{
 				Type:     schema.TypeSet,
@@ -695,7 +645,6 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -708,7 +657,6 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -716,7 +664,6 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 			"url_category_unitary": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"url_category": &schema.Schema{
 				Type:     schema.TypeSet,
@@ -726,7 +673,6 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -740,7 +686,6 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -754,7 +699,6 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -768,7 +712,6 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -782,7 +725,6 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 511),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -957,7 +899,7 @@ func flattenFirewallSecurityPolicyUuidSp(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenFirewallSecurityPolicyPolicyidSp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallSecurityPolicyNameSp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1405,7 +1347,7 @@ func flattenFirewallSecurityPolicyInternetServiceIdSp(v interface{}, d *schema.R
 }
 
 func flattenFirewallSecurityPolicyInternetServiceIdIdSp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallSecurityPolicyInternetServiceNegateSp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1623,7 +1565,7 @@ func flattenFirewallSecurityPolicyInternetServiceSrcIdSp(v interface{}, d *schem
 }
 
 func flattenFirewallSecurityPolicyInternetServiceSrcIdIdSp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallSecurityPolicyInternetServiceSrcNegateSp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2325,7 +2267,7 @@ func flattenFirewallSecurityPolicyApplicationSp(v interface{}, d *schema.Resourc
 }
 
 func flattenFirewallSecurityPolicyApplicationIdSp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallSecurityPolicyAppCategorySp(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -2367,7 +2309,7 @@ func flattenFirewallSecurityPolicyAppCategorySp(v interface{}, d *schema.Resourc
 }
 
 func flattenFirewallSecurityPolicyAppCategoryIdSp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallSecurityPolicyUrlCategoryUnitarySp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2413,7 +2355,7 @@ func flattenFirewallSecurityPolicyUrlCategorySp(v interface{}, d *schema.Resourc
 }
 
 func flattenFirewallSecurityPolicyUrlCategoryIdSp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallSecurityPolicyAppGroupSp(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -4640,6 +4582,8 @@ func getObjectFirewallSecurityPolicy(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("comments"); ok {
@@ -4649,6 +4593,8 @@ func getObjectFirewallSecurityPolicy(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["comments"] = t
 		}
+	} else if d.HasChange("comments") {
+		obj["comments"] = nil
 	}
 
 	if v, ok := d.GetOk("srcintf"); ok || d.HasChange("srcintf") {
@@ -5045,6 +4991,8 @@ func getObjectFirewallSecurityPolicy(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["schedule"] = t
 		}
+	} else if d.HasChange("schedule") {
+		obj["schedule"] = nil
 	}
 
 	if v, ok := d.GetOk("status"); ok {
@@ -5099,6 +5047,8 @@ func getObjectFirewallSecurityPolicy(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["logtraffic-start"] = t
 		}
+	} else if d.HasChange("logtraffic_start") {
+		obj["logtraffic-start"] = nil
 	}
 
 	if v, ok := d.GetOk("profile_type"); ok {
@@ -5117,6 +5067,8 @@ func getObjectFirewallSecurityPolicy(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["profile-group"] = t
 		}
+	} else if d.HasChange("profile_group") {
+		obj["profile-group"] = nil
 	}
 
 	if v, ok := d.GetOk("profile_protocol_options"); ok {
@@ -5144,6 +5096,8 @@ func getObjectFirewallSecurityPolicy(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["av-profile"] = t
 		}
+	} else if d.HasChange("av_profile") {
+		obj["av-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("webfilter_profile"); ok {
@@ -5153,6 +5107,8 @@ func getObjectFirewallSecurityPolicy(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["webfilter-profile"] = t
 		}
+	} else if d.HasChange("webfilter_profile") {
+		obj["webfilter-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("dnsfilter_profile"); ok {
@@ -5162,6 +5118,8 @@ func getObjectFirewallSecurityPolicy(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["dnsfilter-profile"] = t
 		}
+	} else if d.HasChange("dnsfilter_profile") {
+		obj["dnsfilter-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("emailfilter_profile"); ok {
@@ -5171,6 +5129,8 @@ func getObjectFirewallSecurityPolicy(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["emailfilter-profile"] = t
 		}
+	} else if d.HasChange("emailfilter_profile") {
+		obj["emailfilter-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("dlp_profile"); ok {
@@ -5180,6 +5140,8 @@ func getObjectFirewallSecurityPolicy(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["dlp-profile"] = t
 		}
+	} else if d.HasChange("dlp_profile") {
+		obj["dlp-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("dlp_sensor"); ok {
@@ -5189,6 +5151,8 @@ func getObjectFirewallSecurityPolicy(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["dlp-sensor"] = t
 		}
+	} else if d.HasChange("dlp_sensor") {
+		obj["dlp-sensor"] = nil
 	}
 
 	if v, ok := d.GetOk("file_filter_profile"); ok {
@@ -5198,6 +5162,8 @@ func getObjectFirewallSecurityPolicy(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["file-filter-profile"] = t
 		}
+	} else if d.HasChange("file_filter_profile") {
+		obj["file-filter-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("ips_sensor"); ok {
@@ -5207,6 +5173,8 @@ func getObjectFirewallSecurityPolicy(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["ips-sensor"] = t
 		}
+	} else if d.HasChange("ips_sensor") {
+		obj["ips-sensor"] = nil
 	}
 
 	if v, ok := d.GetOk("application_list"); ok {
@@ -5216,6 +5184,8 @@ func getObjectFirewallSecurityPolicy(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["application-list"] = t
 		}
+	} else if d.HasChange("application_list") {
+		obj["application-list"] = nil
 	}
 
 	if v, ok := d.GetOk("voip_profile"); ok {
@@ -5225,6 +5195,8 @@ func getObjectFirewallSecurityPolicy(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["voip-profile"] = t
 		}
+	} else if d.HasChange("voip_profile") {
+		obj["voip-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("ips_voip_filter"); ok {
@@ -5234,6 +5206,8 @@ func getObjectFirewallSecurityPolicy(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["ips-voip-filter"] = t
 		}
+	} else if d.HasChange("ips_voip_filter") {
+		obj["ips-voip-filter"] = nil
 	}
 
 	if v, ok := d.GetOk("sctp_filter_profile"); ok {
@@ -5243,6 +5217,8 @@ func getObjectFirewallSecurityPolicy(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["sctp-filter-profile"] = t
 		}
+	} else if d.HasChange("sctp_filter_profile") {
+		obj["sctp-filter-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("diameter_filter_profile"); ok {
@@ -5252,6 +5228,8 @@ func getObjectFirewallSecurityPolicy(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["diameter-filter-profile"] = t
 		}
+	} else if d.HasChange("diameter_filter_profile") {
+		obj["diameter-filter-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("virtual_patch_profile"); ok {
@@ -5261,6 +5239,8 @@ func getObjectFirewallSecurityPolicy(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["virtual-patch-profile"] = t
 		}
+	} else if d.HasChange("virtual_patch_profile") {
+		obj["virtual-patch-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("icap_profile"); ok {
@@ -5270,6 +5250,8 @@ func getObjectFirewallSecurityPolicy(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["icap-profile"] = t
 		}
+	} else if d.HasChange("icap_profile") {
+		obj["icap-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("cifs_profile"); ok {
@@ -5279,6 +5261,8 @@ func getObjectFirewallSecurityPolicy(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["cifs-profile"] = t
 		}
+	} else if d.HasChange("cifs_profile") {
+		obj["cifs-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("videofilter_profile"); ok {
@@ -5288,6 +5272,8 @@ func getObjectFirewallSecurityPolicy(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["videofilter-profile"] = t
 		}
+	} else if d.HasChange("videofilter_profile") {
+		obj["videofilter-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("ssh_filter_profile"); ok {
@@ -5297,6 +5283,8 @@ func getObjectFirewallSecurityPolicy(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["ssh-filter-profile"] = t
 		}
+	} else if d.HasChange("ssh_filter_profile") {
+		obj["ssh-filter-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("casb_profile"); ok {
@@ -5306,6 +5294,8 @@ func getObjectFirewallSecurityPolicy(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["casb-profile"] = t
 		}
+	} else if d.HasChange("casb_profile") {
+		obj["casb-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("application"); ok || d.HasChange("application") {
@@ -5343,6 +5333,8 @@ func getObjectFirewallSecurityPolicy(d *schema.ResourceData, sv string) (*map[st
 				obj["url-category"] = t
 			}
 		}
+	} else if d.HasChange("url_category_unitary") {
+		obj["url-category"] = nil
 	}
 
 	if v, ok := d.GetOk("url_category"); ok || d.HasChange("url_category") {

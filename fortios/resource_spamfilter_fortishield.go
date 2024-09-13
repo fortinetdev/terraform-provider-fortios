@@ -40,17 +40,14 @@ func resourceSpamfilterFortishield() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"spam_submit_force": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"spam_submit_txt2htm": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 		},
 	}
@@ -238,6 +235,8 @@ func getObjectSpamfilterFortishield(d *schema.ResourceData, setArgNil bool, sv s
 				obj["spam-submit-srv"] = t
 			}
 		}
+	} else if d.HasChange("spam_submit_srv") {
+		obj["spam-submit-srv"] = nil
 	}
 
 	if v, ok := d.GetOk("spam_submit_force"); ok {
@@ -251,6 +250,8 @@ func getObjectSpamfilterFortishield(d *schema.ResourceData, setArgNil bool, sv s
 				obj["spam-submit-force"] = t
 			}
 		}
+	} else if d.HasChange("spam_submit_force") {
+		obj["spam-submit-force"] = nil
 	}
 
 	if v, ok := d.GetOk("spam_submit_txt2htm"); ok {
@@ -264,6 +265,8 @@ func getObjectSpamfilterFortishield(d *schema.ResourceData, setArgNil bool, sv s
 				obj["spam-submit-txt2htm"] = t
 			}
 		}
+	} else if d.HasChange("spam_submit_txt2htm") {
+		obj["spam-submit-txt2htm"] = nil
 	}
 
 	return &obj, nil

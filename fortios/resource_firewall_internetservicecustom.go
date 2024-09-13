@@ -40,7 +40,6 @@ func resourceFirewallInternetServiceCustom() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"reputation": &schema.Schema{
 				Type:     schema.TypeInt,
@@ -61,7 +60,6 @@ func resourceFirewallInternetServiceCustom() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"addr_mode": &schema.Schema{
 							Type:     schema.TypeString,
@@ -72,7 +70,6 @@ func resourceFirewallInternetServiceCustom() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"port_range": &schema.Schema{
 							Type:     schema.TypeList,
@@ -82,7 +79,6 @@ func resourceFirewallInternetServiceCustom() *schema.Resource {
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 									"start_port": &schema.Schema{
 										Type:         schema.TypeInt,
@@ -108,7 +104,6 @@ func resourceFirewallInternetServiceCustom() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -122,7 +117,6 @@ func resourceFirewallInternetServiceCustom() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -300,7 +294,7 @@ func flattenFirewallInternetServiceCustomName(v interface{}, d *schema.ResourceD
 }
 
 func flattenFirewallInternetServiceCustomReputation(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallInternetServiceCustomComment(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -371,7 +365,7 @@ func flattenFirewallInternetServiceCustomEntry(v interface{}, d *schema.Resource
 }
 
 func flattenFirewallInternetServiceCustomEntryId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallInternetServiceCustomEntryAddrMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -379,7 +373,7 @@ func flattenFirewallInternetServiceCustomEntryAddrMode(v interface{}, d *schema.
 }
 
 func flattenFirewallInternetServiceCustomEntryProtocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallInternetServiceCustomEntryPortRange(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -431,15 +425,15 @@ func flattenFirewallInternetServiceCustomEntryPortRange(v interface{}, d *schema
 }
 
 func flattenFirewallInternetServiceCustomEntryPortRangeId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallInternetServiceCustomEntryPortRangeStartPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallInternetServiceCustomEntryPortRangeEndPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallInternetServiceCustomEntryDst(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -607,6 +601,8 @@ func expandFirewallInternetServiceCustomEntry(d *schema.ResourceData, v interfac
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandFirewallInternetServiceCustomEntryId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr_mode"
@@ -617,26 +613,28 @@ func expandFirewallInternetServiceCustomEntry(d *schema.ResourceData, v interfac
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["protocol"], _ = expandFirewallInternetServiceCustomEntryProtocol(d, i["protocol"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["protocol"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port_range"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["port-range"], _ = expandFirewallInternetServiceCustomEntryPortRange(d, i["port_range"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["port-range"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["dst"], _ = expandFirewallInternetServiceCustomEntryDst(d, i["dst"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["dst"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst6"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["dst6"], _ = expandFirewallInternetServiceCustomEntryDst6(d, i["dst6"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["dst6"] = make([]string, 0)
 		}
 
@@ -677,6 +675,8 @@ func expandFirewallInternetServiceCustomEntryPortRange(d *schema.ResourceData, v
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandFirewallInternetServiceCustomEntryPortRangeId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "start_port"
@@ -775,6 +775,8 @@ func getObjectFirewallInternetServiceCustom(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOkExists("reputation"); ok {
@@ -793,6 +795,8 @@ func getObjectFirewallInternetServiceCustom(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("entry"); ok || d.HasChange("entry") {

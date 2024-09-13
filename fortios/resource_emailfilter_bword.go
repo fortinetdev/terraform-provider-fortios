@@ -46,7 +46,6 @@ func resourceEmailfilterBword() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"comment": &schema.Schema{
 				Type:         schema.TypeString,
@@ -66,13 +65,11 @@ func resourceEmailfilterBword() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"pattern": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 127),
 							Optional:     true,
-							Computed:     true,
 						},
 						"pattern_type": &schema.Schema{
 							Type:     schema.TypeString,
@@ -269,7 +266,7 @@ func resourceEmailfilterBwordRead(d *schema.ResourceData, m interface{}) error {
 }
 
 func flattenEmailfilterBwordId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenEmailfilterBwordName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -358,7 +355,7 @@ func flattenEmailfilterBwordEntriesStatus(v interface{}, d *schema.ResourceData,
 }
 
 func flattenEmailfilterBwordEntriesId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenEmailfilterBwordEntriesPattern(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -382,7 +379,7 @@ func flattenEmailfilterBwordEntriesLanguage(v interface{}, d *schema.ResourceDat
 }
 
 func flattenEmailfilterBwordEntriesScore(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectEmailfilterBword(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -471,11 +468,15 @@ func expandEmailfilterBwordEntries(d *schema.ResourceData, v interface{}, pre st
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandEmailfilterBwordEntriesId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["pattern"], _ = expandEmailfilterBwordEntriesPattern(d, i["pattern"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["pattern"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern_type"
@@ -562,6 +563,8 @@ func getObjectEmailfilterBword(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
@@ -571,6 +574,8 @@ func getObjectEmailfilterBword(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("entries"); ok || d.HasChange("entries") {

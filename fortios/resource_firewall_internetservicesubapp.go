@@ -39,7 +39,6 @@ func resourceFirewallInternetServiceSubapp() *schema.Resource {
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"sub_app": &schema.Schema{
 				Type:     schema.TypeSet,
@@ -49,7 +48,6 @@ func resourceFirewallInternetServiceSubapp() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -220,7 +218,7 @@ func resourceFirewallInternetServiceSubappRead(d *schema.ResourceData, m interfa
 }
 
 func flattenFirewallInternetServiceSubappId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallInternetServiceSubappSubApp(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -262,7 +260,7 @@ func flattenFirewallInternetServiceSubappSubApp(v interface{}, d *schema.Resourc
 }
 
 func flattenFirewallInternetServiceSubappSubAppId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectFirewallInternetServiceSubapp(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -347,6 +345,8 @@ func getObjectFirewallInternetServiceSubapp(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["id"] = t
 		}
+	} else if d.HasChange("fosid") {
+		obj["id"] = nil
 	}
 
 	if v, ok := d.GetOk("sub_app"); ok || d.HasChange("sub_app") {

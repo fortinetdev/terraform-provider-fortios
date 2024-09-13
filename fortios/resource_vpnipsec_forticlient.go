@@ -300,6 +300,8 @@ func getObjectVpnIpsecForticlient(d *schema.ResourceData, sv string) (*map[strin
 		} else if t != nil {
 			obj["usergroupname"] = t
 		}
+	} else if d.HasChange("usergroupname") {
+		obj["usergroupname"] = nil
 	}
 
 	if v, ok := d.GetOk("phase2name"); ok {
@@ -309,6 +311,8 @@ func getObjectVpnIpsecForticlient(d *schema.ResourceData, sv string) (*map[strin
 		} else if t != nil {
 			obj["phase2name"] = t
 		}
+	} else if d.HasChange("phase2name") {
+		obj["phase2name"] = nil
 	}
 
 	if v, ok := d.GetOk("status"); ok {

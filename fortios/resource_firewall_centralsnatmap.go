@@ -66,7 +66,6 @@ func resourceFirewallCentralSnatMap() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -80,7 +79,6 @@ func resourceFirewallCentralSnatMap() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -94,7 +92,6 @@ func resourceFirewallCentralSnatMap() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -108,7 +105,6 @@ func resourceFirewallCentralSnatMap() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -122,7 +118,6 @@ func resourceFirewallCentralSnatMap() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -136,7 +131,6 @@ func resourceFirewallCentralSnatMap() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -150,7 +144,6 @@ func resourceFirewallCentralSnatMap() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -164,7 +157,6 @@ func resourceFirewallCentralSnatMap() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -378,7 +370,7 @@ func resourceFirewallCentralSnatMapRead(d *schema.ResourceData, m interface{}) e
 }
 
 func flattenFirewallCentralSnatMapPolicyid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallCentralSnatMapUuid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -734,7 +726,7 @@ func flattenFirewallCentralSnatMapPortPreserve(v interface{}, d *schema.Resource
 }
 
 func flattenFirewallCentralSnatMapProtocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallCentralSnatMapOrigPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1392,6 +1384,8 @@ func getObjectFirewallCentralSnatMap(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["protocol"] = t
 		}
+	} else if d.HasChange("protocol") {
+		obj["protocol"] = nil
 	}
 
 	if v, ok := d.GetOk("orig_port"); ok {
@@ -1401,6 +1395,8 @@ func getObjectFirewallCentralSnatMap(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["orig-port"] = t
 		}
+	} else if d.HasChange("orig_port") {
+		obj["orig-port"] = nil
 	}
 
 	if v, ok := d.GetOk("nat_port"); ok {
@@ -1455,6 +1451,8 @@ func getObjectFirewallCentralSnatMap(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["comments"] = t
 		}
+	} else if d.HasChange("comments") {
+		obj["comments"] = nil
 	}
 
 	return &obj, nil

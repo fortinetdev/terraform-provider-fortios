@@ -66,7 +66,6 @@ func resourceSystemVxlan() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -80,7 +79,6 @@ func resourceSystemVxlan() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 45),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -95,13 +93,11 @@ func resourceSystemVxlan() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"evpn_id": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"learn_from_traffic": &schema.Schema{
 				Type:     schema.TypeString,
@@ -282,7 +278,7 @@ func flattenSystemVxlanInterface(v interface{}, d *schema.ResourceData, pre stri
 }
 
 func flattenSystemVxlanVni(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVxlanIpVersion(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -374,15 +370,15 @@ func flattenSystemVxlanRemoteIp6Ip6(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenSystemVxlanDstport(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVxlanMulticastTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVxlanEvpnId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVxlanLearnFromTraffic(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -594,6 +590,8 @@ func getObjectSystemVxlan(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["interface"] = t
 		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
 	}
 
 	if v, ok := d.GetOk("vni"); ok {
@@ -603,6 +601,8 @@ func getObjectSystemVxlan(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["vni"] = t
 		}
+	} else if d.HasChange("vni") {
+		obj["vni"] = nil
 	}
 
 	if v, ok := d.GetOk("ip_version"); ok {
@@ -648,6 +648,8 @@ func getObjectSystemVxlan(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["multicast-ttl"] = t
 		}
+	} else if d.HasChange("multicast_ttl") {
+		obj["multicast-ttl"] = nil
 	}
 
 	if v, ok := d.GetOk("evpn_id"); ok {
@@ -657,6 +659,8 @@ func getObjectSystemVxlan(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["evpn-id"] = t
 		}
+	} else if d.HasChange("evpn_id") {
+		obj["evpn-id"] = nil
 	}
 
 	if v, ok := d.GetOk("learn_from_traffic"); ok {

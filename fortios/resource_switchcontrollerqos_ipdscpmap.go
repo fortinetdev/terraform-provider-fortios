@@ -46,7 +46,6 @@ func resourceSwitchControllerQosIpDscpMap() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"map": &schema.Schema{
 				Type:     schema.TypeList,
@@ -57,28 +56,23 @@ func resourceSwitchControllerQosIpDscpMap() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"cos_queue": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 7),
 							Optional:     true,
-							Computed:     true,
 						},
 						"diffserv": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"ip_precedence": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"value": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -319,7 +313,7 @@ func flattenSwitchControllerQosIpDscpMapMapName(v interface{}, d *schema.Resourc
 }
 
 func flattenSwitchControllerQosIpDscpMapMapCosQueue(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerQosIpDscpMapMapDiffserv(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -405,26 +399,36 @@ func expandSwitchControllerQosIpDscpMapMap(d *schema.ResourceData, v interface{}
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandSwitchControllerQosIpDscpMapMapName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "cos_queue"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["cos-queue"], _ = expandSwitchControllerQosIpDscpMapMapCosQueue(d, i["cos_queue"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["cos-queue"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "diffserv"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["diffserv"], _ = expandSwitchControllerQosIpDscpMapMapDiffserv(d, i["diffserv"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["diffserv"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip_precedence"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["ip-precedence"], _ = expandSwitchControllerQosIpDscpMapMapIpPrecedence(d, i["ip_precedence"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["ip-precedence"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["value"], _ = expandSwitchControllerQosIpDscpMapMapValue(d, i["value"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["value"] = nil
 		}
 
 		result = append(result, tmp)
@@ -474,6 +478,8 @@ func getObjectSwitchControllerQosIpDscpMap(d *schema.ResourceData, sv string) (*
 		} else if t != nil {
 			obj["description"] = t
 		}
+	} else if d.HasChange("description") {
+		obj["description"] = nil
 	}
 
 	if v, ok := d.GetOk("map"); ok || d.HasChange("map") {

@@ -52,7 +52,6 @@ func resourceRouterPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -71,7 +70,6 @@ func resourceRouterPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -85,7 +83,6 @@ func resourceRouterPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -104,7 +101,6 @@ func resourceRouterPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -118,7 +114,6 @@ func resourceRouterPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -137,13 +132,11 @@ func resourceRouterPolicy() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"start_port": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"end_port": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -155,7 +148,6 @@ func resourceRouterPolicy() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"end_source_port": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -172,17 +164,14 @@ func resourceRouterPolicy() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"tos": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"tos_mask": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
@@ -202,7 +191,6 @@ func resourceRouterPolicy() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -216,7 +204,6 @@ func resourceRouterPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -387,7 +374,7 @@ func resourceRouterPolicyRead(d *schema.ResourceData, m interface{}) error {
 }
 
 func flattenRouterPolicySeqNum(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterPolicyInputDevice(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -617,23 +604,23 @@ func flattenRouterPolicyAction(v interface{}, d *schema.ResourceData, pre string
 }
 
 func flattenRouterPolicyProtocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterPolicyStartPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterPolicyEndPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterPolicyStartSourcePort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterPolicyEndSourcePort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterPolicyGateway(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -699,7 +686,7 @@ func flattenRouterPolicyInternetServiceId(v interface{}, d *schema.ResourceData,
 }
 
 func flattenRouterPolicyInternetServiceIdId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterPolicyInternetServiceCustom(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -1330,6 +1317,8 @@ func getObjectRouterPolicy(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["protocol"] = t
 		}
+	} else if d.HasChange("protocol") {
+		obj["protocol"] = nil
 	}
 
 	if v, ok := d.GetOkExists("start_port"); ok {
@@ -1339,6 +1328,8 @@ func getObjectRouterPolicy(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["start-port"] = t
 		}
+	} else if d.HasChange("start_port") {
+		obj["start-port"] = nil
 	}
 
 	if v, ok := d.GetOkExists("end_port"); ok {
@@ -1357,6 +1348,8 @@ func getObjectRouterPolicy(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["start-source-port"] = t
 		}
+	} else if d.HasChange("start_source_port") {
+		obj["start-source-port"] = nil
 	}
 
 	if v, ok := d.GetOkExists("end_source_port"); ok {
@@ -1384,6 +1377,8 @@ func getObjectRouterPolicy(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["output-device"] = t
 		}
+	} else if d.HasChange("output_device") {
+		obj["output-device"] = nil
 	}
 
 	if v, ok := d.GetOk("tos"); ok {
@@ -1393,6 +1388,8 @@ func getObjectRouterPolicy(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["tos"] = t
 		}
+	} else if d.HasChange("tos") {
+		obj["tos"] = nil
 	}
 
 	if v, ok := d.GetOk("tos_mask"); ok {
@@ -1402,6 +1399,8 @@ func getObjectRouterPolicy(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["tos-mask"] = t
 		}
+	} else if d.HasChange("tos_mask") {
+		obj["tos-mask"] = nil
 	}
 
 	if v, ok := d.GetOk("status"); ok {
@@ -1420,6 +1419,8 @@ func getObjectRouterPolicy(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["comments"] = t
 		}
+	} else if d.HasChange("comments") {
+		obj["comments"] = nil
 	}
 
 	if v, ok := d.GetOk("internet_service_id"); ok || d.HasChange("internet_service_id") {

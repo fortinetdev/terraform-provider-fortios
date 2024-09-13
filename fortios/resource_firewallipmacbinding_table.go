@@ -39,7 +39,6 @@ func resourceFirewallIpmacbindingTable() *schema.Resource {
 			"seq_num": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"ip": &schema.Schema{
 				Type:     schema.TypeString,
@@ -217,7 +216,7 @@ func resourceFirewallIpmacbindingTableRead(d *schema.ResourceData, m interface{}
 }
 
 func flattenFirewallIpmacbindingTableSeqNum(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallIpmacbindingTableIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -308,6 +307,8 @@ func getObjectFirewallIpmacbindingTable(d *schema.ResourceData, sv string) (*map
 		} else if t != nil {
 			obj["seq-num"] = t
 		}
+	} else if d.HasChange("seq_num") {
+		obj["seq-num"] = nil
 	}
 
 	if v, ok := d.GetOk("ip"); ok {

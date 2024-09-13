@@ -47,7 +47,6 @@ func resourceExtensionControllerExtender() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 19),
 				Optional:     true,
-				Computed:     true,
 			},
 			"authorized": &schema.Schema{
 				Type:     schema.TypeString,
@@ -58,13 +57,11 @@ func resourceExtensionControllerExtender() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 31),
 				Optional:     true,
-				Computed:     true,
 			},
 			"description": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"vdom": &schema.Schema{
 				Type:     schema.TypeInt,
@@ -79,13 +76,11 @@ func resourceExtensionControllerExtender() *schema.Resource {
 			"extension_type": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 31),
 				Optional:     true,
-				Computed:     true,
 			},
 			"override_allowaccess": &schema.Schema{
 				Type:     schema.TypeString,
@@ -95,7 +90,6 @@ func resourceExtensionControllerExtender() *schema.Resource {
 			"allowaccess": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"override_login_password_change": &schema.Schema{
 				Type:     schema.TypeString,
@@ -111,6 +105,7 @@ func resourceExtensionControllerExtender() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 27),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"override_enforce_bandwidth": &schema.Schema{
 				Type:     schema.TypeString,
@@ -139,13 +134,11 @@ func resourceExtensionControllerExtender() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 31),
 							Optional:     true,
-							Computed:     true,
 						},
 						"modem2_extension": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 31),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -336,11 +329,11 @@ func flattenExtensionControllerExtenderDescription(v interface{}, d *schema.Reso
 }
 
 func flattenExtensionControllerExtenderVdom(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenExtensionControllerExtenderDeviceId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenExtensionControllerExtenderExtensionType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -367,10 +360,6 @@ func flattenExtensionControllerExtenderLoginPasswordChange(v interface{}, d *sch
 	return v
 }
 
-func flattenExtensionControllerExtenderLoginPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
 func flattenExtensionControllerExtenderOverrideEnforceBandwidth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -380,7 +369,7 @@ func flattenExtensionControllerExtenderEnforceBandwidth(v interface{}, d *schema
 }
 
 func flattenExtensionControllerExtenderBandwidthLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenExtensionControllerExtenderWanExtension(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -502,12 +491,6 @@ func refreshObjectExtensionControllerExtender(d *schema.ResourceData, o map[stri
 	if err = d.Set("login_password_change", flattenExtensionControllerExtenderLoginPasswordChange(o["login-password-change"], d, "login_password_change", sv)); err != nil {
 		if !fortiAPIPatch(o["login-password-change"]) {
 			return fmt.Errorf("Error reading login_password_change: %v", err)
-		}
-	}
-
-	if err = d.Set("login_password", flattenExtensionControllerExtenderLoginPassword(o["login-password"], d, "login_password", sv)); err != nil {
-		if !fortiAPIPatch(o["login-password"]) {
-			return fmt.Errorf("Error reading login_password: %v", err)
 		}
 	}
 
@@ -681,6 +664,8 @@ func getObjectExtensionControllerExtender(d *schema.ResourceData, sv string) (*m
 		} else if t != nil {
 			obj["id"] = t
 		}
+	} else if d.HasChange("fosid") {
+		obj["id"] = nil
 	}
 
 	if v, ok := d.GetOk("authorized"); ok {
@@ -699,6 +684,8 @@ func getObjectExtensionControllerExtender(d *schema.ResourceData, sv string) (*m
 		} else if t != nil {
 			obj["ext-name"] = t
 		}
+	} else if d.HasChange("ext_name") {
+		obj["ext-name"] = nil
 	}
 
 	if v, ok := d.GetOk("description"); ok {
@@ -708,6 +695,8 @@ func getObjectExtensionControllerExtender(d *schema.ResourceData, sv string) (*m
 		} else if t != nil {
 			obj["description"] = t
 		}
+	} else if d.HasChange("description") {
+		obj["description"] = nil
 	}
 
 	if v, ok := d.GetOkExists("vdom"); ok {
@@ -735,6 +724,8 @@ func getObjectExtensionControllerExtender(d *schema.ResourceData, sv string) (*m
 		} else if t != nil {
 			obj["extension-type"] = t
 		}
+	} else if d.HasChange("extension_type") {
+		obj["extension-type"] = nil
 	}
 
 	if v, ok := d.GetOk("profile"); ok {
@@ -744,6 +735,8 @@ func getObjectExtensionControllerExtender(d *schema.ResourceData, sv string) (*m
 		} else if t != nil {
 			obj["profile"] = t
 		}
+	} else if d.HasChange("profile") {
+		obj["profile"] = nil
 	}
 
 	if v, ok := d.GetOk("override_allowaccess"); ok {
@@ -762,6 +755,8 @@ func getObjectExtensionControllerExtender(d *schema.ResourceData, sv string) (*m
 		} else if t != nil {
 			obj["allowaccess"] = t
 		}
+	} else if d.HasChange("allowaccess") {
+		obj["allowaccess"] = nil
 	}
 
 	if v, ok := d.GetOk("override_login_password_change"); ok {
@@ -789,6 +784,8 @@ func getObjectExtensionControllerExtender(d *schema.ResourceData, sv string) (*m
 		} else if t != nil {
 			obj["login-password"] = t
 		}
+	} else if d.HasChange("login_password") {
+		obj["login-password"] = nil
 	}
 
 	if v, ok := d.GetOk("override_enforce_bandwidth"); ok {

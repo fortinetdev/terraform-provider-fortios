@@ -39,6 +39,8 @@ The following attributes are exported:
 * `auth_pwd` - Password for authentication protocol.
 * `priv_proto` - Privacy (encryption) protocol.
 * `priv_pwd` - Password for privacy (encryption) protocol.
+* `interface_select_method` - Specify how to select outgoing interface to reach server.
+* `interface` - Specify outgoing interface to reach server.
 
 The `vdoms` block contains:
 

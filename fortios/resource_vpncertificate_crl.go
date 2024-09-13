@@ -45,7 +45,6 @@ func resourceVpnCertificateCrl() *schema.Resource {
 			"crl": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"range": &schema.Schema{
 				Type:     schema.TypeString,
@@ -67,13 +66,11 @@ func resourceVpnCertificateCrl() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ldap_username": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ldap_password": &schema.Schema{
 				Type:         schema.TypeString,
@@ -85,13 +82,11 @@ func resourceVpnCertificateCrl() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"scep_url": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"scep_cert": &schema.Schema{
 				Type:         schema.TypeString,
@@ -102,7 +97,6 @@ func resourceVpnCertificateCrl() *schema.Resource {
 			"update_interval": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"source_ip": &schema.Schema{
 				Type:     schema.TypeString,
@@ -112,7 +106,6 @@ func resourceVpnCertificateCrl() *schema.Resource {
 			"last_updated": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 		},
 	}
@@ -297,10 +290,6 @@ func flattenVpnCertificateCrlLdapUsername(v interface{}, d *schema.ResourceData,
 	return v
 }
 
-func flattenVpnCertificateCrlLdapPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
 func flattenVpnCertificateCrlHttpUrl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -314,7 +303,7 @@ func flattenVpnCertificateCrlScepCert(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenVpnCertificateCrlUpdateInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVpnCertificateCrlSourceIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -322,7 +311,7 @@ func flattenVpnCertificateCrlSourceIp(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenVpnCertificateCrlLastUpdated(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectVpnCertificateCrl(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -490,6 +479,8 @@ func getObjectVpnCertificateCrl(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["crl"] = t
 		}
+	} else if d.HasChange("crl") {
+		obj["crl"] = nil
 	}
 
 	if v, ok := d.GetOk("range"); ok {
@@ -526,6 +517,8 @@ func getObjectVpnCertificateCrl(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["ldap-server"] = t
 		}
+	} else if d.HasChange("ldap_server") {
+		obj["ldap-server"] = nil
 	}
 
 	if v, ok := d.GetOk("ldap_username"); ok {
@@ -535,6 +528,8 @@ func getObjectVpnCertificateCrl(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["ldap-username"] = t
 		}
+	} else if d.HasChange("ldap_username") {
+		obj["ldap-username"] = nil
 	}
 
 	if v, ok := d.GetOk("ldap_password"); ok {
@@ -544,6 +539,8 @@ func getObjectVpnCertificateCrl(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["ldap-password"] = t
 		}
+	} else if d.HasChange("ldap_password") {
+		obj["ldap-password"] = nil
 	}
 
 	if v, ok := d.GetOk("http_url"); ok {
@@ -553,6 +550,8 @@ func getObjectVpnCertificateCrl(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["http-url"] = t
 		}
+	} else if d.HasChange("http_url") {
+		obj["http-url"] = nil
 	}
 
 	if v, ok := d.GetOk("scep_url"); ok {
@@ -562,6 +561,8 @@ func getObjectVpnCertificateCrl(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["scep-url"] = t
 		}
+	} else if d.HasChange("scep_url") {
+		obj["scep-url"] = nil
 	}
 
 	if v, ok := d.GetOk("scep_cert"); ok {
@@ -580,6 +581,8 @@ func getObjectVpnCertificateCrl(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["update-interval"] = t
 		}
+	} else if d.HasChange("update_interval") {
+		obj["update-interval"] = nil
 	}
 
 	if v, ok := d.GetOk("source_ip"); ok {
@@ -598,6 +601,8 @@ func getObjectVpnCertificateCrl(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["last-updated"] = t
 		}
+	} else if d.HasChange("last_updated") {
+		obj["last-updated"] = nil
 	}
 
 	return &obj, nil

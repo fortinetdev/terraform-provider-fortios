@@ -282,6 +282,8 @@ func getObjectSystemMacAddressTable(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["interface"] = t
 		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
 	}
 
 	if v, ok := d.GetOk("reply_substitute"); ok {

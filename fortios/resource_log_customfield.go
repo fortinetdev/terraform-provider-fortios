@@ -281,6 +281,8 @@ func getObjectLogCustomField(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("value"); ok {
@@ -290,6 +292,8 @@ func getObjectLogCustomField(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["value"] = t
 		}
+	} else if d.HasChange("value") {
+		obj["value"] = nil
 	}
 
 	return &obj, nil

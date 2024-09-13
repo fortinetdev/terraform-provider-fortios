@@ -40,7 +40,6 @@ func resourceFirewallAddrgrp6() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
-				Computed:     true,
 			},
 			"uuid": &schema.Schema{
 				Type:     schema.TypeString,
@@ -50,13 +49,11 @@ func resourceFirewallAddrgrp6() *schema.Resource {
 			"visibility": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"color": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 32),
 				Optional:     true,
-				Computed:     true,
 			},
 			"comment": &schema.Schema{
 				Type:         schema.TypeString,
@@ -72,7 +69,6 @@ func resourceFirewallAddrgrp6() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -91,7 +87,6 @@ func resourceFirewallAddrgrp6() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -105,13 +100,11 @@ func resourceFirewallAddrgrp6() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"category": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"tags": &schema.Schema{
 							Type:     schema.TypeSet,
@@ -122,7 +115,6 @@ func resourceFirewallAddrgrp6() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -313,7 +305,7 @@ func flattenFirewallAddrgrp6Visibility(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenFirewallAddrgrp6Color(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallAddrgrp6Comment(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -715,17 +707,21 @@ func expandFirewallAddrgrp6Tagging(d *schema.ResourceData, v interface{}, pre st
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandFirewallAddrgrp6TaggingName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["category"], _ = expandFirewallAddrgrp6TaggingCategory(d, i["category"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["category"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tags"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["tags"], _ = expandFirewallAddrgrp6TaggingTags(d, i["tags"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["tags"] = make([]string, 0)
 		}
 
@@ -787,6 +783,8 @@ func getObjectFirewallAddrgrp6(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("uuid"); ok {
@@ -805,6 +803,8 @@ func getObjectFirewallAddrgrp6(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["visibility"] = t
 		}
+	} else if d.HasChange("visibility") {
+		obj["visibility"] = nil
 	}
 
 	if v, ok := d.GetOkExists("color"); ok {
@@ -814,6 +814,8 @@ func getObjectFirewallAddrgrp6(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["color"] = t
 		}
+	} else if d.HasChange("color") {
+		obj["color"] = nil
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
@@ -823,6 +825,8 @@ func getObjectFirewallAddrgrp6(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("member"); ok || d.HasChange("member") {

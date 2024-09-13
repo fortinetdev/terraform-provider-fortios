@@ -45,7 +45,6 @@ func resourceFirewallAuthPortal() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -54,19 +53,16 @@ func resourceFirewallAuthPortal() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"portal_addr6": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"identity_based_route": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"proxy_auth": &schema.Schema{
 				Type:     schema.TypeString,
@@ -388,6 +384,8 @@ func getObjectFirewallAuthPortal(d *schema.ResourceData, setArgNil bool, sv stri
 				obj["portal-addr"] = t
 			}
 		}
+	} else if d.HasChange("portal_addr") {
+		obj["portal-addr"] = nil
 	}
 
 	if v, ok := d.GetOk("portal_addr6"); ok {
@@ -401,6 +399,8 @@ func getObjectFirewallAuthPortal(d *schema.ResourceData, setArgNil bool, sv stri
 				obj["portal-addr6"] = t
 			}
 		}
+	} else if d.HasChange("portal_addr6") {
+		obj["portal-addr6"] = nil
 	}
 
 	if v, ok := d.GetOk("identity_based_route"); ok {
@@ -414,6 +414,8 @@ func getObjectFirewallAuthPortal(d *schema.ResourceData, setArgNil bool, sv stri
 				obj["identity-based-route"] = t
 			}
 		}
+	} else if d.HasChange("identity_based_route") {
+		obj["identity-based-route"] = nil
 	}
 
 	if v, ok := d.GetOk("proxy_auth"); ok {

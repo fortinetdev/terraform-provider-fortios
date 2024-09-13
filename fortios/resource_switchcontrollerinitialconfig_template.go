@@ -47,7 +47,6 @@ func resourceSwitchControllerInitialConfigTemplate() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 4094),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ip": &schema.Schema{
 				Type:     schema.TypeString,
@@ -57,7 +56,6 @@ func resourceSwitchControllerInitialConfigTemplate() *schema.Resource {
 			"allowaccess": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"auto_ip": &schema.Schema{
 				Type:     schema.TypeString,
@@ -229,7 +227,7 @@ func flattenSwitchControllerInitialConfigTemplateName(v interface{}, d *schema.R
 }
 
 func flattenSwitchControllerInitialConfigTemplateVlanid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerInitialConfigTemplateIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -339,6 +337,8 @@ func getObjectSwitchControllerInitialConfigTemplate(d *schema.ResourceData, sv s
 		} else if t != nil {
 			obj["vlanid"] = t
 		}
+	} else if d.HasChange("vlanid") {
+		obj["vlanid"] = nil
 	}
 
 	if v, ok := d.GetOk("ip"); ok {
@@ -357,6 +357,8 @@ func getObjectSwitchControllerInitialConfigTemplate(d *schema.ResourceData, sv s
 		} else if t != nil {
 			obj["allowaccess"] = t
 		}
+	} else if d.HasChange("allowaccess") {
+		obj["allowaccess"] = nil
 	}
 
 	if v, ok := d.GetOk("auto_ip"); ok {

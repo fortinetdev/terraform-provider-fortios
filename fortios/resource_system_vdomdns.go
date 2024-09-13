@@ -76,7 +76,6 @@ func resourceSystemVdomDns() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 127),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -105,7 +104,6 @@ func resourceSystemVdomDns() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"server_select_method": &schema.Schema{
 				Type:     schema.TypeString,
@@ -707,6 +705,8 @@ func getObjectSystemVdomDns(d *schema.ResourceData, setArgNil bool, sv string) (
 				obj["interface"] = t
 			}
 		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
 	}
 
 	if v, ok := d.GetOk("server_select_method"); ok {

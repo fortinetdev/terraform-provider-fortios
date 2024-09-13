@@ -44,7 +44,6 @@ func resourceLogMemorySetting() *schema.Resource {
 			"diskfull": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 		},
 	}
@@ -231,6 +230,8 @@ func getObjectLogMemorySetting(d *schema.ResourceData, setArgNil bool, sv string
 				obj["diskfull"] = t
 			}
 		}
+	} else if d.HasChange("diskfull") {
+		obj["diskfull"] = nil
 	}
 
 	return &obj, nil

@@ -170,6 +170,13 @@ The following arguments are supported:
 * `npu_offload` - Enable/disable offloading NPU. Valid values: `enable`, `disable`.
 * `send_cert_chain` - Enable/disable sending certificate chain. Valid values: `enable`, `disable`.
 * `dhgrp` - DH group. Valid values: `1`, `2`, `5`, `14`, `15`, `16`, `17`, `18`, `19`, `20`, `21`, `27`, `28`, `29`, `30`, `31`, `32`.
+* `addke1` - ADDKE1 group. Valid values: `0`, `1080`, `1081`, `1082`.
+* `addke2` - ADDKE2 group. Valid values: `0`, `1080`, `1081`, `1082`.
+* `addke3` - ADDKE3 group. Valid values: `0`, `1080`, `1081`, `1082`.
+* `addke4` - ADDKE4 group. Valid values: `0`, `1080`, `1081`, `1082`.
+* `addke5` - ADDKE5 group. Valid values: `0`, `1080`, `1081`, `1082`.
+* `addke6` - ADDKE6 group. Valid values: `0`, `1080`, `1081`, `1082`.
+* `addke7` - ADDKE7 group. Valid values: `0`, `1080`, `1081`, `1082`.
 * `suite_b` - Use Suite-B. Valid values: `disable`, `suite-b-gcm-128`, `suite-b-gcm-256`.
 * `eap` - Enable/disable IKEv2 EAP authentication. Valid values: `enable`, `disable`.
 * `eap_identity` - IKEv2 EAP peer identity type. Valid values: `use-id-payload`, `send-request`.
@@ -189,6 +196,7 @@ The following arguments are supported:
 * `authusrgrp` - Authentication user group.
 * `mesh_selector_type` - Add selectors containing subsets of the configuration depending on traffic. Valid values: `disable`, `subnet`, `host`.
 * `idle_timeout` - Enable/disable IPsec tunnel idle timeout. Valid values: `enable`, `disable`.
+* `shared_idle_timeout` - Enable/disable IPsec tunnel shared idle timeout. Valid values: `enable`, `disable`.
 * `idle_timeoutinterval` - IPsec tunnel idle timeout in minutes (5 - 43200).
 * `ha_sync_esp_seqno` - Enable/disable sequence number jump ahead for IPsec HA. Valid values: `enable`, `disable`.
 * `fgsp_sync` - Enable/disable IPsec syncing of tunnels for FGSP IPsec. Valid values: `enable`, `disable`.
@@ -199,7 +207,7 @@ The following arguments are supported:
 * `childless_ike` - Enable/disable childless IKEv2 initiation (RFC 6023). Valid values: `enable`, `disable`.
 * `azure_ad_autoconnect` - Enable/disable Azure AD Auto-Connect for FortiClient. Valid values: `enable`, `disable`.
 * `client_resume` - Enable/disable resumption of offline FortiClient sessions.  When a FortiClient enabled laptop is closed or enters sleep/hibernate mode, enabling this feature allows FortiClient to keep the tunnel during this period, and allows users to immediately resume using the IPsec tunnel when the device wakes up. Valid values: `enable`, `disable`.
-* `client_resume_interval` - Maximum time in seconds during which a VPN client may resume using a tunnel after a client PC has entered sleep mode or temporarily lost its network connection (120 - 172800, default = 1800).
+* `client_resume_interval` - Maximum time in seconds during which a VPN client may resume using a tunnel after a client PC has entered sleep mode or temporarily lost its network connection (120 - 172800). On FortiOS versions 7.4.4: default = 1800. On FortiOS versions >= 7.6.0: default = 7200.
 * `rekey` - Enable/disable phase1 rekey. Valid values: `enable`, `disable`.
 * `digital_signature_auth` - Enable/disable IKEv2 Digital Signature Authentication (RFC 7427). Valid values: `enable`, `disable`.
 * `signature_hash_alg` - Digital Signature Authentication hash algorithms. Valid values: `sha1`, `sha2-256`, `sha2-384`, `sha2-512`.
@@ -225,18 +233,21 @@ The following arguments are supported:
 * `link_cost` - VPN tunnel underlay link cost.
 * `kms` - Key Management Services server.
 * `exchange_fgt_device_id` - Enable/disable device identifier exchange with peer FortiGate units for use of VPN monitor data by FortiManager. Valid values: `enable`, `disable`.
+* `ipv6_auto_linklocal` - Enable/disable auto generation of IPv6 link-local address using last 8 bytes of mode-cfg assigned IPv6 address. Valid values: `enable`, `disable`.
 * `ems_sn_check` - Enable/disable verification of EMS serial number. Valid values: `enable`, `disable`.
 * `cert_trust_store` - CA certificate trust store. Valid values: `local`, `ems`.
 * `qkd` - Enable/disable use of Quantum Key Distribution (QKD) server. Valid values: `disable`, `allow`, `require`.
 * `qkd_profile` - Quantum Key Distribution (QKD) server profile.
-* `transport` - Set IKE transport protocol. Valid values: `udp`, `udp-fallback-tcp`, `tcp`.
+* `transport` - Set IKE transport protocol.
 * `fortinet_esp` - Enable/disable Fortinet ESP encapsulaton. Valid values: `enable`, `disable`.
+* `auto_transport_threshold` - Timeout in seconds before falling back to next transport protocol.
 * `fallback_tcp_threshold` - Timeout in seconds before falling back IKE/IPsec traffic to tcp.
-* `remote_gw_match` - Set type of IPv4 remote gateway address matching. Valid values: `any`, `ipmask`, `iprange`, `geography`.
+* `remote_gw_match` - Set type of IPv4 remote gateway address matching.
 * `remote_gw_subnet` - IPv4 address and subnet mask.
 * `remote_gw_start_ip` - First IPv4 address in the range.
 * `remote_gw_end_ip` - Last IPv4 address in the range.
 * `remote_gw_country` - IPv4 addresses associated to a specific country.
+* `remote_gw_ztna_tags` - IPv4 ZTNA posture tags. The structure of `remote_gw_ztna_tags` block is documented below.
 * `remote_gw6_match` - Set type of IPv6 remote gateway address matching. Valid values: `any`, `ipprefix`, `iprange`, `geography`.
 * `remote_gw6_subnet` - IPv6 address and prefix.
 * `remote_gw6_start_ip` - First IPv6 address in the range.
@@ -271,6 +282,10 @@ The `ipv6_exclude_range` block supports:
 The `backup_gateway` block supports:
 
 * `address` - Address of backup gateway.
+
+The `remote_gw_ztna_tags` block supports:
+
+* `name` - Address name.
 
 
 ## Attribute Reference

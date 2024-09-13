@@ -59,33 +59,27 @@ func resourceSwitchControllerQosQueuePolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"description": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"min_rate": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"max_rate": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"min_rate_percent": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"max_rate_percent": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"drop_policy": &schema.Schema{
 							Type:     schema.TypeString,
@@ -369,19 +363,19 @@ func flattenSwitchControllerQosQueuePolicyCosQueueDescription(v interface{}, d *
 }
 
 func flattenSwitchControllerQosQueuePolicyCosQueueMinRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerQosQueuePolicyCosQueueMaxRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerQosQueuePolicyCosQueueMinRatePercent(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerQosQueuePolicyCosQueueMaxRatePercent(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerQosQueuePolicyCosQueueDropPolicy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -393,7 +387,7 @@ func flattenSwitchControllerQosQueuePolicyCosQueueEcn(v interface{}, d *schema.R
 }
 
 func flattenSwitchControllerQosQueuePolicyCosQueueWeight(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectSwitchControllerQosQueuePolicy(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -477,31 +471,43 @@ func expandSwitchControllerQosQueuePolicyCosQueue(d *schema.ResourceData, v inte
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandSwitchControllerQosQueuePolicyCosQueueName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["description"], _ = expandSwitchControllerQosQueuePolicyCosQueueDescription(d, i["description"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["description"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "min_rate"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["min-rate"], _ = expandSwitchControllerQosQueuePolicyCosQueueMinRate(d, i["min_rate"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["min-rate"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "max_rate"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["max-rate"], _ = expandSwitchControllerQosQueuePolicyCosQueueMaxRate(d, i["max_rate"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["max-rate"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "min_rate_percent"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["min-rate-percent"], _ = expandSwitchControllerQosQueuePolicyCosQueueMinRatePercent(d, i["min_rate_percent"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["min-rate-percent"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "max_rate_percent"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["max-rate-percent"], _ = expandSwitchControllerQosQueuePolicyCosQueueMaxRatePercent(d, i["max_rate_percent"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["max-rate-percent"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "drop_policy"

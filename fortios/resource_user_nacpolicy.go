@@ -47,7 +47,6 @@ func resourceUserNacPolicy() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"category": &schema.Schema{
 				Type:     schema.TypeString,
@@ -68,84 +67,70 @@ func resourceUserNacPolicy() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 120),
 				Optional:     true,
-				Computed:     true,
 			},
 			"mac": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"hw_vendor": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"type": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"family": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 31),
 				Optional:     true,
-				Computed:     true,
 			},
 			"os": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 31),
 				Optional:     true,
-				Computed:     true,
 			},
 			"hw_version": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"sw_version": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"host": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 64),
 				Optional:     true,
-				Computed:     true,
 			},
 			"user": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 64),
 				Optional:     true,
-				Computed:     true,
 			},
 			"src": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"user_group": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ems_tag": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
-				Computed:     true,
 			},
 			"fortivoice_tag": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
-				Computed:     true,
 			},
 			"severity": &schema.Schema{
 				Type:     schema.TypeSet,
@@ -156,7 +141,6 @@ func resourceUserNacPolicy() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -165,7 +149,6 @@ func resourceUserNacPolicy() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"switch_group": &schema.Schema{
 				Type:     schema.TypeSet,
@@ -176,7 +159,6 @@ func resourceUserNacPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -190,7 +172,6 @@ func resourceUserNacPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -204,25 +185,21 @@ func resourceUserNacPolicy() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"switch_mac_policy": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"firewall_address": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ssid_policy": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
@@ -410,7 +387,7 @@ func flattenUserNacPolicyMatchType(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenUserNacPolicyMatchPeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserNacPolicyMac(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -504,7 +481,7 @@ func flattenUserNacPolicySeverity(v interface{}, d *schema.ResourceData, pre str
 }
 
 func flattenUserNacPolicySeveritySeverityNum(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserNacPolicySwitchFortilink(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1034,6 +1011,8 @@ func getObjectUserNacPolicy(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["description"] = t
 		}
+	} else if d.HasChange("description") {
+		obj["description"] = nil
 	}
 
 	if v, ok := d.GetOk("category"); ok {
@@ -1070,6 +1049,8 @@ func getObjectUserNacPolicy(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["match-period"] = t
 		}
+	} else if d.HasChange("match_period") {
+		obj["match-period"] = nil
 	}
 
 	if v, ok := d.GetOk("mac"); ok {
@@ -1079,6 +1060,8 @@ func getObjectUserNacPolicy(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["mac"] = t
 		}
+	} else if d.HasChange("mac") {
+		obj["mac"] = nil
 	}
 
 	if v, ok := d.GetOk("hw_vendor"); ok {
@@ -1088,6 +1071,8 @@ func getObjectUserNacPolicy(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["hw-vendor"] = t
 		}
+	} else if d.HasChange("hw_vendor") {
+		obj["hw-vendor"] = nil
 	}
 
 	if v, ok := d.GetOk("type"); ok {
@@ -1097,6 +1082,8 @@ func getObjectUserNacPolicy(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["type"] = t
 		}
+	} else if d.HasChange("type") {
+		obj["type"] = nil
 	}
 
 	if v, ok := d.GetOk("family"); ok {
@@ -1106,6 +1093,8 @@ func getObjectUserNacPolicy(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["family"] = t
 		}
+	} else if d.HasChange("family") {
+		obj["family"] = nil
 	}
 
 	if v, ok := d.GetOk("os"); ok {
@@ -1115,6 +1104,8 @@ func getObjectUserNacPolicy(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["os"] = t
 		}
+	} else if d.HasChange("os") {
+		obj["os"] = nil
 	}
 
 	if v, ok := d.GetOk("hw_version"); ok {
@@ -1124,6 +1115,8 @@ func getObjectUserNacPolicy(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["hw-version"] = t
 		}
+	} else if d.HasChange("hw_version") {
+		obj["hw-version"] = nil
 	}
 
 	if v, ok := d.GetOk("sw_version"); ok {
@@ -1133,6 +1126,8 @@ func getObjectUserNacPolicy(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["sw-version"] = t
 		}
+	} else if d.HasChange("sw_version") {
+		obj["sw-version"] = nil
 	}
 
 	if v, ok := d.GetOk("host"); ok {
@@ -1142,6 +1137,8 @@ func getObjectUserNacPolicy(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["host"] = t
 		}
+	} else if d.HasChange("host") {
+		obj["host"] = nil
 	}
 
 	if v, ok := d.GetOk("user"); ok {
@@ -1151,6 +1148,8 @@ func getObjectUserNacPolicy(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["user"] = t
 		}
+	} else if d.HasChange("user") {
+		obj["user"] = nil
 	}
 
 	if v, ok := d.GetOk("src"); ok {
@@ -1160,6 +1159,8 @@ func getObjectUserNacPolicy(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["src"] = t
 		}
+	} else if d.HasChange("src") {
+		obj["src"] = nil
 	}
 
 	if v, ok := d.GetOk("user_group"); ok {
@@ -1169,6 +1170,8 @@ func getObjectUserNacPolicy(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["user-group"] = t
 		}
+	} else if d.HasChange("user_group") {
+		obj["user-group"] = nil
 	}
 
 	if v, ok := d.GetOk("ems_tag"); ok {
@@ -1178,6 +1181,8 @@ func getObjectUserNacPolicy(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["ems-tag"] = t
 		}
+	} else if d.HasChange("ems_tag") {
+		obj["ems-tag"] = nil
 	}
 
 	if v, ok := d.GetOk("fortivoice_tag"); ok {
@@ -1187,6 +1192,8 @@ func getObjectUserNacPolicy(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["fortivoice-tag"] = t
 		}
+	} else if d.HasChange("fortivoice_tag") {
+		obj["fortivoice-tag"] = nil
 	}
 
 	if v, ok := d.GetOk("severity"); ok || d.HasChange("severity") {
@@ -1205,6 +1212,8 @@ func getObjectUserNacPolicy(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["switch-fortilink"] = t
 		}
+	} else if d.HasChange("switch_fortilink") {
+		obj["switch-fortilink"] = nil
 	}
 
 	if v, ok := d.GetOk("switch_group"); ok || d.HasChange("switch_group") {
@@ -1241,6 +1250,8 @@ func getObjectUserNacPolicy(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["switch-port-policy"] = t
 		}
+	} else if d.HasChange("switch_port_policy") {
+		obj["switch-port-policy"] = nil
 	}
 
 	if v, ok := d.GetOk("switch_mac_policy"); ok {
@@ -1250,6 +1261,8 @@ func getObjectUserNacPolicy(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["switch-mac-policy"] = t
 		}
+	} else if d.HasChange("switch_mac_policy") {
+		obj["switch-mac-policy"] = nil
 	}
 
 	if v, ok := d.GetOk("firewall_address"); ok {
@@ -1259,6 +1272,8 @@ func getObjectUserNacPolicy(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["firewall-address"] = t
 		}
+	} else if d.HasChange("firewall_address") {
+		obj["firewall-address"] = nil
 	}
 
 	if v, ok := d.GetOk("ssid_policy"); ok {
@@ -1268,6 +1283,8 @@ func getObjectUserNacPolicy(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["ssid-policy"] = t
 		}
+	} else if d.HasChange("ssid_policy") {
+		obj["ssid-policy"] = nil
 	}
 
 	return &obj, nil

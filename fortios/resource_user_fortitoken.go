@@ -52,7 +52,6 @@ func resourceUserFortitoken() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 208),
 				Optional:     true,
-				Computed:     true,
 			},
 			"comments": &schema.Schema{
 				Type:         schema.TypeString,
@@ -63,30 +62,25 @@ func resourceUserFortitoken() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 31),
 				Optional:     true,
-				Computed:     true,
 			},
 			"activation_code": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 32),
 				Optional:     true,
-				Computed:     true,
 			},
 			"activation_expire": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"reg_id": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 256),
 				Optional:     true,
-				Computed:     true,
 			},
 			"os_ver": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -268,7 +262,7 @@ func flattenUserFortitokenActivationCode(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenUserFortitokenActivationExpire(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserFortitokenRegId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -409,6 +403,8 @@ func getObjectUserFortitoken(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["seed"] = t
 		}
+	} else if d.HasChange("seed") {
+		obj["seed"] = nil
 	}
 
 	if v, ok := d.GetOk("comments"); ok {
@@ -418,6 +414,8 @@ func getObjectUserFortitoken(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["comments"] = t
 		}
+	} else if d.HasChange("comments") {
+		obj["comments"] = nil
 	}
 
 	if v, ok := d.GetOk("license"); ok {
@@ -427,6 +425,8 @@ func getObjectUserFortitoken(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["license"] = t
 		}
+	} else if d.HasChange("license") {
+		obj["license"] = nil
 	}
 
 	if v, ok := d.GetOk("activation_code"); ok {
@@ -436,6 +436,8 @@ func getObjectUserFortitoken(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["activation-code"] = t
 		}
+	} else if d.HasChange("activation_code") {
+		obj["activation-code"] = nil
 	}
 
 	if v, ok := d.GetOkExists("activation_expire"); ok {
@@ -445,6 +447,8 @@ func getObjectUserFortitoken(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["activation-expire"] = t
 		}
+	} else if d.HasChange("activation_expire") {
+		obj["activation-expire"] = nil
 	}
 
 	if v, ok := d.GetOk("reg_id"); ok {
@@ -454,6 +458,8 @@ func getObjectUserFortitoken(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["reg-id"] = t
 		}
+	} else if d.HasChange("reg_id") {
+		obj["reg-id"] = nil
 	}
 
 	if v, ok := d.GetOk("os_ver"); ok {
@@ -463,6 +469,8 @@ func getObjectUserFortitoken(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["os-ver"] = t
 		}
+	} else if d.HasChange("os_ver") {
+		obj["os-ver"] = nil
 	}
 
 	return &obj, nil

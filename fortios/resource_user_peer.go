@@ -52,19 +52,16 @@ func resourceUserPeer() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
-				Computed:     true,
 			},
 			"subject": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"cn": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"cn_type": &schema.Schema{
 				Type:     schema.TypeString,
@@ -80,30 +77,27 @@ func resourceUserPeer() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"mfa_username": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"mfa_password": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"ldap_server": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ldap_username": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ldap_password": &schema.Schema{
 				Type:         schema.TypeString,
@@ -120,7 +114,6 @@ func resourceUserPeer() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"two_factor": &schema.Schema{
 				Type:     schema.TypeString,
@@ -324,19 +317,11 @@ func flattenUserPeerMfaUsername(v interface{}, d *schema.ResourceData, pre strin
 	return v
 }
 
-func flattenUserPeerMfaPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
 func flattenUserPeerLdapServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
 func flattenUserPeerLdapUsername(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenUserPeerLdapPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -349,10 +334,6 @@ func flattenUserPeerOcspOverrideServer(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenUserPeerTwoFactor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenUserPeerPasswd(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -410,12 +391,6 @@ func refreshObjectUserPeer(d *schema.ResourceData, o map[string]interface{}, sv 
 	if err = d.Set("mfa_username", flattenUserPeerMfaUsername(o["mfa-username"], d, "mfa_username", sv)); err != nil {
 		if !fortiAPIPatch(o["mfa-username"]) {
 			return fmt.Errorf("Error reading mfa_username: %v", err)
-		}
-	}
-
-	if err = d.Set("mfa_password", flattenUserPeerMfaPassword(o["mfa-password"], d, "mfa_password", sv)); err != nil {
-		if !fortiAPIPatch(o["mfa-password"]) {
-			return fmt.Errorf("Error reading mfa_password: %v", err)
 		}
 	}
 
@@ -554,6 +529,8 @@ func getObjectUserPeer(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["ca"] = t
 		}
+	} else if d.HasChange("ca") {
+		obj["ca"] = nil
 	}
 
 	if v, ok := d.GetOk("subject"); ok {
@@ -563,6 +540,8 @@ func getObjectUserPeer(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["subject"] = t
 		}
+	} else if d.HasChange("subject") {
+		obj["subject"] = nil
 	}
 
 	if v, ok := d.GetOk("cn"); ok {
@@ -572,6 +551,8 @@ func getObjectUserPeer(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["cn"] = t
 		}
+	} else if d.HasChange("cn") {
+		obj["cn"] = nil
 	}
 
 	if v, ok := d.GetOk("cn_type"); ok {
@@ -599,6 +580,8 @@ func getObjectUserPeer(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["mfa-server"] = t
 		}
+	} else if d.HasChange("mfa_server") {
+		obj["mfa-server"] = nil
 	}
 
 	if v, ok := d.GetOk("mfa_username"); ok {
@@ -608,6 +591,8 @@ func getObjectUserPeer(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["mfa-username"] = t
 		}
+	} else if d.HasChange("mfa_username") {
+		obj["mfa-username"] = nil
 	}
 
 	if v, ok := d.GetOk("mfa_password"); ok {
@@ -617,6 +602,8 @@ func getObjectUserPeer(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["mfa-password"] = t
 		}
+	} else if d.HasChange("mfa_password") {
+		obj["mfa-password"] = nil
 	}
 
 	if v, ok := d.GetOk("ldap_server"); ok {
@@ -626,6 +613,8 @@ func getObjectUserPeer(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["ldap-server"] = t
 		}
+	} else if d.HasChange("ldap_server") {
+		obj["ldap-server"] = nil
 	}
 
 	if v, ok := d.GetOk("ldap_username"); ok {
@@ -635,6 +624,8 @@ func getObjectUserPeer(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["ldap-username"] = t
 		}
+	} else if d.HasChange("ldap_username") {
+		obj["ldap-username"] = nil
 	}
 
 	if v, ok := d.GetOk("ldap_password"); ok {
@@ -644,6 +635,8 @@ func getObjectUserPeer(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["ldap-password"] = t
 		}
+	} else if d.HasChange("ldap_password") {
+		obj["ldap-password"] = nil
 	}
 
 	if v, ok := d.GetOk("ldap_mode"); ok {
@@ -662,6 +655,8 @@ func getObjectUserPeer(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["ocsp-override-server"] = t
 		}
+	} else if d.HasChange("ocsp_override_server") {
+		obj["ocsp-override-server"] = nil
 	}
 
 	if v, ok := d.GetOk("two_factor"); ok {
@@ -680,6 +675,8 @@ func getObjectUserPeer(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["passwd"] = t
 		}
+	} else if d.HasChange("passwd") {
+		obj["passwd"] = nil
 	}
 
 	return &obj, nil

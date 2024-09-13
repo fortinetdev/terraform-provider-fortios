@@ -40,7 +40,6 @@ func resourceIcapProfile() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
@@ -67,7 +66,6 @@ func resourceIcapProfile() *schema.Resource {
 			"file_transfer": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"streaming_content_bypass": &schema.Schema{
 				Type:     schema.TypeString,
@@ -94,25 +92,21 @@ func resourceIcapProfile() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4096),
 				Optional:     true,
-				Computed:     true,
 			},
 			"request_server": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"response_server": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"file_transfer_server": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"request_failure": &schema.Schema{
 				Type:     schema.TypeString,
@@ -133,19 +127,16 @@ func resourceIcapProfile() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
-				Computed:     true,
 			},
 			"response_path": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
-				Computed:     true,
 			},
 			"file_transfer_path": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
-				Computed:     true,
 			},
 			"methods": &schema.Schema{
 				Type:     schema.TypeString,
@@ -175,7 +166,6 @@ func resourceIcapProfile() *schema.Resource {
 			"extension_feature": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"scan_progress_interval": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -203,13 +193,11 @@ func resourceIcapProfile() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 						"content": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"base64_encoding": &schema.Schema{
 							Type:     schema.TypeString,
@@ -228,13 +216,11 @@ func resourceIcapProfile() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"host": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 						"header_group": &schema.Schema{
 							Type:     schema.TypeList,
@@ -244,19 +230,16 @@ func resourceIcapProfile() *schema.Resource {
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 									"header_name": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 									"header": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 255),
 										Optional:     true,
-										Computed:     true,
 									},
 									"case_sensitivity": &schema.Schema{
 										Type:     schema.TypeString,
@@ -280,7 +263,6 @@ func resourceIcapProfile() *schema.Resource {
 										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(100, 599),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -482,7 +464,7 @@ func flattenIcapProfileStreamingContentBypass(v interface{}, d *schema.ResourceD
 }
 
 func flattenIcapProfile204SizeLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenIcapProfile204Response(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -494,7 +476,7 @@ func flattenIcapProfilePreview(v interface{}, d *schema.ResourceData, pre string
 }
 
 func flattenIcapProfilePreviewDataLength(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenIcapProfileRequestServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -558,11 +540,11 @@ func flattenIcapProfileExtensionFeature(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenIcapProfileScanProgressInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenIcapProfileTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenIcapProfileIcapHeaders(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -619,7 +601,7 @@ func flattenIcapProfileIcapHeaders(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenIcapProfileIcapHeadersId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenIcapProfileIcapHeadersName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -754,7 +736,7 @@ func flattenIcapProfileRespmodForwardRulesHeaderGroup(v interface{}, d *schema.R
 }
 
 func flattenIcapProfileRespmodForwardRulesHeaderGroupId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenIcapProfileRespmodForwardRulesHeaderGroupHeaderName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -812,7 +794,7 @@ func flattenIcapProfileRespmodForwardRulesHttpRespStatusCode(v interface{}, d *s
 }
 
 func flattenIcapProfileRespmodForwardRulesHttpRespStatusCodeCode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectIcapProfile(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -1167,11 +1149,15 @@ func expandIcapProfileIcapHeaders(d *schema.ResourceData, v interface{}, pre str
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandIcapProfileIcapHeadersName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "content"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["content"], _ = expandIcapProfileIcapHeadersContent(d, i["content"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["content"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "base64_encoding"
@@ -1220,17 +1206,21 @@ func expandIcapProfileRespmodForwardRules(d *schema.ResourceData, v interface{},
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandIcapProfileRespmodForwardRulesName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "host"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["host"], _ = expandIcapProfileRespmodForwardRulesHost(d, i["host"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["host"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "header_group"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["header-group"], _ = expandIcapProfileRespmodForwardRulesHeaderGroup(d, i["header_group"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["header-group"] = make([]string, 0)
 		}
 
@@ -1240,9 +1230,9 @@ func expandIcapProfileRespmodForwardRules(d *schema.ResourceData, v interface{},
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_resp_status_code"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["http-resp-status-code"], _ = expandIcapProfileRespmodForwardRulesHttpRespStatusCode(d, i["http_resp_status_code"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["http-resp-status-code"] = make([]string, 0)
 		}
 
@@ -1279,16 +1269,22 @@ func expandIcapProfileRespmodForwardRulesHeaderGroup(d *schema.ResourceData, v i
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandIcapProfileRespmodForwardRulesHeaderGroupId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "header_name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["header-name"], _ = expandIcapProfileRespmodForwardRulesHeaderGroupHeaderName(d, i["header_name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["header-name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["header"], _ = expandIcapProfileRespmodForwardRulesHeaderGroupHeader(d, i["header"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["header"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "case_sensitivity"
@@ -1362,6 +1358,8 @@ func getObjectIcapProfile(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["replacemsg-group"] = t
 		}
+	} else if d.HasChange("replacemsg_group") {
+		obj["replacemsg-group"] = nil
 	}
 
 	if v, ok := d.GetOk("name"); ok {
@@ -1380,6 +1378,8 @@ func getObjectIcapProfile(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("request"); ok {
@@ -1407,6 +1407,8 @@ func getObjectIcapProfile(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["file-transfer"] = t
 		}
+	} else if d.HasChange("file_transfer") {
+		obj["file-transfer"] = nil
 	}
 
 	if v, ok := d.GetOk("streaming_content_bypass"); ok {
@@ -1452,6 +1454,8 @@ func getObjectIcapProfile(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["preview-data-length"] = t
 		}
+	} else if d.HasChange("preview_data_length") {
+		obj["preview-data-length"] = nil
 	}
 
 	if v, ok := d.GetOk("request_server"); ok {
@@ -1461,6 +1465,8 @@ func getObjectIcapProfile(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["request-server"] = t
 		}
+	} else if d.HasChange("request_server") {
+		obj["request-server"] = nil
 	}
 
 	if v, ok := d.GetOk("response_server"); ok {
@@ -1470,6 +1476,8 @@ func getObjectIcapProfile(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["response-server"] = t
 		}
+	} else if d.HasChange("response_server") {
+		obj["response-server"] = nil
 	}
 
 	if v, ok := d.GetOk("file_transfer_server"); ok {
@@ -1479,6 +1487,8 @@ func getObjectIcapProfile(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["file-transfer-server"] = t
 		}
+	} else if d.HasChange("file_transfer_server") {
+		obj["file-transfer-server"] = nil
 	}
 
 	if v, ok := d.GetOk("request_failure"); ok {
@@ -1515,6 +1525,8 @@ func getObjectIcapProfile(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["request-path"] = t
 		}
+	} else if d.HasChange("request_path") {
+		obj["request-path"] = nil
 	}
 
 	if v, ok := d.GetOk("response_path"); ok {
@@ -1524,6 +1536,8 @@ func getObjectIcapProfile(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["response-path"] = t
 		}
+	} else if d.HasChange("response_path") {
+		obj["response-path"] = nil
 	}
 
 	if v, ok := d.GetOk("file_transfer_path"); ok {
@@ -1533,6 +1547,8 @@ func getObjectIcapProfile(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["file-transfer-path"] = t
 		}
+	} else if d.HasChange("file_transfer_path") {
+		obj["file-transfer-path"] = nil
 	}
 
 	if v, ok := d.GetOk("methods"); ok {
@@ -1587,6 +1603,8 @@ func getObjectIcapProfile(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["extension-feature"] = t
 		}
+	} else if d.HasChange("extension_feature") {
+		obj["extension-feature"] = nil
 	}
 
 	if v, ok := d.GetOk("scan_progress_interval"); ok {

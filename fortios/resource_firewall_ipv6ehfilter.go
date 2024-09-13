@@ -50,7 +50,6 @@ func resourceFirewallIpv6EhFilter() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"routing": &schema.Schema{
 				Type:     schema.TypeString,
@@ -61,7 +60,6 @@ func resourceFirewallIpv6EhFilter() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"fragment": &schema.Schema{
 				Type:     schema.TypeString,
@@ -205,7 +203,7 @@ func flattenFirewallIpv6EhFilterDestOpt(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenFirewallIpv6EhFilterHdoptType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallIpv6EhFilterRouting(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -213,7 +211,7 @@ func flattenFirewallIpv6EhFilterRouting(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenFirewallIpv6EhFilterRoutingType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallIpv6EhFilterFragment(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -360,6 +358,8 @@ func getObjectFirewallIpv6EhFilter(d *schema.ResourceData, setArgNil bool, sv st
 				obj["hdopt-type"] = t
 			}
 		}
+	} else if d.HasChange("hdopt_type") {
+		obj["hdopt-type"] = nil
 	}
 
 	if v, ok := d.GetOk("routing"); ok {
@@ -386,6 +386,8 @@ func getObjectFirewallIpv6EhFilter(d *schema.ResourceData, setArgNil bool, sv st
 				obj["routing-type"] = t
 			}
 		}
+	} else if d.HasChange("routing_type") {
+		obj["routing-type"] = nil
 	}
 
 	if v, ok := d.GetOk("fragment"); ok {

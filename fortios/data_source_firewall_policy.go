@@ -688,6 +688,10 @@ func dataSourceFirewallPolicy() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"log_http_transaction": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"capture_packet": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -1157,6 +1161,10 @@ func dataSourceFirewallPolicy() *schema.Resource {
 				Computed: true,
 			},
 			"radius_mac_auth_bypass": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"radius_ip_auth_bypass": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -2659,6 +2667,10 @@ func dataSourceFlattenFirewallPolicyLogtrafficStart(v interface{}, d *schema.Res
 	return v
 }
 
+func dataSourceFlattenFirewallPolicyLogHttpTransaction(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallPolicyCapturePacket(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -3474,6 +3486,10 @@ func dataSourceFlattenFirewallPolicyRadiusMacAuthBypass(v interface{}, d *schema
 	return v
 }
 
+func dataSourceFlattenFirewallPolicyRadiusIpAuthBypass(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallPolicyDelayTcpNpuSession(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -4131,6 +4147,12 @@ func dataSourceRefreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]
 		}
 	}
 
+	if err = d.Set("log_http_transaction", dataSourceFlattenFirewallPolicyLogHttpTransaction(o["log-http-transaction"], d, "log_http_transaction")); err != nil {
+		if !fortiAPIPatch(o["log-http-transaction"]) {
+			return fmt.Errorf("Error reading log_http_transaction: %v", err)
+		}
+	}
+
 	if err = d.Set("capture_packet", dataSourceFlattenFirewallPolicyCapturePacket(o["capture-packet"], d, "capture_packet")); err != nil {
 		if !fortiAPIPatch(o["capture-packet"]) {
 			return fmt.Errorf("Error reading capture_packet: %v", err)
@@ -4668,6 +4690,12 @@ func dataSourceRefreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]
 	if err = d.Set("radius_mac_auth_bypass", dataSourceFlattenFirewallPolicyRadiusMacAuthBypass(o["radius-mac-auth-bypass"], d, "radius_mac_auth_bypass")); err != nil {
 		if !fortiAPIPatch(o["radius-mac-auth-bypass"]) {
 			return fmt.Errorf("Error reading radius_mac_auth_bypass: %v", err)
+		}
+	}
+
+	if err = d.Set("radius_ip_auth_bypass", dataSourceFlattenFirewallPolicyRadiusIpAuthBypass(o["radius-ip-auth-bypass"], d, "radius_ip_auth_bypass")); err != nil {
+		if !fortiAPIPatch(o["radius-ip-auth-bypass"]) {
+			return fmt.Errorf("Error reading radius_ip_auth_bypass: %v", err)
 		}
 	}
 

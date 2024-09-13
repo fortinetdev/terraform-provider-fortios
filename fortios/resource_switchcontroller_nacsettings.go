@@ -58,7 +58,6 @@ func resourceSwitchControllerNacSettings() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"auto_auth": &schema.Schema{
 				Type:     schema.TypeString,
@@ -239,7 +238,7 @@ func flattenSwitchControllerNacSettingsMode(v interface{}, d *schema.ResourceDat
 }
 
 func flattenSwitchControllerNacSettingsInactiveTimer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerNacSettingsOnboardingVlan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -377,6 +376,8 @@ func getObjectSwitchControllerNacSettings(d *schema.ResourceData, sv string) (*m
 		} else if t != nil {
 			obj["onboarding-vlan"] = t
 		}
+	} else if d.HasChange("onboarding_vlan") {
+		obj["onboarding-vlan"] = nil
 	}
 
 	if v, ok := d.GetOk("auto_auth"); ok {

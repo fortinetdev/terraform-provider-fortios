@@ -213,7 +213,7 @@ func resourceRouterospfNetworkRead(d *schema.ResourceData, m interface{}) error 
 }
 
 func flattenRouterospfNetworkId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterospfNetworkPrefix(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -324,6 +324,8 @@ func getObjectRouterospfNetwork(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["comments"] = t
 		}
+	} else if d.HasChange("comments") {
+		obj["comments"] = nil
 	}
 
 	return &obj, nil

@@ -47,19 +47,16 @@ func resourceUserExchange() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"domain_name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
-				Computed:     true,
 			},
 			"username": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 64),
 				Optional:     true,
-				Computed:     true,
 			},
 			"password": &schema.Schema{
 				Type:         schema.TypeString,
@@ -111,7 +108,6 @@ func resourceUserExchange() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -294,10 +290,6 @@ func flattenUserExchangeDomainName(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenUserExchangeUsername(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenUserExchangePassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -566,6 +558,8 @@ func getObjectUserExchange(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["server-name"] = t
 		}
+	} else if d.HasChange("server_name") {
+		obj["server-name"] = nil
 	}
 
 	if v, ok := d.GetOk("domain_name"); ok {
@@ -575,6 +569,8 @@ func getObjectUserExchange(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["domain-name"] = t
 		}
+	} else if d.HasChange("domain_name") {
+		obj["domain-name"] = nil
 	}
 
 	if v, ok := d.GetOk("username"); ok {
@@ -584,6 +580,8 @@ func getObjectUserExchange(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["username"] = t
 		}
+	} else if d.HasChange("username") {
+		obj["username"] = nil
 	}
 
 	if v, ok := d.GetOk("password"); ok {
@@ -593,6 +591,8 @@ func getObjectUserExchange(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["password"] = t
 		}
+	} else if d.HasChange("password") {
+		obj["password"] = nil
 	}
 
 	if v, ok := d.GetOk("ip"); ok {

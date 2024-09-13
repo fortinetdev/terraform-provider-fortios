@@ -39,7 +39,6 @@ func resourceFirewallIpTranslation() *schema.Resource {
 			"transid": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"type": &schema.Schema{
 				Type:     schema.TypeString,
@@ -214,7 +213,7 @@ func resourceFirewallIpTranslationRead(d *schema.ResourceData, m interface{}) er
 }
 
 func flattenFirewallIpTranslationTransid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallIpTranslationType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -305,6 +304,8 @@ func getObjectFirewallIpTranslation(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["transid"] = t
 		}
+	} else if d.HasChange("transid") {
+		obj["transid"] = nil
 	}
 
 	if v, ok := d.GetOk("type"); ok {

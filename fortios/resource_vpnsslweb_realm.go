@@ -47,7 +47,6 @@ func resourceVpnSslWebRealm() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"login_page": &schema.Schema{
 				Type:         schema.TypeString,
@@ -68,13 +67,11 @@ func resourceVpnSslWebRealm() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"radius_server": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"nas_ip": &schema.Schema{
 				Type:     schema.TypeString,
@@ -85,7 +82,6 @@ func resourceVpnSslWebRealm() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -247,7 +243,7 @@ func flattenVpnSslWebRealmUrlPath(v interface{}, d *schema.ResourceData, pre str
 }
 
 func flattenVpnSslWebRealmMaxConcurrentUser(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVpnSslWebRealmLoginPage(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -275,7 +271,7 @@ func flattenVpnSslWebRealmNasIp(v interface{}, d *schema.ResourceData, pre strin
 }
 
 func flattenVpnSslWebRealmRadiusPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectVpnSslWebRealm(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -399,6 +395,8 @@ func getObjectVpnSslWebRealm(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["max-concurrent-user"] = t
 		}
+	} else if d.HasChange("max_concurrent_user") {
+		obj["max-concurrent-user"] = nil
 	}
 
 	if v, ok := d.GetOk("login_page"); ok {
@@ -408,6 +406,8 @@ func getObjectVpnSslWebRealm(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["login-page"] = t
 		}
+	} else if d.HasChange("login_page") {
+		obj["login-page"] = nil
 	}
 
 	if v, ok := d.GetOk("virtual_host"); ok {
@@ -417,6 +417,8 @@ func getObjectVpnSslWebRealm(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["virtual-host"] = t
 		}
+	} else if d.HasChange("virtual_host") {
+		obj["virtual-host"] = nil
 	}
 
 	if v, ok := d.GetOk("virtual_host_only"); ok {
@@ -435,6 +437,8 @@ func getObjectVpnSslWebRealm(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["virtual-host-server-cert"] = t
 		}
+	} else if d.HasChange("virtual_host_server_cert") {
+		obj["virtual-host-server-cert"] = nil
 	}
 
 	if v, ok := d.GetOk("radius_server"); ok {
@@ -444,6 +448,8 @@ func getObjectVpnSslWebRealm(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["radius-server"] = t
 		}
+	} else if d.HasChange("radius_server") {
+		obj["radius-server"] = nil
 	}
 
 	if v, ok := d.GetOk("nas_ip"); ok {
@@ -462,6 +468,8 @@ func getObjectVpnSslWebRealm(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["radius-port"] = t
 		}
+	} else if d.HasChange("radius_port") {
+		obj["radius-port"] = nil
 	}
 
 	return &obj, nil

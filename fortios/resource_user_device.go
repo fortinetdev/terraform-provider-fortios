@@ -46,19 +46,16 @@ func resourceUserDevice() *schema.Resource {
 			"mac": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"user": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 64),
 				Optional:     true,
-				Computed:     true,
 			},
 			"master_device": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"comment": &schema.Schema{
 				Type:         schema.TypeString,
@@ -79,13 +76,11 @@ func resourceUserDevice() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"category": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"tags": &schema.Schema{
 							Type:     schema.TypeList,
@@ -96,7 +91,6 @@ func resourceUserDevice() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 64),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -107,12 +101,10 @@ func resourceUserDevice() *schema.Resource {
 			"type": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"category": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
@@ -532,17 +524,21 @@ func expandUserDeviceTagging(d *schema.ResourceData, v interface{}, pre string, 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandUserDeviceTaggingName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["category"], _ = expandUserDeviceTaggingCategory(d, i["category"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["category"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tags"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["tags"], _ = expandUserDeviceTaggingTags(d, i["tags"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["tags"] = make([]string, 0)
 		}
 
@@ -579,6 +575,8 @@ func expandUserDeviceTaggingTags(d *schema.ResourceData, v interface{}, pre stri
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandUserDeviceTaggingTagsName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		result = append(result, tmp)
@@ -620,6 +618,8 @@ func getObjectUserDevice(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["mac"] = t
 		}
+	} else if d.HasChange("mac") {
+		obj["mac"] = nil
 	}
 
 	if v, ok := d.GetOk("user"); ok {
@@ -629,6 +629,8 @@ func getObjectUserDevice(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["user"] = t
 		}
+	} else if d.HasChange("user") {
+		obj["user"] = nil
 	}
 
 	if v, ok := d.GetOk("master_device"); ok {
@@ -638,6 +640,8 @@ func getObjectUserDevice(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["master-device"] = t
 		}
+	} else if d.HasChange("master_device") {
+		obj["master-device"] = nil
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
@@ -647,6 +651,8 @@ func getObjectUserDevice(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("avatar"); ok {
@@ -656,6 +662,8 @@ func getObjectUserDevice(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["avatar"] = t
 		}
+	} else if d.HasChange("avatar") {
+		obj["avatar"] = nil
 	}
 
 	if v, ok := d.GetOk("tagging"); ok || d.HasChange("tagging") {
@@ -674,6 +682,8 @@ func getObjectUserDevice(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["type"] = t
 		}
+	} else if d.HasChange("type") {
+		obj["type"] = nil
 	}
 
 	if v, ok := d.GetOk("category"); ok {
@@ -683,6 +693,8 @@ func getObjectUserDevice(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["category"] = t
 		}
+	} else if d.HasChange("category") {
+		obj["category"] = nil
 	}
 
 	return &obj, nil

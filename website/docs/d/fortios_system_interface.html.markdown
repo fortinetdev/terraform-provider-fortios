@@ -72,6 +72,7 @@ The following attributes are exported:
 * `dhcp_renew_time` - DHCP renew time in seconds (300-604800), 0 means use the renew time provided by the server.
 * `ipunnumbered` - Unnumbered IP used for PPPoE interfaces for which no unique local address is provided.
 * `username` - Username of the PPPoE account, provided by your ISP.
+* `pppoe_egress_cos` - CoS in VLAN tag for outgoing PPPoE/PPP packets.
 * `pppoe_unnumbered_negotiate` - Enable/disable PPPoE unnumbered negotiation.
 * `password` - PPPoE account's password.
 * `idle_timeout` - PPPoE auto disconnect after idle timeout seconds, 0 means no timeout.
@@ -111,6 +112,7 @@ The following attributes are exported:
 * `ipmac` - Enable/disable IP/MAC binding.
 * `subst` - Enable to always send packets from this interface to a destination MAC address.
 * `macaddr` - Change the interface's MAC address.
+* `virtual_mac` - Change the interface's virtual MAC address.
 * `substitute_dst_mac` - Destination MAC address that all packets are sent to from this interface.
 * `speed` - Interface speed. The default setting and the options available depend on the interface hardware.
 * `status` - Bring the interface up or shut the interface down.
@@ -130,6 +132,9 @@ The following attributes are exported:
 * `ring_tx` - TX ring size.
 * `wccp` - Enable/disable WCCP on this interface. Used for encapsulated WCCP communication between WCCP clients and servers.
 * `netflow_sampler` - Enable/disable NetFlow on this interface and set the data that NetFlow collects (rx, tx, or both).
+* `netflow_sample_rate` - NetFlow sample rate.  Sample one packet every configured number of packets
+(1 - 65535, default = 1, which means standard NetFlow where all packets are sampled).
+* `netflow_sampler_id` - Netflow sampler ID.
 * `sflow_sampler` - Enable/disable sFlow on this interface.
 * `drop_overlapped_fragment` - Enable/disable drop overlapped fragment packets.
 * `drop_fragment` - Enable/disable drop fragment packets.
@@ -182,6 +187,7 @@ The following attributes are exported:
 * `security_mode` - Turn on captive portal authentication for this interface.
 * `captive_portal` - Enable/disable captive portal.
 * `security_mac_auth_bypass` - Enable/disable MAC authentication bypass.
+* `security_ip_auth_bypass` - Enable/disable IP authentication bypass.
 * `security_external_web` - URL of external authentication web server.
 * `security_external_logout` - URL of external authentication logout server.
 * `replacemsg_override_group` - Replacement message override group.
@@ -337,6 +343,7 @@ The `tags` block contains:
 The `ipv6` block contains:
 
 * `ip6_mode` - Addressing mode (static, DHCP, delegated).
+* `client_options` - DHCP6 client options. The structure of `client_options` block is documented below.
 * `nd_mode` - Neighbor discovery mode.
 * `nd_cert` - Neighbor discovery certificate.
 * `nd_security_level` - Neighbor discovery security level (0 - 7; 0 = least secure, default = 0).
@@ -386,6 +393,14 @@ The `ipv6` block contains:
 * `vrip6_link_local` - Link-local IPv6 address of virtual router.
 * `vrrp6` - IPv6 VRRP configuration. The structure of `vrrp6` block is documented below.
 
+The `client_options` block contains:
+
+* `id` - ID.
+* `code` - DHCPv6 option code.
+* `type` - DHCPv6 option type.
+* `value` - DHCPv6 option value (hexadecimal value must be even).
+* `ip6` - DHCP option IP6s.
+
 The `ip6_extra_addr` block contains:
 
 * `prefix` - IPv6 address prefix.
@@ -433,6 +448,7 @@ The `vrrp6` block contains:
 * `preempt` - Enable/disable preempt mode.
 * `accept_mode` - Enable/disable accept mode.
 * `vrdst6` - Monitor the route to this destination.
+* `vrdst_priority` - Priority of the virtual router when the virtual router destination becomes unreachable (0 - 254).
 * `ignore_default_route` - Enable/disable ignoring of default route when checking destination.
 * `status` - Enable/disable VRRP.
 

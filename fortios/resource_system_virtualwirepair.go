@@ -52,7 +52,6 @@ func resourceSystemVirtualWirePair() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -65,7 +64,6 @@ func resourceSystemVirtualWirePair() *schema.Resource {
 			"vlan_filter": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
@@ -415,6 +413,8 @@ func getObjectSystemVirtualWirePair(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["vlan-filter"] = t
 		}
+	} else if d.HasChange("vlan_filter") {
+		obj["vlan-filter"] = nil
 	}
 
 	return &obj, nil

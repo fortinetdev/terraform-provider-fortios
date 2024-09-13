@@ -66,19 +66,16 @@ func resourceSystemSdwan() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 10000000),
 				Optional:     true,
-				Computed:     true,
 			},
 			"app_perf_log_period": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 3600),
 				Optional:     true,
-				Computed:     true,
 			},
 			"neighbor_hold_boot_time": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 10000000),
 				Optional:     true,
-				Computed:     true,
 			},
 			"fail_detect": &schema.Schema{
 				Type:     schema.TypeString,
@@ -94,7 +91,6 @@ func resourceSystemSdwan() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -109,7 +105,6 @@ func resourceSystemSdwan() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"advpn_select": &schema.Schema{
 							Type:     schema.TypeString,
@@ -120,7 +115,6 @@ func resourceSystemSdwan() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"service_sla_tie_break": &schema.Schema{
 							Type:     schema.TypeString,
@@ -145,13 +139,11 @@ func resourceSystemSdwan() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 512),
 							Optional:     true,
-							Computed:     true,
 						},
 						"interface": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 						"zone": &schema.Schema{
 							Type:         schema.TypeString,
@@ -187,7 +179,6 @@ func resourceSystemSdwan() *schema.Resource {
 						"cost": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"weight": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -206,17 +197,25 @@ func resourceSystemSdwan() *schema.Resource {
 							Optional:     true,
 							Computed:     true,
 						},
+						"priority_in_sla": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(0, 65535),
+							Optional:     true,
+						},
+						"priority_out_sla": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(0, 65535),
+							Optional:     true,
+						},
 						"spillover_threshold": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 16776000),
 							Optional:     true,
-							Computed:     true,
 						},
 						"ingress_spillover_threshold": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 16776000),
 							Optional:     true,
-							Computed:     true,
 						},
 						"volume_ratio": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -233,7 +232,6 @@ func resourceSystemSdwan() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"comment": &schema.Schema{
 							Type:         schema.TypeString,
@@ -252,7 +250,6 @@ func resourceSystemSdwan() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"probe_packets": &schema.Schema{
 							Type:     schema.TypeString,
@@ -273,7 +270,6 @@ func resourceSystemSdwan() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 						"detect_mode": &schema.Schema{
 							Type:     schema.TypeString,
@@ -289,7 +285,6 @@ func resourceSystemSdwan() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 						"quality_measured_method": &schema.Schema{
 							Type:     schema.TypeString,
@@ -305,7 +300,6 @@ func resourceSystemSdwan() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
 							Optional:     true,
-							Computed:     true,
 						},
 						"password": &schema.Schema{
 							Type:         schema.TypeString,
@@ -334,7 +328,6 @@ func resourceSystemSdwan() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 254),
 							Optional:     true,
-							Computed:     true,
 						},
 						"http_get": &schema.Schema{
 							Type:         schema.TypeString,
@@ -352,7 +345,6 @@ func resourceSystemSdwan() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 1024),
 							Optional:     true,
-							Computed:     true,
 						},
 						"dns_request_domain": &schema.Schema{
 							Type:         schema.TypeString,
@@ -419,57 +411,47 @@ func resourceSystemSdwan() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 32),
 							Optional:     true,
-							Computed:     true,
 						},
 						"sla_fail_log_period": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 3600),
 							Optional:     true,
-							Computed:     true,
 						},
 						"sla_pass_log_period": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 3600),
 							Optional:     true,
-							Computed:     true,
 						},
 						"threshold_warning_packetloss": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 100),
 							Optional:     true,
-							Computed:     true,
 						},
 						"threshold_alert_packetloss": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 100),
 							Optional:     true,
-							Computed:     true,
 						},
 						"threshold_warning_latency": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"threshold_alert_latency": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"threshold_warning_jitter": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"threshold_alert_jitter": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"vrf": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 251),
 							Optional:     true,
-							Computed:     true,
 						},
 						"source": &schema.Schema{
 							Type:     schema.TypeString,
@@ -489,7 +471,6 @@ func resourceSystemSdwan() *schema.Resource {
 									"seq_num": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 								},
 							},
@@ -502,7 +483,6 @@ func resourceSystemSdwan() *schema.Resource {
 						"class_id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"sla": &schema.Schema{
 							Type:     schema.TypeList,
@@ -513,7 +493,6 @@ func resourceSystemSdwan() *schema.Resource {
 										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(1, 32),
 										Optional:     true,
-										Computed:     true,
 									},
 									"link_cost_factor": &schema.Schema{
 										Type:     schema.TypeString,
@@ -536,7 +515,6 @@ func resourceSystemSdwan() *schema.Resource {
 										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 100),
 										Optional:     true,
-										Computed:     true,
 									},
 									"mos_threshold": &schema.Schema{
 										Type:         schema.TypeString,
@@ -548,13 +526,307 @@ func resourceSystemSdwan() *schema.Resource {
 										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 65535),
 										Optional:     true,
-										Computed:     true,
 									},
 									"priority_out_sla": &schema.Schema{
 										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 65535),
 										Optional:     true,
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+			"health_check_fortiguard": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"target_name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 35),
+							Optional:     true,
+						},
+						"probe_packets": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"addr_mode": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"system_dns": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"server": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+						},
+						"detect_mode": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"protocol": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"port": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(0, 65535),
+							Optional:     true,
+						},
+						"quality_measured_method": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"security_mode": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"user": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 64),
+							Optional:     true,
+						},
+						"password": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 128),
+							Optional:     true,
+							Sensitive:    true,
+						},
+						"packet_size": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(0, 65535),
+							Optional:     true,
+							Computed:     true,
+						},
+						"ha_priority": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(1, 50),
+							Optional:     true,
+							Computed:     true,
+						},
+						"ftp_mode": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"ftp_file": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 254),
+							Optional:     true,
+						},
+						"http_get": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 1024),
+							Optional:     true,
+							Computed:     true,
+						},
+						"http_agent": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 1024),
+							Optional:     true,
+							Computed:     true,
+						},
+						"http_match": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 1024),
+							Optional:     true,
+						},
+						"dns_request_domain": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 255),
+							Optional:     true,
+							Computed:     true,
+						},
+						"dns_match_ip": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"interval": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(20, 3600000),
+							Optional:     true,
+							Computed:     true,
+						},
+						"probe_timeout": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(20, 3600000),
+							Optional:     true,
+							Computed:     true,
+						},
+						"failtime": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(1, 3600),
+							Optional:     true,
+							Computed:     true,
+						},
+						"recoverytime": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(1, 3600),
+							Optional:     true,
+							Computed:     true,
+						},
+						"probe_count": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(5, 30),
+							Optional:     true,
+							Computed:     true,
+						},
+						"diffservcode": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"update_cascade_interface": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"update_static_route": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"embed_measured_health": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"sla_id_redistribute": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(0, 32),
+							Optional:     true,
+						},
+						"sla_fail_log_period": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(0, 3600),
+							Optional:     true,
+						},
+						"sla_pass_log_period": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(0, 3600),
+							Optional:     true,
+						},
+						"threshold_warning_packetloss": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(0, 100),
+							Optional:     true,
+						},
+						"threshold_alert_packetloss": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(0, 100),
+							Optional:     true,
+						},
+						"threshold_warning_latency": &schema.Schema{
+							Type:     schema.TypeInt,
+							Optional: true,
+						},
+						"threshold_alert_latency": &schema.Schema{
+							Type:     schema.TypeInt,
+							Optional: true,
+						},
+						"threshold_warning_jitter": &schema.Schema{
+							Type:     schema.TypeInt,
+							Optional: true,
+						},
+						"threshold_alert_jitter": &schema.Schema{
+							Type:     schema.TypeInt,
+							Optional: true,
+						},
+						"vrf": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(0, 251),
+							Optional:     true,
+						},
+						"source": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"source6": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"members": &schema.Schema{
+							Type:     schema.TypeSet,
+							Optional: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"seq_num": &schema.Schema{
+										Type:     schema.TypeInt,
+										Optional: true,
+									},
+								},
+							},
+						},
+						"mos_codec": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"class_id": &schema.Schema{
+							Type:     schema.TypeInt,
+							Optional: true,
+						},
+						"sla": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"id": &schema.Schema{
+										Type:         schema.TypeInt,
+										ValidateFunc: validation.IntBetween(1, 32),
+										Optional:     true,
+									},
+									"link_cost_factor": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
+									},
+									"latency_threshold": &schema.Schema{
+										Type:         schema.TypeInt,
+										ValidateFunc: validation.IntBetween(0, 10000000),
+										Optional:     true,
 										Computed:     true,
+									},
+									"jitter_threshold": &schema.Schema{
+										Type:         schema.TypeInt,
+										ValidateFunc: validation.IntBetween(0, 10000000),
+										Optional:     true,
+										Computed:     true,
+									},
+									"packetloss_threshold": &schema.Schema{
+										Type:         schema.TypeInt,
+										ValidateFunc: validation.IntBetween(0, 100),
+										Optional:     true,
+									},
+									"mos_threshold": &schema.Schema{
+										Type:         schema.TypeString,
+										ValidateFunc: validation.StringLenBetween(0, 35),
+										Optional:     true,
+										Computed:     true,
+									},
+									"priority_in_sla": &schema.Schema{
+										Type:         schema.TypeInt,
+										ValidateFunc: validation.IntBetween(0, 65535),
+										Optional:     true,
+									},
+									"priority_out_sla": &schema.Schema{
+										Type:         schema.TypeInt,
+										ValidateFunc: validation.IntBetween(0, 65535),
+										Optional:     true,
 									},
 								},
 							},
@@ -571,7 +843,6 @@ func resourceSystemSdwan() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 45),
 							Optional:     true,
-							Computed:     true,
 						},
 						"member_block": &schema.Schema{
 							Type:     schema.TypeSet,
@@ -581,7 +852,6 @@ func resourceSystemSdwan() *schema.Resource {
 									"seq_num": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 								},
 							},
@@ -595,12 +865,10 @@ func resourceSystemSdwan() *schema.Resource {
 						"member": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"service_id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"mode": &schema.Schema{
 							Type:     schema.TypeString,
@@ -616,12 +884,10 @@ func resourceSystemSdwan() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"sla_id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -635,13 +901,11 @@ func resourceSystemSdwan() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 4000),
 							Optional:     true,
-							Computed:     true,
 						},
 						"name": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"addr_mode": &schema.Schema{
 							Type:     schema.TypeString,
@@ -667,7 +931,6 @@ func resourceSystemSdwan() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -686,7 +949,6 @@ func resourceSystemSdwan() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -705,7 +967,6 @@ func resourceSystemSdwan() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"hash_mode": &schema.Schema{
 							Type:     schema.TypeString,
@@ -731,23 +992,19 @@ func resourceSystemSdwan() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"tos": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"tos_mask": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"protocol": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"start_port": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -776,7 +1033,6 @@ func resourceSystemSdwan() *schema.Resource {
 						"route_tag": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"dst": &schema.Schema{
 							Type:     schema.TypeSet,
@@ -787,7 +1043,6 @@ func resourceSystemSdwan() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -806,7 +1061,6 @@ func resourceSystemSdwan() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -820,7 +1074,6 @@ func resourceSystemSdwan() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -834,7 +1087,6 @@ func resourceSystemSdwan() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -853,7 +1105,6 @@ func resourceSystemSdwan() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -867,7 +1118,6 @@ func resourceSystemSdwan() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -886,7 +1136,6 @@ func resourceSystemSdwan() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -900,7 +1149,6 @@ func resourceSystemSdwan() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -914,7 +1162,6 @@ func resourceSystemSdwan() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -928,7 +1175,6 @@ func resourceSystemSdwan() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -941,7 +1187,6 @@ func resourceSystemSdwan() *schema.Resource {
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 								},
 							},
@@ -955,7 +1200,6 @@ func resourceSystemSdwan() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -968,7 +1212,6 @@ func resourceSystemSdwan() *schema.Resource {
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 								},
 							},
@@ -982,7 +1225,6 @@ func resourceSystemSdwan() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -996,25 +1238,21 @@ func resourceSystemSdwan() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 10000000),
 							Optional:     true,
-							Computed:     true,
 						},
 						"latency_weight": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 10000000),
 							Optional:     true,
-							Computed:     true,
 						},
 						"jitter_weight": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 10000000),
 							Optional:     true,
-							Computed:     true,
 						},
 						"bandwidth_weight": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 10000000),
 							Optional:     true,
-							Computed:     true,
 						},
 						"link_cost_threshold": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -1026,7 +1264,6 @@ func resourceSystemSdwan() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 10000000),
 							Optional:     true,
-							Computed:     true,
 						},
 						"sla_stickiness": &schema.Schema{
 							Type:     schema.TypeString,
@@ -1046,12 +1283,10 @@ func resourceSystemSdwan() *schema.Resource {
 						"dscp_forward_tag": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"dscp_reverse_tag": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"sla": &schema.Schema{
 							Type:     schema.TypeList,
@@ -1062,12 +1297,10 @@ func resourceSystemSdwan() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 35),
 										Optional:     true,
-										Computed:     true,
 									},
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 								},
 							},
@@ -1080,7 +1313,6 @@ func resourceSystemSdwan() *schema.Resource {
 									"seq_num": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 								},
 							},
@@ -1094,7 +1326,6 @@ func resourceSystemSdwan() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -1144,6 +1375,11 @@ func resourceSystemSdwan() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"comment": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 255),
+							Optional:     true,
+						},
 					},
 				},
 			},
@@ -1156,7 +1392,6 @@ func resourceSystemSdwan() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"service_id": &schema.Schema{
 							Type:     schema.TypeSet,
@@ -1166,7 +1401,6 @@ func resourceSystemSdwan() *schema.Resource {
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 								},
 							},
@@ -1180,7 +1414,6 @@ func resourceSystemSdwan() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -1194,7 +1427,6 @@ func resourceSystemSdwan() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -1208,7 +1440,6 @@ func resourceSystemSdwan() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -1222,7 +1453,6 @@ func resourceSystemSdwan() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -1236,7 +1466,6 @@ func resourceSystemSdwan() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -1250,7 +1479,6 @@ func resourceSystemSdwan() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -1264,7 +1492,6 @@ func resourceSystemSdwan() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -1428,7 +1655,7 @@ func flattenSystemSdwanSpeedtestBypassRouting(v interface{}, d *schema.ResourceD
 }
 
 func flattenSystemSdwanDuplicationMaxNum(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanNeighborHoldDown(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1436,15 +1663,15 @@ func flattenSystemSdwanNeighborHoldDown(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenSystemSdwanNeighborHoldDownTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanAppPerfLogPeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanNeighborHoldBootTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanFailDetect(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1568,7 +1795,7 @@ func flattenSystemSdwanZoneServiceSlaTieBreak(v interface{}, d *schema.ResourceD
 }
 
 func flattenSystemSdwanZoneMinimumSlaMeetMembers(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanMembers(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -1655,6 +1882,16 @@ func flattenSystemSdwanMembers(v interface{}, d *schema.ResourceData, pre string
 			tmp["priority6"] = flattenSystemSdwanMembersPriority6(cur_v, d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority_in_sla"
+		if cur_v, ok := i["priority-in-sla"]; ok {
+			tmp["priority_in_sla"] = flattenSystemSdwanMembersPriorityInSla(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority_out_sla"
+		if cur_v, ok := i["priority-out-sla"]; ok {
+			tmp["priority_out_sla"] = flattenSystemSdwanMembersPriorityOutSla(cur_v, d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "spillover_threshold"
 		if cur_v, ok := i["spillover-threshold"]; ok {
 			tmp["spillover_threshold"] = flattenSystemSdwanMembersSpilloverThreshold(cur_v, d, pre_append, sv)
@@ -1695,7 +1932,7 @@ func flattenSystemSdwanMembers(v interface{}, d *schema.ResourceData, pre string
 }
 
 func flattenSystemSdwanMembersSeqNum(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanMembersInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1727,31 +1964,39 @@ func flattenSystemSdwanMembersSource6(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenSystemSdwanMembersCost(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanMembersWeight(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanMembersPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanMembersPriority6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
+}
+
+func flattenSystemSdwanMembersPriorityInSla(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenSystemSdwanMembersPriorityOutSla(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanMembersSpilloverThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanMembersIngressSpilloverThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanMembersVolumeRatio(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanMembersStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1759,7 +2004,7 @@ func flattenSystemSdwanMembersStatus(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenSystemSdwanMembersTransportGroup(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanMembersComment(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1846,8 +2091,7 @@ func flattenSystemSdwanHealthCheck(v interface{}, d *schema.ResourceData, pre st
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "password"
-		if cur_v, ok := i["password"]; ok {
-			tmp["password"] = flattenSystemSdwanHealthCheckPassword(cur_v, d, pre_append, sv)
+		if _, ok := i["password"]; ok {
 			c := d.Get(pre_append).(string)
 			if c != "" {
 				tmp["password"] = c
@@ -2067,7 +2311,7 @@ func flattenSystemSdwanHealthCheckProtocol(v interface{}, d *schema.ResourceData
 }
 
 func flattenSystemSdwanHealthCheckPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanHealthCheckQualityMeasuredMethod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2082,16 +2326,12 @@ func flattenSystemSdwanHealthCheckUser(v interface{}, d *schema.ResourceData, pr
 	return v
 }
 
-func flattenSystemSdwanHealthCheckPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
 func flattenSystemSdwanHealthCheckPacketSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanHealthCheckHaPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanHealthCheckFtpMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2123,23 +2363,23 @@ func flattenSystemSdwanHealthCheckDnsMatchIp(v interface{}, d *schema.ResourceDa
 }
 
 func flattenSystemSdwanHealthCheckInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanHealthCheckProbeTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanHealthCheckFailtime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanHealthCheckRecoverytime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanHealthCheckProbeCount(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanHealthCheckDiffservcode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2159,43 +2399,43 @@ func flattenSystemSdwanHealthCheckEmbedMeasuredHealth(v interface{}, d *schema.R
 }
 
 func flattenSystemSdwanHealthCheckSlaIdRedistribute(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanHealthCheckSlaFailLogPeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanHealthCheckSlaPassLogPeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanHealthCheckThresholdWarningPacketloss(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanHealthCheckThresholdAlertPacketloss(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanHealthCheckThresholdWarningLatency(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanHealthCheckThresholdAlertLatency(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanHealthCheckThresholdWarningJitter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanHealthCheckThresholdAlertJitter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanHealthCheckVrf(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanHealthCheckSource(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2245,7 +2485,7 @@ func flattenSystemSdwanHealthCheckMembers(v interface{}, d *schema.ResourceData,
 }
 
 func flattenSystemSdwanHealthCheckMembersSeqNum(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanHealthCheckMosCodec(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2253,7 +2493,7 @@ func flattenSystemSdwanHealthCheckMosCodec(v interface{}, d *schema.ResourceData
 }
 
 func flattenSystemSdwanHealthCheckClassId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanHealthCheckSla(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -2330,7 +2570,7 @@ func flattenSystemSdwanHealthCheckSla(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenSystemSdwanHealthCheckSlaId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanHealthCheckSlaLinkCostFactor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2338,15 +2578,15 @@ func flattenSystemSdwanHealthCheckSlaLinkCostFactor(v interface{}, d *schema.Res
 }
 
 func flattenSystemSdwanHealthCheckSlaLatencyThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanHealthCheckSlaJitterThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanHealthCheckSlaPacketlossThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanHealthCheckSlaMosThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2354,11 +2594,596 @@ func flattenSystemSdwanHealthCheckSlaMosThreshold(v interface{}, d *schema.Resou
 }
 
 func flattenSystemSdwanHealthCheckSlaPriorityInSla(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanHealthCheckSlaPriorityOutSla(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenSystemSdwanHealthCheckFortiguard(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "target_name"
+		if cur_v, ok := i["target-name"]; ok {
+			tmp["target_name"] = flattenSystemSdwanHealthCheckFortiguardTargetName(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "probe_packets"
+		if cur_v, ok := i["probe-packets"]; ok {
+			tmp["probe_packets"] = flattenSystemSdwanHealthCheckFortiguardProbePackets(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr_mode"
+		if cur_v, ok := i["addr-mode"]; ok {
+			tmp["addr_mode"] = flattenSystemSdwanHealthCheckFortiguardAddrMode(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "system_dns"
+		if cur_v, ok := i["system-dns"]; ok {
+			tmp["system_dns"] = flattenSystemSdwanHealthCheckFortiguardSystemDns(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "server"
+		if cur_v, ok := i["server"]; ok {
+			tmp["server"] = flattenSystemSdwanHealthCheckFortiguardServer(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "detect_mode"
+		if cur_v, ok := i["detect-mode"]; ok {
+			tmp["detect_mode"] = flattenSystemSdwanHealthCheckFortiguardDetectMode(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
+		if cur_v, ok := i["protocol"]; ok {
+			tmp["protocol"] = flattenSystemSdwanHealthCheckFortiguardProtocol(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
+		if cur_v, ok := i["port"]; ok {
+			tmp["port"] = flattenSystemSdwanHealthCheckFortiguardPort(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "quality_measured_method"
+		if cur_v, ok := i["quality-measured-method"]; ok {
+			tmp["quality_measured_method"] = flattenSystemSdwanHealthCheckFortiguardQualityMeasuredMethod(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "security_mode"
+		if cur_v, ok := i["security-mode"]; ok {
+			tmp["security_mode"] = flattenSystemSdwanHealthCheckFortiguardSecurityMode(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "user"
+		if cur_v, ok := i["user"]; ok {
+			tmp["user"] = flattenSystemSdwanHealthCheckFortiguardUser(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "password"
+		if _, ok := i["password"]; ok {
+			c := d.Get(pre_append).(string)
+			if c != "" {
+				tmp["password"] = c
+			}
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "packet_size"
+		if cur_v, ok := i["packet-size"]; ok {
+			tmp["packet_size"] = flattenSystemSdwanHealthCheckFortiguardPacketSize(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "ha_priority"
+		if cur_v, ok := i["ha-priority"]; ok {
+			tmp["ha_priority"] = flattenSystemSdwanHealthCheckFortiguardHaPriority(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "ftp_mode"
+		if cur_v, ok := i["ftp-mode"]; ok {
+			tmp["ftp_mode"] = flattenSystemSdwanHealthCheckFortiguardFtpMode(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "ftp_file"
+		if cur_v, ok := i["ftp-file"]; ok {
+			tmp["ftp_file"] = flattenSystemSdwanHealthCheckFortiguardFtpFile(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_get"
+		if cur_v, ok := i["http-get"]; ok {
+			tmp["http_get"] = flattenSystemSdwanHealthCheckFortiguardHttpGet(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_agent"
+		if cur_v, ok := i["http-agent"]; ok {
+			tmp["http_agent"] = flattenSystemSdwanHealthCheckFortiguardHttpAgent(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_match"
+		if cur_v, ok := i["http-match"]; ok {
+			tmp["http_match"] = flattenSystemSdwanHealthCheckFortiguardHttpMatch(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "dns_request_domain"
+		if cur_v, ok := i["dns-request-domain"]; ok {
+			tmp["dns_request_domain"] = flattenSystemSdwanHealthCheckFortiguardDnsRequestDomain(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "dns_match_ip"
+		if cur_v, ok := i["dns-match-ip"]; ok {
+			tmp["dns_match_ip"] = flattenSystemSdwanHealthCheckFortiguardDnsMatchIp(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "interval"
+		if cur_v, ok := i["interval"]; ok {
+			tmp["interval"] = flattenSystemSdwanHealthCheckFortiguardInterval(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "probe_timeout"
+		if cur_v, ok := i["probe-timeout"]; ok {
+			tmp["probe_timeout"] = flattenSystemSdwanHealthCheckFortiguardProbeTimeout(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "failtime"
+		if cur_v, ok := i["failtime"]; ok {
+			tmp["failtime"] = flattenSystemSdwanHealthCheckFortiguardFailtime(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "recoverytime"
+		if cur_v, ok := i["recoverytime"]; ok {
+			tmp["recoverytime"] = flattenSystemSdwanHealthCheckFortiguardRecoverytime(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "probe_count"
+		if cur_v, ok := i["probe-count"]; ok {
+			tmp["probe_count"] = flattenSystemSdwanHealthCheckFortiguardProbeCount(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "diffservcode"
+		if cur_v, ok := i["diffservcode"]; ok {
+			tmp["diffservcode"] = flattenSystemSdwanHealthCheckFortiguardDiffservcode(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "update_cascade_interface"
+		if cur_v, ok := i["update-cascade-interface"]; ok {
+			tmp["update_cascade_interface"] = flattenSystemSdwanHealthCheckFortiguardUpdateCascadeInterface(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "update_static_route"
+		if cur_v, ok := i["update-static-route"]; ok {
+			tmp["update_static_route"] = flattenSystemSdwanHealthCheckFortiguardUpdateStaticRoute(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "embed_measured_health"
+		if cur_v, ok := i["embed-measured-health"]; ok {
+			tmp["embed_measured_health"] = flattenSystemSdwanHealthCheckFortiguardEmbedMeasuredHealth(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "sla_id_redistribute"
+		if cur_v, ok := i["sla-id-redistribute"]; ok {
+			tmp["sla_id_redistribute"] = flattenSystemSdwanHealthCheckFortiguardSlaIdRedistribute(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "sla_fail_log_period"
+		if cur_v, ok := i["sla-fail-log-period"]; ok {
+			tmp["sla_fail_log_period"] = flattenSystemSdwanHealthCheckFortiguardSlaFailLogPeriod(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "sla_pass_log_period"
+		if cur_v, ok := i["sla-pass-log-period"]; ok {
+			tmp["sla_pass_log_period"] = flattenSystemSdwanHealthCheckFortiguardSlaPassLogPeriod(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "threshold_warning_packetloss"
+		if cur_v, ok := i["threshold-warning-packetloss"]; ok {
+			tmp["threshold_warning_packetloss"] = flattenSystemSdwanHealthCheckFortiguardThresholdWarningPacketloss(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "threshold_alert_packetloss"
+		if cur_v, ok := i["threshold-alert-packetloss"]; ok {
+			tmp["threshold_alert_packetloss"] = flattenSystemSdwanHealthCheckFortiguardThresholdAlertPacketloss(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "threshold_warning_latency"
+		if cur_v, ok := i["threshold-warning-latency"]; ok {
+			tmp["threshold_warning_latency"] = flattenSystemSdwanHealthCheckFortiguardThresholdWarningLatency(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "threshold_alert_latency"
+		if cur_v, ok := i["threshold-alert-latency"]; ok {
+			tmp["threshold_alert_latency"] = flattenSystemSdwanHealthCheckFortiguardThresholdAlertLatency(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "threshold_warning_jitter"
+		if cur_v, ok := i["threshold-warning-jitter"]; ok {
+			tmp["threshold_warning_jitter"] = flattenSystemSdwanHealthCheckFortiguardThresholdWarningJitter(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "threshold_alert_jitter"
+		if cur_v, ok := i["threshold-alert-jitter"]; ok {
+			tmp["threshold_alert_jitter"] = flattenSystemSdwanHealthCheckFortiguardThresholdAlertJitter(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrf"
+		if cur_v, ok := i["vrf"]; ok {
+			tmp["vrf"] = flattenSystemSdwanHealthCheckFortiguardVrf(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "source"
+		if cur_v, ok := i["source"]; ok {
+			tmp["source"] = flattenSystemSdwanHealthCheckFortiguardSource(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "source6"
+		if cur_v, ok := i["source6"]; ok {
+			tmp["source6"] = flattenSystemSdwanHealthCheckFortiguardSource6(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "members"
+		if cur_v, ok := i["members"]; ok {
+			tmp["members"] = flattenSystemSdwanHealthCheckFortiguardMembers(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "mos_codec"
+		if cur_v, ok := i["mos-codec"]; ok {
+			tmp["mos_codec"] = flattenSystemSdwanHealthCheckFortiguardMosCodec(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "class_id"
+		if cur_v, ok := i["class-id"]; ok {
+			tmp["class_id"] = flattenSystemSdwanHealthCheckFortiguardClassId(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "sla"
+		if cur_v, ok := i["sla"]; ok {
+			tmp["sla"] = flattenSystemSdwanHealthCheckFortiguardSla(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "target_name", d)
+	return result
+}
+
+func flattenSystemSdwanHealthCheckFortiguardTargetName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
+}
+
+func flattenSystemSdwanHealthCheckFortiguardProbePackets(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdwanHealthCheckFortiguardAddrMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdwanHealthCheckFortiguardSystemDns(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdwanHealthCheckFortiguardServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdwanHealthCheckFortiguardDetectMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdwanHealthCheckFortiguardProtocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdwanHealthCheckFortiguardPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenSystemSdwanHealthCheckFortiguardQualityMeasuredMethod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdwanHealthCheckFortiguardSecurityMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdwanHealthCheckFortiguardUser(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdwanHealthCheckFortiguardPacketSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenSystemSdwanHealthCheckFortiguardHaPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenSystemSdwanHealthCheckFortiguardFtpMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdwanHealthCheckFortiguardFtpFile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdwanHealthCheckFortiguardHttpGet(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdwanHealthCheckFortiguardHttpAgent(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdwanHealthCheckFortiguardHttpMatch(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdwanHealthCheckFortiguardDnsRequestDomain(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdwanHealthCheckFortiguardDnsMatchIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdwanHealthCheckFortiguardInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenSystemSdwanHealthCheckFortiguardProbeTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenSystemSdwanHealthCheckFortiguardFailtime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenSystemSdwanHealthCheckFortiguardRecoverytime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenSystemSdwanHealthCheckFortiguardProbeCount(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenSystemSdwanHealthCheckFortiguardDiffservcode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdwanHealthCheckFortiguardUpdateCascadeInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdwanHealthCheckFortiguardUpdateStaticRoute(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdwanHealthCheckFortiguardEmbedMeasuredHealth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdwanHealthCheckFortiguardSlaIdRedistribute(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenSystemSdwanHealthCheckFortiguardSlaFailLogPeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenSystemSdwanHealthCheckFortiguardSlaPassLogPeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenSystemSdwanHealthCheckFortiguardThresholdWarningPacketloss(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenSystemSdwanHealthCheckFortiguardThresholdAlertPacketloss(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenSystemSdwanHealthCheckFortiguardThresholdWarningLatency(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenSystemSdwanHealthCheckFortiguardThresholdAlertLatency(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenSystemSdwanHealthCheckFortiguardThresholdWarningJitter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenSystemSdwanHealthCheckFortiguardThresholdAlertJitter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenSystemSdwanHealthCheckFortiguardVrf(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenSystemSdwanHealthCheckFortiguardSource(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdwanHealthCheckFortiguardSource6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdwanHealthCheckFortiguardMembers(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "seq_num"
+		if cur_v, ok := i["seq-num"]; ok {
+			tmp["seq_num"] = flattenSystemSdwanHealthCheckFortiguardMembersSeqNum(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "seq_num", d)
+	return result
+}
+
+func flattenSystemSdwanHealthCheckFortiguardMembersSeqNum(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenSystemSdwanHealthCheckFortiguardMosCodec(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdwanHealthCheckFortiguardClassId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenSystemSdwanHealthCheckFortiguardSla(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemSdwanHealthCheckFortiguardSlaId(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "link_cost_factor"
+		if cur_v, ok := i["link-cost-factor"]; ok {
+			tmp["link_cost_factor"] = flattenSystemSdwanHealthCheckFortiguardSlaLinkCostFactor(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "latency_threshold"
+		if cur_v, ok := i["latency-threshold"]; ok {
+			tmp["latency_threshold"] = flattenSystemSdwanHealthCheckFortiguardSlaLatencyThreshold(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "jitter_threshold"
+		if cur_v, ok := i["jitter-threshold"]; ok {
+			tmp["jitter_threshold"] = flattenSystemSdwanHealthCheckFortiguardSlaJitterThreshold(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "packetloss_threshold"
+		if cur_v, ok := i["packetloss-threshold"]; ok {
+			tmp["packetloss_threshold"] = flattenSystemSdwanHealthCheckFortiguardSlaPacketlossThreshold(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "mos_threshold"
+		if cur_v, ok := i["mos-threshold"]; ok {
+			tmp["mos_threshold"] = flattenSystemSdwanHealthCheckFortiguardSlaMosThreshold(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority_in_sla"
+		if cur_v, ok := i["priority-in-sla"]; ok {
+			tmp["priority_in_sla"] = flattenSystemSdwanHealthCheckFortiguardSlaPriorityInSla(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority_out_sla"
+		if cur_v, ok := i["priority-out-sla"]; ok {
+			tmp["priority_out_sla"] = flattenSystemSdwanHealthCheckFortiguardSlaPriorityOutSla(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "id", d)
+	return result
+}
+
+func flattenSystemSdwanHealthCheckFortiguardSlaId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenSystemSdwanHealthCheckFortiguardSlaLinkCostFactor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdwanHealthCheckFortiguardSlaLatencyThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenSystemSdwanHealthCheckFortiguardSlaJitterThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenSystemSdwanHealthCheckFortiguardSlaPacketlossThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenSystemSdwanHealthCheckFortiguardSlaMosThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdwanHealthCheckFortiguardSlaPriorityInSla(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenSystemSdwanHealthCheckFortiguardSlaPriorityOutSla(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanNeighbor(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -2486,19 +3311,19 @@ func flattenSystemSdwanNeighborMemberBlock(v interface{}, d *schema.ResourceData
 }
 
 func flattenSystemSdwanNeighborMemberBlockSeqNum(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanNeighborMinimumSlaMeetMembers(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanNeighborMember(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanNeighborServiceId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanNeighborMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2514,7 +3339,7 @@ func flattenSystemSdwanNeighborHealthCheck(v interface{}, d *schema.ResourceData
 }
 
 func flattenSystemSdwanNeighborSlaId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanService(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -2866,6 +3691,11 @@ func flattenSystemSdwanService(v interface{}, d *schema.ResourceData, pre string
 			tmp["shortcut"] = flattenSystemSdwanServiceShortcut(cur_v, d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
+		if cur_v, ok := i["comment"]; ok {
+			tmp["comment"] = flattenSystemSdwanServiceComment(cur_v, d, pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -2876,7 +3706,7 @@ func flattenSystemSdwanService(v interface{}, d *schema.ResourceData, pre string
 }
 
 func flattenSystemSdwanServiceId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanServiceName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2992,7 +3822,7 @@ func flattenSystemSdwanServiceZoneMode(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenSystemSdwanServiceMinimumSlaMeetMembers(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanServiceHashMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -3012,7 +3842,7 @@ func flattenSystemSdwanServiceStandaloneAction(v interface{}, d *schema.Resource
 }
 
 func flattenSystemSdwanServiceQualityLink(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanServiceTos(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -3024,27 +3854,27 @@ func flattenSystemSdwanServiceTosMask(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenSystemSdwanServiceProtocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanServiceStartPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanServiceEndPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanServiceStartSrcPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanServiceEndSrcPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanServiceRouteTag(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanServiceDst(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -3518,7 +4348,7 @@ func flattenSystemSdwanServiceInternetServiceAppCtrl(v interface{}, d *schema.Re
 }
 
 func flattenSystemSdwanServiceInternetServiceAppCtrlId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanServiceInternetServiceAppCtrlGroup(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -3602,7 +4432,7 @@ func flattenSystemSdwanServiceInternetServiceAppCtrlCategory(v interface{}, d *s
 }
 
 func flattenSystemSdwanServiceInternetServiceAppCtrlCategoryId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanServiceHealthCheck(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -3652,27 +4482,27 @@ func flattenSystemSdwanServiceLinkCostFactor(v interface{}, d *schema.ResourceDa
 }
 
 func flattenSystemSdwanServicePacketLossWeight(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanServiceLatencyWeight(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanServiceJitterWeight(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanServiceBandwidthWeight(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanServiceLinkCostThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanServiceHoldDownTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanServiceSlaStickiness(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -3743,7 +4573,7 @@ func flattenSystemSdwanServiceSlaHealthCheck(v interface{}, d *schema.ResourceDa
 }
 
 func flattenSystemSdwanServiceSlaId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanServicePriorityMembers(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -3785,7 +4615,7 @@ func flattenSystemSdwanServicePriorityMembers(v interface{}, d *schema.ResourceD
 }
 
 func flattenSystemSdwanServicePriorityMembersSeqNum(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanServicePriorityZone(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -3863,6 +4693,10 @@ func flattenSystemSdwanServiceAgentExclusive(v interface{}, d *schema.ResourceDa
 }
 
 func flattenSystemSdwanServiceShortcut(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdwanServiceComment(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -3960,7 +4794,7 @@ func flattenSystemSdwanDuplication(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenSystemSdwanDuplicationId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanDuplicationServiceId(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -4002,7 +4836,7 @@ func flattenSystemSdwanDuplicationServiceId(v interface{}, d *schema.ResourceDat
 }
 
 func flattenSystemSdwanDuplicationServiceIdId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSdwanDuplicationSrcaddr(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -4439,6 +5273,22 @@ func refreshObjectSystemSdwan(d *schema.ResourceData, o map[string]interface{}, 
 	}
 
 	if b_get_all_tables {
+		if err = d.Set("health_check_fortiguard", flattenSystemSdwanHealthCheckFortiguard(o["health-check-fortiguard"], d, "health_check_fortiguard", sv)); err != nil {
+			if !fortiAPIPatch(o["health-check-fortiguard"]) {
+				return fmt.Errorf("Error reading health_check_fortiguard: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("health_check_fortiguard"); ok {
+			if err = d.Set("health_check_fortiguard", flattenSystemSdwanHealthCheckFortiguard(o["health-check-fortiguard"], d, "health_check_fortiguard", sv)); err != nil {
+				if !fortiAPIPatch(o["health-check-fortiguard"]) {
+					return fmt.Errorf("Error reading health_check_fortiguard: %v", err)
+				}
+			}
+		}
+	}
+
+	if b_get_all_tables {
 		if err = d.Set("neighbor", flattenSystemSdwanNeighbor(o["neighbor"], d, "neighbor", sv)); err != nil {
 			if !fortiAPIPatch(o["neighbor"]) {
 				return fmt.Errorf("Error reading neighbor: %v", err)
@@ -4576,6 +5426,8 @@ func expandSystemSdwanZone(d *schema.ResourceData, v interface{}, pre string, sv
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandSystemSdwanZoneName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "advpn_select"
@@ -4586,6 +5438,8 @@ func expandSystemSdwanZone(d *schema.ResourceData, v interface{}, pre string, sv
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "advpn_health_check"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["advpn-health-check"], _ = expandSystemSdwanZoneAdvpnHealthCheck(d, i["advpn_health_check"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["advpn-health-check"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "service_sla_tie_break"
@@ -4643,11 +5497,15 @@ func expandSystemSdwanMembers(d *schema.ResourceData, v interface{}, pre string,
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "seq_num"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["seq-num"], _ = expandSystemSdwanMembersSeqNum(d, i["seq_num"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["seq-num"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["interface"], _ = expandSystemSdwanMembersInterface(d, i["interface"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["interface"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "zone"
@@ -4683,6 +5541,8 @@ func expandSystemSdwanMembers(d *schema.ResourceData, v interface{}, pre string,
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "cost"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["cost"], _ = expandSystemSdwanMembersCost(d, i["cost"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["cost"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "weight"
@@ -4700,14 +5560,32 @@ func expandSystemSdwanMembers(d *schema.ResourceData, v interface{}, pre string,
 			tmp["priority6"], _ = expandSystemSdwanMembersPriority6(d, i["priority6"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority_in_sla"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["priority-in-sla"], _ = expandSystemSdwanMembersPriorityInSla(d, i["priority_in_sla"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["priority-in-sla"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority_out_sla"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["priority-out-sla"], _ = expandSystemSdwanMembersPriorityOutSla(d, i["priority_out_sla"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["priority-out-sla"] = nil
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "spillover_threshold"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["spillover-threshold"], _ = expandSystemSdwanMembersSpilloverThreshold(d, i["spillover_threshold"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["spillover-threshold"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ingress_spillover_threshold"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["ingress-spillover-threshold"], _ = expandSystemSdwanMembersIngressSpilloverThreshold(d, i["ingress_spillover_threshold"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["ingress-spillover-threshold"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "volume_ratio"
@@ -4723,11 +5601,15 @@ func expandSystemSdwanMembers(d *schema.ResourceData, v interface{}, pre string,
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "transport_group"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["transport-group"], _ = expandSystemSdwanMembersTransportGroup(d, i["transport_group"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["transport-group"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["comment"], _ = expandSystemSdwanMembersComment(d, i["comment"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["comment"] = nil
 		}
 
 		result = append(result, tmp)
@@ -4786,6 +5668,14 @@ func expandSystemSdwanMembersPriority6(d *schema.ResourceData, v interface{}, pr
 	return v, nil
 }
 
+func expandSystemSdwanMembersPriorityInSla(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanMembersPriorityOutSla(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemSdwanMembersSpilloverThreshold(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -4827,6 +5717,8 @@ func expandSystemSdwanHealthCheck(d *schema.ResourceData, v interface{}, pre str
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandSystemSdwanHealthCheckName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "probe_packets"
@@ -4847,6 +5739,8 @@ func expandSystemSdwanHealthCheck(d *schema.ResourceData, v interface{}, pre str
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "server"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["server"], _ = expandSystemSdwanHealthCheckServer(d, i["server"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["server"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "detect_mode"
@@ -4862,6 +5756,8 @@ func expandSystemSdwanHealthCheck(d *schema.ResourceData, v interface{}, pre str
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["port"], _ = expandSystemSdwanHealthCheckPort(d, i["port"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["port"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "quality_measured_method"
@@ -4877,11 +5773,15 @@ func expandSystemSdwanHealthCheck(d *schema.ResourceData, v interface{}, pre str
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "user"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["user"], _ = expandSystemSdwanHealthCheckUser(d, i["user"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["user"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "password"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["password"], _ = expandSystemSdwanHealthCheckPassword(d, i["password"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["password"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "packet_size"
@@ -4902,6 +5802,8 @@ func expandSystemSdwanHealthCheck(d *schema.ResourceData, v interface{}, pre str
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ftp_file"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["ftp-file"], _ = expandSystemSdwanHealthCheckFtpFile(d, i["ftp_file"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["ftp-file"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_get"
@@ -4917,6 +5819,8 @@ func expandSystemSdwanHealthCheck(d *schema.ResourceData, v interface{}, pre str
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_match"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["http-match"], _ = expandSystemSdwanHealthCheckHttpMatch(d, i["http_match"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["http-match"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dns_request_domain"
@@ -4977,51 +5881,71 @@ func expandSystemSdwanHealthCheck(d *schema.ResourceData, v interface{}, pre str
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sla_id_redistribute"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["sla-id-redistribute"], _ = expandSystemSdwanHealthCheckSlaIdRedistribute(d, i["sla_id_redistribute"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["sla-id-redistribute"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sla_fail_log_period"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["sla-fail-log-period"], _ = expandSystemSdwanHealthCheckSlaFailLogPeriod(d, i["sla_fail_log_period"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["sla-fail-log-period"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sla_pass_log_period"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["sla-pass-log-period"], _ = expandSystemSdwanHealthCheckSlaPassLogPeriod(d, i["sla_pass_log_period"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["sla-pass-log-period"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "threshold_warning_packetloss"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["threshold-warning-packetloss"], _ = expandSystemSdwanHealthCheckThresholdWarningPacketloss(d, i["threshold_warning_packetloss"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["threshold-warning-packetloss"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "threshold_alert_packetloss"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["threshold-alert-packetloss"], _ = expandSystemSdwanHealthCheckThresholdAlertPacketloss(d, i["threshold_alert_packetloss"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["threshold-alert-packetloss"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "threshold_warning_latency"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["threshold-warning-latency"], _ = expandSystemSdwanHealthCheckThresholdWarningLatency(d, i["threshold_warning_latency"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["threshold-warning-latency"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "threshold_alert_latency"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["threshold-alert-latency"], _ = expandSystemSdwanHealthCheckThresholdAlertLatency(d, i["threshold_alert_latency"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["threshold-alert-latency"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "threshold_warning_jitter"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["threshold-warning-jitter"], _ = expandSystemSdwanHealthCheckThresholdWarningJitter(d, i["threshold_warning_jitter"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["threshold-warning-jitter"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "threshold_alert_jitter"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["threshold-alert-jitter"], _ = expandSystemSdwanHealthCheckThresholdAlertJitter(d, i["threshold_alert_jitter"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["threshold-alert-jitter"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrf"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["vrf"], _ = expandSystemSdwanHealthCheckVrf(d, i["vrf"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["vrf"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "source"
@@ -5035,9 +5959,9 @@ func expandSystemSdwanHealthCheck(d *schema.ResourceData, v interface{}, pre str
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "members"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["members"], _ = expandSystemSdwanHealthCheckMembers(d, i["members"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["members"] = make([]string, 0)
 		}
 
@@ -5049,12 +5973,14 @@ func expandSystemSdwanHealthCheck(d *schema.ResourceData, v interface{}, pre str
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "class_id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["class-id"], _ = expandSystemSdwanHealthCheckClassId(d, i["class_id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["class-id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sla"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["sla"], _ = expandSystemSdwanHealthCheckSla(d, i["sla"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["sla"] = make([]string, 0)
 		}
 
@@ -5287,6 +6213,8 @@ func expandSystemSdwanHealthCheckSla(d *schema.ResourceData, v interface{}, pre 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSystemSdwanHealthCheckSlaId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "link_cost_factor"
@@ -5307,6 +6235,8 @@ func expandSystemSdwanHealthCheckSla(d *schema.ResourceData, v interface{}, pre 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "packetloss_threshold"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["packetloss-threshold"], _ = expandSystemSdwanHealthCheckSlaPacketlossThreshold(d, i["packetloss_threshold"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["packetloss-threshold"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mos_threshold"
@@ -5317,11 +6247,15 @@ func expandSystemSdwanHealthCheckSla(d *schema.ResourceData, v interface{}, pre 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority_in_sla"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["priority-in-sla"], _ = expandSystemSdwanHealthCheckSlaPriorityInSla(d, i["priority_in_sla"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["priority-in-sla"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority_out_sla"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["priority-out-sla"], _ = expandSystemSdwanHealthCheckSlaPriorityOutSla(d, i["priority_out_sla"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["priority-out-sla"] = nil
 		}
 
 		result = append(result, tmp)
@@ -5364,6 +6298,606 @@ func expandSystemSdwanHealthCheckSlaPriorityOutSla(d *schema.ResourceData, v int
 	return v, nil
 }
 
+func expandSystemSdwanHealthCheckFortiguard(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "target_name"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["target-name"], _ = expandSystemSdwanHealthCheckFortiguardTargetName(d, i["target_name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["target-name"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "probe_packets"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["probe-packets"], _ = expandSystemSdwanHealthCheckFortiguardProbePackets(d, i["probe_packets"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr_mode"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["addr-mode"], _ = expandSystemSdwanHealthCheckFortiguardAddrMode(d, i["addr_mode"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "system_dns"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["system-dns"], _ = expandSystemSdwanHealthCheckFortiguardSystemDns(d, i["system_dns"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "server"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["server"], _ = expandSystemSdwanHealthCheckFortiguardServer(d, i["server"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["server"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "detect_mode"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["detect-mode"], _ = expandSystemSdwanHealthCheckFortiguardDetectMode(d, i["detect_mode"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["protocol"], _ = expandSystemSdwanHealthCheckFortiguardProtocol(d, i["protocol"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["port"], _ = expandSystemSdwanHealthCheckFortiguardPort(d, i["port"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["port"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "quality_measured_method"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["quality-measured-method"], _ = expandSystemSdwanHealthCheckFortiguardQualityMeasuredMethod(d, i["quality_measured_method"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "security_mode"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["security-mode"], _ = expandSystemSdwanHealthCheckFortiguardSecurityMode(d, i["security_mode"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "user"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["user"], _ = expandSystemSdwanHealthCheckFortiguardUser(d, i["user"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["user"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "password"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["password"], _ = expandSystemSdwanHealthCheckFortiguardPassword(d, i["password"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["password"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "packet_size"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["packet-size"], _ = expandSystemSdwanHealthCheckFortiguardPacketSize(d, i["packet_size"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "ha_priority"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["ha-priority"], _ = expandSystemSdwanHealthCheckFortiguardHaPriority(d, i["ha_priority"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "ftp_mode"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["ftp-mode"], _ = expandSystemSdwanHealthCheckFortiguardFtpMode(d, i["ftp_mode"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "ftp_file"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["ftp-file"], _ = expandSystemSdwanHealthCheckFortiguardFtpFile(d, i["ftp_file"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["ftp-file"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_get"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["http-get"], _ = expandSystemSdwanHealthCheckFortiguardHttpGet(d, i["http_get"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_agent"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["http-agent"], _ = expandSystemSdwanHealthCheckFortiguardHttpAgent(d, i["http_agent"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_match"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["http-match"], _ = expandSystemSdwanHealthCheckFortiguardHttpMatch(d, i["http_match"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["http-match"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "dns_request_domain"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["dns-request-domain"], _ = expandSystemSdwanHealthCheckFortiguardDnsRequestDomain(d, i["dns_request_domain"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "dns_match_ip"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["dns-match-ip"], _ = expandSystemSdwanHealthCheckFortiguardDnsMatchIp(d, i["dns_match_ip"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "interval"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["interval"], _ = expandSystemSdwanHealthCheckFortiguardInterval(d, i["interval"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "probe_timeout"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["probe-timeout"], _ = expandSystemSdwanHealthCheckFortiguardProbeTimeout(d, i["probe_timeout"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "failtime"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["failtime"], _ = expandSystemSdwanHealthCheckFortiguardFailtime(d, i["failtime"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "recoverytime"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["recoverytime"], _ = expandSystemSdwanHealthCheckFortiguardRecoverytime(d, i["recoverytime"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "probe_count"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["probe-count"], _ = expandSystemSdwanHealthCheckFortiguardProbeCount(d, i["probe_count"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "diffservcode"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["diffservcode"], _ = expandSystemSdwanHealthCheckFortiguardDiffservcode(d, i["diffservcode"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["diffservcode"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "update_cascade_interface"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["update-cascade-interface"], _ = expandSystemSdwanHealthCheckFortiguardUpdateCascadeInterface(d, i["update_cascade_interface"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "update_static_route"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["update-static-route"], _ = expandSystemSdwanHealthCheckFortiguardUpdateStaticRoute(d, i["update_static_route"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "embed_measured_health"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["embed-measured-health"], _ = expandSystemSdwanHealthCheckFortiguardEmbedMeasuredHealth(d, i["embed_measured_health"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "sla_id_redistribute"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["sla-id-redistribute"], _ = expandSystemSdwanHealthCheckFortiguardSlaIdRedistribute(d, i["sla_id_redistribute"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["sla-id-redistribute"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "sla_fail_log_period"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["sla-fail-log-period"], _ = expandSystemSdwanHealthCheckFortiguardSlaFailLogPeriod(d, i["sla_fail_log_period"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["sla-fail-log-period"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "sla_pass_log_period"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["sla-pass-log-period"], _ = expandSystemSdwanHealthCheckFortiguardSlaPassLogPeriod(d, i["sla_pass_log_period"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["sla-pass-log-period"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "threshold_warning_packetloss"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["threshold-warning-packetloss"], _ = expandSystemSdwanHealthCheckFortiguardThresholdWarningPacketloss(d, i["threshold_warning_packetloss"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["threshold-warning-packetloss"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "threshold_alert_packetloss"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["threshold-alert-packetloss"], _ = expandSystemSdwanHealthCheckFortiguardThresholdAlertPacketloss(d, i["threshold_alert_packetloss"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["threshold-alert-packetloss"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "threshold_warning_latency"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["threshold-warning-latency"], _ = expandSystemSdwanHealthCheckFortiguardThresholdWarningLatency(d, i["threshold_warning_latency"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["threshold-warning-latency"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "threshold_alert_latency"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["threshold-alert-latency"], _ = expandSystemSdwanHealthCheckFortiguardThresholdAlertLatency(d, i["threshold_alert_latency"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["threshold-alert-latency"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "threshold_warning_jitter"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["threshold-warning-jitter"], _ = expandSystemSdwanHealthCheckFortiguardThresholdWarningJitter(d, i["threshold_warning_jitter"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["threshold-warning-jitter"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "threshold_alert_jitter"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["threshold-alert-jitter"], _ = expandSystemSdwanHealthCheckFortiguardThresholdAlertJitter(d, i["threshold_alert_jitter"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["threshold-alert-jitter"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrf"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["vrf"], _ = expandSystemSdwanHealthCheckFortiguardVrf(d, i["vrf"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["vrf"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "source"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["source"], _ = expandSystemSdwanHealthCheckFortiguardSource(d, i["source"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "source6"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["source6"], _ = expandSystemSdwanHealthCheckFortiguardSource6(d, i["source6"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "members"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["members"], _ = expandSystemSdwanHealthCheckFortiguardMembers(d, i["members"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["members"] = make([]string, 0)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "mos_codec"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["mos-codec"], _ = expandSystemSdwanHealthCheckFortiguardMosCodec(d, i["mos_codec"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "class_id"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["class-id"], _ = expandSystemSdwanHealthCheckFortiguardClassId(d, i["class_id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["class-id"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "sla"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["sla"], _ = expandSystemSdwanHealthCheckFortiguardSla(d, i["sla"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["sla"] = make([]string, 0)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardTargetName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardProbePackets(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardAddrMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardSystemDns(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardDetectMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardProtocol(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardQualityMeasuredMethod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardSecurityMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardUser(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardPassword(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardPacketSize(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardHaPriority(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardFtpMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardFtpFile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardHttpGet(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardHttpAgent(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardHttpMatch(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardDnsRequestDomain(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardDnsMatchIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardProbeTimeout(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardFailtime(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardRecoverytime(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardProbeCount(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardDiffservcode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardUpdateCascadeInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardUpdateStaticRoute(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardEmbedMeasuredHealth(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardSlaIdRedistribute(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardSlaFailLogPeriod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardSlaPassLogPeriod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardThresholdWarningPacketloss(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardThresholdAlertPacketloss(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardThresholdWarningLatency(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardThresholdAlertLatency(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardThresholdWarningJitter(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardThresholdAlertJitter(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardVrf(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardSource(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardSource6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardMembers(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.(*schema.Set).List()
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		tmp["seq-num"], _ = expandSystemSdwanHealthCheckFortiguardMembersSeqNum(d, i["seq_num"], pre_append, sv)
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardMembersSeqNum(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardMosCodec(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardClassId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardSla(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["id"], _ = expandSystemSdwanHealthCheckFortiguardSlaId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "link_cost_factor"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["link-cost-factor"], _ = expandSystemSdwanHealthCheckFortiguardSlaLinkCostFactor(d, i["link_cost_factor"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "latency_threshold"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["latency-threshold"], _ = expandSystemSdwanHealthCheckFortiguardSlaLatencyThreshold(d, i["latency_threshold"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "jitter_threshold"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["jitter-threshold"], _ = expandSystemSdwanHealthCheckFortiguardSlaJitterThreshold(d, i["jitter_threshold"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "packetloss_threshold"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["packetloss-threshold"], _ = expandSystemSdwanHealthCheckFortiguardSlaPacketlossThreshold(d, i["packetloss_threshold"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["packetloss-threshold"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "mos_threshold"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["mos-threshold"], _ = expandSystemSdwanHealthCheckFortiguardSlaMosThreshold(d, i["mos_threshold"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority_in_sla"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["priority-in-sla"], _ = expandSystemSdwanHealthCheckFortiguardSlaPriorityInSla(d, i["priority_in_sla"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["priority-in-sla"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority_out_sla"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["priority-out-sla"], _ = expandSystemSdwanHealthCheckFortiguardSlaPriorityOutSla(d, i["priority_out_sla"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["priority-out-sla"] = nil
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardSlaId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardSlaLinkCostFactor(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardSlaLatencyThreshold(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardSlaJitterThreshold(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardSlaPacketlossThreshold(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardSlaMosThreshold(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardSlaPriorityInSla(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardSlaPriorityOutSla(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemSdwanNeighbor(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	result := make([]map[string]interface{}, 0, len(l))
@@ -5381,10 +6915,12 @@ func expandSystemSdwanNeighbor(d *schema.ResourceData, v interface{}, pre string
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["ip"], _ = expandSystemSdwanNeighborIp(d, i["ip"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["ip"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "member_block"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			new_version_map := map[string][]string{
 				">=": []string{"7.2.0"},
 			}
@@ -5396,7 +6932,7 @@ func expandSystemSdwanNeighbor(d *schema.ResourceData, v interface{}, pre string
 			} else {
 				tmp["member"], _ = expandSystemSdwanNeighborMemberBlock(d, i["member_block"], pre_append, sv)
 			}
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["member"] = make([]string, 0)
 		}
 
@@ -5418,11 +6954,15 @@ func expandSystemSdwanNeighbor(d *schema.ResourceData, v interface{}, pre string
 			} else {
 				tmp["member"], _ = expandSystemSdwanNeighborMember(d, i["member"], pre_append, sv)
 			}
+		} else if d.HasChange(pre_append) {
+			tmp["member"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "service_id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["service-id"], _ = expandSystemSdwanNeighborServiceId(d, i["service_id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["service-id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mode"
@@ -5438,11 +6978,15 @@ func expandSystemSdwanNeighbor(d *schema.ResourceData, v interface{}, pre string
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "health_check"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["health-check"], _ = expandSystemSdwanNeighborHealthCheck(d, i["health_check"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["health-check"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sla_id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["sla-id"], _ = expandSystemSdwanNeighborSlaId(d, i["sla_id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["sla-id"] = nil
 		}
 
 		result = append(result, tmp)
@@ -5530,11 +7074,15 @@ func expandSystemSdwanService(d *schema.ResourceData, v interface{}, pre string,
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSystemSdwanServiceId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandSystemSdwanServiceName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr_mode"
@@ -5553,9 +7101,9 @@ func expandSystemSdwanService(d *schema.ResourceData, v interface{}, pre string,
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "input_device"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["input-device"], _ = expandSystemSdwanServiceInputDevice(d, i["input_device"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["input-device"] = make([]string, 0)
 		}
 
@@ -5565,9 +7113,9 @@ func expandSystemSdwanService(d *schema.ResourceData, v interface{}, pre string,
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "input_zone"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["input-zone"], _ = expandSystemSdwanServiceInputZone(d, i["input_zone"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["input-zone"] = make([]string, 0)
 		}
 
@@ -5584,6 +7132,8 @@ func expandSystemSdwanService(d *schema.ResourceData, v interface{}, pre string,
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "minimum_sla_meet_members"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["minimum-sla-meet-members"], _ = expandSystemSdwanServiceMinimumSlaMeetMembers(d, i["minimum_sla_meet_members"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["minimum-sla-meet-members"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "hash_mode"
@@ -5609,21 +7159,29 @@ func expandSystemSdwanService(d *schema.ResourceData, v interface{}, pre string,
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "quality_link"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["quality-link"], _ = expandSystemSdwanServiceQualityLink(d, i["quality_link"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["quality-link"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tos"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["tos"], _ = expandSystemSdwanServiceTos(d, i["tos"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["tos"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tos_mask"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["tos-mask"], _ = expandSystemSdwanServiceTosMask(d, i["tos_mask"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["tos-mask"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["protocol"], _ = expandSystemSdwanServiceProtocol(d, i["protocol"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["protocol"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "start_port"
@@ -5649,12 +7207,14 @@ func expandSystemSdwanService(d *schema.ResourceData, v interface{}, pre string,
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_tag"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["route-tag"], _ = expandSystemSdwanServiceRouteTag(d, i["route_tag"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["route-tag"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["dst"], _ = expandSystemSdwanServiceDst(d, i["dst"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["dst"] = make([]string, 0)
 		}
 
@@ -5664,23 +7224,23 @@ func expandSystemSdwanService(d *schema.ResourceData, v interface{}, pre string,
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "src"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["src"], _ = expandSystemSdwanServiceSrc(d, i["src"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["src"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst6"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["dst6"], _ = expandSystemSdwanServiceDst6(d, i["dst6"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["dst6"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "src6"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["src6"], _ = expandSystemSdwanServiceSrc6(d, i["src6"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["src6"] = make([]string, 0)
 		}
 
@@ -5690,16 +7250,16 @@ func expandSystemSdwanService(d *schema.ResourceData, v interface{}, pre string,
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "users"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["users"], _ = expandSystemSdwanServiceUsers(d, i["users"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["users"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "groups"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["groups"], _ = expandSystemSdwanServiceGroups(d, i["groups"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["groups"] = make([]string, 0)
 		}
 
@@ -5709,58 +7269,58 @@ func expandSystemSdwanService(d *schema.ResourceData, v interface{}, pre string,
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "internet_service_custom"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["internet-service-custom"], _ = expandSystemSdwanServiceInternetServiceCustom(d, i["internet_service_custom"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["internet-service-custom"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "internet_service_custom_group"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["internet-service-custom-group"], _ = expandSystemSdwanServiceInternetServiceCustomGroup(d, i["internet_service_custom_group"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["internet-service-custom-group"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "internet_service_name"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["internet-service-name"], _ = expandSystemSdwanServiceInternetServiceName(d, i["internet_service_name"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["internet-service-name"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "internet_service_group"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["internet-service-group"], _ = expandSystemSdwanServiceInternetServiceGroup(d, i["internet_service_group"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["internet-service-group"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "internet_service_app_ctrl"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["internet-service-app-ctrl"], _ = expandSystemSdwanServiceInternetServiceAppCtrl(d, i["internet_service_app_ctrl"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["internet-service-app-ctrl"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "internet_service_app_ctrl_group"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["internet-service-app-ctrl-group"], _ = expandSystemSdwanServiceInternetServiceAppCtrlGroup(d, i["internet_service_app_ctrl_group"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["internet-service-app-ctrl-group"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "internet_service_app_ctrl_category"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["internet-service-app-ctrl-category"], _ = expandSystemSdwanServiceInternetServiceAppCtrlCategory(d, i["internet_service_app_ctrl_category"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["internet-service-app-ctrl-category"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "health_check"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["health-check"], _ = expandSystemSdwanServiceHealthCheck(d, i["health_check"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["health-check"] = make([]string, 0)
 		}
 
@@ -5772,21 +7332,29 @@ func expandSystemSdwanService(d *schema.ResourceData, v interface{}, pre string,
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "packet_loss_weight"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["packet-loss-weight"], _ = expandSystemSdwanServicePacketLossWeight(d, i["packet_loss_weight"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["packet-loss-weight"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "latency_weight"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["latency-weight"], _ = expandSystemSdwanServiceLatencyWeight(d, i["latency_weight"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["latency-weight"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "jitter_weight"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["jitter-weight"], _ = expandSystemSdwanServiceJitterWeight(d, i["jitter_weight"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["jitter-weight"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "bandwidth_weight"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["bandwidth-weight"], _ = expandSystemSdwanServiceBandwidthWeight(d, i["bandwidth_weight"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["bandwidth-weight"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "link_cost_threshold"
@@ -5797,6 +7365,8 @@ func expandSystemSdwanService(d *schema.ResourceData, v interface{}, pre string,
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "hold_down_time"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["hold-down-time"], _ = expandSystemSdwanServiceHoldDownTime(d, i["hold_down_time"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["hold-down-time"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sla_stickiness"
@@ -5817,31 +7387,35 @@ func expandSystemSdwanService(d *schema.ResourceData, v interface{}, pre string,
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dscp_forward_tag"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["dscp-forward-tag"], _ = expandSystemSdwanServiceDscpForwardTag(d, i["dscp_forward_tag"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["dscp-forward-tag"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dscp_reverse_tag"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["dscp-reverse-tag"], _ = expandSystemSdwanServiceDscpReverseTag(d, i["dscp_reverse_tag"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["dscp-reverse-tag"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sla"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["sla"], _ = expandSystemSdwanServiceSla(d, i["sla"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["sla"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority_members"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["priority-members"], _ = expandSystemSdwanServicePriorityMembers(d, i["priority_members"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["priority-members"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority_zone"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["priority-zone"], _ = expandSystemSdwanServicePriorityZone(d, i["priority_zone"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["priority-zone"] = make([]string, 0)
 		}
 
@@ -5888,6 +7462,13 @@ func expandSystemSdwanService(d *schema.ResourceData, v interface{}, pre string,
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "shortcut"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["shortcut"], _ = expandSystemSdwanServiceShortcut(d, i["shortcut"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["comment"], _ = expandSystemSdwanServiceComment(d, i["comment"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["comment"] = nil
 		}
 
 		result = append(result, tmp)
@@ -6511,11 +8092,15 @@ func expandSystemSdwanServiceSla(d *schema.ResourceData, v interface{}, pre stri
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "health_check"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["health-check"], _ = expandSystemSdwanServiceSlaHealthCheck(d, i["health_check"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["health-check"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSystemSdwanServiceSlaId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		result = append(result, tmp)
@@ -6626,6 +8211,10 @@ func expandSystemSdwanServiceShortcut(d *schema.ResourceData, v interface{}, pre
 	return v, nil
 }
 
+func expandSystemSdwanServiceComment(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemSdwanDuplication(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	result := make([]map[string]interface{}, 0, len(l))
@@ -6643,61 +8232,63 @@ func expandSystemSdwanDuplication(d *schema.ResourceData, v interface{}, pre str
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSystemSdwanDuplicationId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "service_id"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["service-id"], _ = expandSystemSdwanDuplicationServiceId(d, i["service_id"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["service-id"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "srcaddr"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["srcaddr"], _ = expandSystemSdwanDuplicationSrcaddr(d, i["srcaddr"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["srcaddr"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dstaddr"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["dstaddr"], _ = expandSystemSdwanDuplicationDstaddr(d, i["dstaddr"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["dstaddr"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "srcaddr6"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["srcaddr6"], _ = expandSystemSdwanDuplicationSrcaddr6(d, i["srcaddr6"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["srcaddr6"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dstaddr6"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["dstaddr6"], _ = expandSystemSdwanDuplicationDstaddr6(d, i["dstaddr6"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["dstaddr6"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "srcintf"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["srcintf"], _ = expandSystemSdwanDuplicationSrcintf(d, i["srcintf"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["srcintf"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dstintf"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["dstintf"], _ = expandSystemSdwanDuplicationDstintf(d, i["dstintf"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["dstintf"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "service"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["service"], _ = expandSystemSdwanDuplicationService(d, i["service"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["service"] = make([]string, 0)
 		}
 
@@ -7043,6 +8634,8 @@ func getObjectSystemSdwan(d *schema.ResourceData, setArgNil bool, sv string) (*m
 				obj["neighbor-hold-down-time"] = t
 			}
 		}
+	} else if d.HasChange("neighbor_hold_down_time") {
+		obj["neighbor-hold-down-time"] = nil
 	}
 
 	if v, ok := d.GetOkExists("app_perf_log_period"); ok {
@@ -7056,6 +8649,8 @@ func getObjectSystemSdwan(d *schema.ResourceData, setArgNil bool, sv string) (*m
 				obj["app-perf-log-period"] = t
 			}
 		}
+	} else if d.HasChange("app_perf_log_period") {
+		obj["app-perf-log-period"] = nil
 	}
 
 	if v, ok := d.GetOkExists("neighbor_hold_boot_time"); ok {
@@ -7069,6 +8664,8 @@ func getObjectSystemSdwan(d *schema.ResourceData, setArgNil bool, sv string) (*m
 				obj["neighbor-hold-boot-time"] = t
 			}
 		}
+	} else if d.HasChange("neighbor_hold_boot_time") {
+		obj["neighbor-hold-boot-time"] = nil
 	}
 
 	if v, ok := d.GetOk("fail_detect"); ok {
@@ -7132,6 +8729,19 @@ func getObjectSystemSdwan(d *schema.ResourceData, setArgNil bool, sv string) (*m
 				return &obj, err
 			} else if t != nil {
 				obj["health-check"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("health_check_fortiguard"); ok || d.HasChange("health_check_fortiguard") {
+		if setArgNil {
+			obj["health-check-fortiguard"] = make([]struct{}, 0)
+		} else {
+			t, err := expandSystemSdwanHealthCheckFortiguard(d, v, "health_check_fortiguard", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["health-check-fortiguard"] = t
 			}
 		}
 	}

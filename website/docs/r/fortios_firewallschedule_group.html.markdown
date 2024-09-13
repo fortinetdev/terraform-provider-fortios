@@ -36,6 +36,7 @@ The following arguments are supported:
 
 * `name` - (Required) Schedule group name.
 * `member` - (Required) Schedules added to the schedule group. The structure of `member` block is documented below.
+* `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `color` - Color of icon on the GUI.
 * `fabric_object` - Security Fabric global object setting. Valid values: `enable`, `disable`.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].

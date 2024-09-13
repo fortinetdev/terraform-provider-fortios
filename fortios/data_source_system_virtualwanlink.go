@@ -1051,15 +1051,6 @@ func dataSourceFlattenSystemVirtualWanLinkHealthCheck(v interface{}, d *schema.R
 			tmp["security_mode"] = dataSourceFlattenSystemVirtualWanLinkHealthCheckSecurityMode(i["security-mode"], d, pre_append)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "password"
-		if _, ok := i["password"]; ok {
-			tmp["password"] = dataSourceFlattenSystemVirtualWanLinkHealthCheckPassword(i["password"], d, pre_append)
-			c := d.Get(pre_append).(string)
-			if c != "" {
-				tmp["password"] = c
-			}
-		}
-
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "packet_size"
 		if _, ok := i["packet-size"]; ok {
 			tmp["packet_size"] = dataSourceFlattenSystemVirtualWanLinkHealthCheckPacketSize(i["packet-size"], d, pre_append)

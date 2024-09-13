@@ -159,6 +159,7 @@ The following arguments are supported:
 * `gui_ztna` - Enable/disable Zero Trust Network Access features on the GUI. Valid values: `enable`, `disable`.
 * `gui_ot` - Enable/disable Show Operational Technology Purdue Model. Valid values: `enable`, `disable`.
 * `gui_dynamic_device_os_id` - Enable/disable Create dynamic addresses to manage known devices. Valid values: `enable`, `disable`.
+* `gui_gtp` - Enable/disable Manage general radio packet service (GPRS) protocols on the GUI. Valid values: `enable`, `disable`.
 * `location_id` - Local location ID in the form of an IPv4 address.
 * `gui_per_policy_disclaimer` - Enable/disable policy disclaimer on the GUI. Valid values: `enable`, `disable`.
 * `gui_policy_learning` - Enable/disable firewall policy learning mode on the GUI. Valid values: `enable`, `disable`.

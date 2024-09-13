@@ -161,7 +161,7 @@ func resourceEmailfilterOptionsRead(d *schema.ResourceData, m interface{}) error
 }
 
 func flattenEmailfilterOptionsDnsTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectEmailfilterOptions(d *schema.ResourceData, o map[string]interface{}, sv string) error {

@@ -308,6 +308,8 @@ func getObjectWebfilterFtgdLocalRating(d *schema.ResourceData, sv string) (*map[
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("rating"); ok {
@@ -317,6 +319,8 @@ func getObjectWebfilterFtgdLocalRating(d *schema.ResourceData, sv string) (*map[
 		} else if t != nil {
 			obj["rating"] = t
 		}
+	} else if d.HasChange("rating") {
+		obj["rating"] = nil
 	}
 
 	return &obj, nil

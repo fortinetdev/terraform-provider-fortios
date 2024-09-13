@@ -21,6 +21,7 @@ The following arguments are supported:
 * `comments` - Comment.
 * `interface` - Configuration interface name.
 * `ip` - IP address.
+* `linkdown_fast_failover` - Enable/disable fast link failover. Valid values: `enable`, `disable`.
 * `authentication` - Authentication type.
 * `authentication_key` - Authentication key.
 * `keychain` - Message-digest key-chain name.

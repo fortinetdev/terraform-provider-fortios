@@ -46,7 +46,6 @@ func resourceRouterPrefixList6() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
-				Computed:     true,
 			},
 			"rule": &schema.Schema{
 				Type:     schema.TypeList,
@@ -56,7 +55,6 @@ func resourceRouterPrefixList6() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"action": &schema.Schema{
 							Type:     schema.TypeString,
@@ -66,24 +64,20 @@ func resourceRouterPrefixList6() *schema.Resource {
 						"prefix6": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"ge": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 128),
 							Optional:     true,
-							Computed:     true,
 						},
 						"le": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 128),
 							Optional:     true,
-							Computed:     true,
 						},
 						"flags": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -325,7 +319,7 @@ func flattenRouterPrefixList6Rule(v interface{}, d *schema.ResourceData, pre str
 }
 
 func flattenRouterPrefixList6RuleId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterPrefixList6RuleAction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -337,15 +331,15 @@ func flattenRouterPrefixList6RulePrefix6(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenRouterPrefixList6RuleGe(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterPrefixList6RuleLe(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterPrefixList6RuleFlags(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectRouterPrefixList6(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -419,6 +413,8 @@ func expandRouterPrefixList6Rule(d *schema.ResourceData, v interface{}, pre stri
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandRouterPrefixList6RuleId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
@@ -429,21 +425,29 @@ func expandRouterPrefixList6Rule(d *schema.ResourceData, v interface{}, pre stri
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix6"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["prefix6"], _ = expandRouterPrefixList6RulePrefix6(d, i["prefix6"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["prefix6"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ge"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["ge"], _ = expandRouterPrefixList6RuleGe(d, i["ge"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["ge"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "le"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["le"], _ = expandRouterPrefixList6RuleLe(d, i["le"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["le"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "flags"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["flags"], _ = expandRouterPrefixList6RuleFlags(d, i["flags"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["flags"] = nil
 		}
 
 		result = append(result, tmp)
@@ -497,6 +501,8 @@ func getObjectRouterPrefixList6(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["comments"] = t
 		}
+	} else if d.HasChange("comments") {
+		obj["comments"] = nil
 	}
 
 	if v, ok := d.GetOk("rule"); ok || d.HasChange("rule") {

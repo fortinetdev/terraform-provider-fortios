@@ -52,7 +52,6 @@ func resourceSwitchControllerRemoteLog() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"port": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -243,7 +242,7 @@ func flattenSwitchControllerRemoteLogServer(v interface{}, d *schema.ResourceDat
 }
 
 func flattenSwitchControllerRemoteLogPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerRemoteLogSeverity(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -368,6 +367,8 @@ func getObjectSwitchControllerRemoteLog(d *schema.ResourceData, sv string) (*map
 		} else if t != nil {
 			obj["server"] = t
 		}
+	} else if d.HasChange("server") {
+		obj["server"] = nil
 	}
 
 	if v, ok := d.GetOkExists("port"); ok {

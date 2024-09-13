@@ -62,23 +62,19 @@ func resourceCertificateLocal() *schema.Resource {
 			"certificate": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"csr": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"state": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"scep_url": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"range": &schema.Schema{
 				Type:     schema.TypeString,
@@ -93,12 +89,10 @@ func resourceCertificateLocal() *schema.Resource {
 			"auto_regenerate_days": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"auto_regenerate_days_warning": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"scep_password": &schema.Schema{
 				Type:         schema.TypeString,
@@ -110,7 +104,6 @@ func resourceCertificateLocal() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"name_encoding": &schema.Schema{
 				Type:     schema.TypeString,
@@ -126,7 +119,6 @@ func resourceCertificateLocal() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ike_localid_type": &schema.Schema{
 				Type:     schema.TypeString,
@@ -152,19 +144,16 @@ func resourceCertificateLocal() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"cmp_path": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"cmp_server_cert": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
-				Computed:     true,
 			},
 			"cmp_regeneration_method": &schema.Schema{
 				Type:     schema.TypeString,
@@ -181,13 +170,11 @@ func resourceCertificateLocal() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"acme_email": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"acme_rsa_key_size": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -205,49 +192,41 @@ func resourceCertificateLocal() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"est_ca_id": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"est_http_username": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"est_http_password": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"est_client_cert": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
-				Computed:     true,
 			},
 			"est_server_cert": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
-				Computed:     true,
 			},
 			"est_srp_username": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"est_srp_password": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -408,15 +387,7 @@ func flattenCertificateLocalName(v interface{}, d *schema.ResourceData, pre stri
 	return v
 }
 
-func flattenCertificateLocalPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
 func flattenCertificateLocalComments(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenCertificateLocalPrivateKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -445,15 +416,11 @@ func flattenCertificateLocalSource(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenCertificateLocalAutoRegenerateDays(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenCertificateLocalAutoRegenerateDaysWarning(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenCertificateLocalScepPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenCertificateLocalCaIdentifier(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -477,7 +444,7 @@ func flattenCertificateLocalIkeLocalidType(v interface{}, d *schema.ResourceData
 }
 
 func flattenCertificateLocalLastUpdated(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenCertificateLocalEnrollProtocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -517,11 +484,11 @@ func flattenCertificateLocalAcmeEmail(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenCertificateLocalAcmeRsaKeySize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenCertificateLocalAcmeRenewWindow(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenCertificateLocalEstServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -949,6 +916,8 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["password"] = t
 		}
+	} else if d.HasChange("password") {
+		obj["password"] = nil
 	}
 
 	if v, ok := d.GetOk("comments"); ok {
@@ -967,6 +936,8 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["private-key"] = t
 		}
+	} else if d.HasChange("private_key") {
+		obj["private-key"] = nil
 	}
 
 	if v, ok := d.GetOk("certificate"); ok {
@@ -976,6 +947,8 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["certificate"] = t
 		}
+	} else if d.HasChange("certificate") {
+		obj["certificate"] = nil
 	}
 
 	if v, ok := d.GetOk("csr"); ok {
@@ -985,6 +958,8 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["csr"] = t
 		}
+	} else if d.HasChange("csr") {
+		obj["csr"] = nil
 	}
 
 	if v, ok := d.GetOk("state"); ok {
@@ -994,6 +969,8 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["state"] = t
 		}
+	} else if d.HasChange("state") {
+		obj["state"] = nil
 	}
 
 	if v, ok := d.GetOk("scep_url"); ok {
@@ -1003,6 +980,8 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["scep-url"] = t
 		}
+	} else if d.HasChange("scep_url") {
+		obj["scep-url"] = nil
 	}
 
 	if v, ok := d.GetOk("range"); ok {
@@ -1030,6 +1009,8 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["auto-regenerate-days"] = t
 		}
+	} else if d.HasChange("auto_regenerate_days") {
+		obj["auto-regenerate-days"] = nil
 	}
 
 	if v, ok := d.GetOkExists("auto_regenerate_days_warning"); ok {
@@ -1039,6 +1020,8 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["auto-regenerate-days-warning"] = t
 		}
+	} else if d.HasChange("auto_regenerate_days_warning") {
+		obj["auto-regenerate-days-warning"] = nil
 	}
 
 	if v, ok := d.GetOk("scep_password"); ok {
@@ -1048,6 +1031,8 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["scep-password"] = t
 		}
+	} else if d.HasChange("scep_password") {
+		obj["scep-password"] = nil
 	}
 
 	if v, ok := d.GetOk("ca_identifier"); ok {
@@ -1057,6 +1042,8 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["ca-identifier"] = t
 		}
+	} else if d.HasChange("ca_identifier") {
+		obj["ca-identifier"] = nil
 	}
 
 	if v, ok := d.GetOk("name_encoding"); ok {
@@ -1084,6 +1071,8 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["ike-localid"] = t
 		}
+	} else if d.HasChange("ike_localid") {
+		obj["ike-localid"] = nil
 	}
 
 	if v, ok := d.GetOk("ike_localid_type"); ok {
@@ -1129,6 +1118,8 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["cmp-server"] = t
 		}
+	} else if d.HasChange("cmp_server") {
+		obj["cmp-server"] = nil
 	}
 
 	if v, ok := d.GetOk("cmp_path"); ok {
@@ -1138,6 +1129,8 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["cmp-path"] = t
 		}
+	} else if d.HasChange("cmp_path") {
+		obj["cmp-path"] = nil
 	}
 
 	if v, ok := d.GetOk("cmp_server_cert"); ok {
@@ -1147,6 +1140,8 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["cmp-server-cert"] = t
 		}
+	} else if d.HasChange("cmp_server_cert") {
+		obj["cmp-server-cert"] = nil
 	}
 
 	if v, ok := d.GetOk("cmp_regeneration_method"); ok {
@@ -1174,6 +1169,8 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["acme-domain"] = t
 		}
+	} else if d.HasChange("acme_domain") {
+		obj["acme-domain"] = nil
 	}
 
 	if v, ok := d.GetOk("acme_email"); ok {
@@ -1183,6 +1180,8 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["acme-email"] = t
 		}
+	} else if d.HasChange("acme_email") {
+		obj["acme-email"] = nil
 	}
 
 	if v, ok := d.GetOk("acme_rsa_key_size"); ok {
@@ -1210,6 +1209,8 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["est-server"] = t
 		}
+	} else if d.HasChange("est_server") {
+		obj["est-server"] = nil
 	}
 
 	if v, ok := d.GetOk("est_ca_id"); ok {
@@ -1219,6 +1220,8 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["est-ca-id"] = t
 		}
+	} else if d.HasChange("est_ca_id") {
+		obj["est-ca-id"] = nil
 	}
 
 	if v, ok := d.GetOk("est_http_username"); ok {
@@ -1228,6 +1231,8 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["est-http-username"] = t
 		}
+	} else if d.HasChange("est_http_username") {
+		obj["est-http-username"] = nil
 	}
 
 	if v, ok := d.GetOk("est_http_password"); ok {
@@ -1237,6 +1242,8 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["est-http-password"] = t
 		}
+	} else if d.HasChange("est_http_password") {
+		obj["est-http-password"] = nil
 	}
 
 	if v, ok := d.GetOk("est_client_cert"); ok {
@@ -1246,6 +1253,8 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["est-client-cert"] = t
 		}
+	} else if d.HasChange("est_client_cert") {
+		obj["est-client-cert"] = nil
 	}
 
 	if v, ok := d.GetOk("est_server_cert"); ok {
@@ -1255,6 +1264,8 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["est-server-cert"] = t
 		}
+	} else if d.HasChange("est_server_cert") {
+		obj["est-server-cert"] = nil
 	}
 
 	if v, ok := d.GetOk("est_srp_username"); ok {
@@ -1264,6 +1275,8 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["est-srp-username"] = t
 		}
+	} else if d.HasChange("est_srp_username") {
+		obj["est-srp-username"] = nil
 	}
 
 	if v, ok := d.GetOk("est_srp_password"); ok {
@@ -1273,6 +1286,8 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["est-srp-password"] = t
 		}
+	} else if d.HasChange("est_srp_password") {
+		obj["est-srp-password"] = nil
 	}
 
 	return &obj, nil

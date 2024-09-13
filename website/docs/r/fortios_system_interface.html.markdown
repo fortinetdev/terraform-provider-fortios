@@ -76,6 +76,7 @@ The following arguments are supported:
 * `dhcp_renew_time` - DHCP renew time in seconds (300-604800), 0 means use the renew time provided by the server.
 * `ipunnumbered` - Unnumbered IP used for PPPoE interfaces for which no unique local address is provided.
 * `username` - Username of the PPPoE account, provided by your ISP.
+* `pppoe_egress_cos` - CoS in VLAN tag for outgoing PPPoE/PPP packets. Valid values: `cos0`, `cos1`, `cos2`, `cos3`, `cos4`, `cos5`, `cos6`, `cos7`.
 * `pppoe_unnumbered_negotiate` - Enable/disable PPPoE unnumbered negotiation. Valid values: `enable`, `disable`.
 * `password` - PPPoE account's password.
 * `idle_timeout` - PPPoE auto disconnect after idle timeout seconds, 0 means no timeout.
@@ -115,6 +116,7 @@ The following arguments are supported:
 * `ipmac` - Enable/disable IP/MAC binding. Valid values: `enable`, `disable`.
 * `subst` - Enable to always send packets from this interface to a destination MAC address. Valid values: `enable`, `disable`.
 * `macaddr` - Change the interface's MAC address.
+* `virtual_mac` - Change the interface's virtual MAC address.
 * `substitute_dst_mac` - Destination MAC address that all packets are sent to from this interface.
 * `speed` - Interface speed. The default setting and the options available depend on the interface hardware.
 * `status` - Bring the interface up or shut the interface down. Valid values: `up`, `down`.
@@ -134,6 +136,9 @@ The following arguments are supported:
 * `ring_tx` - TX ring size.
 * `wccp` - Enable/disable WCCP on this interface. Used for encapsulated WCCP communication between WCCP clients and servers. Valid values: `enable`, `disable`.
 * `netflow_sampler` - Enable/disable NetFlow on this interface and set the data that NetFlow collects (rx, tx, or both). Valid values: `disable`, `tx`, `rx`, `both`.
+* `netflow_sample_rate` - NetFlow sample rate.  Sample one packet every configured number of packets
+(1 - 65535, default = 1, which means standard NetFlow where all packets are sampled).
+* `netflow_sampler_id` - Netflow sampler ID.
 * `sflow_sampler` - Enable/disable sFlow on this interface. Valid values: `enable`, `disable`.
 * `drop_overlapped_fragment` - Enable/disable drop overlapped fragment packets. Valid values: `enable`, `disable`.
 * `drop_fragment` - Enable/disable drop fragment packets. Valid values: `enable`, `disable`.
@@ -186,6 +191,7 @@ The following arguments are supported:
 * `security_mode` - Turn on captive portal authentication for this interface. Valid values: `none`, `captive-portal`, `802.1X`.
 * `captive_portal` - Enable/disable captive portal.
 * `security_mac_auth_bypass` - Enable/disable MAC authentication bypass. Valid values: `mac-auth-only`, `enable`, `disable`.
+* `security_ip_auth_bypass` - Enable/disable IP authentication bypass. Valid values: `enable`, `disable`.
 * `security_external_web` - URL of external authentication web server.
 * `security_external_logout` - URL of external authentication logout server.
 * `replacemsg_override_group` - Replacement message override group.
@@ -300,7 +306,7 @@ The `vrrp` block supports:
 * `vrgrp` - VRRP group ID (1 - 65535).
 * `vrip` - IP address of the virtual router.
 * `priority` - Priority of the virtual router (1 - 255).
-* `adv_interval` - Advertisement interval (1 - 255 seconds).
+* `adv_interval` - Advertisement interval. On FortiOS versions 6.2.0-7.4.4: 1 - 255 seconds. On FortiOS versions >= 7.6.0: 250 - 255000 milliseconds.
 * `start_time` - Startup time (1 - 255 seconds).
 * `preempt` - Enable/disable preempt mode. Valid values: `enable`, `disable`.
 * `accept_mode` - Enable/disable accept mode. Valid values: `enable`, `disable`.
@@ -345,6 +351,7 @@ The `tags` block supports:
 The `ipv6` block supports:
 
 * `ip6_mode` - Addressing mode (static, DHCP, delegated). Valid values: `static`, `dhcp`, `pppoe`, `delegated`.
+* `client_options` - DHCP6 client options. The structure of `client_options` block is documented below.
 * `nd_mode` - Neighbor discovery mode. Valid values: `basic`, `SEND-compatible`.
 * `nd_cert` - Neighbor discovery certificate.
 * `nd_security_level` - Neighbor discovery security level (0 - 7; 0 = least secure, default = 0).
@@ -394,6 +401,14 @@ The `ipv6` block supports:
 * `vrip6_link_local` - Link-local IPv6 address of virtual router.
 * `vrrp6` - IPv6 VRRP configuration. The structure of `vrrp6` block is documented below.
 
+The `client_options` block supports:
+
+* `id` - ID.
+* `code` - DHCPv6 option code.
+* `type` - DHCPv6 option type. Valid values: `hex`, `string`, `ip6`, `fqdn`.
+* `value` - DHCPv6 option value (hexadecimal value must be even).
+* `ip6` - DHCP option IP6s.
+
 The `ip6_extra_addr` block supports:
 
 * `prefix` - IPv6 address prefix.
@@ -436,11 +451,12 @@ The `vrrp6` block supports:
 * `vrgrp` - VRRP group ID (1 - 65535).
 * `vrip6` - IPv6 address of the virtual router.
 * `priority` - Priority of the virtual router (1 - 255).
-* `adv_interval` - Advertisement interval (1 - 255 seconds).
+* `adv_interval` - Advertisement interval. On FortiOS versions 6.2.0-7.4.4: 1 - 255 seconds. On FortiOS versions >= 7.6.0: 250 - 255000 milliseconds.
 * `start_time` - Startup time (1 - 255 seconds).
 * `preempt` - Enable/disable preempt mode. Valid values: `enable`, `disable`.
 * `accept_mode` - Enable/disable accept mode. Valid values: `enable`, `disable`.
 * `vrdst6` - Monitor the route to this destination.
+* `vrdst_priority` - Priority of the virtual router when the virtual router destination becomes unreachable (0 - 254).
 * `ignore_default_route` - Enable/disable ignoring of default route when checking destination. Valid values: `enable`, `disable`.
 * `status` - Enable/disable VRRP. Valid values: `enable`, `disable`.
 

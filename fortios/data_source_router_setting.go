@@ -36,6 +36,10 @@ func dataSourceRouterSetting() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"kernel_route_distance": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
 			"ospf_debug_lsa_flags": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -178,6 +182,10 @@ func dataSourceFlattenRouterSettingHostname(v interface{}, d *schema.ResourceDat
 	return v
 }
 
+func dataSourceFlattenRouterSettingKernelRouteDistance(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenRouterSettingOspfDebugLsaFlags(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -286,6 +294,12 @@ func dataSourceRefreshObjectRouterSetting(d *schema.ResourceData, o map[string]i
 	if err = d.Set("hostname", dataSourceFlattenRouterSettingHostname(o["hostname"], d, "hostname")); err != nil {
 		if !fortiAPIPatch(o["hostname"]) {
 			return fmt.Errorf("Error reading hostname: %v", err)
+		}
+	}
+
+	if err = d.Set("kernel_route_distance", dataSourceFlattenRouterSettingKernelRouteDistance(o["kernel-route-distance"], d, "kernel_route_distance")); err != nil {
+		if !fortiAPIPatch(o["kernel-route-distance"]) {
+			return fmt.Errorf("Error reading kernel_route_distance: %v", err)
 		}
 	}
 

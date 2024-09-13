@@ -20,9 +20,10 @@ The following arguments are supported:
 * `setup_time` - Upgrade preparation start time in UTC (hh:mm yyyy/mm/dd UTC).
 * `upgrade_path` - Fortinet OS image versions to upgrade through in major-minor-patch format, such as 7-0-4.
 * `device_type` - Fortinet device type.
-* `status` - Current status of the upgrade. Valid values: `disabled`, `initialized`, `downloading`, `device-disconnected`, `ready`, `coordinating`, `staging`, `final-check`, `upgrade-devices`, `cancelled`, `confirmed`, `done`, `failed`.
+* `status` - Current status of the upgrade.
 * `failure_reason` - Upgrade failure reason.
 * `ha_reboot_controller` - Serial number of the FortiGate unit that will control the reboot process for the federated upgrade of the HA cluster.
+* `next_path_index` - The index of the next image to upgrade to.
 * `known_ha_members` - Known members of the HA cluster. If a member is missing at upgrade time, the upgrade will be cancelled. The structure of `known_ha_members` block is documented below.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
 * `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 

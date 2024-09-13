@@ -47,7 +47,6 @@ func resourceWirelessControllerWidsProfile() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"sensor_mode": &schema.Schema{
 				Type:     schema.TypeString,
@@ -68,7 +67,6 @@ func resourceWirelessControllerWidsProfile() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 3),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -82,7 +80,6 @@ func resourceWirelessControllerWidsProfile() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 3),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -126,7 +123,6 @@ func resourceWirelessControllerWidsProfile() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -134,17 +130,14 @@ func resourceWirelessControllerWidsProfile() *schema.Resource {
 			"ap_bgscan_disable_day": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"ap_bgscan_disable_start": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"ap_bgscan_disable_end": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"ap_fgscan_report_intv": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -622,23 +615,23 @@ func flattenWirelessControllerWidsProfileApScanChannelList6GChan(v interface{}, 
 }
 
 func flattenWirelessControllerWidsProfileApBgscanPeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerWidsProfileApBgscanIntv(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerWidsProfileApBgscanDuration(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerWidsProfileApBgscanIdle(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerWidsProfileApBgscanReportIntv(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerWidsProfileApBgscanDisableSchedules(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -696,7 +689,7 @@ func flattenWirelessControllerWidsProfileApBgscanDisableEnd(v interface{}, d *sc
 }
 
 func flattenWirelessControllerWidsProfileApFgscanReportIntv(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerWidsProfileApScanPassive(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -728,7 +721,7 @@ func flattenWirelessControllerWidsProfileLongDurationAttack(v interface{}, d *sc
 }
 
 func flattenWirelessControllerWidsProfileLongDurationThresh(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerWidsProfileInvalidMacOui(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -744,11 +737,11 @@ func flattenWirelessControllerWidsProfileAuthFrameFlood(v interface{}, d *schema
 }
 
 func flattenWirelessControllerWidsProfileAuthFloodTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerWidsProfileAuthFloodThresh(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerWidsProfileAssocFrameFlood(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -756,11 +749,11 @@ func flattenWirelessControllerWidsProfileAssocFrameFlood(v interface{}, d *schem
 }
 
 func flattenWirelessControllerWidsProfileAssocFloodTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerWidsProfileAssocFloodThresh(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerWidsProfileSpoofedDeauth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -776,11 +769,11 @@ func flattenWirelessControllerWidsProfileEapolStartFlood(v interface{}, d *schem
 }
 
 func flattenWirelessControllerWidsProfileEapolStartThresh(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerWidsProfileEapolStartIntv(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerWidsProfileEapolLogoffFlood(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -788,11 +781,11 @@ func flattenWirelessControllerWidsProfileEapolLogoffFlood(v interface{}, d *sche
 }
 
 func flattenWirelessControllerWidsProfileEapolLogoffThresh(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerWidsProfileEapolLogoffIntv(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerWidsProfileEapolSuccFlood(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -800,11 +793,11 @@ func flattenWirelessControllerWidsProfileEapolSuccFlood(v interface{}, d *schema
 }
 
 func flattenWirelessControllerWidsProfileEapolSuccThresh(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerWidsProfileEapolSuccIntv(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerWidsProfileEapolFailFlood(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -812,11 +805,11 @@ func flattenWirelessControllerWidsProfileEapolFailFlood(v interface{}, d *schema
 }
 
 func flattenWirelessControllerWidsProfileEapolFailThresh(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerWidsProfileEapolFailIntv(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerWidsProfileEapolPreSuccFlood(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -824,11 +817,11 @@ func flattenWirelessControllerWidsProfileEapolPreSuccFlood(v interface{}, d *sch
 }
 
 func flattenWirelessControllerWidsProfileEapolPreSuccThresh(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerWidsProfileEapolPreSuccIntv(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerWidsProfileEapolPreFailFlood(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -836,15 +829,15 @@ func flattenWirelessControllerWidsProfileEapolPreFailFlood(v interface{}, d *sch
 }
 
 func flattenWirelessControllerWidsProfileEapolPreFailThresh(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerWidsProfileEapolPreFailIntv(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerWidsProfileDeauthUnknownSrcThresh(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectWirelessControllerWidsProfile(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -1516,6 +1509,8 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("sensor_mode"); ok {
@@ -1615,6 +1610,8 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["ap-bgscan-disable-day"] = t
 		}
+	} else if d.HasChange("ap_bgscan_disable_day") {
+		obj["ap-bgscan-disable-day"] = nil
 	}
 
 	if v, ok := d.GetOk("ap_bgscan_disable_start"); ok {
@@ -1624,6 +1621,8 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["ap-bgscan-disable-start"] = t
 		}
+	} else if d.HasChange("ap_bgscan_disable_start") {
+		obj["ap-bgscan-disable-start"] = nil
 	}
 
 	if v, ok := d.GetOk("ap_bgscan_disable_end"); ok {
@@ -1633,6 +1632,8 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["ap-bgscan-disable-end"] = t
 		}
+	} else if d.HasChange("ap_bgscan_disable_end") {
+		obj["ap-bgscan-disable-end"] = nil
 	}
 
 	if v, ok := d.GetOk("ap_fgscan_report_intv"); ok {

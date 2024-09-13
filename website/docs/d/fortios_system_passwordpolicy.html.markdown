@@ -31,4 +31,5 @@ The following attributes are exported:
 * `expire_status` - Enable/disable password expiration.
 * `expire_day` - Number of days after which passwords expire (1 - 999 days, default = 90).
 * `reuse_password` - Enable/disable reusing of password (if both reuse-password and change-4-characters are enabled, change-4-characters overrides).
+* `reuse_password_limit` - Number of times passwords can be reused (0 - 20, default = 0. If set to 0, can reuse password an unlimited number of times.).
 

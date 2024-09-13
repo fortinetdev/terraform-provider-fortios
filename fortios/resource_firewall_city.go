@@ -40,13 +40,11 @@ func resourceFirewallCity() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -204,7 +202,7 @@ func resourceFirewallCityRead(d *schema.ResourceData, m interface{}) error {
 }
 
 func flattenFirewallCityId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallCityName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -253,6 +251,8 @@ func getObjectFirewallCity(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["id"] = t
 		}
+	} else if d.HasChange("fosid") {
+		obj["id"] = nil
 	}
 
 	if v, ok := d.GetOk("name"); ok {
@@ -262,6 +262,8 @@ func getObjectFirewallCity(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	return &obj, nil

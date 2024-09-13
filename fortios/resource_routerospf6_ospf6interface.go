@@ -52,7 +52,6 @@ func resourceRouterospf6Ospf6Interface() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"retransmit_interval": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -70,7 +69,6 @@ func resourceRouterospf6Ospf6Interface() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"priority": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -82,13 +80,11 @@ func resourceRouterospf6Ospf6Interface() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"hello_interval": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
@@ -109,7 +105,6 @@ func resourceRouterospf6Ospf6Interface() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(576, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"mtu_ignore": &schema.Schema{
 				Type:     schema.TypeString,
@@ -145,17 +140,18 @@ func resourceRouterospf6Ospf6Interface() *schema.Resource {
 						"spi": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"auth_key": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 128),
 							Optional:     true,
+							Sensitive:    true,
 						},
 						"enc_key": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 128),
 							Optional:     true,
+							Sensitive:    true,
 						},
 					},
 				},
@@ -180,7 +176,6 @@ func resourceRouterospf6Ospf6Interface() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 						"priority": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -369,27 +364,27 @@ func flattenRouterospf6Ospf6InterfaceInterface(v interface{}, d *schema.Resource
 }
 
 func flattenRouterospf6Ospf6InterfaceRetransmitInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterospf6Ospf6InterfaceTransmitDelay(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterospf6Ospf6InterfaceCost(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterospf6Ospf6InterfacePriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterospf6Ospf6InterfaceDeadInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterospf6Ospf6InterfaceHelloInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterospf6Ospf6InterfaceStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -405,7 +400,7 @@ func flattenRouterospf6Ospf6InterfaceBfd(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenRouterospf6Ospf6InterfaceMtu(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterospf6Ospf6InterfaceMtuIgnore(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -417,7 +412,7 @@ func flattenRouterospf6Ospf6InterfaceAuthentication(v interface{}, d *schema.Res
 }
 
 func flattenRouterospf6Ospf6InterfaceKeyRolloverInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterospf6Ospf6InterfaceIpsecAuthAlg(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -458,13 +453,19 @@ func flattenRouterospf6Ospf6InterfaceIpsecKeys(v interface{}, d *schema.Resource
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_key"
-		if cur_v, ok := i["auth-key"]; ok {
-			tmp["auth_key"] = flattenRouterospf6Ospf6InterfaceIpsecKeysAuthKey(cur_v, d, pre_append, sv)
+		if _, ok := i["auth-key"]; ok {
+			c := d.Get(pre_append).(string)
+			if c != "" {
+				tmp["auth_key"] = c
+			}
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "enc_key"
-		if cur_v, ok := i["enc-key"]; ok {
-			tmp["enc_key"] = flattenRouterospf6Ospf6InterfaceIpsecKeysEncKey(cur_v, d, pre_append, sv)
+		if _, ok := i["enc-key"]; ok {
+			c := d.Get(pre_append).(string)
+			if c != "" {
+				tmp["enc_key"] = c
+			}
 		}
 
 		result = append(result, tmp)
@@ -477,15 +478,7 @@ func flattenRouterospf6Ospf6InterfaceIpsecKeys(v interface{}, d *schema.Resource
 }
 
 func flattenRouterospf6Ospf6InterfaceIpsecKeysSpi(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenRouterospf6Ospf6InterfaceIpsecKeysAuthKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenRouterospf6Ospf6InterfaceIpsecKeysEncKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterospf6Ospf6InterfaceNeighbor(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -546,15 +539,15 @@ func flattenRouterospf6Ospf6InterfaceNeighborIp6(v interface{}, d *schema.Resour
 }
 
 func flattenRouterospf6Ospf6InterfaceNeighborPollInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterospf6Ospf6InterfaceNeighborCost(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterospf6Ospf6InterfaceNeighborPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectRouterospf6Ospf6Interface(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -804,16 +797,22 @@ func expandRouterospf6Ospf6InterfaceIpsecKeys(d *schema.ResourceData, v interfac
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "spi"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["spi"], _ = expandRouterospf6Ospf6InterfaceIpsecKeysSpi(d, i["spi"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["spi"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_key"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["auth-key"], _ = expandRouterospf6Ospf6InterfaceIpsecKeysAuthKey(d, i["auth_key"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["auth-key"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "enc_key"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["enc-key"], _ = expandRouterospf6Ospf6InterfaceIpsecKeysEncKey(d, i["enc_key"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["enc-key"] = nil
 		}
 
 		result = append(result, tmp)
@@ -863,6 +862,8 @@ func expandRouterospf6Ospf6InterfaceNeighbor(d *schema.ResourceData, v interface
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "cost"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["cost"], _ = expandRouterospf6Ospf6InterfaceNeighborCost(d, i["cost"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["cost"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
@@ -922,6 +923,8 @@ func getObjectRouterospf6Ospf6Interface(d *schema.ResourceData, sv string) (*map
 		} else if t != nil {
 			obj["interface"] = t
 		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
 	}
 
 	if v, ok := d.GetOk("retransmit_interval"); ok {
@@ -949,6 +952,8 @@ func getObjectRouterospf6Ospf6Interface(d *schema.ResourceData, sv string) (*map
 		} else if t != nil {
 			obj["cost"] = t
 		}
+	} else if d.HasChange("cost") {
+		obj["cost"] = nil
 	}
 
 	if v, ok := d.GetOkExists("priority"); ok {
@@ -967,6 +972,8 @@ func getObjectRouterospf6Ospf6Interface(d *schema.ResourceData, sv string) (*map
 		} else if t != nil {
 			obj["dead-interval"] = t
 		}
+	} else if d.HasChange("dead_interval") {
+		obj["dead-interval"] = nil
 	}
 
 	if v, ok := d.GetOk("hello_interval"); ok {
@@ -976,6 +983,8 @@ func getObjectRouterospf6Ospf6Interface(d *schema.ResourceData, sv string) (*map
 		} else if t != nil {
 			obj["hello-interval"] = t
 		}
+	} else if d.HasChange("hello_interval") {
+		obj["hello-interval"] = nil
 	}
 
 	if v, ok := d.GetOk("status"); ok {
@@ -1012,6 +1021,8 @@ func getObjectRouterospf6Ospf6Interface(d *schema.ResourceData, sv string) (*map
 		} else if t != nil {
 			obj["mtu"] = t
 		}
+	} else if d.HasChange("mtu") {
+		obj["mtu"] = nil
 	}
 
 	if v, ok := d.GetOk("mtu_ignore"); ok {

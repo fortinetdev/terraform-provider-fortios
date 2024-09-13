@@ -52,9 +52,13 @@ func resourceRouterospfOspfInterface() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ip": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"linkdown_fast_failover": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -68,29 +72,26 @@ func resourceRouterospfOspfInterface() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 8),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"keychain": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"md5_key": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"md5_keychain": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"prefix_length": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 32),
 				Optional:     true,
-				Computed:     true,
 			},
 			"retransmit_interval": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -108,7 +109,6 @@ func resourceRouterospfOspfInterface() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"priority": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -120,19 +120,16 @@ func resourceRouterospfOspfInterface() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"hello_interval": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"hello_multiplier": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(3, 10),
 				Optional:     true,
-				Computed:     true,
 			},
 			"database_filter_out": &schema.Schema{
 				Type:     schema.TypeString,
@@ -143,7 +140,6 @@ func resourceRouterospfOspfInterface() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(576, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"mtu_ignore": &schema.Schema{
 				Type:     schema.TypeString,
@@ -180,12 +176,12 @@ func resourceRouterospfOspfInterface() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"key_string": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 16),
 							Optional:     true,
+							Sensitive:    true,
 						},
 					},
 				},
@@ -371,11 +367,11 @@ func flattenRouterospfOspfInterfaceIp(v interface{}, d *schema.ResourceData, pre
 	return v
 }
 
-func flattenRouterospfOspfInterfaceAuthentication(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+func flattenRouterospfOspfInterfaceLinkdownFastFailover(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenRouterospfOspfInterfaceAuthenticationKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+func flattenRouterospfOspfInterfaceAuthentication(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -392,35 +388,35 @@ func flattenRouterospfOspfInterfaceMd5Keychain(v interface{}, d *schema.Resource
 }
 
 func flattenRouterospfOspfInterfacePrefixLength(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterospfOspfInterfaceRetransmitInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterospfOspfInterfaceTransmitDelay(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterospfOspfInterfaceCost(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterospfOspfInterfacePriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterospfOspfInterfaceDeadInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterospfOspfInterfaceHelloInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterospfOspfInterfaceHelloMultiplier(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterospfOspfInterfaceDatabaseFilterOut(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -428,7 +424,7 @@ func flattenRouterospfOspfInterfaceDatabaseFilterOut(v interface{}, d *schema.Re
 }
 
 func flattenRouterospfOspfInterfaceMtu(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterospfOspfInterfaceMtuIgnore(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -448,7 +444,7 @@ func flattenRouterospfOspfInterfaceStatus(v interface{}, d *schema.ResourceData,
 }
 
 func flattenRouterospfOspfInterfaceResyncTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterospfOspfInterfaceMd5Keys(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -481,8 +477,11 @@ func flattenRouterospfOspfInterfaceMd5Keys(v interface{}, d *schema.ResourceData
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "key_string"
-		if cur_v, ok := i["key-string"]; ok {
-			tmp["key_string"] = flattenRouterospfOspfInterfaceMd5KeysKeyString(cur_v, d, pre_append, sv)
+		if _, ok := i["key-string"]; ok {
+			c := d.Get(pre_append).(string)
+			if c != "" {
+				tmp["key_string"] = c
+			}
 		}
 
 		result = append(result, tmp)
@@ -495,11 +494,7 @@ func flattenRouterospfOspfInterfaceMd5Keys(v interface{}, d *schema.ResourceData
 }
 
 func flattenRouterospfOspfInterfaceMd5KeysId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenRouterospfOspfInterfaceMd5KeysKeyString(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectRouterospfOspfInterface(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -535,15 +530,15 @@ func refreshObjectRouterospfOspfInterface(d *schema.ResourceData, o map[string]i
 		}
 	}
 
-	if err = d.Set("authentication", flattenRouterospfOspfInterfaceAuthentication(o["authentication"], d, "authentication", sv)); err != nil {
-		if !fortiAPIPatch(o["authentication"]) {
-			return fmt.Errorf("Error reading authentication: %v", err)
+	if err = d.Set("linkdown_fast_failover", flattenRouterospfOspfInterfaceLinkdownFastFailover(o["linkdown-fast-failover"], d, "linkdown_fast_failover", sv)); err != nil {
+		if !fortiAPIPatch(o["linkdown-fast-failover"]) {
+			return fmt.Errorf("Error reading linkdown_fast_failover: %v", err)
 		}
 	}
 
-	if err = d.Set("authentication_key", flattenRouterospfOspfInterfaceAuthenticationKey(o["authentication-key"], d, "authentication_key", sv)); err != nil {
-		if !fortiAPIPatch(o["authentication-key"]) {
-			return fmt.Errorf("Error reading authentication_key: %v", err)
+	if err = d.Set("authentication", flattenRouterospfOspfInterfaceAuthentication(o["authentication"], d, "authentication", sv)); err != nil {
+		if !fortiAPIPatch(o["authentication"]) {
+			return fmt.Errorf("Error reading authentication: %v", err)
 		}
 	}
 
@@ -696,6 +691,10 @@ func expandRouterospfOspfInterfaceIp(d *schema.ResourceData, v interface{}, pre 
 	return v, nil
 }
 
+func expandRouterospfOspfInterfaceLinkdownFastFailover(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandRouterospfOspfInterfaceAuthentication(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -793,11 +792,15 @@ func expandRouterospfOspfInterfaceMd5Keys(d *schema.ResourceData, v interface{},
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandRouterospfOspfInterfaceMd5KeysId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "key_string"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["key-string"], _ = expandRouterospfOspfInterfaceMd5KeysKeyString(d, i["key_string"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["key-string"] = nil
 		}
 
 		result = append(result, tmp)
@@ -835,6 +838,8 @@ func getObjectRouterospfOspfInterface(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["comments"] = t
 		}
+	} else if d.HasChange("comments") {
+		obj["comments"] = nil
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
@@ -844,6 +849,8 @@ func getObjectRouterospfOspfInterface(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["interface"] = t
 		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
 	}
 
 	if v, ok := d.GetOk("ip"); ok {
@@ -852,6 +859,15 @@ func getObjectRouterospfOspfInterface(d *schema.ResourceData, sv string) (*map[s
 			return &obj, err
 		} else if t != nil {
 			obj["ip"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("linkdown_fast_failover"); ok {
+		t, err := expandRouterospfOspfInterfaceLinkdownFastFailover(d, v, "linkdown_fast_failover", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["linkdown-fast-failover"] = t
 		}
 	}
 
@@ -871,6 +887,8 @@ func getObjectRouterospfOspfInterface(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["authentication-key"] = t
 		}
+	} else if d.HasChange("authentication_key") {
+		obj["authentication-key"] = nil
 	}
 
 	if v, ok := d.GetOk("keychain"); ok {
@@ -880,6 +898,8 @@ func getObjectRouterospfOspfInterface(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["keychain"] = t
 		}
+	} else if d.HasChange("keychain") {
+		obj["keychain"] = nil
 	}
 
 	if v, ok := d.GetOk("md5_key"); ok {
@@ -889,6 +909,8 @@ func getObjectRouterospfOspfInterface(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["md5-key"] = t
 		}
+	} else if d.HasChange("md5_key") {
+		obj["md5-key"] = nil
 	}
 
 	if v, ok := d.GetOk("md5_keychain"); ok {
@@ -898,6 +920,8 @@ func getObjectRouterospfOspfInterface(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["md5-keychain"] = t
 		}
+	} else if d.HasChange("md5_keychain") {
+		obj["md5-keychain"] = nil
 	}
 
 	if v, ok := d.GetOkExists("prefix_length"); ok {
@@ -907,6 +931,8 @@ func getObjectRouterospfOspfInterface(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["prefix-length"] = t
 		}
+	} else if d.HasChange("prefix_length") {
+		obj["prefix-length"] = nil
 	}
 
 	if v, ok := d.GetOk("retransmit_interval"); ok {
@@ -934,6 +960,8 @@ func getObjectRouterospfOspfInterface(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["cost"] = t
 		}
+	} else if d.HasChange("cost") {
+		obj["cost"] = nil
 	}
 
 	if v, ok := d.GetOkExists("priority"); ok {
@@ -952,6 +980,8 @@ func getObjectRouterospfOspfInterface(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["dead-interval"] = t
 		}
+	} else if d.HasChange("dead_interval") {
+		obj["dead-interval"] = nil
 	}
 
 	if v, ok := d.GetOkExists("hello_interval"); ok {
@@ -961,6 +991,8 @@ func getObjectRouterospfOspfInterface(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["hello-interval"] = t
 		}
+	} else if d.HasChange("hello_interval") {
+		obj["hello-interval"] = nil
 	}
 
 	if v, ok := d.GetOk("hello_multiplier"); ok {
@@ -970,6 +1002,8 @@ func getObjectRouterospfOspfInterface(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["hello-multiplier"] = t
 		}
+	} else if d.HasChange("hello_multiplier") {
+		obj["hello-multiplier"] = nil
 	}
 
 	if v, ok := d.GetOk("database_filter_out"); ok {
@@ -988,6 +1022,8 @@ func getObjectRouterospfOspfInterface(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["mtu"] = t
 		}
+	} else if d.HasChange("mtu") {
+		obj["mtu"] = nil
 	}
 
 	if v, ok := d.GetOk("mtu_ignore"); ok {

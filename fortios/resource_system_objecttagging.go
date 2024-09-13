@@ -67,7 +67,6 @@ func resourceSystemObjectTagging() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 32),
 				Optional:     true,
-				Computed:     true,
 			},
 			"tags": &schema.Schema{
 				Type:     schema.TypeSet,
@@ -78,7 +77,6 @@ func resourceSystemObjectTagging() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -269,7 +267,7 @@ func flattenSystemObjectTaggingMultiple(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenSystemObjectTaggingColor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemObjectTaggingTags(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -491,6 +489,8 @@ func getObjectSystemObjectTagging(d *schema.ResourceData, sv string) (*map[strin
 		} else if t != nil {
 			obj["color"] = t
 		}
+	} else if d.HasChange("color") {
+		obj["color"] = nil
 	}
 
 	if v, ok := d.GetOk("tags"); ok || d.HasChange("tags") {

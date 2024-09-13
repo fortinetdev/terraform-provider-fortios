@@ -48,6 +48,7 @@ The following arguments are supported:
 * `certificate` - Certificate.
 * `fabric_workers` - Number of worker processes for Security Fabric daemon.
 * `downstream_access` - Enable/disable downstream device access to this device's configuration and data. Valid values: `enable`, `disable`.
+* `legacy_authentication` - Enable/disable legacy authentication. Valid values: `disable`, `enable`.
 * `downstream_accprofile` - Default access profile for requests from downstream devices.
 * `fixed_key` - Auto-generated fixed key used when this device is the root. (Will automatically be generated if not set.)
 * `trusted_list` - Pre-authorized and blocked security fabric nodes. The structure of `trusted_list` block is documented below.

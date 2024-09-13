@@ -40,7 +40,6 @@ func resourceFirewallSniffer() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 9999),
 				Optional:     true,
-				Computed:     true,
 			},
 			"uuid": &schema.Schema{
 				Type:     schema.TypeString,
@@ -76,25 +75,21 @@ func resourceFirewallSniffer() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"port": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"protocol": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"vlan": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"application_list_status": &schema.Schema{
 				Type:     schema.TypeString,
@@ -105,7 +100,6 @@ func resourceFirewallSniffer() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ips_sensor_status": &schema.Schema{
 				Type:     schema.TypeString,
@@ -116,7 +110,6 @@ func resourceFirewallSniffer() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"dsri": &schema.Schema{
 				Type:     schema.TypeString,
@@ -132,7 +125,6 @@ func resourceFirewallSniffer() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"casb_profile_status": &schema.Schema{
 				Type:     schema.TypeString,
@@ -143,7 +135,6 @@ func resourceFirewallSniffer() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"webfilter_profile_status": &schema.Schema{
 				Type:     schema.TypeString,
@@ -154,7 +145,6 @@ func resourceFirewallSniffer() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"emailfilter_profile_status": &schema.Schema{
 				Type:     schema.TypeString,
@@ -165,7 +155,6 @@ func resourceFirewallSniffer() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"dlp_profile_status": &schema.Schema{
 				Type:     schema.TypeString,
@@ -176,18 +165,15 @@ func resourceFirewallSniffer() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"spamfilter_profile_status": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"spamfilter_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"dlp_sensor_status": &schema.Schema{
 				Type:     schema.TypeString,
@@ -198,7 +184,6 @@ func resourceFirewallSniffer() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ip_threatfeed_status": &schema.Schema{
 				Type:     schema.TypeString,
@@ -214,7 +199,6 @@ func resourceFirewallSniffer() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -228,7 +212,6 @@ func resourceFirewallSniffer() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ips_dos_status": &schema.Schema{
 				Type:     schema.TypeString,
@@ -244,7 +227,6 @@ func resourceFirewallSniffer() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -279,12 +261,10 @@ func resourceFirewallSniffer() *schema.Resource {
 						"threshold": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"thresholddefault": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -292,7 +272,6 @@ func resourceFirewallSniffer() *schema.Resource {
 			"scan_botnet_connections": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"max_packet_count": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -466,7 +445,7 @@ func resourceFirewallSnifferRead(d *schema.ResourceData, m interface{}) error {
 }
 
 func flattenFirewallSnifferId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallSnifferUuid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -750,11 +729,11 @@ func flattenFirewallSnifferAnomalyQuarantineLog(v interface{}, d *schema.Resourc
 }
 
 func flattenFirewallSnifferAnomalyThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallSnifferAnomalyThresholdDefault(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallSnifferScanBotnetConnections(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -762,7 +741,7 @@ func flattenFirewallSnifferScanBotnetConnections(v interface{}, d *schema.Resour
 }
 
 func flattenFirewallSnifferMaxPacketCount(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectFirewallSniffer(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -1212,6 +1191,8 @@ func expandFirewallSnifferAnomaly(d *schema.ResourceData, v interface{}, pre str
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandFirewallSnifferAnomalyName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
@@ -1247,11 +1228,15 @@ func expandFirewallSnifferAnomaly(d *schema.ResourceData, v interface{}, pre str
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "threshold"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["threshold"], _ = expandFirewallSnifferAnomalyThreshold(d, i["threshold"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["threshold"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "thresholddefault"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["threshold(default)"], _ = expandFirewallSnifferAnomalyThresholdDefault(d, i["thresholddefault"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["threshold(default)"] = nil
 		}
 
 		result = append(result, tmp)
@@ -1316,6 +1301,8 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["id"] = t
 		}
+	} else if d.HasChange("fosid") {
+		obj["id"] = nil
 	}
 
 	if v, ok := d.GetOk("uuid"); ok {
@@ -1370,6 +1357,8 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["interface"] = t
 		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
 	}
 
 	if v, ok := d.GetOk("host"); ok {
@@ -1379,6 +1368,8 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["host"] = t
 		}
+	} else if d.HasChange("host") {
+		obj["host"] = nil
 	}
 
 	if v, ok := d.GetOk("port"); ok {
@@ -1388,6 +1379,8 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["port"] = t
 		}
+	} else if d.HasChange("port") {
+		obj["port"] = nil
 	}
 
 	if v, ok := d.GetOk("protocol"); ok {
@@ -1397,6 +1390,8 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["protocol"] = t
 		}
+	} else if d.HasChange("protocol") {
+		obj["protocol"] = nil
 	}
 
 	if v, ok := d.GetOk("vlan"); ok {
@@ -1406,6 +1401,8 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["vlan"] = t
 		}
+	} else if d.HasChange("vlan") {
+		obj["vlan"] = nil
 	}
 
 	if v, ok := d.GetOk("application_list_status"); ok {
@@ -1424,6 +1421,8 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["application-list"] = t
 		}
+	} else if d.HasChange("application_list") {
+		obj["application-list"] = nil
 	}
 
 	if v, ok := d.GetOk("ips_sensor_status"); ok {
@@ -1442,6 +1441,8 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["ips-sensor"] = t
 		}
+	} else if d.HasChange("ips_sensor") {
+		obj["ips-sensor"] = nil
 	}
 
 	if v, ok := d.GetOk("dsri"); ok {
@@ -1469,6 +1470,8 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["av-profile"] = t
 		}
+	} else if d.HasChange("av_profile") {
+		obj["av-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("casb_profile_status"); ok {
@@ -1487,6 +1490,8 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["casb-profile"] = t
 		}
+	} else if d.HasChange("casb_profile") {
+		obj["casb-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("webfilter_profile_status"); ok {
@@ -1505,6 +1510,8 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["webfilter-profile"] = t
 		}
+	} else if d.HasChange("webfilter_profile") {
+		obj["webfilter-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("emailfilter_profile_status"); ok {
@@ -1523,6 +1530,8 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["emailfilter-profile"] = t
 		}
+	} else if d.HasChange("emailfilter_profile") {
+		obj["emailfilter-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("dlp_profile_status"); ok {
@@ -1541,6 +1550,8 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["dlp-profile"] = t
 		}
+	} else if d.HasChange("dlp_profile") {
+		obj["dlp-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("spamfilter_profile_status"); ok {
@@ -1550,6 +1561,8 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["spamfilter-profile-status"] = t
 		}
+	} else if d.HasChange("spamfilter_profile_status") {
+		obj["spamfilter-profile-status"] = nil
 	}
 
 	if v, ok := d.GetOk("spamfilter_profile"); ok {
@@ -1559,6 +1572,8 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["spamfilter-profile"] = t
 		}
+	} else if d.HasChange("spamfilter_profile") {
+		obj["spamfilter-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("dlp_sensor_status"); ok {
@@ -1577,6 +1592,8 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["dlp-sensor"] = t
 		}
+	} else if d.HasChange("dlp_sensor") {
+		obj["dlp-sensor"] = nil
 	}
 
 	if v, ok := d.GetOk("ip_threatfeed_status"); ok {
@@ -1613,6 +1630,8 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["file-filter-profile"] = t
 		}
+	} else if d.HasChange("file_filter_profile") {
+		obj["file-filter-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("ips_dos_status"); ok {
@@ -1640,6 +1659,8 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["scan-botnet-connections"] = t
 		}
+	} else if d.HasChange("scan_botnet_connections") {
+		obj["scan-botnet-connections"] = nil
 	}
 
 	if v, ok := d.GetOk("max_packet_count"); ok {

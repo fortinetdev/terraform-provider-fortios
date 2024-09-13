@@ -69,6 +69,7 @@ The following arguments are supported:
 * `h3c_compatibility` - Enable/disable compatibility with the H3C, a mechanism that performs security checking for authentication. Valid values: `enable`, `disable`.
 * `auth_type` - Authentication methods/protocols permitted for this RADIUS server. Valid values: `auto`, `ms_chap_v2`, `ms_chap`, `chap`, `pap`.
 * `source_ip` - Source IP address for communications to the RADIUS server.
+* `source_ip_interface` - Source interface for communication with the RADIUS server.
 * `username_case_sensitive` - Enable/disable case sensitive user names. Valid values: `enable`, `disable`.
 * `group_override_attr_type` - RADIUS attribute type to override user group information. Valid values: `filter-Id`, `class`.
 * `class` - Class attribute name(s). The structure of `class` block is documented below.

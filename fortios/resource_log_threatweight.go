@@ -170,7 +170,6 @@ func resourceLogThreatWeight() *schema.Resource {
 						"botnet_connection": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"content_disarm": &schema.Schema{
 							Type:     schema.TypeString,
@@ -249,13 +248,11 @@ func resourceLogThreatWeight() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"category": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"level": &schema.Schema{
 							Type:     schema.TypeString,
@@ -274,13 +271,11 @@ func resourceLogThreatWeight() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"country": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 2),
 							Optional:     true,
-							Computed:     true,
 						},
 						"level": &schema.Schema{
 							Type:     schema.TypeString,
@@ -299,13 +294,11 @@ func resourceLogThreatWeight() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"category": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 						"level": &schema.Schema{
 							Type:     schema.TypeString,
@@ -481,19 +474,19 @@ func flattenLogThreatWeightLevel(v interface{}, d *schema.ResourceData, pre stri
 }
 
 func flattenLogThreatWeightLevelLow(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenLogThreatWeightLevelMedium(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenLogThreatWeightLevelHigh(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenLogThreatWeightLevelCritical(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenLogThreatWeightBlockedConnection(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -812,11 +805,11 @@ func flattenLogThreatWeightWeb(v interface{}, d *schema.ResourceData, pre string
 }
 
 func flattenLogThreatWeightWebId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenLogThreatWeightWebCategory(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenLogThreatWeightWebLevel(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -872,7 +865,7 @@ func flattenLogThreatWeightGeolocation(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenLogThreatWeightGeolocationId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenLogThreatWeightGeolocationCountry(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -932,11 +925,11 @@ func flattenLogThreatWeightApplication(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenLogThreatWeightApplicationId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenLogThreatWeightApplicationCategory(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenLogThreatWeightApplicationLevel(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1514,11 +1507,15 @@ func expandLogThreatWeightWeb(d *schema.ResourceData, v interface{}, pre string,
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandLogThreatWeightWebId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["category"], _ = expandLogThreatWeightWebCategory(d, i["category"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["category"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "level"
@@ -1563,11 +1560,15 @@ func expandLogThreatWeightGeolocation(d *schema.ResourceData, v interface{}, pre
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandLogThreatWeightGeolocationId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "country"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["country"], _ = expandLogThreatWeightGeolocationCountry(d, i["country"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["country"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "level"
@@ -1612,11 +1613,15 @@ func expandLogThreatWeightApplication(d *schema.ResourceData, v interface{}, pre
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandLogThreatWeightApplicationId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["category"], _ = expandLogThreatWeightApplicationCategory(d, i["category"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["category"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "level"

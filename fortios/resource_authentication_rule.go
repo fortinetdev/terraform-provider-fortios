@@ -62,7 +62,6 @@ func resourceAuthenticationRule() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -76,7 +75,6 @@ func resourceAuthenticationRule() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -90,7 +88,6 @@ func resourceAuthenticationRule() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -104,7 +101,6 @@ func resourceAuthenticationRule() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -118,7 +114,6 @@ func resourceAuthenticationRule() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -132,13 +127,11 @@ func resourceAuthenticationRule() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"sso_auth_method": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"web_auth_cookie": &schema.Schema{
 				Type:     schema.TypeString,
@@ -584,7 +577,7 @@ func flattenAuthenticationRuleCorsStateful(v interface{}, d *schema.ResourceData
 }
 
 func flattenAuthenticationRuleCorsDepth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenAuthenticationRuleCertAuthCookie(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1062,6 +1055,8 @@ func getObjectAuthenticationRule(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["active-auth-method"] = t
 		}
+	} else if d.HasChange("active_auth_method") {
+		obj["active-auth-method"] = nil
 	}
 
 	if v, ok := d.GetOk("sso_auth_method"); ok {
@@ -1071,6 +1066,8 @@ func getObjectAuthenticationRule(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["sso-auth-method"] = t
 		}
+	} else if d.HasChange("sso_auth_method") {
+		obj["sso-auth-method"] = nil
 	}
 
 	if v, ok := d.GetOk("web_auth_cookie"); ok {
@@ -1134,6 +1131,8 @@ func getObjectAuthenticationRule(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["comments"] = t
 		}
+	} else if d.HasChange("comments") {
+		obj["comments"] = nil
 	}
 
 	return &obj, nil

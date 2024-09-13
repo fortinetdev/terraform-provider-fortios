@@ -55,7 +55,6 @@ func resourceSystemDnsDatabase() *schema.Resource {
 			"allow_transfer": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"type": &schema.Schema{
 				Type:     schema.TypeString,
@@ -98,7 +97,6 @@ func resourceSystemDnsDatabase() *schema.Resource {
 			"forwarder": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"forwarder6": &schema.Schema{
 				Type:     schema.TypeString,
@@ -114,6 +112,11 @@ func resourceSystemDnsDatabase() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
+			},
+			"source_ip_interface": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 15),
+				Optional:     true,
 			},
 			"rr_max": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -144,7 +147,6 @@ func resourceSystemDnsDatabase() *schema.Resource {
 						"ttl": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"preference": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -166,13 +168,11 @@ func resourceSystemDnsDatabase() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"canonical_name": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -383,7 +383,7 @@ func flattenSystemDnsDatabaseContact(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenSystemDnsDatabaseTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemDnsDatabaseAuthoritative(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -406,8 +406,12 @@ func flattenSystemDnsDatabaseSourceIp6(v interface{}, d *schema.ResourceData, pr
 	return v
 }
 
-func flattenSystemDnsDatabaseRrMax(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+func flattenSystemDnsDatabaseSourceIpInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
+}
+
+func flattenSystemDnsDatabaseRrMax(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
 }
 
 func flattenSystemDnsDatabaseDnsEntry(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -489,7 +493,7 @@ func flattenSystemDnsDatabaseDnsEntry(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenSystemDnsDatabaseDnsEntryId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemDnsDatabaseDnsEntryStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -501,11 +505,11 @@ func flattenSystemDnsDatabaseDnsEntryType(v interface{}, d *schema.ResourceData,
 }
 
 func flattenSystemDnsDatabaseDnsEntryTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemDnsDatabaseDnsEntryPreference(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemDnsDatabaseDnsEntryIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -629,6 +633,12 @@ func refreshObjectSystemDnsDatabase(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
+	if err = d.Set("source_ip_interface", flattenSystemDnsDatabaseSourceIpInterface(o["source-ip-interface"], d, "source_ip_interface", sv)); err != nil {
+		if !fortiAPIPatch(o["source-ip-interface"]) {
+			return fmt.Errorf("Error reading source_ip_interface: %v", err)
+		}
+	}
+
 	if err = d.Set("rr_max", flattenSystemDnsDatabaseRrMax(o["rr-max"], d, "rr_max", sv)); err != nil {
 		if !fortiAPIPatch(o["rr-max"]) {
 			return fmt.Errorf("Error reading rr_max: %v", err)
@@ -724,6 +734,10 @@ func expandSystemDnsDatabaseSourceIp6(d *schema.ResourceData, v interface{}, pre
 	return v, nil
 }
 
+func expandSystemDnsDatabaseSourceIpInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemDnsDatabaseRrMax(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -760,6 +774,8 @@ func expandSystemDnsDatabaseDnsEntry(d *schema.ResourceData, v interface{}, pre 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ttl"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["ttl"], _ = expandSystemDnsDatabaseDnsEntryTtl(d, i["ttl"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["ttl"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "preference"
@@ -780,11 +796,15 @@ func expandSystemDnsDatabaseDnsEntry(d *schema.ResourceData, v interface{}, pre 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "hostname"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["hostname"], _ = expandSystemDnsDatabaseDnsEntryHostname(d, i["hostname"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["hostname"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "canonical_name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["canonical-name"], _ = expandSystemDnsDatabaseDnsEntryCanonicalName(d, i["canonical_name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["canonical-name"] = nil
 		}
 
 		result = append(result, tmp)
@@ -859,6 +879,8 @@ func getObjectSystemDnsDatabase(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["domain"] = t
 		}
+	} else if d.HasChange("domain") {
+		obj["domain"] = nil
 	}
 
 	if v, ok := d.GetOk("allow_transfer"); ok {
@@ -868,6 +890,8 @@ func getObjectSystemDnsDatabase(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["allow-transfer"] = t
 		}
+	} else if d.HasChange("allow_transfer") {
+		obj["allow-transfer"] = nil
 	}
 
 	if v, ok := d.GetOk("type"); ok {
@@ -949,6 +973,8 @@ func getObjectSystemDnsDatabase(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["forwarder"] = t
 		}
+	} else if d.HasChange("forwarder") {
+		obj["forwarder"] = nil
 	}
 
 	if v, ok := d.GetOk("forwarder6"); ok {
@@ -976,6 +1002,17 @@ func getObjectSystemDnsDatabase(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["source-ip6"] = t
 		}
+	}
+
+	if v, ok := d.GetOk("source_ip_interface"); ok {
+		t, err := expandSystemDnsDatabaseSourceIpInterface(d, v, "source_ip_interface", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["source-ip-interface"] = t
+		}
+	} else if d.HasChange("source_ip_interface") {
+		obj["source-ip-interface"] = nil
 	}
 
 	if v, ok := d.GetOkExists("rr_max"); ok {

@@ -47,7 +47,6 @@ func resourceIpsCustom() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 4095),
 				Optional:     true,
-				Computed:     true,
 			},
 			"sig_name": &schema.Schema{
 				Type:         schema.TypeString,
@@ -63,27 +62,22 @@ func resourceIpsCustom() *schema.Resource {
 			"severity": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"location": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"os": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"application": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"protocol": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
@@ -109,7 +103,6 @@ func resourceIpsCustom() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -279,7 +272,7 @@ func flattenIpsCustomSigName(v interface{}, d *schema.ResourceData, pre string, 
 }
 
 func flattenIpsCustomRuleId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenIpsCustomSeverity(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -493,6 +486,8 @@ func getObjectIpsCustom(d *schema.ResourceData, sv string) (*map[string]interfac
 		} else if t != nil {
 			obj["signature"] = t
 		}
+	} else if d.HasChange("signature") {
+		obj["signature"] = nil
 	}
 
 	if v, ok := d.GetOk("sig_name"); ok {
@@ -520,6 +515,8 @@ func getObjectIpsCustom(d *schema.ResourceData, sv string) (*map[string]interfac
 		} else if t != nil {
 			obj["severity"] = t
 		}
+	} else if d.HasChange("severity") {
+		obj["severity"] = nil
 	}
 
 	if v, ok := d.GetOk("location"); ok {
@@ -529,6 +526,8 @@ func getObjectIpsCustom(d *schema.ResourceData, sv string) (*map[string]interfac
 		} else if t != nil {
 			obj["location"] = t
 		}
+	} else if d.HasChange("location") {
+		obj["location"] = nil
 	}
 
 	if v, ok := d.GetOk("os"); ok {
@@ -538,6 +537,8 @@ func getObjectIpsCustom(d *schema.ResourceData, sv string) (*map[string]interfac
 		} else if t != nil {
 			obj["os"] = t
 		}
+	} else if d.HasChange("os") {
+		obj["os"] = nil
 	}
 
 	if v, ok := d.GetOk("application"); ok {
@@ -547,6 +548,8 @@ func getObjectIpsCustom(d *schema.ResourceData, sv string) (*map[string]interfac
 		} else if t != nil {
 			obj["application"] = t
 		}
+	} else if d.HasChange("application") {
+		obj["application"] = nil
 	}
 
 	if v, ok := d.GetOk("protocol"); ok {
@@ -556,6 +559,8 @@ func getObjectIpsCustom(d *schema.ResourceData, sv string) (*map[string]interfac
 		} else if t != nil {
 			obj["protocol"] = t
 		}
+	} else if d.HasChange("protocol") {
+		obj["protocol"] = nil
 	}
 
 	if v, ok := d.GetOk("status"); ok {
@@ -601,6 +606,8 @@ func getObjectIpsCustom(d *schema.ResourceData, sv string) (*map[string]interfac
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	return &obj, nil

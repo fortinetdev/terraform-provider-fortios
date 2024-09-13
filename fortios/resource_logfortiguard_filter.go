@@ -66,6 +66,11 @@ func resourceLogFortiguardFilter() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"http_transaction": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"anomaly": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -74,12 +79,10 @@ func resourceLogFortiguardFilter() *schema.Resource {
 			"netscan_discovery": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"netscan_vulnerability": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"voip": &schema.Schema{
 				Type:     schema.TypeString,
@@ -89,7 +92,6 @@ func resourceLogFortiguardFilter() *schema.Resource {
 			"dlp_archive": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"gtp": &schema.Schema{
 				Type:     schema.TypeString,
@@ -109,7 +111,6 @@ func resourceLogFortiguardFilter() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"category": &schema.Schema{
 							Type:     schema.TypeString,
@@ -120,7 +121,6 @@ func resourceLogFortiguardFilter() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 1023),
 							Optional:     true,
-							Computed:     true,
 						},
 						"filter_type": &schema.Schema{
 							Type:     schema.TypeString,
@@ -133,18 +133,15 @@ func resourceLogFortiguardFilter() *schema.Resource {
 			"dns": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"ssh": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"filter": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 1023),
 				Optional:     true,
-				Computed:     true,
 			},
 			"filter_type": &schema.Schema{
 				Type:     schema.TypeString,
@@ -303,6 +300,10 @@ func flattenLogFortiguardFilterZtnaTraffic(v interface{}, d *schema.ResourceData
 	return v
 }
 
+func flattenLogFortiguardFilterHttpTransaction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenLogFortiguardFilterAnomaly(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -385,7 +386,7 @@ func flattenLogFortiguardFilterFreeStyle(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenLogFortiguardFilterFreeStyleId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenLogFortiguardFilterFreeStyleCategory(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -458,6 +459,12 @@ func refreshObjectLogFortiguardFilter(d *schema.ResourceData, o map[string]inter
 	if err = d.Set("ztna_traffic", flattenLogFortiguardFilterZtnaTraffic(o["ztna-traffic"], d, "ztna_traffic", sv)); err != nil {
 		if !fortiAPIPatch(o["ztna-traffic"]) {
 			return fmt.Errorf("Error reading ztna_traffic: %v", err)
+		}
+	}
+
+	if err = d.Set("http_transaction", flattenLogFortiguardFilterHttpTransaction(o["http-transaction"], d, "http_transaction", sv)); err != nil {
+		if !fortiAPIPatch(o["http-transaction"]) {
+			return fmt.Errorf("Error reading http_transaction: %v", err)
 		}
 	}
 
@@ -576,6 +583,10 @@ func expandLogFortiguardFilterZtnaTraffic(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
+func expandLogFortiguardFilterHttpTransaction(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandLogFortiguardFilterAnomaly(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -621,6 +632,8 @@ func expandLogFortiguardFilterFreeStyle(d *schema.ResourceData, v interface{}, p
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandLogFortiguardFilterFreeStyleId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
@@ -631,6 +644,8 @@ func expandLogFortiguardFilterFreeStyle(d *schema.ResourceData, v interface{}, p
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["filter"], _ = expandLogFortiguardFilterFreeStyleFilter(d, i["filter"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["filter"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_type"
@@ -759,6 +774,19 @@ func getObjectLogFortiguardFilter(d *schema.ResourceData, setArgNil bool, sv str
 		}
 	}
 
+	if v, ok := d.GetOk("http_transaction"); ok {
+		if setArgNil {
+			obj["http-transaction"] = nil
+		} else {
+			t, err := expandLogFortiguardFilterHttpTransaction(d, v, "http_transaction", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["http-transaction"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("anomaly"); ok {
 		if setArgNil {
 			obj["anomaly"] = nil
@@ -783,6 +811,8 @@ func getObjectLogFortiguardFilter(d *schema.ResourceData, setArgNil bool, sv str
 				obj["netscan-discovery"] = t
 			}
 		}
+	} else if d.HasChange("netscan_discovery") {
+		obj["netscan-discovery"] = nil
 	}
 
 	if v, ok := d.GetOk("netscan_vulnerability"); ok {
@@ -796,6 +826,8 @@ func getObjectLogFortiguardFilter(d *schema.ResourceData, setArgNil bool, sv str
 				obj["netscan-vulnerability"] = t
 			}
 		}
+	} else if d.HasChange("netscan_vulnerability") {
+		obj["netscan-vulnerability"] = nil
 	}
 
 	if v, ok := d.GetOk("voip"); ok {
@@ -822,6 +854,8 @@ func getObjectLogFortiguardFilter(d *schema.ResourceData, setArgNil bool, sv str
 				obj["dlp-archive"] = t
 			}
 		}
+	} else if d.HasChange("dlp_archive") {
+		obj["dlp-archive"] = nil
 	}
 
 	if v, ok := d.GetOk("gtp"); ok {
@@ -874,6 +908,8 @@ func getObjectLogFortiguardFilter(d *schema.ResourceData, setArgNil bool, sv str
 				obj["dns"] = t
 			}
 		}
+	} else if d.HasChange("dns") {
+		obj["dns"] = nil
 	}
 
 	if v, ok := d.GetOk("ssh"); ok {
@@ -887,6 +923,8 @@ func getObjectLogFortiguardFilter(d *schema.ResourceData, setArgNil bool, sv str
 				obj["ssh"] = t
 			}
 		}
+	} else if d.HasChange("ssh") {
+		obj["ssh"] = nil
 	}
 
 	if v, ok := d.GetOk("filter"); ok {
@@ -900,6 +938,8 @@ func getObjectLogFortiguardFilter(d *schema.ResourceData, setArgNil bool, sv str
 				obj["filter"] = t
 			}
 		}
+	} else if d.HasChange("filter") {
+		obj["filter"] = nil
 	}
 
 	if v, ok := d.GetOk("filter_type"); ok {

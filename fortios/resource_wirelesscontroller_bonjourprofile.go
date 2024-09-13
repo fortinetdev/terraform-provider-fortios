@@ -47,7 +47,11 @@ func resourceWirelessControllerBonjourProfile() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
+			},
+			"micro_location": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"policy_list": &schema.Schema{
 				Type:     schema.TypeList,
@@ -58,13 +62,11 @@ func resourceWirelessControllerBonjourProfile() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 						"description": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"from_vlan": &schema.Schema{
 							Type:         schema.TypeString,
@@ -259,6 +261,10 @@ func flattenWirelessControllerBonjourProfileComment(v interface{}, d *schema.Res
 	return v
 }
 
+func flattenWirelessControllerBonjourProfileMicroLocation(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerBonjourProfilePolicyList(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -318,7 +324,7 @@ func flattenWirelessControllerBonjourProfilePolicyList(v interface{}, d *schema.
 }
 
 func flattenWirelessControllerBonjourProfilePolicyListPolicyId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerBonjourProfilePolicyListDescription(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -358,6 +364,12 @@ func refreshObjectWirelessControllerBonjourProfile(d *schema.ResourceData, o map
 		}
 	}
 
+	if err = d.Set("micro_location", flattenWirelessControllerBonjourProfileMicroLocation(o["micro-location"], d, "micro_location", sv)); err != nil {
+		if !fortiAPIPatch(o["micro-location"]) {
+			return fmt.Errorf("Error reading micro_location: %v", err)
+		}
+	}
+
 	if b_get_all_tables {
 		if err = d.Set("policy_list", flattenWirelessControllerBonjourProfilePolicyList(o["policy-list"], d, "policy_list", sv)); err != nil {
 			if !fortiAPIPatch(o["policy-list"]) {
@@ -391,6 +403,10 @@ func expandWirelessControllerBonjourProfileComment(d *schema.ResourceData, v int
 	return v, nil
 }
 
+func expandWirelessControllerBonjourProfileMicroLocation(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWirelessControllerBonjourProfilePolicyList(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	result := make([]map[string]interface{}, 0, len(l))
@@ -408,11 +424,15 @@ func expandWirelessControllerBonjourProfilePolicyList(d *schema.ResourceData, v 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "policy_id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["policy-id"], _ = expandWirelessControllerBonjourProfilePolicyListPolicyId(d, i["policy_id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["policy-id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["description"], _ = expandWirelessControllerBonjourProfilePolicyListDescription(d, i["description"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["description"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "from_vlan"
@@ -476,6 +496,17 @@ func getObjectWirelessControllerBonjourProfile(d *schema.ResourceData, sv string
 			return &obj, err
 		} else if t != nil {
 			obj["comment"] = t
+		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
+	}
+
+	if v, ok := d.GetOk("micro_location"); ok {
+		t, err := expandWirelessControllerBonjourProfileMicroLocation(d, v, "micro_location", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["micro-location"] = t
 		}
 	}
 

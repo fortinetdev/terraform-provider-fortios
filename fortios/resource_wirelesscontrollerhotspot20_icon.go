@@ -52,7 +52,6 @@ func resourceWirelessControllerHotspot20Icon() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"lang": &schema.Schema{
 							Type:         schema.TypeString,
@@ -64,7 +63,6 @@ func resourceWirelessControllerHotspot20Icon() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"type": &schema.Schema{
 							Type:     schema.TypeString,
@@ -75,13 +73,11 @@ func resourceWirelessControllerHotspot20Icon() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 						"height": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -335,11 +331,11 @@ func flattenWirelessControllerHotspot20IconIconListType(v interface{}, d *schema
 }
 
 func flattenWirelessControllerHotspot20IconIconListWidth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerHotspot20IconIconListHeight(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectWirelessControllerHotspot20Icon(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -403,6 +399,8 @@ func expandWirelessControllerHotspot20IconIconList(d *schema.ResourceData, v int
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandWirelessControllerHotspot20IconIconListName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "lang"
@@ -413,6 +411,8 @@ func expandWirelessControllerHotspot20IconIconList(d *schema.ResourceData, v int
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "file"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["file"], _ = expandWirelessControllerHotspot20IconIconListFile(d, i["file"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["file"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
@@ -423,11 +423,15 @@ func expandWirelessControllerHotspot20IconIconList(d *schema.ResourceData, v int
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "width"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["width"], _ = expandWirelessControllerHotspot20IconIconListWidth(d, i["width"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["width"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "height"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["height"], _ = expandWirelessControllerHotspot20IconIconListHeight(d, i["height"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["height"] = nil
 		}
 
 		result = append(result, tmp)

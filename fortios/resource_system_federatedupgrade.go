@@ -41,6 +41,11 @@ func resourceSystemFederatedUpgrade() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"source": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"failure_reason": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -50,24 +55,25 @@ func resourceSystemFederatedUpgrade() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
-				Computed:     true,
 			},
 			"upgrade_id": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"next_path_index": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 10),
 				Optional:     true,
-				Computed:     true,
+			},
+			"ignore_signing_errors": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"ha_reboot_controller": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
-				Computed:     true,
 			},
 			"known_ha_members": &schema.Schema{
 				Type:     schema.TypeList,
@@ -78,7 +84,6 @@ func resourceSystemFederatedUpgrade() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -92,7 +97,6 @@ func resourceSystemFederatedUpgrade() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 						"timing": &schema.Schema{
 							Type:     schema.TypeString,
@@ -108,17 +112,14 @@ func resourceSystemFederatedUpgrade() *schema.Resource {
 						"time": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"setup_time": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"upgrade_path": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"device_type": &schema.Schema{
 							Type:     schema.TypeString,
@@ -129,7 +130,6 @@ func resourceSystemFederatedUpgrade() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -266,6 +266,10 @@ func flattenSystemFederatedUpgradeStatus(v interface{}, d *schema.ResourceData, 
 	return v
 }
 
+func flattenSystemFederatedUpgradeSource(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemFederatedUpgradeFailureReason(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -275,10 +279,14 @@ func flattenSystemFederatedUpgradeFailureDevice(v interface{}, d *schema.Resourc
 }
 
 func flattenSystemFederatedUpgradeUpgradeId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemFederatedUpgradeNextPathIndex(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenSystemFederatedUpgradeIgnoreSigningErrors(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -410,7 +418,7 @@ func flattenSystemFederatedUpgradeNodeListTiming(v interface{}, d *schema.Resour
 }
 
 func flattenSystemFederatedUpgradeNodeListMaximumMinutes(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemFederatedUpgradeNodeListTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -448,6 +456,12 @@ func refreshObjectSystemFederatedUpgrade(d *schema.ResourceData, o map[string]in
 		}
 	}
 
+	if err = d.Set("source", flattenSystemFederatedUpgradeSource(o["source"], d, "source", sv)); err != nil {
+		if !fortiAPIPatch(o["source"]) {
+			return fmt.Errorf("Error reading source: %v", err)
+		}
+	}
+
 	if err = d.Set("failure_reason", flattenSystemFederatedUpgradeFailureReason(o["failure-reason"], d, "failure_reason", sv)); err != nil {
 		if !fortiAPIPatch(o["failure-reason"]) {
 			return fmt.Errorf("Error reading failure_reason: %v", err)
@@ -469,6 +483,12 @@ func refreshObjectSystemFederatedUpgrade(d *schema.ResourceData, o map[string]in
 	if err = d.Set("next_path_index", flattenSystemFederatedUpgradeNextPathIndex(o["next-path-index"], d, "next_path_index", sv)); err != nil {
 		if !fortiAPIPatch(o["next-path-index"]) {
 			return fmt.Errorf("Error reading next_path_index: %v", err)
+		}
+	}
+
+	if err = d.Set("ignore_signing_errors", flattenSystemFederatedUpgradeIgnoreSigningErrors(o["ignore-signing-errors"], d, "ignore_signing_errors", sv)); err != nil {
+		if !fortiAPIPatch(o["ignore-signing-errors"]) {
+			return fmt.Errorf("Error reading ignore_signing_errors: %v", err)
 		}
 	}
 
@@ -523,6 +543,10 @@ func expandSystemFederatedUpgradeStatus(d *schema.ResourceData, v interface{}, p
 	return v, nil
 }
 
+func expandSystemFederatedUpgradeSource(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemFederatedUpgradeFailureReason(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -536,6 +560,10 @@ func expandSystemFederatedUpgradeUpgradeId(d *schema.ResourceData, v interface{}
 }
 
 func expandSystemFederatedUpgradeNextPathIndex(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemFederatedUpgradeIgnoreSigningErrors(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -560,6 +588,8 @@ func expandSystemFederatedUpgradeKnownHaMembers(d *schema.ResourceData, v interf
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "serial"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["serial"], _ = expandSystemFederatedUpgradeKnownHaMembersSerial(d, i["serial"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["serial"] = nil
 		}
 
 		result = append(result, tmp)
@@ -591,6 +621,8 @@ func expandSystemFederatedUpgradeNodeList(d *schema.ResourceData, v interface{},
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "serial"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["serial"], _ = expandSystemFederatedUpgradeNodeListSerial(d, i["serial"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["serial"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "timing"
@@ -606,16 +638,22 @@ func expandSystemFederatedUpgradeNodeList(d *schema.ResourceData, v interface{},
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "time"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["time"], _ = expandSystemFederatedUpgradeNodeListTime(d, i["time"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["time"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "setup_time"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["setup-time"], _ = expandSystemFederatedUpgradeNodeListSetupTime(d, i["setup_time"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["setup-time"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "upgrade_path"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["upgrade-path"], _ = expandSystemFederatedUpgradeNodeListUpgradePath(d, i["upgrade_path"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["upgrade-path"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "device_type"
@@ -626,6 +664,8 @@ func expandSystemFederatedUpgradeNodeList(d *schema.ResourceData, v interface{},
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "coordinating_fortigate"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["coordinating-fortigate"], _ = expandSystemFederatedUpgradeNodeListCoordinatingFortigate(d, i["coordinating_fortigate"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["coordinating-fortigate"] = nil
 		}
 
 		result = append(result, tmp)
@@ -684,6 +724,19 @@ func getObjectSystemFederatedUpgrade(d *schema.ResourceData, setArgNil bool, sv 
 		}
 	}
 
+	if v, ok := d.GetOk("source"); ok {
+		if setArgNil {
+			obj["source"] = nil
+		} else {
+			t, err := expandSystemFederatedUpgradeSource(d, v, "source", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["source"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("failure_reason"); ok {
 		if setArgNil {
 			obj["failure-reason"] = nil
@@ -708,6 +761,8 @@ func getObjectSystemFederatedUpgrade(d *schema.ResourceData, setArgNil bool, sv 
 				obj["failure-device"] = t
 			}
 		}
+	} else if d.HasChange("failure_device") {
+		obj["failure-device"] = nil
 	}
 
 	if v, ok := d.GetOkExists("upgrade_id"); ok {
@@ -721,6 +776,8 @@ func getObjectSystemFederatedUpgrade(d *schema.ResourceData, setArgNil bool, sv 
 				obj["upgrade-id"] = t
 			}
 		}
+	} else if d.HasChange("upgrade_id") {
+		obj["upgrade-id"] = nil
 	}
 
 	if v, ok := d.GetOkExists("next_path_index"); ok {
@@ -732,6 +789,21 @@ func getObjectSystemFederatedUpgrade(d *schema.ResourceData, setArgNil bool, sv 
 				return &obj, err
 			} else if t != nil {
 				obj["next-path-index"] = t
+			}
+		}
+	} else if d.HasChange("next_path_index") {
+		obj["next-path-index"] = nil
+	}
+
+	if v, ok := d.GetOk("ignore_signing_errors"); ok {
+		if setArgNil {
+			obj["ignore-signing-errors"] = nil
+		} else {
+			t, err := expandSystemFederatedUpgradeIgnoreSigningErrors(d, v, "ignore_signing_errors", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ignore-signing-errors"] = t
 			}
 		}
 	}
@@ -747,6 +819,8 @@ func getObjectSystemFederatedUpgrade(d *schema.ResourceData, setArgNil bool, sv 
 				obj["ha-reboot-controller"] = t
 			}
 		}
+	} else if d.HasChange("ha_reboot_controller") {
+		obj["ha-reboot-controller"] = nil
 	}
 
 	if v, ok := d.GetOk("known_ha_members"); ok || d.HasChange("known_ha_members") {

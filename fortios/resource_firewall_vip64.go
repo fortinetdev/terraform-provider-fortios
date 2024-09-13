@@ -40,13 +40,11 @@ func resourceFirewallVip64() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
-				Computed:     true,
 			},
 			"fosid": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"uuid": &schema.Schema{
 				Type:     schema.TypeString,
@@ -72,7 +70,6 @@ func resourceFirewallVip64() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -103,18 +100,15 @@ func resourceFirewallVip64() *schema.Resource {
 			"extport": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"mappedport": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"color": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 32),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ldb_method": &schema.Schema{
 				Type:     schema.TypeString,
@@ -124,7 +118,6 @@ func resourceFirewallVip64() *schema.Resource {
 			"server_type": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"realservers": &schema.Schema{
 				Type:     schema.TypeList,
@@ -134,7 +127,6 @@ func resourceFirewallVip64() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"ip": &schema.Schema{
 							Type:     schema.TypeString,
@@ -145,7 +137,6 @@ func resourceFirewallVip64() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -172,17 +163,14 @@ func resourceFirewallVip64() *schema.Resource {
 						"max_connections": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"monitor": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"client_ip": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -196,7 +184,6 @@ func resourceFirewallVip64() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -371,7 +358,7 @@ func flattenFirewallVip64Name(v interface{}, d *schema.ResourceData, pre string,
 }
 
 func flattenFirewallVip64Id(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallVip64Uuid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -457,7 +444,7 @@ func flattenFirewallVip64Mappedport(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenFirewallVip64Color(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallVip64LdbMethod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -534,34 +521,7 @@ func flattenFirewallVip64Realservers(v interface{}, d *schema.ResourceData, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "monitor"
 		if cur_v, ok := i["monitor"]; ok {
-			v := flattenFirewallVip64RealserversMonitor(cur_v, d, pre_append, sv)
-			vx := ""
-			bstring := false
-			new_version_map := map[string][]string{
-				"=": []string{"6.4.10", "6.4.11", "6.4.12", "6.4.13", "6.4.14", "6.4.15", "7.0.0"},
-			}
-			if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
-				l := v.([]interface{})
-				if len(l) > 0 {
-					for k, r := range l {
-						i := r.(map[string]interface{})
-						if _, ok := i["name"]; ok {
-							if xv, ok := i["name"].(string); ok {
-								vx += xv
-								if k < len(l)-1 {
-									vx += ", "
-								}
-							}
-						}
-					}
-					bstring = true
-				}
-			}
-			if bstring == true {
-				tmp["monitor"] = vx
-			} else {
-				tmp["monitor"] = v
-			}
+			tmp["monitor"] = flattenFirewallVip64RealserversMonitor(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "client_ip"
@@ -579,7 +539,7 @@ func flattenFirewallVip64Realservers(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenFirewallVip64RealserversId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallVip64RealserversIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -587,7 +547,7 @@ func flattenFirewallVip64RealserversIp(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenFirewallVip64RealserversPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallVip64RealserversStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -595,11 +555,11 @@ func flattenFirewallVip64RealserversStatus(v interface{}, d *schema.ResourceData
 }
 
 func flattenFirewallVip64RealserversWeight(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallVip64RealserversHolddownInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallVip64RealserversHealthcheck(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -607,11 +567,11 @@ func flattenFirewallVip64RealserversHealthcheck(v interface{}, d *schema.Resourc
 }
 
 func flattenFirewallVip64RealserversMaxConnections(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallVip64RealserversMonitor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convmap2str(v, d.Get("monitor"), "name")
 }
 
 func flattenFirewallVip64RealserversClientIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -921,6 +881,8 @@ func expandFirewallVip64Realservers(d *schema.ResourceData, v interface{}, pre s
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandFirewallVip64RealserversId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
@@ -931,6 +893,8 @@ func expandFirewallVip64Realservers(d *schema.ResourceData, v interface{}, pre s
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["port"], _ = expandFirewallVip64RealserversPort(d, i["port"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["port"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
@@ -956,43 +920,22 @@ func expandFirewallVip64Realservers(d *schema.ResourceData, v interface{}, pre s
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "max_connections"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["max-connections"], _ = expandFirewallVip64RealserversMaxConnections(d, i["max_connections"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["max-connections"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "monitor"
 		if _, ok := d.GetOk(pre_append); ok {
-			bstring := false
-			t, _ := expandFirewallVip64RealserversMonitor(d, i["monitor"], pre_append, sv)
-			if t != nil {
-				new_version_map := map[string][]string{
-					"=": []string{"6.4.10", "6.4.11", "6.4.12", "6.4.13", "6.4.14", "6.4.15", "7.0.0"},
-				}
-				if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
-					bstring = true
-				}
-			}
-
-			if bstring == true {
-				vx := fmt.Sprintf("%v", t)
-				vx = strings.Replace(vx, "\"", "", -1)
-				vxx := strings.Split(vx, " ")
-
-				tmps := make([]map[string]interface{}, 0, len(vxx))
-
-				for _, xv := range vxx {
-					xtmp := make(map[string]interface{})
-					xtmp["name"] = xv
-
-					tmps = append(tmps, xtmp)
-				}
-				tmp["monitor"] = tmps
-			} else {
-				tmp["monitor"] = t
-			}
+			tmp["monitor"], _ = expandFirewallVip64RealserversMonitor(d, i["monitor"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["monitor"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "client_ip"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["client-ip"], _ = expandFirewallVip64RealserversClientIp(d, i["client_ip"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["client-ip"] = nil
 		}
 
 		result = append(result, tmp)
@@ -1036,7 +979,25 @@ func expandFirewallVip64RealserversMaxConnections(d *schema.ResourceData, v inte
 }
 
 func expandFirewallVip64RealserversMonitor(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
+	new_version_map := map[string][]string{
+		"=": []string{"6.4.10", "6.4.11", "6.4.12", "6.4.13", "6.4.14", "6.4.15", "7.0.0"},
+	}
+	if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
+		vx := fmt.Sprintf("%v", v)
+		vxx := strings.Split(vx, ", ")
+
+		tmps := make([]map[string]interface{}, 0, len(vxx))
+
+		for _, xv := range vxx {
+			xtmp := make(map[string]interface{})
+			xtmp["name"] = xv
+
+			tmps = append(tmps, xtmp)
+		}
+		return tmps, nil
+	} else {
+		return v, nil
+	}
 }
 
 func expandFirewallVip64RealserversClientIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
@@ -1081,6 +1042,8 @@ func getObjectFirewallVip64(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOkExists("fosid"); ok {
@@ -1090,6 +1053,8 @@ func getObjectFirewallVip64(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["id"] = t
 		}
+	} else if d.HasChange("fosid") {
+		obj["id"] = nil
 	}
 
 	if v, ok := d.GetOk("uuid"); ok {
@@ -1108,6 +1073,8 @@ func getObjectFirewallVip64(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("type"); ok {
@@ -1135,6 +1102,8 @@ func getObjectFirewallVip64(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["extip"] = t
 		}
+	} else if d.HasChange("extip") {
+		obj["extip"] = nil
 	}
 
 	if v, ok := d.GetOk("mappedip"); ok {
@@ -1144,6 +1113,8 @@ func getObjectFirewallVip64(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["mappedip"] = t
 		}
+	} else if d.HasChange("mappedip") {
+		obj["mappedip"] = nil
 	}
 
 	if v, ok := d.GetOk("arp_reply"); ok {
@@ -1180,6 +1151,8 @@ func getObjectFirewallVip64(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["extport"] = t
 		}
+	} else if d.HasChange("extport") {
+		obj["extport"] = nil
 	}
 
 	if v, ok := d.GetOk("mappedport"); ok {
@@ -1189,6 +1162,8 @@ func getObjectFirewallVip64(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["mappedport"] = t
 		}
+	} else if d.HasChange("mappedport") {
+		obj["mappedport"] = nil
 	}
 
 	if v, ok := d.GetOkExists("color"); ok {
@@ -1198,6 +1173,8 @@ func getObjectFirewallVip64(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["color"] = t
 		}
+	} else if d.HasChange("color") {
+		obj["color"] = nil
 	}
 
 	if v, ok := d.GetOk("ldb_method"); ok {
@@ -1216,6 +1193,8 @@ func getObjectFirewallVip64(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["server-type"] = t
 		}
+	} else if d.HasChange("server_type") {
+		obj["server-type"] = nil
 	}
 
 	if v, ok := d.GetOk("realservers"); ok || d.HasChange("realservers") {

@@ -65,6 +65,14 @@ func dataSourceSystemSnmpCommunity() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"interface_select_method": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"interface": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 					},
 				},
 			},
@@ -90,6 +98,14 @@ func dataSourceSystemSnmpCommunity() *schema.Resource {
 							Computed: true,
 						},
 						"host_type": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"interface_select_method": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"interface": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -259,6 +275,16 @@ func dataSourceFlattenSystemSnmpCommunityHosts(v interface{}, d *schema.Resource
 			tmp["host_type"] = dataSourceFlattenSystemSnmpCommunityHostsHostType(i["host-type"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_select_method"
+		if _, ok := i["interface-select-method"]; ok {
+			tmp["interface_select_method"] = dataSourceFlattenSystemSnmpCommunityHostsInterfaceSelectMethod(i["interface-select-method"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
+		if _, ok := i["interface"]; ok {
+			tmp["interface"] = dataSourceFlattenSystemSnmpCommunityHostsInterface(i["interface"], d, pre_append)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -284,6 +310,14 @@ func dataSourceFlattenSystemSnmpCommunityHostsHaDirect(v interface{}, d *schema.
 }
 
 func dataSourceFlattenSystemSnmpCommunityHostsHostType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemSnmpCommunityHostsInterfaceSelectMethod(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemSnmpCommunityHostsInterface(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -331,6 +365,16 @@ func dataSourceFlattenSystemSnmpCommunityHosts6(v interface{}, d *schema.Resourc
 			tmp["host_type"] = dataSourceFlattenSystemSnmpCommunityHosts6HostType(i["host-type"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_select_method"
+		if _, ok := i["interface-select-method"]; ok {
+			tmp["interface_select_method"] = dataSourceFlattenSystemSnmpCommunityHosts6InterfaceSelectMethod(i["interface-select-method"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
+		if _, ok := i["interface"]; ok {
+			tmp["interface"] = dataSourceFlattenSystemSnmpCommunityHosts6Interface(i["interface"], d, pre_append)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -356,6 +400,14 @@ func dataSourceFlattenSystemSnmpCommunityHosts6HaDirect(v interface{}, d *schema
 }
 
 func dataSourceFlattenSystemSnmpCommunityHosts6HostType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemSnmpCommunityHosts6InterfaceSelectMethod(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemSnmpCommunityHosts6Interface(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 

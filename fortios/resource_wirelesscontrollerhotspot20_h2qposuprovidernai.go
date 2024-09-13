@@ -52,13 +52,11 @@ func resourceWirelessControllerHotspot20H2QpOsuProviderNai() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"osu_nai": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -344,11 +342,15 @@ func expandWirelessControllerHotspot20H2QpOsuProviderNaiNaiList(d *schema.Resour
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandWirelessControllerHotspot20H2QpOsuProviderNaiNaiListName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "osu_nai"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["osu-nai"], _ = expandWirelessControllerHotspot20H2QpOsuProviderNaiNaiListOsuNai(d, i["osu_nai"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["osu-nai"] = nil
 		}
 
 		result = append(result, tmp)

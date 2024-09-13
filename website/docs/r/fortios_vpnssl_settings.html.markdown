@@ -98,7 +98,7 @@ The following arguments are supported:
 * `client_sigalgs` - Set signature algorithms related to client authentication. Affects TLS version <= 1.2 only. Valid values: `no-rsa-pss`, `all`.
 * `dual_stack_mode` - Tunnel mode: enable parallel IPv4 and IPv6 tunnel. Web mode: support IPv4 and IPv6 bookmarks in the portal. Valid values: `enable`, `disable`.
 * `tunnel_addr_assigned_method` - Method used for assigning address for tunnel. Valid values: `first-available`, `round-robin`.
-* `saml_redirect_port` - SAML local redirect port in the machine running FCT (0 - 65535). 0 is to disable redirection on FGT side.
+* `saml_redirect_port` - SAML local redirect port in the machine running FortiClient (0 - 65535). 0 is to disable redirection on FGT side.
 * `web_mode_snat` - Enable/disable use of IP pools defined in firewall policy while using web-mode. Valid values: `enable`, `disable`.
 * `ztna_trusted_client` - Enable/disable verification of device certificate for SSLVPN ZTNA session. Valid values: `enable`, `disable`.
 * `server_hostname` - Server hostname for HTTPS. When set, will be used for SSL VPN web proxy host header for any redirection.

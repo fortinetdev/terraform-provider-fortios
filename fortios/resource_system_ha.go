@@ -40,13 +40,11 @@ func resourceSystemHa() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 1023),
 				Optional:     true,
-				Computed:     true,
 			},
 			"group_name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 32),
 				Optional:     true,
-				Computed:     true,
 			},
 			"mode": &schema.Schema{
 				Type:     schema.TypeString,
@@ -73,7 +71,32 @@ func resourceSystemHa() *schema.Resource {
 			"hbdev": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
+			},
+			"auto_virtual_mac_interface": &schema.Schema{
+				Type:     schema.TypeSet,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"interface_name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 15),
+							Optional:     true,
+						},
+					},
+				},
+			},
+			"backup_hbdev": &schema.Schema{
+				Type:     schema.TypeSet,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+						},
+					},
+				},
 			},
 			"unicast_hb": &schema.Schema{
 				Type:     schema.TypeString,
@@ -93,7 +116,6 @@ func resourceSystemHa() *schema.Resource {
 			"session_sync_dev": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"route_ttl": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -105,7 +127,6 @@ func resourceSystemHa() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 3600),
 				Optional:     true,
-				Computed:     true,
 			},
 			"route_hold": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -249,13 +270,11 @@ func resourceSystemHa() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"interface": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 						"dst": &schema.Schema{
 							Type:     schema.TypeString,
@@ -322,7 +341,6 @@ func resourceSystemHa() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"peer_ip": &schema.Schema{
 							Type:     schema.TypeString,
@@ -346,7 +364,6 @@ func resourceSystemHa() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"override": &schema.Schema{
 				Type:     schema.TypeString,
@@ -363,7 +380,6 @@ func resourceSystemHa() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 3600),
 				Optional:     true,
-				Computed:     true,
 			},
 			"schedule": &schema.Schema{
 				Type:     schema.TypeString,
@@ -418,18 +434,15 @@ func resourceSystemHa() *schema.Resource {
 			"monitor": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"pingserver_monitor_interface": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"pingserver_failover_threshold": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 50),
 				Optional:     true,
-				Computed:     true,
 			},
 			"pingserver_secondary_force_reset": &schema.Schema{
 				Type:     schema.TypeString,
@@ -477,23 +490,19 @@ func resourceSystemHa() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 3600),
 							Optional:     true,
-							Computed:     true,
 						},
 						"monitor": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"pingserver_monitor_interface": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"pingserver_failover_threshold": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 50),
 							Optional:     true,
-							Computed:     true,
 						},
 						"pingserver_secondary_force_reset": &schema.Schema{
 							Type:     schema.TypeString,
@@ -519,7 +528,6 @@ func resourceSystemHa() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -530,7 +538,6 @@ func resourceSystemHa() *schema.Resource {
 			"vdom": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"secondary_vcluster": &schema.Schema{
 				Type:     schema.TypeList,
@@ -560,23 +567,19 @@ func resourceSystemHa() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 3600),
 							Optional:     true,
-							Computed:     true,
 						},
 						"monitor": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"pingserver_monitor_interface": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"pingserver_failover_threshold": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 50),
 							Optional:     true,
-							Computed:     true,
 						},
 						"pingserver_secondary_force_reset": &schema.Schema{
 							Type:     schema.TypeString,
@@ -586,12 +589,10 @@ func resourceSystemHa() *schema.Resource {
 						"pingserver_slave_force_reset": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"vdom": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -620,7 +621,6 @@ func resourceSystemHa() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 95),
 				Optional:     true,
-				Computed:     true,
 			},
 			"memory_failover_monitor_period": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -643,17 +643,19 @@ func resourceSystemHa() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 300),
 				Optional:     true,
-				Computed:     true,
+			},
+			"check_secondary_dev_health": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"ipsec_phase2_proposal": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"inter_cluster_session_sync": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
@@ -784,7 +786,7 @@ func resourceSystemHaRead(d *schema.ResourceData, m interface{}) error {
 }
 
 func flattenSystemHaGroupId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemHaGroupName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -799,16 +801,92 @@ func flattenSystemHaSyncPacketBalance(v interface{}, d *schema.ResourceData, pre
 	return v
 }
 
-func flattenSystemHaPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenSystemHaKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
 func flattenSystemHaHbdev(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return remove_quote(v)
+}
+
+func flattenSystemHaAutoVirtualMacInterface(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
+		if cur_v, ok := i["interface-name"]; ok {
+			tmp["interface_name"] = flattenSystemHaAutoVirtualMacInterfaceInterfaceName(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "interface_name", d)
+	return result
+}
+
+func flattenSystemHaAutoVirtualMacInterfaceInterfaceName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemHaBackupHbdev(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemHaBackupHbdevName(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenSystemHaBackupHbdevName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
 }
 
 func flattenSystemHaUnicastHb(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -828,23 +906,23 @@ func flattenSystemHaSessionSyncDev(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenSystemHaRouteTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemHaRouteWait(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemHaRouteHold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemHaMulticastTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemHaEvpnTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemHaLoadBalanceAll(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -864,7 +942,7 @@ func flattenSystemHaAuthentication(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenSystemHaHbInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemHaHbIntervalInMilliseconds(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -872,11 +950,11 @@ func flattenSystemHaHbIntervalInMilliseconds(v interface{}, d *schema.ResourceDa
 }
 
 func flattenSystemHaHbLostThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemHaHelloHolddown(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemHaGratuitousArps(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -884,11 +962,11 @@ func flattenSystemHaGratuitousArps(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenSystemHaArps(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemHaArpsInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemHaSessionPickup(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -924,7 +1002,7 @@ func flattenSystemHaUninterruptibleUpgrade(v interface{}, d *schema.ResourceData
 }
 
 func flattenSystemHaUninterruptiblePrimaryWait(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemHaStandaloneMgmtVdom(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -994,7 +1072,7 @@ func flattenSystemHaHaMgmtInterfaces(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenSystemHaHaMgmtInterfacesId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemHaHaMgmtInterfacesInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1033,7 +1111,7 @@ func flattenSystemHaL2EpEthType(v interface{}, d *schema.ResourceData, pre strin
 }
 
 func flattenSystemHaHaUptimeDiffMargin(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemHaStandaloneConfigSync(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1092,7 +1170,7 @@ func flattenSystemHaUnicastPeers(v interface{}, d *schema.ResourceData, pre stri
 }
 
 func flattenSystemHaUnicastPeersId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemHaUnicastPeersPeerIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1108,7 +1186,7 @@ func flattenSystemHaVcluster2(v interface{}, d *schema.ResourceData, pre string,
 }
 
 func flattenSystemHaVclusterId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemHaOverride(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1116,11 +1194,11 @@ func flattenSystemHaOverride(v interface{}, d *schema.ResourceData, pre string, 
 }
 
 func flattenSystemHaPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemHaOverrideWaitTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemHaSchedule(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1172,7 +1250,7 @@ func flattenSystemHaPingserverMonitorInterface(v interface{}, d *schema.Resource
 }
 
 func flattenSystemHaPingserverFailoverThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemHaPingserverSecondaryForceReset(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1184,7 +1262,7 @@ func flattenSystemHaPingserverSlaveForceReset(v interface{}, d *schema.ResourceD
 }
 
 func flattenSystemHaPingserverFlipTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemHaVclusterStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1280,7 +1358,7 @@ func flattenSystemHaVcluster(v interface{}, d *schema.ResourceData, pre string, 
 }
 
 func flattenSystemHaVclusterVclusterId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemHaVclusterOverride(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1288,11 +1366,11 @@ func flattenSystemHaVclusterOverride(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenSystemHaVclusterPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemHaVclusterOverrideWaitTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemHaVclusterMonitor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1304,7 +1382,7 @@ func flattenSystemHaVclusterPingserverMonitorInterface(v interface{}, d *schema.
 }
 
 func flattenSystemHaVclusterPingserverFailoverThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemHaVclusterPingserverSecondaryForceReset(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1312,7 +1390,7 @@ func flattenSystemHaVclusterPingserverSecondaryForceReset(v interface{}, d *sche
 }
 
 func flattenSystemHaVclusterPingserverFlipTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemHaVclusterPingserverSlaveForceReset(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1429,7 +1507,7 @@ func flattenSystemHaSecondaryVcluster(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenSystemHaSecondaryVclusterVclusterId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemHaSecondaryVclusterOverride(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1437,11 +1515,11 @@ func flattenSystemHaSecondaryVclusterOverride(v interface{}, d *schema.ResourceD
 }
 
 func flattenSystemHaSecondaryVclusterPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemHaSecondaryVclusterOverrideWaitTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemHaSecondaryVclusterMonitor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1453,7 +1531,7 @@ func flattenSystemHaSecondaryVclusterPingserverMonitorInterface(v interface{}, d
 }
 
 func flattenSystemHaSecondaryVclusterPingserverFailoverThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemHaSecondaryVclusterPingserverSecondaryForceReset(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1485,22 +1563,26 @@ func flattenSystemHaMemoryBasedFailover(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenSystemHaMemoryFailoverThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemHaMemoryFailoverMonitorPeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemHaMemoryFailoverSampleRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemHaMemoryFailoverFlipTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemHaFailoverHoldTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenSystemHaCheckSecondaryDevHealth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1548,6 +1630,38 @@ func refreshObjectSystemHa(d *schema.ResourceData, o map[string]interface{}, sv 
 	if err = d.Set("hbdev", flattenSystemHaHbdev(o["hbdev"], d, "hbdev", sv)); err != nil {
 		if !fortiAPIPatch(o["hbdev"]) {
 			return fmt.Errorf("Error reading hbdev: %v", err)
+		}
+	}
+
+	if b_get_all_tables {
+		if err = d.Set("auto_virtual_mac_interface", flattenSystemHaAutoVirtualMacInterface(o["auto-virtual-mac-interface"], d, "auto_virtual_mac_interface", sv)); err != nil {
+			if !fortiAPIPatch(o["auto-virtual-mac-interface"]) {
+				return fmt.Errorf("Error reading auto_virtual_mac_interface: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("auto_virtual_mac_interface"); ok {
+			if err = d.Set("auto_virtual_mac_interface", flattenSystemHaAutoVirtualMacInterface(o["auto-virtual-mac-interface"], d, "auto_virtual_mac_interface", sv)); err != nil {
+				if !fortiAPIPatch(o["auto-virtual-mac-interface"]) {
+					return fmt.Errorf("Error reading auto_virtual_mac_interface: %v", err)
+				}
+			}
+		}
+	}
+
+	if b_get_all_tables {
+		if err = d.Set("backup_hbdev", flattenSystemHaBackupHbdev(o["backup-hbdev"], d, "backup_hbdev", sv)); err != nil {
+			if !fortiAPIPatch(o["backup-hbdev"]) {
+				return fmt.Errorf("Error reading backup_hbdev: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("backup_hbdev"); ok {
+			if err = d.Set("backup_hbdev", flattenSystemHaBackupHbdev(o["backup-hbdev"], d, "backup_hbdev", sv)); err != nil {
+				if !fortiAPIPatch(o["backup-hbdev"]) {
+					return fmt.Errorf("Error reading backup_hbdev: %v", err)
+				}
+			}
 		}
 	}
 
@@ -2041,6 +2155,12 @@ func refreshObjectSystemHa(d *schema.ResourceData, o map[string]interface{}, sv 
 		}
 	}
 
+	if err = d.Set("check_secondary_dev_health", flattenSystemHaCheckSecondaryDevHealth(o["check-secondary-dev-health"], d, "check_secondary_dev_health", sv)); err != nil {
+		if !fortiAPIPatch(o["check-secondary-dev-health"]) {
+			return fmt.Errorf("Error reading check_secondary_dev_health: %v", err)
+		}
+	}
+
 	if err = d.Set("ipsec_phase2_proposal", flattenSystemHaIpsecPhase2Proposal(o["ipsec-phase2-proposal"], d, "ipsec_phase2_proposal", sv)); err != nil {
 		if !fortiAPIPatch(o["ipsec-phase2-proposal"]) {
 			return fmt.Errorf("Error reading ipsec_phase2_proposal: %v", err)
@@ -2087,6 +2207,62 @@ func expandSystemHaKey(d *schema.ResourceData, v interface{}, pre string, sv str
 }
 
 func expandSystemHaHbdev(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemHaAutoVirtualMacInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.(*schema.Set).List()
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		tmp["interface-name"], _ = expandSystemHaAutoVirtualMacInterfaceInterfaceName(d, i["interface_name"], pre_append, sv)
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemHaAutoVirtualMacInterfaceInterfaceName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemHaBackupHbdev(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.(*schema.Set).List()
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		tmp["name"], _ = expandSystemHaBackupHbdevName(d, i["name"], pre_append, sv)
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemHaBackupHbdevName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2231,11 +2407,15 @@ func expandSystemHaHaMgmtInterfaces(d *schema.ResourceData, v interface{}, pre s
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSystemHaHaMgmtInterfacesId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["interface"], _ = expandSystemHaHaMgmtInterfacesInterface(d, i["interface"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["interface"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst"
@@ -2326,6 +2506,8 @@ func expandSystemHaUnicastPeers(d *schema.ResourceData, v interface{}, pre strin
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSystemHaUnicastPeersId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "peer_ip"
@@ -2473,21 +2655,29 @@ func expandSystemHaVcluster(d *schema.ResourceData, v interface{}, pre string, s
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "override_wait_time"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["override-wait-time"], _ = expandSystemHaVclusterOverrideWaitTime(d, i["override_wait_time"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["override-wait-time"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "monitor"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["monitor"], _ = expandSystemHaVclusterMonitor(d, i["monitor"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["monitor"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pingserver_monitor_interface"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["pingserver-monitor-interface"], _ = expandSystemHaVclusterPingserverMonitorInterface(d, i["pingserver_monitor_interface"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["pingserver-monitor-interface"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pingserver_failover_threshold"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["pingserver-failover-threshold"], _ = expandSystemHaVclusterPingserverFailoverThreshold(d, i["pingserver_failover_threshold"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["pingserver-failover-threshold"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pingserver_secondary_force_reset"
@@ -2506,9 +2696,9 @@ func expandSystemHaVcluster(d *schema.ResourceData, v interface{}, pre string, s
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vdom"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["vdom"], _ = expandSystemHaVclusterVdom(d, i["vdom"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["vdom"] = make([]string, 0)
 		}
 
@@ -2762,6 +2952,10 @@ func expandSystemHaFailoverHoldTime(d *schema.ResourceData, v interface{}, pre s
 	return v, nil
 }
 
+func expandSystemHaCheckSecondaryDevHealth(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemHaIpsecPhase2Proposal(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -2784,6 +2978,8 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 				obj["group-id"] = t
 			}
 		}
+	} else if d.HasChange("group_id") {
+		obj["group-id"] = nil
 	}
 
 	if v, ok := d.GetOk("group_name"); ok {
@@ -2797,6 +2993,8 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 				obj["group-name"] = t
 			}
 		}
+	} else if d.HasChange("group_name") {
+		obj["group-name"] = nil
 	}
 
 	if v, ok := d.GetOk("mode"); ok {
@@ -2836,6 +3034,8 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 				obj["password"] = t
 			}
 		}
+	} else if d.HasChange("password") {
+		obj["password"] = nil
 	}
 
 	if v, ok := d.GetOk("key"); ok {
@@ -2849,6 +3049,8 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 				obj["key"] = t
 			}
 		}
+	} else if d.HasChange("key") {
+		obj["key"] = nil
 	}
 
 	if v, ok := d.GetOk("hbdev"); ok {
@@ -2860,6 +3062,34 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 				return &obj, err
 			} else if t != nil {
 				obj["hbdev"] = t
+			}
+		}
+	} else if d.HasChange("hbdev") {
+		obj["hbdev"] = nil
+	}
+
+	if v, ok := d.GetOk("auto_virtual_mac_interface"); ok || d.HasChange("auto_virtual_mac_interface") {
+		if setArgNil {
+			obj["auto-virtual-mac-interface"] = make([]struct{}, 0)
+		} else {
+			t, err := expandSystemHaAutoVirtualMacInterface(d, v, "auto_virtual_mac_interface", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auto-virtual-mac-interface"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("backup_hbdev"); ok || d.HasChange("backup_hbdev") {
+		if setArgNil {
+			obj["backup-hbdev"] = make([]struct{}, 0)
+		} else {
+			t, err := expandSystemHaBackupHbdev(d, v, "backup_hbdev", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["backup-hbdev"] = t
 			}
 		}
 	}
@@ -2914,6 +3144,8 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 				obj["session-sync-dev"] = t
 			}
 		}
+	} else if d.HasChange("session_sync_dev") {
+		obj["session-sync-dev"] = nil
 	}
 
 	if v, ok := d.GetOk("route_ttl"); ok {
@@ -2940,6 +3172,8 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 				obj["route-wait"] = t
 			}
 		}
+	} else if d.HasChange("route_wait") {
+		obj["route-wait"] = nil
 	}
 
 	if v, ok := d.GetOkExists("route_hold"); ok {
@@ -3421,6 +3655,8 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 				obj["vcluster-id"] = t
 			}
 		}
+	} else if d.HasChange("vcluster_id") {
+		obj["vcluster-id"] = nil
 	}
 
 	if v, ok := d.GetOk("override"); ok {
@@ -3460,6 +3696,8 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 				obj["override-wait-time"] = t
 			}
 		}
+	} else if d.HasChange("override_wait_time") {
+		obj["override-wait-time"] = nil
 	}
 
 	if v, ok := d.GetOk("schedule"); ok {
@@ -3603,6 +3841,8 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 				obj["monitor"] = t
 			}
 		}
+	} else if d.HasChange("monitor") {
+		obj["monitor"] = nil
 	}
 
 	if v, ok := d.GetOk("pingserver_monitor_interface"); ok {
@@ -3616,6 +3856,8 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 				obj["pingserver-monitor-interface"] = t
 			}
 		}
+	} else if d.HasChange("pingserver_monitor_interface") {
+		obj["pingserver-monitor-interface"] = nil
 	}
 
 	if v, ok := d.GetOkExists("pingserver_failover_threshold"); ok {
@@ -3629,6 +3871,8 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 				obj["pingserver-failover-threshold"] = t
 			}
 		}
+	} else if d.HasChange("pingserver_failover_threshold") {
+		obj["pingserver-failover-threshold"] = nil
 	}
 
 	if v, ok := d.GetOk("pingserver_secondary_force_reset"); ok {
@@ -3707,6 +3951,8 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 				obj["vdom"] = t
 			}
 		}
+	} else if d.HasChange("vdom") {
+		obj["vdom"] = nil
 	}
 
 	if v, ok := d.GetOk("secondary_vcluster"); ok {
@@ -3781,6 +4027,8 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 				obj["memory-failover-threshold"] = t
 			}
 		}
+	} else if d.HasChange("memory_failover_threshold") {
+		obj["memory-failover-threshold"] = nil
 	}
 
 	if v, ok := d.GetOk("memory_failover_monitor_period"); ok {
@@ -3833,6 +4081,21 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 				obj["failover-hold-time"] = t
 			}
 		}
+	} else if d.HasChange("failover_hold_time") {
+		obj["failover-hold-time"] = nil
+	}
+
+	if v, ok := d.GetOk("check_secondary_dev_health"); ok {
+		if setArgNil {
+			obj["check-secondary-dev-health"] = nil
+		} else {
+			t, err := expandSystemHaCheckSecondaryDevHealth(d, v, "check_secondary_dev_health", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["check-secondary-dev-health"] = t
+			}
+		}
 	}
 
 	if v, ok := d.GetOk("ipsec_phase2_proposal"); ok {
@@ -3846,6 +4109,8 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 				obj["ipsec-phase2-proposal"] = t
 			}
 		}
+	} else if d.HasChange("ipsec_phase2_proposal") {
+		obj["ipsec-phase2-proposal"] = nil
 	}
 
 	if v, ok := d.GetOk("inter_cluster_session_sync"); ok {
@@ -3859,6 +4124,8 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 				obj["inter-cluster-session-sync"] = t
 			}
 		}
+	} else if d.HasChange("inter_cluster_session_sync") {
+		obj["inter-cluster-session-sync"] = nil
 	}
 
 	return &obj, nil

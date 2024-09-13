@@ -47,35 +47,29 @@ func resourceEndpointControlRegisteredForticlient() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 31),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ip": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"mac": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"status": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"flag": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"reg_fortigate": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 19),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -249,11 +243,11 @@ func flattenEndpointControlRegisteredForticlientMac(v interface{}, d *schema.Res
 }
 
 func flattenEndpointControlRegisteredForticlientStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenEndpointControlRegisteredForticlientFlag(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenEndpointControlRegisteredForticlientRegFortigate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -361,6 +355,8 @@ func getObjectEndpointControlRegisteredForticlient(d *schema.ResourceData, sv st
 		} else if t != nil {
 			obj["vdom"] = t
 		}
+	} else if d.HasChange("vdom") {
+		obj["vdom"] = nil
 	}
 
 	if v, ok := d.GetOk("ip"); ok {
@@ -370,6 +366,8 @@ func getObjectEndpointControlRegisteredForticlient(d *schema.ResourceData, sv st
 		} else if t != nil {
 			obj["ip"] = t
 		}
+	} else if d.HasChange("ip") {
+		obj["ip"] = nil
 	}
 
 	if v, ok := d.GetOk("mac"); ok {
@@ -379,6 +377,8 @@ func getObjectEndpointControlRegisteredForticlient(d *schema.ResourceData, sv st
 		} else if t != nil {
 			obj["mac"] = t
 		}
+	} else if d.HasChange("mac") {
+		obj["mac"] = nil
 	}
 
 	if v, ok := d.GetOkExists("status"); ok {
@@ -388,6 +388,8 @@ func getObjectEndpointControlRegisteredForticlient(d *schema.ResourceData, sv st
 		} else if t != nil {
 			obj["status"] = t
 		}
+	} else if d.HasChange("status") {
+		obj["status"] = nil
 	}
 
 	if v, ok := d.GetOkExists("flag"); ok {
@@ -397,6 +399,8 @@ func getObjectEndpointControlRegisteredForticlient(d *schema.ResourceData, sv st
 		} else if t != nil {
 			obj["flag"] = t
 		}
+	} else if d.HasChange("flag") {
+		obj["flag"] = nil
 	}
 
 	if v, ok := d.GetOk("reg_fortigate"); ok {
@@ -406,6 +410,8 @@ func getObjectEndpointControlRegisteredForticlient(d *schema.ResourceData, sv st
 		} else if t != nil {
 			obj["reg-fortigate"] = t
 		}
+	} else if d.HasChange("reg_fortigate") {
+		obj["reg-fortigate"] = nil
 	}
 
 	return &obj, nil

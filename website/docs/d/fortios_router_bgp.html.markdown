@@ -470,6 +470,7 @@ The `network` block contains:
 * `network_import_check` - Configure insurance of BGP network route existence in IGP.
 * `backdoor` - Enable/disable route as backdoor.
 * `route_map` - Route map to modify generated route.
+* `prefix_name` - Name of firewall address or address group.
 
 The `network6` block contains:
 

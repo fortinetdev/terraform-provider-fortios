@@ -46,7 +46,6 @@ func resourceSwitchControllerNacDevice() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
-				Computed:     true,
 			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
@@ -62,36 +61,30 @@ func resourceSwitchControllerNacDevice() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"last_known_port": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"matched_nac_policy": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"port_policy": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"mac_policy": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"last_seen": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 		},
 	}
@@ -249,7 +242,7 @@ func resourceSwitchControllerNacDeviceRead(d *schema.ResourceData, m interface{}
 }
 
 func flattenSwitchControllerNacDeviceId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerNacDeviceDescription(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -285,7 +278,7 @@ func flattenSwitchControllerNacDeviceMacPolicy(v interface{}, d *schema.Resource
 }
 
 func flattenSwitchControllerNacDeviceLastSeen(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectSwitchControllerNacDevice(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -419,6 +412,8 @@ func getObjectSwitchControllerNacDevice(d *schema.ResourceData, sv string) (*map
 		} else if t != nil {
 			obj["description"] = t
 		}
+	} else if d.HasChange("description") {
+		obj["description"] = nil
 	}
 
 	if v, ok := d.GetOk("status"); ok {
@@ -446,6 +441,8 @@ func getObjectSwitchControllerNacDevice(d *schema.ResourceData, sv string) (*map
 		} else if t != nil {
 			obj["last-known-switch"] = t
 		}
+	} else if d.HasChange("last_known_switch") {
+		obj["last-known-switch"] = nil
 	}
 
 	if v, ok := d.GetOk("last_known_port"); ok {
@@ -455,6 +452,8 @@ func getObjectSwitchControllerNacDevice(d *schema.ResourceData, sv string) (*map
 		} else if t != nil {
 			obj["last-known-port"] = t
 		}
+	} else if d.HasChange("last_known_port") {
+		obj["last-known-port"] = nil
 	}
 
 	if v, ok := d.GetOk("matched_nac_policy"); ok {
@@ -464,6 +463,8 @@ func getObjectSwitchControllerNacDevice(d *schema.ResourceData, sv string) (*map
 		} else if t != nil {
 			obj["matched-nac-policy"] = t
 		}
+	} else if d.HasChange("matched_nac_policy") {
+		obj["matched-nac-policy"] = nil
 	}
 
 	if v, ok := d.GetOk("port_policy"); ok {
@@ -473,6 +474,8 @@ func getObjectSwitchControllerNacDevice(d *schema.ResourceData, sv string) (*map
 		} else if t != nil {
 			obj["port-policy"] = t
 		}
+	} else if d.HasChange("port_policy") {
+		obj["port-policy"] = nil
 	}
 
 	if v, ok := d.GetOk("mac_policy"); ok {
@@ -482,6 +485,8 @@ func getObjectSwitchControllerNacDevice(d *schema.ResourceData, sv string) (*map
 		} else if t != nil {
 			obj["mac-policy"] = t
 		}
+	} else if d.HasChange("mac_policy") {
+		obj["mac-policy"] = nil
 	}
 
 	if v, ok := d.GetOkExists("last_seen"); ok {
@@ -491,6 +496,8 @@ func getObjectSwitchControllerNacDevice(d *schema.ResourceData, sv string) (*map
 		} else if t != nil {
 			obj["last-seen"] = t
 		}
+	} else if d.HasChange("last_seen") {
+		obj["last-seen"] = nil
 	}
 
 	return &obj, nil

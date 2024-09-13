@@ -40,25 +40,21 @@ func resourceWirelessControllerGlobal() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"location": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"acd_process_count": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"wpad_process_count": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"image_download": &schema.Schema{
 				Type:     schema.TypeString,
@@ -117,7 +113,6 @@ func resourceWirelessControllerGlobal() *schema.Resource {
 			"max_clients": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"rogue_scan_mac_adjacency": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -160,12 +155,10 @@ func resourceWirelessControllerGlobal() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"max_sta_cap": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"max_sta_cap_wtp": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -176,7 +169,6 @@ func resourceWirelessControllerGlobal() *schema.Resource {
 			"max_rogue_ap": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"max_rogue_ap_wtp": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -187,12 +179,10 @@ func resourceWirelessControllerGlobal() *schema.Resource {
 			"max_rogue_sta": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"max_ble_device": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"dfs_lab_test": &schema.Schema{
 				Type:     schema.TypeString,
@@ -326,11 +316,11 @@ func flattenWirelessControllerGlobalLocation(v interface{}, d *schema.ResourceDa
 }
 
 func flattenWirelessControllerGlobalAcdProcessCount(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerGlobalWpadProcessCount(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerGlobalImageDownload(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -346,7 +336,7 @@ func flattenWirelessControllerGlobalRollingWtpUpgradeThreshold(v interface{}, d 
 }
 
 func flattenWirelessControllerGlobalMaxRetransmit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerGlobalControlMessageOffload(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -362,11 +352,11 @@ func flattenWirelessControllerGlobalLinkAggregation(v interface{}, d *schema.Res
 }
 
 func flattenWirelessControllerGlobalMeshEthType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerGlobalFiappEthType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerGlobalDiscoveryMcAddr(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -374,11 +364,11 @@ func flattenWirelessControllerGlobalDiscoveryMcAddr(v interface{}, d *schema.Res
 }
 
 func flattenWirelessControllerGlobalMaxClients(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerGlobalRogueScanMacAdjacency(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerGlobalIpsecBaseIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -394,7 +384,7 @@ func flattenWirelessControllerGlobalTunnelMode(v interface{}, d *schema.Resource
 }
 
 func flattenWirelessControllerGlobalNacInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerGlobalApLogServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -406,31 +396,31 @@ func flattenWirelessControllerGlobalApLogServerIp(v interface{}, d *schema.Resou
 }
 
 func flattenWirelessControllerGlobalApLogServerPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerGlobalMaxStaCap(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerGlobalMaxStaCapWtp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerGlobalMaxRogueAp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerGlobalMaxRogueApWtp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerGlobalMaxRogueSta(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerGlobalMaxBleDevice(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerGlobalDfsLabTest(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -763,6 +753,8 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData, setArgNil bool, s
 				obj["name"] = t
 			}
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("location"); ok {
@@ -776,6 +768,8 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData, setArgNil bool, s
 				obj["location"] = t
 			}
 		}
+	} else if d.HasChange("location") {
+		obj["location"] = nil
 	}
 
 	if v, ok := d.GetOkExists("acd_process_count"); ok {
@@ -789,6 +783,8 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData, setArgNil bool, s
 				obj["acd-process-count"] = t
 			}
 		}
+	} else if d.HasChange("acd_process_count") {
+		obj["acd-process-count"] = nil
 	}
 
 	if v, ok := d.GetOkExists("wpad_process_count"); ok {
@@ -802,6 +798,8 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData, setArgNil bool, s
 				obj["wpad-process-count"] = t
 			}
 		}
+	} else if d.HasChange("wpad_process_count") {
+		obj["wpad-process-count"] = nil
 	}
 
 	if v, ok := d.GetOk("image_download"); ok {
@@ -945,6 +943,8 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData, setArgNil bool, s
 				obj["max-clients"] = t
 			}
 		}
+	} else if d.HasChange("max_clients") {
+		obj["max-clients"] = nil
 	}
 
 	if v, ok := d.GetOkExists("rogue_scan_mac_adjacency"); ok {
@@ -1049,6 +1049,8 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData, setArgNil bool, s
 				obj["ap-log-server-port"] = t
 			}
 		}
+	} else if d.HasChange("ap_log_server_port") {
+		obj["ap-log-server-port"] = nil
 	}
 
 	if v, ok := d.GetOkExists("max_sta_cap"); ok {
@@ -1062,6 +1064,8 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData, setArgNil bool, s
 				obj["max-sta-cap"] = t
 			}
 		}
+	} else if d.HasChange("max_sta_cap") {
+		obj["max-sta-cap"] = nil
 	}
 
 	if v, ok := d.GetOk("max_sta_cap_wtp"); ok {
@@ -1088,6 +1092,8 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData, setArgNil bool, s
 				obj["max-rogue-ap"] = t
 			}
 		}
+	} else if d.HasChange("max_rogue_ap") {
+		obj["max-rogue-ap"] = nil
 	}
 
 	if v, ok := d.GetOk("max_rogue_ap_wtp"); ok {
@@ -1114,6 +1120,8 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData, setArgNil bool, s
 				obj["max-rogue-sta"] = t
 			}
 		}
+	} else if d.HasChange("max_rogue_sta") {
+		obj["max-rogue-sta"] = nil
 	}
 
 	if v, ok := d.GetOkExists("max_ble_device"); ok {
@@ -1127,6 +1135,8 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData, setArgNil bool, s
 				obj["max-ble-device"] = t
 			}
 		}
+	} else if d.HasChange("max_ble_device") {
+		obj["max-ble-device"] = nil
 	}
 
 	if v, ok := d.GetOk("dfs_lab_test"); ok {

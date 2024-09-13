@@ -40,7 +40,6 @@ func resourceFirewallVipgrp64() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
-				Computed:     true,
 			},
 			"uuid": &schema.Schema{
 				Type:     schema.TypeString,
@@ -51,7 +50,6 @@ func resourceFirewallVipgrp64() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 32),
 				Optional:     true,
-				Computed:     true,
 			},
 			"comments": &schema.Schema{
 				Type:         schema.TypeString,
@@ -67,7 +65,6 @@ func resourceFirewallVipgrp64() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -246,7 +243,7 @@ func flattenFirewallVipgrp64Uuid(v interface{}, d *schema.ResourceData, pre stri
 }
 
 func flattenFirewallVipgrp64Color(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallVipgrp64Comments(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -407,6 +404,8 @@ func getObjectFirewallVipgrp64(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("uuid"); ok {
@@ -425,6 +424,8 @@ func getObjectFirewallVipgrp64(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["color"] = t
 		}
+	} else if d.HasChange("color") {
+		obj["color"] = nil
 	}
 
 	if v, ok := d.GetOk("comments"); ok {
@@ -434,6 +435,8 @@ func getObjectFirewallVipgrp64(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["comments"] = t
 		}
+	} else if d.HasChange("comments") {
+		obj["comments"] = nil
 	}
 
 	if v, ok := d.GetOk("member"); ok || d.HasChange("member") {

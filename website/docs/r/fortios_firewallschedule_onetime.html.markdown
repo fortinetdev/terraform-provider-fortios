@@ -26,6 +26,7 @@ resource "fortios_firewallschedule_onetime" "trname" {
 The following arguments are supported:
 
 * `name` - (Required) Onetime schedule name.
+* `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `start` - (Required) Schedule start date and time, format hh:mm yyyy/mm/dd.
 * `start_utc` - Schedule start date and time, in epoch format.
 * `end` - (Required) Schedule end date and time, format hh:mm yyyy/mm/dd.

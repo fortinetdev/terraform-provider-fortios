@@ -51,7 +51,6 @@ func resourceDlpSensor() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"comment": &schema.Schema{
 				Type:         schema.TypeString,
@@ -67,13 +66,11 @@ func resourceDlpSensor() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 32),
 							Optional:     true,
-							Computed:     true,
 						},
 						"dictionary": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"count": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -98,7 +95,6 @@ func resourceDlpSensor() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"filter": &schema.Schema{
 				Type:     schema.TypeList,
@@ -108,13 +104,11 @@ func resourceDlpSensor() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"name": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"severity": &schema.Schema{
 							Type:     schema.TypeString,
@@ -129,7 +123,6 @@ func resourceDlpSensor() *schema.Resource {
 						"proto": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"filter_by": &schema.Schema{
 							Type:     schema.TypeString,
@@ -145,7 +138,6 @@ func resourceDlpSensor() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"sensitivity": &schema.Schema{
 							Type:     schema.TypeSet,
@@ -156,7 +148,6 @@ func resourceDlpSensor() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 35),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -170,7 +161,6 @@ func resourceDlpSensor() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 35),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -184,13 +174,11 @@ func resourceDlpSensor() *schema.Resource {
 						"file_type": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"regexp": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"archive": &schema.Schema{
 							Type:     schema.TypeString,
@@ -228,22 +216,18 @@ func resourceDlpSensor() *schema.Resource {
 			"flow_based": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"options": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"full_archive_proto": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"summary_proto": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
@@ -480,7 +464,7 @@ func flattenDlpSensorEntries(v interface{}, d *schema.ResourceData, pre string, 
 }
 
 func flattenDlpSensorEntriesId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenDlpSensorEntriesDictionary(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -488,7 +472,7 @@ func flattenDlpSensorEntriesDictionary(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenDlpSensorEntriesCount(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenDlpSensorEntriesStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -617,7 +601,7 @@ func flattenDlpSensorFilter(v interface{}, d *schema.ResourceData, pre string, s
 }
 
 func flattenDlpSensorFilterId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenDlpSensorFilterName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -641,7 +625,7 @@ func flattenDlpSensorFilterFilterBy(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenDlpSensorFilterFileSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenDlpSensorFilterCompanyIdentifier(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -733,11 +717,11 @@ func flattenDlpSensorFilterFpSensitivityName(v interface{}, d *schema.ResourceDa
 }
 
 func flattenDlpSensorFilterMatchPercentage(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenDlpSensorFilterFileType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenDlpSensorFilterRegexp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -945,11 +929,15 @@ func expandDlpSensorEntries(d *schema.ResourceData, v interface{}, pre string, s
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandDlpSensorEntriesId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dictionary"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["dictionary"], _ = expandDlpSensorEntriesDictionary(d, i["dictionary"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["dictionary"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "count"
@@ -1011,11 +999,15 @@ func expandDlpSensorFilter(d *schema.ResourceData, v interface{}, pre string, sv
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandDlpSensorFilterId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandDlpSensorFilterName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "severity"
@@ -1031,6 +1023,8 @@ func expandDlpSensorFilter(d *schema.ResourceData, v interface{}, pre string, sv
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "proto"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["proto"], _ = expandDlpSensorFilterProto(d, i["proto"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["proto"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_by"
@@ -1046,19 +1040,21 @@ func expandDlpSensorFilter(d *schema.ResourceData, v interface{}, pre string, sv
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "company_identifier"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["company-identifier"], _ = expandDlpSensorFilterCompanyIdentifier(d, i["company_identifier"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["company-identifier"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sensitivity"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["sensitivity"], _ = expandDlpSensorFilterSensitivity(d, i["sensitivity"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["sensitivity"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "fp_sensitivity"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["fp-sensitivity"], _ = expandDlpSensorFilterFpSensitivity(d, i["fp_sensitivity"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["fp-sensitivity"] = make([]string, 0)
 		}
 
@@ -1070,11 +1066,15 @@ func expandDlpSensorFilter(d *schema.ResourceData, v interface{}, pre string, sv
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "file_type"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["file-type"], _ = expandDlpSensorFilterFileType(d, i["file_type"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["file-type"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "regexp"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["regexp"], _ = expandDlpSensorFilterRegexp(d, i["regexp"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["regexp"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "archive"
@@ -1177,6 +1177,8 @@ func expandDlpSensorFilterFpSensitivity(d *schema.ResourceData, v interface{}, p
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandDlpSensorFilterFpSensitivityName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		result = append(result, tmp)
@@ -1271,6 +1273,8 @@ func getObjectDlpSensor(d *schema.ResourceData, sv string) (*map[string]interfac
 		} else if t != nil {
 			obj["eval"] = t
 		}
+	} else if d.HasChange("eval") {
+		obj["eval"] = nil
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
@@ -1280,6 +1284,8 @@ func getObjectDlpSensor(d *schema.ResourceData, sv string) (*map[string]interfac
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("entries"); ok || d.HasChange("entries") {
@@ -1307,6 +1313,8 @@ func getObjectDlpSensor(d *schema.ResourceData, sv string) (*map[string]interfac
 		} else if t != nil {
 			obj["replacemsg-group"] = t
 		}
+	} else if d.HasChange("replacemsg_group") {
+		obj["replacemsg-group"] = nil
 	}
 
 	if v, ok := d.GetOk("filter"); ok || d.HasChange("filter") {
@@ -1352,6 +1360,8 @@ func getObjectDlpSensor(d *schema.ResourceData, sv string) (*map[string]interfac
 		} else if t != nil {
 			obj["flow-based"] = t
 		}
+	} else if d.HasChange("flow_based") {
+		obj["flow-based"] = nil
 	}
 
 	if v, ok := d.GetOk("options"); ok {
@@ -1361,6 +1371,8 @@ func getObjectDlpSensor(d *schema.ResourceData, sv string) (*map[string]interfac
 		} else if t != nil {
 			obj["options"] = t
 		}
+	} else if d.HasChange("options") {
+		obj["options"] = nil
 	}
 
 	if v, ok := d.GetOk("full_archive_proto"); ok {
@@ -1370,6 +1382,8 @@ func getObjectDlpSensor(d *schema.ResourceData, sv string) (*map[string]interfac
 		} else if t != nil {
 			obj["full-archive-proto"] = t
 		}
+	} else if d.HasChange("full_archive_proto") {
+		obj["full-archive-proto"] = nil
 	}
 
 	if v, ok := d.GetOk("summary_proto"); ok {
@@ -1379,6 +1393,8 @@ func getObjectDlpSensor(d *schema.ResourceData, sv string) (*map[string]interfac
 		} else if t != nil {
 			obj["summary-proto"] = t
 		}
+	} else if d.HasChange("summary_proto") {
+		obj["summary-proto"] = nil
 	}
 
 	return &obj, nil

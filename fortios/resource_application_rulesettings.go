@@ -39,7 +39,6 @@ func resourceApplicationRuleSettings() *schema.Resource {
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 		},
 	}
@@ -197,7 +196,7 @@ func resourceApplicationRuleSettingsRead(d *schema.ResourceData, m interface{}) 
 }
 
 func flattenApplicationRuleSettingsId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectApplicationRuleSettings(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -232,6 +231,8 @@ func getObjectApplicationRuleSettings(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["id"] = t
 		}
+	} else if d.HasChange("fosid") {
+		obj["id"] = nil
 	}
 
 	return &obj, nil

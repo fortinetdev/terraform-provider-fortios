@@ -45,6 +45,8 @@ The `hosts` block contains:
 * `ip` - IPv4 address of the SNMP manager (host).
 * `ha_direct` - Enable/disable direct management of HA cluster members.
 * `host_type` - Control whether the SNMP manager sends SNMP queries, receives SNMP traps, or both.
+* `interface_select_method` - Specify how to select outgoing interface to reach server.
+* `interface` - Specify outgoing interface to reach server.
 
 The `hosts6` block contains:
 
@@ -53,6 +55,8 @@ The `hosts6` block contains:
 * `ipv6` - SNMP manager IPv6 address prefix.
 * `ha_direct` - Enable/disable direct management of HA cluster members.
 * `host_type` - Control whether the SNMP manager sends SNMP queries, receives SNMP traps, or both.
+* `interface_select_method` - Specify how to select outgoing interface to reach server.
+* `interface` - Specify outgoing interface to reach server.
 
 The `vdoms` block contains:
 

@@ -68,6 +68,11 @@ func resourceVpnSslWebPortal() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"dhcp_reservation": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"save_password": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -82,7 +87,6 @@ func resourceVpnSslWebPortal() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -116,7 +120,6 @@ func resourceVpnSslWebPortal() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -165,7 +168,6 @@ func resourceVpnSslWebPortal() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -199,7 +201,6 @@ func resourceVpnSslWebPortal() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -278,7 +279,6 @@ func resourceVpnSslWebPortal() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"bookmarks": &schema.Schema{
 							Type:     schema.TypeList,
@@ -289,7 +289,6 @@ func resourceVpnSslWebPortal() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 35),
 										Optional:     true,
-										Computed:     true,
 									},
 									"apptype": &schema.Schema{
 										Type:     schema.TypeString,
@@ -325,18 +324,15 @@ func resourceVpnSslWebPortal() *schema.Resource {
 										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 65535),
 										Optional:     true,
-										Computed:     true,
 									},
 									"remote_port": &schema.Schema{
 										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 65535),
 										Optional:     true,
-										Computed:     true,
 									},
 									"show_status_window": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
 									},
 									"description": &schema.Schema{
 										Type:         schema.TypeString,
@@ -351,7 +347,6 @@ func resourceVpnSslWebPortal() *schema.Resource {
 									"server_layout": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
 									},
 									"security": &schema.Schema{
 										Type:     schema.TypeString,
@@ -366,7 +361,6 @@ func resourceVpnSslWebPortal() *schema.Resource {
 									"preconnection_id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 									"preconnection_blob": &schema.Schema{
 										Type:         schema.TypeString,
@@ -387,7 +381,6 @@ func resourceVpnSslWebPortal() *schema.Resource {
 										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 65535),
 										Optional:     true,
-										Computed:     true,
 									},
 									"logon_user": &schema.Schema{
 										Type:         schema.TypeString,
@@ -419,7 +412,6 @@ func resourceVpnSslWebPortal() *schema.Resource {
 													Type:         schema.TypeString,
 													ValidateFunc: validation.StringLenBetween(0, 35),
 													Optional:     true,
-													Computed:     true,
 												},
 												"value": &schema.Schema{
 													Type:         schema.TypeString,
@@ -518,7 +510,6 @@ func resourceVpnSslWebPortal() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"smb_ntlmv1_auth": &schema.Schema{
 				Type:     schema.TypeString,
@@ -543,7 +534,6 @@ func resourceVpnSslWebPortal() *schema.Resource {
 			"transform_backward_slashes": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"use_sdwan": &schema.Schema{
 				Type:     schema.TypeString,
@@ -581,7 +571,6 @@ func resourceVpnSslWebPortal() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: intBetweenWithZero(120, 259200),
 				Optional:     true,
-				Computed:     true,
 			},
 			"host_check_policy": &schema.Schema{
 				Type:     schema.TypeSet,
@@ -592,7 +581,6 @@ func resourceVpnSslWebPortal() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -621,7 +609,6 @@ func resourceVpnSslWebPortal() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"mac_addr_mask": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -659,7 +646,11 @@ func resourceVpnSslWebPortal() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
+						},
+						"minor_version": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(0, 65535),
+							Optional:     true,
 						},
 						"action": &schema.Schema{
 							Type:     schema.TypeString,
@@ -670,7 +661,6 @@ func resourceVpnSslWebPortal() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 						"latest_patch_level": &schema.Schema{
 							Type:     schema.TypeString,
@@ -728,7 +718,6 @@ func resourceVpnSslWebPortal() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"domains": &schema.Schema{
 							Type:         schema.TypeString,
@@ -789,7 +778,6 @@ func resourceVpnSslWebPortal() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 35),
 										Optional:     true,
-										Computed:     true,
 									},
 									"value": &schema.Schema{
 										Type:         schema.TypeString,
@@ -813,6 +801,7 @@ func resourceVpnSslWebPortal() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 128),
 							Optional:     true,
+							Sensitive:    true,
 						},
 					},
 				},
@@ -1003,6 +992,10 @@ func flattenVpnSslWebPortalAutoConnect(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenVpnSslWebPortalKeepAlive(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnSslWebPortalDhcpReservation(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1467,8 +1460,7 @@ func flattenVpnSslWebPortalBookmarkGroupBookmarks(v interface{}, d *schema.Resou
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "logon_password"
-		if cur_v, ok := i["logon-password"]; ok {
-			tmp["logon_password"] = flattenVpnSslWebPortalBookmarkGroupBookmarksLogonPassword(cur_v, d, pre_append, sv)
+		if _, ok := i["logon-password"]; ok {
 			c := d.Get(pre_append).(string)
 			if c != "" {
 				tmp["logon_password"] = c
@@ -1501,8 +1493,7 @@ func flattenVpnSslWebPortalBookmarkGroupBookmarks(v interface{}, d *schema.Resou
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sso_password"
-		if cur_v, ok := i["sso-password"]; ok {
-			tmp["sso_password"] = flattenVpnSslWebPortalBookmarkGroupBookmarksSsoPassword(cur_v, d, pre_append, sv)
+		if _, ok := i["sso-password"]; ok {
 			c := d.Get(pre_append).(string)
 			if c != "" {
 				tmp["sso_password"] = c
@@ -1567,11 +1558,11 @@ func flattenVpnSslWebPortalBookmarkGroupBookmarksAdditionalParams(v interface{},
 }
 
 func flattenVpnSslWebPortalBookmarkGroupBookmarksListeningPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVpnSslWebPortalBookmarkGroupBookmarksRemotePort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVpnSslWebPortalBookmarkGroupBookmarksShowStatusWindow(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1599,7 +1590,7 @@ func flattenVpnSslWebPortalBookmarkGroupBookmarksSendPreconnectionId(v interface
 }
 
 func flattenVpnSslWebPortalBookmarkGroupBookmarksPreconnectionId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVpnSslWebPortalBookmarkGroupBookmarksPreconnectionBlob(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1615,14 +1606,10 @@ func flattenVpnSslWebPortalBookmarkGroupBookmarksRestrictedAdmin(v interface{}, 
 }
 
 func flattenVpnSslWebPortalBookmarkGroupBookmarksPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVpnSslWebPortalBookmarkGroupBookmarksLogonUser(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenVpnSslWebPortalBookmarkGroupBookmarksLogonPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1693,20 +1680,16 @@ func flattenVpnSslWebPortalBookmarkGroupBookmarksSsoUsername(v interface{}, d *s
 	return v
 }
 
-func flattenVpnSslWebPortalBookmarkGroupBookmarksSsoPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
 func flattenVpnSslWebPortalBookmarkGroupBookmarksSsoCredentialSentOnce(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
 func flattenVpnSslWebPortalBookmarkGroupBookmarksWidth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVpnSslWebPortalBookmarkGroupBookmarksHeight(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVpnSslWebPortalBookmarkGroupBookmarksVncKeyboardLayout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1782,11 +1765,11 @@ func flattenVpnSslWebPortalClipboard(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenVpnSslWebPortalDefaultWindowWidth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVpnSslWebPortalDefaultWindowHeight(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVpnSslWebPortalHostCheck(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1794,7 +1777,7 @@ func flattenVpnSslWebPortalHostCheck(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenVpnSslWebPortalHostCheckInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVpnSslWebPortalHostCheckPolicy(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -1904,7 +1887,7 @@ func flattenVpnSslWebPortalMacAddrCheckRuleName(v interface{}, d *schema.Resourc
 }
 
 func flattenVpnSslWebPortalMacAddrCheckRuleMacAddrMask(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVpnSslWebPortalMacAddrCheckRuleMacAddrList(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -1982,6 +1965,11 @@ func flattenVpnSslWebPortalOsCheckList(v interface{}, d *schema.ResourceData, pr
 			tmp["name"] = flattenVpnSslWebPortalOsCheckListName(cur_v, d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "minor_version"
+		if cur_v, ok := i["minor-version"]; ok {
+			tmp["minor_version"] = flattenVpnSslWebPortalOsCheckListMinorVersion(cur_v, d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if cur_v, ok := i["action"]; ok {
 			tmp["action"] = flattenVpnSslWebPortalOsCheckListAction(cur_v, d, pre_append, sv)
@@ -2010,12 +1998,16 @@ func flattenVpnSslWebPortalOsCheckListName(v interface{}, d *schema.ResourceData
 	return v
 }
 
+func flattenVpnSslWebPortalOsCheckListMinorVersion(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
 func flattenVpnSslWebPortalOsCheckListAction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
 func flattenVpnSslWebPortalOsCheckListTolerance(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVpnSslWebPortalOsCheckListLatestPatchLevel(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2118,7 +2110,7 @@ func flattenVpnSslWebPortalSplitDns(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenVpnSslWebPortalSplitDnsId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVpnSslWebPortalSplitDnsDomains(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2182,7 +2174,10 @@ func flattenVpnSslWebPortalLandingPage(v interface{}, d *schema.ResourceData, pr
 
 	pre_append = pre + ".0." + "sso_password"
 	if _, ok := i["sso-password"]; ok {
-		result["sso_password"] = flattenVpnSslWebPortalLandingPageSsoPassword(i["sso-password"], d, pre_append, sv)
+		c := d.Get(pre_append).(string)
+		if c != "" {
+			result["sso_password"] = c
+		}
 	}
 
 	lastresult := []map[string]interface{}{result}
@@ -2260,10 +2255,6 @@ func flattenVpnSslWebPortalLandingPageSsoUsername(v interface{}, d *schema.Resou
 	return v
 }
 
-func flattenVpnSslWebPortalLandingPageSsoPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
 func refreshObjectVpnSslWebPortal(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 	var b_get_all_tables bool
@@ -2306,6 +2297,12 @@ func refreshObjectVpnSslWebPortal(d *schema.ResourceData, o map[string]interface
 	if err = d.Set("keep_alive", flattenVpnSslWebPortalKeepAlive(o["keep-alive"], d, "keep_alive", sv)); err != nil {
 		if !fortiAPIPatch(o["keep-alive"]) {
 			return fmt.Errorf("Error reading keep_alive: %v", err)
+		}
+	}
+
+	if err = d.Set("dhcp_reservation", flattenVpnSslWebPortalDhcpReservation(o["dhcp-reservation"], d, "dhcp_reservation", sv)); err != nil {
+		if !fortiAPIPatch(o["dhcp-reservation"]) {
+			return fmt.Errorf("Error reading dhcp_reservation: %v", err)
 		}
 	}
 
@@ -2874,6 +2871,10 @@ func expandVpnSslWebPortalKeepAlive(d *schema.ResourceData, v interface{}, pre s
 	return v, nil
 }
 
+func expandVpnSslWebPortalDhcpReservation(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandVpnSslWebPortalSavePassword(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -3119,12 +3120,14 @@ func expandVpnSslWebPortalBookmarkGroup(d *schema.ResourceData, v interface{}, p
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandVpnSslWebPortalBookmarkGroupName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "bookmarks"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["bookmarks"], _ = expandVpnSslWebPortalBookmarkGroupBookmarks(d, i["bookmarks"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["bookmarks"] = make([]string, 0)
 		}
 
@@ -3157,6 +3160,8 @@ func expandVpnSslWebPortalBookmarkGroupBookmarks(d *schema.ResourceData, v inter
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandVpnSslWebPortalBookmarkGroupBookmarksName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "apptype"
@@ -3167,46 +3172,64 @@ func expandVpnSslWebPortalBookmarkGroupBookmarks(d *schema.ResourceData, v inter
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "url"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["url"], _ = expandVpnSslWebPortalBookmarkGroupBookmarksUrl(d, i["url"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["url"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "host"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["host"], _ = expandVpnSslWebPortalBookmarkGroupBookmarksHost(d, i["host"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["host"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "folder"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["folder"], _ = expandVpnSslWebPortalBookmarkGroupBookmarksFolder(d, i["folder"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["folder"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "domain"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["domain"], _ = expandVpnSslWebPortalBookmarkGroupBookmarksDomain(d, i["domain"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["domain"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "additional_params"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["additional-params"], _ = expandVpnSslWebPortalBookmarkGroupBookmarksAdditionalParams(d, i["additional_params"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["additional-params"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "listening_port"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["listening-port"], _ = expandVpnSslWebPortalBookmarkGroupBookmarksListeningPort(d, i["listening_port"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["listening-port"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "remote_port"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["remote-port"], _ = expandVpnSslWebPortalBookmarkGroupBookmarksRemotePort(d, i["remote_port"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["remote-port"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "show_status_window"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["show-status-window"], _ = expandVpnSslWebPortalBookmarkGroupBookmarksShowStatusWindow(d, i["show_status_window"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["show-status-window"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["description"], _ = expandVpnSslWebPortalBookmarkGroupBookmarksDescription(d, i["description"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["description"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "keyboard_layout"
@@ -3217,6 +3240,8 @@ func expandVpnSslWebPortalBookmarkGroupBookmarks(d *schema.ResourceData, v inter
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "server_layout"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["server-layout"], _ = expandVpnSslWebPortalBookmarkGroupBookmarksServerLayout(d, i["server_layout"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["server-layout"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "security"
@@ -3232,16 +3257,22 @@ func expandVpnSslWebPortalBookmarkGroupBookmarks(d *schema.ResourceData, v inter
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "preconnection_id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["preconnection-id"], _ = expandVpnSslWebPortalBookmarkGroupBookmarksPreconnectionId(d, i["preconnection_id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["preconnection-id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "preconnection_blob"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["preconnection-blob"], _ = expandVpnSslWebPortalBookmarkGroupBookmarksPreconnectionBlob(d, i["preconnection_blob"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["preconnection-blob"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "load_balancing_info"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["load-balancing-info"], _ = expandVpnSslWebPortalBookmarkGroupBookmarksLoadBalancingInfo(d, i["load_balancing_info"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["load-balancing-info"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "restricted_admin"
@@ -3252,16 +3283,22 @@ func expandVpnSslWebPortalBookmarkGroupBookmarks(d *schema.ResourceData, v inter
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["port"], _ = expandVpnSslWebPortalBookmarkGroupBookmarksPort(d, i["port"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["port"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "logon_user"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["logon-user"], _ = expandVpnSslWebPortalBookmarkGroupBookmarksLogonUser(d, i["logon_user"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["logon-user"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "logon_password"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["logon-password"], _ = expandVpnSslWebPortalBookmarkGroupBookmarksLogonPassword(d, i["logon_password"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["logon-password"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "color_depth"
@@ -3275,9 +3312,9 @@ func expandVpnSslWebPortalBookmarkGroupBookmarks(d *schema.ResourceData, v inter
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "form_data"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["form-data"], _ = expandVpnSslWebPortalBookmarkGroupBookmarksFormData(d, i["form_data"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["form-data"] = make([]string, 0)
 		}
 
@@ -3289,11 +3326,15 @@ func expandVpnSslWebPortalBookmarkGroupBookmarks(d *schema.ResourceData, v inter
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sso_username"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["sso-username"], _ = expandVpnSslWebPortalBookmarkGroupBookmarksSsoUsername(d, i["sso_username"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["sso-username"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sso_password"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["sso-password"], _ = expandVpnSslWebPortalBookmarkGroupBookmarksSsoPassword(d, i["sso_password"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["sso-password"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sso_credential_sent_once"
@@ -3437,11 +3478,15 @@ func expandVpnSslWebPortalBookmarkGroupBookmarksFormData(d *schema.ResourceData,
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandVpnSslWebPortalBookmarkGroupBookmarksFormDataName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["value"], _ = expandVpnSslWebPortalBookmarkGroupBookmarksFormDataValue(d, i["value"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["value"] = nil
 		}
 
 		result = append(result, tmp)
@@ -3629,6 +3674,8 @@ func expandVpnSslWebPortalMacAddrCheckRule(d *schema.ResourceData, v interface{}
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandVpnSslWebPortalMacAddrCheckRuleName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mac_addr_mask"
@@ -3637,9 +3684,9 @@ func expandVpnSslWebPortalMacAddrCheckRule(d *schema.ResourceData, v interface{}
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mac_addr_list"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["mac-addr-list"], _ = expandVpnSslWebPortalMacAddrCheckRuleMacAddrList(d, i["mac_addr_list"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["mac-addr-list"] = make([]string, 0)
 		}
 
@@ -3708,6 +3755,15 @@ func expandVpnSslWebPortalOsCheckList(d *schema.ResourceData, v interface{}, pre
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandVpnSslWebPortalOsCheckListName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "minor_version"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["minor-version"], _ = expandVpnSslWebPortalOsCheckListMinorVersion(d, i["minor_version"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["minor-version"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
@@ -3718,6 +3774,8 @@ func expandVpnSslWebPortalOsCheckList(d *schema.ResourceData, v interface{}, pre
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tolerance"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["tolerance"], _ = expandVpnSslWebPortalOsCheckListTolerance(d, i["tolerance"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["tolerance"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "latest_patch_level"
@@ -3734,6 +3792,10 @@ func expandVpnSslWebPortalOsCheckList(d *schema.ResourceData, v interface{}, pre
 }
 
 func expandVpnSslWebPortalOsCheckListName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnSslWebPortalOsCheckListMinorVersion(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3798,11 +3860,15 @@ func expandVpnSslWebPortalSplitDns(d *schema.ResourceData, v interface{}, pre st
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandVpnSslWebPortalSplitDnsId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "domains"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["domains"], _ = expandVpnSslWebPortalSplitDnsDomains(d, i["domains"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["domains"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dns_server1"
@@ -3930,11 +3996,15 @@ func expandVpnSslWebPortalLandingPageFormData(d *schema.ResourceData, v interfac
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandVpnSslWebPortalLandingPageFormDataName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["value"], _ = expandVpnSslWebPortalLandingPageFormDataValue(d, i["value"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["value"] = nil
 		}
 
 		result = append(result, tmp)
@@ -4019,6 +4089,15 @@ func getObjectVpnSslWebPortal(d *schema.ResourceData, sv string) (*map[string]in
 			return &obj, err
 		} else if t != nil {
 			obj["keep-alive"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("dhcp_reservation"); ok {
+		t, err := expandVpnSslWebPortalDhcpReservation(d, v, "dhcp_reservation", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["dhcp-reservation"] = t
 		}
 	}
 
@@ -4110,6 +4189,8 @@ func getObjectVpnSslWebPortal(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["dns-suffix"] = t
 		}
+	} else if d.HasChange("dns_suffix") {
+		obj["dns-suffix"] = nil
 	}
 
 	if v, ok := d.GetOk("wins_server1"); ok {
@@ -4389,6 +4470,8 @@ func getObjectVpnSslWebPortal(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["redir-url"] = t
 		}
+	} else if d.HasChange("redir_url") {
+		obj["redir-url"] = nil
 	}
 
 	if v, ok := d.GetOk("theme"); ok {
@@ -4407,6 +4490,8 @@ func getObjectVpnSslWebPortal(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["custom-lang"] = t
 		}
+	} else if d.HasChange("custom_lang") {
+		obj["custom-lang"] = nil
 	}
 
 	if v, ok := d.GetOk("smb_ntlmv1_auth"); ok {
@@ -4452,6 +4537,8 @@ func getObjectVpnSslWebPortal(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["transform-backward-slashes"] = t
 		}
+	} else if d.HasChange("transform_backward_slashes") {
+		obj["transform-backward-slashes"] = nil
 	}
 
 	if v, ok := d.GetOk("use_sdwan"); ok {
@@ -4515,6 +4602,8 @@ func getObjectVpnSslWebPortal(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["host-check-interval"] = t
 		}
+	} else if d.HasChange("host_check_interval") {
+		obj["host-check-interval"] = nil
 	}
 
 	if v, ok := d.GetOk("host_check_policy"); ok || d.HasChange("host_check_policy") {
@@ -4614,6 +4703,8 @@ func getObjectVpnSslWebPortal(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["windows-forticlient-download-url"] = t
 		}
+	} else if d.HasChange("windows_forticlient_download_url") {
+		obj["windows-forticlient-download-url"] = nil
 	}
 
 	if v, ok := d.GetOk("macos_forticlient_download_url"); ok {
@@ -4623,6 +4714,8 @@ func getObjectVpnSslWebPortal(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["macos-forticlient-download-url"] = t
 		}
+	} else if d.HasChange("macos_forticlient_download_url") {
+		obj["macos-forticlient-download-url"] = nil
 	}
 
 	if v, ok := d.GetOk("skip_check_for_unsupported_os"); ok {

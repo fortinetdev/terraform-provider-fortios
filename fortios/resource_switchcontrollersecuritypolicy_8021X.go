@@ -57,12 +57,21 @@ func resourceSwitchControllerSecurityPolicy8021X() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
 			},
 			"mac_auth_bypass": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"auth_order": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"auth_priority": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -91,13 +100,11 @@ func resourceSwitchControllerSecurityPolicy8021X() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"guest_vlan_id": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"guest_auth_delay": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -114,13 +121,11 @@ func resourceSwitchControllerSecurityPolicy8021X() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"auth_fail_vlan_id": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"framevid_apply": &schema.Schema{
 				Type:     schema.TypeString,
@@ -152,7 +157,6 @@ func resourceSwitchControllerSecurityPolicy8021X() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"authserver_timeout_tagged": &schema.Schema{
 				Type:     schema.TypeString,
@@ -163,7 +167,6 @@ func resourceSwitchControllerSecurityPolicy8021X() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"dacl": &schema.Schema{
 				Type:     schema.TypeString,
@@ -389,6 +392,14 @@ func flattenSwitchControllerSecurityPolicy8021XMacAuthBypass(v interface{}, d *s
 	return v
 }
 
+func flattenSwitchControllerSecurityPolicy8021XAuthOrder(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerSecurityPolicy8021XAuthPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSwitchControllerSecurityPolicy8021XOpenAuth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -406,7 +417,7 @@ func flattenSwitchControllerSecurityPolicy8021XGuestVlan(v interface{}, d *schem
 }
 
 func flattenSwitchControllerSecurityPolicy8021XGuestVlanid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerSecurityPolicy8021XGuestVlanId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -414,7 +425,7 @@ func flattenSwitchControllerSecurityPolicy8021XGuestVlanId(v interface{}, d *sch
 }
 
 func flattenSwitchControllerSecurityPolicy8021XGuestAuthDelay(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerSecurityPolicy8021XAuthFailVlan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -422,7 +433,7 @@ func flattenSwitchControllerSecurityPolicy8021XAuthFailVlan(v interface{}, d *sc
 }
 
 func flattenSwitchControllerSecurityPolicy8021XAuthFailVlanid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerSecurityPolicy8021XAuthFailVlanId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -442,7 +453,7 @@ func flattenSwitchControllerSecurityPolicy8021XPolicyType(v interface{}, d *sche
 }
 
 func flattenSwitchControllerSecurityPolicy8021XAuthserverTimeoutPeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerSecurityPolicy8021XAuthserverTimeoutVlan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -505,6 +516,18 @@ func refreshObjectSwitchControllerSecurityPolicy8021X(d *schema.ResourceData, o 
 	if err = d.Set("mac_auth_bypass", flattenSwitchControllerSecurityPolicy8021XMacAuthBypass(o["mac-auth-bypass"], d, "mac_auth_bypass", sv)); err != nil {
 		if !fortiAPIPatch(o["mac-auth-bypass"]) {
 			return fmt.Errorf("Error reading mac_auth_bypass: %v", err)
+		}
+	}
+
+	if err = d.Set("auth_order", flattenSwitchControllerSecurityPolicy8021XAuthOrder(o["auth-order"], d, "auth_order", sv)); err != nil {
+		if !fortiAPIPatch(o["auth-order"]) {
+			return fmt.Errorf("Error reading auth_order: %v", err)
+		}
+	}
+
+	if err = d.Set("auth_priority", flattenSwitchControllerSecurityPolicy8021XAuthPriority(o["auth-priority"], d, "auth_priority", sv)); err != nil {
+		if !fortiAPIPatch(o["auth-priority"]) {
+			return fmt.Errorf("Error reading auth_priority: %v", err)
 		}
 	}
 
@@ -671,6 +694,14 @@ func expandSwitchControllerSecurityPolicy8021XMacAuthBypass(d *schema.ResourceDa
 	return v, nil
 }
 
+func expandSwitchControllerSecurityPolicy8021XAuthOrder(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerSecurityPolicy8021XAuthPriority(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSwitchControllerSecurityPolicy8021XOpenAuth(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -786,6 +817,24 @@ func getObjectSwitchControllerSecurityPolicy8021X(d *schema.ResourceData, sv str
 		}
 	}
 
+	if v, ok := d.GetOk("auth_order"); ok {
+		t, err := expandSwitchControllerSecurityPolicy8021XAuthOrder(d, v, "auth_order", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["auth-order"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("auth_priority"); ok {
+		t, err := expandSwitchControllerSecurityPolicy8021XAuthPriority(d, v, "auth_priority", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["auth-priority"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("open_auth"); ok {
 		t, err := expandSwitchControllerSecurityPolicy8021XOpenAuth(d, v, "open_auth", sv)
 		if err != nil {
@@ -829,6 +878,8 @@ func getObjectSwitchControllerSecurityPolicy8021X(d *schema.ResourceData, sv str
 		} else if t != nil {
 			obj["guest-vlanid"] = t
 		}
+	} else if d.HasChange("guest_vlanid") {
+		obj["guest-vlanid"] = nil
 	}
 
 	if v, ok := d.GetOk("guest_vlan_id"); ok {
@@ -838,6 +889,8 @@ func getObjectSwitchControllerSecurityPolicy8021X(d *schema.ResourceData, sv str
 		} else if t != nil {
 			obj["guest-vlan-id"] = t
 		}
+	} else if d.HasChange("guest_vlan_id") {
+		obj["guest-vlan-id"] = nil
 	}
 
 	if v, ok := d.GetOk("guest_auth_delay"); ok {
@@ -865,6 +918,8 @@ func getObjectSwitchControllerSecurityPolicy8021X(d *schema.ResourceData, sv str
 		} else if t != nil {
 			obj["auth-fail-vlanid"] = t
 		}
+	} else if d.HasChange("auth_fail_vlanid") {
+		obj["auth-fail-vlanid"] = nil
 	}
 
 	if v, ok := d.GetOk("auth_fail_vlan_id"); ok {
@@ -874,6 +929,8 @@ func getObjectSwitchControllerSecurityPolicy8021X(d *schema.ResourceData, sv str
 		} else if t != nil {
 			obj["auth-fail-vlan-id"] = t
 		}
+	} else if d.HasChange("auth_fail_vlan_id") {
+		obj["auth-fail-vlan-id"] = nil
 	}
 
 	if v, ok := d.GetOk("framevid_apply"); ok {
@@ -928,6 +985,8 @@ func getObjectSwitchControllerSecurityPolicy8021X(d *schema.ResourceData, sv str
 		} else if t != nil {
 			obj["authserver-timeout-vlanid"] = t
 		}
+	} else if d.HasChange("authserver_timeout_vlanid") {
+		obj["authserver-timeout-vlanid"] = nil
 	}
 
 	if v, ok := d.GetOk("authserver_timeout_tagged"); ok {
@@ -946,6 +1005,8 @@ func getObjectSwitchControllerSecurityPolicy8021X(d *schema.ResourceData, sv str
 		} else if t != nil {
 			obj["authserver-timeout-tagged-vlanid"] = t
 		}
+	} else if d.HasChange("authserver_timeout_tagged_vlanid") {
+		obj["authserver-timeout-tagged-vlanid"] = nil
 	}
 
 	if v, ok := d.GetOk("dacl"); ok {

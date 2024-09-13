@@ -28,6 +28,7 @@ The following attributes are exported:
 * `idp_single_sign_on_url` - IDP single sign-on URL.
 * `idp_single_logout_url` - IDP single logout url.
 * `idp_cert` - IDP Certificate name.
+* `scim_client` - SCIM client name.
 * `user_name` - User name in assertion statement.
 * `group_name` - Group name in assertion statement.
 * `digest_method` - Digest Method Algorithm. (default = sha1).

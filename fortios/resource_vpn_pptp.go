@@ -64,7 +64,6 @@ func resourceVpnPptp() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -359,6 +358,8 @@ func getObjectVpnPptp(d *schema.ResourceData, setArgNil bool, sv string) (*map[s
 				obj["usrgrp"] = t
 			}
 		}
+	} else if d.HasChange("usrgrp") {
+		obj["usrgrp"] = nil
 	}
 
 	return &obj, nil

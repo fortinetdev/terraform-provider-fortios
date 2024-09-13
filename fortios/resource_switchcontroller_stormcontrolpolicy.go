@@ -47,7 +47,6 @@ func resourceSwitchControllerStormControlPolicy() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"storm_control_mode": &schema.Schema{
 				Type:     schema.TypeString,
@@ -243,7 +242,7 @@ func flattenSwitchControllerStormControlPolicyStormControlMode(v interface{}, d 
 }
 
 func flattenSwitchControllerStormControlPolicyRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerStormControlPolicyUnknownUnicast(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -359,6 +358,8 @@ func getObjectSwitchControllerStormControlPolicy(d *schema.ResourceData, sv stri
 		} else if t != nil {
 			obj["description"] = t
 		}
+	} else if d.HasChange("description") {
+		obj["description"] = nil
 	}
 
 	if v, ok := d.GetOk("storm_control_mode"); ok {

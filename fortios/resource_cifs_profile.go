@@ -58,12 +58,10 @@ func resourceCifsProfile() *schema.Resource {
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"log": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"entries": &schema.Schema{
 							Type:     schema.TypeList,
@@ -74,7 +72,6 @@ func resourceCifsProfile() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 35),
 										Optional:     true,
-										Computed:     true,
 									},
 									"comment": &schema.Schema{
 										Type:         schema.TypeString,
@@ -84,12 +81,10 @@ func resourceCifsProfile() *schema.Resource {
 									"action": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
 									},
 									"direction": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
 									},
 									"file_type": &schema.Schema{
 										Type:     schema.TypeSet,
@@ -100,7 +95,6 @@ func resourceCifsProfile() *schema.Resource {
 													Type:         schema.TypeString,
 													ValidateFunc: validation.StringLenBetween(0, 39),
 													Optional:     true,
-													Computed:     true,
 												},
 											},
 										},
@@ -115,7 +109,6 @@ func resourceCifsProfile() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"server_keytab": &schema.Schema{
 				Type:     schema.TypeList,
@@ -126,13 +119,11 @@ func resourceCifsProfile() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 511),
 							Optional:     true,
-							Computed:     true,
 						},
 						"keytab": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 8191),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -646,27 +637,35 @@ func expandCifsProfileFileFilterEntries(d *schema.ResourceData, v interface{}, p
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["filter"], _ = expandCifsProfileFileFilterEntriesFilter(d, i["filter"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["filter"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["comment"], _ = expandCifsProfileFileFilterEntriesComment(d, i["comment"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["comment"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["action"], _ = expandCifsProfileFileFilterEntriesAction(d, i["action"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["action"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "direction"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["direction"], _ = expandCifsProfileFileFilterEntriesDirection(d, i["direction"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["direction"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "file_type"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["file-type"], _ = expandCifsProfileFileFilterEntriesFileType(d, i["file_type"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["file-type"] = make([]string, 0)
 		}
 
@@ -743,11 +742,15 @@ func expandCifsProfileServerKeytab(d *schema.ResourceData, v interface{}, pre st
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "principal"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["principal"], _ = expandCifsProfileServerKeytabPrincipal(d, i["principal"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["principal"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "keytab"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["keytab"], _ = expandCifsProfileServerKeytabKeytab(d, i["keytab"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["keytab"] = nil
 		}
 
 		result = append(result, tmp)
@@ -803,6 +806,8 @@ func getObjectCifsProfile(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["domain-controller"] = t
 		}
+	} else if d.HasChange("domain_controller") {
+		obj["domain-controller"] = nil
 	}
 
 	if v, ok := d.GetOk("server_keytab"); ok || d.HasChange("server_keytab") {

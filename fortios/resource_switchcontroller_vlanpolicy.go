@@ -47,19 +47,16 @@ func resourceSwitchControllerVlanPolicy() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"fortilink": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"vlan": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"allowed_vlans": &schema.Schema{
 				Type:     schema.TypeSet,
@@ -70,7 +67,6 @@ func resourceSwitchControllerVlanPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -84,7 +80,6 @@ func resourceSwitchControllerVlanPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -557,6 +552,8 @@ func getObjectSwitchControllerVlanPolicy(d *schema.ResourceData, sv string) (*ma
 		} else if t != nil {
 			obj["description"] = t
 		}
+	} else if d.HasChange("description") {
+		obj["description"] = nil
 	}
 
 	if v, ok := d.GetOk("fortilink"); ok {
@@ -566,6 +563,8 @@ func getObjectSwitchControllerVlanPolicy(d *schema.ResourceData, sv string) (*ma
 		} else if t != nil {
 			obj["fortilink"] = t
 		}
+	} else if d.HasChange("fortilink") {
+		obj["fortilink"] = nil
 	}
 
 	if v, ok := d.GetOk("vlan"); ok {
@@ -575,6 +574,8 @@ func getObjectSwitchControllerVlanPolicy(d *schema.ResourceData, sv string) (*ma
 		} else if t != nil {
 			obj["vlan"] = t
 		}
+	} else if d.HasChange("vlan") {
+		obj["vlan"] = nil
 	}
 
 	if v, ok := d.GetOk("allowed_vlans"); ok || d.HasChange("allowed_vlans") {

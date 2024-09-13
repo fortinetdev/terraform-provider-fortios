@@ -56,7 +56,6 @@ func resourceVideofilterProfile() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"comment": &schema.Schema{
 							Type:         schema.TypeString,
@@ -71,19 +70,16 @@ func resourceVideofilterProfile() *schema.Resource {
 						"keyword": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"category": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 7),
 							Optional:     true,
-							Computed:     true,
 						},
 						"channel": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"action": &schema.Schema{
 							Type:     schema.TypeString,
@@ -111,7 +107,6 @@ func resourceVideofilterProfile() *schema.Resource {
 			"youtube_channel_filter": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"fortiguard_category": &schema.Schema{
 				Type:     schema.TypeList,
@@ -128,7 +123,6 @@ func resourceVideofilterProfile() *schema.Resource {
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 									"action": &schema.Schema{
 										Type:     schema.TypeString,
@@ -138,7 +132,6 @@ func resourceVideofilterProfile() *schema.Resource {
 									"category_id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 									"log": &schema.Schema{
 										Type:     schema.TypeString,
@@ -170,7 +163,6 @@ func resourceVideofilterProfile() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
@@ -419,7 +411,7 @@ func flattenVideofilterProfileFilters(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenVideofilterProfileFiltersId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVideofilterProfileFiltersComment(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -431,7 +423,7 @@ func flattenVideofilterProfileFiltersType(v interface{}, d *schema.ResourceData,
 }
 
 func flattenVideofilterProfileFiltersKeyword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVideofilterProfileFiltersCategory(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -459,7 +451,7 @@ func flattenVideofilterProfileLog(v interface{}, d *schema.ResourceData, pre str
 }
 
 func flattenVideofilterProfileYoutubeChannelFilter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVideofilterProfileFortiguardCategory(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -534,7 +526,7 @@ func flattenVideofilterProfileFortiguardCategoryFilters(v interface{}, d *schema
 }
 
 func flattenVideofilterProfileFortiguardCategoryFiltersId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVideofilterProfileFortiguardCategoryFiltersAction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -542,7 +534,7 @@ func flattenVideofilterProfileFortiguardCategoryFiltersAction(v interface{}, d *
 }
 
 func flattenVideofilterProfileFortiguardCategoryFiltersCategoryId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVideofilterProfileFortiguardCategoryFiltersLog(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -694,11 +686,15 @@ func expandVideofilterProfileFilters(d *schema.ResourceData, v interface{}, pre 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandVideofilterProfileFiltersId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["comment"], _ = expandVideofilterProfileFiltersComment(d, i["comment"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["comment"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
@@ -709,16 +705,22 @@ func expandVideofilterProfileFilters(d *schema.ResourceData, v interface{}, pre 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "keyword"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["keyword"], _ = expandVideofilterProfileFiltersKeyword(d, i["keyword"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["keyword"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["category"], _ = expandVideofilterProfileFiltersCategory(d, i["category"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["category"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "channel"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["channel"], _ = expandVideofilterProfileFiltersChannel(d, i["channel"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["channel"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
@@ -820,6 +822,8 @@ func expandVideofilterProfileFortiguardCategoryFilters(d *schema.ResourceData, v
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandVideofilterProfileFortiguardCategoryFiltersId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
@@ -830,6 +834,8 @@ func expandVideofilterProfileFortiguardCategoryFilters(d *schema.ResourceData, v
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category_id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["category-id"], _ = expandVideofilterProfileFortiguardCategoryFiltersCategoryId(d, i["category_id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["category-id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "log"
@@ -896,6 +902,8 @@ func getObjectVideofilterProfile(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("filters"); ok || d.HasChange("filters") {
@@ -932,6 +940,8 @@ func getObjectVideofilterProfile(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["youtube-channel-filter"] = t
 		}
+	} else if d.HasChange("youtube_channel_filter") {
+		obj["youtube-channel-filter"] = nil
 	}
 
 	if v, ok := d.GetOk("fortiguard_category"); ok {
@@ -977,6 +987,8 @@ func getObjectVideofilterProfile(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["replacemsg-group"] = t
 		}
+	} else if d.HasChange("replacemsg_group") {
+		obj["replacemsg-group"] = nil
 	}
 
 	return &obj, nil

@@ -39,24 +39,20 @@ func resourceFirewallVendorMac() *schema.Resource {
 			"fosid": &schema.Schema{
 				Type: schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"name": &schema.Schema{
 				Type: schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional: true,
-				Computed: true,
 			},
 			"mac_number": &schema.Schema{
 				Type: schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"obsolete": &schema.Schema{
 				Type: schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
 				Optional: true,
-				Computed: true,
 			},
 		},
 	}
@@ -215,7 +211,7 @@ func resourceFirewallVendorMacRead(d *schema.ResourceData, m interface{}) error 
 
 
 func flattenFirewallVendorMacId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallVendorMacName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -223,11 +219,11 @@ func flattenFirewallVendorMacName(v interface{}, d *schema.ResourceData, pre str
 }
 
 func flattenFirewallVendorMacMacNumber(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallVendorMacObsolete(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 
@@ -302,6 +298,8 @@ func getObjectFirewallVendorMac(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["id"] = t
 		}
+    } else if d.HasChange("fosid") {
+		obj["id"] = nil
 	}
 
 
@@ -312,6 +310,8 @@ func getObjectFirewallVendorMac(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["name"] = t
 		}
+    } else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 
@@ -322,6 +322,8 @@ func getObjectFirewallVendorMac(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["mac-number"] = t
 		}
+    } else if d.HasChange("mac_number") {
+		obj["mac-number"] = nil
 	}
 
 
@@ -332,6 +334,8 @@ func getObjectFirewallVendorMac(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["obsolete"] = t
 		}
+    } else if d.HasChange("obsolete") {
+		obj["obsolete"] = nil
 	}
 
 

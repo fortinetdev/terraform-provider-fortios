@@ -60,7 +60,6 @@ func resourceWebfilterContent() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 127),
 							Optional:     true,
-							Computed:     true,
 						},
 						"pattern_type": &schema.Schema{
 							Type:     schema.TypeString,
@@ -256,7 +255,7 @@ func resourceWebfilterContentRead(d *schema.ResourceData, m interface{}) error {
 }
 
 func flattenWebfilterContentId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWebfilterContentName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -347,7 +346,7 @@ func flattenWebfilterContentEntriesLang(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenWebfilterContentEntriesScore(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWebfilterContentEntriesAction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -435,6 +434,8 @@ func expandWebfilterContentEntries(d *schema.ResourceData, v interface{}, pre st
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandWebfilterContentEntriesName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern_type"
@@ -513,6 +514,8 @@ func getObjectWebfilterContent(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
@@ -522,6 +525,8 @@ func getObjectWebfilterContent(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("entries"); ok || d.HasChange("entries") {

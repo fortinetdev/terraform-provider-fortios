@@ -46,7 +46,6 @@ func resourceRouterMulticastFlow() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
-				Computed:     true,
 			},
 			"flows": &schema.Schema{
 				Type:     schema.TypeList,
@@ -293,7 +292,7 @@ func flattenRouterMulticastFlowFlows(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenRouterMulticastFlowFlowsId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterMulticastFlowFlowsGroupAddr(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -426,6 +425,8 @@ func getObjectRouterMulticastFlow(d *schema.ResourceData, sv string) (*map[strin
 		} else if t != nil {
 			obj["comments"] = t
 		}
+	} else if d.HasChange("comments") {
+		obj["comments"] = nil
 	}
 
 	if v, ok := d.GetOk("flows"); ok || d.HasChange("flows") {

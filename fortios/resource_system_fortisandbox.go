@@ -55,13 +55,11 @@ func resourceSystemFortisandbox() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"source_ip": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"interface_select_method": &schema.Schema{
 				Type:     schema.TypeString,
@@ -72,7 +70,6 @@ func resourceSystemFortisandbox() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"enc_algorithm": &schema.Schema{
 				Type:     schema.TypeString,
@@ -88,7 +85,6 @@ func resourceSystemFortisandbox() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -413,6 +409,8 @@ func getObjectSystemFortisandbox(d *schema.ResourceData, setArgNil bool, sv stri
 				obj["server"] = t
 			}
 		}
+	} else if d.HasChange("server") {
+		obj["server"] = nil
 	}
 
 	if v, ok := d.GetOk("source_ip"); ok {
@@ -426,6 +424,8 @@ func getObjectSystemFortisandbox(d *schema.ResourceData, setArgNil bool, sv stri
 				obj["source-ip"] = t
 			}
 		}
+	} else if d.HasChange("source_ip") {
+		obj["source-ip"] = nil
 	}
 
 	if v, ok := d.GetOk("interface_select_method"); ok {
@@ -452,6 +452,8 @@ func getObjectSystemFortisandbox(d *schema.ResourceData, setArgNil bool, sv stri
 				obj["interface"] = t
 			}
 		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
 	}
 
 	if v, ok := d.GetOk("enc_algorithm"); ok {
@@ -491,6 +493,8 @@ func getObjectSystemFortisandbox(d *schema.ResourceData, setArgNil bool, sv stri
 				obj["email"] = t
 			}
 		}
+	} else if d.HasChange("email") {
+		obj["email"] = nil
 	}
 
 	return &obj, nil

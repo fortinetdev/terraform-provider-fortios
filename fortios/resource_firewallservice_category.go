@@ -40,7 +40,11 @@ func resourceFirewallServiceCategory() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
+			},
+			"uuid": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"comment": &schema.Schema{
 				Type:         schema.TypeString,
@@ -211,6 +215,10 @@ func flattenFirewallServiceCategoryName(v interface{}, d *schema.ResourceData, p
 	return v
 }
 
+func flattenFirewallServiceCategoryUuid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallServiceCategoryComment(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -225,6 +233,12 @@ func refreshObjectFirewallServiceCategory(d *schema.ResourceData, o map[string]i
 	if err = d.Set("name", flattenFirewallServiceCategoryName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
+		}
+	}
+
+	if err = d.Set("uuid", flattenFirewallServiceCategoryUuid(o["uuid"], d, "uuid", sv)); err != nil {
+		if !fortiAPIPatch(o["uuid"]) {
+			return fmt.Errorf("Error reading uuid: %v", err)
 		}
 	}
 
@@ -253,6 +267,10 @@ func expandFirewallServiceCategoryName(d *schema.ResourceData, v interface{}, pr
 	return v, nil
 }
 
+func expandFirewallServiceCategoryUuid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallServiceCategoryComment(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -271,6 +289,17 @@ func getObjectFirewallServiceCategory(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
+	}
+
+	if v, ok := d.GetOk("uuid"); ok {
+		t, err := expandFirewallServiceCategoryUuid(d, v, "uuid", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["uuid"] = t
+		}
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
@@ -280,6 +309,8 @@ func getObjectFirewallServiceCategory(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("fabric_object"); ok {

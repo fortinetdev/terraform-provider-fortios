@@ -52,7 +52,6 @@ func resourceWirelessControllerSsidPolicy() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -282,6 +281,8 @@ func getObjectWirelessControllerSsidPolicy(d *schema.ResourceData, sv string) (*
 		} else if t != nil {
 			obj["description"] = t
 		}
+	} else if d.HasChange("description") {
+		obj["description"] = nil
 	}
 
 	if v, ok := d.GetOk("vlan"); ok {
@@ -291,6 +292,8 @@ func getObjectWirelessControllerSsidPolicy(d *schema.ResourceData, sv string) (*
 		} else if t != nil {
 			obj["vlan"] = t
 		}
+	} else if d.HasChange("vlan") {
+		obj["vlan"] = nil
 	}
 
 	return &obj, nil

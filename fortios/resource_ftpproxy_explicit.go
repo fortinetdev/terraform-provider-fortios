@@ -44,7 +44,6 @@ func resourceFtpProxyExplicit() *schema.Resource {
 			"incoming_port": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"incoming_ip": &schema.Schema{
 				Type:     schema.TypeString,
@@ -54,7 +53,6 @@ func resourceFtpProxyExplicit() *schema.Resource {
 			"outgoing_ip": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"sec_default_action": &schema.Schema{
 				Type:     schema.TypeString,
@@ -233,7 +231,7 @@ func flattenFtpProxyExplicitSsl(v interface{}, d *schema.ResourceData, pre strin
 }
 
 func flattenFtpProxyExplicitSslCert(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convmap2str(v, d.Get("ssl_cert"), "name")
 }
 
 func flattenFtpProxyExplicitSslDhBits(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -289,42 +287,9 @@ func refreshObjectFtpProxyExplicit(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
-	{
-		v := flattenFtpProxyExplicitSslCert(o["ssl-cert"], d, "ssl_cert", sv)
-		vx := ""
-		bstring := false
-		new_version_map := map[string][]string{
-			">=": []string{"7.4.2"},
-		}
-		if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
-			l := v.([]interface{})
-			if len(l) > 0 {
-				for k, r := range l {
-					i := r.(map[string]interface{})
-					if _, ok := i["name"]; ok {
-						if xv, ok := i["name"].(string); ok {
-							vx += xv
-							if k < len(l)-1 {
-								vx += ", "
-							}
-						}
-					}
-				}
-			}
-			bstring = true
-		}
-		if bstring == true {
-			if err = d.Set("ssl_cert", vx); err != nil {
-				if !fortiAPIPatch(o["ssl-cert"]) {
-					return fmt.Errorf("Error reading ssl_cert: %v", err)
-				}
-			}
-		} else {
-			if err = d.Set("ssl_cert", v); err != nil {
-				if !fortiAPIPatch(o["ssl-cert"]) {
-					return fmt.Errorf("Error reading ssl_cert: %v", err)
-				}
-			}
+	if err = d.Set("ssl_cert", flattenFtpProxyExplicitSslCert(o["ssl-cert"], d, "ssl_cert", sv)); err != nil {
+		if !fortiAPIPatch(o["ssl-cert"]) {
+			return fmt.Errorf("Error reading ssl_cert: %v", err)
 		}
 	}
 
@@ -378,7 +343,25 @@ func expandFtpProxyExplicitSsl(d *schema.ResourceData, v interface{}, pre string
 }
 
 func expandFtpProxyExplicitSslCert(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
+	new_version_map := map[string][]string{
+		">=": []string{"7.4.2"},
+	}
+	if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
+		vx := fmt.Sprintf("%v", v)
+		vxx := strings.Split(vx, ", ")
+
+		tmps := make([]map[string]interface{}, 0, len(vxx))
+
+		for _, xv := range vxx {
+			xtmp := make(map[string]interface{})
+			xtmp["name"] = xv
+
+			tmps = append(tmps, xtmp)
+		}
+		return tmps, nil
+	} else {
+		return v, nil
+	}
 }
 
 func expandFtpProxyExplicitSslDhBits(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
@@ -416,6 +399,8 @@ func getObjectFtpProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 				obj["incoming-port"] = t
 			}
 		}
+	} else if d.HasChange("incoming_port") {
+		obj["incoming-port"] = nil
 	}
 
 	if v, ok := d.GetOk("incoming_ip"); ok {
@@ -442,6 +427,8 @@ func getObjectFtpProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 				obj["outgoing-ip"] = t
 			}
 		}
+	} else if d.HasChange("outgoing_ip") {
+		obj["outgoing-ip"] = nil
 	}
 
 	if v, ok := d.GetOk("sec_default_action"); ok {
@@ -491,25 +478,7 @@ func getObjectFtpProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 			if err != nil {
 				return &obj, err
 			} else if t != nil {
-				new_version_map := map[string][]string{
-					">=": []string{"7.4.2"},
-				}
-				if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
-					vx := fmt.Sprintf("%v", t)
-					vxx := strings.Split(vx, ", ")
-
-					tmps := make([]map[string]interface{}, 0, len(vxx))
-
-					for _, xv := range vxx {
-						xtmp := make(map[string]interface{})
-						xtmp["name"] = xv
-
-						tmps = append(tmps, xtmp)
-					}
-					obj["ssl-cert"] = tmps
-				} else {
-					obj["ssl-cert"] = t
-				}
+				obj["ssl-cert"] = t
 			}
 		}
 	}

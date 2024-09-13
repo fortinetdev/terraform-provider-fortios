@@ -119,7 +119,7 @@ The `set_aspath` block supports:
 
 The `set_community` block supports:
 
-* `community` - Attribute: AA|AA:NN|internet|local-AS|no-advertise|no-export.
+* `community` - Attribute: AA|AA:NN|internet|local-AS|no-advertise|no-export (exact match required for well known communities).
 
 The `set_extcommunity_rt` block supports:
 

@@ -167,11 +167,11 @@ func resourceSystemSpeedTestSettingRead(d *schema.ResourceData, m interface{}) e
 }
 
 func flattenSystemSpeedTestSettingLatencyThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSpeedTestSettingMultipleTcpStream(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectSystemSpeedTestSetting(d *schema.ResourceData, o map[string]interface{}, sv string) error {

@@ -259,19 +259,19 @@ func flattenWirelessControllerWagProfileWagIp(v interface{}, d *schema.ResourceD
 }
 
 func flattenWirelessControllerWagProfileWagPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerWagProfilePingInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerWagProfilePingNumber(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerWagProfileReturnPacketTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerWagProfileDhcpIpAddr(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -399,6 +399,8 @@ func getObjectWirelessControllerWagProfile(d *schema.ResourceData, sv string) (*
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("tunnel_type"); ok {

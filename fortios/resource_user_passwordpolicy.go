@@ -70,31 +70,26 @@ func resourceUserPasswordPolicy() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 128),
 				Optional:     true,
-				Computed:     true,
 			},
 			"min_upper_case_letter": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 128),
 				Optional:     true,
-				Computed:     true,
 			},
 			"min_non_alphanumeric": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 128),
 				Optional:     true,
-				Computed:     true,
 			},
 			"min_number": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 128),
 				Optional:     true,
-				Computed:     true,
 			},
 			"min_change_characters": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 128),
 				Optional:     true,
-				Computed:     true,
 			},
 			"expire_status": &schema.Schema{
 				Type:     schema.TypeString,
@@ -105,6 +100,11 @@ func resourceUserPasswordPolicy() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
+			},
+			"reuse_password_limit": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 20),
+				Optional:     true,
 			},
 		},
 	}
@@ -266,11 +266,11 @@ func flattenUserPasswordPolicyName(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenUserPasswordPolicyExpireDays(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserPasswordPolicyWarnDays(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserPasswordPolicyExpiredPasswordRenewal(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -278,27 +278,27 @@ func flattenUserPasswordPolicyExpiredPasswordRenewal(v interface{}, d *schema.Re
 }
 
 func flattenUserPasswordPolicyMinimumLength(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserPasswordPolicyMinLowerCaseLetter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserPasswordPolicyMinUpperCaseLetter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserPasswordPolicyMinNonAlphanumeric(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserPasswordPolicyMinNumber(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserPasswordPolicyMinChangeCharacters(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserPasswordPolicyExpireStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -307,6 +307,10 @@ func flattenUserPasswordPolicyExpireStatus(v interface{}, d *schema.ResourceData
 
 func flattenUserPasswordPolicyReusePassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
+}
+
+func flattenUserPasswordPolicyReusePasswordLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
 }
 
 func refreshObjectUserPasswordPolicy(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -384,6 +388,12 @@ func refreshObjectUserPasswordPolicy(d *schema.ResourceData, o map[string]interf
 		}
 	}
 
+	if err = d.Set("reuse_password_limit", flattenUserPasswordPolicyReusePasswordLimit(o["reuse-password-limit"], d, "reuse_password_limit", sv)); err != nil {
+		if !fortiAPIPatch(o["reuse-password-limit"]) {
+			return fmt.Errorf("Error reading reuse_password_limit: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -438,6 +448,10 @@ func expandUserPasswordPolicyExpireStatus(d *schema.ResourceData, v interface{},
 }
 
 func expandUserPasswordPolicyReusePassword(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserPasswordPolicyReusePasswordLimit(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -496,6 +510,8 @@ func getObjectUserPasswordPolicy(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["min-lower-case-letter"] = t
 		}
+	} else if d.HasChange("min_lower_case_letter") {
+		obj["min-lower-case-letter"] = nil
 	}
 
 	if v, ok := d.GetOkExists("min_upper_case_letter"); ok {
@@ -505,6 +521,8 @@ func getObjectUserPasswordPolicy(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["min-upper-case-letter"] = t
 		}
+	} else if d.HasChange("min_upper_case_letter") {
+		obj["min-upper-case-letter"] = nil
 	}
 
 	if v, ok := d.GetOkExists("min_non_alphanumeric"); ok {
@@ -514,6 +532,8 @@ func getObjectUserPasswordPolicy(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["min-non-alphanumeric"] = t
 		}
+	} else if d.HasChange("min_non_alphanumeric") {
+		obj["min-non-alphanumeric"] = nil
 	}
 
 	if v, ok := d.GetOkExists("min_number"); ok {
@@ -523,6 +543,8 @@ func getObjectUserPasswordPolicy(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["min-number"] = t
 		}
+	} else if d.HasChange("min_number") {
+		obj["min-number"] = nil
 	}
 
 	if v, ok := d.GetOkExists("min_change_characters"); ok {
@@ -532,6 +554,8 @@ func getObjectUserPasswordPolicy(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["min-change-characters"] = t
 		}
+	} else if d.HasChange("min_change_characters") {
+		obj["min-change-characters"] = nil
 	}
 
 	if v, ok := d.GetOk("expire_status"); ok {
@@ -550,6 +574,17 @@ func getObjectUserPasswordPolicy(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["reuse-password"] = t
 		}
+	}
+
+	if v, ok := d.GetOkExists("reuse_password_limit"); ok {
+		t, err := expandUserPasswordPolicyReusePasswordLimit(d, v, "reuse_password_limit", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["reuse-password-limit"] = t
+		}
+	} else if d.HasChange("reuse_password_limit") {
+		obj["reuse-password-limit"] = nil
 	}
 
 	return &obj, nil

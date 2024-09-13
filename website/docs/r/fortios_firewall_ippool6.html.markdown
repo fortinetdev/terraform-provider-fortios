@@ -24,8 +24,11 @@ resource "fortios_firewall_ippool6" "trname" {
 The following arguments are supported:
 
 * `name` - IPv6 IP pool name.
+* `type` - Configure IPv6 pool type (overload or NPTv6). Valid values: `overload`, `nptv6`.
 * `startip` - (Required) First IPv6 address (inclusive) in the range for the address pool (format xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx, Default: ::).
 * `endip` - (Required) Final IPv6 address (inclusive) in the range for the address pool (format xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx, Default: ::).
+* `internal_prefix` - Internal NPTv6 prefix length (32 - 64).
+* `external_prefix` - External NPTv6 prefix length (32 - 64).
 * `comments` - Comment.
 * `nat46` - Enable/disable NAT46. Valid values: `disable`, `enable`.
 * `add_nat46_route` - Enable/disable adding NAT46 route. Valid values: `disable`, `enable`.

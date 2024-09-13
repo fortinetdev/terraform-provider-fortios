@@ -52,7 +52,6 @@ func resourceWirelessControllerHotspot20H2QpOperatorName() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 10),
 							Optional:     true,
-							Computed:     true,
 						},
 						"lang": &schema.Schema{
 							Type:         schema.TypeString,
@@ -64,7 +63,6 @@ func resourceWirelessControllerHotspot20H2QpOperatorName() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 252),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -287,7 +285,7 @@ func flattenWirelessControllerHotspot20H2QpOperatorNameValueList(v interface{}, 
 }
 
 func flattenWirelessControllerHotspot20H2QpOperatorNameValueListIndex(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerHotspot20H2QpOperatorNameValueListLang(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -359,6 +357,8 @@ func expandWirelessControllerHotspot20H2QpOperatorNameValueList(d *schema.Resour
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "index"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["index"], _ = expandWirelessControllerHotspot20H2QpOperatorNameValueListIndex(d, i["index"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["index"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "lang"
@@ -369,6 +369,8 @@ func expandWirelessControllerHotspot20H2QpOperatorNameValueList(d *schema.Resour
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["value"], _ = expandWirelessControllerHotspot20H2QpOperatorNameValueListValue(d, i["value"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["value"] = nil
 		}
 
 		result = append(result, tmp)

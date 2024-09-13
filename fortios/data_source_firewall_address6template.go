@@ -32,6 +32,10 @@ func dataSourceFirewallAddress6Template() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"uuid": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"ip6": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -132,6 +136,10 @@ func dataSourceFirewallAddress6TemplateRead(d *schema.ResourceData, m interface{
 }
 
 func dataSourceFlattenFirewallAddress6TemplateName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallAddress6TemplateUuid(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -266,6 +274,12 @@ func dataSourceRefreshObjectFirewallAddress6Template(d *schema.ResourceData, o m
 	if err = d.Set("name", dataSourceFlattenFirewallAddress6TemplateName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
+		}
+	}
+
+	if err = d.Set("uuid", dataSourceFlattenFirewallAddress6TemplateUuid(o["uuid"], d, "uuid")); err != nil {
+		if !fortiAPIPatch(o["uuid"]) {
+			return fmt.Errorf("Error reading uuid: %v", err)
 		}
 	}
 

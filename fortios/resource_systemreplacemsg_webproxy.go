@@ -271,6 +271,8 @@ func getObjectSystemReplacemsgWebproxy(d *schema.ResourceData, setArgNil bool, s
 				obj["buffer"] = t
 			}
 		}
+	} else if d.HasChange("buffer") {
+		obj["buffer"] = nil
 	}
 
 	if v, ok := d.GetOk("header"); ok {

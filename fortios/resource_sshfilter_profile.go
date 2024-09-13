@@ -46,12 +46,10 @@ func resourceSshFilterProfile() *schema.Resource {
 			"block": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"log": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"default_command_log": &schema.Schema{
 				Type:     schema.TypeString,
@@ -66,7 +64,6 @@ func resourceSshFilterProfile() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"type": &schema.Schema{
 							Type:     schema.TypeString,
@@ -77,7 +74,6 @@ func resourceSshFilterProfile() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 128),
 							Optional:     true,
-							Computed:     true,
 						},
 						"action": &schema.Schema{
 							Type:     schema.TypeString,
@@ -112,17 +108,14 @@ func resourceSshFilterProfile() *schema.Resource {
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"log": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"scan_archive_contents": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"entries": &schema.Schema{
 							Type:     schema.TypeList,
@@ -133,7 +126,6 @@ func resourceSshFilterProfile() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 35),
 										Optional:     true,
-										Computed:     true,
 									},
 									"comment": &schema.Schema{
 										Type:         schema.TypeString,
@@ -143,17 +135,14 @@ func resourceSshFilterProfile() *schema.Resource {
 									"action": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
 									},
 									"direction": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
 									},
 									"password_protected": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
 									},
 									"file_type": &schema.Schema{
 										Type:     schema.TypeSet,
@@ -164,7 +153,6 @@ func resourceSshFilterProfile() *schema.Resource {
 													Type:         schema.TypeString,
 													ValidateFunc: validation.StringLenBetween(0, 39),
 													Optional:     true,
-													Computed:     true,
 												},
 											},
 										},
@@ -425,7 +413,7 @@ func flattenSshFilterProfileShellCommands(v interface{}, d *schema.ResourceData,
 }
 
 func flattenSshFilterProfileShellCommandsId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSshFilterProfileShellCommandsType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -729,6 +717,8 @@ func expandSshFilterProfileShellCommands(d *schema.ResourceData, v interface{}, 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSshFilterProfileShellCommandsId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
@@ -739,6 +729,8 @@ func expandSshFilterProfileShellCommands(d *schema.ResourceData, v interface{}, 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["pattern"], _ = expandSshFilterProfileShellCommandsPattern(d, i["pattern"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["pattern"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
@@ -858,32 +850,42 @@ func expandSshFilterProfileFileFilterEntries(d *schema.ResourceData, v interface
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["filter"], _ = expandSshFilterProfileFileFilterEntriesFilter(d, i["filter"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["filter"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["comment"], _ = expandSshFilterProfileFileFilterEntriesComment(d, i["comment"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["comment"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["action"], _ = expandSshFilterProfileFileFilterEntriesAction(d, i["action"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["action"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "direction"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["direction"], _ = expandSshFilterProfileFileFilterEntriesDirection(d, i["direction"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["direction"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "password_protected"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["password-protected"], _ = expandSshFilterProfileFileFilterEntriesPasswordProtected(d, i["password_protected"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["password-protected"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "file_type"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["file-type"], _ = expandSshFilterProfileFileFilterEntriesFileType(d, i["file_type"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["file-type"] = make([]string, 0)
 		}
 
@@ -962,6 +964,8 @@ func getObjectSshFilterProfile(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["block"] = t
 		}
+	} else if d.HasChange("block") {
+		obj["block"] = nil
 	}
 
 	if v, ok := d.GetOk("log"); ok {
@@ -971,6 +975,8 @@ func getObjectSshFilterProfile(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["log"] = t
 		}
+	} else if d.HasChange("log") {
+		obj["log"] = nil
 	}
 
 	if v, ok := d.GetOk("default_command_log"); ok {

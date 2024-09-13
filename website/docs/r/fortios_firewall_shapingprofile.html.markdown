@@ -33,6 +33,7 @@ The following arguments are supported:
 * `profile_name` - (Required) Shaping profile name.
 * `comment` - Comment.
 * `type` - Select shaping profile type: policing / queuing. Valid values: `policing`, `queuing`.
+* `npu_offloading` - Enable/disable NPU offloading. Valid values: `disable`, `enable`.
 * `default_class_id` - (Required) Default class ID to handle unclassified packets (including all local traffic).
 * `shaping_entries` - Define shaping entries of this shaping profile. The structure of `shaping_entries` block is documented below.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].

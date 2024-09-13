@@ -56,12 +56,10 @@ func resourceRouterExtcommunityList() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"action": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"regexp": &schema.Schema{
 							Type:         schema.TypeString,
@@ -78,7 +76,6 @@ func resourceRouterExtcommunityList() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -315,7 +312,7 @@ func flattenRouterExtcommunityListRule(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenRouterExtcommunityListRuleId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterExtcommunityListRuleAction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -405,11 +402,15 @@ func expandRouterExtcommunityListRule(d *schema.ResourceData, v interface{}, pre
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandRouterExtcommunityListRuleId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["action"], _ = expandRouterExtcommunityListRuleAction(d, i["action"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["action"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "regexp"
@@ -425,6 +426,8 @@ func expandRouterExtcommunityListRule(d *schema.ResourceData, v interface{}, pre
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "match"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["match"], _ = expandRouterExtcommunityListRuleMatch(d, i["match"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["match"] = nil
 		}
 
 		result = append(result, tmp)

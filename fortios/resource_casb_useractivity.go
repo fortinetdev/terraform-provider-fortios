@@ -47,7 +47,6 @@ func resourceCasbUserActivity() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 36),
 				Optional:     true,
-				Computed:     true,
 			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
@@ -58,7 +57,6 @@ func resourceCasbUserActivity() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"type": &schema.Schema{
 				Type:     schema.TypeString,
@@ -69,13 +67,11 @@ func resourceCasbUserActivity() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
-				Computed:     true,
 			},
 			"application": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
-				Computed:     true,
 			},
 			"category": &schema.Schema{
 				Type:     schema.TypeString,
@@ -95,7 +91,6 @@ func resourceCasbUserActivity() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"strategy": &schema.Schema{
 							Type:     schema.TypeString,
@@ -110,7 +105,6 @@ func resourceCasbUserActivity() *schema.Resource {
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 									"type": &schema.Schema{
 										Type:     schema.TypeString,
@@ -126,7 +120,6 @@ func resourceCasbUserActivity() *schema.Resource {
 													Type:         schema.TypeString,
 													ValidateFunc: validation.StringLenBetween(0, 127),
 													Optional:     true,
-													Computed:     true,
 												},
 											},
 										},
@@ -140,7 +133,6 @@ func resourceCasbUserActivity() *schema.Resource {
 													Type:         schema.TypeString,
 													ValidateFunc: validation.StringLenBetween(0, 79),
 													Optional:     true,
-													Computed:     true,
 												},
 											},
 										},
@@ -154,13 +146,11 @@ func resourceCasbUserActivity() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 1023),
 										Optional:     true,
-										Computed:     true,
 									},
 									"header_name": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 255),
 										Optional:     true,
-										Computed:     true,
 									},
 									"case_sensitive": &schema.Schema{
 										Type:     schema.TypeString,
@@ -187,7 +177,6 @@ func resourceCasbUserActivity() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -203,7 +192,6 @@ func resourceCasbUserActivity() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 									"target": &schema.Schema{
 										Type:     schema.TypeString,
@@ -224,7 +212,6 @@ func resourceCasbUserActivity() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 255),
 										Optional:     true,
-										Computed:     true,
 									},
 									"search_pattern": &schema.Schema{
 										Type:     schema.TypeString,
@@ -235,7 +222,6 @@ func resourceCasbUserActivity() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 1023),
 										Optional:     true,
-										Computed:     true,
 									},
 									"case_sensitive": &schema.Schema{
 										Type:     schema.TypeString,
@@ -256,7 +242,6 @@ func resourceCasbUserActivity() *schema.Resource {
 													Type:         schema.TypeString,
 													ValidateFunc: validation.StringLenBetween(0, 79),
 													Optional:     true,
-													Computed:     true,
 												},
 											},
 										},
@@ -517,7 +502,7 @@ func flattenCasbUserActivityMatch(v interface{}, d *schema.ResourceData, pre str
 }
 
 func flattenCasbUserActivityMatchId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenCasbUserActivityMatchStrategy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -603,7 +588,7 @@ func flattenCasbUserActivityMatchRules(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenCasbUserActivityMatchRulesId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenCasbUserActivityMatchRulesType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1088,6 +1073,8 @@ func expandCasbUserActivityMatch(d *schema.ResourceData, v interface{}, pre stri
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandCasbUserActivityMatchId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "strategy"
@@ -1096,9 +1083,9 @@ func expandCasbUserActivityMatch(d *schema.ResourceData, v interface{}, pre stri
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rules"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["rules"], _ = expandCasbUserActivityMatchRules(d, i["rules"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["rules"] = make([]string, 0)
 		}
 
@@ -1135,6 +1122,8 @@ func expandCasbUserActivityMatchRules(d *schema.ResourceData, v interface{}, pre
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandCasbUserActivityMatchRulesId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
@@ -1143,16 +1132,16 @@ func expandCasbUserActivityMatchRules(d *schema.ResourceData, v interface{}, pre
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "domains"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["domains"], _ = expandCasbUserActivityMatchRulesDomains(d, i["domains"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["domains"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "methods"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["methods"], _ = expandCasbUserActivityMatchRulesMethods(d, i["methods"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["methods"] = make([]string, 0)
 		}
 
@@ -1164,11 +1153,15 @@ func expandCasbUserActivityMatchRules(d *schema.ResourceData, v interface{}, pre
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_value"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["match-value"], _ = expandCasbUserActivityMatchRulesMatchValue(d, i["match_value"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["match-value"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "header_name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["header-name"], _ = expandCasbUserActivityMatchRulesHeaderName(d, i["header_name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["header-name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "case_sensitive"
@@ -1290,6 +1283,8 @@ func expandCasbUserActivityControlOptions(d *schema.ResourceData, v interface{},
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandCasbUserActivityControlOptionsName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
@@ -1298,9 +1293,9 @@ func expandCasbUserActivityControlOptions(d *schema.ResourceData, v interface{},
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "operations"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["operations"], _ = expandCasbUserActivityControlOptionsOperations(d, i["operations"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["operations"] = make([]string, 0)
 		}
 
@@ -1337,6 +1332,8 @@ func expandCasbUserActivityControlOptionsOperations(d *schema.ResourceData, v in
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandCasbUserActivityControlOptionsOperationsName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "target"
@@ -1357,6 +1354,8 @@ func expandCasbUserActivityControlOptionsOperations(d *schema.ResourceData, v in
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "header_name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["header-name"], _ = expandCasbUserActivityControlOptionsOperationsHeaderName(d, i["header_name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["header-name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "search_pattern"
@@ -1367,6 +1366,8 @@ func expandCasbUserActivityControlOptionsOperations(d *schema.ResourceData, v in
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "search_key"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["search-key"], _ = expandCasbUserActivityControlOptionsOperationsSearchKey(d, i["search_key"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["search-key"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "case_sensitive"
@@ -1380,9 +1381,9 @@ func expandCasbUserActivityControlOptionsOperations(d *schema.ResourceData, v in
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "values"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["values"], _ = expandCasbUserActivityControlOptionsOperationsValues(d, i["values"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["values"] = make([]string, 0)
 		}
 
@@ -1477,6 +1478,8 @@ func getObjectCasbUserActivity(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["uuid"] = t
 		}
+	} else if d.HasChange("uuid") {
+		obj["uuid"] = nil
 	}
 
 	if v, ok := d.GetOk("status"); ok {
@@ -1495,6 +1498,8 @@ func getObjectCasbUserActivity(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["description"] = t
 		}
+	} else if d.HasChange("description") {
+		obj["description"] = nil
 	}
 
 	if v, ok := d.GetOk("type"); ok {
@@ -1513,6 +1518,8 @@ func getObjectCasbUserActivity(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["casb-name"] = t
 		}
+	} else if d.HasChange("casb_name") {
+		obj["casb-name"] = nil
 	}
 
 	if v, ok := d.GetOk("application"); ok {
@@ -1522,6 +1529,8 @@ func getObjectCasbUserActivity(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["application"] = t
 		}
+	} else if d.HasChange("application") {
+		obj["application"] = nil
 	}
 
 	if v, ok := d.GetOk("category"); ok {

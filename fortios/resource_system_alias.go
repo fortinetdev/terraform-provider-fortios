@@ -262,6 +262,8 @@ func getObjectSystemAlias(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["command"] = t
 		}
+	} else if d.HasChange("command") {
+		obj["command"] = nil
 	}
 
 	return &obj, nil

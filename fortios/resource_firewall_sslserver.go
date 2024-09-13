@@ -40,7 +40,6 @@ func resourceFirewallSslServer() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ip": &schema.Schema{
 				Type:     schema.TypeString,
@@ -270,7 +269,7 @@ func flattenFirewallSslServerIp(v interface{}, d *schema.ResourceData, pre strin
 }
 
 func flattenFirewallSslServerPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallSslServerSslMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -282,11 +281,11 @@ func flattenFirewallSslServerAddHeaderXForwardedProto(v interface{}, d *schema.R
 }
 
 func flattenFirewallSslServerMappedPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallSslServerSslCert(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convmap2str(v, d.Get("ssl_cert"), "name")
 }
 
 func flattenFirewallSslServerSslDhBits(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -356,42 +355,9 @@ func refreshObjectFirewallSslServer(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
-	{
-		v := flattenFirewallSslServerSslCert(o["ssl-cert"], d, "ssl_cert", sv)
-		vx := ""
-		bstring := false
-		new_version_map := map[string][]string{
-			">=": []string{"7.4.2"},
-		}
-		if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
-			l := v.([]interface{})
-			if len(l) > 0 {
-				for k, r := range l {
-					i := r.(map[string]interface{})
-					if _, ok := i["name"]; ok {
-						if xv, ok := i["name"].(string); ok {
-							vx += xv
-							if k < len(l)-1 {
-								vx += ", "
-							}
-						}
-					}
-				}
-			}
-			bstring = true
-		}
-		if bstring == true {
-			if err = d.Set("ssl_cert", vx); err != nil {
-				if !fortiAPIPatch(o["ssl-cert"]) {
-					return fmt.Errorf("Error reading ssl_cert: %v", err)
-				}
-			}
-		} else {
-			if err = d.Set("ssl_cert", v); err != nil {
-				if !fortiAPIPatch(o["ssl-cert"]) {
-					return fmt.Errorf("Error reading ssl_cert: %v", err)
-				}
-			}
+	if err = d.Set("ssl_cert", flattenFirewallSslServerSslCert(o["ssl-cert"], d, "ssl_cert", sv)); err != nil {
+		if !fortiAPIPatch(o["ssl-cert"]) {
+			return fmt.Errorf("Error reading ssl_cert: %v", err)
 		}
 	}
 
@@ -471,7 +437,25 @@ func expandFirewallSslServerMappedPort(d *schema.ResourceData, v interface{}, pr
 }
 
 func expandFirewallSslServerSslCert(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
+	new_version_map := map[string][]string{
+		">=": []string{"7.4.2"},
+	}
+	if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
+		vx := fmt.Sprintf("%v", v)
+		vxx := strings.Split(vx, ", ")
+
+		tmps := make([]map[string]interface{}, 0, len(vxx))
+
+		for _, xv := range vxx {
+			xtmp := make(map[string]interface{})
+			xtmp["name"] = xv
+
+			tmps = append(tmps, xtmp)
+		}
+		return tmps, nil
+	} else {
+		return v, nil
+	}
 }
 
 func expandFirewallSslServerSslDhBits(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
@@ -512,6 +496,8 @@ func getObjectFirewallSslServer(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("ip"); ok {
@@ -564,25 +550,7 @@ func getObjectFirewallSslServer(d *schema.ResourceData, sv string) (*map[string]
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
-			new_version_map := map[string][]string{
-				">=": []string{"7.4.2"},
-			}
-			if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
-				vx := fmt.Sprintf("%v", t)
-				vxx := strings.Split(vx, ", ")
-
-				tmps := make([]map[string]interface{}, 0, len(vxx))
-
-				for _, xv := range vxx {
-					xtmp := make(map[string]interface{})
-					xtmp["name"] = xv
-
-					tmps = append(tmps, xtmp)
-				}
-				obj["ssl-cert"] = tmps
-			} else {
-				obj["ssl-cert"] = t
-			}
+			obj["ssl-cert"] = t
 		}
 	}
 

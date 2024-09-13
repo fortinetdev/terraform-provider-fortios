@@ -52,7 +52,6 @@ func resourceWirelessControllerHotspot20H2QpAdviceOfCharge() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"type": &schema.Schema{
 							Type:     schema.TypeString,
@@ -63,13 +62,11 @@ func resourceWirelessControllerHotspot20H2QpAdviceOfCharge() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 1),
 							Optional:     true,
-							Computed:     true,
 						},
 						"nai_realm": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"plan_info": &schema.Schema{
 							Type:     schema.TypeList,
@@ -80,25 +77,21 @@ func resourceWirelessControllerHotspot20H2QpAdviceOfCharge() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 35),
 										Optional:     true,
-										Computed:     true,
 									},
 									"lang": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 3),
 										Optional:     true,
-										Computed:     true,
 									},
 									"currency": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 3),
 										Optional:     true,
-										Computed:     true,
 									},
 									"info_file": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 64),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -479,6 +472,8 @@ func expandWirelessControllerHotspot20H2QpAdviceOfChargeAocList(d *schema.Resour
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandWirelessControllerHotspot20H2QpAdviceOfChargeAocListName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
@@ -489,17 +484,21 @@ func expandWirelessControllerHotspot20H2QpAdviceOfChargeAocList(d *schema.Resour
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "nai_realm_encoding"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["nai-realm-encoding"], _ = expandWirelessControllerHotspot20H2QpAdviceOfChargeAocListNaiRealmEncoding(d, i["nai_realm_encoding"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["nai-realm-encoding"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "nai_realm"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["nai-realm"], _ = expandWirelessControllerHotspot20H2QpAdviceOfChargeAocListNaiRealm(d, i["nai_realm"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["nai-realm"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "plan_info"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["plan-info"], _ = expandWirelessControllerHotspot20H2QpAdviceOfChargeAocListPlanInfo(d, i["plan_info"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["plan-info"] = make([]string, 0)
 		}
 
@@ -544,21 +543,29 @@ func expandWirelessControllerHotspot20H2QpAdviceOfChargeAocListPlanInfo(d *schem
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandWirelessControllerHotspot20H2QpAdviceOfChargeAocListPlanInfoName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "lang"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["lang"], _ = expandWirelessControllerHotspot20H2QpAdviceOfChargeAocListPlanInfoLang(d, i["lang"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["lang"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "currency"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["currency"], _ = expandWirelessControllerHotspot20H2QpAdviceOfChargeAocListPlanInfoCurrency(d, i["currency"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["currency"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "info_file"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["info-file"], _ = expandWirelessControllerHotspot20H2QpAdviceOfChargeAocListPlanInfoInfoFile(d, i["info_file"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["info-file"] = nil
 		}
 
 		result = append(result, tmp)

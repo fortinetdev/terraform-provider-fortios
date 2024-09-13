@@ -290,6 +290,8 @@ func getObjectSystemReplacemsgImage(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["image-base64"] = t
 		}
+	} else if d.HasChange("image_base64") {
+		obj["image-base64"] = nil
 	}
 
 	return &obj, nil

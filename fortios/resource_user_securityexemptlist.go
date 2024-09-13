@@ -47,7 +47,6 @@ func resourceUserSecurityExemptList() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
-				Computed:     true,
 			},
 			"rule": &schema.Schema{
 				Type:     schema.TypeList,
@@ -57,7 +56,6 @@ func resourceUserSecurityExemptList() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"srcaddr": &schema.Schema{
 							Type:     schema.TypeSet,
@@ -68,7 +66,6 @@ func resourceUserSecurityExemptList() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -82,7 +79,6 @@ func resourceUserSecurityExemptList() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 35),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -96,7 +92,6 @@ func resourceUserSecurityExemptList() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -110,7 +105,6 @@ func resourceUserSecurityExemptList() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -350,7 +344,7 @@ func flattenUserSecurityExemptListRule(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenUserSecurityExemptListRuleId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserSecurityExemptListRuleSrcaddr(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -592,33 +586,35 @@ func expandUserSecurityExemptListRule(d *schema.ResourceData, v interface{}, pre
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandUserSecurityExemptListRuleId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "srcaddr"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["srcaddr"], _ = expandUserSecurityExemptListRuleSrcaddr(d, i["srcaddr"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["srcaddr"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "devices"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["devices"], _ = expandUserSecurityExemptListRuleDevices(d, i["devices"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["devices"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dstaddr"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["dstaddr"], _ = expandUserSecurityExemptListRuleDstaddr(d, i["dstaddr"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["dstaddr"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "service"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["service"], _ = expandUserSecurityExemptListRuleService(d, i["service"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["service"] = make([]string, 0)
 		}
 
@@ -679,6 +675,8 @@ func expandUserSecurityExemptListRuleDevices(d *schema.ResourceData, v interface
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandUserSecurityExemptListRuleDevicesName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		result = append(result, tmp)
@@ -768,6 +766,8 @@ func getObjectUserSecurityExemptList(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["description"] = t
 		}
+	} else if d.HasChange("description") {
+		obj["description"] = nil
 	}
 
 	if v, ok := d.GetOk("rule"); ok || d.HasChange("rule") {

@@ -52,7 +52,6 @@ func resourceEndpointControlFctemsOverride() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"dirty_reason": &schema.Schema{
 				Type:     schema.TypeString,
@@ -68,13 +67,11 @@ func resourceEndpointControlFctemsOverride() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 20),
 				Optional:     true,
-				Computed:     true,
 			},
 			"server": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"https_port": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -86,13 +83,11 @@ func resourceEndpointControlFctemsOverride() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 16),
 				Optional:     true,
-				Computed:     true,
 			},
 			"tenant_id": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 32),
 				Optional:     true,
-				Computed:     true,
 			},
 			"source_ip": &schema.Schema{
 				Type:     schema.TypeString,
@@ -132,7 +127,6 @@ func resourceEndpointControlFctemsOverride() *schema.Resource {
 			"capabilities": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"call_timeout": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -170,7 +164,6 @@ func resourceEndpointControlFctemsOverride() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"trust_ca_cn": &schema.Schema{
 				Type:     schema.TypeString,
@@ -181,7 +174,6 @@ func resourceEndpointControlFctemsOverride() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -339,7 +331,7 @@ func resourceEndpointControlFctemsOverrideRead(d *schema.ResourceData, m interfa
 }
 
 func flattenEndpointControlFctemsOverrideEmsId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenEndpointControlFctemsOverrideStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -367,7 +359,7 @@ func flattenEndpointControlFctemsOverrideServer(v interface{}, d *schema.Resourc
 }
 
 func flattenEndpointControlFctemsOverrideHttpsPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenEndpointControlFctemsOverrideSerialNumber(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -411,11 +403,11 @@ func flattenEndpointControlFctemsOverrideCapabilities(v interface{}, d *schema.R
 }
 
 func flattenEndpointControlFctemsOverrideCallTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenEndpointControlFctemsOverrideOutOfSyncThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenEndpointControlFctemsOverrideSendTagsToAllVdoms(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -756,6 +748,8 @@ func getObjectEndpointControlFctemsOverride(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("dirty_reason"); ok {
@@ -783,6 +777,8 @@ func getObjectEndpointControlFctemsOverride(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["cloud-authentication-access-key"] = t
 		}
+	} else if d.HasChange("cloud_authentication_access_key") {
+		obj["cloud-authentication-access-key"] = nil
 	}
 
 	if v, ok := d.GetOk("server"); ok {
@@ -792,6 +788,8 @@ func getObjectEndpointControlFctemsOverride(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["server"] = t
 		}
+	} else if d.HasChange("server") {
+		obj["server"] = nil
 	}
 
 	if v, ok := d.GetOk("https_port"); ok {
@@ -810,6 +808,8 @@ func getObjectEndpointControlFctemsOverride(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["serial-number"] = t
 		}
+	} else if d.HasChange("serial_number") {
+		obj["serial-number"] = nil
 	}
 
 	if v, ok := d.GetOk("tenant_id"); ok {
@@ -819,6 +819,8 @@ func getObjectEndpointControlFctemsOverride(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["tenant-id"] = t
 		}
+	} else if d.HasChange("tenant_id") {
+		obj["tenant-id"] = nil
 	}
 
 	if v, ok := d.GetOk("source_ip"); ok {
@@ -891,6 +893,8 @@ func getObjectEndpointControlFctemsOverride(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["capabilities"] = t
 		}
+	} else if d.HasChange("capabilities") {
+		obj["capabilities"] = nil
 	}
 
 	if v, ok := d.GetOk("call_timeout"); ok {
@@ -954,6 +958,8 @@ func getObjectEndpointControlFctemsOverride(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["interface"] = t
 		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
 	}
 
 	if v, ok := d.GetOk("trust_ca_cn"); ok {
@@ -972,6 +978,8 @@ func getObjectEndpointControlFctemsOverride(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["verifying-ca"] = t
 		}
+	} else if d.HasChange("verifying_ca") {
+		obj["verifying-ca"] = nil
 	}
 
 	return &obj, nil

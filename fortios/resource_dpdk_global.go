@@ -50,7 +50,6 @@ func resourceDpdkGlobal() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 31),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -74,7 +73,6 @@ func resourceDpdkGlobal() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 2047),
 				Optional:     true,
-				Computed:     true,
 			},
 			"per_session_accounting": &schema.Schema{
 				Type:     schema.TypeString,
@@ -297,11 +295,11 @@ func flattenDpdkGlobalIpsecOffload(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenDpdkGlobalHugepagePercentage(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenDpdkGlobalMbufpoolPercentage(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectDpdkGlobal(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -535,6 +533,8 @@ func getObjectDpdkGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 				obj["protects"] = t
 			}
 		}
+	} else if d.HasChange("protects") {
+		obj["protects"] = nil
 	}
 
 	if v, ok := d.GetOk("per_session_accounting"); ok {

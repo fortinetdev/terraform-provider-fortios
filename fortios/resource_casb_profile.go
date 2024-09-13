@@ -57,7 +57,6 @@ func resourceCasbProfile() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -78,7 +77,6 @@ func resourceCasbProfile() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -97,7 +95,6 @@ func resourceCasbProfile() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -116,7 +113,6 @@ func resourceCasbProfile() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -135,7 +131,6 @@ func resourceCasbProfile() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 									"action": &schema.Schema{
 										Type:     schema.TypeString,
@@ -145,7 +140,6 @@ func resourceCasbProfile() *schema.Resource {
 									"bypass": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
 									},
 								},
 							},
@@ -159,7 +153,6 @@ func resourceCasbProfile() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 									"option": &schema.Schema{
 										Type:     schema.TypeList,
@@ -170,7 +163,6 @@ func resourceCasbProfile() *schema.Resource {
 													Type:         schema.TypeString,
 													ValidateFunc: validation.StringLenBetween(0, 79),
 													Optional:     true,
-													Computed:     true,
 												},
 												"user_input": &schema.Schema{
 													Type:     schema.TypeSet,
@@ -181,7 +173,6 @@ func resourceCasbProfile() *schema.Resource {
 																Type:         schema.TypeString,
 																ValidateFunc: validation.StringLenBetween(0, 79),
 																Optional:     true,
-																Computed:     true,
 															},
 														},
 													},
@@ -873,6 +864,8 @@ func expandCasbProfileSaasApplication(d *schema.ResourceData, v interface{}, pre
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandCasbProfileSaasApplicationName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
@@ -886,9 +879,9 @@ func expandCasbProfileSaasApplication(d *schema.ResourceData, v interface{}, pre
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "safe_search_control"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["safe-search-control"], _ = expandCasbProfileSaasApplicationSafeSearchControl(d, i["safe_search_control"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["safe-search-control"] = make([]string, 0)
 		}
 
@@ -898,9 +891,9 @@ func expandCasbProfileSaasApplication(d *schema.ResourceData, v interface{}, pre
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tenant_control_tenants"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["tenant-control-tenants"], _ = expandCasbProfileSaasApplicationTenantControlTenants(d, i["tenant_control_tenants"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["tenant-control-tenants"] = make([]string, 0)
 		}
 
@@ -910,9 +903,9 @@ func expandCasbProfileSaasApplication(d *schema.ResourceData, v interface{}, pre
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "domain_control_domains"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["domain-control-domains"], _ = expandCasbProfileSaasApplicationDomainControlDomains(d, i["domain_control_domains"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["domain-control-domains"] = make([]string, 0)
 		}
 
@@ -922,16 +915,16 @@ func expandCasbProfileSaasApplication(d *schema.ResourceData, v interface{}, pre
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "access_rule"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["access-rule"], _ = expandCasbProfileSaasApplicationAccessRule(d, i["access_rule"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["access-rule"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "custom_control"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["custom-control"], _ = expandCasbProfileSaasApplicationCustomControl(d, i["custom_control"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["custom-control"] = make([]string, 0)
 		}
 
@@ -1068,6 +1061,8 @@ func expandCasbProfileSaasApplicationAccessRule(d *schema.ResourceData, v interf
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandCasbProfileSaasApplicationAccessRuleName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
@@ -1078,6 +1073,8 @@ func expandCasbProfileSaasApplicationAccessRule(d *schema.ResourceData, v interf
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "bypass"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["bypass"], _ = expandCasbProfileSaasApplicationAccessRuleBypass(d, i["bypass"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["bypass"] = nil
 		}
 
 		result = append(result, tmp)
@@ -1117,12 +1114,14 @@ func expandCasbProfileSaasApplicationCustomControl(d *schema.ResourceData, v int
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandCasbProfileSaasApplicationCustomControlName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "option"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["option"], _ = expandCasbProfileSaasApplicationCustomControlOption(d, i["option"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["option"] = make([]string, 0)
 		}
 
@@ -1155,12 +1154,14 @@ func expandCasbProfileSaasApplicationCustomControlOption(d *schema.ResourceData,
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandCasbProfileSaasApplicationCustomControlOptionName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "user_input"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["user-input"], _ = expandCasbProfileSaasApplicationCustomControlOptionUserInput(d, i["user_input"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["user-input"] = make([]string, 0)
 		}
 
@@ -1223,6 +1224,8 @@ func getObjectCasbProfile(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("saas_application"); ok || d.HasChange("saas_application") {

@@ -271,6 +271,8 @@ func getObjectSystemReplacemsgTrafficQuota(d *schema.ResourceData, setArgNil boo
 				obj["buffer"] = t
 			}
 		}
+	} else if d.HasChange("buffer") {
+		obj["buffer"] = nil
 	}
 
 	if v, ok := d.GetOk("header"); ok {

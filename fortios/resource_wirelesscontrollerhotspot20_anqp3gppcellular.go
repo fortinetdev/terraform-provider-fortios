@@ -52,19 +52,16 @@ func resourceWirelessControllerHotspot20Anqp3GppCellular() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 6),
 							Optional:     true,
-							Computed:     true,
 						},
 						"mcc": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 3),
 							Optional:     true,
-							Computed:     true,
 						},
 						"mnc": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 3),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -287,7 +284,7 @@ func flattenWirelessControllerHotspot20Anqp3GppCellularMccMncList(v interface{},
 }
 
 func flattenWirelessControllerHotspot20Anqp3GppCellularMccMncListId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerHotspot20Anqp3GppCellularMccMncListMcc(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -359,16 +356,22 @@ func expandWirelessControllerHotspot20Anqp3GppCellularMccMncList(d *schema.Resou
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandWirelessControllerHotspot20Anqp3GppCellularMccMncListId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mcc"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["mcc"], _ = expandWirelessControllerHotspot20Anqp3GppCellularMccMncListMcc(d, i["mcc"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["mcc"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mnc"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["mnc"], _ = expandWirelessControllerHotspot20Anqp3GppCellularMccMncListMnc(d, i["mnc"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["mnc"] = nil
 		}
 
 		result = append(result, tmp)

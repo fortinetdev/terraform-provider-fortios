@@ -20,6 +20,7 @@ Use this data source to get information on an fortios firewallschedule onetime
 The following attributes are exported:
 
 * `name` - Onetime schedule name.
+* `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `start` - Schedule start date and time, format hh:mm yyyy/mm/dd.
 * `start_utc` - Schedule start date and time, in epoch format.
 * `end` - Schedule end date and time, format hh:mm yyyy/mm/dd.

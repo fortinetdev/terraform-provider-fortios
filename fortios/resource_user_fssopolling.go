@@ -56,13 +56,11 @@ func resourceUserFssoPolling() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"port": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"user": &schema.Schema{
 				Type:         schema.TypeString,
@@ -101,7 +99,6 @@ func resourceUserFssoPolling() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 511),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -282,7 +279,7 @@ func resourceUserFssoPollingRead(d *schema.ResourceData, m interface{}) error {
 }
 
 func flattenUserFssoPollingId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserFssoPollingStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -298,14 +295,10 @@ func flattenUserFssoPollingDefaultDomain(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenUserFssoPollingPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserFssoPollingUser(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenUserFssoPollingPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -314,11 +307,11 @@ func flattenUserFssoPollingLdapServer(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenUserFssoPollingLogonHistory(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserFssoPollingPollingFrequency(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserFssoPollingAdgrp(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -528,6 +521,8 @@ func expandUserFssoPollingAdgrp(d *schema.ResourceData, v interface{}, pre strin
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandUserFssoPollingAdgrpName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		result = append(result, tmp)
@@ -578,6 +573,8 @@ func getObjectUserFssoPolling(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["server"] = t
 		}
+	} else if d.HasChange("server") {
+		obj["server"] = nil
 	}
 
 	if v, ok := d.GetOk("default_domain"); ok {
@@ -587,6 +584,8 @@ func getObjectUserFssoPolling(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["default-domain"] = t
 		}
+	} else if d.HasChange("default_domain") {
+		obj["default-domain"] = nil
 	}
 
 	if v, ok := d.GetOkExists("port"); ok {
@@ -596,6 +595,8 @@ func getObjectUserFssoPolling(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["port"] = t
 		}
+	} else if d.HasChange("port") {
+		obj["port"] = nil
 	}
 
 	if v, ok := d.GetOk("user"); ok {
@@ -605,6 +606,8 @@ func getObjectUserFssoPolling(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["user"] = t
 		}
+	} else if d.HasChange("user") {
+		obj["user"] = nil
 	}
 
 	if v, ok := d.GetOk("password"); ok {
@@ -614,6 +617,8 @@ func getObjectUserFssoPolling(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["password"] = t
 		}
+	} else if d.HasChange("password") {
+		obj["password"] = nil
 	}
 
 	if v, ok := d.GetOk("ldap_server"); ok {
@@ -623,6 +628,8 @@ func getObjectUserFssoPolling(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["ldap-server"] = t
 		}
+	} else if d.HasChange("ldap_server") {
+		obj["ldap-server"] = nil
 	}
 
 	if v, ok := d.GetOkExists("logon_history"); ok {

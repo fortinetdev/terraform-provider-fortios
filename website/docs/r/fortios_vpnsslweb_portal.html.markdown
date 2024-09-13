@@ -78,6 +78,7 @@ The following arguments are supported:
 * `dhcp_ip_overlap` - Configure overlapping DHCP IP allocation assignment. Valid values: `use-new`, `use-old`.
 * `auto_connect` - Enable/disable automatic connect by client when system is up. Valid values: `enable`, `disable`.
 * `keep_alive` - Enable/disable automatic reconnect for FortiClient connections. Valid values: `enable`, `disable`.
+* `dhcp_reservation` - Enable/disable dhcp reservation. Valid values: `enable`, `disable`.
 * `save_password` - Enable/disable FortiClient saving the user's password. Valid values: `enable`, `disable`.
 * `ip_pools` - IPv4 firewall source address objects reserved for SSL-VPN tunnel mode clients. The structure of `ip_pools` block is documented below.
 * `exclusive_routing` - Enable/disable all traffic go through tunnel only. Valid values: `enable`, `disable`.
@@ -232,6 +233,7 @@ The `mac_addr_list` block supports:
 The `os_check_list` block supports:
 
 * `name` - Name.
+* `minor_version` - Minor version number.
 * `action` - OS check options. Valid values: `deny`, `allow`, `check-up-to-date`.
 * `tolerance` - OS patch level tolerance.
 * `latest_patch_level` - Latest OS patch level.

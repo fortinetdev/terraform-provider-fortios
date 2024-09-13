@@ -68,7 +68,6 @@ func resourceSystemLldpNetworkPolicy() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 4094),
 							Optional:     true,
-							Computed:     true,
 						},
 						"priority": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -106,7 +105,6 @@ func resourceSystemLldpNetworkPolicy() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 4094),
 							Optional:     true,
-							Computed:     true,
 						},
 						"priority": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -144,7 +142,6 @@ func resourceSystemLldpNetworkPolicy() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 4094),
 							Optional:     true,
-							Computed:     true,
 						},
 						"priority": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -182,7 +179,6 @@ func resourceSystemLldpNetworkPolicy() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 4094),
 							Optional:     true,
-							Computed:     true,
 						},
 						"priority": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -220,7 +216,6 @@ func resourceSystemLldpNetworkPolicy() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 4094),
 							Optional:     true,
-							Computed:     true,
 						},
 						"priority": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -258,7 +253,6 @@ func resourceSystemLldpNetworkPolicy() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 4094),
 							Optional:     true,
-							Computed:     true,
 						},
 						"priority": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -296,7 +290,6 @@ func resourceSystemLldpNetworkPolicy() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 4094),
 							Optional:     true,
-							Computed:     true,
 						},
 						"priority": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -334,7 +327,6 @@ func resourceSystemLldpNetworkPolicy() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 4094),
 							Optional:     true,
-							Computed:     true,
 						},
 						"priority": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -566,15 +558,15 @@ func flattenSystemLldpNetworkPolicyVoiceTag(v interface{}, d *schema.ResourceDat
 }
 
 func flattenSystemLldpNetworkPolicyVoiceVlan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemLldpNetworkPolicyVoicePriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemLldpNetworkPolicyVoiceDscp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemLldpNetworkPolicyVoiceSignaling(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -624,15 +616,15 @@ func flattenSystemLldpNetworkPolicyVoiceSignalingTag(v interface{}, d *schema.Re
 }
 
 func flattenSystemLldpNetworkPolicyVoiceSignalingVlan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemLldpNetworkPolicyVoiceSignalingPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemLldpNetworkPolicyVoiceSignalingDscp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemLldpNetworkPolicyGuest(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -682,15 +674,15 @@ func flattenSystemLldpNetworkPolicyGuestTag(v interface{}, d *schema.ResourceDat
 }
 
 func flattenSystemLldpNetworkPolicyGuestVlan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemLldpNetworkPolicyGuestPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemLldpNetworkPolicyGuestDscp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemLldpNetworkPolicyGuestVoiceSignaling(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -740,15 +732,15 @@ func flattenSystemLldpNetworkPolicyGuestVoiceSignalingTag(v interface{}, d *sche
 }
 
 func flattenSystemLldpNetworkPolicyGuestVoiceSignalingVlan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemLldpNetworkPolicyGuestVoiceSignalingPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemLldpNetworkPolicyGuestVoiceSignalingDscp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemLldpNetworkPolicySoftphone(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -798,15 +790,15 @@ func flattenSystemLldpNetworkPolicySoftphoneTag(v interface{}, d *schema.Resourc
 }
 
 func flattenSystemLldpNetworkPolicySoftphoneVlan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemLldpNetworkPolicySoftphonePriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemLldpNetworkPolicySoftphoneDscp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemLldpNetworkPolicyVideoConferencing(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -856,15 +848,15 @@ func flattenSystemLldpNetworkPolicyVideoConferencingTag(v interface{}, d *schema
 }
 
 func flattenSystemLldpNetworkPolicyVideoConferencingVlan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemLldpNetworkPolicyVideoConferencingPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemLldpNetworkPolicyVideoConferencingDscp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemLldpNetworkPolicyStreamingVideo(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -914,15 +906,15 @@ func flattenSystemLldpNetworkPolicyStreamingVideoTag(v interface{}, d *schema.Re
 }
 
 func flattenSystemLldpNetworkPolicyStreamingVideoVlan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemLldpNetworkPolicyStreamingVideoPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemLldpNetworkPolicyStreamingVideoDscp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemLldpNetworkPolicyVideoSignaling(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -972,15 +964,15 @@ func flattenSystemLldpNetworkPolicyVideoSignalingTag(v interface{}, d *schema.Re
 }
 
 func flattenSystemLldpNetworkPolicyVideoSignalingVlan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemLldpNetworkPolicyVideoSignalingPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemLldpNetworkPolicyVideoSignalingDscp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectSystemLldpNetworkPolicy(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -1600,6 +1592,8 @@ func getObjectSystemLldpNetworkPolicy(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("voice"); ok {

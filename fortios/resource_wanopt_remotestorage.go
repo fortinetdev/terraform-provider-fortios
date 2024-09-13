@@ -45,13 +45,11 @@ func resourceWanoptRemoteStorage() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"remote_cache_id": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"remote_cache_ip": &schema.Schema{
 				Type:     schema.TypeString,
@@ -271,6 +269,8 @@ func getObjectWanoptRemoteStorage(d *schema.ResourceData, setArgNil bool, sv str
 				obj["local-cache-id"] = t
 			}
 		}
+	} else if d.HasChange("local_cache_id") {
+		obj["local-cache-id"] = nil
 	}
 
 	if v, ok := d.GetOk("remote_cache_id"); ok {
@@ -284,6 +284,8 @@ func getObjectWanoptRemoteStorage(d *schema.ResourceData, setArgNil bool, sv str
 				obj["remote-cache-id"] = t
 			}
 		}
+	} else if d.HasChange("remote_cache_id") {
+		obj["remote-cache-id"] = nil
 	}
 
 	if v, ok := d.GetOk("remote_cache_ip"); ok {

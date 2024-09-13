@@ -47,7 +47,6 @@ func resourceSwitchControllerDynamicPortPolicy() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"fortilink": &schema.Schema{
 				Type:         schema.TypeString,
@@ -64,13 +63,11 @@ func resourceSwitchControllerDynamicPortPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"description": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -91,7 +88,6 @@ func resourceSwitchControllerDynamicPortPolicy() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 120),
 							Optional:     true,
-							Computed:     true,
 						},
 						"interface_tags": &schema.Schema{
 							Type:     schema.TypeSet,
@@ -102,7 +98,6 @@ func resourceSwitchControllerDynamicPortPolicy() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 63),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -111,55 +106,46 @@ func resourceSwitchControllerDynamicPortPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 17),
 							Optional:     true,
-							Computed:     true,
 						},
 						"hw_vendor": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 						"type": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 						"family": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 31),
 							Optional:     true,
-							Computed:     true,
 						},
 						"host": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
 							Optional:     true,
-							Computed:     true,
 						},
 						"lldp_profile": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"qos_policy": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"n802_1x": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 31),
 							Optional:     true,
-							Computed:     true,
 						},
 						"vlan_policy": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"bounce_port_link": &schema.Schema{
 							Type:     schema.TypeString,
@@ -485,7 +471,7 @@ func flattenSwitchControllerDynamicPortPolicyPolicyMatchType(v interface{}, d *s
 }
 
 func flattenSwitchControllerDynamicPortPolicyPolicyMatchPeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerDynamicPortPolicyPolicyInterfaceTags(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -651,11 +637,15 @@ func expandSwitchControllerDynamicPortPolicyPolicy(d *schema.ResourceData, v int
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandSwitchControllerDynamicPortPolicyPolicyName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["description"], _ = expandSwitchControllerDynamicPortPolicyPolicyDescription(d, i["description"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["description"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
@@ -676,58 +666,78 @@ func expandSwitchControllerDynamicPortPolicyPolicy(d *schema.ResourceData, v int
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_period"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["match-period"], _ = expandSwitchControllerDynamicPortPolicyPolicyMatchPeriod(d, i["match_period"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["match-period"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_tags"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["interface-tags"], _ = expandSwitchControllerDynamicPortPolicyPolicyInterfaceTags(d, i["interface_tags"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["interface-tags"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mac"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["mac"], _ = expandSwitchControllerDynamicPortPolicyPolicyMac(d, i["mac"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["mac"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "hw_vendor"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["hw-vendor"], _ = expandSwitchControllerDynamicPortPolicyPolicyHwVendor(d, i["hw_vendor"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["hw-vendor"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["type"], _ = expandSwitchControllerDynamicPortPolicyPolicyType(d, i["type"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["type"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "family"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["family"], _ = expandSwitchControllerDynamicPortPolicyPolicyFamily(d, i["family"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["family"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "host"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["host"], _ = expandSwitchControllerDynamicPortPolicyPolicyHost(d, i["host"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["host"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "lldp_profile"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["lldp-profile"], _ = expandSwitchControllerDynamicPortPolicyPolicyLldpProfile(d, i["lldp_profile"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["lldp-profile"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "qos_policy"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["qos-policy"], _ = expandSwitchControllerDynamicPortPolicyPolicyQosPolicy(d, i["qos_policy"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["qos-policy"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "n802_1x"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["802-1x"], _ = expandSwitchControllerDynamicPortPolicyPolicy8021X(d, i["n802_1x"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["802-1x"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan_policy"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["vlan-policy"], _ = expandSwitchControllerDynamicPortPolicyPolicyVlanPolicy(d, i["vlan_policy"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["vlan-policy"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "bounce_port_link"
@@ -854,6 +864,8 @@ func getObjectSwitchControllerDynamicPortPolicy(d *schema.ResourceData, sv strin
 		} else if t != nil {
 			obj["description"] = t
 		}
+	} else if d.HasChange("description") {
+		obj["description"] = nil
 	}
 
 	if v, ok := d.GetOk("fortilink"); ok {

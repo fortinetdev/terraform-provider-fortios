@@ -234,6 +234,7 @@ The `outbreak_prevention` block supports:
 
 The `content_disarm` block supports:
 
+* `analytics_suspicious` - Enable/disable using CDR as a secondary method for determining suspicous files for analytics. Valid values: `disable`, `enable`.
 * `original_file_destination` - Destination to send original file if active content is removed. Valid values: `fortisandbox`, `quarantine`, `discard`.
 * `error_action` - Action to be taken if CDR engine encounters an unrecoverable error. Valid values: `block`, `log-only`, `ignore`.
 * `office_macro` - Enable/disable stripping of macros in Microsoft Office documents. Valid values: `disable`, `enable`.

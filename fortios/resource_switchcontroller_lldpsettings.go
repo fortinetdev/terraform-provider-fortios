@@ -39,7 +39,6 @@ func resourceSwitchControllerLldpSettings() *schema.Resource {
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"tx_hold": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -192,15 +191,15 @@ func flattenSwitchControllerLldpSettingsStatus(v interface{}, d *schema.Resource
 }
 
 func flattenSwitchControllerLldpSettingsTxHold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerLldpSettingsTxInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerLldpSettingsFastStartInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerLldpSettingsManagementInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -297,6 +296,8 @@ func getObjectSwitchControllerLldpSettings(d *schema.ResourceData, setArgNil boo
 				obj["status"] = t
 			}
 		}
+	} else if d.HasChange("status") {
+		obj["status"] = nil
 	}
 
 	if v, ok := d.GetOk("tx_hold"); ok {

@@ -59,48 +59,39 @@ func resourceSpamfilterBwl() *schema.Resource {
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"type": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"action": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"addr_type": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"ip4_subnet": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"ip6_subnet": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"pattern_type": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"email_pattern": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 127),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -271,7 +262,7 @@ func resourceSpamfilterBwlRead(d *schema.ResourceData, m interface{}) error {
 }
 
 func flattenSpamfilterBwlId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSpamfilterBwlName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -365,7 +356,7 @@ func flattenSpamfilterBwlEntriesStatus(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenSpamfilterBwlEntriesId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSpamfilterBwlEntriesType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -484,46 +475,64 @@ func expandSpamfilterBwlEntries(d *schema.ResourceData, v interface{}, pre strin
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["status"], _ = expandSpamfilterBwlEntriesStatus(d, i["status"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["status"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSpamfilterBwlEntriesId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["type"], _ = expandSpamfilterBwlEntriesType(d, i["type"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["type"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["action"], _ = expandSpamfilterBwlEntriesAction(d, i["action"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["action"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr_type"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["addr-type"], _ = expandSpamfilterBwlEntriesAddrType(d, i["addr_type"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["addr-type"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip4_subnet"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["ip4-subnet"], _ = expandSpamfilterBwlEntriesIp4Subnet(d, i["ip4_subnet"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["ip4-subnet"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip6_subnet"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["ip6-subnet"], _ = expandSpamfilterBwlEntriesIp6Subnet(d, i["ip6_subnet"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["ip6-subnet"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern_type"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["pattern-type"], _ = expandSpamfilterBwlEntriesPatternType(d, i["pattern_type"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["pattern-type"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "email_pattern"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["email-pattern"], _ = expandSpamfilterBwlEntriesEmailPattern(d, i["email_pattern"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["email-pattern"] = nil
 		}
 
 		result = append(result, tmp)
@@ -589,6 +598,8 @@ func getObjectSpamfilterBwl(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
@@ -598,6 +609,8 @@ func getObjectSpamfilterBwl(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("entries"); ok || d.HasChange("entries") {

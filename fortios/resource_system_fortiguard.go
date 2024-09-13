@@ -50,7 +50,6 @@ func resourceSystemFortiguard() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 50),
 				Optional:     true,
-				Computed:     true,
 			},
 			"load_balance_servers": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -72,7 +71,6 @@ func resourceSystemFortiguard() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"sandbox_inline_scan": &schema.Schema{
 				Type:     schema.TypeString,
@@ -113,7 +111,6 @@ func resourceSystemFortiguard() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 31),
 				Optional:     true,
-				Computed:     true,
 			},
 			"auto_firmware_upgrade": &schema.Schema{
 				Type:     schema.TypeString,
@@ -200,7 +197,6 @@ func resourceSystemFortiguard() *schema.Resource {
 			"antispam_expiration": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"antispam_timeout": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -284,7 +280,6 @@ func resourceSystemFortiguard() *schema.Resource {
 			"sdns_server_ip": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"sdns_server_port": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -306,7 +301,6 @@ func resourceSystemFortiguard() *schema.Resource {
 			"sdns_options": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"source_ip": &schema.Schema{
 				Type:     schema.TypeString,
@@ -327,13 +321,11 @@ func resourceSystemFortiguard() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"proxy_username": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 64),
 				Optional:     true,
-				Computed:     true,
 			},
 			"proxy_password": &schema.Schema{
 				Type:         schema.TypeString,
@@ -376,7 +368,6 @@ func resourceSystemFortiguard() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -509,7 +500,7 @@ func flattenSystemFortiguardServiceAccountId(v interface{}, d *schema.ResourceDa
 }
 
 func flattenSystemFortiguardLoadBalanceServers(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemFortiguardAutoJoinForticloud(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -565,15 +556,15 @@ func flattenSystemFortiguardAutoFirmwareUpgradeDay(v interface{}, d *schema.Reso
 }
 
 func flattenSystemFortiguardAutoFirmwareUpgradeDelay(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemFortiguardAutoFirmwareUpgradeStartHour(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemFortiguardAutoFirmwareUpgradeEndHour(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemFortiguardGuiPromptAutoUpgrade(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -581,7 +572,7 @@ func flattenSystemFortiguardGuiPromptAutoUpgrade(v interface{}, d *schema.Resour
 }
 
 func flattenSystemFortiguardFdsLicenseExpiringDays(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemFortiguardFortiguardAnycast(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -601,27 +592,27 @@ func flattenSystemFortiguardAntispamCache(v interface{}, d *schema.ResourceData,
 }
 
 func flattenSystemFortiguardAntispamCacheTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemFortiguardAntispamCacheMpermille(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemFortiguardAntispamCacheMpercent(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemFortiguardAntispamLicense(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemFortiguardAntispamExpiration(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemFortiguardAntispamTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemFortiguardOutbreakPreventionForceOff(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -633,27 +624,27 @@ func flattenSystemFortiguardOutbreakPreventionCache(v interface{}, d *schema.Res
 }
 
 func flattenSystemFortiguardOutbreakPreventionCacheTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemFortiguardOutbreakPreventionCacheMpermille(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemFortiguardOutbreakPreventionCacheMpercent(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemFortiguardOutbreakPreventionLicense(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemFortiguardOutbreakPreventionExpiration(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemFortiguardOutbreakPreventionTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemFortiguardWebfilterForceOff(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -665,19 +656,19 @@ func flattenSystemFortiguardWebfilterCache(v interface{}, d *schema.ResourceData
 }
 
 func flattenSystemFortiguardWebfilterCacheTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemFortiguardWebfilterLicense(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemFortiguardWebfilterExpiration(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemFortiguardWebfilterTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemFortiguardSdnsServerIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -685,7 +676,7 @@ func flattenSystemFortiguardSdnsServerIp(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenSystemFortiguardSdnsServerPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemFortiguardAnycastSdnsServerIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -693,7 +684,7 @@ func flattenSystemFortiguardAnycastSdnsServerIp(v interface{}, d *schema.Resourc
 }
 
 func flattenSystemFortiguardAnycastSdnsServerPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemFortiguardSdnsOptions(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -713,23 +704,19 @@ func flattenSystemFortiguardProxyServerIp(v interface{}, d *schema.ResourceData,
 }
 
 func flattenSystemFortiguardProxyServerPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemFortiguardProxyUsername(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemFortiguardProxyPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
 func flattenSystemFortiguardVideofilterLicense(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemFortiguardVideofilterExpiration(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemFortiguardDdnsServerIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -741,7 +728,7 @@ func flattenSystemFortiguardDdnsServerIp6(v interface{}, d *schema.ResourceData,
 }
 
 func flattenSystemFortiguardDdnsServerPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemFortiguardInterfaceSelectMethod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1438,6 +1425,8 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 				obj["service-account-id"] = t
 			}
 		}
+	} else if d.HasChange("service_account_id") {
+		obj["service-account-id"] = nil
 	}
 
 	if v, ok := d.GetOk("load_balance_servers"); ok {
@@ -1490,6 +1479,8 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 				obj["sandbox-region"] = t
 			}
 		}
+	} else if d.HasChange("sandbox_region") {
+		obj["sandbox-region"] = nil
 	}
 
 	if v, ok := d.GetOk("sandbox_inline_scan"); ok {
@@ -1594,6 +1585,8 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 				obj["vdom"] = t
 			}
 		}
+	} else if d.HasChange("vdom") {
+		obj["vdom"] = nil
 	}
 
 	if v, ok := d.GetOk("auto_firmware_upgrade"); ok {
@@ -1802,6 +1795,8 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 				obj["antispam-expiration"] = t
 			}
 		}
+	} else if d.HasChange("antispam_expiration") {
+		obj["antispam-expiration"] = nil
 	}
 
 	if v, ok := d.GetOk("antispam_timeout"); ok {
@@ -2010,6 +2005,8 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 				obj["sdns-server-ip"] = t
 			}
 		}
+	} else if d.HasChange("sdns_server_ip") {
+		obj["sdns-server-ip"] = nil
 	}
 
 	if v, ok := d.GetOk("sdns_server_port"); ok {
@@ -2062,6 +2059,8 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 				obj["sdns-options"] = t
 			}
 		}
+	} else if d.HasChange("sdns_options") {
+		obj["sdns-options"] = nil
 	}
 
 	if v, ok := d.GetOk("source_ip"); ok {
@@ -2114,6 +2113,8 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 				obj["proxy-server-port"] = t
 			}
 		}
+	} else if d.HasChange("proxy_server_port") {
+		obj["proxy-server-port"] = nil
 	}
 
 	if v, ok := d.GetOk("proxy_username"); ok {
@@ -2127,6 +2128,8 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 				obj["proxy-username"] = t
 			}
 		}
+	} else if d.HasChange("proxy_username") {
+		obj["proxy-username"] = nil
 	}
 
 	if v, ok := d.GetOk("proxy_password"); ok {
@@ -2140,6 +2143,8 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 				obj["proxy-password"] = t
 			}
 		}
+	} else if d.HasChange("proxy_password") {
+		obj["proxy-password"] = nil
 	}
 
 	if v, ok := d.GetOkExists("videofilter_license"); ok {
@@ -2231,6 +2236,8 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 				obj["interface"] = t
 			}
 		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
 	}
 
 	return &obj, nil

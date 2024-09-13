@@ -224,6 +224,10 @@ func dataSourceSystemInterface() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"pppoe_egress_cos": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"pppoe_unnumbered_negotiate": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -382,6 +386,10 @@ func dataSourceSystemInterface() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"virtual_mac": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"substitute_dst_mac": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -456,6 +464,14 @@ func dataSourceSystemInterface() *schema.Resource {
 			},
 			"netflow_sampler": &schema.Schema{
 				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"netflow_sample_rate": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"netflow_sampler_id": &schema.Schema{
+				Type:     schema.TypeInt,
 				Computed: true,
 			},
 			"sflow_sampler": &schema.Schema{
@@ -679,6 +695,10 @@ func dataSourceSystemInterface() *schema.Resource {
 				Computed: true,
 			},
 			"security_mac_auth_bypass": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"security_ip_auth_bypass": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -1156,6 +1176,34 @@ func dataSourceSystemInterface() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"client_options": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"id": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+									"code": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"value": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"ip6": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
 						"nd_mode": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
@@ -1487,6 +1535,10 @@ func dataSourceSystemInterface() *schema.Resource {
 									},
 									"vrdst6": &schema.Schema{
 										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"vrdst_priority": &schema.Schema{
+										Type:     schema.TypeInt,
 										Computed: true,
 									},
 									"ignore_default_route": &schema.Schema{
@@ -1827,6 +1879,10 @@ func dataSourceFlattenSystemInterfaceUsername(v interface{}, d *schema.ResourceD
 	return v
 }
 
+func dataSourceFlattenSystemInterfacePppoeEgressCos(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemInterfacePppoeUnnumberedNegotiate(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -1983,6 +2039,10 @@ func dataSourceFlattenSystemInterfaceMacaddr(v interface{}, d *schema.ResourceDa
 	return v
 }
 
+func dataSourceFlattenSystemInterfaceVirtualMac(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemInterfaceSubstituteDstMac(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -2077,6 +2137,14 @@ func dataSourceFlattenSystemInterfaceWccp(v interface{}, d *schema.ResourceData,
 }
 
 func dataSourceFlattenSystemInterfaceNetflowSampler(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceNetflowSampleRate(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceNetflowSamplerId(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -2349,6 +2417,10 @@ func dataSourceFlattenSystemInterfaceCaptivePortal(v interface{}, d *schema.Reso
 }
 
 func dataSourceFlattenSystemInterfaceSecurityMacAuthBypass(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceSecurityIpAuthBypass(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -3123,6 +3195,11 @@ func dataSourceFlattenSystemInterfaceIpv6(v interface{}, d *schema.ResourceData,
 		result["ip6_mode"] = dataSourceFlattenSystemInterfaceIpv6Ip6Mode(i["ip6-mode"], d, pre_append)
 	}
 
+	pre_append = pre + ".0." + "client_options"
+	if _, ok := i["client-options"]; ok {
+		result["client_options"] = dataSourceFlattenSystemInterfaceIpv6ClientOptions(i["client-options"], d, pre_append)
+	}
+
 	pre_append = pre + ".0." + "nd_mode"
 	if _, ok := i["nd-mode"]; ok {
 		result["nd_mode"] = dataSourceFlattenSystemInterfaceIpv6NdMode(i["nd-mode"], d, pre_append)
@@ -3368,6 +3445,78 @@ func dataSourceFlattenSystemInterfaceIpv6(v interface{}, d *schema.ResourceData,
 }
 
 func dataSourceFlattenSystemInterfaceIpv6Ip6Mode(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceIpv6ClientOptions(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := i["id"]; ok {
+			tmp["id"] = dataSourceFlattenSystemInterfaceIpv6ClientOptionsId(i["id"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "code"
+		if _, ok := i["code"]; ok {
+			tmp["code"] = dataSourceFlattenSystemInterfaceIpv6ClientOptionsCode(i["code"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
+		if _, ok := i["type"]; ok {
+			tmp["type"] = dataSourceFlattenSystemInterfaceIpv6ClientOptionsType(i["type"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
+		if _, ok := i["value"]; ok {
+			tmp["value"] = dataSourceFlattenSystemInterfaceIpv6ClientOptionsValue(i["value"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip6"
+		if _, ok := i["ip6"]; ok {
+			tmp["ip6"] = dataSourceFlattenSystemInterfaceIpv6ClientOptionsIp6(i["ip6"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenSystemInterfaceIpv6ClientOptionsId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceIpv6ClientOptionsCode(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceIpv6ClientOptionsType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceIpv6ClientOptionsValue(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceIpv6ClientOptionsIp6(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -3927,6 +4076,11 @@ func dataSourceFlattenSystemInterfaceIpv6Vrrp6(v interface{}, d *schema.Resource
 			tmp["vrdst6"] = dataSourceFlattenSystemInterfaceIpv6Vrrp6Vrdst6(i["vrdst6"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrdst_priority"
+		if _, ok := i["vrdst-priority"]; ok {
+			tmp["vrdst_priority"] = dataSourceFlattenSystemInterfaceIpv6Vrrp6VrdstPriority(i["vrdst-priority"], d, pre_append)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ignore_default_route"
 		if _, ok := i["ignore-default-route"]; ok {
 			tmp["ignore_default_route"] = dataSourceFlattenSystemInterfaceIpv6Vrrp6IgnoreDefaultRoute(i["ignore-default-route"], d, pre_append)
@@ -3978,6 +4132,10 @@ func dataSourceFlattenSystemInterfaceIpv6Vrrp6AcceptMode(v interface{}, d *schem
 }
 
 func dataSourceFlattenSystemInterfaceIpv6Vrrp6Vrdst6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceIpv6Vrrp6VrdstPriority(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -4238,6 +4396,12 @@ func dataSourceRefreshObjectSystemInterface(d *schema.ResourceData, o map[string
 		}
 	}
 
+	if err = d.Set("pppoe_egress_cos", dataSourceFlattenSystemInterfacePppoeEgressCos(o["pppoe-egress-cos"], d, "pppoe_egress_cos")); err != nil {
+		if !fortiAPIPatch(o["pppoe-egress-cos"]) {
+			return fmt.Errorf("Error reading pppoe_egress_cos: %v", err)
+		}
+	}
+
 	if err = d.Set("pppoe_unnumbered_negotiate", dataSourceFlattenSystemInterfacePppoeUnnumberedNegotiate(o["pppoe-unnumbered-negotiate"], d, "pppoe_unnumbered_negotiate")); err != nil {
 		if !fortiAPIPatch(o["pppoe-unnumbered-negotiate"]) {
 			return fmt.Errorf("Error reading pppoe_unnumbered_negotiate: %v", err)
@@ -4460,6 +4624,12 @@ func dataSourceRefreshObjectSystemInterface(d *schema.ResourceData, o map[string
 		}
 	}
 
+	if err = d.Set("virtual_mac", dataSourceFlattenSystemInterfaceVirtualMac(o["virtual-mac"], d, "virtual_mac")); err != nil {
+		if !fortiAPIPatch(o["virtual-mac"]) {
+			return fmt.Errorf("Error reading virtual_mac: %v", err)
+		}
+	}
+
 	if err = d.Set("substitute_dst_mac", dataSourceFlattenSystemInterfaceSubstituteDstMac(o["substitute-dst-mac"], d, "substitute_dst_mac")); err != nil {
 		if !fortiAPIPatch(o["substitute-dst-mac"]) {
 			return fmt.Errorf("Error reading substitute_dst_mac: %v", err)
@@ -4571,6 +4741,18 @@ func dataSourceRefreshObjectSystemInterface(d *schema.ResourceData, o map[string
 	if err = d.Set("netflow_sampler", dataSourceFlattenSystemInterfaceNetflowSampler(o["netflow-sampler"], d, "netflow_sampler")); err != nil {
 		if !fortiAPIPatch(o["netflow-sampler"]) {
 			return fmt.Errorf("Error reading netflow_sampler: %v", err)
+		}
+	}
+
+	if err = d.Set("netflow_sample_rate", dataSourceFlattenSystemInterfaceNetflowSampleRate(o["netflow-sample-rate"], d, "netflow_sample_rate")); err != nil {
+		if !fortiAPIPatch(o["netflow-sample-rate"]) {
+			return fmt.Errorf("Error reading netflow_sample_rate: %v", err)
+		}
+	}
+
+	if err = d.Set("netflow_sampler_id", dataSourceFlattenSystemInterfaceNetflowSamplerId(o["netflow-sampler-id"], d, "netflow_sampler_id")); err != nil {
+		if !fortiAPIPatch(o["netflow-sampler-id"]) {
+			return fmt.Errorf("Error reading netflow_sampler_id: %v", err)
 		}
 	}
 
@@ -4883,6 +5065,12 @@ func dataSourceRefreshObjectSystemInterface(d *schema.ResourceData, o map[string
 	if err = d.Set("security_mac_auth_bypass", dataSourceFlattenSystemInterfaceSecurityMacAuthBypass(o["security-mac-auth-bypass"], d, "security_mac_auth_bypass")); err != nil {
 		if !fortiAPIPatch(o["security-mac-auth-bypass"]) {
 			return fmt.Errorf("Error reading security_mac_auth_bypass: %v", err)
+		}
+	}
+
+	if err = d.Set("security_ip_auth_bypass", dataSourceFlattenSystemInterfaceSecurityIpAuthBypass(o["security-ip-auth-bypass"], d, "security_ip_auth_bypass")); err != nil {
+		if !fortiAPIPatch(o["security-ip-auth-bypass"]) {
+			return fmt.Errorf("Error reading security_ip_auth_bypass: %v", err)
 		}
 	}
 

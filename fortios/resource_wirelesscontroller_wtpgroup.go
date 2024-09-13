@@ -46,13 +46,11 @@ func resourceWirelessControllerWtpGroup() *schema.Resource {
 			"platform_type": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"ble_major_id": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"wtps": &schema.Schema{
 				Type:     schema.TypeSet,
@@ -63,7 +61,6 @@ func resourceWirelessControllerWtpGroup() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -242,7 +239,7 @@ func flattenWirelessControllerWtpGroupPlatformType(v interface{}, d *schema.Reso
 }
 
 func flattenWirelessControllerWtpGroupBleMajorId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerWtpGroupWtps(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -398,6 +395,8 @@ func getObjectWirelessControllerWtpGroup(d *schema.ResourceData, sv string) (*ma
 		} else if t != nil {
 			obj["platform-type"] = t
 		}
+	} else if d.HasChange("platform_type") {
+		obj["platform-type"] = nil
 	}
 
 	if v, ok := d.GetOkExists("ble_major_id"); ok {
@@ -407,6 +406,8 @@ func getObjectWirelessControllerWtpGroup(d *schema.ResourceData, sv string) (*ma
 		} else if t != nil {
 			obj["ble-major-id"] = t
 		}
+	} else if d.HasChange("ble_major_id") {
+		obj["ble-major-id"] = nil
 	}
 
 	if v, ok := d.GetOk("wtps"); ok || d.HasChange("wtps") {

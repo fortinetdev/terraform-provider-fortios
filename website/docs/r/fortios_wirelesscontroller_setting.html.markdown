@@ -35,7 +35,7 @@ The following arguments are supported:
 The `offending_ssid` block supports:
 
 * `id` - ID.
-* `ssid_pattern` - Define offending SSID pattern (case insensitive), eg: word, word*, *word, wo*rd.
+* `ssid_pattern` - Define offending SSID pattern (case insensitive). For example, word, word*, *word, wo*rd.
 * `action` - Actions taken for detected offending SSID. Valid values: `log`, `suppress`.
 
 The `darrp_optimize_schedules` block supports:

@@ -40,6 +40,8 @@ The following arguments are supported:
 * `security_mode` - Port or MAC based 802.1X security mode. Valid values: `802.1X`, `802.1X-mac-based`.
 * `user_group` - Name of user-group to assign to this MAC Authentication Bypass (MAB) policy. The structure of `user_group` block is documented below.
 * `mac_auth_bypass` - Enable/disable MAB for this policy. Valid values: `disable`, `enable`.
+* `auth_order` - Configure authentication order. Valid values: `dot1x-mab`, `mab-dot1x`, `mab`.
+* `auth_priority` - Configure authentication priority. Valid values: `legacy`, `dot1x-mab`, `mab-dot1x`.
 * `open_auth` - Enable/disable open authentication for this policy. Valid values: `disable`, `enable`.
 * `eap_passthru` - Enable/disable EAP pass-through mode, allowing protocols (such as LLDP) to pass through ports for more flexible authentication. Valid values: `disable`, `enable`.
 * `eap_auto_untagged_vlans` - Enable/disable automatic inclusion of untagged VLANs. Valid values: `disable`, `enable`.

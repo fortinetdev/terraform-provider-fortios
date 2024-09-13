@@ -43,6 +43,7 @@ The following arguments are supported:
 * `expire_status` - Enable/disable password expiration. Valid values: `enable`, `disable`.
 * `expire_day` - Number of days after which passwords expire (1 - 999 days, default = 90).
 * `reuse_password` - Enable/disable reuse of password. On FortiOS versions 6.2.0-7.0.0: If both reuse-password and change-4-characters are enabled, change-4-characters overrides.. On FortiOS versions >= 7.0.1: If both reuse-password and min-change-characters are enabled, min-change-characters overrides.. Valid values: `enable`, `disable`.
+* `reuse_password_limit` - Number of times passwords can be reused (0 - 20, default = 0. If set to 0, can reuse password an unlimited number of times.).
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 

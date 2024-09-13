@@ -44,6 +44,7 @@ The following arguments are supported:
 * `status_ttl` - Time for which server reachability is cached so that when a server is unreachable, it will not be retried for at least this period of time (0 = cache disabled, default = 300).
 * `server_identity_check` - Enable/disable LDAP server identity check (verify server domain name/IP address against the server certificate). Valid values: `enable`, `disable`.
 * `source_ip` - Source IP for communications to LDAP server.
+* `source_ip_interface` - Source interface for communication with the LDAP server.
 * `source_port` - Source port to be used for communication with the LDAP server.
 * `cnid` - Common name identifier for the LDAP server. The common name identifier for most LDAP servers is "cn".
 * `dn` - (Required) Distinguished name used to look up entries on the LDAP server.

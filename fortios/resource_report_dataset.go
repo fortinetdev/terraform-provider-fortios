@@ -45,13 +45,11 @@ func resourceReportDataset() *schema.Resource {
 			"policy": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"query": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 2303),
 				Optional:     true,
-				Computed:     true,
 			},
 			"field": &schema.Schema{
 				Type:     schema.TypeList,
@@ -61,7 +59,6 @@ func resourceReportDataset() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"type": &schema.Schema{
 							Type:     schema.TypeString,
@@ -72,13 +69,11 @@ func resourceReportDataset() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 71),
 							Optional:     true,
-							Computed:     true,
 						},
 						"displayname": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 127),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -91,24 +86,20 @@ func resourceReportDataset() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"display_name": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 127),
 							Optional:     true,
-							Computed:     true,
 						},
 						"field": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 127),
 							Optional:     true,
-							Computed:     true,
 						},
 						"data_type": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -283,7 +274,7 @@ func flattenReportDatasetName(v interface{}, d *schema.ResourceData, pre string,
 }
 
 func flattenReportDatasetPolicy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenReportDatasetQuery(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -344,7 +335,7 @@ func flattenReportDatasetField(v interface{}, d *schema.ResourceData, pre string
 }
 
 func flattenReportDatasetFieldId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenReportDatasetFieldType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -413,7 +404,7 @@ func flattenReportDatasetParameters(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenReportDatasetParametersId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenReportDatasetParametersDisplayName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -525,6 +516,8 @@ func expandReportDatasetField(d *schema.ResourceData, v interface{}, pre string,
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandReportDatasetFieldId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
@@ -535,11 +528,15 @@ func expandReportDatasetField(d *schema.ResourceData, v interface{}, pre string,
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandReportDatasetFieldName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "displayname"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["displayname"], _ = expandReportDatasetFieldDisplayname(d, i["displayname"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["displayname"] = nil
 		}
 
 		result = append(result, tmp)
@@ -583,21 +580,29 @@ func expandReportDatasetParameters(d *schema.ResourceData, v interface{}, pre st
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandReportDatasetParametersId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "display_name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["display-name"], _ = expandReportDatasetParametersDisplayName(d, i["display_name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["display-name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "field"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["field"], _ = expandReportDatasetParametersField(d, i["field"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["field"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "data_type"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["data-type"], _ = expandReportDatasetParametersDataType(d, i["data_type"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["data-type"] = nil
 		}
 
 		result = append(result, tmp)
@@ -643,6 +648,8 @@ func getObjectReportDataset(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["policy"] = t
 		}
+	} else if d.HasChange("policy") {
+		obj["policy"] = nil
 	}
 
 	if v, ok := d.GetOk("query"); ok {
@@ -652,6 +659,8 @@ func getObjectReportDataset(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["query"] = t
 		}
+	} else if d.HasChange("query") {
+		obj["query"] = nil
 	}
 
 	if v, ok := d.GetOk("field"); ok || d.HasChange("field") {

@@ -52,7 +52,6 @@ func resourceWirelessControllerNacProfile() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -282,6 +281,8 @@ func getObjectWirelessControllerNacProfile(d *schema.ResourceData, sv string) (*
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("onboarding_vlan"); ok {
@@ -291,6 +292,8 @@ func getObjectWirelessControllerNacProfile(d *schema.ResourceData, sv string) (*
 		} else if t != nil {
 			obj["onboarding-vlan"] = t
 		}
+	} else if d.HasChange("onboarding_vlan") {
+		obj["onboarding-vlan"] = nil
 	}
 
 	return &obj, nil

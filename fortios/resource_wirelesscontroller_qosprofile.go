@@ -47,31 +47,26 @@ func resourceWirelessControllerQosProfile() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"uplink": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 2097152),
 				Optional:     true,
-				Computed:     true,
 			},
 			"downlink": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 2097152),
 				Optional:     true,
-				Computed:     true,
 			},
 			"uplink_sta": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 2097152),
 				Optional:     true,
-				Computed:     true,
 			},
 			"downlink_sta": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 2097152),
 				Optional:     true,
-				Computed:     true,
 			},
 			"burst": &schema.Schema{
 				Type:     schema.TypeString,
@@ -124,7 +119,6 @@ func resourceWirelessControllerQosProfile() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -138,7 +132,6 @@ func resourceWirelessControllerQosProfile() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -152,7 +145,6 @@ func resourceWirelessControllerQosProfile() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -166,7 +158,6 @@ func resourceWirelessControllerQosProfile() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -192,7 +183,6 @@ func resourceWirelessControllerQosProfile() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"wmm_bk_dscp": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -374,19 +364,19 @@ func flattenWirelessControllerQosProfileComment(v interface{}, d *schema.Resourc
 }
 
 func flattenWirelessControllerQosProfileUplink(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerQosProfileDownlink(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerQosProfileUplinkSta(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerQosProfileDownlinkSta(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerQosProfileBurst(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -406,7 +396,7 @@ func flattenWirelessControllerQosProfileCallAdmissionControl(v interface{}, d *s
 }
 
 func flattenWirelessControllerQosProfileCallCapacity(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerQosProfileBandwidthAdmissionControl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -414,7 +404,7 @@ func flattenWirelessControllerQosProfileBandwidthAdmissionControl(v interface{},
 }
 
 func flattenWirelessControllerQosProfileBandwidthCapacity(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerQosProfileDscpWmmMapping(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -460,7 +450,7 @@ func flattenWirelessControllerQosProfileDscpWmmVo(v interface{}, d *schema.Resou
 }
 
 func flattenWirelessControllerQosProfileDscpWmmVoId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerQosProfileDscpWmmVi(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -502,7 +492,7 @@ func flattenWirelessControllerQosProfileDscpWmmVi(v interface{}, d *schema.Resou
 }
 
 func flattenWirelessControllerQosProfileDscpWmmViId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerQosProfileDscpWmmBe(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -544,7 +534,7 @@ func flattenWirelessControllerQosProfileDscpWmmBe(v interface{}, d *schema.Resou
 }
 
 func flattenWirelessControllerQosProfileDscpWmmBeId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerQosProfileDscpWmmBk(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -586,7 +576,7 @@ func flattenWirelessControllerQosProfileDscpWmmBk(v interface{}, d *schema.Resou
 }
 
 func flattenWirelessControllerQosProfileDscpWmmBkId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerQosProfileWmmDscpMarking(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -594,19 +584,19 @@ func flattenWirelessControllerQosProfileWmmDscpMarking(v interface{}, d *schema.
 }
 
 func flattenWirelessControllerQosProfileWmmVoDscp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerQosProfileWmmViDscp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerQosProfileWmmBeDscp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerQosProfileWmmBkDscp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectWirelessControllerQosProfile(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -1012,6 +1002,8 @@ func getObjectWirelessControllerQosProfile(d *schema.ResourceData, sv string) (*
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOkExists("uplink"); ok {
@@ -1021,6 +1013,8 @@ func getObjectWirelessControllerQosProfile(d *schema.ResourceData, sv string) (*
 		} else if t != nil {
 			obj["uplink"] = t
 		}
+	} else if d.HasChange("uplink") {
+		obj["uplink"] = nil
 	}
 
 	if v, ok := d.GetOkExists("downlink"); ok {
@@ -1030,6 +1024,8 @@ func getObjectWirelessControllerQosProfile(d *schema.ResourceData, sv string) (*
 		} else if t != nil {
 			obj["downlink"] = t
 		}
+	} else if d.HasChange("downlink") {
+		obj["downlink"] = nil
 	}
 
 	if v, ok := d.GetOkExists("uplink_sta"); ok {
@@ -1039,6 +1035,8 @@ func getObjectWirelessControllerQosProfile(d *schema.ResourceData, sv string) (*
 		} else if t != nil {
 			obj["uplink-sta"] = t
 		}
+	} else if d.HasChange("uplink_sta") {
+		obj["uplink-sta"] = nil
 	}
 
 	if v, ok := d.GetOkExists("downlink_sta"); ok {
@@ -1048,6 +1046,8 @@ func getObjectWirelessControllerQosProfile(d *schema.ResourceData, sv string) (*
 		} else if t != nil {
 			obj["downlink-sta"] = t
 		}
+	} else if d.HasChange("downlink_sta") {
+		obj["downlink-sta"] = nil
 	}
 
 	if v, ok := d.GetOk("burst"); ok {
@@ -1192,6 +1192,8 @@ func getObjectWirelessControllerQosProfile(d *schema.ResourceData, sv string) (*
 		} else if t != nil {
 			obj["wmm-be-dscp"] = t
 		}
+	} else if d.HasChange("wmm_be_dscp") {
+		obj["wmm-be-dscp"] = nil
 	}
 
 	if v, ok := d.GetOkExists("wmm_bk_dscp"); ok {

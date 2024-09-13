@@ -46,17 +46,14 @@ func resourceSwitchControllerLldpProfile() *schema.Resource {
 			"med_tlvs": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"n8021_tlvs": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"n8023_tlvs": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"auto_isl": &schema.Schema{
 				Type:     schema.TypeString,
@@ -79,7 +76,6 @@ func resourceSwitchControllerLldpProfile() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 9),
 				Optional:     true,
-				Computed:     true,
 			},
 			"auto_mclag_icl": &schema.Schema{
 				Type:     schema.TypeString,
@@ -95,13 +91,11 @@ func resourceSwitchControllerLldpProfile() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"auto_isl_auth_identity": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"auto_isl_auth_reauth": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -118,7 +112,6 @@ func resourceSwitchControllerLldpProfile() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"med_network_policy": &schema.Schema{
 				Type:     schema.TypeList,
@@ -129,7 +122,6 @@ func resourceSwitchControllerLldpProfile() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -140,7 +132,6 @@ func resourceSwitchControllerLldpProfile() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 						"assign_vlan": &schema.Schema{
 							Type:     schema.TypeString,
@@ -151,19 +142,16 @@ func resourceSwitchControllerLldpProfile() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4094),
 							Optional:     true,
-							Computed:     true,
 						},
 						"priority": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 7),
 							Optional:     true,
-							Computed:     true,
 						},
 						"dscp": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -177,7 +165,6 @@ func resourceSwitchControllerLldpProfile() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -188,7 +175,6 @@ func resourceSwitchControllerLldpProfile() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -202,7 +188,6 @@ func resourceSwitchControllerLldpProfile() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"oui": &schema.Schema{
 							Type:     schema.TypeString,
@@ -213,12 +198,10 @@ func resourceSwitchControllerLldpProfile() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"information_string": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -409,15 +392,15 @@ func flattenSwitchControllerLldpProfileAutoIsl(v interface{}, d *schema.Resource
 }
 
 func flattenSwitchControllerLldpProfileAutoIslHelloTimer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerLldpProfileAutoIslReceiveTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerLldpProfileAutoIslPortGroup(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerLldpProfileAutoMclagIcl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -437,7 +420,7 @@ func flattenSwitchControllerLldpProfileAutoIslAuthIdentity(v interface{}, d *sch
 }
 
 func flattenSwitchControllerLldpProfileAutoIslAuthReauth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerLldpProfileAutoIslAuthEncrypt(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -533,15 +516,15 @@ func flattenSwitchControllerLldpProfileMedNetworkPolicyAssignVlan(v interface{},
 }
 
 func flattenSwitchControllerLldpProfileMedNetworkPolicyVlan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerLldpProfileMedNetworkPolicyPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerLldpProfileMedNetworkPolicyDscp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerLldpProfileMedLocationService(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -666,7 +649,7 @@ func flattenSwitchControllerLldpProfileCustomTlvsOui(v interface{}, d *schema.Re
 }
 
 func flattenSwitchControllerLldpProfileCustomTlvsSubtype(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerLldpProfileCustomTlvsInformationString(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -906,6 +889,8 @@ func expandSwitchControllerLldpProfileMedNetworkPolicy(d *schema.ResourceData, v
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandSwitchControllerLldpProfileMedNetworkPolicyName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
@@ -916,6 +901,8 @@ func expandSwitchControllerLldpProfileMedNetworkPolicy(d *schema.ResourceData, v
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan_intf"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["vlan-intf"], _ = expandSwitchControllerLldpProfileMedNetworkPolicyVlanIntf(d, i["vlan_intf"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["vlan-intf"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "assign_vlan"
@@ -926,16 +913,22 @@ func expandSwitchControllerLldpProfileMedNetworkPolicy(d *schema.ResourceData, v
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["vlan"], _ = expandSwitchControllerLldpProfileMedNetworkPolicyVlan(d, i["vlan"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["vlan"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["priority"], _ = expandSwitchControllerLldpProfileMedNetworkPolicyPriority(d, i["priority"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["priority"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dscp"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["dscp"], _ = expandSwitchControllerLldpProfileMedNetworkPolicyDscp(d, i["dscp"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["dscp"] = nil
 		}
 
 		result = append(result, tmp)
@@ -991,6 +984,8 @@ func expandSwitchControllerLldpProfileMedLocationService(d *schema.ResourceData,
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandSwitchControllerLldpProfileMedLocationServiceName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
@@ -1001,6 +996,8 @@ func expandSwitchControllerLldpProfileMedLocationService(d *schema.ResourceData,
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sys_location_id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["sys-location-id"], _ = expandSwitchControllerLldpProfileMedLocationServiceSysLocationId(d, i["sys_location_id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["sys-location-id"] = nil
 		}
 
 		result = append(result, tmp)
@@ -1040,6 +1037,8 @@ func expandSwitchControllerLldpProfileCustomTlvs(d *schema.ResourceData, v inter
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandSwitchControllerLldpProfileCustomTlvsName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "oui"
@@ -1050,11 +1049,15 @@ func expandSwitchControllerLldpProfileCustomTlvs(d *schema.ResourceData, v inter
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "subtype"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["subtype"], _ = expandSwitchControllerLldpProfileCustomTlvsSubtype(d, i["subtype"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["subtype"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "information_string"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["information-string"], _ = expandSwitchControllerLldpProfileCustomTlvsInformationString(d, i["information_string"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["information-string"] = nil
 		}
 
 		result = append(result, tmp)
@@ -1100,6 +1103,8 @@ func getObjectSwitchControllerLldpProfile(d *schema.ResourceData, sv string) (*m
 		} else if t != nil {
 			obj["med-tlvs"] = t
 		}
+	} else if d.HasChange("med_tlvs") {
+		obj["med-tlvs"] = nil
 	}
 
 	if v, ok := d.GetOk("n8021_tlvs"); ok {
@@ -1109,6 +1114,8 @@ func getObjectSwitchControllerLldpProfile(d *schema.ResourceData, sv string) (*m
 		} else if t != nil {
 			obj["802.1-tlvs"] = t
 		}
+	} else if d.HasChange("n8021_tlvs") {
+		obj["802.1-tlvs"] = nil
 	}
 
 	if v, ok := d.GetOk("n8023_tlvs"); ok {
@@ -1118,6 +1125,8 @@ func getObjectSwitchControllerLldpProfile(d *schema.ResourceData, sv string) (*m
 		} else if t != nil {
 			obj["802.3-tlvs"] = t
 		}
+	} else if d.HasChange("n8023_tlvs") {
+		obj["802.3-tlvs"] = nil
 	}
 
 	if v, ok := d.GetOk("auto_isl"); ok {
@@ -1154,6 +1163,8 @@ func getObjectSwitchControllerLldpProfile(d *schema.ResourceData, sv string) (*m
 		} else if t != nil {
 			obj["auto-isl-port-group"] = t
 		}
+	} else if d.HasChange("auto_isl_port_group") {
+		obj["auto-isl-port-group"] = nil
 	}
 
 	if v, ok := d.GetOk("auto_mclag_icl"); ok {
@@ -1181,6 +1192,8 @@ func getObjectSwitchControllerLldpProfile(d *schema.ResourceData, sv string) (*m
 		} else if t != nil {
 			obj["auto-isl-auth-user"] = t
 		}
+	} else if d.HasChange("auto_isl_auth_user") {
+		obj["auto-isl-auth-user"] = nil
 	}
 
 	if v, ok := d.GetOk("auto_isl_auth_identity"); ok {
@@ -1190,6 +1203,8 @@ func getObjectSwitchControllerLldpProfile(d *schema.ResourceData, sv string) (*m
 		} else if t != nil {
 			obj["auto-isl-auth-identity"] = t
 		}
+	} else if d.HasChange("auto_isl_auth_identity") {
+		obj["auto-isl-auth-identity"] = nil
 	}
 
 	if v, ok := d.GetOk("auto_isl_auth_reauth"); ok {
@@ -1217,6 +1232,8 @@ func getObjectSwitchControllerLldpProfile(d *schema.ResourceData, sv string) (*m
 		} else if t != nil {
 			obj["auto-isl-auth-macsec-profile"] = t
 		}
+	} else if d.HasChange("auto_isl_auth_macsec_profile") {
+		obj["auto-isl-auth-macsec-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("med_network_policy"); ok || d.HasChange("med_network_policy") {

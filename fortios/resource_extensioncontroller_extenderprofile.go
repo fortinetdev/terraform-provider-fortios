@@ -62,7 +62,6 @@ func resourceExtensionControllerExtenderProfile() *schema.Resource {
 			"allowaccess": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"login_password_change": &schema.Schema{
 				Type:     schema.TypeString,
@@ -73,6 +72,7 @@ func resourceExtensionControllerExtenderProfile() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 27),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"enforce_bandwidth": &schema.Schema{
 				Type:     schema.TypeString,
@@ -101,7 +101,6 @@ func resourceExtensionControllerExtenderProfile() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -205,7 +204,6 @@ func resourceExtensionControllerExtenderProfile() *schema.Resource {
 													Type:         schema.TypeString,
 													ValidateFunc: validation.StringLenBetween(0, 31),
 													Optional:     true,
-													Computed:     true,
 												},
 												"status": &schema.Schema{
 													Type:     schema.TypeString,
@@ -216,12 +214,10 @@ func resourceExtensionControllerExtenderProfile() *schema.Resource {
 													Type:         schema.TypeString,
 													ValidateFunc: validation.StringLenBetween(0, 31),
 													Optional:     true,
-													Computed:     true,
 												},
 												"alert": &schema.Schema{
 													Type:     schema.TypeString,
 													Optional: true,
-													Computed: true,
 												},
 											},
 										},
@@ -245,12 +241,10 @@ func resourceExtensionControllerExtenderProfile() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 15),
 										Optional:     true,
-										Computed:     true,
 									},
 									"conn_status": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 									"default_sim": &schema.Schema{
 										Type:     schema.TypeString,
@@ -276,17 +270,18 @@ func resourceExtensionControllerExtenderProfile() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 27),
 										Optional:     true,
+										Sensitive:    true,
 									},
 									"sim2_pin_code": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 27),
 										Optional:     true,
+										Sensitive:    true,
 									},
 									"preferred_carrier": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 31),
 										Optional:     true,
-										Computed:     true,
 									},
 									"auto_switch": &schema.Schema{
 										Type:     schema.TypeList,
@@ -325,7 +320,6 @@ func resourceExtensionControllerExtenderProfile() *schema.Resource {
 												"switch_back": &schema.Schema{
 													Type:     schema.TypeString,
 													Optional: true,
-													Computed: true,
 												},
 												"switch_back_time": &schema.Schema{
 													Type:         schema.TypeString,
@@ -360,12 +354,10 @@ func resourceExtensionControllerExtenderProfile() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 15),
 										Optional:     true,
-										Computed:     true,
 									},
 									"conn_status": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 									"default_sim": &schema.Schema{
 										Type:     schema.TypeString,
@@ -391,17 +383,18 @@ func resourceExtensionControllerExtenderProfile() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 27),
 										Optional:     true,
+										Sensitive:    true,
 									},
 									"sim2_pin_code": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 27),
 										Optional:     true,
+										Sensitive:    true,
 									},
 									"preferred_carrier": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 31),
 										Optional:     true,
-										Computed:     true,
 									},
 									"auto_switch": &schema.Schema{
 										Type:     schema.TypeList,
@@ -440,7 +433,6 @@ func resourceExtensionControllerExtenderProfile() *schema.Resource {
 												"switch_back": &schema.Schema{
 													Type:     schema.TypeString,
 													Optional: true,
-													Computed: true,
 												},
 												"switch_back_time": &schema.Schema{
 													Type:         schema.TypeString,
@@ -478,19 +470,16 @@ func resourceExtensionControllerExtenderProfile() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 						"backhaul_interface": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 						"backhaul_ip": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"backhaul": &schema.Schema{
 							Type:     schema.TypeList,
@@ -501,7 +490,6 @@ func resourceExtensionControllerExtenderProfile() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 31),
 										Optional:     true,
-										Computed:     true,
 									},
 									"port": &schema.Schema{
 										Type:     schema.TypeString,
@@ -518,6 +506,38 @@ func resourceExtensionControllerExtenderProfile() *schema.Resource {
 										ValidateFunc: validation.IntBetween(1, 256),
 										Optional:     true,
 										Computed:     true,
+									},
+								},
+							},
+						},
+						"downlinks": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"name": &schema.Schema{
+										Type:         schema.TypeString,
+										ValidateFunc: validation.StringLenBetween(0, 31),
+										Optional:     true,
+									},
+									"type": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
+									},
+									"port": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+									},
+									"vap": &schema.Schema{
+										Type:         schema.TypeString,
+										ValidateFunc: validation.StringLenBetween(0, 31),
+										Optional:     true,
+									},
+									"pvid": &schema.Schema{
+										Type:         schema.TypeInt,
+										ValidateFunc: validation.IntBetween(0, 4089),
+										Optional:     true,
 									},
 								},
 							},
@@ -572,7 +592,6 @@ func resourceExtensionControllerExtenderProfile() *schema.Resource {
 									"channel": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
 									},
 									"bandwidth": &schema.Schema{
 										Type:     schema.TypeString,
@@ -600,7 +619,6 @@ func resourceExtensionControllerExtenderProfile() *schema.Resource {
 										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 512),
 										Optional:     true,
-										Computed:     true,
 									},
 									"extension_channel": &schema.Schema{
 										Type:     schema.TypeString,
@@ -616,13 +634,11 @@ func resourceExtensionControllerExtenderProfile() *schema.Resource {
 										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 63),
 										Optional:     true,
-										Computed:     true,
 									},
 									"lan_ext_vap": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 31),
 										Optional:     true,
-										Computed:     true,
 									},
 									"local_vaps": &schema.Schema{
 										Type:     schema.TypeSet,
@@ -633,7 +649,6 @@ func resourceExtensionControllerExtenderProfile() *schema.Resource {
 													Type:         schema.TypeString,
 													ValidateFunc: validation.StringLenBetween(0, 79),
 													Optional:     true,
-													Computed:     true,
 												},
 											},
 										},
@@ -676,7 +691,6 @@ func resourceExtensionControllerExtenderProfile() *schema.Resource {
 									"channel": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
 									},
 									"bandwidth": &schema.Schema{
 										Type:     schema.TypeString,
@@ -704,7 +718,6 @@ func resourceExtensionControllerExtenderProfile() *schema.Resource {
 										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 512),
 										Optional:     true,
-										Computed:     true,
 									},
 									"extension_channel": &schema.Schema{
 										Type:     schema.TypeString,
@@ -720,13 +733,11 @@ func resourceExtensionControllerExtenderProfile() *schema.Resource {
 										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 63),
 										Optional:     true,
-										Computed:     true,
 									},
 									"lan_ext_vap": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 31),
 										Optional:     true,
-										Computed:     true,
 									},
 									"local_vaps": &schema.Schema{
 										Type:     schema.TypeSet,
@@ -737,7 +748,6 @@ func resourceExtensionControllerExtenderProfile() *schema.Resource {
 													Type:         schema.TypeString,
 													ValidateFunc: validation.StringLenBetween(0, 79),
 													Optional:     true,
-													Computed:     true,
 												},
 											},
 										},
@@ -913,7 +923,7 @@ func flattenExtensionControllerExtenderProfileName(v interface{}, d *schema.Reso
 }
 
 func flattenExtensionControllerExtenderProfileId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenExtensionControllerExtenderProfileModel(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -932,16 +942,12 @@ func flattenExtensionControllerExtenderProfileLoginPasswordChange(v interface{},
 	return v
 }
 
-func flattenExtensionControllerExtenderProfileLoginPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
 func flattenExtensionControllerExtenderProfileEnforceBandwidth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
 func flattenExtensionControllerExtenderProfileBandwidthLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenExtensionControllerExtenderProfileCellular(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -1057,11 +1063,11 @@ func flattenExtensionControllerExtenderProfileCellularControllerReportStatus(v i
 }
 
 func flattenExtensionControllerExtenderProfileCellularControllerReportInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenExtensionControllerExtenderProfileCellularControllerReportSignalThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenExtensionControllerExtenderProfileCellularSmsNotification(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -1287,12 +1293,18 @@ func flattenExtensionControllerExtenderProfileCellularModem1(v interface{}, d *s
 
 	pre_append = pre + ".0." + "sim1_pin_code"
 	if _, ok := i["sim1-pin-code"]; ok {
-		result["sim1_pin_code"] = flattenExtensionControllerExtenderProfileCellularModem1Sim1PinCode(i["sim1-pin-code"], d, pre_append, sv)
+		c := d.Get(pre_append).(string)
+		if c != "" {
+			result["sim1_pin_code"] = c
+		}
 	}
 
 	pre_append = pre + ".0." + "sim2_pin_code"
 	if _, ok := i["sim2-pin-code"]; ok {
-		result["sim2_pin_code"] = flattenExtensionControllerExtenderProfileCellularModem1Sim2PinCode(i["sim2-pin-code"], d, pre_append, sv)
+		c := d.Get(pre_append).(string)
+		if c != "" {
+			result["sim2_pin_code"] = c
+		}
 	}
 
 	pre_append = pre + ".0." + "preferred_carrier"
@@ -1318,7 +1330,7 @@ func flattenExtensionControllerExtenderProfileCellularModem1RedundantIntf(v inte
 }
 
 func flattenExtensionControllerExtenderProfileCellularModem1ConnStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenExtensionControllerExtenderProfileCellularModem1DefaultSim(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1334,14 +1346,6 @@ func flattenExtensionControllerExtenderProfileCellularModem1Sim1Pin(v interface{
 }
 
 func flattenExtensionControllerExtenderProfileCellularModem1Sim2Pin(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenExtensionControllerExtenderProfileCellularModem1Sim1PinCode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenExtensionControllerExtenderProfileCellularModem1Sim2PinCode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1407,11 +1411,11 @@ func flattenExtensionControllerExtenderProfileCellularModem1AutoSwitchDisconnect
 }
 
 func flattenExtensionControllerExtenderProfileCellularModem1AutoSwitchDisconnectThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenExtensionControllerExtenderProfileCellularModem1AutoSwitchDisconnectPeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenExtensionControllerExtenderProfileCellularModem1AutoSwitchSignal(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1431,7 +1435,7 @@ func flattenExtensionControllerExtenderProfileCellularModem1AutoSwitchSwitchBack
 }
 
 func flattenExtensionControllerExtenderProfileCellularModem1AutoSwitchSwitchBackTimer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenExtensionControllerExtenderProfileCellularModem2(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -1480,12 +1484,18 @@ func flattenExtensionControllerExtenderProfileCellularModem2(v interface{}, d *s
 
 	pre_append = pre + ".0." + "sim1_pin_code"
 	if _, ok := i["sim1-pin-code"]; ok {
-		result["sim1_pin_code"] = flattenExtensionControllerExtenderProfileCellularModem2Sim1PinCode(i["sim1-pin-code"], d, pre_append, sv)
+		c := d.Get(pre_append).(string)
+		if c != "" {
+			result["sim1_pin_code"] = c
+		}
 	}
 
 	pre_append = pre + ".0." + "sim2_pin_code"
 	if _, ok := i["sim2-pin-code"]; ok {
-		result["sim2_pin_code"] = flattenExtensionControllerExtenderProfileCellularModem2Sim2PinCode(i["sim2-pin-code"], d, pre_append, sv)
+		c := d.Get(pre_append).(string)
+		if c != "" {
+			result["sim2_pin_code"] = c
+		}
 	}
 
 	pre_append = pre + ".0." + "preferred_carrier"
@@ -1511,7 +1521,7 @@ func flattenExtensionControllerExtenderProfileCellularModem2RedundantIntf(v inte
 }
 
 func flattenExtensionControllerExtenderProfileCellularModem2ConnStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenExtensionControllerExtenderProfileCellularModem2DefaultSim(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1527,14 +1537,6 @@ func flattenExtensionControllerExtenderProfileCellularModem2Sim1Pin(v interface{
 }
 
 func flattenExtensionControllerExtenderProfileCellularModem2Sim2Pin(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenExtensionControllerExtenderProfileCellularModem2Sim1PinCode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenExtensionControllerExtenderProfileCellularModem2Sim2PinCode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1600,11 +1602,11 @@ func flattenExtensionControllerExtenderProfileCellularModem2AutoSwitchDisconnect
 }
 
 func flattenExtensionControllerExtenderProfileCellularModem2AutoSwitchDisconnectThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenExtensionControllerExtenderProfileCellularModem2AutoSwitchDisconnectPeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenExtensionControllerExtenderProfileCellularModem2AutoSwitchSignal(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1624,7 +1626,7 @@ func flattenExtensionControllerExtenderProfileCellularModem2AutoSwitchSwitchBack
 }
 
 func flattenExtensionControllerExtenderProfileCellularModem2AutoSwitchSwitchBackTimer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenExtensionControllerExtenderProfileLanExtension(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -1659,6 +1661,11 @@ func flattenExtensionControllerExtenderProfileLanExtension(v interface{}, d *sch
 	pre_append = pre + ".0." + "backhaul"
 	if _, ok := i["backhaul"]; ok {
 		result["backhaul"] = flattenExtensionControllerExtenderProfileLanExtensionBackhaul(i["backhaul"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "downlinks"
+	if _, ok := i["downlinks"]; ok {
+		result["downlinks"] = flattenExtensionControllerExtenderProfileLanExtensionDownlinks(i["downlinks"], d, pre_append, sv)
 	}
 
 	lastresult := []map[string]interface{}{result}
@@ -1747,7 +1754,85 @@ func flattenExtensionControllerExtenderProfileLanExtensionBackhaulRole(v interfa
 }
 
 func flattenExtensionControllerExtenderProfileLanExtensionBackhaulWeight(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenExtensionControllerExtenderProfileLanExtensionDownlinks(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenExtensionControllerExtenderProfileLanExtensionDownlinksName(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
+		if cur_v, ok := i["type"]; ok {
+			tmp["type"] = flattenExtensionControllerExtenderProfileLanExtensionDownlinksType(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
+		if cur_v, ok := i["port"]; ok {
+			tmp["port"] = flattenExtensionControllerExtenderProfileLanExtensionDownlinksPort(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vap"
+		if cur_v, ok := i["vap"]; ok {
+			tmp["vap"] = flattenExtensionControllerExtenderProfileLanExtensionDownlinksVap(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "pvid"
+		if cur_v, ok := i["pvid"]; ok {
+			tmp["pvid"] = flattenExtensionControllerExtenderProfileLanExtensionDownlinksPvid(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenExtensionControllerExtenderProfileLanExtensionDownlinksName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
+}
+
+func flattenExtensionControllerExtenderProfileLanExtensionDownlinksType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenExtensionControllerExtenderProfileLanExtensionDownlinksPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenExtensionControllerExtenderProfileLanExtensionDownlinksVap(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenExtensionControllerExtenderProfileLanExtensionDownlinksPvid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
 }
 
 func flattenExtensionControllerExtenderProfileWifi(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -1904,11 +1989,11 @@ func flattenExtensionControllerExtenderProfileWifiRadio1Bandwidth(v interface{},
 }
 
 func flattenExtensionControllerExtenderProfileWifiRadio1PowerLevel(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenExtensionControllerExtenderProfileWifiRadio1BeaconInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenExtensionControllerExtenderProfileWifiRadio180211D(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1916,7 +2001,7 @@ func flattenExtensionControllerExtenderProfileWifiRadio180211D(v interface{}, d 
 }
 
 func flattenExtensionControllerExtenderProfileWifiRadio1MaxClients(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenExtensionControllerExtenderProfileWifiRadio1ExtensionChannel(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1928,7 +2013,7 @@ func flattenExtensionControllerExtenderProfileWifiRadio1BssColorMode(v interface
 }
 
 func flattenExtensionControllerExtenderProfileWifiRadio1BssColor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenExtensionControllerExtenderProfileWifiRadio1LanExtVap(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2099,11 +2184,11 @@ func flattenExtensionControllerExtenderProfileWifiRadio2Bandwidth(v interface{},
 }
 
 func flattenExtensionControllerExtenderProfileWifiRadio2PowerLevel(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenExtensionControllerExtenderProfileWifiRadio2BeaconInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenExtensionControllerExtenderProfileWifiRadio280211D(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2111,7 +2196,7 @@ func flattenExtensionControllerExtenderProfileWifiRadio280211D(v interface{}, d 
 }
 
 func flattenExtensionControllerExtenderProfileWifiRadio2MaxClients(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenExtensionControllerExtenderProfileWifiRadio2ExtensionChannel(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2123,7 +2208,7 @@ func flattenExtensionControllerExtenderProfileWifiRadio2BssColorMode(v interface
 }
 
 func flattenExtensionControllerExtenderProfileWifiRadio2BssColor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenExtensionControllerExtenderProfileWifiRadio2LanExtVap(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2214,12 +2299,6 @@ func refreshObjectExtensionControllerExtenderProfile(d *schema.ResourceData, o m
 	if err = d.Set("login_password_change", flattenExtensionControllerExtenderProfileLoginPasswordChange(o["login-password-change"], d, "login_password_change", sv)); err != nil {
 		if !fortiAPIPatch(o["login-password-change"]) {
 			return fmt.Errorf("Error reading login_password_change: %v", err)
-		}
-	}
-
-	if err = d.Set("login_password", flattenExtensionControllerExtenderProfileLoginPassword(o["login-password"], d, "login_password", sv)); err != nil {
-		if !fortiAPIPatch(o["login-password"]) {
-			return fmt.Errorf("Error reading login_password: %v", err)
 		}
 	}
 
@@ -2559,6 +2638,8 @@ func expandExtensionControllerExtenderProfileCellularSmsNotificationReceiver(d *
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandExtensionControllerExtenderProfileCellularSmsNotificationReceiverName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
@@ -2569,11 +2650,15 @@ func expandExtensionControllerExtenderProfileCellularSmsNotificationReceiver(d *
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "phone_number"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["phone-number"], _ = expandExtensionControllerExtenderProfileCellularSmsNotificationReceiverPhoneNumber(d, i["phone_number"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["phone-number"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "alert"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["alert"], _ = expandExtensionControllerExtenderProfileCellularSmsNotificationReceiverAlert(d, i["alert"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["alert"] = nil
 		}
 
 		result = append(result, tmp)
@@ -2988,6 +3073,12 @@ func expandExtensionControllerExtenderProfileLanExtension(d *schema.ResourceData
 	} else {
 		result["backhaul"] = make([]string, 0)
 	}
+	pre_append = pre + ".0." + "downlinks"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["downlinks"], _ = expandExtensionControllerExtenderProfileLanExtensionDownlinks(d, i["downlinks"], pre_append, sv)
+	} else {
+		result["downlinks"] = make([]string, 0)
+	}
 
 	return result, nil
 }
@@ -3025,6 +3116,8 @@ func expandExtensionControllerExtenderProfileLanExtensionBackhaul(d *schema.Reso
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandExtensionControllerExtenderProfileLanExtensionBackhaulName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
@@ -3063,6 +3156,81 @@ func expandExtensionControllerExtenderProfileLanExtensionBackhaulRole(d *schema.
 }
 
 func expandExtensionControllerExtenderProfileLanExtensionBackhaulWeight(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandExtensionControllerExtenderProfileLanExtensionDownlinks(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["name"], _ = expandExtensionControllerExtenderProfileLanExtensionDownlinksName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["type"], _ = expandExtensionControllerExtenderProfileLanExtensionDownlinksType(d, i["type"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["port"], _ = expandExtensionControllerExtenderProfileLanExtensionDownlinksPort(d, i["port"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["port"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vap"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["vap"], _ = expandExtensionControllerExtenderProfileLanExtensionDownlinksVap(d, i["vap"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["vap"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "pvid"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["pvid"], _ = expandExtensionControllerExtenderProfileLanExtensionDownlinksPvid(d, i["pvid"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["pvid"] = nil
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandExtensionControllerExtenderProfileLanExtensionDownlinksName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandExtensionControllerExtenderProfileLanExtensionDownlinksType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandExtensionControllerExtenderProfileLanExtensionDownlinksPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandExtensionControllerExtenderProfileLanExtensionDownlinksVap(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandExtensionControllerExtenderProfileLanExtensionDownlinksPvid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3482,6 +3650,8 @@ func getObjectExtensionControllerExtenderProfile(d *schema.ResourceData, sv stri
 		} else if t != nil {
 			obj["allowaccess"] = t
 		}
+	} else if d.HasChange("allowaccess") {
+		obj["allowaccess"] = nil
 	}
 
 	if v, ok := d.GetOk("login_password_change"); ok {
@@ -3500,6 +3670,8 @@ func getObjectExtensionControllerExtenderProfile(d *schema.ResourceData, sv stri
 		} else if t != nil {
 			obj["login-password"] = t
 		}
+	} else if d.HasChange("login_password") {
+		obj["login-password"] = nil
 	}
 
 	if v, ok := d.GetOk("enforce_bandwidth"); ok {

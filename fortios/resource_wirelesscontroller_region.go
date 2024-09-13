@@ -46,13 +46,11 @@ func resourceWirelessControllerRegion() *schema.Resource {
 			"image_type": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"comments": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 1027),
 				Optional:     true,
-				Computed:     true,
 			},
 			"grayscale": &schema.Schema{
 				Type:     schema.TypeString,
@@ -237,7 +235,7 @@ func flattenWirelessControllerRegionGrayscale(v interface{}, d *schema.ResourceD
 }
 
 func flattenWirelessControllerRegionOpacity(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectWirelessControllerRegion(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -321,6 +319,8 @@ func getObjectWirelessControllerRegion(d *schema.ResourceData, sv string) (*map[
 		} else if t != nil {
 			obj["image-type"] = t
 		}
+	} else if d.HasChange("image_type") {
+		obj["image-type"] = nil
 	}
 
 	if v, ok := d.GetOk("comments"); ok {
@@ -330,6 +330,8 @@ func getObjectWirelessControllerRegion(d *schema.ResourceData, sv string) (*map[
 		} else if t != nil {
 			obj["comments"] = t
 		}
+	} else if d.HasChange("comments") {
+		obj["comments"] = nil
 	}
 
 	if v, ok := d.GetOk("grayscale"); ok {

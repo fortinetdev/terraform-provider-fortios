@@ -46,7 +46,6 @@ func resourceWirelessControllerTimers() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"discovery_interval": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -76,7 +75,6 @@ func resourceWirelessControllerTimers() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 1440),
 				Optional:     true,
-				Computed:     true,
 			},
 			"fake_ap_log": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -87,17 +85,14 @@ func resourceWirelessControllerTimers() *schema.Resource {
 			"sta_cap_cleanup": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"rogue_ap_cleanup": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"rogue_sta_cleanup": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"ble_device_cleanup": &schema.Schema{
 				Type:     schema.TypeInt,
@@ -108,12 +103,10 @@ func resourceWirelessControllerTimers() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 86400),
 				Optional:     true,
-				Computed:     true,
 			},
 			"darrp_day": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"darrp_time": &schema.Schema{
 				Type:     schema.TypeList,
@@ -124,7 +117,6 @@ func resourceWirelessControllerTimers() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 5),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -181,19 +173,16 @@ func resourceWirelessControllerTimers() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(5, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ap_reboot_wait_time": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 7),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ap_reboot_wait_interval2": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(5, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
@@ -324,55 +313,55 @@ func resourceWirelessControllerTimersRead(d *schema.ResourceData, m interface{})
 }
 
 func flattenWirelessControllerTimersEchoInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerTimersNatSessionKeepAlive(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerTimersDiscoveryInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerTimersClientIdleTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerTimersClientIdleRehomeTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerTimersAuthTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerTimersRogueApLog(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerTimersFakeApLog(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerTimersStaCapCleanup(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerTimersRogueApCleanup(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerTimersRogueStaCleanup(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerTimersBleDeviceCleanup(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerTimersDarrpOptimize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerTimersDarrpDay(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -422,39 +411,39 @@ func flattenWirelessControllerTimersDarrpTimeTime(v interface{}, d *schema.Resou
 }
 
 func flattenWirelessControllerTimersStaStatsInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerTimersVapStatsInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerTimersRadioStatsInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerTimersStaCapabilityInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerTimersStaLocateTimer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerTimersIpsecIntfCleanup(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerTimersBleScanReportIntv(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerTimersDrmaInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerTimersApRebootWaitInterval1(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerTimersApRebootWaitTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -462,7 +451,7 @@ func flattenWirelessControllerTimersApRebootWaitTime(v interface{}, d *schema.Re
 }
 
 func flattenWirelessControllerTimersApRebootWaitInterval2(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectWirelessControllerTimers(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -722,6 +711,8 @@ func expandWirelessControllerTimersDarrpTime(d *schema.ResourceData, v interface
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "time"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["time"], _ = expandWirelessControllerTimersDarrpTimeTime(d, i["time"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["time"] = nil
 		}
 
 		result = append(result, tmp)
@@ -807,6 +798,8 @@ func getObjectWirelessControllerTimers(d *schema.ResourceData, setArgNil bool, s
 				obj["nat-session-keep-alive"] = t
 			}
 		}
+	} else if d.HasChange("nat_session_keep_alive") {
+		obj["nat-session-keep-alive"] = nil
 	}
 
 	if v, ok := d.GetOk("discovery_interval"); ok {
@@ -872,6 +865,8 @@ func getObjectWirelessControllerTimers(d *schema.ResourceData, setArgNil bool, s
 				obj["rogue-ap-log"] = t
 			}
 		}
+	} else if d.HasChange("rogue_ap_log") {
+		obj["rogue-ap-log"] = nil
 	}
 
 	if v, ok := d.GetOk("fake_ap_log"); ok {
@@ -898,6 +893,8 @@ func getObjectWirelessControllerTimers(d *schema.ResourceData, setArgNil bool, s
 				obj["sta-cap-cleanup"] = t
 			}
 		}
+	} else if d.HasChange("sta_cap_cleanup") {
+		obj["sta-cap-cleanup"] = nil
 	}
 
 	if v, ok := d.GetOkExists("rogue_ap_cleanup"); ok {
@@ -911,6 +908,8 @@ func getObjectWirelessControllerTimers(d *schema.ResourceData, setArgNil bool, s
 				obj["rogue-ap-cleanup"] = t
 			}
 		}
+	} else if d.HasChange("rogue_ap_cleanup") {
+		obj["rogue-ap-cleanup"] = nil
 	}
 
 	if v, ok := d.GetOkExists("rogue_sta_cleanup"); ok {
@@ -924,6 +923,8 @@ func getObjectWirelessControllerTimers(d *schema.ResourceData, setArgNil bool, s
 				obj["rogue-sta-cleanup"] = t
 			}
 		}
+	} else if d.HasChange("rogue_sta_cleanup") {
+		obj["rogue-sta-cleanup"] = nil
 	}
 
 	if v, ok := d.GetOkExists("ble_device_cleanup"); ok {
@@ -950,6 +951,8 @@ func getObjectWirelessControllerTimers(d *schema.ResourceData, setArgNil bool, s
 				obj["darrp-optimize"] = t
 			}
 		}
+	} else if d.HasChange("darrp_optimize") {
+		obj["darrp-optimize"] = nil
 	}
 
 	if v, ok := d.GetOk("darrp_day"); ok {
@@ -963,6 +966,8 @@ func getObjectWirelessControllerTimers(d *schema.ResourceData, setArgNil bool, s
 				obj["darrp-day"] = t
 			}
 		}
+	} else if d.HasChange("darrp_day") {
+		obj["darrp-day"] = nil
 	}
 
 	if v, ok := d.GetOk("darrp_time"); ok || d.HasChange("darrp_time") {
@@ -1093,6 +1098,8 @@ func getObjectWirelessControllerTimers(d *schema.ResourceData, setArgNil bool, s
 				obj["ap-reboot-wait-interval1"] = t
 			}
 		}
+	} else if d.HasChange("ap_reboot_wait_interval1") {
+		obj["ap-reboot-wait-interval1"] = nil
 	}
 
 	if v, ok := d.GetOk("ap_reboot_wait_time"); ok {
@@ -1106,6 +1113,8 @@ func getObjectWirelessControllerTimers(d *schema.ResourceData, setArgNil bool, s
 				obj["ap-reboot-wait-time"] = t
 			}
 		}
+	} else if d.HasChange("ap_reboot_wait_time") {
+		obj["ap-reboot-wait-time"] = nil
 	}
 
 	if v, ok := d.GetOk("ap_reboot_wait_interval2"); ok {
@@ -1119,6 +1128,8 @@ func getObjectWirelessControllerTimers(d *schema.ResourceData, setArgNil bool, s
 				obj["ap-reboot-wait-interval2"] = t
 			}
 		}
+	} else if d.HasChange("ap_reboot_wait_interval2") {
+		obj["ap-reboot-wait-interval2"] = nil
 	}
 
 	return &obj, nil

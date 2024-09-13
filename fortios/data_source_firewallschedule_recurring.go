@@ -32,6 +32,10 @@ func dataSourceFirewallScheduleRecurring() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"uuid": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"start": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -103,6 +107,10 @@ func dataSourceFlattenFirewallScheduleRecurringName(v interface{}, d *schema.Res
 	return v
 }
 
+func dataSourceFlattenFirewallScheduleRecurringUuid(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallScheduleRecurringStart(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -129,6 +137,12 @@ func dataSourceRefreshObjectFirewallScheduleRecurring(d *schema.ResourceData, o 
 	if err = d.Set("name", dataSourceFlattenFirewallScheduleRecurringName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
+		}
+	}
+
+	if err = d.Set("uuid", dataSourceFlattenFirewallScheduleRecurringUuid(o["uuid"], d, "uuid")); err != nil {
+		if !fortiAPIPatch(o["uuid"]) {
+			return fmt.Errorf("Error reading uuid: %v", err)
 		}
 	}
 

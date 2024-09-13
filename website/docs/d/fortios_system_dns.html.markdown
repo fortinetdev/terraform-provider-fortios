@@ -34,6 +34,7 @@ The following attributes are exported:
 * `dns_cache_ttl` - Duration in seconds that the DNS cache retains information.
 * `cache_notfound_responses` - Enable/disable response from the DNS server when a record is not in cache.
 * `source_ip` - IP address used by the DNS server as its source IP.
+* `root_servers` - Configure up to two preferred servers that serve the DNS root zone (default uses all 13 root servers).
 * `interface_select_method` - Specify how to select outgoing interface to reach server.
 * `interface` - Specify outgoing interface to reach server.
 * `server_select_method` - Specify how configured servers are prioritized.
@@ -43,6 +44,8 @@ The following attributes are exported:
 * `fqdn_cache_ttl` - FQDN cache time to live in seconds (0 - 86400, default = 0).
 * `fqdn_max_refresh` - FQDN cache maximum refresh time in seconds (3600 - 86400, default = 3600).
 * `fqdn_min_refresh` - FQDN cache minimum refresh time in seconds (10 - 3600, default = 60).
+* `hostname_ttl` - TTL of hostname table entries (60 - 86400).
+* `hostname_limit` - Limit of the number of hostname table entries (0 - 50000).
 
 The `server_hostname` block contains:
 

@@ -45,18 +45,17 @@ func resourceLogTacacsAccountingSetting() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"server_key": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"source_ip": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"interface_select_method": &schema.Schema{
 				Type:     schema.TypeString,
@@ -67,7 +66,6 @@ func resourceLogTacacsAccountingSetting() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -195,10 +193,6 @@ func flattenLogTacacsAccountingSettingServer(v interface{}, d *schema.ResourceDa
 	return v
 }
 
-func flattenLogTacacsAccountingSettingServerKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
 func flattenLogTacacsAccountingSettingSourceIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -223,12 +217,6 @@ func refreshObjectLogTacacsAccountingSetting(d *schema.ResourceData, o map[strin
 	if err = d.Set("server", flattenLogTacacsAccountingSettingServer(o["server"], d, "server", sv)); err != nil {
 		if !fortiAPIPatch(o["server"]) {
 			return fmt.Errorf("Error reading server: %v", err)
-		}
-	}
-
-	if err = d.Set("server_key", flattenLogTacacsAccountingSettingServerKey(o["server-key"], d, "server_key", sv)); err != nil {
-		if !fortiAPIPatch(o["server-key"]) {
-			return fmt.Errorf("Error reading server_key: %v", err)
 		}
 	}
 
@@ -310,6 +298,8 @@ func getObjectLogTacacsAccountingSetting(d *schema.ResourceData, setArgNil bool,
 				obj["server"] = t
 			}
 		}
+	} else if d.HasChange("server") {
+		obj["server"] = nil
 	}
 
 	if v, ok := d.GetOk("server_key"); ok {
@@ -323,6 +313,8 @@ func getObjectLogTacacsAccountingSetting(d *schema.ResourceData, setArgNil bool,
 				obj["server-key"] = t
 			}
 		}
+	} else if d.HasChange("server_key") {
+		obj["server-key"] = nil
 	}
 
 	if v, ok := d.GetOk("source_ip"); ok {
@@ -336,6 +328,8 @@ func getObjectLogTacacsAccountingSetting(d *schema.ResourceData, setArgNil bool,
 				obj["source-ip"] = t
 			}
 		}
+	} else if d.HasChange("source_ip") {
+		obj["source-ip"] = nil
 	}
 
 	if v, ok := d.GetOk("interface_select_method"); ok {
@@ -362,6 +356,8 @@ func getObjectLogTacacsAccountingSetting(d *schema.ResourceData, setArgNil bool,
 				obj["interface"] = t
 			}
 		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
 	}
 
 	return &obj, nil

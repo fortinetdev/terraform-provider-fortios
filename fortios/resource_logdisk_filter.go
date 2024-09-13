@@ -66,6 +66,11 @@ func resourceLogDiskFilter() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"http_transaction": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"anomaly": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -74,12 +79,10 @@ func resourceLogDiskFilter() *schema.Resource {
 			"netscan_discovery": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"netscan_vulnerability": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"voip": &schema.Schema{
 				Type:     schema.TypeString,
@@ -109,7 +112,6 @@ func resourceLogDiskFilter() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"category": &schema.Schema{
 							Type:     schema.TypeString,
@@ -120,7 +122,6 @@ func resourceLogDiskFilter() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 1023),
 							Optional:     true,
-							Computed:     true,
 						},
 						"filter_type": &schema.Schema{
 							Type:     schema.TypeString,
@@ -133,108 +134,87 @@ func resourceLogDiskFilter() *schema.Resource {
 			"dns": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"ssh": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"event": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"system": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"radius": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"ipsec": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"dhcp": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"ppp": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"admin": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"ha": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"auth": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"pattern": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"sslvpn_log_auth": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"sslvpn_log_adm": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"sslvpn_log_session": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"vip_ssl": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"ldb_monitor": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"wan_opt": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"wireless_activity": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"cpu_memory_usage": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"filter": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 1023),
 				Optional:     true,
-				Computed:     true,
 			},
 			"filter_type": &schema.Schema{
 				Type:     schema.TypeString,
@@ -393,6 +373,10 @@ func flattenLogDiskFilterZtnaTraffic(v interface{}, d *schema.ResourceData, pre 
 	return v
 }
 
+func flattenLogDiskFilterHttpTransaction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenLogDiskFilterAnomaly(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -475,7 +459,7 @@ func flattenLogDiskFilterFreeStyle(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenLogDiskFilterFreeStyleId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenLogDiskFilterFreeStyleCategory(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -620,6 +604,12 @@ func refreshObjectLogDiskFilter(d *schema.ResourceData, o map[string]interface{}
 	if err = d.Set("ztna_traffic", flattenLogDiskFilterZtnaTraffic(o["ztna-traffic"], d, "ztna_traffic", sv)); err != nil {
 		if !fortiAPIPatch(o["ztna-traffic"]) {
 			return fmt.Errorf("Error reading ztna_traffic: %v", err)
+		}
+	}
+
+	if err = d.Set("http_transaction", flattenLogDiskFilterHttpTransaction(o["http-transaction"], d, "http_transaction", sv)); err != nil {
+		if !fortiAPIPatch(o["http-transaction"]) {
+			return fmt.Errorf("Error reading http_transaction: %v", err)
 		}
 	}
 
@@ -846,6 +836,10 @@ func expandLogDiskFilterZtnaTraffic(d *schema.ResourceData, v interface{}, pre s
 	return v, nil
 }
 
+func expandLogDiskFilterHttpTransaction(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandLogDiskFilterAnomaly(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -891,6 +885,8 @@ func expandLogDiskFilterFreeStyle(d *schema.ResourceData, v interface{}, pre str
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandLogDiskFilterFreeStyleId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
@@ -901,6 +897,8 @@ func expandLogDiskFilterFreeStyle(d *schema.ResourceData, v interface{}, pre str
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["filter"], _ = expandLogDiskFilterFreeStyleFilter(d, i["filter"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["filter"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_type"
@@ -1101,6 +1099,19 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 		}
 	}
 
+	if v, ok := d.GetOk("http_transaction"); ok {
+		if setArgNil {
+			obj["http-transaction"] = nil
+		} else {
+			t, err := expandLogDiskFilterHttpTransaction(d, v, "http_transaction", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["http-transaction"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("anomaly"); ok {
 		if setArgNil {
 			obj["anomaly"] = nil
@@ -1125,6 +1136,8 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 				obj["netscan-discovery"] = t
 			}
 		}
+	} else if d.HasChange("netscan_discovery") {
+		obj["netscan-discovery"] = nil
 	}
 
 	if v, ok := d.GetOk("netscan_vulnerability"); ok {
@@ -1138,6 +1151,8 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 				obj["netscan-vulnerability"] = t
 			}
 		}
+	} else if d.HasChange("netscan_vulnerability") {
+		obj["netscan-vulnerability"] = nil
 	}
 
 	if v, ok := d.GetOk("voip"); ok {
@@ -1216,6 +1231,8 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 				obj["dns"] = t
 			}
 		}
+	} else if d.HasChange("dns") {
+		obj["dns"] = nil
 	}
 
 	if v, ok := d.GetOk("ssh"); ok {
@@ -1229,6 +1246,8 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 				obj["ssh"] = t
 			}
 		}
+	} else if d.HasChange("ssh") {
+		obj["ssh"] = nil
 	}
 
 	if v, ok := d.GetOk("event"); ok {
@@ -1242,6 +1261,8 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 				obj["event"] = t
 			}
 		}
+	} else if d.HasChange("event") {
+		obj["event"] = nil
 	}
 
 	if v, ok := d.GetOk("system"); ok {
@@ -1255,6 +1276,8 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 				obj["system"] = t
 			}
 		}
+	} else if d.HasChange("system") {
+		obj["system"] = nil
 	}
 
 	if v, ok := d.GetOk("radius"); ok {
@@ -1268,6 +1291,8 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 				obj["radius"] = t
 			}
 		}
+	} else if d.HasChange("radius") {
+		obj["radius"] = nil
 	}
 
 	if v, ok := d.GetOk("ipsec"); ok {
@@ -1281,6 +1306,8 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 				obj["ipsec"] = t
 			}
 		}
+	} else if d.HasChange("ipsec") {
+		obj["ipsec"] = nil
 	}
 
 	if v, ok := d.GetOk("dhcp"); ok {
@@ -1294,6 +1321,8 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 				obj["dhcp"] = t
 			}
 		}
+	} else if d.HasChange("dhcp") {
+		obj["dhcp"] = nil
 	}
 
 	if v, ok := d.GetOk("ppp"); ok {
@@ -1307,6 +1336,8 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 				obj["ppp"] = t
 			}
 		}
+	} else if d.HasChange("ppp") {
+		obj["ppp"] = nil
 	}
 
 	if v, ok := d.GetOk("admin"); ok {
@@ -1320,6 +1351,8 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 				obj["admin"] = t
 			}
 		}
+	} else if d.HasChange("admin") {
+		obj["admin"] = nil
 	}
 
 	if v, ok := d.GetOk("ha"); ok {
@@ -1333,6 +1366,8 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 				obj["ha"] = t
 			}
 		}
+	} else if d.HasChange("ha") {
+		obj["ha"] = nil
 	}
 
 	if v, ok := d.GetOk("auth"); ok {
@@ -1346,6 +1381,8 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 				obj["auth"] = t
 			}
 		}
+	} else if d.HasChange("auth") {
+		obj["auth"] = nil
 	}
 
 	if v, ok := d.GetOk("pattern"); ok {
@@ -1359,6 +1396,8 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 				obj["pattern"] = t
 			}
 		}
+	} else if d.HasChange("pattern") {
+		obj["pattern"] = nil
 	}
 
 	if v, ok := d.GetOk("sslvpn_log_auth"); ok {
@@ -1372,6 +1411,8 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 				obj["sslvpn-log-auth"] = t
 			}
 		}
+	} else if d.HasChange("sslvpn_log_auth") {
+		obj["sslvpn-log-auth"] = nil
 	}
 
 	if v, ok := d.GetOk("sslvpn_log_adm"); ok {
@@ -1385,6 +1426,8 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 				obj["sslvpn-log-adm"] = t
 			}
 		}
+	} else if d.HasChange("sslvpn_log_adm") {
+		obj["sslvpn-log-adm"] = nil
 	}
 
 	if v, ok := d.GetOk("sslvpn_log_session"); ok {
@@ -1398,6 +1441,8 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 				obj["sslvpn-log-session"] = t
 			}
 		}
+	} else if d.HasChange("sslvpn_log_session") {
+		obj["sslvpn-log-session"] = nil
 	}
 
 	if v, ok := d.GetOk("vip_ssl"); ok {
@@ -1411,6 +1456,8 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 				obj["vip-ssl"] = t
 			}
 		}
+	} else if d.HasChange("vip_ssl") {
+		obj["vip-ssl"] = nil
 	}
 
 	if v, ok := d.GetOk("ldb_monitor"); ok {
@@ -1424,6 +1471,8 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 				obj["ldb-monitor"] = t
 			}
 		}
+	} else if d.HasChange("ldb_monitor") {
+		obj["ldb-monitor"] = nil
 	}
 
 	if v, ok := d.GetOk("wan_opt"); ok {
@@ -1437,6 +1486,8 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 				obj["wan-opt"] = t
 			}
 		}
+	} else if d.HasChange("wan_opt") {
+		obj["wan-opt"] = nil
 	}
 
 	if v, ok := d.GetOk("wireless_activity"); ok {
@@ -1450,6 +1501,8 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 				obj["wireless-activity"] = t
 			}
 		}
+	} else if d.HasChange("wireless_activity") {
+		obj["wireless-activity"] = nil
 	}
 
 	if v, ok := d.GetOk("cpu_memory_usage"); ok {
@@ -1463,6 +1516,8 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 				obj["cpu-memory-usage"] = t
 			}
 		}
+	} else if d.HasChange("cpu_memory_usage") {
+		obj["cpu-memory-usage"] = nil
 	}
 
 	if v, ok := d.GetOk("filter"); ok {
@@ -1476,6 +1531,8 @@ func getObjectLogDiskFilter(d *schema.ResourceData, setArgNil bool, sv string) (
 				obj["filter"] = t
 			}
 		}
+	} else if d.HasChange("filter") {
+		obj["filter"] = nil
 	}
 
 	if v, ok := d.GetOk("filter_type"); ok {

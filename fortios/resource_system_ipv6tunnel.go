@@ -56,7 +56,6 @@ func resourceSystemIpv6Tunnel() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"use_sdwan": &schema.Schema{
 				Type:     schema.TypeString,
@@ -356,6 +355,8 @@ func getObjectSystemIpv6Tunnel(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["interface"] = t
 		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
 	}
 
 	if v, ok := d.GetOk("use_sdwan"); ok {

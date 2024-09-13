@@ -47,7 +47,6 @@ func resourceWirelessControllerUtmProfile() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"utm_log": &schema.Schema{
 				Type:     schema.TypeString,
@@ -58,25 +57,21 @@ func resourceWirelessControllerUtmProfile() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"application_list": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"antivirus_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"webfilter_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"scan_botnet_connections": &schema.Schema{
 				Type:     schema.TypeString,
@@ -381,6 +376,8 @@ func getObjectWirelessControllerUtmProfile(d *schema.ResourceData, sv string) (*
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("utm_log"); ok {
@@ -399,6 +396,8 @@ func getObjectWirelessControllerUtmProfile(d *schema.ResourceData, sv string) (*
 		} else if t != nil {
 			obj["ips-sensor"] = t
 		}
+	} else if d.HasChange("ips_sensor") {
+		obj["ips-sensor"] = nil
 	}
 
 	if v, ok := d.GetOk("application_list"); ok {
@@ -408,6 +407,8 @@ func getObjectWirelessControllerUtmProfile(d *schema.ResourceData, sv string) (*
 		} else if t != nil {
 			obj["application-list"] = t
 		}
+	} else if d.HasChange("application_list") {
+		obj["application-list"] = nil
 	}
 
 	if v, ok := d.GetOk("antivirus_profile"); ok {
@@ -417,6 +418,8 @@ func getObjectWirelessControllerUtmProfile(d *schema.ResourceData, sv string) (*
 		} else if t != nil {
 			obj["antivirus-profile"] = t
 		}
+	} else if d.HasChange("antivirus_profile") {
+		obj["antivirus-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("webfilter_profile"); ok {
@@ -426,6 +429,8 @@ func getObjectWirelessControllerUtmProfile(d *schema.ResourceData, sv string) (*
 		} else if t != nil {
 			obj["webfilter-profile"] = t
 		}
+	} else if d.HasChange("webfilter_profile") {
+		obj["webfilter-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("scan_botnet_connections"); ok {

@@ -169,7 +169,7 @@ func flattenSwitchControllerSflowCollectorIp(v interface{}, d *schema.ResourceDa
 }
 
 func flattenSwitchControllerSflowCollectorPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectSwitchControllerSflow(d *schema.ResourceData, o map[string]interface{}, sv string) error {

@@ -40,7 +40,6 @@ func resourceWafSubClass() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
-				Computed:     true,
 			},
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
@@ -208,7 +207,7 @@ func flattenWafSubClassName(v interface{}, d *schema.ResourceData, pre string, s
 }
 
 func flattenWafSubClassId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectWafSubClass(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -253,6 +252,8 @@ func getObjectWafSubClass(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOkExists("fosid"); ok {

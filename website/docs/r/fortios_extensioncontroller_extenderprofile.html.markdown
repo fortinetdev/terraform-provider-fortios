@@ -126,6 +126,7 @@ The `lan_extension` block supports:
 * `backhaul_interface` - IPsec phase1 interface.
 * `backhaul_ip` - IPsec phase1 IPv4/FQDN. Used to specify the external IP/FQDN when the FortiGate unit is behind a NAT device.
 * `backhaul` - LAN extension backhaul tunnel configuration. The structure of `backhaul` block is documented below.
+* `downlinks` - Config FortiExtender downlink interface for LAN extension. The structure of `downlinks` block is documented below.
 
 The `backhaul` block supports:
 
@@ -133,6 +134,14 @@ The `backhaul` block supports:
 * `port` - FortiExtender uplink port. Valid values: `wan`, `lte1`, `lte2`, `port1`, `port2`, `port3`, `port4`, `port5`, `sfp`.
 * `role` - FortiExtender uplink port. Valid values: `primary`, `secondary`.
 * `weight` - WRR weight parameter.
+
+The `downlinks` block supports:
+
+* `name` - FortiExtender LAN extension downlink config entry name.
+* `type` - FortiExtender LAN extension downlink type [port/vap]. Valid values: `port`, `vap`.
+* `port` - FortiExtender LAN extension downlink port. Valid values: `port1`, `port2`, `port3`, `port4`, `port5`, `lan1`, `lan2`.
+* `vap` - FortiExtender LAN extension downlink vap.
+* `pvid` - FortiExtender LAN extension downlink PVID.
 
 The `wifi` block supports:
 

@@ -40,7 +40,6 @@ func resourceFirewallInternetServiceGroup() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"comment": &schema.Schema{
 				Type:         schema.TypeString,
@@ -61,12 +60,10 @@ func resourceFirewallInternetServiceGroup() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -296,7 +293,7 @@ func flattenFirewallInternetServiceGroupMemberName(v interface{}, d *schema.Reso
 }
 
 func flattenFirewallInternetServiceGroupMemberId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectFirewallInternetServiceGroup(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -407,6 +404,8 @@ func getObjectFirewallInternetServiceGroup(d *schema.ResourceData, sv string) (*
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
@@ -416,6 +415,8 @@ func getObjectFirewallInternetServiceGroup(d *schema.ResourceData, sv string) (*
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("direction"); ok {

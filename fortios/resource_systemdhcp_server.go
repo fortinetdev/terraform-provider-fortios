@@ -132,7 +132,6 @@ func resourceSystemDhcpServer() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"wins_server1": &schema.Schema{
 				Type:     schema.TypeString,
@@ -171,7 +170,6 @@ func resourceSystemDhcpServer() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"start_ip": &schema.Schema{
 							Type:     schema.TypeString,
@@ -197,7 +195,6 @@ func resourceSystemDhcpServer() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 255),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -216,7 +213,6 @@ func resourceSystemDhcpServer() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 255),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -225,7 +221,6 @@ func resourceSystemDhcpServer() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: intBetweenWithZero(300, 8640000),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -249,7 +244,6 @@ func resourceSystemDhcpServer() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -258,7 +252,6 @@ func resourceSystemDhcpServer() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
-				Computed:     true,
 			},
 			"options": &schema.Schema{
 				Type:     schema.TypeList,
@@ -268,13 +261,11 @@ func resourceSystemDhcpServer() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"code": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"type": &schema.Schema{
 							Type:     schema.TypeString,
@@ -285,12 +276,10 @@ func resourceSystemDhcpServer() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 312),
 							Optional:     true,
-							Computed:     true,
 						},
 						"ip": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"vci_match": &schema.Schema{
 							Type:     schema.TypeString,
@@ -306,7 +295,6 @@ func resourceSystemDhcpServer() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 255),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -325,7 +313,6 @@ func resourceSystemDhcpServer() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 255),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -389,7 +376,6 @@ func resourceSystemDhcpServer() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 64),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ddns_auth": &schema.Schema{
 				Type:     schema.TypeString,
@@ -400,13 +386,11 @@ func resourceSystemDhcpServer() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 64),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ddns_key": &schema.Schema{
 				Type:      schema.TypeString,
 				Optional:  true,
 				Sensitive: true,
-				Computed:  true,
 			},
 			"ddns_ttl": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -428,7 +412,6 @@ func resourceSystemDhcpServer() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -441,7 +424,6 @@ func resourceSystemDhcpServer() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"start_ip": &schema.Schema{
 							Type:     schema.TypeString,
@@ -467,7 +449,6 @@ func resourceSystemDhcpServer() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 255),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -486,7 +467,6 @@ func resourceSystemDhcpServer() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 255),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -495,7 +475,6 @@ func resourceSystemDhcpServer() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: intBetweenWithZero(300, 8640000),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -518,7 +497,6 @@ func resourceSystemDhcpServer() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"type": &schema.Schema{
 							Type:     schema.TypeString,
@@ -549,7 +527,6 @@ func resourceSystemDhcpServer() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 312),
 							Optional:     true,
-							Computed:     true,
 						},
 						"remote_id_type": &schema.Schema{
 							Type:     schema.TypeString,
@@ -560,7 +537,6 @@ func resourceSystemDhcpServer() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 312),
 							Optional:     true,
-							Computed:     true,
 						},
 						"description": &schema.Schema{
 							Type:         schema.TypeString,
@@ -736,7 +712,7 @@ func resourceSystemDhcpServerRead(d *schema.ResourceData, m interface{}) error {
 }
 
 func flattenSystemDhcpServerId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemDhcpServerStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -744,7 +720,7 @@ func flattenSystemDhcpServerStatus(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenSystemDhcpServerLeaseTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemDhcpServerMacAclDefaultAction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -909,7 +885,7 @@ func flattenSystemDhcpServerIpRange(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenSystemDhcpServerIpRangeId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemDhcpServerIpRangeStartIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1013,7 +989,7 @@ func flattenSystemDhcpServerIpRangeUciStringUciString(v interface{}, d *schema.R
 }
 
 func flattenSystemDhcpServerIpRangeLeaseTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemDhcpServerTimezoneOption(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1149,11 +1125,11 @@ func flattenSystemDhcpServerOptions(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenSystemDhcpServerOptionsId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemDhcpServerOptionsCode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemDhcpServerOptionsType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1269,11 +1245,11 @@ func flattenSystemDhcpServerIpMode(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenSystemDhcpServerConflictedIpTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemDhcpServerIpsecLeaseHold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemDhcpServerAutoConfiguration(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1312,12 +1288,8 @@ func flattenSystemDhcpServerDdnsKeyname(v interface{}, d *schema.ResourceData, p
 	return v
 }
 
-func flattenSystemDhcpServerDdnsKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
 func flattenSystemDhcpServerDdnsTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemDhcpServerVciMatch(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1440,7 +1412,7 @@ func flattenSystemDhcpServerExcludeRange(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenSystemDhcpServerExcludeRangeId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemDhcpServerExcludeRangeStartIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1544,7 +1516,7 @@ func flattenSystemDhcpServerExcludeRangeUciStringUciString(v interface{}, d *sch
 }
 
 func flattenSystemDhcpServerExcludeRangeLeaseTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemDhcpServerSharedSubnet(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1639,7 +1611,7 @@ func flattenSystemDhcpServerReservedAddress(v interface{}, d *schema.ResourceDat
 }
 
 func flattenSystemDhcpServerReservedAddressId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemDhcpServerReservedAddressType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2179,6 +2151,8 @@ func expandSystemDhcpServerIpRange(d *schema.ResourceData, v interface{}, pre st
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSystemDhcpServerIpRangeId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "start_ip"
@@ -2197,9 +2171,9 @@ func expandSystemDhcpServerIpRange(d *schema.ResourceData, v interface{}, pre st
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_string"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["vci-string"], _ = expandSystemDhcpServerIpRangeVciString(d, i["vci_string"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["vci-string"] = make([]string, 0)
 		}
 
@@ -2209,15 +2183,17 @@ func expandSystemDhcpServerIpRange(d *schema.ResourceData, v interface{}, pre st
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "uci_string"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["uci-string"], _ = expandSystemDhcpServerIpRangeUciString(d, i["uci_string"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["uci-string"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "lease_time"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["lease-time"], _ = expandSystemDhcpServerIpRangeLeaseTime(d, i["lease_time"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["lease-time"] = nil
 		}
 
 		result = append(result, tmp)
@@ -2365,11 +2341,15 @@ func expandSystemDhcpServerOptions(d *schema.ResourceData, v interface{}, pre st
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSystemDhcpServerOptionsId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "code"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["code"], _ = expandSystemDhcpServerOptionsCode(d, i["code"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["code"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
@@ -2380,11 +2360,15 @@ func expandSystemDhcpServerOptions(d *schema.ResourceData, v interface{}, pre st
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["value"], _ = expandSystemDhcpServerOptionsValue(d, i["value"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["value"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["ip"], _ = expandSystemDhcpServerOptionsIp(d, i["ip"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["ip"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_match"
@@ -2393,9 +2377,9 @@ func expandSystemDhcpServerOptions(d *schema.ResourceData, v interface{}, pre st
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_string"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["vci-string"], _ = expandSystemDhcpServerOptionsVciString(d, i["vci_string"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["vci-string"] = make([]string, 0)
 		}
 
@@ -2405,9 +2389,9 @@ func expandSystemDhcpServerOptions(d *schema.ResourceData, v interface{}, pre st
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "uci_string"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["uci-string"], _ = expandSystemDhcpServerOptionsUciString(d, i["uci_string"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["uci-string"] = make([]string, 0)
 		}
 
@@ -2612,6 +2596,8 @@ func expandSystemDhcpServerExcludeRange(d *schema.ResourceData, v interface{}, p
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSystemDhcpServerExcludeRangeId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "start_ip"
@@ -2630,9 +2616,9 @@ func expandSystemDhcpServerExcludeRange(d *schema.ResourceData, v interface{}, p
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_string"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["vci-string"], _ = expandSystemDhcpServerExcludeRangeVciString(d, i["vci_string"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["vci-string"] = make([]string, 0)
 		}
 
@@ -2642,15 +2628,17 @@ func expandSystemDhcpServerExcludeRange(d *schema.ResourceData, v interface{}, p
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "uci_string"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["uci-string"], _ = expandSystemDhcpServerExcludeRangeUciString(d, i["uci_string"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["uci-string"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "lease_time"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["lease-time"], _ = expandSystemDhcpServerExcludeRangeLeaseTime(d, i["lease_time"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["lease-time"] = nil
 		}
 
 		result = append(result, tmp)
@@ -2766,6 +2754,8 @@ func expandSystemDhcpServerReservedAddress(d *schema.ResourceData, v interface{}
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSystemDhcpServerReservedAddressId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
@@ -2796,6 +2786,8 @@ func expandSystemDhcpServerReservedAddress(d *schema.ResourceData, v interface{}
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "circuit_id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["circuit-id"], _ = expandSystemDhcpServerReservedAddressCircuitId(d, i["circuit_id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["circuit-id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "remote_id_type"
@@ -2806,11 +2798,15 @@ func expandSystemDhcpServerReservedAddress(d *schema.ResourceData, v interface{}
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "remote_id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["remote-id"], _ = expandSystemDhcpServerReservedAddressRemoteId(d, i["remote_id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["remote-id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["description"], _ = expandSystemDhcpServerReservedAddressDescription(d, i["description"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["description"] = nil
 		}
 
 		result = append(result, tmp)
@@ -3033,6 +3029,8 @@ func getObjectSystemDhcpServer(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["domain"] = t
 		}
+	} else if d.HasChange("domain") {
+		obj["domain"] = nil
 	}
 
 	if v, ok := d.GetOk("wins_server1"); ok {
@@ -3087,6 +3085,8 @@ func getObjectSystemDhcpServer(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["interface"] = t
 		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
 	}
 
 	if v, ok := d.GetOk("ip_range"); ok || d.HasChange("ip_range") {
@@ -3132,6 +3132,8 @@ func getObjectSystemDhcpServer(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["filename"] = t
 		}
+	} else if d.HasChange("filename") {
+		obj["filename"] = nil
 	}
 
 	if v, ok := d.GetOk("options"); ok || d.HasChange("options") {
@@ -3240,6 +3242,8 @@ func getObjectSystemDhcpServer(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["ddns-zone"] = t
 		}
+	} else if d.HasChange("ddns_zone") {
+		obj["ddns-zone"] = nil
 	}
 
 	if v, ok := d.GetOk("ddns_auth"); ok {
@@ -3258,6 +3262,8 @@ func getObjectSystemDhcpServer(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["ddns-keyname"] = t
 		}
+	} else if d.HasChange("ddns_keyname") {
+		obj["ddns-keyname"] = nil
 	}
 
 	if v, ok := d.GetOk("ddns_key"); ok {
@@ -3267,6 +3273,8 @@ func getObjectSystemDhcpServer(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["ddns-key"] = t
 		}
+	} else if d.HasChange("ddns_key") {
+		obj["ddns-key"] = nil
 	}
 
 	if v, ok := d.GetOk("ddns_ttl"); ok {

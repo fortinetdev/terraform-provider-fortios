@@ -224,15 +224,6 @@ func dataSourceFlattenSystemNtpNtpserver(v interface{}, d *schema.ResourceData, 
 			tmp["key_type"] = dataSourceFlattenSystemNtpNtpserverKeyType(i["key-type"], d, pre_append)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "key"
-		if _, ok := i["key"]; ok {
-			tmp["key"] = dataSourceFlattenSystemNtpNtpserverKey(i["key"], d, pre_append)
-			c := d.Get(pre_append).(string)
-			if c != "" {
-				tmp["key"] = c
-			}
-		}
-
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "key_id"
 		if _, ok := i["key-id"]; ok {
 			tmp["key_id"] = dataSourceFlattenSystemNtpNtpserverKeyId(i["key-id"], d, pre_append)

@@ -45,17 +45,14 @@ func resourceIpsViewMap() *schema.Resource {
 			"vdom_id": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"policy_id": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"id_policy_id": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"which": &schema.Schema{
 				Type:     schema.TypeString,
@@ -218,19 +215,19 @@ func resourceIpsViewMapRead(d *schema.ResourceData, m interface{}) error {
 }
 
 func flattenIpsViewMapId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenIpsViewMapVdomId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenIpsViewMapPolicyId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenIpsViewMapIdPolicyId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenIpsViewMapWhich(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -318,6 +315,8 @@ func getObjectIpsViewMap(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["vdom-id"] = t
 		}
+	} else if d.HasChange("vdom_id") {
+		obj["vdom-id"] = nil
 	}
 
 	if v, ok := d.GetOkExists("policy_id"); ok {
@@ -327,6 +326,8 @@ func getObjectIpsViewMap(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["policy-id"] = t
 		}
+	} else if d.HasChange("policy_id") {
+		obj["policy-id"] = nil
 	}
 
 	if v, ok := d.GetOkExists("id_policy_id"); ok {
@@ -336,6 +337,8 @@ func getObjectIpsViewMap(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["id-policy-id"] = t
 		}
+	} else if d.HasChange("id_policy_id") {
+		obj["id-policy-id"] = nil
 	}
 
 	if v, ok := d.GetOk("which"); ok {

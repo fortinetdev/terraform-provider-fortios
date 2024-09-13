@@ -51,7 +51,6 @@ func resourceVpnKmipServer() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -62,7 +61,6 @@ func resourceVpnKmipServer() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"port": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -74,7 +72,6 @@ func resourceVpnKmipServer() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -83,12 +80,12 @@ func resourceVpnKmipServer() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"password": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"ssl_min_proto_version": &schema.Schema{
 				Type:     schema.TypeString,
@@ -109,13 +106,11 @@ func resourceVpnKmipServer() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"source_ip": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
@@ -345,7 +340,7 @@ func flattenVpnKmipServerServerList(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenVpnKmipServerServerListId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVpnKmipServerServerListStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -357,7 +352,7 @@ func flattenVpnKmipServerServerListServer(v interface{}, d *schema.ResourceData,
 }
 
 func flattenVpnKmipServerServerListPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVpnKmipServerServerListCert(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -365,10 +360,6 @@ func flattenVpnKmipServerServerListCert(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenVpnKmipServerUsername(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenVpnKmipServerPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -426,12 +417,6 @@ func refreshObjectVpnKmipServer(d *schema.ResourceData, o map[string]interface{}
 	if err = d.Set("username", flattenVpnKmipServerUsername(o["username"], d, "username", sv)); err != nil {
 		if !fortiAPIPatch(o["username"]) {
 			return fmt.Errorf("Error reading username: %v", err)
-		}
-	}
-
-	if err = d.Set("password", flattenVpnKmipServerPassword(o["password"], d, "password", sv)); err != nil {
-		if !fortiAPIPatch(o["password"]) {
-			return fmt.Errorf("Error reading password: %v", err)
 		}
 	}
 
@@ -495,6 +480,8 @@ func expandVpnKmipServerServerList(d *schema.ResourceData, v interface{}, pre st
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandVpnKmipServerServerListId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
@@ -505,6 +492,8 @@ func expandVpnKmipServerServerList(d *schema.ResourceData, v interface{}, pre st
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "server"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["server"], _ = expandVpnKmipServerServerListServer(d, i["server"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["server"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
@@ -515,6 +504,8 @@ func expandVpnKmipServerServerList(d *schema.ResourceData, v interface{}, pre st
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "cert"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["cert"], _ = expandVpnKmipServerServerListCert(d, i["cert"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["cert"] = nil
 		}
 
 		result = append(result, tmp)
@@ -601,6 +592,8 @@ func getObjectVpnKmipServer(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["username"] = t
 		}
+	} else if d.HasChange("username") {
+		obj["username"] = nil
 	}
 
 	if v, ok := d.GetOk("password"); ok {
@@ -610,6 +603,8 @@ func getObjectVpnKmipServer(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["password"] = t
 		}
+	} else if d.HasChange("password") {
+		obj["password"] = nil
 	}
 
 	if v, ok := d.GetOk("ssl_min_proto_version"); ok {
@@ -646,6 +641,8 @@ func getObjectVpnKmipServer(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["interface"] = t
 		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
 	}
 
 	if v, ok := d.GetOk("source_ip"); ok {
@@ -655,6 +652,8 @@ func getObjectVpnKmipServer(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["source-ip"] = t
 		}
+	} else if d.HasChange("source_ip") {
+		obj["source-ip"] = nil
 	}
 
 	return &obj, nil

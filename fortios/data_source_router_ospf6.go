@@ -723,24 +723,6 @@ func dataSourceFlattenRouterOspf6AreaIpsecKeys(v interface{}, d *schema.Resource
 			tmp["spi"] = dataSourceFlattenRouterOspf6AreaIpsecKeysSpi(i["spi"], d, pre_append)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_key"
-		if _, ok := i["auth-key"]; ok {
-			tmp["auth_key"] = dataSourceFlattenRouterOspf6AreaIpsecKeysAuthKey(i["auth-key"], d, pre_append)
-			c := d.Get(pre_append).(string)
-			if c != "" {
-				tmp["auth_key"] = c
-			}
-		}
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "enc_key"
-		if _, ok := i["enc-key"]; ok {
-			tmp["enc_key"] = dataSourceFlattenRouterOspf6AreaIpsecKeysEncKey(i["enc-key"], d, pre_append)
-			c := d.Get(pre_append).(string)
-			if c != "" {
-				tmp["enc_key"] = c
-			}
-		}
-
 		result = append(result, tmp)
 
 		con += 1
@@ -959,24 +941,6 @@ func dataSourceFlattenRouterOspf6AreaVirtualLinkIpsecKeys(v interface{}, d *sche
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "spi"
 		if _, ok := i["spi"]; ok {
 			tmp["spi"] = dataSourceFlattenRouterOspf6AreaVirtualLinkIpsecKeysSpi(i["spi"], d, pre_append)
-		}
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_key"
-		if _, ok := i["auth-key"]; ok {
-			tmp["auth_key"] = dataSourceFlattenRouterOspf6AreaVirtualLinkIpsecKeysAuthKey(i["auth-key"], d, pre_append)
-			c := d.Get(pre_append).(string)
-			if c != "" {
-				tmp["auth_key"] = c
-			}
-		}
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "enc_key"
-		if _, ok := i["enc-key"]; ok {
-			tmp["enc_key"] = dataSourceFlattenRouterOspf6AreaVirtualLinkIpsecKeysEncKey(i["enc-key"], d, pre_append)
-			c := d.Get(pre_append).(string)
-			if c != "" {
-				tmp["enc_key"] = c
-			}
 		}
 
 		result = append(result, tmp)
@@ -1220,24 +1184,6 @@ func dataSourceFlattenRouterOspf6Ospf6InterfaceIpsecKeys(v interface{}, d *schem
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "spi"
 		if _, ok := i["spi"]; ok {
 			tmp["spi"] = dataSourceFlattenRouterOspf6Ospf6InterfaceIpsecKeysSpi(i["spi"], d, pre_append)
-		}
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_key"
-		if _, ok := i["auth-key"]; ok {
-			tmp["auth_key"] = dataSourceFlattenRouterOspf6Ospf6InterfaceIpsecKeysAuthKey(i["auth-key"], d, pre_append)
-			c := d.Get(pre_append).(string)
-			if c != "" {
-				tmp["auth_key"] = c
-			}
-		}
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "enc_key"
-		if _, ok := i["enc-key"]; ok {
-			tmp["enc_key"] = dataSourceFlattenRouterOspf6Ospf6InterfaceIpsecKeysEncKey(i["enc-key"], d, pre_append)
-			c := d.Get(pre_append).(string)
-			if c != "" {
-				tmp["enc_key"] = c
-			}
 		}
 
 		result = append(result, tmp)

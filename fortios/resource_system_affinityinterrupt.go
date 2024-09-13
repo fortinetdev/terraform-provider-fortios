@@ -55,7 +55,6 @@ func resourceSystemAffinityInterrupt() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -213,7 +212,7 @@ func resourceSystemAffinityInterruptRead(d *schema.ResourceData, m interface{}) 
 }
 
 func flattenSystemAffinityInterruptId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemAffinityInterruptInterrupt(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -299,6 +298,8 @@ func getObjectSystemAffinityInterrupt(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["interrupt"] = t
 		}
+	} else if d.HasChange("interrupt") {
+		obj["interrupt"] = nil
 	}
 
 	if v, ok := d.GetOk("affinity_cpumask"); ok {
@@ -308,6 +309,8 @@ func getObjectSystemAffinityInterrupt(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["affinity-cpumask"] = t
 		}
+	} else if d.HasChange("affinity_cpumask") {
+		obj["affinity-cpumask"] = nil
 	}
 
 	if v, ok := d.GetOk("default_affinity_cpumask"); ok {
@@ -317,6 +320,8 @@ func getObjectSystemAffinityInterrupt(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["default-affinity-cpumask"] = t
 		}
+	} else if d.HasChange("default_affinity_cpumask") {
+		obj["default-affinity-cpumask"] = nil
 	}
 
 	return &obj, nil

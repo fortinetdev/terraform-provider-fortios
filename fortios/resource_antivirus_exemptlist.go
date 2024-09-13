@@ -57,7 +57,6 @@ func resourceAntivirusExemptList() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 64),
 				Optional:     true,
-				Computed:     true,
 			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
@@ -320,6 +319,8 @@ func getObjectAntivirusExemptList(d *schema.ResourceData, sv string) (*map[strin
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("hash_type"); ok {
@@ -338,6 +339,8 @@ func getObjectAntivirusExemptList(d *schema.ResourceData, sv string) (*map[strin
 		} else if t != nil {
 			obj["hash"] = t
 		}
+	} else if d.HasChange("hash") {
+		obj["hash"] = nil
 	}
 
 	if v, ok := d.GetOk("status"); ok {

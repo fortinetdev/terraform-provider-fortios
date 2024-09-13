@@ -25,6 +25,7 @@ The following attributes are exported:
 * `device` - Name for the physical interface.
 * `username` - User name.
 * `password` - Enter the password.
+* `pppoe_egress_cos` - CoS in VLAN tag for outgoing PPPoE/PPP packets.
 * `auth_type` - PPP authentication type to use.
 * `ipunnumbered` - PPPoE unnumbered IP.
 * `pppoe_unnumbered_negotiate` - Enable/disable PPPoE unnumbered negotiation.

@@ -39,92 +39,74 @@ func resourceSystemResourceLimits() *schema.Resource {
 			"session": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"ipsec_phase1": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"ipsec_phase2": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"ipsec_phase1_interface": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"ipsec_phase2_interface": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"dialup_tunnel": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"firewall_policy": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"firewall_address": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"firewall_addrgrp": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"custom_service": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"service_group": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"onetime_schedule": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"recurring_schedule": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"user": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"user_group": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"sslvpn": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"proxy": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"log_disk_quota": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 		},
 	}
@@ -245,75 +227,75 @@ func resourceSystemResourceLimitsRead(d *schema.ResourceData, m interface{}) err
 }
 
 func flattenSystemResourceLimitsSession(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemResourceLimitsIpsecPhase1(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemResourceLimitsIpsecPhase2(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemResourceLimitsIpsecPhase1Interface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemResourceLimitsIpsecPhase2Interface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemResourceLimitsDialupTunnel(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemResourceLimitsFirewallPolicy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemResourceLimitsFirewallAddress(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemResourceLimitsFirewallAddrgrp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemResourceLimitsCustomService(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemResourceLimitsServiceGroup(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemResourceLimitsOnetimeSchedule(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemResourceLimitsRecurringSchedule(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemResourceLimitsUser(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemResourceLimitsUserGroup(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemResourceLimitsSslvpn(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemResourceLimitsProxy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemResourceLimitsLogDiskQuota(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectSystemResourceLimits(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -522,6 +504,8 @@ func getObjectSystemResourceLimits(d *schema.ResourceData, setArgNil bool, sv st
 				obj["session"] = t
 			}
 		}
+	} else if d.HasChange("session") {
+		obj["session"] = nil
 	}
 
 	if v, ok := d.GetOkExists("ipsec_phase1"); ok {
@@ -535,6 +519,8 @@ func getObjectSystemResourceLimits(d *schema.ResourceData, setArgNil bool, sv st
 				obj["ipsec-phase1"] = t
 			}
 		}
+	} else if d.HasChange("ipsec_phase1") {
+		obj["ipsec-phase1"] = nil
 	}
 
 	if v, ok := d.GetOkExists("ipsec_phase2"); ok {
@@ -548,6 +534,8 @@ func getObjectSystemResourceLimits(d *schema.ResourceData, setArgNil bool, sv st
 				obj["ipsec-phase2"] = t
 			}
 		}
+	} else if d.HasChange("ipsec_phase2") {
+		obj["ipsec-phase2"] = nil
 	}
 
 	if v, ok := d.GetOkExists("ipsec_phase1_interface"); ok {
@@ -561,6 +549,8 @@ func getObjectSystemResourceLimits(d *schema.ResourceData, setArgNil bool, sv st
 				obj["ipsec-phase1-interface"] = t
 			}
 		}
+	} else if d.HasChange("ipsec_phase1_interface") {
+		obj["ipsec-phase1-interface"] = nil
 	}
 
 	if v, ok := d.GetOkExists("ipsec_phase2_interface"); ok {
@@ -574,6 +564,8 @@ func getObjectSystemResourceLimits(d *schema.ResourceData, setArgNil bool, sv st
 				obj["ipsec-phase2-interface"] = t
 			}
 		}
+	} else if d.HasChange("ipsec_phase2_interface") {
+		obj["ipsec-phase2-interface"] = nil
 	}
 
 	if v, ok := d.GetOkExists("dialup_tunnel"); ok {
@@ -587,6 +579,8 @@ func getObjectSystemResourceLimits(d *schema.ResourceData, setArgNil bool, sv st
 				obj["dialup-tunnel"] = t
 			}
 		}
+	} else if d.HasChange("dialup_tunnel") {
+		obj["dialup-tunnel"] = nil
 	}
 
 	if v, ok := d.GetOkExists("firewall_policy"); ok {
@@ -600,6 +594,8 @@ func getObjectSystemResourceLimits(d *schema.ResourceData, setArgNil bool, sv st
 				obj["firewall-policy"] = t
 			}
 		}
+	} else if d.HasChange("firewall_policy") {
+		obj["firewall-policy"] = nil
 	}
 
 	if v, ok := d.GetOkExists("firewall_address"); ok {
@@ -613,6 +609,8 @@ func getObjectSystemResourceLimits(d *schema.ResourceData, setArgNil bool, sv st
 				obj["firewall-address"] = t
 			}
 		}
+	} else if d.HasChange("firewall_address") {
+		obj["firewall-address"] = nil
 	}
 
 	if v, ok := d.GetOkExists("firewall_addrgrp"); ok {
@@ -626,6 +624,8 @@ func getObjectSystemResourceLimits(d *schema.ResourceData, setArgNil bool, sv st
 				obj["firewall-addrgrp"] = t
 			}
 		}
+	} else if d.HasChange("firewall_addrgrp") {
+		obj["firewall-addrgrp"] = nil
 	}
 
 	if v, ok := d.GetOkExists("custom_service"); ok {
@@ -639,6 +639,8 @@ func getObjectSystemResourceLimits(d *schema.ResourceData, setArgNil bool, sv st
 				obj["custom-service"] = t
 			}
 		}
+	} else if d.HasChange("custom_service") {
+		obj["custom-service"] = nil
 	}
 
 	if v, ok := d.GetOkExists("service_group"); ok {
@@ -652,6 +654,8 @@ func getObjectSystemResourceLimits(d *schema.ResourceData, setArgNil bool, sv st
 				obj["service-group"] = t
 			}
 		}
+	} else if d.HasChange("service_group") {
+		obj["service-group"] = nil
 	}
 
 	if v, ok := d.GetOkExists("onetime_schedule"); ok {
@@ -665,6 +669,8 @@ func getObjectSystemResourceLimits(d *schema.ResourceData, setArgNil bool, sv st
 				obj["onetime-schedule"] = t
 			}
 		}
+	} else if d.HasChange("onetime_schedule") {
+		obj["onetime-schedule"] = nil
 	}
 
 	if v, ok := d.GetOkExists("recurring_schedule"); ok {
@@ -678,6 +684,8 @@ func getObjectSystemResourceLimits(d *schema.ResourceData, setArgNil bool, sv st
 				obj["recurring-schedule"] = t
 			}
 		}
+	} else if d.HasChange("recurring_schedule") {
+		obj["recurring-schedule"] = nil
 	}
 
 	if v, ok := d.GetOkExists("user"); ok {
@@ -691,6 +699,8 @@ func getObjectSystemResourceLimits(d *schema.ResourceData, setArgNil bool, sv st
 				obj["user"] = t
 			}
 		}
+	} else if d.HasChange("user") {
+		obj["user"] = nil
 	}
 
 	if v, ok := d.GetOkExists("user_group"); ok {
@@ -704,6 +714,8 @@ func getObjectSystemResourceLimits(d *schema.ResourceData, setArgNil bool, sv st
 				obj["user-group"] = t
 			}
 		}
+	} else if d.HasChange("user_group") {
+		obj["user-group"] = nil
 	}
 
 	if v, ok := d.GetOkExists("sslvpn"); ok {
@@ -717,6 +729,8 @@ func getObjectSystemResourceLimits(d *schema.ResourceData, setArgNil bool, sv st
 				obj["sslvpn"] = t
 			}
 		}
+	} else if d.HasChange("sslvpn") {
+		obj["sslvpn"] = nil
 	}
 
 	if v, ok := d.GetOkExists("proxy"); ok {
@@ -730,6 +744,8 @@ func getObjectSystemResourceLimits(d *schema.ResourceData, setArgNil bool, sv st
 				obj["proxy"] = t
 			}
 		}
+	} else if d.HasChange("proxy") {
+		obj["proxy"] = nil
 	}
 
 	if v, ok := d.GetOkExists("log_disk_quota"); ok {
@@ -743,6 +759,8 @@ func getObjectSystemResourceLimits(d *schema.ResourceData, setArgNil bool, sv st
 				obj["log-disk-quota"] = t
 			}
 		}
+	} else if d.HasChange("log_disk_quota") {
+		obj["log-disk-quota"] = nil
 	}
 
 	return &obj, nil

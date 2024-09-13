@@ -113,6 +113,10 @@ func dataSourceSystemCsf() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"legacy_authentication": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"downstream_accprofile": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -370,6 +374,10 @@ func dataSourceFlattenSystemCsfDownstreamAccess(v interface{}, d *schema.Resourc
 	return v
 }
 
+func dataSourceFlattenSystemCsfLegacyAuthentication(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemCsfDownstreamAccprofile(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -622,15 +630,6 @@ func dataSourceFlattenSystemCsfFabricDevice(v interface{}, d *schema.ResourceDat
 			tmp["https_port"] = dataSourceFlattenSystemCsfFabricDeviceHttpsPort(i["https-port"], d, pre_append)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "access_token"
-		if _, ok := i["access-token"]; ok {
-			tmp["access_token"] = dataSourceFlattenSystemCsfFabricDeviceAccessToken(i["access-token"], d, pre_append)
-			c := d.Get(pre_append).(string)
-			if c != "" {
-				tmp["access_token"] = c
-			}
-		}
-
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "device_type"
 		if _, ok := i["device-type"]; ok {
 			tmp["device_type"] = dataSourceFlattenSystemCsfFabricDeviceDeviceType(i["device-type"], d, pre_append)
@@ -639,15 +638,6 @@ func dataSourceFlattenSystemCsfFabricDevice(v interface{}, d *schema.ResourceDat
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "login"
 		if _, ok := i["login"]; ok {
 			tmp["login"] = dataSourceFlattenSystemCsfFabricDeviceLogin(i["login"], d, pre_append)
-		}
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "password"
-		if _, ok := i["password"]; ok {
-			tmp["password"] = dataSourceFlattenSystemCsfFabricDevicePassword(i["password"], d, pre_append)
-			c := d.Get(pre_append).(string)
-			if c != "" {
-				tmp["password"] = c
-			}
 		}
 
 		result = append(result, tmp)
@@ -806,6 +796,12 @@ func dataSourceRefreshObjectSystemCsf(d *schema.ResourceData, o map[string]inter
 	if err = d.Set("downstream_access", dataSourceFlattenSystemCsfDownstreamAccess(o["downstream-access"], d, "downstream_access")); err != nil {
 		if !fortiAPIPatch(o["downstream-access"]) {
 			return fmt.Errorf("Error reading downstream_access: %v", err)
+		}
+	}
+
+	if err = d.Set("legacy_authentication", dataSourceFlattenSystemCsfLegacyAuthentication(o["legacy-authentication"], d, "legacy_authentication")); err != nil {
+		if !fortiAPIPatch(o["legacy-authentication"]) {
+			return fmt.Errorf("Error reading legacy_authentication: %v", err)
 		}
 	}
 

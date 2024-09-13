@@ -40,7 +40,6 @@ func resourceFirewallProxyAddress() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
-				Computed:     true,
 			},
 			"uuid": &schema.Schema{
 				Type:     schema.TypeString,
@@ -56,25 +55,21 @@ func resourceFirewallProxyAddress() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
-				Computed:     true,
 			},
 			"host_regex": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"path": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"query": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"referrer": &schema.Schema{
 				Type:     schema.TypeString,
@@ -89,7 +84,6 @@ func resourceFirewallProxyAddress() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -97,36 +91,30 @@ func resourceFirewallProxyAddress() *schema.Resource {
 			"method": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"ua": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"ua_min_ver": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ua_max_ver": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"header_name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
-				Computed:     true,
 			},
 			"header": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"case_sensitivity": &schema.Schema{
 				Type:     schema.TypeString,
@@ -141,19 +129,16 @@ func resourceFirewallProxyAddress() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"header_name": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 						"header": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"case_sensitivity": &schema.Schema{
 							Type:     schema.TypeString,
@@ -167,7 +152,6 @@ func resourceFirewallProxyAddress() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 32),
 				Optional:     true,
-				Computed:     true,
 			},
 			"tagging": &schema.Schema{
 				Type:     schema.TypeList,
@@ -178,13 +162,11 @@ func resourceFirewallProxyAddress() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"category": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"tags": &schema.Schema{
 							Type:     schema.TypeSet,
@@ -195,7 +177,6 @@ func resourceFirewallProxyAddress() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -217,7 +198,6 @@ func resourceFirewallProxyAddress() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -225,7 +205,6 @@ func resourceFirewallProxyAddress() *schema.Resource {
 			"visibility": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
@@ -463,7 +442,7 @@ func flattenFirewallProxyAddressCategory(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenFirewallProxyAddressCategoryId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallProxyAddressMethod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -548,7 +527,7 @@ func flattenFirewallProxyAddressHeaderGroup(v interface{}, d *schema.ResourceDat
 }
 
 func flattenFirewallProxyAddressHeaderGroupId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallProxyAddressHeaderGroupHeaderName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -564,7 +543,7 @@ func flattenFirewallProxyAddressHeaderGroupCaseSensitivity(v interface{}, d *sch
 }
 
 func flattenFirewallProxyAddressColor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallProxyAddressTagging(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -1010,16 +989,22 @@ func expandFirewallProxyAddressHeaderGroup(d *schema.ResourceData, v interface{}
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandFirewallProxyAddressHeaderGroupId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "header_name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["header-name"], _ = expandFirewallProxyAddressHeaderGroupHeaderName(d, i["header_name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["header-name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["header"], _ = expandFirewallProxyAddressHeaderGroupHeader(d, i["header"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["header"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "case_sensitivity"
@@ -1072,17 +1057,21 @@ func expandFirewallProxyAddressTagging(d *schema.ResourceData, v interface{}, pr
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandFirewallProxyAddressTaggingName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["category"], _ = expandFirewallProxyAddressTaggingCategory(d, i["category"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["category"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tags"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["tags"], _ = expandFirewallProxyAddressTaggingTags(d, i["tags"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["tags"] = make([]string, 0)
 		}
 
@@ -1176,6 +1165,8 @@ func getObjectFirewallProxyAddress(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("uuid"); ok {
@@ -1203,6 +1194,8 @@ func getObjectFirewallProxyAddress(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["host"] = t
 		}
+	} else if d.HasChange("host") {
+		obj["host"] = nil
 	}
 
 	if v, ok := d.GetOk("host_regex"); ok {
@@ -1212,6 +1205,8 @@ func getObjectFirewallProxyAddress(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["host-regex"] = t
 		}
+	} else if d.HasChange("host_regex") {
+		obj["host-regex"] = nil
 	}
 
 	if v, ok := d.GetOk("path"); ok {
@@ -1221,6 +1216,8 @@ func getObjectFirewallProxyAddress(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["path"] = t
 		}
+	} else if d.HasChange("path") {
+		obj["path"] = nil
 	}
 
 	if v, ok := d.GetOk("query"); ok {
@@ -1230,6 +1227,8 @@ func getObjectFirewallProxyAddress(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["query"] = t
 		}
+	} else if d.HasChange("query") {
+		obj["query"] = nil
 	}
 
 	if v, ok := d.GetOk("referrer"); ok {
@@ -1257,6 +1256,8 @@ func getObjectFirewallProxyAddress(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["method"] = t
 		}
+	} else if d.HasChange("method") {
+		obj["method"] = nil
 	}
 
 	if v, ok := d.GetOk("ua"); ok {
@@ -1266,6 +1267,8 @@ func getObjectFirewallProxyAddress(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["ua"] = t
 		}
+	} else if d.HasChange("ua") {
+		obj["ua"] = nil
 	}
 
 	if v, ok := d.GetOk("ua_min_ver"); ok {
@@ -1275,6 +1278,8 @@ func getObjectFirewallProxyAddress(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["ua-min-ver"] = t
 		}
+	} else if d.HasChange("ua_min_ver") {
+		obj["ua-min-ver"] = nil
 	}
 
 	if v, ok := d.GetOk("ua_max_ver"); ok {
@@ -1284,6 +1289,8 @@ func getObjectFirewallProxyAddress(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["ua-max-ver"] = t
 		}
+	} else if d.HasChange("ua_max_ver") {
+		obj["ua-max-ver"] = nil
 	}
 
 	if v, ok := d.GetOk("header_name"); ok {
@@ -1293,6 +1300,8 @@ func getObjectFirewallProxyAddress(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["header-name"] = t
 		}
+	} else if d.HasChange("header_name") {
+		obj["header-name"] = nil
 	}
 
 	if v, ok := d.GetOk("header"); ok {
@@ -1302,6 +1311,8 @@ func getObjectFirewallProxyAddress(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["header"] = t
 		}
+	} else if d.HasChange("header") {
+		obj["header"] = nil
 	}
 
 	if v, ok := d.GetOk("case_sensitivity"); ok {
@@ -1329,6 +1340,8 @@ func getObjectFirewallProxyAddress(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["color"] = t
 		}
+	} else if d.HasChange("color") {
+		obj["color"] = nil
 	}
 
 	if v, ok := d.GetOk("tagging"); ok || d.HasChange("tagging") {
@@ -1347,6 +1360,8 @@ func getObjectFirewallProxyAddress(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("application"); ok || d.HasChange("application") {
@@ -1365,6 +1380,8 @@ func getObjectFirewallProxyAddress(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["visibility"] = t
 		}
+	} else if d.HasChange("visibility") {
+		obj["visibility"] = nil
 	}
 
 	return &obj, nil

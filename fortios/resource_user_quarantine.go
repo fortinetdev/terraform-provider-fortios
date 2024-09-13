@@ -45,13 +45,11 @@ func resourceUserQuarantine() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"firewall_groups": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
-				Computed:     true,
 			},
 			"targets": &schema.Schema{
 				Type:     schema.TypeList,
@@ -62,13 +60,11 @@ func resourceUserQuarantine() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"description": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"macs": &schema.Schema{
 							Type:     schema.TypeList,
@@ -83,13 +79,11 @@ func resourceUserQuarantine() *schema.Resource {
 									"entry_id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 									"description": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 63),
 										Optional:     true,
-										Computed:     true,
 									},
 									"drop": &schema.Schema{
 										Type:     schema.TypeString,
@@ -100,7 +94,6 @@ func resourceUserQuarantine() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 63),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -367,7 +360,7 @@ func flattenUserQuarantineTargetsMacsMac(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenUserQuarantineTargetsMacsEntryId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserQuarantineTargetsMacsDescription(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -463,17 +456,21 @@ func expandUserQuarantineTargets(d *schema.ResourceData, v interface{}, pre stri
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "entry"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["entry"], _ = expandUserQuarantineTargetsEntry(d, i["entry"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["entry"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["description"], _ = expandUserQuarantineTargetsDescription(d, i["description"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["description"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "macs"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["macs"], _ = expandUserQuarantineTargetsMacs(d, i["macs"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["macs"] = make([]string, 0)
 		}
 
@@ -515,11 +512,15 @@ func expandUserQuarantineTargetsMacs(d *schema.ResourceData, v interface{}, pre 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "entry_id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["entry-id"], _ = expandUserQuarantineTargetsMacsEntryId(d, i["entry_id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["entry-id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["description"], _ = expandUserQuarantineTargetsMacsDescription(d, i["description"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["description"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "drop"
@@ -530,6 +531,8 @@ func expandUserQuarantineTargetsMacs(d *schema.ResourceData, v interface{}, pre 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "parent"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["parent"], _ = expandUserQuarantineTargetsMacsParent(d, i["parent"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["parent"] = nil
 		}
 
 		result = append(result, tmp)
@@ -587,6 +590,8 @@ func getObjectUserQuarantine(d *schema.ResourceData, setArgNil bool, sv string) 
 				obj["traffic-policy"] = t
 			}
 		}
+	} else if d.HasChange("traffic_policy") {
+		obj["traffic-policy"] = nil
 	}
 
 	if v, ok := d.GetOk("firewall_groups"); ok {
@@ -600,6 +605,8 @@ func getObjectUserQuarantine(d *schema.ResourceData, setArgNil bool, sv string) 
 				obj["firewall-groups"] = t
 			}
 		}
+	} else if d.HasChange("firewall_groups") {
+		obj["firewall-groups"] = nil
 	}
 
 	if v, ok := d.GetOk("targets"); ok || d.HasChange("targets") {

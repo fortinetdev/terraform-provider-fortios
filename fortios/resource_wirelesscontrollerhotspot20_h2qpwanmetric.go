@@ -72,19 +72,16 @@ func resourceWirelessControllerHotspot20H2QpWanMetric() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"downlink_load": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"load_measurement_duration": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -258,23 +255,23 @@ func flattenWirelessControllerHotspot20H2QpWanMetricLinkAtCapacity(v interface{}
 }
 
 func flattenWirelessControllerHotspot20H2QpWanMetricUplinkSpeed(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerHotspot20H2QpWanMetricDownlinkSpeed(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerHotspot20H2QpWanMetricUplinkLoad(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerHotspot20H2QpWanMetricDownlinkLoad(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerHotspot20H2QpWanMetricLoadMeasurementDuration(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectWirelessControllerHotspot20H2QpWanMetric(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -443,6 +440,8 @@ func getObjectWirelessControllerHotspot20H2QpWanMetric(d *schema.ResourceData, s
 		} else if t != nil {
 			obj["uplink-load"] = t
 		}
+	} else if d.HasChange("uplink_load") {
+		obj["uplink-load"] = nil
 	}
 
 	if v, ok := d.GetOkExists("downlink_load"); ok {
@@ -452,6 +451,8 @@ func getObjectWirelessControllerHotspot20H2QpWanMetric(d *schema.ResourceData, s
 		} else if t != nil {
 			obj["downlink-load"] = t
 		}
+	} else if d.HasChange("downlink_load") {
+		obj["downlink-load"] = nil
 	}
 
 	if v, ok := d.GetOkExists("load_measurement_duration"); ok {
@@ -461,6 +462,8 @@ func getObjectWirelessControllerHotspot20H2QpWanMetric(d *schema.ResourceData, s
 		} else if t != nil {
 			obj["load-measurement-duration"] = t
 		}
+	} else if d.HasChange("load_measurement_duration") {
+		obj["load-measurement-duration"] = nil
 	}
 
 	return &obj, nil

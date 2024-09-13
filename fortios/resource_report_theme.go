@@ -57,163 +57,136 @@ func resourceReportTheme() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 71),
 				Optional:     true,
-				Computed:     true,
 			},
 			"default_pdf_style": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 71),
 				Optional:     true,
-				Computed:     true,
 			},
 			"page_style": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 71),
 				Optional:     true,
-				Computed:     true,
 			},
 			"page_header_style": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 71),
 				Optional:     true,
-				Computed:     true,
 			},
 			"page_footer_style": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 71),
 				Optional:     true,
-				Computed:     true,
 			},
 			"report_title_style": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 71),
 				Optional:     true,
-				Computed:     true,
 			},
 			"report_subtitle_style": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 71),
 				Optional:     true,
-				Computed:     true,
 			},
 			"toc_title_style": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 71),
 				Optional:     true,
-				Computed:     true,
 			},
 			"toc_heading1_style": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 71),
 				Optional:     true,
-				Computed:     true,
 			},
 			"toc_heading2_style": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 71),
 				Optional:     true,
-				Computed:     true,
 			},
 			"toc_heading3_style": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 71),
 				Optional:     true,
-				Computed:     true,
 			},
 			"toc_heading4_style": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 71),
 				Optional:     true,
-				Computed:     true,
 			},
 			"heading1_style": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 71),
 				Optional:     true,
-				Computed:     true,
 			},
 			"heading2_style": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 71),
 				Optional:     true,
-				Computed:     true,
 			},
 			"heading3_style": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 71),
 				Optional:     true,
-				Computed:     true,
 			},
 			"heading4_style": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 71),
 				Optional:     true,
-				Computed:     true,
 			},
 			"normal_text_style": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 71),
 				Optional:     true,
-				Computed:     true,
 			},
 			"bullet_list_style": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 71),
 				Optional:     true,
-				Computed:     true,
 			},
 			"numbered_list_style": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 71),
 				Optional:     true,
-				Computed:     true,
 			},
 			"image_style": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 71),
 				Optional:     true,
-				Computed:     true,
 			},
 			"hline_style": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 71),
 				Optional:     true,
-				Computed:     true,
 			},
 			"graph_chart_style": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 71),
 				Optional:     true,
-				Computed:     true,
 			},
 			"table_chart_style": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 71),
 				Optional:     true,
-				Computed:     true,
 			},
 			"table_chart_caption_style": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 71),
 				Optional:     true,
-				Computed:     true,
 			},
 			"table_chart_head_style": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 71),
 				Optional:     true,
-				Computed:     true,
 			},
 			"table_chart_odd_row_style": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 71),
 				Optional:     true,
-				Computed:     true,
 			},
 			"table_chart_even_row_style": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 71),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -839,6 +812,8 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["default-html-style"] = t
 		}
+	} else if d.HasChange("default_html_style") {
+		obj["default-html-style"] = nil
 	}
 
 	if v, ok := d.GetOk("default_pdf_style"); ok {
@@ -848,6 +823,8 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["default-pdf-style"] = t
 		}
+	} else if d.HasChange("default_pdf_style") {
+		obj["default-pdf-style"] = nil
 	}
 
 	if v, ok := d.GetOk("page_style"); ok {
@@ -857,6 +834,8 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["page-style"] = t
 		}
+	} else if d.HasChange("page_style") {
+		obj["page-style"] = nil
 	}
 
 	if v, ok := d.GetOk("page_header_style"); ok {
@@ -866,6 +845,8 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["page-header-style"] = t
 		}
+	} else if d.HasChange("page_header_style") {
+		obj["page-header-style"] = nil
 	}
 
 	if v, ok := d.GetOk("page_footer_style"); ok {
@@ -875,6 +856,8 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["page-footer-style"] = t
 		}
+	} else if d.HasChange("page_footer_style") {
+		obj["page-footer-style"] = nil
 	}
 
 	if v, ok := d.GetOk("report_title_style"); ok {
@@ -884,6 +867,8 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["report-title-style"] = t
 		}
+	} else if d.HasChange("report_title_style") {
+		obj["report-title-style"] = nil
 	}
 
 	if v, ok := d.GetOk("report_subtitle_style"); ok {
@@ -893,6 +878,8 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["report-subtitle-style"] = t
 		}
+	} else if d.HasChange("report_subtitle_style") {
+		obj["report-subtitle-style"] = nil
 	}
 
 	if v, ok := d.GetOk("toc_title_style"); ok {
@@ -902,6 +889,8 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["toc-title-style"] = t
 		}
+	} else if d.HasChange("toc_title_style") {
+		obj["toc-title-style"] = nil
 	}
 
 	if v, ok := d.GetOk("toc_heading1_style"); ok {
@@ -911,6 +900,8 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["toc-heading1-style"] = t
 		}
+	} else if d.HasChange("toc_heading1_style") {
+		obj["toc-heading1-style"] = nil
 	}
 
 	if v, ok := d.GetOk("toc_heading2_style"); ok {
@@ -920,6 +911,8 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["toc-heading2-style"] = t
 		}
+	} else if d.HasChange("toc_heading2_style") {
+		obj["toc-heading2-style"] = nil
 	}
 
 	if v, ok := d.GetOk("toc_heading3_style"); ok {
@@ -929,6 +922,8 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["toc-heading3-style"] = t
 		}
+	} else if d.HasChange("toc_heading3_style") {
+		obj["toc-heading3-style"] = nil
 	}
 
 	if v, ok := d.GetOk("toc_heading4_style"); ok {
@@ -938,6 +933,8 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["toc-heading4-style"] = t
 		}
+	} else if d.HasChange("toc_heading4_style") {
+		obj["toc-heading4-style"] = nil
 	}
 
 	if v, ok := d.GetOk("heading1_style"); ok {
@@ -947,6 +944,8 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["heading1-style"] = t
 		}
+	} else if d.HasChange("heading1_style") {
+		obj["heading1-style"] = nil
 	}
 
 	if v, ok := d.GetOk("heading2_style"); ok {
@@ -956,6 +955,8 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["heading2-style"] = t
 		}
+	} else if d.HasChange("heading2_style") {
+		obj["heading2-style"] = nil
 	}
 
 	if v, ok := d.GetOk("heading3_style"); ok {
@@ -965,6 +966,8 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["heading3-style"] = t
 		}
+	} else if d.HasChange("heading3_style") {
+		obj["heading3-style"] = nil
 	}
 
 	if v, ok := d.GetOk("heading4_style"); ok {
@@ -974,6 +977,8 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["heading4-style"] = t
 		}
+	} else if d.HasChange("heading4_style") {
+		obj["heading4-style"] = nil
 	}
 
 	if v, ok := d.GetOk("normal_text_style"); ok {
@@ -983,6 +988,8 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["normal-text-style"] = t
 		}
+	} else if d.HasChange("normal_text_style") {
+		obj["normal-text-style"] = nil
 	}
 
 	if v, ok := d.GetOk("bullet_list_style"); ok {
@@ -992,6 +999,8 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["bullet-list-style"] = t
 		}
+	} else if d.HasChange("bullet_list_style") {
+		obj["bullet-list-style"] = nil
 	}
 
 	if v, ok := d.GetOk("numbered_list_style"); ok {
@@ -1001,6 +1010,8 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["numbered-list-style"] = t
 		}
+	} else if d.HasChange("numbered_list_style") {
+		obj["numbered-list-style"] = nil
 	}
 
 	if v, ok := d.GetOk("image_style"); ok {
@@ -1010,6 +1021,8 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["image-style"] = t
 		}
+	} else if d.HasChange("image_style") {
+		obj["image-style"] = nil
 	}
 
 	if v, ok := d.GetOk("hline_style"); ok {
@@ -1019,6 +1032,8 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["hline-style"] = t
 		}
+	} else if d.HasChange("hline_style") {
+		obj["hline-style"] = nil
 	}
 
 	if v, ok := d.GetOk("graph_chart_style"); ok {
@@ -1028,6 +1043,8 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["graph-chart-style"] = t
 		}
+	} else if d.HasChange("graph_chart_style") {
+		obj["graph-chart-style"] = nil
 	}
 
 	if v, ok := d.GetOk("table_chart_style"); ok {
@@ -1037,6 +1054,8 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["table-chart-style"] = t
 		}
+	} else if d.HasChange("table_chart_style") {
+		obj["table-chart-style"] = nil
 	}
 
 	if v, ok := d.GetOk("table_chart_caption_style"); ok {
@@ -1046,6 +1065,8 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["table-chart-caption-style"] = t
 		}
+	} else if d.HasChange("table_chart_caption_style") {
+		obj["table-chart-caption-style"] = nil
 	}
 
 	if v, ok := d.GetOk("table_chart_head_style"); ok {
@@ -1055,6 +1076,8 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["table-chart-head-style"] = t
 		}
+	} else if d.HasChange("table_chart_head_style") {
+		obj["table-chart-head-style"] = nil
 	}
 
 	if v, ok := d.GetOk("table_chart_odd_row_style"); ok {
@@ -1064,6 +1087,8 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["table-chart-odd-row-style"] = t
 		}
+	} else if d.HasChange("table_chart_odd_row_style") {
+		obj["table-chart-odd-row-style"] = nil
 	}
 
 	if v, ok := d.GetOk("table_chart_even_row_style"); ok {
@@ -1073,6 +1098,8 @@ func getObjectReportTheme(d *schema.ResourceData, sv string) (*map[string]interf
 		} else if t != nil {
 			obj["table-chart-even-row-style"] = t
 		}
+	} else if d.HasChange("table_chart_even_row_style") {
+		obj["table-chart-even-row-style"] = nil
 	}
 
 	return &obj, nil

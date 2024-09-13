@@ -50,7 +50,6 @@ func resourceSystemCentralManagement() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"schedule_config_restore": &schema.Schema{
 				Type:     schema.TypeString,
@@ -85,12 +84,10 @@ func resourceSystemCentralManagement() *schema.Resource {
 			"serial_number": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"fmg": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"fmg_source_ip": &schema.Schema{
 				Type:     schema.TypeString,
@@ -106,12 +103,10 @@ func resourceSystemCentralManagement() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ca_cert": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"vdom": &schema.Schema{
 				Type:         schema.TypeString,
@@ -127,12 +122,10 @@ func resourceSystemCentralManagement() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"server_type": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"addr_type": &schema.Schema{
 							Type:     schema.TypeString,
@@ -153,7 +146,6 @@ func resourceSystemCentralManagement() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -182,7 +174,6 @@ func resourceSystemCentralManagement() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
@@ -440,7 +431,7 @@ func flattenSystemCentralManagementServerList(v interface{}, d *schema.ResourceD
 }
 
 func flattenSystemCentralManagementServerListId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemCentralManagementServerListServerType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -724,11 +715,15 @@ func expandSystemCentralManagementServerList(d *schema.ResourceData, v interface
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSystemCentralManagementServerListId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "server_type"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["server-type"], _ = expandSystemCentralManagementServerListServerType(d, i["server_type"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["server-type"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr_type"
@@ -749,6 +744,8 @@ func expandSystemCentralManagementServerList(d *schema.ResourceData, v interface
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "fqdn"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["fqdn"], _ = expandSystemCentralManagementServerListFqdn(d, i["fqdn"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["fqdn"] = nil
 		}
 
 		result = append(result, tmp)
@@ -843,6 +840,8 @@ func getObjectSystemCentralManagement(d *schema.ResourceData, setArgNil bool, sv
 				obj["fortigate-cloud-sso-default-profile"] = t
 			}
 		}
+	} else if d.HasChange("fortigate_cloud_sso_default_profile") {
+		obj["fortigate-cloud-sso-default-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("schedule_config_restore"); ok {
@@ -934,6 +933,8 @@ func getObjectSystemCentralManagement(d *schema.ResourceData, setArgNil bool, sv
 				obj["serial-number"] = t
 			}
 		}
+	} else if d.HasChange("serial_number") {
+		obj["serial-number"] = nil
 	}
 
 	if v, ok := d.GetOk("fmg"); ok {
@@ -947,6 +948,8 @@ func getObjectSystemCentralManagement(d *schema.ResourceData, setArgNil bool, sv
 				obj["fmg"] = t
 			}
 		}
+	} else if d.HasChange("fmg") {
+		obj["fmg"] = nil
 	}
 
 	if v, ok := d.GetOk("fmg_source_ip"); ok {
@@ -986,6 +989,8 @@ func getObjectSystemCentralManagement(d *schema.ResourceData, setArgNil bool, sv
 				obj["local-cert"] = t
 			}
 		}
+	} else if d.HasChange("local_cert") {
+		obj["local-cert"] = nil
 	}
 
 	if v, ok := d.GetOk("ca_cert"); ok {
@@ -999,6 +1004,8 @@ func getObjectSystemCentralManagement(d *schema.ResourceData, setArgNil bool, sv
 				obj["ca-cert"] = t
 			}
 		}
+	} else if d.HasChange("ca_cert") {
+		obj["ca-cert"] = nil
 	}
 
 	if v, ok := d.GetOk("vdom"); ok {
@@ -1090,6 +1097,8 @@ func getObjectSystemCentralManagement(d *schema.ResourceData, setArgNil bool, sv
 				obj["interface"] = t
 			}
 		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
 	}
 
 	return &obj, nil

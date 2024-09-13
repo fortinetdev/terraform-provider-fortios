@@ -67,7 +67,6 @@ func resourceIcapServer() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"port": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -89,7 +88,6 @@ func resourceIcapServer() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"healthcheck": &schema.Schema{
 				Type:     schema.TypeString,
@@ -100,7 +98,6 @@ func resourceIcapServer() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -282,11 +279,11 @@ func flattenIcapServerFqdn(v interface{}, d *schema.ResourceData, pre string, sv
 }
 
 func flattenIcapServerPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenIcapServerMaxConnections(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenIcapServerSecure(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -492,6 +489,8 @@ func getObjectIcapServer(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["fqdn"] = t
 		}
+	} else if d.HasChange("fqdn") {
+		obj["fqdn"] = nil
 	}
 
 	if v, ok := d.GetOk("port"); ok {
@@ -528,6 +527,8 @@ func getObjectIcapServer(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["ssl-cert"] = t
 		}
+	} else if d.HasChange("ssl_cert") {
+		obj["ssl-cert"] = nil
 	}
 
 	if v, ok := d.GetOk("healthcheck"); ok {
@@ -546,6 +547,8 @@ func getObjectIcapServer(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["healthcheck-service"] = t
 		}
+	} else if d.HasChange("healthcheck_service") {
+		obj["healthcheck-service"] = nil
 	}
 
 	return &obj, nil

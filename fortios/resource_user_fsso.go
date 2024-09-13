@@ -68,7 +68,6 @@ func resourceUserFsso() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"port2": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -86,7 +85,6 @@ func resourceUserFsso() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"port3": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -104,7 +102,6 @@ func resourceUserFsso() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"port4": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -122,7 +119,6 @@ func resourceUserFsso() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"port5": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -146,13 +142,11 @@ func resourceUserFsso() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"group_poll_interval": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 2880),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ldap_poll": &schema.Schema{
 				Type:     schema.TypeString,
@@ -175,7 +169,6 @@ func resourceUserFsso() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ssl": &schema.Schema{
 				Type:     schema.TypeString,
@@ -186,7 +179,6 @@ func resourceUserFsso() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ssl_server_host_ip_check": &schema.Schema{
 				Type:     schema.TypeString,
@@ -197,7 +189,6 @@ func resourceUserFsso() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
-				Computed:     true,
 			},
 			"source_ip": &schema.Schema{
 				Type:     schema.TypeString,
@@ -218,7 +209,6 @@ func resourceUserFsso() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -388,11 +378,7 @@ func flattenUserFssoServer(v interface{}, d *schema.ResourceData, pre string, sv
 }
 
 func flattenUserFssoPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenUserFssoPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserFssoServer2(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -400,11 +386,7 @@ func flattenUserFssoServer2(v interface{}, d *schema.ResourceData, pre string, s
 }
 
 func flattenUserFssoPort2(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenUserFssoPassword2(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserFssoServer3(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -412,11 +394,7 @@ func flattenUserFssoServer3(v interface{}, d *schema.ResourceData, pre string, s
 }
 
 func flattenUserFssoPort3(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenUserFssoPassword3(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserFssoServer4(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -424,11 +402,7 @@ func flattenUserFssoServer4(v interface{}, d *schema.ResourceData, pre string, s
 }
 
 func flattenUserFssoPort4(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenUserFssoPassword4(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserFssoServer5(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -436,15 +410,11 @@ func flattenUserFssoServer5(v interface{}, d *schema.ResourceData, pre string, s
 }
 
 func flattenUserFssoPort5(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenUserFssoPassword5(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserFssoLogonTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserFssoLdapServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -452,7 +422,7 @@ func flattenUserFssoLdapServer(v interface{}, d *schema.ResourceData, pre string
 }
 
 func flattenUserFssoGroupPollInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserFssoLdapPoll(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -460,7 +430,7 @@ func flattenUserFssoLdapPoll(v interface{}, d *schema.ResourceData, pre string, 
 }
 
 func flattenUserFssoLdapPollInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserFssoLdapPollFilter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -833,6 +803,8 @@ func getObjectUserFsso(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["server"] = t
 		}
+	} else if d.HasChange("server") {
+		obj["server"] = nil
 	}
 
 	if v, ok := d.GetOk("port"); ok {
@@ -851,6 +823,8 @@ func getObjectUserFsso(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["password"] = t
 		}
+	} else if d.HasChange("password") {
+		obj["password"] = nil
 	}
 
 	if v, ok := d.GetOk("server2"); ok {
@@ -860,6 +834,8 @@ func getObjectUserFsso(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["server2"] = t
 		}
+	} else if d.HasChange("server2") {
+		obj["server2"] = nil
 	}
 
 	if v, ok := d.GetOk("port2"); ok {
@@ -878,6 +854,8 @@ func getObjectUserFsso(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["password2"] = t
 		}
+	} else if d.HasChange("password2") {
+		obj["password2"] = nil
 	}
 
 	if v, ok := d.GetOk("server3"); ok {
@@ -887,6 +865,8 @@ func getObjectUserFsso(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["server3"] = t
 		}
+	} else if d.HasChange("server3") {
+		obj["server3"] = nil
 	}
 
 	if v, ok := d.GetOk("port3"); ok {
@@ -905,6 +885,8 @@ func getObjectUserFsso(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["password3"] = t
 		}
+	} else if d.HasChange("password3") {
+		obj["password3"] = nil
 	}
 
 	if v, ok := d.GetOk("server4"); ok {
@@ -914,6 +896,8 @@ func getObjectUserFsso(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["server4"] = t
 		}
+	} else if d.HasChange("server4") {
+		obj["server4"] = nil
 	}
 
 	if v, ok := d.GetOk("port4"); ok {
@@ -932,6 +916,8 @@ func getObjectUserFsso(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["password4"] = t
 		}
+	} else if d.HasChange("password4") {
+		obj["password4"] = nil
 	}
 
 	if v, ok := d.GetOk("server5"); ok {
@@ -941,6 +927,8 @@ func getObjectUserFsso(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["server5"] = t
 		}
+	} else if d.HasChange("server5") {
+		obj["server5"] = nil
 	}
 
 	if v, ok := d.GetOk("port5"); ok {
@@ -959,6 +947,8 @@ func getObjectUserFsso(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["password5"] = t
 		}
+	} else if d.HasChange("password5") {
+		obj["password5"] = nil
 	}
 
 	if v, ok := d.GetOk("logon_timeout"); ok {
@@ -977,6 +967,8 @@ func getObjectUserFsso(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["ldap-server"] = t
 		}
+	} else if d.HasChange("ldap_server") {
+		obj["ldap-server"] = nil
 	}
 
 	if v, ok := d.GetOk("group_poll_interval"); ok {
@@ -986,6 +978,8 @@ func getObjectUserFsso(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["group-poll-interval"] = t
 		}
+	} else if d.HasChange("group_poll_interval") {
+		obj["group-poll-interval"] = nil
 	}
 
 	if v, ok := d.GetOk("ldap_poll"); ok {
@@ -1022,6 +1016,8 @@ func getObjectUserFsso(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["user-info-server"] = t
 		}
+	} else if d.HasChange("user_info_server") {
+		obj["user-info-server"] = nil
 	}
 
 	if v, ok := d.GetOk("ssl"); ok {
@@ -1040,6 +1036,8 @@ func getObjectUserFsso(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["sni"] = t
 		}
+	} else if d.HasChange("sni") {
+		obj["sni"] = nil
 	}
 
 	if v, ok := d.GetOk("ssl_server_host_ip_check"); ok {
@@ -1058,6 +1056,8 @@ func getObjectUserFsso(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["ssl-trusted-cert"] = t
 		}
+	} else if d.HasChange("ssl_trusted_cert") {
+		obj["ssl-trusted-cert"] = nil
 	}
 
 	if v, ok := d.GetOk("source_ip"); ok {
@@ -1094,6 +1094,8 @@ func getObjectUserFsso(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["interface"] = t
 		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
 	}
 
 	return &obj, nil

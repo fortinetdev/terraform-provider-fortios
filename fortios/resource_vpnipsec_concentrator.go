@@ -63,7 +63,6 @@ func resourceVpnIpsecConcentrator() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -234,7 +233,7 @@ func resourceVpnIpsecConcentratorRead(d *schema.ResourceData, m interface{}) err
 }
 
 func flattenVpnIpsecConcentratorId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVpnIpsecConcentratorName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {

@@ -46,22 +46,18 @@ func resourceEndpointControlClient() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 32),
 				Optional:     true,
-				Computed:     true,
 			},
 			"src_ip": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"src_mac": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"info": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"ad_groups": &schema.Schema{
 				Type:         schema.TypeString,
@@ -224,7 +220,7 @@ func resourceEndpointControlClientRead(d *schema.ResourceData, m interface{}) er
 }
 
 func flattenEndpointControlClientId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenEndpointControlClientFtclUid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -338,6 +334,8 @@ func getObjectEndpointControlClient(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["ftcl-uid"] = t
 		}
+	} else if d.HasChange("ftcl_uid") {
+		obj["ftcl-uid"] = nil
 	}
 
 	if v, ok := d.GetOk("src_ip"); ok {
@@ -347,6 +345,8 @@ func getObjectEndpointControlClient(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["src-ip"] = t
 		}
+	} else if d.HasChange("src_ip") {
+		obj["src-ip"] = nil
 	}
 
 	if v, ok := d.GetOk("src_mac"); ok {
@@ -356,6 +356,8 @@ func getObjectEndpointControlClient(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["src-mac"] = t
 		}
+	} else if d.HasChange("src_mac") {
+		obj["src-mac"] = nil
 	}
 
 	if v, ok := d.GetOk("info"); ok {
@@ -365,6 +367,8 @@ func getObjectEndpointControlClient(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["info"] = t
 		}
+	} else if d.HasChange("info") {
+		obj["info"] = nil
 	}
 
 	if v, ok := d.GetOk("ad_groups"); ok {
@@ -374,6 +378,8 @@ func getObjectEndpointControlClient(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["ad-groups"] = t
 		}
+	} else if d.HasChange("ad_groups") {
+		obj["ad-groups"] = nil
 	}
 
 	return &obj, nil

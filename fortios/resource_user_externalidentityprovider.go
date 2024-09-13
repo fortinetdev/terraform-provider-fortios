@@ -46,18 +46,15 @@ func resourceUserExternalIdentityProvider() *schema.Resource {
 			"type": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"version": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"url": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
-				Computed:     true,
 			},
 			"user_attr_name": &schema.Schema{
 				Type:         schema.TypeString,
@@ -75,13 +72,11 @@ func resourceUserExternalIdentityProvider() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"source_ip": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"interface_select_method": &schema.Schema{
 				Type:     schema.TypeString,
@@ -92,7 +87,6 @@ func resourceUserExternalIdentityProvider() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"server_identity_check": &schema.Schema{
 				Type:     schema.TypeString,
@@ -285,7 +279,7 @@ func flattenUserExternalIdentityProviderGroupAttrName(v interface{}, d *schema.R
 }
 
 func flattenUserExternalIdentityProviderPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserExternalIdentityProviderSourceIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -305,7 +299,7 @@ func flattenUserExternalIdentityProviderServerIdentityCheck(v interface{}, d *sc
 }
 
 func flattenUserExternalIdentityProviderTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectUserExternalIdentityProvider(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -459,6 +453,8 @@ func getObjectUserExternalIdentityProvider(d *schema.ResourceData, sv string) (*
 		} else if t != nil {
 			obj["type"] = t
 		}
+	} else if d.HasChange("type") {
+		obj["type"] = nil
 	}
 
 	if v, ok := d.GetOk("version"); ok {
@@ -468,6 +464,8 @@ func getObjectUserExternalIdentityProvider(d *schema.ResourceData, sv string) (*
 		} else if t != nil {
 			obj["version"] = t
 		}
+	} else if d.HasChange("version") {
+		obj["version"] = nil
 	}
 
 	if v, ok := d.GetOk("url"); ok {
@@ -477,6 +475,8 @@ func getObjectUserExternalIdentityProvider(d *schema.ResourceData, sv string) (*
 		} else if t != nil {
 			obj["url"] = t
 		}
+	} else if d.HasChange("url") {
+		obj["url"] = nil
 	}
 
 	if v, ok := d.GetOk("user_attr_name"); ok {
@@ -504,6 +504,8 @@ func getObjectUserExternalIdentityProvider(d *schema.ResourceData, sv string) (*
 		} else if t != nil {
 			obj["port"] = t
 		}
+	} else if d.HasChange("port") {
+		obj["port"] = nil
 	}
 
 	if v, ok := d.GetOk("source_ip"); ok {
@@ -513,6 +515,8 @@ func getObjectUserExternalIdentityProvider(d *schema.ResourceData, sv string) (*
 		} else if t != nil {
 			obj["source-ip"] = t
 		}
+	} else if d.HasChange("source_ip") {
+		obj["source-ip"] = nil
 	}
 
 	if v, ok := d.GetOk("interface_select_method"); ok {
@@ -531,6 +535,8 @@ func getObjectUserExternalIdentityProvider(d *schema.ResourceData, sv string) (*
 		} else if t != nil {
 			obj["interface"] = t
 		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
 	}
 
 	if v, ok := d.GetOk("server_identity_check"); ok {

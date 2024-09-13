@@ -52,7 +52,6 @@ func resourceWirelessControllerHotspot20H2QpOsuProvider() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 10),
 							Optional:     true,
-							Computed:     true,
 						},
 						"lang": &schema.Schema{
 							Type:         schema.TypeString,
@@ -64,7 +63,6 @@ func resourceWirelessControllerHotspot20H2QpOsuProvider() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 252),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -73,18 +71,15 @@ func resourceWirelessControllerHotspot20H2QpOsuProvider() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"osu_method": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"osu_nai": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"service_description": &schema.Schema{
 				Type:     schema.TypeList,
@@ -94,7 +89,6 @@ func resourceWirelessControllerHotspot20H2QpOsuProvider() *schema.Resource {
 						"service_id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"lang": &schema.Schema{
 							Type:         schema.TypeString,
@@ -106,7 +100,6 @@ func resourceWirelessControllerHotspot20H2QpOsuProvider() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 252),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -115,7 +108,6 @@ func resourceWirelessControllerHotspot20H2QpOsuProvider() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
@@ -335,7 +327,7 @@ func flattenWirelessControllerHotspot20H2QpOsuProviderFriendlyName(v interface{}
 }
 
 func flattenWirelessControllerHotspot20H2QpOsuProviderFriendlyNameIndex(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerHotspot20H2QpOsuProviderFriendlyNameLang(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -407,7 +399,7 @@ func flattenWirelessControllerHotspot20H2QpOsuProviderServiceDescription(v inter
 }
 
 func flattenWirelessControllerHotspot20H2QpOsuProviderServiceDescriptionServiceId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerHotspot20H2QpOsuProviderServiceDescriptionLang(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -523,6 +515,8 @@ func expandWirelessControllerHotspot20H2QpOsuProviderFriendlyName(d *schema.Reso
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "index"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["index"], _ = expandWirelessControllerHotspot20H2QpOsuProviderFriendlyNameIndex(d, i["index"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["index"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "lang"
@@ -533,6 +527,8 @@ func expandWirelessControllerHotspot20H2QpOsuProviderFriendlyName(d *schema.Reso
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "friendly_name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["friendly-name"], _ = expandWirelessControllerHotspot20H2QpOsuProviderFriendlyNameFriendlyName(d, i["friendly_name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["friendly-name"] = nil
 		}
 
 		result = append(result, tmp)
@@ -584,6 +580,8 @@ func expandWirelessControllerHotspot20H2QpOsuProviderServiceDescription(d *schem
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "service_id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["service-id"], _ = expandWirelessControllerHotspot20H2QpOsuProviderServiceDescriptionServiceId(d, i["service_id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["service-id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "lang"
@@ -594,6 +592,8 @@ func expandWirelessControllerHotspot20H2QpOsuProviderServiceDescription(d *schem
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "service_description"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["service-description"], _ = expandWirelessControllerHotspot20H2QpOsuProviderServiceDescriptionServiceDescription(d, i["service_description"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["service-description"] = nil
 		}
 
 		result = append(result, tmp)
@@ -648,6 +648,8 @@ func getObjectWirelessControllerHotspot20H2QpOsuProvider(d *schema.ResourceData,
 		} else if t != nil {
 			obj["server-uri"] = t
 		}
+	} else if d.HasChange("server_uri") {
+		obj["server-uri"] = nil
 	}
 
 	if v, ok := d.GetOk("osu_method"); ok {
@@ -657,6 +659,8 @@ func getObjectWirelessControllerHotspot20H2QpOsuProvider(d *schema.ResourceData,
 		} else if t != nil {
 			obj["osu-method"] = t
 		}
+	} else if d.HasChange("osu_method") {
+		obj["osu-method"] = nil
 	}
 
 	if v, ok := d.GetOk("osu_nai"); ok {
@@ -666,6 +670,8 @@ func getObjectWirelessControllerHotspot20H2QpOsuProvider(d *schema.ResourceData,
 		} else if t != nil {
 			obj["osu-nai"] = t
 		}
+	} else if d.HasChange("osu_nai") {
+		obj["osu-nai"] = nil
 	}
 
 	if v, ok := d.GetOk("service_description"); ok || d.HasChange("service_description") {
@@ -684,6 +690,8 @@ func getObjectWirelessControllerHotspot20H2QpOsuProvider(d *schema.ResourceData,
 		} else if t != nil {
 			obj["icon"] = t
 		}
+	} else if d.HasChange("icon") {
+		obj["icon"] = nil
 	}
 
 	return &obj, nil

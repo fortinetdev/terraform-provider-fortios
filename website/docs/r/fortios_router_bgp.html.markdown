@@ -126,7 +126,7 @@ The following arguments are supported:
 * `multipath_recursive_distance` - Enable/disable use of recursive distance to select multipath. Valid values: `enable`, `disable`.
 * `recursive_next_hop` - Enable/disable recursive resolution of next-hop using BGP route. Valid values: `enable`, `disable`.
 * `recursive_inherit_priority` - Enable/disable priority inheritance for recursive resolution. Valid values: `enable`, `disable`.
-* `tag_resolve_mode` - Configure tag-match mode. Resolves BGP routes with other routes containing the same tag. Valid values: `disable`, `preferred`, `merge`.
+* `tag_resolve_mode` - Configure tag-match mode. Resolves BGP routes with other routes containing the same tag.
 * `cluster_id` - Route reflector cluster ID.
 * `confederation_identifier` - Confederation identifier.
 * `confederation_peers` - Confederation peers. The structure of `confederation_peers` block is documented below.
@@ -541,6 +541,7 @@ The `network` block supports:
 * `network_import_check` - Configure insurance of BGP network route existence in IGP. Valid values: `global`, `enable`, `disable`.
 * `backdoor` - Enable/disable route as backdoor. Valid values: `enable`, `disable`.
 * `route_map` - Route map to modify generated route.
+* `prefix_name` - Name of firewall address or address group.
 
 The `network6` block supports:
 

@@ -39,7 +39,6 @@ func resourceLogSyslogd2OverrideSetting() *schema.Resource {
 			"override": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
@@ -50,9 +49,13 @@ func resourceLogSyslogd2OverrideSetting() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
-				Computed:     true,
 			},
 			"mode": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"use_management_vdom": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -68,11 +71,15 @@ func resourceLogSyslogd2OverrideSetting() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"source_ip_interface": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 15),
+				Optional:     true,
+			},
 			"source_ip": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"format": &schema.Schema{
 				Type:     schema.TypeString,
@@ -88,7 +95,6 @@ func resourceLogSyslogd2OverrideSetting() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 100000),
 				Optional:     true,
-				Computed:     true,
 			},
 			"enc_algorithm": &schema.Schema{
 				Type:     schema.TypeString,
@@ -104,7 +110,6 @@ func resourceLogSyslogd2OverrideSetting() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"custom_field_name": &schema.Schema{
 				Type:     schema.TypeList,
@@ -115,19 +120,16 @@ func resourceLogSyslogd2OverrideSetting() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"name": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"custom": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -141,7 +143,6 @@ func resourceLogSyslogd2OverrideSetting() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"syslog_type": &schema.Schema{
 				Type:     schema.TypeInt,
@@ -292,11 +293,19 @@ func flattenLogSyslogd2OverrideSettingMode(v interface{}, d *schema.ResourceData
 	return v
 }
 
-func flattenLogSyslogd2OverrideSettingPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+func flattenLogSyslogd2OverrideSettingUseManagementVdom(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
+func flattenLogSyslogd2OverrideSettingPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
 func flattenLogSyslogd2OverrideSettingFacility(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenLogSyslogd2OverrideSettingSourceIpInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -313,7 +322,7 @@ func flattenLogSyslogd2OverrideSettingPriority(v interface{}, d *schema.Resource
 }
 
 func flattenLogSyslogd2OverrideSettingMaxLogRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenLogSyslogd2OverrideSettingEncAlgorithm(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -377,7 +386,7 @@ func flattenLogSyslogd2OverrideSettingCustomFieldName(v interface{}, d *schema.R
 }
 
 func flattenLogSyslogd2OverrideSettingCustomFieldNameId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenLogSyslogd2OverrideSettingCustomFieldNameName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -397,7 +406,7 @@ func flattenLogSyslogd2OverrideSettingInterface(v interface{}, d *schema.Resourc
 }
 
 func flattenLogSyslogd2OverrideSettingSyslogType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectLogSyslogd2OverrideSetting(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -433,6 +442,12 @@ func refreshObjectLogSyslogd2OverrideSetting(d *schema.ResourceData, o map[strin
 		}
 	}
 
+	if err = d.Set("use_management_vdom", flattenLogSyslogd2OverrideSettingUseManagementVdom(o["use-management-vdom"], d, "use_management_vdom", sv)); err != nil {
+		if !fortiAPIPatch(o["use-management-vdom"]) {
+			return fmt.Errorf("Error reading use_management_vdom: %v", err)
+		}
+	}
+
 	if err = d.Set("port", flattenLogSyslogd2OverrideSettingPort(o["port"], d, "port", sv)); err != nil {
 		if !fortiAPIPatch(o["port"]) {
 			return fmt.Errorf("Error reading port: %v", err)
@@ -442,6 +457,12 @@ func refreshObjectLogSyslogd2OverrideSetting(d *schema.ResourceData, o map[strin
 	if err = d.Set("facility", flattenLogSyslogd2OverrideSettingFacility(o["facility"], d, "facility", sv)); err != nil {
 		if !fortiAPIPatch(o["facility"]) {
 			return fmt.Errorf("Error reading facility: %v", err)
+		}
+	}
+
+	if err = d.Set("source_ip_interface", flattenLogSyslogd2OverrideSettingSourceIpInterface(o["source-ip-interface"], d, "source_ip_interface", sv)); err != nil {
+		if !fortiAPIPatch(o["source-ip-interface"]) {
+			return fmt.Errorf("Error reading source_ip_interface: %v", err)
 		}
 	}
 
@@ -546,11 +567,19 @@ func expandLogSyslogd2OverrideSettingMode(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
+func expandLogSyslogd2OverrideSettingUseManagementVdom(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandLogSyslogd2OverrideSettingPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
 func expandLogSyslogd2OverrideSettingFacility(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogSyslogd2OverrideSettingSourceIpInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -599,16 +628,22 @@ func expandLogSyslogd2OverrideSettingCustomFieldName(d *schema.ResourceData, v i
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandLogSyslogd2OverrideSettingCustomFieldNameId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandLogSyslogd2OverrideSettingCustomFieldNameName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "custom"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["custom"], _ = expandLogSyslogd2OverrideSettingCustomFieldNameCustom(d, i["custom"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["custom"] = nil
 		}
 
 		result = append(result, tmp)
@@ -657,6 +692,8 @@ func getObjectLogSyslogd2OverrideSetting(d *schema.ResourceData, setArgNil bool,
 				obj["override"] = t
 			}
 		}
+	} else if d.HasChange("override") {
+		obj["override"] = nil
 	}
 
 	if v, ok := d.GetOk("status"); ok {
@@ -683,6 +720,8 @@ func getObjectLogSyslogd2OverrideSetting(d *schema.ResourceData, setArgNil bool,
 				obj["server"] = t
 			}
 		}
+	} else if d.HasChange("server") {
+		obj["server"] = nil
 	}
 
 	if v, ok := d.GetOk("mode"); ok {
@@ -694,6 +733,19 @@ func getObjectLogSyslogd2OverrideSetting(d *schema.ResourceData, setArgNil bool,
 				return &obj, err
 			} else if t != nil {
 				obj["mode"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("use_management_vdom"); ok {
+		if setArgNil {
+			obj["use-management-vdom"] = nil
+		} else {
+			t, err := expandLogSyslogd2OverrideSettingUseManagementVdom(d, v, "use_management_vdom", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["use-management-vdom"] = t
 			}
 		}
 	}
@@ -724,6 +776,21 @@ func getObjectLogSyslogd2OverrideSetting(d *schema.ResourceData, setArgNil bool,
 		}
 	}
 
+	if v, ok := d.GetOk("source_ip_interface"); ok {
+		if setArgNil {
+			obj["source-ip-interface"] = nil
+		} else {
+			t, err := expandLogSyslogd2OverrideSettingSourceIpInterface(d, v, "source_ip_interface", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["source-ip-interface"] = t
+			}
+		}
+	} else if d.HasChange("source_ip_interface") {
+		obj["source-ip-interface"] = nil
+	}
+
 	if v, ok := d.GetOk("source_ip"); ok {
 		if setArgNil {
 			obj["source-ip"] = nil
@@ -735,6 +802,8 @@ func getObjectLogSyslogd2OverrideSetting(d *schema.ResourceData, setArgNil bool,
 				obj["source-ip"] = t
 			}
 		}
+	} else if d.HasChange("source_ip") {
+		obj["source-ip"] = nil
 	}
 
 	if v, ok := d.GetOk("format"); ok {
@@ -774,6 +843,8 @@ func getObjectLogSyslogd2OverrideSetting(d *schema.ResourceData, setArgNil bool,
 				obj["max-log-rate"] = t
 			}
 		}
+	} else if d.HasChange("max_log_rate") {
+		obj["max-log-rate"] = nil
 	}
 
 	if v, ok := d.GetOk("enc_algorithm"); ok {
@@ -813,6 +884,8 @@ func getObjectLogSyslogd2OverrideSetting(d *schema.ResourceData, setArgNil bool,
 				obj["certificate"] = t
 			}
 		}
+	} else if d.HasChange("certificate") {
+		obj["certificate"] = nil
 	}
 
 	if v, ok := d.GetOk("custom_field_name"); ok || d.HasChange("custom_field_name") {
@@ -852,6 +925,8 @@ func getObjectLogSyslogd2OverrideSetting(d *schema.ResourceData, setArgNil bool,
 				obj["interface"] = t
 			}
 		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
 	}
 
 	if v, ok := d.GetOkExists("syslog_type"); ok {

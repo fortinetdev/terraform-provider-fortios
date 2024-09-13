@@ -61,7 +61,6 @@ func resourceSystemSitTunnel() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"use_sdwan": &schema.Schema{
 				Type:     schema.TypeString,
@@ -384,6 +383,8 @@ func getObjectSystemSitTunnel(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["interface"] = t
 		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
 	}
 
 	if v, ok := d.GetOk("use_sdwan"); ok {

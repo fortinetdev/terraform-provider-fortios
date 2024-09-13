@@ -46,19 +46,16 @@ func resourceWebfilterSearchEngine() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
-				Computed:     true,
 			},
 			"url": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
-				Computed:     true,
 			},
 			"query": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"safesearch": &schema.Schema{
 				Type:     schema.TypeString,
@@ -74,7 +71,6 @@ func resourceWebfilterSearchEngine() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -360,6 +356,8 @@ func getObjectWebfilterSearchEngine(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["hostname"] = t
 		}
+	} else if d.HasChange("hostname") {
+		obj["hostname"] = nil
 	}
 
 	if v, ok := d.GetOk("url"); ok {
@@ -369,6 +367,8 @@ func getObjectWebfilterSearchEngine(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["url"] = t
 		}
+	} else if d.HasChange("url") {
+		obj["url"] = nil
 	}
 
 	if v, ok := d.GetOk("query"); ok {
@@ -378,6 +378,8 @@ func getObjectWebfilterSearchEngine(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["query"] = t
 		}
+	} else if d.HasChange("query") {
+		obj["query"] = nil
 	}
 
 	if v, ok := d.GetOk("safesearch"); ok {
@@ -405,6 +407,8 @@ func getObjectWebfilterSearchEngine(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["safesearch-str"] = t
 		}
+	} else if d.HasChange("safesearch_str") {
+		obj["safesearch-str"] = nil
 	}
 
 	return &obj, nil

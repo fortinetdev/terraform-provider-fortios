@@ -80,6 +80,10 @@ func dataSourceFirewallServiceCustom() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"udplite_portrange": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"sctp_portrange": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -252,6 +256,10 @@ func dataSourceFlattenFirewallServiceCustomTcpPortrange(v interface{}, d *schema
 }
 
 func dataSourceFlattenFirewallServiceCustomUdpPortrange(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallServiceCustomUdplitePortrange(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -457,6 +465,12 @@ func dataSourceRefreshObjectFirewallServiceCustom(d *schema.ResourceData, o map[
 	if err = d.Set("udp_portrange", dataSourceFlattenFirewallServiceCustomUdpPortrange(o["udp-portrange"], d, "udp_portrange")); err != nil {
 		if !fortiAPIPatch(o["udp-portrange"]) {
 			return fmt.Errorf("Error reading udp_portrange: %v", err)
+		}
+	}
+
+	if err = d.Set("udplite_portrange", dataSourceFlattenFirewallServiceCustomUdplitePortrange(o["udplite-portrange"], d, "udplite_portrange")); err != nil {
+		if !fortiAPIPatch(o["udplite-portrange"]) {
+			return fmt.Errorf("Error reading udplite_portrange: %v", err)
 		}
 	}
 

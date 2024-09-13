@@ -45,13 +45,11 @@ func resourceUserSetting() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"auth_ca_cert": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"auth_secure_http": &schema.Schema{
 				Type:     schema.TypeString,
@@ -104,7 +102,6 @@ func resourceUserSetting() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 3600),
 				Optional:     true,
-				Computed:     true,
 			},
 			"auth_invalid_max": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -121,7 +118,6 @@ func resourceUserSetting() *schema.Resource {
 			"auth_lockout_duration": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"per_policy_disclaimer": &schema.Schema{
 				Type:     schema.TypeString,
@@ -136,7 +132,6 @@ func resourceUserSetting() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"type": &schema.Schema{
 							Type:     schema.TypeString,
@@ -160,7 +155,6 @@ func resourceUserSetting() *schema.Resource {
 			"auth_ssl_max_proto_version": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"auth_ssl_sigalgs": &schema.Schema{
 				Type:     schema.TypeString,
@@ -171,7 +165,6 @@ func resourceUserSetting() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
@@ -334,7 +327,7 @@ func flattenUserSettingAuthOnDemand(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenUserSettingAuthTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserSettingAuthTimeoutType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -342,7 +335,7 @@ func flattenUserSettingAuthTimeoutType(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenUserSettingAuthPortalTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserSettingRadiusSesTimeoutAct(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -350,19 +343,19 @@ func flattenUserSettingRadiusSesTimeoutAct(v interface{}, d *schema.ResourceData
 }
 
 func flattenUserSettingAuthBlackoutTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserSettingAuthInvalidMax(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserSettingAuthLockoutThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserSettingAuthLockoutDuration(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserSettingPerPolicyDisclaimer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -418,7 +411,7 @@ func flattenUserSettingAuthPorts(v interface{}, d *schema.ResourceData, pre stri
 }
 
 func flattenUserSettingAuthPortsId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserSettingAuthPortsType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -426,7 +419,7 @@ func flattenUserSettingAuthPortsType(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenUserSettingAuthPortsPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserSettingAuthSslMinProtoVersion(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -690,6 +683,8 @@ func expandUserSettingAuthPorts(d *schema.ResourceData, v interface{}, pre strin
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandUserSettingAuthPortsId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
@@ -765,6 +760,8 @@ func getObjectUserSetting(d *schema.ResourceData, setArgNil bool, sv string) (*m
 				obj["auth-cert"] = t
 			}
 		}
+	} else if d.HasChange("auth_cert") {
+		obj["auth-cert"] = nil
 	}
 
 	if v, ok := d.GetOk("auth_ca_cert"); ok {
@@ -778,6 +775,8 @@ func getObjectUserSetting(d *schema.ResourceData, setArgNil bool, sv string) (*m
 				obj["auth-ca-cert"] = t
 			}
 		}
+	} else if d.HasChange("auth_ca_cert") {
+		obj["auth-ca-cert"] = nil
 	}
 
 	if v, ok := d.GetOk("auth_secure_http"); ok {
@@ -908,6 +907,8 @@ func getObjectUserSetting(d *schema.ResourceData, setArgNil bool, sv string) (*m
 				obj["auth-blackout-time"] = t
 			}
 		}
+	} else if d.HasChange("auth_blackout_time") {
+		obj["auth-blackout-time"] = nil
 	}
 
 	if v, ok := d.GetOk("auth_invalid_max"); ok {
@@ -947,6 +948,8 @@ func getObjectUserSetting(d *schema.ResourceData, setArgNil bool, sv string) (*m
 				obj["auth-lockout-duration"] = t
 			}
 		}
+	} else if d.HasChange("auth_lockout_duration") {
+		obj["auth-lockout-duration"] = nil
 	}
 
 	if v, ok := d.GetOk("per_policy_disclaimer"); ok {
@@ -999,6 +1002,8 @@ func getObjectUserSetting(d *schema.ResourceData, setArgNil bool, sv string) (*m
 				obj["auth-ssl-max-proto-version"] = t
 			}
 		}
+	} else if d.HasChange("auth_ssl_max_proto_version") {
+		obj["auth-ssl-max-proto-version"] = nil
 	}
 
 	if v, ok := d.GetOk("auth_ssl_sigalgs"); ok {
@@ -1025,6 +1030,8 @@ func getObjectUserSetting(d *schema.ResourceData, setArgNil bool, sv string) (*m
 				obj["default-user-password-policy"] = t
 			}
 		}
+	} else if d.HasChange("default_user_password_policy") {
+		obj["default-user-password-policy"] = nil
 	}
 
 	return &obj, nil

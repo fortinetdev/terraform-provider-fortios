@@ -61,7 +61,6 @@ func resourceSystemReplacemsgGroup() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 28),
 							Optional:     true,
-							Computed:     true,
 						},
 						"buffer": &schema.Schema{
 							Type:         schema.TypeString,
@@ -90,7 +89,6 @@ func resourceSystemReplacemsgGroup() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 28),
 							Optional:     true,
-							Computed:     true,
 						},
 						"buffer": &schema.Schema{
 							Type:         schema.TypeString,
@@ -119,7 +117,6 @@ func resourceSystemReplacemsgGroup() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 28),
 							Optional:     true,
-							Computed:     true,
 						},
 						"buffer": &schema.Schema{
 							Type:         schema.TypeString,
@@ -148,7 +145,6 @@ func resourceSystemReplacemsgGroup() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 28),
 							Optional:     true,
-							Computed:     true,
 						},
 						"buffer": &schema.Schema{
 							Type:         schema.TypeString,
@@ -177,7 +173,6 @@ func resourceSystemReplacemsgGroup() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 28),
 							Optional:     true,
-							Computed:     true,
 						},
 						"buffer": &schema.Schema{
 							Type:         schema.TypeString,
@@ -187,12 +182,10 @@ func resourceSystemReplacemsgGroup() *schema.Resource {
 						"header": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"format": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -206,7 +199,6 @@ func resourceSystemReplacemsgGroup() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 28),
 							Optional:     true,
-							Computed:     true,
 						},
 						"buffer": &schema.Schema{
 							Type:         schema.TypeString,
@@ -235,7 +227,6 @@ func resourceSystemReplacemsgGroup() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 28),
 							Optional:     true,
-							Computed:     true,
 						},
 						"buffer": &schema.Schema{
 							Type:         schema.TypeString,
@@ -264,7 +255,6 @@ func resourceSystemReplacemsgGroup() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 28),
 							Optional:     true,
-							Computed:     true,
 						},
 						"buffer": &schema.Schema{
 							Type:         schema.TypeString,
@@ -293,7 +283,6 @@ func resourceSystemReplacemsgGroup() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 28),
 							Optional:     true,
-							Computed:     true,
 						},
 						"buffer": &schema.Schema{
 							Type:         schema.TypeString,
@@ -322,7 +311,6 @@ func resourceSystemReplacemsgGroup() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 28),
 							Optional:     true,
-							Computed:     true,
 						},
 						"buffer": &schema.Schema{
 							Type:         schema.TypeString,
@@ -351,7 +339,6 @@ func resourceSystemReplacemsgGroup() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 28),
 							Optional:     true,
-							Computed:     true,
 						},
 						"buffer": &schema.Schema{
 							Type:         schema.TypeString,
@@ -380,7 +367,6 @@ func resourceSystemReplacemsgGroup() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 28),
 							Optional:     true,
-							Computed:     true,
 						},
 						"buffer": &schema.Schema{
 							Type:         schema.TypeString,
@@ -390,12 +376,10 @@ func resourceSystemReplacemsgGroup() *schema.Resource {
 						"header": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"format": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -409,7 +393,6 @@ func resourceSystemReplacemsgGroup() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 28),
 							Optional:     true,
-							Computed:     true,
 						},
 						"buffer": &schema.Schema{
 							Type:         schema.TypeString,
@@ -419,12 +402,10 @@ func resourceSystemReplacemsgGroup() *schema.Resource {
 						"header": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"format": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -438,7 +419,6 @@ func resourceSystemReplacemsgGroup() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 28),
 							Optional:     true,
-							Computed:     true,
 						},
 						"buffer": &schema.Schema{
 							Type:         schema.TypeString,
@@ -467,7 +447,6 @@ func resourceSystemReplacemsgGroup() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 28),
 							Optional:     true,
-							Computed:     true,
 						},
 						"buffer": &schema.Schema{
 							Type:         schema.TypeString,
@@ -496,7 +475,6 @@ func resourceSystemReplacemsgGroup() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 28),
 							Optional:     true,
-							Computed:     true,
 						},
 						"buffer": &schema.Schema{
 							Type:         schema.TypeString,
@@ -525,7 +503,6 @@ func resourceSystemReplacemsgGroup() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 28),
 							Optional:     true,
-							Computed:     true,
 						},
 						"buffer": &schema.Schema{
 							Type:         schema.TypeString,
@@ -554,7 +531,6 @@ func resourceSystemReplacemsgGroup() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 28),
 							Optional:     true,
-							Computed:     true,
 						},
 						"buffer": &schema.Schema{
 							Type:         schema.TypeString,
@@ -583,7 +559,6 @@ func resourceSystemReplacemsgGroup() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 28),
 							Optional:     true,
-							Computed:     true,
 						},
 						"buffer": &schema.Schema{
 							Type:         schema.TypeString,
@@ -2460,11 +2435,15 @@ func expandSystemReplacemsgGroupMail(d *schema.ResourceData, v interface{}, pre 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["msg-type"], _ = expandSystemReplacemsgGroupMailMsgType(d, i["msg_type"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["msg-type"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["buffer"], _ = expandSystemReplacemsgGroupMailBuffer(d, i["buffer"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["buffer"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
@@ -2518,11 +2497,15 @@ func expandSystemReplacemsgGroupHttp(d *schema.ResourceData, v interface{}, pre 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["msg-type"], _ = expandSystemReplacemsgGroupHttpMsgType(d, i["msg_type"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["msg-type"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["buffer"], _ = expandSystemReplacemsgGroupHttpBuffer(d, i["buffer"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["buffer"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
@@ -2576,11 +2559,15 @@ func expandSystemReplacemsgGroupWebproxy(d *schema.ResourceData, v interface{}, 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["msg-type"], _ = expandSystemReplacemsgGroupWebproxyMsgType(d, i["msg_type"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["msg-type"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["buffer"], _ = expandSystemReplacemsgGroupWebproxyBuffer(d, i["buffer"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["buffer"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
@@ -2634,11 +2621,15 @@ func expandSystemReplacemsgGroupFtp(d *schema.ResourceData, v interface{}, pre s
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["msg-type"], _ = expandSystemReplacemsgGroupFtpMsgType(d, i["msg_type"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["msg-type"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["buffer"], _ = expandSystemReplacemsgGroupFtpBuffer(d, i["buffer"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["buffer"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
@@ -2692,21 +2683,29 @@ func expandSystemReplacemsgGroupNntp(d *schema.ResourceData, v interface{}, pre 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["msg-type"], _ = expandSystemReplacemsgGroupNntpMsgType(d, i["msg_type"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["msg-type"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["buffer"], _ = expandSystemReplacemsgGroupNntpBuffer(d, i["buffer"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["buffer"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["header"], _ = expandSystemReplacemsgGroupNntpHeader(d, i["header"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["header"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["format"], _ = expandSystemReplacemsgGroupNntpFormat(d, i["format"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["format"] = nil
 		}
 
 		result = append(result, tmp)
@@ -2750,11 +2749,15 @@ func expandSystemReplacemsgGroupFortiguardWf(d *schema.ResourceData, v interface
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["msg-type"], _ = expandSystemReplacemsgGroupFortiguardWfMsgType(d, i["msg_type"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["msg-type"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["buffer"], _ = expandSystemReplacemsgGroupFortiguardWfBuffer(d, i["buffer"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["buffer"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
@@ -2808,11 +2811,15 @@ func expandSystemReplacemsgGroupSpam(d *schema.ResourceData, v interface{}, pre 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["msg-type"], _ = expandSystemReplacemsgGroupSpamMsgType(d, i["msg_type"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["msg-type"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["buffer"], _ = expandSystemReplacemsgGroupSpamBuffer(d, i["buffer"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["buffer"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
@@ -2866,11 +2873,15 @@ func expandSystemReplacemsgGroupAlertmail(d *schema.ResourceData, v interface{},
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["msg-type"], _ = expandSystemReplacemsgGroupAlertmailMsgType(d, i["msg_type"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["msg-type"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["buffer"], _ = expandSystemReplacemsgGroupAlertmailBuffer(d, i["buffer"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["buffer"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
@@ -2924,11 +2935,15 @@ func expandSystemReplacemsgGroupAdmin(d *schema.ResourceData, v interface{}, pre
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["msg-type"], _ = expandSystemReplacemsgGroupAdminMsgType(d, i["msg_type"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["msg-type"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["buffer"], _ = expandSystemReplacemsgGroupAdminBuffer(d, i["buffer"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["buffer"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
@@ -2982,11 +2997,15 @@ func expandSystemReplacemsgGroupAuth(d *schema.ResourceData, v interface{}, pre 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["msg-type"], _ = expandSystemReplacemsgGroupAuthMsgType(d, i["msg_type"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["msg-type"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["buffer"], _ = expandSystemReplacemsgGroupAuthBuffer(d, i["buffer"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["buffer"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
@@ -3040,11 +3059,15 @@ func expandSystemReplacemsgGroupSslvpn(d *schema.ResourceData, v interface{}, pr
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["msg-type"], _ = expandSystemReplacemsgGroupSslvpnMsgType(d, i["msg_type"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["msg-type"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["buffer"], _ = expandSystemReplacemsgGroupSslvpnBuffer(d, i["buffer"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["buffer"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
@@ -3098,21 +3121,29 @@ func expandSystemReplacemsgGroupEc(d *schema.ResourceData, v interface{}, pre st
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["msg-type"], _ = expandSystemReplacemsgGroupEcMsgType(d, i["msg_type"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["msg-type"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["buffer"], _ = expandSystemReplacemsgGroupEcBuffer(d, i["buffer"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["buffer"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["header"], _ = expandSystemReplacemsgGroupEcHeader(d, i["header"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["header"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["format"], _ = expandSystemReplacemsgGroupEcFormat(d, i["format"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["format"] = nil
 		}
 
 		result = append(result, tmp)
@@ -3156,21 +3187,29 @@ func expandSystemReplacemsgGroupDeviceDetectionPortal(d *schema.ResourceData, v 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["msg-type"], _ = expandSystemReplacemsgGroupDeviceDetectionPortalMsgType(d, i["msg_type"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["msg-type"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["buffer"], _ = expandSystemReplacemsgGroupDeviceDetectionPortalBuffer(d, i["buffer"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["buffer"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["header"], _ = expandSystemReplacemsgGroupDeviceDetectionPortalHeader(d, i["header"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["header"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["format"], _ = expandSystemReplacemsgGroupDeviceDetectionPortalFormat(d, i["format"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["format"] = nil
 		}
 
 		result = append(result, tmp)
@@ -3214,11 +3253,15 @@ func expandSystemReplacemsgGroupNacQuar(d *schema.ResourceData, v interface{}, p
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["msg-type"], _ = expandSystemReplacemsgGroupNacQuarMsgType(d, i["msg_type"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["msg-type"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["buffer"], _ = expandSystemReplacemsgGroupNacQuarBuffer(d, i["buffer"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["buffer"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
@@ -3272,11 +3315,15 @@ func expandSystemReplacemsgGroupTrafficQuota(d *schema.ResourceData, v interface
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["msg-type"], _ = expandSystemReplacemsgGroupTrafficQuotaMsgType(d, i["msg_type"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["msg-type"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["buffer"], _ = expandSystemReplacemsgGroupTrafficQuotaBuffer(d, i["buffer"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["buffer"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
@@ -3330,11 +3377,15 @@ func expandSystemReplacemsgGroupUtm(d *schema.ResourceData, v interface{}, pre s
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["msg-type"], _ = expandSystemReplacemsgGroupUtmMsgType(d, i["msg_type"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["msg-type"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["buffer"], _ = expandSystemReplacemsgGroupUtmBuffer(d, i["buffer"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["buffer"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
@@ -3388,11 +3439,15 @@ func expandSystemReplacemsgGroupCustomMessage(d *schema.ResourceData, v interfac
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["msg-type"], _ = expandSystemReplacemsgGroupCustomMessageMsgType(d, i["msg_type"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["msg-type"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["buffer"], _ = expandSystemReplacemsgGroupCustomMessageBuffer(d, i["buffer"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["buffer"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
@@ -3446,11 +3501,15 @@ func expandSystemReplacemsgGroupIcap(d *schema.ResourceData, v interface{}, pre 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["msg-type"], _ = expandSystemReplacemsgGroupIcapMsgType(d, i["msg_type"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["msg-type"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["buffer"], _ = expandSystemReplacemsgGroupIcapBuffer(d, i["buffer"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["buffer"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
@@ -3504,11 +3563,15 @@ func expandSystemReplacemsgGroupAutomation(d *schema.ResourceData, v interface{}
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["msg-type"], _ = expandSystemReplacemsgGroupAutomationMsgType(d, i["msg_type"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["msg-type"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["buffer"], _ = expandSystemReplacemsgGroupAutomationBuffer(d, i["buffer"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["buffer"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
@@ -3564,6 +3627,8 @@ func getObjectSystemReplacemsgGroup(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("group_type"); ok {

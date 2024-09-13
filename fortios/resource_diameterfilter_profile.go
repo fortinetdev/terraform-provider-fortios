@@ -96,7 +96,6 @@ func resourceDiameterFilterProfile() *schema.Resource {
 			"command_code_range": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 		},
 	}
@@ -452,6 +451,8 @@ func getObjectDiameterFilterProfile(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("monitor_all_messages"); ok {
@@ -542,6 +543,8 @@ func getObjectDiameterFilterProfile(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["command-code-range"] = t
 		}
+	} else if d.HasChange("command_code_range") {
+		obj["command-code-range"] = nil
 	}
 
 	return &obj, nil

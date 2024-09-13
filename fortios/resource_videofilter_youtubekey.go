@@ -46,7 +46,6 @@ func resourceVideofilterYoutubeKey() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -204,7 +203,7 @@ func resourceVideofilterYoutubeKeyRead(d *schema.ResourceData, m interface{}) er
 }
 
 func flattenVideofilterYoutubeKeyId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVideofilterYoutubeKeyKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -262,6 +261,8 @@ func getObjectVideofilterYoutubeKey(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["key"] = t
 		}
+	} else if d.HasChange("key") {
+		obj["key"] = nil
 	}
 
 	return &obj, nil

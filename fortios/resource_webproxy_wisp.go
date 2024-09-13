@@ -245,15 +245,15 @@ func flattenWebProxyWispServerIp(v interface{}, d *schema.ResourceData, pre stri
 }
 
 func flattenWebProxyWispServerPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWebProxyWispMaxConnections(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWebProxyWispTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectWebProxyWisp(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -357,6 +357,8 @@ func getObjectWebProxyWisp(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("outgoing_ip"); ok {

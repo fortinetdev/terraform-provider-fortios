@@ -71,7 +71,6 @@ func resourceVirtualPatchProfile() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -86,7 +85,6 @@ func resourceVirtualPatchProfile() *schema.Resource {
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 								},
 							},
@@ -346,7 +344,7 @@ func flattenVirtualPatchProfileExemption(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenVirtualPatchProfileExemptionId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVirtualPatchProfileExemptionStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -392,7 +390,7 @@ func flattenVirtualPatchProfileExemptionRule(v interface{}, d *schema.ResourceDa
 }
 
 func flattenVirtualPatchProfileExemptionRuleId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenVirtualPatchProfileExemptionDevice(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -538,6 +536,8 @@ func expandVirtualPatchProfileExemption(d *schema.ResourceData, v interface{}, p
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandVirtualPatchProfileExemptionId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
@@ -546,16 +546,16 @@ func expandVirtualPatchProfileExemption(d *schema.ResourceData, v interface{}, p
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rule"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["rule"], _ = expandVirtualPatchProfileExemptionRule(d, i["rule"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["rule"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "device"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["device"], _ = expandVirtualPatchProfileExemptionDevice(d, i["device"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["device"] = make([]string, 0)
 		}
 
@@ -650,6 +650,8 @@ func getObjectVirtualPatchProfile(d *schema.ResourceData, sv string) (*map[strin
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("severity"); ok {

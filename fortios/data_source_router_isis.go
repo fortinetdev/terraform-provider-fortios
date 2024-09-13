@@ -752,24 +752,6 @@ func dataSourceFlattenRouterIsisIsisInterface(v interface{}, d *schema.ResourceD
 			tmp["wide_metric_l2"] = dataSourceFlattenRouterIsisIsisInterfaceWideMetricL2(i["wide-metric-l2"], d, pre_append)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_password_l1"
-		if _, ok := i["auth-password-l1"]; ok {
-			tmp["auth_password_l1"] = dataSourceFlattenRouterIsisIsisInterfaceAuthPasswordL1(i["auth-password-l1"], d, pre_append)
-			c := d.Get(pre_append).(string)
-			if c != "" {
-				tmp["auth_password_l1"] = c
-			}
-		}
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_password_l2"
-		if _, ok := i["auth-password-l2"]; ok {
-			tmp["auth_password_l2"] = dataSourceFlattenRouterIsisIsisInterfaceAuthPasswordL2(i["auth-password-l2"], d, pre_append)
-			c := d.Get(pre_append).(string)
-			if c != "" {
-				tmp["auth_password_l2"] = c
-			}
-		}
-
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_keychain_l1"
 		if _, ok := i["auth-keychain-l1"]; ok {
 			tmp["auth_keychain_l1"] = dataSourceFlattenRouterIsisIsisInterfaceAuthKeychainL1(i["auth-keychain-l1"], d, pre_append)

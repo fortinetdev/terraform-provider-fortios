@@ -40,7 +40,6 @@ func resourceWafSignature() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 511),
 				Optional:     true,
-				Computed:     true,
 			},
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
@@ -208,7 +207,7 @@ func flattenWafSignatureDesc(v interface{}, d *schema.ResourceData, pre string, 
 }
 
 func flattenWafSignatureId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectWafSignature(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -253,6 +252,8 @@ func getObjectWafSignature(d *schema.ResourceData, sv string) (*map[string]inter
 		} else if t != nil {
 			obj["desc"] = t
 		}
+	} else if d.HasChange("desc") {
+		obj["desc"] = nil
 	}
 
 	if v, ok := d.GetOkExists("fosid"); ok {

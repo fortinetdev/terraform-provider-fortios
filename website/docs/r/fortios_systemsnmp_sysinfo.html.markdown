@@ -34,6 +34,7 @@ The following arguments are supported:
 * `trap_low_memory_threshold` - Memory usage when trap is sent.
 * `trap_log_full_threshold` - Log disk usage when trap is sent.
 * `append_index` - Enable/disable allowance of appending VDOM or interface index in some RFC tables. Valid values: `enable`, `disable`.
+* `non_mgmt_vdom_query` - Enable/disable allowance of SNMPv3 query from non-management vdoms. Valid values: `enable`, `disable`.
 * `trap_free_memory_threshold` - Free memory usage when trap is sent.
 * `trap_freeable_memory_threshold` - Freeable memory usage when trap is sent.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.

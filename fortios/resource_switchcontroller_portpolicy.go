@@ -47,37 +47,31 @@ func resourceSwitchControllerPortPolicy() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"fortilink": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"lldp_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"qos_policy": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"n802_1x": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 31),
 				Optional:     true,
-				Computed:     true,
 			},
 			"vlan_policy": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"bounce_port_link": &schema.Schema{
 				Type:     schema.TypeString,
@@ -382,6 +376,8 @@ func getObjectSwitchControllerPortPolicy(d *schema.ResourceData, sv string) (*ma
 		} else if t != nil {
 			obj["description"] = t
 		}
+	} else if d.HasChange("description") {
+		obj["description"] = nil
 	}
 
 	if v, ok := d.GetOk("fortilink"); ok {
@@ -391,6 +387,8 @@ func getObjectSwitchControllerPortPolicy(d *schema.ResourceData, sv string) (*ma
 		} else if t != nil {
 			obj["fortilink"] = t
 		}
+	} else if d.HasChange("fortilink") {
+		obj["fortilink"] = nil
 	}
 
 	if v, ok := d.GetOk("lldp_profile"); ok {
@@ -400,6 +398,8 @@ func getObjectSwitchControllerPortPolicy(d *schema.ResourceData, sv string) (*ma
 		} else if t != nil {
 			obj["lldp-profile"] = t
 		}
+	} else if d.HasChange("lldp_profile") {
+		obj["lldp-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("qos_policy"); ok {
@@ -409,6 +409,8 @@ func getObjectSwitchControllerPortPolicy(d *schema.ResourceData, sv string) (*ma
 		} else if t != nil {
 			obj["qos-policy"] = t
 		}
+	} else if d.HasChange("qos_policy") {
+		obj["qos-policy"] = nil
 	}
 
 	if v, ok := d.GetOk("n802_1x"); ok {
@@ -418,6 +420,8 @@ func getObjectSwitchControllerPortPolicy(d *schema.ResourceData, sv string) (*ma
 		} else if t != nil {
 			obj["802-1x"] = t
 		}
+	} else if d.HasChange("n802_1x") {
+		obj["802-1x"] = nil
 	}
 
 	if v, ok := d.GetOk("vlan_policy"); ok {
@@ -427,6 +431,8 @@ func getObjectSwitchControllerPortPolicy(d *schema.ResourceData, sv string) (*ma
 		} else if t != nil {
 			obj["vlan-policy"] = t
 		}
+	} else if d.HasChange("vlan_policy") {
+		obj["vlan-policy"] = nil
 	}
 
 	if v, ok := d.GetOk("bounce_port_link"); ok {

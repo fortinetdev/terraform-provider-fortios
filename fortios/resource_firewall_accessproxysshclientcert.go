@@ -40,7 +40,6 @@ func resourceFirewallAccessProxySshClientCert() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
-				Computed:     true,
 			},
 			"source_address": &schema.Schema{
 				Type:     schema.TypeString,
@@ -81,7 +80,6 @@ func resourceFirewallAccessProxySshClientCert() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 127),
 							Optional:     true,
-							Computed:     true,
 						},
 						"critical": &schema.Schema{
 							Type:     schema.TypeString,
@@ -97,7 +95,6 @@ func resourceFirewallAccessProxySshClientCert() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 127),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -106,7 +103,6 @@ func resourceFirewallAccessProxySshClientCert() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
-				Computed:     true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
@@ -501,6 +497,8 @@ func expandFirewallAccessProxySshClientCertCertExtension(d *schema.ResourceData,
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandFirewallAccessProxySshClientCertCertExtensionName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "critical"
@@ -516,6 +514,8 @@ func expandFirewallAccessProxySshClientCertCertExtension(d *schema.ResourceData,
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "data"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["data"], _ = expandFirewallAccessProxySshClientCertCertExtensionData(d, i["data"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["data"] = nil
 		}
 
 		result = append(result, tmp)
@@ -556,6 +556,8 @@ func getObjectFirewallAccessProxySshClientCert(d *schema.ResourceData, sv string
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("source_address"); ok {
@@ -628,6 +630,8 @@ func getObjectFirewallAccessProxySshClientCert(d *schema.ResourceData, sv string
 		} else if t != nil {
 			obj["auth-ca"] = t
 		}
+	} else if d.HasChange("auth_ca") {
+		obj["auth-ca"] = nil
 	}
 
 	return &obj, nil

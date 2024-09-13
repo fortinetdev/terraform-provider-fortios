@@ -45,25 +45,21 @@ func resourceSwitchControllerSnmpSysinfo() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 24),
 				Optional:     true,
-				Computed:     true,
 			},
 			"description": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"contact_info": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"location": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -292,6 +288,8 @@ func getObjectSwitchControllerSnmpSysinfo(d *schema.ResourceData, setArgNil bool
 				obj["engine-id"] = t
 			}
 		}
+	} else if d.HasChange("engine_id") {
+		obj["engine-id"] = nil
 	}
 
 	if v, ok := d.GetOk("description"); ok {
@@ -305,6 +303,8 @@ func getObjectSwitchControllerSnmpSysinfo(d *schema.ResourceData, setArgNil bool
 				obj["description"] = t
 			}
 		}
+	} else if d.HasChange("description") {
+		obj["description"] = nil
 	}
 
 	if v, ok := d.GetOk("contact_info"); ok {
@@ -318,6 +318,8 @@ func getObjectSwitchControllerSnmpSysinfo(d *schema.ResourceData, setArgNil bool
 				obj["contact-info"] = t
 			}
 		}
+	} else if d.HasChange("contact_info") {
+		obj["contact-info"] = nil
 	}
 
 	if v, ok := d.GetOk("location"); ok {
@@ -331,6 +333,8 @@ func getObjectSwitchControllerSnmpSysinfo(d *schema.ResourceData, setArgNil bool
 				obj["location"] = t
 			}
 		}
+	} else if d.HasChange("location") {
+		obj["location"] = nil
 	}
 
 	return &obj, nil

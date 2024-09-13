@@ -98,6 +98,7 @@ The following arguments are supported:
 * `default_information_route_map` - Default information route map.
 * `default_metric` - Default metric of redistribute routes.
 * `distance` - Distance of the route.
+* `lsa_refresh_interval` - The minimal OSPF LSA update time interval
 * `rfc1583_compatible` - Enable/disable RFC1583 compatibility. Valid values: `enable`, `disable`.
 * `router_id` - (Required) Router ID.
 * `spf_timers` - SPF calculation frequency.
@@ -178,6 +179,7 @@ The `ospf_interface` block supports:
 * `comments` - Comment.
 * `interface` - Configuration interface name.
 * `ip` - IP address.
+* `linkdown_fast_failover` - Enable/disable fast link failover. Valid values: `enable`, `disable`.
 * `authentication` - Authentication type.
 * `authentication_key` - Authentication key.
 * `keychain` - Message-digest key-chain name.

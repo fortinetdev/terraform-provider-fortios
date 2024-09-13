@@ -51,7 +51,6 @@ func resourceSwitchControllerAutoConfigCustom() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 16),
 							Optional:     true,
-							Computed:     true,
 						},
 						"policy": &schema.Schema{
 							Type:         schema.TypeString,
@@ -343,6 +342,8 @@ func expandSwitchControllerAutoConfigCustomSwitchBinding(d *schema.ResourceData,
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "switch_id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["switch-id"], _ = expandSwitchControllerAutoConfigCustomSwitchBindingSwitchId(d, i["switch_id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["switch-id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "policy"

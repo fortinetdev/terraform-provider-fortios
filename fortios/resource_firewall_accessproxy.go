@@ -40,13 +40,11 @@ func resourceFirewallAccessProxy() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
-				Computed:     true,
 			},
 			"vip": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
-				Computed:     true,
 			},
 			"client_cert": &schema.Schema{
 				Type:     schema.TypeString,
@@ -67,7 +65,6 @@ func resourceFirewallAccessProxy() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
-				Computed:     true,
 			},
 			"empty_cert_action": &schema.Schema{
 				Type:     schema.TypeString,
@@ -102,18 +99,15 @@ func resourceFirewallAccessProxy() *schema.Resource {
 			"svr_pool_server_max_request": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"svr_pool_server_max_concurrent_request": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"decrypted_traffic_mirror": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"api_gateway": &schema.Schema{
 				Type:     schema.TypeList,
@@ -123,7 +117,6 @@ func resourceFirewallAccessProxy() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"url_map": &schema.Schema{
 							Type:         schema.TypeString,
@@ -145,7 +138,6 @@ func resourceFirewallAccessProxy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 						"url_map_type": &schema.Schema{
 							Type:     schema.TypeString,
@@ -226,7 +218,6 @@ func resourceFirewallAccessProxy() *schema.Resource {
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 									"addr_type": &schema.Schema{
 										Type:     schema.TypeString,
@@ -237,7 +228,6 @@ func resourceFirewallAccessProxy() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 									"ip": &schema.Schema{
 										Type:     schema.TypeString,
@@ -248,7 +238,6 @@ func resourceFirewallAccessProxy() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 255),
 										Optional:     true,
-										Computed:     true,
 									},
 									"port": &schema.Schema{
 										Type:         schema.TypeInt,
@@ -259,7 +248,6 @@ func resourceFirewallAccessProxy() *schema.Resource {
 									"mappedport": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
 									},
 									"status": &schema.Schema{
 										Type:     schema.TypeString,
@@ -291,7 +279,6 @@ func resourceFirewallAccessProxy() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 63),
 										Optional:     true,
-										Computed:     true,
 									},
 									"health_check": &schema.Schema{
 										Type:     schema.TypeString,
@@ -317,7 +304,6 @@ func resourceFirewallAccessProxy() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 									"ssh_host_key_validation": &schema.Schema{
 										Type:     schema.TypeString,
@@ -333,7 +319,6 @@ func resourceFirewallAccessProxy() *schema.Resource {
 													Type:         schema.TypeString,
 													ValidateFunc: validation.StringLenBetween(0, 79),
 													Optional:     true,
-													Computed:     true,
 												},
 											},
 										},
@@ -350,7 +335,6 @@ func resourceFirewallAccessProxy() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -369,18 +353,15 @@ func resourceFirewallAccessProxy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"http_cookie_path": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"http_cookie_generation": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"http_cookie_age": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -402,7 +383,6 @@ func resourceFirewallAccessProxy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"saml_redirect": &schema.Schema{
 							Type:     schema.TypeString,
@@ -427,12 +407,10 @@ func resourceFirewallAccessProxy() *schema.Resource {
 									"priority": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 									"cipher": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
 									},
 									"versions": &schema.Schema{
 										Type:     schema.TypeString,
@@ -461,7 +439,6 @@ func resourceFirewallAccessProxy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -474,7 +451,6 @@ func resourceFirewallAccessProxy() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"url_map": &schema.Schema{
 							Type:         schema.TypeString,
@@ -496,7 +472,6 @@ func resourceFirewallAccessProxy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 						"url_map_type": &schema.Schema{
 							Type:     schema.TypeString,
@@ -577,7 +552,6 @@ func resourceFirewallAccessProxy() *schema.Resource {
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 									"addr_type": &schema.Schema{
 										Type:     schema.TypeString,
@@ -588,7 +562,6 @@ func resourceFirewallAccessProxy() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 									"ip": &schema.Schema{
 										Type:     schema.TypeString,
@@ -599,7 +572,6 @@ func resourceFirewallAccessProxy() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 255),
 										Optional:     true,
-										Computed:     true,
 									},
 									"port": &schema.Schema{
 										Type:         schema.TypeInt,
@@ -610,7 +582,6 @@ func resourceFirewallAccessProxy() *schema.Resource {
 									"mappedport": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
 									},
 									"status": &schema.Schema{
 										Type:     schema.TypeString,
@@ -642,7 +613,6 @@ func resourceFirewallAccessProxy() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 63),
 										Optional:     true,
-										Computed:     true,
 									},
 									"health_check": &schema.Schema{
 										Type:     schema.TypeString,
@@ -668,7 +638,6 @@ func resourceFirewallAccessProxy() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 									"ssh_host_key_validation": &schema.Schema{
 										Type:     schema.TypeString,
@@ -684,7 +653,6 @@ func resourceFirewallAccessProxy() *schema.Resource {
 													Type:         schema.TypeString,
 													ValidateFunc: validation.StringLenBetween(0, 79),
 													Optional:     true,
-													Computed:     true,
 												},
 											},
 										},
@@ -701,7 +669,6 @@ func resourceFirewallAccessProxy() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -720,18 +687,15 @@ func resourceFirewallAccessProxy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"http_cookie_path": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"http_cookie_generation": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"http_cookie_age": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -753,7 +717,6 @@ func resourceFirewallAccessProxy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"saml_redirect": &schema.Schema{
 							Type:     schema.TypeString,
@@ -778,12 +741,10 @@ func resourceFirewallAccessProxy() *schema.Resource {
 									"priority": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 									"cipher": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
 									},
 									"versions": &schema.Schema{
 										Type:     schema.TypeString,
@@ -812,7 +773,6 @@ func resourceFirewallAccessProxy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -1027,15 +987,15 @@ func flattenFirewallAccessProxySvrPoolMultiplex(v interface{}, d *schema.Resourc
 }
 
 func flattenFirewallAccessProxySvrPoolTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallAccessProxySvrPoolServerMaxRequest(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallAccessProxySvrPoolServerMaxConcurrentRequest(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallAccessProxyDecryptedTrafficMirror(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1216,7 +1176,7 @@ func flattenFirewallAccessProxyApiGateway(v interface{}, d *schema.ResourceData,
 }
 
 func flattenFirewallAccessProxyApiGatewayId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallAccessProxyApiGatewayUrlMap(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1301,27 +1261,27 @@ func flattenFirewallAccessProxyApiGatewayQuic(v interface{}, d *schema.ResourceD
 }
 
 func flattenFirewallAccessProxyApiGatewayQuicMaxIdleTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallAccessProxyApiGatewayQuicMaxUdpPayloadSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallAccessProxyApiGatewayQuicActiveConnectionIdLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallAccessProxyApiGatewayQuicAckDelayExponent(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallAccessProxyApiGatewayQuicMaxAckDelay(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallAccessProxyApiGatewayQuicMaxDatagramFrameSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallAccessProxyApiGatewayQuicActiveMigration(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1466,7 +1426,7 @@ func flattenFirewallAccessProxyApiGatewayRealservers(v interface{}, d *schema.Re
 }
 
 func flattenFirewallAccessProxyApiGatewayRealserversId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallAccessProxyApiGatewayRealserversAddrType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1486,7 +1446,7 @@ func flattenFirewallAccessProxyApiGatewayRealserversDomain(v interface{}, d *sch
 }
 
 func flattenFirewallAccessProxyApiGatewayRealserversPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallAccessProxyApiGatewayRealserversMappedport(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1510,7 +1470,7 @@ func flattenFirewallAccessProxyApiGatewayRealserversTunnelEncryption(v interface
 }
 
 func flattenFirewallAccessProxyApiGatewayRealserversWeight(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallAccessProxyApiGatewayRealserversHttpHost(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1642,11 +1602,11 @@ func flattenFirewallAccessProxyApiGatewayHttpCookiePath(v interface{}, d *schema
 }
 
 func flattenFirewallAccessProxyApiGatewayHttpCookieGeneration(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallAccessProxyApiGatewayHttpCookieAge(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallAccessProxyApiGatewayHttpCookieShare(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1722,7 +1682,7 @@ func flattenFirewallAccessProxyApiGatewaySslCipherSuites(v interface{}, d *schem
 }
 
 func flattenFirewallAccessProxyApiGatewaySslCipherSuitesPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallAccessProxyApiGatewaySslCipherSuitesCipher(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1923,7 +1883,7 @@ func flattenFirewallAccessProxyApiGateway6(v interface{}, d *schema.ResourceData
 }
 
 func flattenFirewallAccessProxyApiGateway6Id(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallAccessProxyApiGateway6UrlMap(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2008,27 +1968,27 @@ func flattenFirewallAccessProxyApiGateway6Quic(v interface{}, d *schema.Resource
 }
 
 func flattenFirewallAccessProxyApiGateway6QuicMaxIdleTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallAccessProxyApiGateway6QuicMaxUdpPayloadSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallAccessProxyApiGateway6QuicActiveConnectionIdLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallAccessProxyApiGateway6QuicAckDelayExponent(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallAccessProxyApiGateway6QuicMaxAckDelay(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallAccessProxyApiGateway6QuicMaxDatagramFrameSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallAccessProxyApiGateway6QuicActiveMigration(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2173,7 +2133,7 @@ func flattenFirewallAccessProxyApiGateway6Realservers(v interface{}, d *schema.R
 }
 
 func flattenFirewallAccessProxyApiGateway6RealserversId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallAccessProxyApiGateway6RealserversAddrType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2193,7 +2153,7 @@ func flattenFirewallAccessProxyApiGateway6RealserversDomain(v interface{}, d *sc
 }
 
 func flattenFirewallAccessProxyApiGateway6RealserversPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallAccessProxyApiGateway6RealserversMappedport(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2217,7 +2177,7 @@ func flattenFirewallAccessProxyApiGateway6RealserversTunnelEncryption(v interfac
 }
 
 func flattenFirewallAccessProxyApiGateway6RealserversWeight(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallAccessProxyApiGateway6RealserversHttpHost(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2349,11 +2309,11 @@ func flattenFirewallAccessProxyApiGateway6HttpCookiePath(v interface{}, d *schem
 }
 
 func flattenFirewallAccessProxyApiGateway6HttpCookieGeneration(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallAccessProxyApiGateway6HttpCookieAge(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallAccessProxyApiGateway6HttpCookieShare(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2429,7 +2389,7 @@ func flattenFirewallAccessProxyApiGateway6SslCipherSuites(v interface{}, d *sche
 }
 
 func flattenFirewallAccessProxyApiGateway6SslCipherSuitesPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallAccessProxyApiGateway6SslCipherSuitesCipher(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2673,6 +2633,8 @@ func expandFirewallAccessProxyApiGateway(d *schema.ResourceData, v interface{}, 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandFirewallAccessProxyApiGatewayId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "url_map"
@@ -2693,6 +2655,8 @@ func expandFirewallAccessProxyApiGateway(d *schema.ResourceData, v interface{}, 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "virtual_host"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["virtual-host"], _ = expandFirewallAccessProxyApiGatewayVirtualHost(d, i["virtual_host"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["virtual-host"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "url_map_type"
@@ -2713,21 +2677,21 @@ func expandFirewallAccessProxyApiGateway(d *schema.ResourceData, v interface{}, 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "quic"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["quic"], _ = expandFirewallAccessProxyApiGatewayQuic(d, i["quic"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["quic"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "realservers"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["realservers"], _ = expandFirewallAccessProxyApiGatewayRealservers(d, i["realservers"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["realservers"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "application"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["application"], _ = expandFirewallAccessProxyApiGatewayApplication(d, i["application"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["application"] = make([]string, 0)
 		}
 
@@ -2744,16 +2708,22 @@ func expandFirewallAccessProxyApiGateway(d *schema.ResourceData, v interface{}, 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_cookie_domain"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["http-cookie-domain"], _ = expandFirewallAccessProxyApiGatewayHttpCookieDomain(d, i["http_cookie_domain"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["http-cookie-domain"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_cookie_path"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["http-cookie-path"], _ = expandFirewallAccessProxyApiGatewayHttpCookiePath(d, i["http_cookie_path"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["http-cookie-path"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_cookie_generation"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["http-cookie-generation"], _ = expandFirewallAccessProxyApiGatewayHttpCookieGeneration(d, i["http_cookie_generation"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["http-cookie-generation"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_cookie_age"
@@ -2774,6 +2744,8 @@ func expandFirewallAccessProxyApiGateway(d *schema.ResourceData, v interface{}, 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "saml_server"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["saml-server"], _ = expandFirewallAccessProxyApiGatewaySamlServer(d, i["saml_server"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["saml-server"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "saml_redirect"
@@ -2792,9 +2764,9 @@ func expandFirewallAccessProxyApiGateway(d *schema.ResourceData, v interface{}, 
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ssl_cipher_suites"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["ssl-cipher-suites"], _ = expandFirewallAccessProxyApiGatewaySslCipherSuites(d, i["ssl_cipher_suites"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["ssl-cipher-suites"] = make([]string, 0)
 		}
 
@@ -2816,6 +2788,8 @@ func expandFirewallAccessProxyApiGateway(d *schema.ResourceData, v interface{}, 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ssl_vpn_web_portal"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["ssl-vpn-web-portal"], _ = expandFirewallAccessProxyApiGatewaySslVpnWebPortal(d, i["ssl_vpn_web_portal"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["ssl-vpn-web-portal"] = nil
 		}
 
 		result = append(result, tmp)
@@ -2953,6 +2927,8 @@ func expandFirewallAccessProxyApiGatewayRealservers(d *schema.ResourceData, v in
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandFirewallAccessProxyApiGatewayRealserversId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr_type"
@@ -2963,6 +2939,8 @@ func expandFirewallAccessProxyApiGatewayRealservers(d *schema.ResourceData, v in
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "address"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["address"], _ = expandFirewallAccessProxyApiGatewayRealserversAddress(d, i["address"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["address"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
@@ -2973,6 +2951,8 @@ func expandFirewallAccessProxyApiGatewayRealservers(d *schema.ResourceData, v in
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "domain"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["domain"], _ = expandFirewallAccessProxyApiGatewayRealserversDomain(d, i["domain"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["domain"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
@@ -2983,6 +2963,8 @@ func expandFirewallAccessProxyApiGatewayRealservers(d *schema.ResourceData, v in
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mappedport"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["mappedport"], _ = expandFirewallAccessProxyApiGatewayRealserversMappedport(d, i["mappedport"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["mappedport"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
@@ -3013,6 +2995,8 @@ func expandFirewallAccessProxyApiGatewayRealservers(d *schema.ResourceData, v in
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_host"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["http-host"], _ = expandFirewallAccessProxyApiGatewayRealserversHttpHost(d, i["http_host"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["http-host"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "health_check"
@@ -3038,6 +3022,8 @@ func expandFirewallAccessProxyApiGatewayRealservers(d *schema.ResourceData, v in
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ssh_client_cert"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["ssh-client-cert"], _ = expandFirewallAccessProxyApiGatewayRealserversSshClientCert(d, i["ssh_client_cert"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["ssh-client-cert"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ssh_host_key_validation"
@@ -3046,9 +3032,9 @@ func expandFirewallAccessProxyApiGatewayRealservers(d *schema.ResourceData, v in
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ssh_host_key"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["ssh-host-key"], _ = expandFirewallAccessProxyApiGatewayRealserversSshHostKey(d, i["ssh_host_key"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["ssh-host-key"] = make([]string, 0)
 		}
 
@@ -3257,11 +3243,15 @@ func expandFirewallAccessProxyApiGatewaySslCipherSuites(d *schema.ResourceData, 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["priority"], _ = expandFirewallAccessProxyApiGatewaySslCipherSuitesPriority(d, i["priority"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["priority"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "cipher"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["cipher"], _ = expandFirewallAccessProxyApiGatewaySslCipherSuitesCipher(d, i["cipher"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["cipher"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "versions"
@@ -3322,6 +3312,8 @@ func expandFirewallAccessProxyApiGateway6(d *schema.ResourceData, v interface{},
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandFirewallAccessProxyApiGateway6Id(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "url_map"
@@ -3342,6 +3334,8 @@ func expandFirewallAccessProxyApiGateway6(d *schema.ResourceData, v interface{},
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "virtual_host"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["virtual-host"], _ = expandFirewallAccessProxyApiGateway6VirtualHost(d, i["virtual_host"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["virtual-host"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "url_map_type"
@@ -3362,21 +3356,21 @@ func expandFirewallAccessProxyApiGateway6(d *schema.ResourceData, v interface{},
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "quic"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["quic"], _ = expandFirewallAccessProxyApiGateway6Quic(d, i["quic"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["quic"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "realservers"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["realservers"], _ = expandFirewallAccessProxyApiGateway6Realservers(d, i["realservers"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["realservers"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "application"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["application"], _ = expandFirewallAccessProxyApiGateway6Application(d, i["application"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["application"] = make([]string, 0)
 		}
 
@@ -3393,16 +3387,22 @@ func expandFirewallAccessProxyApiGateway6(d *schema.ResourceData, v interface{},
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_cookie_domain"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["http-cookie-domain"], _ = expandFirewallAccessProxyApiGateway6HttpCookieDomain(d, i["http_cookie_domain"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["http-cookie-domain"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_cookie_path"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["http-cookie-path"], _ = expandFirewallAccessProxyApiGateway6HttpCookiePath(d, i["http_cookie_path"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["http-cookie-path"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_cookie_generation"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["http-cookie-generation"], _ = expandFirewallAccessProxyApiGateway6HttpCookieGeneration(d, i["http_cookie_generation"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["http-cookie-generation"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_cookie_age"
@@ -3423,6 +3423,8 @@ func expandFirewallAccessProxyApiGateway6(d *schema.ResourceData, v interface{},
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "saml_server"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["saml-server"], _ = expandFirewallAccessProxyApiGateway6SamlServer(d, i["saml_server"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["saml-server"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "saml_redirect"
@@ -3441,9 +3443,9 @@ func expandFirewallAccessProxyApiGateway6(d *schema.ResourceData, v interface{},
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ssl_cipher_suites"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["ssl-cipher-suites"], _ = expandFirewallAccessProxyApiGateway6SslCipherSuites(d, i["ssl_cipher_suites"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["ssl-cipher-suites"] = make([]string, 0)
 		}
 
@@ -3465,6 +3467,8 @@ func expandFirewallAccessProxyApiGateway6(d *schema.ResourceData, v interface{},
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ssl_vpn_web_portal"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["ssl-vpn-web-portal"], _ = expandFirewallAccessProxyApiGateway6SslVpnWebPortal(d, i["ssl_vpn_web_portal"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["ssl-vpn-web-portal"] = nil
 		}
 
 		result = append(result, tmp)
@@ -3602,6 +3606,8 @@ func expandFirewallAccessProxyApiGateway6Realservers(d *schema.ResourceData, v i
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandFirewallAccessProxyApiGateway6RealserversId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr_type"
@@ -3612,6 +3618,8 @@ func expandFirewallAccessProxyApiGateway6Realservers(d *schema.ResourceData, v i
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "address"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["address"], _ = expandFirewallAccessProxyApiGateway6RealserversAddress(d, i["address"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["address"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
@@ -3622,6 +3630,8 @@ func expandFirewallAccessProxyApiGateway6Realservers(d *schema.ResourceData, v i
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "domain"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["domain"], _ = expandFirewallAccessProxyApiGateway6RealserversDomain(d, i["domain"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["domain"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
@@ -3632,6 +3642,8 @@ func expandFirewallAccessProxyApiGateway6Realservers(d *schema.ResourceData, v i
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mappedport"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["mappedport"], _ = expandFirewallAccessProxyApiGateway6RealserversMappedport(d, i["mappedport"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["mappedport"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
@@ -3662,6 +3674,8 @@ func expandFirewallAccessProxyApiGateway6Realservers(d *schema.ResourceData, v i
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_host"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["http-host"], _ = expandFirewallAccessProxyApiGateway6RealserversHttpHost(d, i["http_host"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["http-host"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "health_check"
@@ -3687,6 +3701,8 @@ func expandFirewallAccessProxyApiGateway6Realservers(d *schema.ResourceData, v i
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ssh_client_cert"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["ssh-client-cert"], _ = expandFirewallAccessProxyApiGateway6RealserversSshClientCert(d, i["ssh_client_cert"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["ssh-client-cert"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ssh_host_key_validation"
@@ -3695,9 +3711,9 @@ func expandFirewallAccessProxyApiGateway6Realservers(d *schema.ResourceData, v i
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ssh_host_key"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["ssh-host-key"], _ = expandFirewallAccessProxyApiGateway6RealserversSshHostKey(d, i["ssh_host_key"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["ssh-host-key"] = make([]string, 0)
 		}
 
@@ -3906,11 +3922,15 @@ func expandFirewallAccessProxyApiGateway6SslCipherSuites(d *schema.ResourceData,
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["priority"], _ = expandFirewallAccessProxyApiGateway6SslCipherSuitesPriority(d, i["priority"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["priority"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "cipher"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["cipher"], _ = expandFirewallAccessProxyApiGateway6SslCipherSuitesCipher(d, i["cipher"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["cipher"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "versions"
@@ -3964,6 +3984,8 @@ func getObjectFirewallAccessProxy(d *schema.ResourceData, sv string) (*map[strin
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("vip"); ok {
@@ -3973,6 +3995,8 @@ func getObjectFirewallAccessProxy(d *schema.ResourceData, sv string) (*map[strin
 		} else if t != nil {
 			obj["vip"] = t
 		}
+	} else if d.HasChange("vip") {
+		obj["vip"] = nil
 	}
 
 	if v, ok := d.GetOk("client_cert"); ok {
@@ -4009,6 +4033,8 @@ func getObjectFirewallAccessProxy(d *schema.ResourceData, sv string) (*map[strin
 		} else if t != nil {
 			obj["auth-virtual-host"] = t
 		}
+	} else if d.HasChange("auth_virtual_host") {
+		obj["auth-virtual-host"] = nil
 	}
 
 	if v, ok := d.GetOk("empty_cert_action"); ok {
@@ -4072,6 +4098,8 @@ func getObjectFirewallAccessProxy(d *schema.ResourceData, sv string) (*map[strin
 		} else if t != nil {
 			obj["svr-pool-server-max-request"] = t
 		}
+	} else if d.HasChange("svr_pool_server_max_request") {
+		obj["svr-pool-server-max-request"] = nil
 	}
 
 	if v, ok := d.GetOkExists("svr_pool_server_max_concurrent_request"); ok {
@@ -4081,6 +4109,8 @@ func getObjectFirewallAccessProxy(d *schema.ResourceData, sv string) (*map[strin
 		} else if t != nil {
 			obj["svr-pool-server-max-concurrent-request"] = t
 		}
+	} else if d.HasChange("svr_pool_server_max_concurrent_request") {
+		obj["svr-pool-server-max-concurrent-request"] = nil
 	}
 
 	if v, ok := d.GetOk("decrypted_traffic_mirror"); ok {
@@ -4090,6 +4120,8 @@ func getObjectFirewallAccessProxy(d *schema.ResourceData, sv string) (*map[strin
 		} else if t != nil {
 			obj["decrypted-traffic-mirror"] = t
 		}
+	} else if d.HasChange("decrypted_traffic_mirror") {
+		obj["decrypted-traffic-mirror"] = nil
 	}
 
 	if v, ok := d.GetOk("api_gateway"); ok || d.HasChange("api_gateway") {

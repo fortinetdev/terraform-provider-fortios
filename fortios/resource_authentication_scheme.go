@@ -56,19 +56,16 @@ func resourceAuthenticationScheme() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"domain_controller": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"saml_server": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"saml_timeout": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -80,7 +77,6 @@ func resourceAuthenticationScheme() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"require_tfa": &schema.Schema{
 				Type:     schema.TypeString,
@@ -106,7 +102,6 @@ func resourceAuthenticationScheme() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -115,7 +110,6 @@ func resourceAuthenticationScheme() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
@@ -307,7 +301,7 @@ func flattenAuthenticationSchemeSamlServer(v interface{}, d *schema.ResourceData
 }
 
 func flattenAuthenticationSchemeSamlTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenAuthenticationSchemeFssoAgentForNtlm(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -573,6 +567,8 @@ func getObjectAuthenticationScheme(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["method"] = t
 		}
+	} else if d.HasChange("method") {
+		obj["method"] = nil
 	}
 
 	if v, ok := d.GetOk("negotiate_ntlm"); ok {
@@ -591,6 +587,8 @@ func getObjectAuthenticationScheme(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["kerberos-keytab"] = t
 		}
+	} else if d.HasChange("kerberos_keytab") {
+		obj["kerberos-keytab"] = nil
 	}
 
 	if v, ok := d.GetOk("domain_controller"); ok {
@@ -600,6 +598,8 @@ func getObjectAuthenticationScheme(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["domain-controller"] = t
 		}
+	} else if d.HasChange("domain_controller") {
+		obj["domain-controller"] = nil
 	}
 
 	if v, ok := d.GetOk("saml_server"); ok {
@@ -609,6 +609,8 @@ func getObjectAuthenticationScheme(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["saml-server"] = t
 		}
+	} else if d.HasChange("saml_server") {
+		obj["saml-server"] = nil
 	}
 
 	if v, ok := d.GetOk("saml_timeout"); ok {
@@ -627,6 +629,8 @@ func getObjectAuthenticationScheme(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["fsso-agent-for-ntlm"] = t
 		}
+	} else if d.HasChange("fsso_agent_for_ntlm") {
+		obj["fsso-agent-for-ntlm"] = nil
 	}
 
 	if v, ok := d.GetOk("require_tfa"); ok {
@@ -672,6 +676,8 @@ func getObjectAuthenticationScheme(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["ssh-ca"] = t
 		}
+	} else if d.HasChange("ssh_ca") {
+		obj["ssh-ca"] = nil
 	}
 
 	return &obj, nil

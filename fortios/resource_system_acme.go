@@ -45,7 +45,6 @@ func resourceSystemAcme() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -74,37 +73,31 @@ func resourceSystemAcme() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"status": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 127),
 							Optional:     true,
-							Computed:     true,
 						},
 						"url": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 511),
 							Optional:     true,
-							Computed:     true,
 						},
 						"ca_url": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"email": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"privatekey": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 8191),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -503,31 +496,43 @@ func expandSystemAcmeAccounts(d *schema.ResourceData, v interface{}, pre string,
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSystemAcmeAccountsId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["status"], _ = expandSystemAcmeAccountsStatus(d, i["status"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["status"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "url"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["url"], _ = expandSystemAcmeAccountsUrl(d, i["url"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["url"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ca_url"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["ca_url"], _ = expandSystemAcmeAccountsCaUrl(d, i["ca_url"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["ca_url"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "email"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["email"], _ = expandSystemAcmeAccountsEmail(d, i["email"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["email"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "privatekey"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["privatekey"], _ = expandSystemAcmeAccountsPrivatekey(d, i["privatekey"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["privatekey"] = nil
 		}
 
 		result = append(result, tmp)

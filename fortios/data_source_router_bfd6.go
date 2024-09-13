@@ -222,15 +222,6 @@ func dataSourceFlattenRouterBfd6MultihopTemplate(v interface{}, d *schema.Resour
 			tmp["auth_mode"] = dataSourceFlattenRouterBfd6MultihopTemplateAuthMode(i["auth-mode"], d, pre_append)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "md5_key"
-		if _, ok := i["md5-key"]; ok {
-			tmp["md5_key"] = dataSourceFlattenRouterBfd6MultihopTemplateMd5Key(i["md5-key"], d, pre_append)
-			c := d.Get(pre_append).(string)
-			if c != "" {
-				tmp["md5_key"] = c
-			}
-		}
-
 		result = append(result, tmp)
 
 		con += 1

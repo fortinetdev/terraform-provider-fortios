@@ -57,7 +57,6 @@ func resourceEmailfilterProfile() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"spam_log": &schema.Schema{
 				Type:     schema.TypeString,
@@ -79,17 +78,14 @@ func resourceEmailfilterProfile() *schema.Resource {
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"log": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"scan_archive_contents": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"entries": &schema.Schema{
 							Type:     schema.TypeList,
@@ -100,7 +96,6 @@ func resourceEmailfilterProfile() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 35),
 										Optional:     true,
-										Computed:     true,
 									},
 									"comment": &schema.Schema{
 										Type:         schema.TypeString,
@@ -110,17 +105,14 @@ func resourceEmailfilterProfile() *schema.Resource {
 									"protocol": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
 									},
 									"action": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
 									},
 									"password_protected": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
 									},
 									"file_type": &schema.Schema{
 										Type:     schema.TypeSet,
@@ -131,7 +123,6 @@ func resourceEmailfilterProfile() *schema.Resource {
 													Type:         schema.TypeString,
 													ValidateFunc: validation.StringLenBetween(0, 39),
 													Optional:     true,
-													Computed:     true,
 												},
 											},
 										},
@@ -155,7 +146,6 @@ func resourceEmailfilterProfile() *schema.Resource {
 			"options": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"imap": &schema.Schema{
 				Type:     schema.TypeList,
@@ -172,7 +162,6 @@ func resourceEmailfilterProfile() *schema.Resource {
 						"log": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"action": &schema.Schema{
 							Type:     schema.TypeString,
@@ -208,7 +197,6 @@ func resourceEmailfilterProfile() *schema.Resource {
 						"log": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"action": &schema.Schema{
 							Type:     schema.TypeString,
@@ -244,7 +232,6 @@ func resourceEmailfilterProfile() *schema.Resource {
 						"log": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"action": &schema.Schema{
 							Type:     schema.TypeString,
@@ -290,7 +277,6 @@ func resourceEmailfilterProfile() *schema.Resource {
 						"log": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"action": &schema.Schema{
 							Type:     schema.TypeString,
@@ -315,7 +301,6 @@ func resourceEmailfilterProfile() *schema.Resource {
 						"log": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -335,7 +320,6 @@ func resourceEmailfilterProfile() *schema.Resource {
 						"log": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -355,7 +339,6 @@ func resourceEmailfilterProfile() *schema.Resource {
 						"log": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -383,32 +366,26 @@ func resourceEmailfilterProfile() *schema.Resource {
 			"spam_bword_table": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"spam_bal_table": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"spam_bwl_table": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"spam_mheader_table": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"spam_rbl_table": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"spam_iptrust_table": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"get_all_tables": &schema.Schema{
 				Type:     schema.TypeString,
@@ -1124,31 +1101,31 @@ func flattenEmailfilterProfileOtherWebmailsLogAll(v interface{}, d *schema.Resou
 }
 
 func flattenEmailfilterProfileSpamBwordThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenEmailfilterProfileSpamBwordTable(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenEmailfilterProfileSpamBalTable(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenEmailfilterProfileSpamBwlTable(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenEmailfilterProfileSpamMheaderTable(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenEmailfilterProfileSpamRblTable(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenEmailfilterProfileSpamIptrustTable(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectEmailfilterProfile(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -1494,32 +1471,42 @@ func expandEmailfilterProfileFileFilterEntries(d *schema.ResourceData, v interfa
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["filter"], _ = expandEmailfilterProfileFileFilterEntriesFilter(d, i["filter"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["filter"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["comment"], _ = expandEmailfilterProfileFileFilterEntriesComment(d, i["comment"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["comment"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["protocol"], _ = expandEmailfilterProfileFileFilterEntriesProtocol(d, i["protocol"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["protocol"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["action"], _ = expandEmailfilterProfileFileFilterEntriesAction(d, i["action"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["action"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "password_protected"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["password-protected"], _ = expandEmailfilterProfileFileFilterEntriesPasswordProtected(d, i["password_protected"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["password-protected"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "file_type"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["file-type"], _ = expandEmailfilterProfileFileFilterEntriesFileType(d, i["file_type"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["file-type"] = make([]string, 0)
 		}
 
@@ -1966,6 +1953,8 @@ func getObjectEmailfilterProfile(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("feature_set"); ok {
@@ -1984,6 +1973,8 @@ func getObjectEmailfilterProfile(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["replacemsg-group"] = t
 		}
+	} else if d.HasChange("replacemsg_group") {
+		obj["replacemsg-group"] = nil
 	}
 
 	if v, ok := d.GetOk("spam_log"); ok {
@@ -2038,6 +2029,8 @@ func getObjectEmailfilterProfile(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["options"] = t
 		}
+	} else if d.HasChange("options") {
+		obj["options"] = nil
 	}
 
 	if v, ok := d.GetOk("imap"); ok {
@@ -2128,6 +2121,8 @@ func getObjectEmailfilterProfile(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["spam-bword-table"] = t
 		}
+	} else if d.HasChange("spam_bword_table") {
+		obj["spam-bword-table"] = nil
 	}
 
 	if v, ok := d.GetOkExists("spam_bal_table"); ok {
@@ -2137,6 +2132,8 @@ func getObjectEmailfilterProfile(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["spam-bal-table"] = t
 		}
+	} else if d.HasChange("spam_bal_table") {
+		obj["spam-bal-table"] = nil
 	}
 
 	if v, ok := d.GetOkExists("spam_bwl_table"); ok {
@@ -2146,6 +2143,8 @@ func getObjectEmailfilterProfile(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["spam-bwl-table"] = t
 		}
+	} else if d.HasChange("spam_bwl_table") {
+		obj["spam-bwl-table"] = nil
 	}
 
 	if v, ok := d.GetOkExists("spam_mheader_table"); ok {
@@ -2155,6 +2154,8 @@ func getObjectEmailfilterProfile(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["spam-mheader-table"] = t
 		}
+	} else if d.HasChange("spam_mheader_table") {
+		obj["spam-mheader-table"] = nil
 	}
 
 	if v, ok := d.GetOkExists("spam_rbl_table"); ok {
@@ -2164,6 +2165,8 @@ func getObjectEmailfilterProfile(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["spam-rbl-table"] = t
 		}
+	} else if d.HasChange("spam_rbl_table") {
+		obj["spam-rbl-table"] = nil
 	}
 
 	if v, ok := d.GetOkExists("spam_iptrust_table"); ok {
@@ -2173,6 +2176,8 @@ func getObjectEmailfilterProfile(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["spam-iptrust-table"] = t
 		}
+	} else if d.HasChange("spam_iptrust_table") {
+		obj["spam-iptrust-table"] = nil
 	}
 
 	return &obj, nil

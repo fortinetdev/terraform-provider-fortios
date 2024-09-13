@@ -57,24 +57,20 @@ func resourceEndpointControlForticlientEms() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"upload_port": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"rest_api_auth": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"https_port": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"admin_username": &schema.Schema{
 				Type:         schema.TypeString,
@@ -90,7 +86,6 @@ func resourceEndpointControlForticlientEms() *schema.Resource {
 			"admin_type": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 		},
 	}
@@ -260,11 +255,11 @@ func flattenEndpointControlForticlientEmsSerialNumber(v interface{}, d *schema.R
 }
 
 func flattenEndpointControlForticlientEmsListenPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenEndpointControlForticlientEmsUploadPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenEndpointControlForticlientEmsRestApiAuth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -272,14 +267,10 @@ func flattenEndpointControlForticlientEmsRestApiAuth(v interface{}, d *schema.Re
 }
 
 func flattenEndpointControlForticlientEmsHttpsPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenEndpointControlForticlientEmsAdminUsername(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenEndpointControlForticlientEmsAdminPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -412,6 +403,8 @@ func getObjectEndpointControlForticlientEms(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["address"] = t
 		}
+	} else if d.HasChange("address") {
+		obj["address"] = nil
 	}
 
 	if v, ok := d.GetOk("serial_number"); ok {
@@ -421,6 +414,8 @@ func getObjectEndpointControlForticlientEms(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["serial-number"] = t
 		}
+	} else if d.HasChange("serial_number") {
+		obj["serial-number"] = nil
 	}
 
 	if v, ok := d.GetOk("listen_port"); ok {
@@ -430,6 +425,8 @@ func getObjectEndpointControlForticlientEms(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["listen-port"] = t
 		}
+	} else if d.HasChange("listen_port") {
+		obj["listen-port"] = nil
 	}
 
 	if v, ok := d.GetOk("upload_port"); ok {
@@ -439,6 +436,8 @@ func getObjectEndpointControlForticlientEms(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["upload-port"] = t
 		}
+	} else if d.HasChange("upload_port") {
+		obj["upload-port"] = nil
 	}
 
 	if v, ok := d.GetOk("rest_api_auth"); ok {
@@ -448,6 +447,8 @@ func getObjectEndpointControlForticlientEms(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["rest-api-auth"] = t
 		}
+	} else if d.HasChange("rest_api_auth") {
+		obj["rest-api-auth"] = nil
 	}
 
 	if v, ok := d.GetOk("https_port"); ok {
@@ -457,6 +458,8 @@ func getObjectEndpointControlForticlientEms(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["https-port"] = t
 		}
+	} else if d.HasChange("https_port") {
+		obj["https-port"] = nil
 	}
 
 	if v, ok := d.GetOk("admin_username"); ok {
@@ -466,6 +469,8 @@ func getObjectEndpointControlForticlientEms(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["admin-username"] = t
 		}
+	} else if d.HasChange("admin_username") {
+		obj["admin-username"] = nil
 	}
 
 	if v, ok := d.GetOk("admin_password"); ok {
@@ -475,6 +480,8 @@ func getObjectEndpointControlForticlientEms(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["admin-password"] = t
 		}
+	} else if d.HasChange("admin_password") {
+		obj["admin-password"] = nil
 	}
 
 	if v, ok := d.GetOk("admin_type"); ok {
@@ -484,6 +491,8 @@ func getObjectEndpointControlForticlientEms(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["admin-type"] = t
 		}
+	} else if d.HasChange("admin_type") {
+		obj["admin-type"] = nil
 	}
 
 	return &obj, nil

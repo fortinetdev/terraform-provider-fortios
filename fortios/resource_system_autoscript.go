@@ -47,7 +47,6 @@ func resourceSystemAutoScript() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 31557600),
 				Optional:     true,
-				Computed:     true,
 			},
 			"repeat": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -75,7 +74,6 @@ func resourceSystemAutoScript() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 300),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -237,11 +235,11 @@ func flattenSystemAutoScriptName(v interface{}, d *schema.ResourceData, pre stri
 }
 
 func flattenSystemAutoScriptInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemAutoScriptRepeat(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemAutoScriptStart(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -253,11 +251,11 @@ func flattenSystemAutoScriptScript(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenSystemAutoScriptOutputSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemAutoScriptTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectSystemAutoScript(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -361,6 +359,8 @@ func getObjectSystemAutoScript(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["interval"] = t
 		}
+	} else if d.HasChange("interval") {
+		obj["interval"] = nil
 	}
 
 	if v, ok := d.GetOkExists("repeat"); ok {
@@ -388,6 +388,8 @@ func getObjectSystemAutoScript(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["script"] = t
 		}
+	} else if d.HasChange("script") {
+		obj["script"] = nil
 	}
 
 	if v, ok := d.GetOk("output_size"); ok {
@@ -406,6 +408,8 @@ func getObjectSystemAutoScript(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["timeout"] = t
 		}
+	} else if d.HasChange("timeout") {
+		obj["timeout"] = nil
 	}
 
 	return &obj, nil

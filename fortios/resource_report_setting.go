@@ -194,11 +194,11 @@ func flattenReportSettingReportSource(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenReportSettingWebBrowsingThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenReportSettingTopN(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectReportSetting(d *schema.ResourceData, o map[string]interface{}, sv string) error {

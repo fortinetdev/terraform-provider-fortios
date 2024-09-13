@@ -300,6 +300,8 @@ func getObjectWebProxyDebugUrl(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["url-pattern"] = t
 		}
+	} else if d.HasChange("url_pattern") {
+		obj["url-pattern"] = nil
 	}
 
 	if v, ok := d.GetOk("status"); ok {

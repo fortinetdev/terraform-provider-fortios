@@ -236,7 +236,7 @@ func flattenWebProxyFastFallbackProtocol(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenWebProxyFastFallbackConnectionTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectWebProxyFastFallback(d *schema.ResourceData, o map[string]interface{}, sv string) error {

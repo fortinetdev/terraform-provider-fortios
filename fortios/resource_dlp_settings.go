@@ -40,7 +40,6 @@ func resourceDlpSettings() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"size": &schema.Schema{
 				Type:     schema.TypeInt,
@@ -187,7 +186,7 @@ func flattenDlpSettingsStorageDevice(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenDlpSettingsSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenDlpSettingsDbMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -195,11 +194,11 @@ func flattenDlpSettingsDbMode(v interface{}, d *schema.ResourceData, pre string,
 }
 
 func flattenDlpSettingsCacheMemPercent(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenDlpSettingsChunkSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectDlpSettings(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -278,6 +277,8 @@ func getObjectDlpSettings(d *schema.ResourceData, setArgNil bool, sv string) (*m
 				obj["storage-device"] = t
 			}
 		}
+	} else if d.HasChange("storage_device") {
+		obj["storage-device"] = nil
 	}
 
 	if v, ok := d.GetOk("size"); ok {

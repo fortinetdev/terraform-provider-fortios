@@ -188,19 +188,19 @@ func flattenSystemStpSwitchPriority(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenSystemStpHelloTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemStpForwardDelay(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemStpMaxAge(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemStpMaxHops(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectSystemStp(d *schema.ResourceData, o map[string]interface{}, sv string) error {

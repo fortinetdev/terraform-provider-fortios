@@ -40,7 +40,6 @@ func resourceFirewallDecryptedTrafficMirror() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"dstmac": &schema.Schema{
 				Type:     schema.TypeString,
@@ -66,7 +65,6 @@ func resourceFirewallDecryptedTrafficMirror() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -406,6 +404,8 @@ func getObjectFirewallDecryptedTrafficMirror(d *schema.ResourceData, sv string) 
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("dstmac"); ok {

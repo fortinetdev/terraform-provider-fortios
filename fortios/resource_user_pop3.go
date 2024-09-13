@@ -52,7 +52,6 @@ func resourceUserPop3() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"secure": &schema.Schema{
 				Type:     schema.TypeString,
@@ -228,7 +227,7 @@ func flattenUserPop3Server(v interface{}, d *schema.ResourceData, pre string, sv
 }
 
 func flattenUserPop3Port(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserPop3Secure(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -320,6 +319,8 @@ func getObjectUserPop3(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["server"] = t
 		}
+	} else if d.HasChange("server") {
+		obj["server"] = nil
 	}
 
 	if v, ok := d.GetOkExists("port"); ok {
@@ -329,6 +330,8 @@ func getObjectUserPop3(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["port"] = t
 		}
+	} else if d.HasChange("port") {
+		obj["port"] = nil
 	}
 
 	if v, ok := d.GetOk("secure"); ok {

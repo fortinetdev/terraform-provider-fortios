@@ -20,6 +20,7 @@ Use this data source to get information on an fortios firewallservice category
 The following attributes are exported:
 
 * `name` - Service category name.
+* `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `comment` - Comment.
 * `fabric_object` - Security Fabric global object setting.
 

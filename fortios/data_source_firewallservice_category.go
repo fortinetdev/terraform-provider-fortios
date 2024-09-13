@@ -32,6 +32,10 @@ func dataSourceFirewallServiceCategory() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"uuid": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"comment": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -91,6 +95,10 @@ func dataSourceFlattenFirewallServiceCategoryName(v interface{}, d *schema.Resou
 	return v
 }
 
+func dataSourceFlattenFirewallServiceCategoryUuid(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallServiceCategoryComment(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -105,6 +113,12 @@ func dataSourceRefreshObjectFirewallServiceCategory(d *schema.ResourceData, o ma
 	if err = d.Set("name", dataSourceFlattenFirewallServiceCategoryName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
+		}
+	}
+
+	if err = d.Set("uuid", dataSourceFlattenFirewallServiceCategoryUuid(o["uuid"], d, "uuid")); err != nil {
+		if !fortiAPIPatch(o["uuid"]) {
+			return fmt.Errorf("Error reading uuid: %v", err)
 		}
 	}
 

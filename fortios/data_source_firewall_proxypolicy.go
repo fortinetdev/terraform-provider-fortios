@@ -68,6 +68,18 @@ func dataSourceFirewallProxyPolicy() *schema.Resource {
 					},
 				},
 			},
+			"ztna_proxy": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
 			"srcintf": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
@@ -416,6 +428,10 @@ func dataSourceFirewallProxyPolicy() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"dnsfilter_profile": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"emailfilter_profile": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -501,6 +517,10 @@ func dataSourceFirewallProxyPolicy() *schema.Resource {
 				Computed: true,
 			},
 			"logtraffic_start": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"log_http_transaction": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -668,6 +688,42 @@ func dataSourceFlattenFirewallProxyPolicyAccessProxy6(v interface{}, d *schema.R
 }
 
 func dataSourceFlattenFirewallProxyPolicyAccessProxy6Name(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallProxyPolicyZtnaProxy(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = dataSourceFlattenFirewallProxyPolicyZtnaProxyName(i["name"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenFirewallProxyPolicyZtnaProxyName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1499,6 +1555,10 @@ func dataSourceFlattenFirewallProxyPolicyWebfilterProfile(v interface{}, d *sche
 	return v
 }
 
+func dataSourceFlattenFirewallProxyPolicyDnsfilterProfile(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallProxyPolicyEmailfilterProfile(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -1587,6 +1647,10 @@ func dataSourceFlattenFirewallProxyPolicyLogtrafficStart(v interface{}, d *schem
 	return v
 }
 
+func dataSourceFlattenFirewallProxyPolicyLogHttpTransaction(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallProxyPolicyLabel(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -1655,6 +1719,12 @@ func dataSourceRefreshObjectFirewallProxyPolicy(d *schema.ResourceData, o map[st
 	if err = d.Set("access_proxy6", dataSourceFlattenFirewallProxyPolicyAccessProxy6(o["access-proxy6"], d, "access_proxy6")); err != nil {
 		if !fortiAPIPatch(o["access-proxy6"]) {
 			return fmt.Errorf("Error reading access_proxy6: %v", err)
+		}
+	}
+
+	if err = d.Set("ztna_proxy", dataSourceFlattenFirewallProxyPolicyZtnaProxy(o["ztna-proxy"], d, "ztna_proxy")); err != nil {
+		if !fortiAPIPatch(o["ztna-proxy"]) {
+			return fmt.Errorf("Error reading ztna_proxy: %v", err)
 		}
 	}
 
@@ -1940,6 +2010,12 @@ func dataSourceRefreshObjectFirewallProxyPolicy(d *schema.ResourceData, o map[st
 		}
 	}
 
+	if err = d.Set("dnsfilter_profile", dataSourceFlattenFirewallProxyPolicyDnsfilterProfile(o["dnsfilter-profile"], d, "dnsfilter_profile")); err != nil {
+		if !fortiAPIPatch(o["dnsfilter-profile"]) {
+			return fmt.Errorf("Error reading dnsfilter_profile: %v", err)
+		}
+	}
+
 	if err = d.Set("emailfilter_profile", dataSourceFlattenFirewallProxyPolicyEmailfilterProfile(o["emailfilter-profile"], d, "emailfilter_profile")); err != nil {
 		if !fortiAPIPatch(o["emailfilter-profile"]) {
 			return fmt.Errorf("Error reading emailfilter_profile: %v", err)
@@ -2069,6 +2145,12 @@ func dataSourceRefreshObjectFirewallProxyPolicy(d *schema.ResourceData, o map[st
 	if err = d.Set("logtraffic_start", dataSourceFlattenFirewallProxyPolicyLogtrafficStart(o["logtraffic-start"], d, "logtraffic_start")); err != nil {
 		if !fortiAPIPatch(o["logtraffic-start"]) {
 			return fmt.Errorf("Error reading logtraffic_start: %v", err)
+		}
+	}
+
+	if err = d.Set("log_http_transaction", dataSourceFlattenFirewallProxyPolicyLogHttpTransaction(o["log-http-transaction"], d, "log_http_transaction")); err != nil {
+		if !fortiAPIPatch(o["log-http-transaction"]) {
+			return fmt.Errorf("Error reading log_http_transaction: %v", err)
 		}
 	}
 

@@ -32,6 +32,10 @@ func dataSourceFirewallScheduleOnetime() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"uuid": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"start": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -111,6 +115,10 @@ func dataSourceFlattenFirewallScheduleOnetimeName(v interface{}, d *schema.Resou
 	return v
 }
 
+func dataSourceFlattenFirewallScheduleOnetimeUuid(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallScheduleOnetimeStart(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -145,6 +153,12 @@ func dataSourceRefreshObjectFirewallScheduleOnetime(d *schema.ResourceData, o ma
 	if err = d.Set("name", dataSourceFlattenFirewallScheduleOnetimeName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
+		}
+	}
+
+	if err = d.Set("uuid", dataSourceFlattenFirewallScheduleOnetimeUuid(o["uuid"], d, "uuid")); err != nil {
+		if !fortiAPIPatch(o["uuid"]) {
+			return fmt.Errorf("Error reading uuid: %v", err)
 		}
 	}
 

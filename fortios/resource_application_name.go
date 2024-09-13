@@ -56,7 +56,6 @@ func resourceApplicationName() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"popularity": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -79,22 +78,18 @@ func resourceApplicationName() *schema.Resource {
 			"protocol": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"technology": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"behavior": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"vendor": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
@@ -105,7 +100,6 @@ func resourceApplicationName() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 31),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -114,7 +108,6 @@ func resourceApplicationName() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"metadata": &schema.Schema{
 				Type:     schema.TypeList,
@@ -124,17 +117,14 @@ func resourceApplicationName() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"metaid": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"valueid": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -309,27 +299,27 @@ func flattenApplicationNameName(v interface{}, d *schema.ResourceData, pre strin
 }
 
 func flattenApplicationNameId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenApplicationNameCategory(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenApplicationNameSubCategory(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenApplicationNamePopularity(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenApplicationNameRisk(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenApplicationNameWeight(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenApplicationNameProtocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -443,15 +433,15 @@ func flattenApplicationNameMetadata(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenApplicationNameMetadataId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenApplicationNameMetadataMetaid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenApplicationNameMetadataValueid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectApplicationName(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -637,6 +627,8 @@ func expandApplicationNameParameters(d *schema.ResourceData, v interface{}, pre 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandApplicationNameParametersName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		result = append(result, tmp)
@@ -672,16 +664,22 @@ func expandApplicationNameMetadata(d *schema.ResourceData, v interface{}, pre st
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandApplicationNameMetadataId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "metaid"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["metaid"], _ = expandApplicationNameMetadataMetaid(d, i["metaid"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["metaid"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "valueid"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["valueid"], _ = expandApplicationNameMetadataValueid(d, i["valueid"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["valueid"] = nil
 		}
 
 		result = append(result, tmp)
@@ -732,6 +730,8 @@ func getObjectApplicationName(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["category"] = t
 		}
+	} else if d.HasChange("category") {
+		obj["category"] = nil
 	}
 
 	if v, ok := d.GetOkExists("sub_category"); ok {
@@ -741,6 +741,8 @@ func getObjectApplicationName(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["sub-category"] = t
 		}
+	} else if d.HasChange("sub_category") {
+		obj["sub-category"] = nil
 	}
 
 	if v, ok := d.GetOkExists("popularity"); ok {
@@ -777,6 +779,8 @@ func getObjectApplicationName(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["protocol"] = t
 		}
+	} else if d.HasChange("protocol") {
+		obj["protocol"] = nil
 	}
 
 	if v, ok := d.GetOk("technology"); ok {
@@ -786,6 +790,8 @@ func getObjectApplicationName(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["technology"] = t
 		}
+	} else if d.HasChange("technology") {
+		obj["technology"] = nil
 	}
 
 	if v, ok := d.GetOk("behavior"); ok {
@@ -795,6 +801,8 @@ func getObjectApplicationName(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["behavior"] = t
 		}
+	} else if d.HasChange("behavior") {
+		obj["behavior"] = nil
 	}
 
 	if v, ok := d.GetOk("vendor"); ok {
@@ -804,6 +812,8 @@ func getObjectApplicationName(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["vendor"] = t
 		}
+	} else if d.HasChange("vendor") {
+		obj["vendor"] = nil
 	}
 
 	if v, ok := d.GetOk("parameters"); ok || d.HasChange("parameters") {
@@ -822,6 +832,8 @@ func getObjectApplicationName(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["parameter"] = t
 		}
+	} else if d.HasChange("parameter") {
+		obj["parameter"] = nil
 	}
 
 	if v, ok := d.GetOk("metadata"); ok || d.HasChange("metadata") {

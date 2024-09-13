@@ -154,6 +154,8 @@ The following arguments are supported:
 * `memory_use_threshold_red` - Threshold at which memory usage forces the FortiGate to enter conserve mode (% of total RAM, default = 88).
 * `memory_use_threshold_green` - Threshold at which memory usage forces the FortiGate to exit conserve mode (% of total RAM, default = 82).
 * `ip_fragment_mem_thresholds` - Maximum memory (MB) used to reassemble IPv4/IPv6 fragments.
+* `ip_fragment_timeout` - Timeout value in seconds for any fragment not being reassembled
+* `ipv6_fragment_timeout` - Timeout value in seconds for any IPv6 fragment not being reassembled
 * `cpu_use_threshold` - Threshold at which CPU usage is reported. (% of total CPU, default = 90).
 * `log_single_cpu_high` - Enable/disable logging the event of a single CPU core reaching CPU usage threshold. Valid values: `enable`, `disable`.
 * `check_reset_range` - Configure ICMP error message verification. You can either apply strict RST range checking or disable it. Valid values: `strict`, `disable`.
@@ -167,7 +169,7 @@ The following arguments are supported:
 * `admin_https_redirect` - Enable/disable redirection of HTTP administration access to HTTPS. Valid values: `enable`, `disable`.
 * `admin_hsts_max_age` - HTTPS Strict-Transport-Security header max-age in seconds. A value of 0 will reset any HSTS records in the browser.When admin-https-redirect is disabled the header max-age will be 0.
 * `admin_ssh_password` - Enable/disable password authentication for SSH admin access. Valid values: `enable`, `disable`.
-* `admin_restrict_local` - Enable/disable local admin authentication restriction when remote authenticator is up and running. (default = disable) Valid values: `enable`, `disable`.
+* `admin_restrict_local` - Enable/disable local admin authentication restriction when remote authenticator is up and running. (default = disable)
 * `admin_ssh_port` - Administrative access port for SSH. (1 - 65535, default = 22).
 * `admin_ssh_grace_time` - Maximum time in seconds permitted between making an SSH connection to the FortiGate unit and authenticating (10 - 3600 sec (1 hour), default 120).
 * `admin_ssh_v1` - Enable/disable SSH v1 compatibility. Valid values: `enable`, `disable`.
@@ -213,6 +215,7 @@ The following arguments are supported:
 * `switch_controller_reserved_network` - Enable reserved network subnet for controlled switches. This is available when the switch controller is enabled.
 * `dnsproxy_worker_count` - DNS proxy worker count.
 * `url_filter_count` - URL filter daemon count.
+* `httpd_max_worker_count` - Maximum number of simultaneous HTTP requests that will be served. This number may affect GUI and REST API performance (0 - 128, default = 0 means let system decide).
 * `proxy_worker_count` - Proxy worker count.
 * `scanunit_count` - Number of scanunits. The range and the default depend on the number of CPUs. Only available on FortiGate units with multiple CPUs.
 * `proxy_hardware_acceleration` - Enable/disable email proxy hardware acceleration. Valid values: `disable`, `enable`.
@@ -250,6 +253,7 @@ The following arguments are supported:
 * `wad_source_affinity` - Enable/disable dispatching traffic to WAD workers based on source affinity. Valid values: `disable`, `enable`.
 * `wad_memory_change_granularity` - Minimum percentage change in system memory usage detected by the wad daemon prior to adjusting TCP window size for any active connection.
 * `login_timestamp` - Enable/disable login time recording. Valid values: `enable`, `disable`.
+* `ip_conflict_detection` - Enable/disable logging of IPv4 address conflict detection. Valid values: `enable`, `disable`.
 * `miglogd_children` - Number of logging (miglogd) processes to be allowed to run. Higher number can reduce performance; lower number can slow log processing time.
 * `special_file_23_support` - Enable/disable IPS detection of HIBUN format files when using Data Leak Protection. Valid values: `disable`, `enable`.
 * `log_uuid_policy` - Enable/disable insertion of policy UUIDs to traffic logs. Valid values: `enable`, `disable`.
@@ -309,9 +313,16 @@ The following arguments are supported:
 * `internet_service_download_list` - Configure which on-demand Internet Service IDs are to be downloaded. The structure of `internet_service_download_list` block is documented below.
 * `early_tcp_npu_session` - Enable/disable early TCP NPU session. Valid values: `enable`, `disable`.
 * `npu_neighbor_update` - Enable/disable sending of probing packets to update neighbors for offloaded sessions. Valid values: `enable`, `disable`.
+* `delay_tcp_npu_session` - Enable TCP NPU session delay to guarantee packet order of 3-way handshake. Valid values: `enable`, `disable`.
 * `interface_subnet_usage` - Enable/disable allowing use of interface-subnet setting in firewall addresses (default = enable). Valid values: `disable`, `enable`.
 * `sflowd_max_children_num` - Maximum number of sflowd child processes allowed to run.
 * `fortigslb_integration` - Enable/disable integration with the FortiGSLB cloud service. Valid values: `disable`, `enable`.
+* `user_history_password_threshold` - Maximum number of previous passwords saved per admin/user (3 - 15, default = 3).
+* `auth_session_auto_backup` - Enable/disable automatic and periodic backup of authentication sessions (default = disable). Sessions are restored upon bootup. Valid values: `enable`, `disable`.
+* `auth_session_auto_backup_interval` - Configure automatic authentication session backup interval in minutes (default = 15). Valid values: `1min`, `5min`, `15min`, `30min`, `1hr`.
+* `scim_https_port` - SCIM port (0 - 65535, default = 44559).
+* `scim_http_port` - SCIM http port (0 - 65535, default = 44558).
+* `scim_server_cert` - Server certificate that the FortiGate uses for SCIM connections.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
 * `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.

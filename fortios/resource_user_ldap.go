@@ -51,13 +51,11 @@ func resourceUserLdap() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"tertiary_server": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"status_ttl": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -75,11 +73,15 @@ func resourceUserLdap() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"source_ip_interface": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 15),
+				Optional:     true,
+			},
 			"source_port": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
-				Computed:     true,
 			},
 			"cnid": &schema.Schema{
 				Type:         schema.TypeString,
@@ -105,24 +107,20 @@ func resourceUserLdap() *schema.Resource {
 			"two_factor_authentication": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"two_factor_notification": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"two_factor_filter": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 2047),
 				Optional:     true,
-				Computed:     true,
 			},
 			"username": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 511),
 				Optional:     true,
-				Computed:     true,
 			},
 			"password": &schema.Schema{
 				Type:         schema.TypeString,
@@ -139,7 +137,6 @@ func resourceUserLdap() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 511),
 				Optional:     true,
-				Computed:     true,
 			},
 			"group_object_filter": &schema.Schema{
 				Type:         schema.TypeString,
@@ -151,7 +148,6 @@ func resourceUserLdap() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 2047),
 				Optional:     true,
-				Computed:     true,
 			},
 			"secure": &schema.Schema{
 				Type:     schema.TypeString,
@@ -167,7 +163,6 @@ func resourceUserLdap() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
-				Computed:     true,
 			},
 			"port": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -215,7 +210,6 @@ func resourceUserLdap() *schema.Resource {
 			"search_type": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"client_cert_auth": &schema.Schema{
 				Type:     schema.TypeString,
@@ -226,7 +220,6 @@ func resourceUserLdap() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
-				Computed:     true,
 			},
 			"obtain_user_info": &schema.Schema{
 				Type:     schema.TypeString,
@@ -237,7 +230,6 @@ func resourceUserLdap() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"interface_select_method": &schema.Schema{
 				Type:     schema.TypeString,
@@ -248,7 +240,6 @@ func resourceUserLdap() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"antiphish": &schema.Schema{
 				Type:     schema.TypeString,
@@ -433,7 +424,7 @@ func flattenUserLdapTertiaryServer(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenUserLdapStatusTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserLdapServerIdentityCheck(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -444,8 +435,12 @@ func flattenUserLdapSourceIp(v interface{}, d *schema.ResourceData, pre string, 
 	return v
 }
 
-func flattenUserLdapSourcePort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+func flattenUserLdapSourceIpInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
+}
+
+func flattenUserLdapSourcePort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
 }
 
 func flattenUserLdapCnid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -480,10 +475,6 @@ func flattenUserLdapUsername(v interface{}, d *schema.ResourceData, pre string, 
 	return v
 }
 
-func flattenUserLdapPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
 func flattenUserLdapGroupMemberCheck(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -513,7 +504,7 @@ func flattenUserLdapCaCert(v interface{}, d *schema.ResourceData, pre string, sv
 }
 
 func flattenUserLdapPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenUserLdapPasswordExpiryWarning(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -622,6 +613,12 @@ func refreshObjectUserLdap(d *schema.ResourceData, o map[string]interface{}, sv 
 	if err = d.Set("source_ip", flattenUserLdapSourceIp(o["source-ip"], d, "source_ip", sv)); err != nil {
 		if !fortiAPIPatch(o["source-ip"]) {
 			return fmt.Errorf("Error reading source_ip: %v", err)
+		}
+	}
+
+	if err = d.Set("source_ip_interface", flattenUserLdapSourceIpInterface(o["source-ip-interface"], d, "source_ip_interface", sv)); err != nil {
+		if !fortiAPIPatch(o["source-ip-interface"]) {
+			return fmt.Errorf("Error reading source_ip_interface: %v", err)
 		}
 	}
 
@@ -860,6 +857,10 @@ func expandUserLdapSourceIp(d *schema.ResourceData, v interface{}, pre string, s
 	return v, nil
 }
 
+func expandUserLdapSourceIpInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandUserLdapSourcePort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -1015,6 +1016,8 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["server"] = t
 		}
+	} else if d.HasChange("server") {
+		obj["server"] = nil
 	}
 
 	if v, ok := d.GetOk("secondary_server"); ok {
@@ -1024,6 +1027,8 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["secondary-server"] = t
 		}
+	} else if d.HasChange("secondary_server") {
+		obj["secondary-server"] = nil
 	}
 
 	if v, ok := d.GetOk("tertiary_server"); ok {
@@ -1033,6 +1038,8 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["tertiary-server"] = t
 		}
+	} else if d.HasChange("tertiary_server") {
+		obj["tertiary-server"] = nil
 	}
 
 	if v, ok := d.GetOkExists("status_ttl"); ok {
@@ -1062,6 +1069,17 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 		}
 	}
 
+	if v, ok := d.GetOk("source_ip_interface"); ok {
+		t, err := expandUserLdapSourceIpInterface(d, v, "source_ip_interface", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["source-ip-interface"] = t
+		}
+	} else if d.HasChange("source_ip_interface") {
+		obj["source-ip-interface"] = nil
+	}
+
 	if v, ok := d.GetOkExists("source_port"); ok {
 		t, err := expandUserLdapSourcePort(d, v, "source_port", sv)
 		if err != nil {
@@ -1069,6 +1087,8 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["source-port"] = t
 		}
+	} else if d.HasChange("source_port") {
+		obj["source-port"] = nil
 	}
 
 	if v, ok := d.GetOk("cnid"); ok {
@@ -1087,6 +1107,8 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["dn"] = t
 		}
+	} else if d.HasChange("dn") {
+		obj["dn"] = nil
 	}
 
 	if v, ok := d.GetOk("type"); ok {
@@ -1114,6 +1136,8 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["two-factor-authentication"] = t
 		}
+	} else if d.HasChange("two_factor_authentication") {
+		obj["two-factor-authentication"] = nil
 	}
 
 	if v, ok := d.GetOk("two_factor_notification"); ok {
@@ -1123,6 +1147,8 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["two-factor-notification"] = t
 		}
+	} else if d.HasChange("two_factor_notification") {
+		obj["two-factor-notification"] = nil
 	}
 
 	if v, ok := d.GetOk("two_factor_filter"); ok {
@@ -1132,6 +1158,8 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["two-factor-filter"] = t
 		}
+	} else if d.HasChange("two_factor_filter") {
+		obj["two-factor-filter"] = nil
 	}
 
 	if v, ok := d.GetOk("username"); ok {
@@ -1141,6 +1169,8 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["username"] = t
 		}
+	} else if d.HasChange("username") {
+		obj["username"] = nil
 	}
 
 	if v, ok := d.GetOk("password"); ok {
@@ -1150,6 +1180,8 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["password"] = t
 		}
+	} else if d.HasChange("password") {
+		obj["password"] = nil
 	}
 
 	if v, ok := d.GetOk("group_member_check"); ok {
@@ -1168,6 +1200,8 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["group-search-base"] = t
 		}
+	} else if d.HasChange("group_search_base") {
+		obj["group-search-base"] = nil
 	}
 
 	if v, ok := d.GetOk("group_object_filter"); ok {
@@ -1186,6 +1220,8 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["group-filter"] = t
 		}
+	} else if d.HasChange("group_filter") {
+		obj["group-filter"] = nil
 	}
 
 	if v, ok := d.GetOk("secure"); ok {
@@ -1213,6 +1249,8 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["ca-cert"] = t
 		}
+	} else if d.HasChange("ca_cert") {
+		obj["ca-cert"] = nil
 	}
 
 	if v, ok := d.GetOk("port"); ok {
@@ -1294,6 +1332,8 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["search-type"] = t
 		}
+	} else if d.HasChange("search_type") {
+		obj["search-type"] = nil
 	}
 
 	if v, ok := d.GetOk("client_cert_auth"); ok {
@@ -1312,6 +1352,8 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["client-cert"] = t
 		}
+	} else if d.HasChange("client_cert") {
+		obj["client-cert"] = nil
 	}
 
 	if v, ok := d.GetOk("obtain_user_info"); ok {
@@ -1330,6 +1372,8 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["user-info-exchange-server"] = t
 		}
+	} else if d.HasChange("user_info_exchange_server") {
+		obj["user-info-exchange-server"] = nil
 	}
 
 	if v, ok := d.GetOk("interface_select_method"); ok {
@@ -1348,6 +1392,8 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["interface"] = t
 		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
 	}
 
 	if v, ok := d.GetOk("antiphish"); ok {

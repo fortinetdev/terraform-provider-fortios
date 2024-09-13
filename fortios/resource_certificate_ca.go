@@ -65,29 +65,24 @@ func resourceCertificateCa() *schema.Resource {
 			"trusted": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"scep_url": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"est_url": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"auto_update_days": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"auto_update_days_warning": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"source_ip": &schema.Schema{
 				Type:     schema.TypeString,
@@ -98,7 +93,6 @@ func resourceCertificateCa() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"obsolete": &schema.Schema{
 				Type:     schema.TypeString,
@@ -113,7 +107,6 @@ func resourceCertificateCa() *schema.Resource {
 			"last_updated": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 		},
 	}
@@ -274,10 +267,6 @@ func flattenCertificateCaName(v interface{}, d *schema.ResourceData, pre string,
 	return v
 }
 
-func flattenCertificateCaCa(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
 func flattenCertificateCaRange(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -303,11 +292,11 @@ func flattenCertificateCaEstUrl(v interface{}, d *schema.ResourceData, pre strin
 }
 
 func flattenCertificateCaAutoUpdateDays(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenCertificateCaAutoUpdateDaysWarning(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenCertificateCaSourceIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -327,7 +316,7 @@ func flattenCertificateCaFabricCa(v interface{}, d *schema.ResourceData, pre str
 }
 
 func flattenCertificateCaLastUpdated(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectCertificateCa(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -505,6 +494,8 @@ func getObjectCertificateCa(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["ca"] = t
 		}
+	} else if d.HasChange("ca") {
+		obj["ca"] = nil
 	}
 
 	if v, ok := d.GetOk("range"); ok {
@@ -541,6 +532,8 @@ func getObjectCertificateCa(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["trusted"] = t
 		}
+	} else if d.HasChange("trusted") {
+		obj["trusted"] = nil
 	}
 
 	if v, ok := d.GetOk("scep_url"); ok {
@@ -550,6 +543,8 @@ func getObjectCertificateCa(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["scep-url"] = t
 		}
+	} else if d.HasChange("scep_url") {
+		obj["scep-url"] = nil
 	}
 
 	if v, ok := d.GetOk("est_url"); ok {
@@ -559,6 +554,8 @@ func getObjectCertificateCa(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["est-url"] = t
 		}
+	} else if d.HasChange("est_url") {
+		obj["est-url"] = nil
 	}
 
 	if v, ok := d.GetOkExists("auto_update_days"); ok {
@@ -568,6 +565,8 @@ func getObjectCertificateCa(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["auto-update-days"] = t
 		}
+	} else if d.HasChange("auto_update_days") {
+		obj["auto-update-days"] = nil
 	}
 
 	if v, ok := d.GetOkExists("auto_update_days_warning"); ok {
@@ -577,6 +576,8 @@ func getObjectCertificateCa(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["auto-update-days-warning"] = t
 		}
+	} else if d.HasChange("auto_update_days_warning") {
+		obj["auto-update-days-warning"] = nil
 	}
 
 	if v, ok := d.GetOk("source_ip"); ok {
@@ -595,6 +596,8 @@ func getObjectCertificateCa(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["ca-identifier"] = t
 		}
+	} else if d.HasChange("ca_identifier") {
+		obj["ca-identifier"] = nil
 	}
 
 	if v, ok := d.GetOk("obsolete"); ok {
@@ -622,6 +625,8 @@ func getObjectCertificateCa(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["last-updated"] = t
 		}
+	} else if d.HasChange("last_updated") {
+		obj["last-updated"] = nil
 	}
 
 	return &obj, nil

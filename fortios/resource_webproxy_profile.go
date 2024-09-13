@@ -101,13 +101,11 @@ func resourceWebProxyProfile() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"name": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 						"dstaddr": &schema.Schema{
 							Type:     schema.TypeSet,
@@ -118,7 +116,6 @@ func resourceWebProxyProfile() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -132,7 +129,6 @@ func resourceWebProxyProfile() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -146,7 +142,6 @@ func resourceWebProxyProfile() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 1023),
 							Optional:     true,
-							Computed:     true,
 						},
 						"base64_encoding": &schema.Schema{
 							Type:     schema.TypeString,
@@ -454,7 +449,7 @@ func flattenWebProxyProfileHeaders(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenWebProxyProfileHeadersId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWebProxyProfileHeadersName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -726,24 +721,28 @@ func expandWebProxyProfileHeaders(d *schema.ResourceData, v interface{}, pre str
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandWebProxyProfileHeadersId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandWebProxyProfileHeadersName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dstaddr"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["dstaddr"], _ = expandWebProxyProfileHeadersDstaddr(d, i["dstaddr"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["dstaddr"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dstaddr6"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["dstaddr6"], _ = expandWebProxyProfileHeadersDstaddr6(d, i["dstaddr6"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["dstaddr6"] = make([]string, 0)
 		}
 
@@ -755,6 +754,8 @@ func expandWebProxyProfileHeaders(d *schema.ResourceData, v interface{}, pre str
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "content"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["content"], _ = expandWebProxyProfileHeadersContent(d, i["content"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["content"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "base64_encoding"

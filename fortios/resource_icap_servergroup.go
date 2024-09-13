@@ -57,7 +57,6 @@ func resourceIcapServerGroup() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"weight": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -289,7 +288,7 @@ func flattenIcapServerGroupServerListName(v interface{}, d *schema.ResourceData,
 }
 
 func flattenIcapServerGroupServerListWeight(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectIcapServerGroup(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -363,6 +362,8 @@ func expandIcapServerGroupServerList(d *schema.ResourceData, v interface{}, pre 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandIcapServerGroupServerListName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "weight"

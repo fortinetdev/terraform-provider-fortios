@@ -267,7 +267,6 @@ func resourceSystemAccprofile() *schema.Resource {
 						"spamfilter": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"data_loss_prevention": &schema.Schema{
 							Type:     schema.TypeString,
@@ -970,7 +969,7 @@ func flattenSystemAccprofileAdmintimeoutOverride(v interface{}, d *schema.Resour
 }
 
 func flattenSystemAccprofileAdmintimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemAccprofileCliDiagnose(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1713,6 +1712,8 @@ func getObjectSystemAccprofile(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["comments"] = t
 		}
+	} else if d.HasChange("comments") {
+		obj["comments"] = nil
 	}
 
 	if v, ok := d.GetOk("secfabgrp"); ok {

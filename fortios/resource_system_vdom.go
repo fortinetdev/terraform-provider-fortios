@@ -47,22 +47,18 @@ func resourceSystemVdom() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 11),
 				Optional:     true,
-				Computed:     true,
 			},
 			"vcluster_id": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"flag": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"temporary": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 		},
 	}
@@ -228,15 +224,15 @@ func flattenSystemVdomShortName(v interface{}, d *schema.ResourceData, pre strin
 }
 
 func flattenSystemVdomVclusterId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVdomFlag(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemVdomTemporary(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectSystemVdom(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -320,6 +316,8 @@ func getObjectSystemVdom(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["short-name"] = t
 		}
+	} else if d.HasChange("short_name") {
+		obj["short-name"] = nil
 	}
 
 	if v, ok := d.GetOkExists("vcluster_id"); ok {
@@ -329,6 +327,8 @@ func getObjectSystemVdom(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["vcluster-id"] = t
 		}
+	} else if d.HasChange("vcluster_id") {
+		obj["vcluster-id"] = nil
 	}
 
 	if v, ok := d.GetOkExists("flag"); ok {
@@ -338,6 +338,8 @@ func getObjectSystemVdom(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["flag"] = t
 		}
+	} else if d.HasChange("flag") {
+		obj["flag"] = nil
 	}
 
 	if v, ok := d.GetOkExists("temporary"); ok {
@@ -347,6 +349,8 @@ func getObjectSystemVdom(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["temporary"] = t
 		}
+	} else if d.HasChange("temporary") {
+		obj["temporary"] = nil
 	}
 
 	return &obj, nil

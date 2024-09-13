@@ -47,7 +47,6 @@ func resourceSystemGreTunnel() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ip_version": &schema.Schema{
 				Type:     schema.TypeString,
@@ -100,12 +99,10 @@ func resourceSystemGreTunnel() *schema.Resource {
 			"key_outbound": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"key_inbound": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"dscp_copying": &schema.Schema{
 				Type:     schema.TypeString,
@@ -121,7 +118,6 @@ func resourceSystemGreTunnel() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 32767),
 				Optional:     true,
-				Computed:     true,
 			},
 			"keepalive_failtimes": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -333,11 +329,11 @@ func flattenSystemGreTunnelChecksumReception(v interface{}, d *schema.ResourceDa
 }
 
 func flattenSystemGreTunnelKeyOutbound(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemGreTunnelKeyInbound(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemGreTunnelDscpCopying(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -349,11 +345,11 @@ func flattenSystemGreTunnelDiffservcode(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenSystemGreTunnelKeepaliveInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemGreTunnelKeepaliveFailtimes(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectSystemGreTunnel(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -567,6 +563,8 @@ func getObjectSystemGreTunnel(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["interface"] = t
 		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
 	}
 
 	if v, ok := d.GetOk("ip_version"); ok {
@@ -666,6 +664,8 @@ func getObjectSystemGreTunnel(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["key-outbound"] = t
 		}
+	} else if d.HasChange("key_outbound") {
+		obj["key-outbound"] = nil
 	}
 
 	if v, ok := d.GetOkExists("key_inbound"); ok {
@@ -675,6 +675,8 @@ func getObjectSystemGreTunnel(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["key-inbound"] = t
 		}
+	} else if d.HasChange("key_inbound") {
+		obj["key-inbound"] = nil
 	}
 
 	if v, ok := d.GetOk("dscp_copying"); ok {
@@ -702,6 +704,8 @@ func getObjectSystemGreTunnel(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["keepalive-interval"] = t
 		}
+	} else if d.HasChange("keepalive_interval") {
+		obj["keepalive-interval"] = nil
 	}
 
 	if v, ok := d.GetOk("keepalive_failtimes"); ok {

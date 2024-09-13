@@ -53,6 +53,10 @@ func dataSourceSystemVdomNetflow() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"source_ip_interface": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"interface_select_method": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
@@ -165,6 +169,11 @@ func dataSourceFlattenSystemVdomNetflowCollectors(v interface{}, d *schema.Resou
 			tmp["source_ip"] = dataSourceFlattenSystemVdomNetflowCollectorsSourceIp(i["source-ip"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_ip_interface"
+		if _, ok := i["source-ip-interface"]; ok {
+			tmp["source_ip_interface"] = dataSourceFlattenSystemVdomNetflowCollectorsSourceIpInterface(i["source-ip-interface"], d, pre_append)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_select_method"
 		if _, ok := i["interface-select-method"]; ok {
 			tmp["interface_select_method"] = dataSourceFlattenSystemVdomNetflowCollectorsInterfaceSelectMethod(i["interface-select-method"], d, pre_append)
@@ -196,6 +205,10 @@ func dataSourceFlattenSystemVdomNetflowCollectorsCollectorPort(v interface{}, d 
 }
 
 func dataSourceFlattenSystemVdomNetflowCollectorsSourceIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemVdomNetflowCollectorsSourceIpInterface(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 

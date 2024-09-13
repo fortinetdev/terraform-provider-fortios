@@ -52,19 +52,16 @@ func resourceWirelessControllerHotspot20AnqpVenueUrl() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 10),
 							Optional:     true,
-							Computed:     true,
 						},
 						"number": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"value": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 254),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -287,11 +284,11 @@ func flattenWirelessControllerHotspot20AnqpVenueUrlValueList(v interface{}, d *s
 }
 
 func flattenWirelessControllerHotspot20AnqpVenueUrlValueListIndex(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerHotspot20AnqpVenueUrlValueListNumber(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerHotspot20AnqpVenueUrlValueListValue(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -359,16 +356,22 @@ func expandWirelessControllerHotspot20AnqpVenueUrlValueList(d *schema.ResourceDa
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "index"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["index"], _ = expandWirelessControllerHotspot20AnqpVenueUrlValueListIndex(d, i["index"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["index"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "number"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["number"], _ = expandWirelessControllerHotspot20AnqpVenueUrlValueListNumber(d, i["number"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["number"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["value"], _ = expandWirelessControllerHotspot20AnqpVenueUrlValueListValue(d, i["value"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["value"] = nil
 		}
 
 		result = append(result, tmp)

@@ -232,10 +232,6 @@ func flattenSwitchControllerSwitchProfileLoginPasswdOverride(v interface{}, d *s
 	return v
 }
 
-func flattenSwitchControllerSwitchProfileLoginPasswd(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
 func flattenSwitchControllerSwitchProfileLogin(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -342,6 +338,8 @@ func getObjectSwitchControllerSwitchProfile(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["login-passwd"] = t
 		}
+	} else if d.HasChange("login_passwd") {
+		obj["login-passwd"] = nil
 	}
 
 	if v, ok := d.GetOk("login"); ok {

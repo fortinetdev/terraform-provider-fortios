@@ -51,6 +51,11 @@ func resourceFirewallShapingProfile() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"npu_offloading": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"default_class_id": &schema.Schema{
 				Type:     schema.TypeInt,
 				Required: true,
@@ -68,7 +73,6 @@ func resourceFirewallShapingProfile() *schema.Resource {
 						"class_id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"priority": &schema.Schema{
 							Type:     schema.TypeString,
@@ -79,7 +83,6 @@ func resourceFirewallShapingProfile() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 100),
 							Optional:     true,
-							Computed:     true,
 						},
 						"maximum_bandwidth_percentage": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -97,19 +100,16 @@ func resourceFirewallShapingProfile() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 2000),
 							Optional:     true,
-							Computed:     true,
 						},
 						"cburst_in_msec": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 2000),
 							Optional:     true,
-							Computed:     true,
 						},
 						"red_probability": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 20),
 							Optional:     true,
-							Computed:     true,
 						},
 						"min": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -303,8 +303,12 @@ func flattenFirewallShapingProfileType(v interface{}, d *schema.ResourceData, pr
 	return v
 }
 
-func flattenFirewallShapingProfileDefaultClassId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+func flattenFirewallShapingProfileNpuOffloading(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
+}
+
+func flattenFirewallShapingProfileDefaultClassId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
 }
 
 func flattenFirewallShapingProfileShapingEntries(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -396,11 +400,11 @@ func flattenFirewallShapingProfileShapingEntries(v interface{}, d *schema.Resour
 }
 
 func flattenFirewallShapingProfileShapingEntriesId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallShapingProfileShapingEntriesClassId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallShapingProfileShapingEntriesPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -408,35 +412,35 @@ func flattenFirewallShapingProfileShapingEntriesPriority(v interface{}, d *schem
 }
 
 func flattenFirewallShapingProfileShapingEntriesGuaranteedBandwidthPercentage(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallShapingProfileShapingEntriesMaximumBandwidthPercentage(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallShapingProfileShapingEntriesLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallShapingProfileShapingEntriesBurstInMsec(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallShapingProfileShapingEntriesCburstInMsec(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallShapingProfileShapingEntriesRedProbability(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallShapingProfileShapingEntriesMin(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallShapingProfileShapingEntriesMax(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectFirewallShapingProfile(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -463,6 +467,12 @@ func refreshObjectFirewallShapingProfile(d *schema.ResourceData, o map[string]in
 	if err = d.Set("type", flattenFirewallShapingProfileType(o["type"], d, "type", sv)); err != nil {
 		if !fortiAPIPatch(o["type"]) {
 			return fmt.Errorf("Error reading type: %v", err)
+		}
+	}
+
+	if err = d.Set("npu_offloading", flattenFirewallShapingProfileNpuOffloading(o["npu-offloading"], d, "npu_offloading", sv)); err != nil {
+		if !fortiAPIPatch(o["npu-offloading"]) {
+			return fmt.Errorf("Error reading npu_offloading: %v", err)
 		}
 	}
 
@@ -509,6 +519,10 @@ func expandFirewallShapingProfileType(d *schema.ResourceData, v interface{}, pre
 	return v, nil
 }
 
+func expandFirewallShapingProfileNpuOffloading(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallShapingProfileDefaultClassId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -535,6 +549,8 @@ func expandFirewallShapingProfileShapingEntries(d *schema.ResourceData, v interf
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "class_id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["class-id"], _ = expandFirewallShapingProfileShapingEntriesClassId(d, i["class_id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["class-id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
@@ -545,6 +561,8 @@ func expandFirewallShapingProfileShapingEntries(d *schema.ResourceData, v interf
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "guaranteed_bandwidth_percentage"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["guaranteed-bandwidth-percentage"], _ = expandFirewallShapingProfileShapingEntriesGuaranteedBandwidthPercentage(d, i["guaranteed_bandwidth_percentage"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["guaranteed-bandwidth-percentage"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_bandwidth_percentage"
@@ -560,16 +578,22 @@ func expandFirewallShapingProfileShapingEntries(d *schema.ResourceData, v interf
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "burst_in_msec"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["burst-in-msec"], _ = expandFirewallShapingProfileShapingEntriesBurstInMsec(d, i["burst_in_msec"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["burst-in-msec"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "cburst_in_msec"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["cburst-in-msec"], _ = expandFirewallShapingProfileShapingEntriesCburstInMsec(d, i["cburst_in_msec"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["cburst-in-msec"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "red_probability"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["red-probability"], _ = expandFirewallShapingProfileShapingEntriesRedProbability(d, i["red_probability"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["red-probability"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "min"
@@ -644,6 +668,8 @@ func getObjectFirewallShapingProfile(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["profile-name"] = t
 		}
+	} else if d.HasChange("profile_name") {
+		obj["profile-name"] = nil
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
@@ -653,6 +679,8 @@ func getObjectFirewallShapingProfile(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("type"); ok {
@@ -664,6 +692,15 @@ func getObjectFirewallShapingProfile(d *schema.ResourceData, sv string) (*map[st
 		}
 	}
 
+	if v, ok := d.GetOk("npu_offloading"); ok {
+		t, err := expandFirewallShapingProfileNpuOffloading(d, v, "npu_offloading", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["npu-offloading"] = t
+		}
+	}
+
 	if v, ok := d.GetOkExists("default_class_id"); ok {
 		t, err := expandFirewallShapingProfileDefaultClassId(d, v, "default_class_id", sv)
 		if err != nil {
@@ -671,6 +708,8 @@ func getObjectFirewallShapingProfile(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["default-class-id"] = t
 		}
+	} else if d.HasChange("default_class_id") {
+		obj["default-class-id"] = nil
 	}
 
 	if v, ok := d.GetOk("shaping_entries"); ok || d.HasChange("shaping_entries") {

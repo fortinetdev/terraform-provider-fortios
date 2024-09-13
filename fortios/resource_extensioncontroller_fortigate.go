@@ -47,7 +47,6 @@ func resourceExtensionControllerFortigate() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 19),
 				Optional:     true,
-				Computed:     true,
 			},
 			"authorized": &schema.Schema{
 				Type:     schema.TypeString,
@@ -58,18 +57,15 @@ func resourceExtensionControllerFortigate() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 31),
 				Optional:     true,
-				Computed:     true,
 			},
 			"description": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"vdom": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"device_id": &schema.Schema{
 				Type:     schema.TypeInt,
@@ -80,7 +76,6 @@ func resourceExtensionControllerFortigate() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 31),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -258,11 +253,11 @@ func flattenExtensionControllerFortigateDescription(v interface{}, d *schema.Res
 }
 
 func flattenExtensionControllerFortigateVdom(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenExtensionControllerFortigateDeviceId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenExtensionControllerFortigateProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -380,6 +375,8 @@ func getObjectExtensionControllerFortigate(d *schema.ResourceData, sv string) (*
 		} else if t != nil {
 			obj["id"] = t
 		}
+	} else if d.HasChange("fosid") {
+		obj["id"] = nil
 	}
 
 	if v, ok := d.GetOk("authorized"); ok {
@@ -398,6 +395,8 @@ func getObjectExtensionControllerFortigate(d *schema.ResourceData, sv string) (*
 		} else if t != nil {
 			obj["hostname"] = t
 		}
+	} else if d.HasChange("hostname") {
+		obj["hostname"] = nil
 	}
 
 	if v, ok := d.GetOk("description"); ok {
@@ -407,6 +406,8 @@ func getObjectExtensionControllerFortigate(d *schema.ResourceData, sv string) (*
 		} else if t != nil {
 			obj["description"] = t
 		}
+	} else if d.HasChange("description") {
+		obj["description"] = nil
 	}
 
 	if v, ok := d.GetOkExists("vdom"); ok {
@@ -416,6 +417,8 @@ func getObjectExtensionControllerFortigate(d *schema.ResourceData, sv string) (*
 		} else if t != nil {
 			obj["vdom"] = t
 		}
+	} else if d.HasChange("vdom") {
+		obj["vdom"] = nil
 	}
 
 	if v, ok := d.GetOkExists("device_id"); ok {
@@ -434,6 +437,8 @@ func getObjectExtensionControllerFortigate(d *schema.ResourceData, sv string) (*
 		} else if t != nil {
 			obj["profile"] = t
 		}
+	} else if d.HasChange("profile") {
+		obj["profile"] = nil
 	}
 
 	return &obj, nil

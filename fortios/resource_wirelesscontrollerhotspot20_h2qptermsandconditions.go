@@ -47,18 +47,15 @@ func resourceWirelessControllerHotspot20H2QpTermsAndConditions() *schema.Resourc
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 254),
 				Optional:     true,
-				Computed:     true,
 			},
 			"timestamp": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"url": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 253),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -224,7 +221,7 @@ func flattenWirelessControllerHotspot20H2QpTermsAndConditionsFilename(v interfac
 }
 
 func flattenWirelessControllerHotspot20H2QpTermsAndConditionsTimestamp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerHotspot20H2QpTermsAndConditionsUrl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -302,6 +299,8 @@ func getObjectWirelessControllerHotspot20H2QpTermsAndConditions(d *schema.Resour
 		} else if t != nil {
 			obj["filename"] = t
 		}
+	} else if d.HasChange("filename") {
+		obj["filename"] = nil
 	}
 
 	if v, ok := d.GetOkExists("timestamp"); ok {
@@ -311,6 +310,8 @@ func getObjectWirelessControllerHotspot20H2QpTermsAndConditions(d *schema.Resour
 		} else if t != nil {
 			obj["timestamp"] = t
 		}
+	} else if d.HasChange("timestamp") {
+		obj["timestamp"] = nil
 	}
 
 	if v, ok := d.GetOk("url"); ok {
@@ -320,6 +321,8 @@ func getObjectWirelessControllerHotspot20H2QpTermsAndConditions(d *schema.Resour
 		} else if t != nil {
 			obj["url"] = t
 		}
+	} else if d.HasChange("url") {
+		obj["url"] = nil
 	}
 
 	return &obj, nil

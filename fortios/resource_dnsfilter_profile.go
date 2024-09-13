@@ -57,7 +57,6 @@ func resourceDnsfilterProfile() *schema.Resource {
 						"domain_filter_table": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -72,7 +71,6 @@ func resourceDnsfilterProfile() *schema.Resource {
 						"options": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"filters": &schema.Schema{
 							Type:     schema.TypeList,
@@ -83,13 +81,11 @@ func resourceDnsfilterProfile() *schema.Resource {
 										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 255),
 										Optional:     true,
-										Computed:     true,
 									},
 									"category": &schema.Schema{
 										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 255),
 										Optional:     true,
-										Computed:     true,
 									},
 									"action": &schema.Schema{
 										Type:     schema.TypeString,
@@ -161,7 +157,6 @@ func resourceDnsfilterProfile() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -174,7 +169,6 @@ func resourceDnsfilterProfile() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"addr_type": &schema.Schema{
 							Type:     schema.TypeString,
@@ -229,7 +223,6 @@ func resourceDnsfilterProfile() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -431,7 +424,7 @@ func flattenDnsfilterProfileDomainFilter(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenDnsfilterProfileDomainFilterDomainFilterTable(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenDnsfilterProfileFtgdDns(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -515,11 +508,11 @@ func flattenDnsfilterProfileFtgdDnsFilters(v interface{}, d *schema.ResourceData
 }
 
 func flattenDnsfilterProfileFtgdDnsFiltersId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenDnsfilterProfileFtgdDnsFiltersCategory(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenDnsfilterProfileFtgdDnsFiltersAction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -687,7 +680,7 @@ func flattenDnsfilterProfileDnsTranslation(v interface{}, d *schema.ResourceData
 }
 
 func flattenDnsfilterProfileDnsTranslationId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenDnsfilterProfileDnsTranslationAddrType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -719,7 +712,7 @@ func flattenDnsfilterProfileDnsTranslationDst6(v interface{}, d *schema.Resource
 }
 
 func flattenDnsfilterProfileDnsTranslationPrefix(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenDnsfilterProfileTransparentDnsDatabase(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -1013,11 +1006,15 @@ func expandDnsfilterProfileFtgdDnsFilters(d *schema.ResourceData, v interface{},
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandDnsfilterProfileFtgdDnsFiltersId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["category"], _ = expandDnsfilterProfileFtgdDnsFiltersCategory(d, i["category"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["category"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
@@ -1135,6 +1132,8 @@ func expandDnsfilterProfileDnsTranslation(d *schema.ResourceData, v interface{},
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandDnsfilterProfileDnsTranslationId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr_type"
@@ -1272,6 +1271,8 @@ func getObjectDnsfilterProfile(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("domain_filter"); ok {

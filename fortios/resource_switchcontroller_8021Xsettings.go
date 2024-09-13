@@ -212,15 +212,15 @@ func flattenSwitchController8021XSettingsLinkDownAuth(v interface{}, d *schema.R
 }
 
 func flattenSwitchController8021XSettingsReauthPeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchController8021XSettingsMaxReauthAttempt(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchController8021XSettingsTxPeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchController8021XSettingsMabReauth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {

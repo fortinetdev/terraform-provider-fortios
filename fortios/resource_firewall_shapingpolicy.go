@@ -51,7 +51,6 @@ func resourceFirewallShapingPolicy() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"comment": &schema.Schema{
 				Type:         schema.TypeString,
@@ -82,7 +81,6 @@ func resourceFirewallShapingPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -96,7 +94,6 @@ func resourceFirewallShapingPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -110,7 +107,6 @@ func resourceFirewallShapingPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -124,7 +120,6 @@ func resourceFirewallShapingPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -143,7 +138,6 @@ func resourceFirewallShapingPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -156,7 +150,6 @@ func resourceFirewallShapingPolicy() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -170,7 +163,6 @@ func resourceFirewallShapingPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -184,7 +176,6 @@ func resourceFirewallShapingPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -198,7 +189,6 @@ func resourceFirewallShapingPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -217,7 +207,6 @@ func resourceFirewallShapingPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -230,7 +219,6 @@ func resourceFirewallShapingPolicy() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -244,7 +232,6 @@ func resourceFirewallShapingPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -258,7 +245,6 @@ func resourceFirewallShapingPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -272,7 +258,6 @@ func resourceFirewallShapingPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -286,7 +271,6 @@ func resourceFirewallShapingPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -295,7 +279,6 @@ func resourceFirewallShapingPolicy() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"users": &schema.Schema{
 				Type:     schema.TypeSet,
@@ -306,7 +289,6 @@ func resourceFirewallShapingPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -320,7 +302,6 @@ func resourceFirewallShapingPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -333,7 +314,6 @@ func resourceFirewallShapingPolicy() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -346,7 +326,6 @@ func resourceFirewallShapingPolicy() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -360,7 +339,6 @@ func resourceFirewallShapingPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -373,7 +351,6 @@ func resourceFirewallShapingPolicy() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -387,7 +364,6 @@ func resourceFirewallShapingPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -401,7 +377,6 @@ func resourceFirewallShapingPolicy() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -425,24 +400,20 @@ func resourceFirewallShapingPolicy() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"traffic_shaper_reverse": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"per_ip_shaper": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"class_id": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"diffserv_forward": &schema.Schema{
 				Type:     schema.TypeString,
@@ -640,7 +611,7 @@ func resourceFirewallShapingPolicyRead(d *schema.ResourceData, m interface{}) er
 }
 
 func flattenFirewallShapingPolicyId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallShapingPolicyUuid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -920,7 +891,7 @@ func flattenFirewallShapingPolicyInternetServiceId(v interface{}, d *schema.Reso
 }
 
 func flattenFirewallShapingPolicyInternetServiceIdId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallShapingPolicyInternetServiceGroup(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -1134,7 +1105,7 @@ func flattenFirewallShapingPolicyInternetServiceSrcId(v interface{}, d *schema.R
 }
 
 func flattenFirewallShapingPolicyInternetServiceSrcIdId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallShapingPolicyInternetServiceSrcGroup(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -1432,7 +1403,7 @@ func flattenFirewallShapingPolicyApplication(v interface{}, d *schema.ResourceDa
 }
 
 func flattenFirewallShapingPolicyApplicationId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallShapingPolicyAppCategory(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -1474,7 +1445,7 @@ func flattenFirewallShapingPolicyAppCategory(v interface{}, d *schema.ResourceDa
 }
 
 func flattenFirewallShapingPolicyAppCategoryId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallShapingPolicyAppGroup(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -1558,7 +1529,7 @@ func flattenFirewallShapingPolicyUrlCategory(v interface{}, d *schema.ResourceDa
 }
 
 func flattenFirewallShapingPolicyUrlCategoryId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallShapingPolicySrcintf(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -1670,7 +1641,7 @@ func flattenFirewallShapingPolicyPerIpShaper(v interface{}, d *schema.ResourceDa
 }
 
 func flattenFirewallShapingPolicyClassId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallShapingPolicyDiffservForward(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2985,6 +2956,8 @@ func getObjectFirewallShapingPolicy(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
@@ -2994,6 +2967,8 @@ func getObjectFirewallShapingPolicy(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("status"); ok {
@@ -3183,6 +3158,8 @@ func getObjectFirewallShapingPolicy(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["schedule"] = t
 		}
+	} else if d.HasChange("schedule") {
+		obj["schedule"] = nil
 	}
 
 	if v, ok := d.GetOk("users"); ok || d.HasChange("users") {
@@ -3291,6 +3268,8 @@ func getObjectFirewallShapingPolicy(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["traffic-shaper"] = t
 		}
+	} else if d.HasChange("traffic_shaper") {
+		obj["traffic-shaper"] = nil
 	}
 
 	if v, ok := d.GetOk("traffic_shaper_reverse"); ok {
@@ -3300,6 +3279,8 @@ func getObjectFirewallShapingPolicy(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["traffic-shaper-reverse"] = t
 		}
+	} else if d.HasChange("traffic_shaper_reverse") {
+		obj["traffic-shaper-reverse"] = nil
 	}
 
 	if v, ok := d.GetOk("per_ip_shaper"); ok {
@@ -3309,6 +3290,8 @@ func getObjectFirewallShapingPolicy(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["per-ip-shaper"] = t
 		}
+	} else if d.HasChange("per_ip_shaper") {
+		obj["per-ip-shaper"] = nil
 	}
 
 	if v, ok := d.GetOkExists("class_id"); ok {
@@ -3318,6 +3301,8 @@ func getObjectFirewallShapingPolicy(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["class-id"] = t
 		}
+	} else if d.HasChange("class_id") {
+		obj["class-id"] = nil
 	}
 
 	if v, ok := d.GetOk("diffserv_forward"); ok {

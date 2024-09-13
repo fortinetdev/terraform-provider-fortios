@@ -58,6 +58,30 @@ func dataSourceSystemHa() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"auto_virtual_mac_interface": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"interface_name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
+			"backup_hbdev": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
 			"unicast_hb": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -494,6 +518,10 @@ func dataSourceSystemHa() *schema.Resource {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+			"check_secondary_dev_health": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"ipsec_phase2_proposal": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -565,6 +593,78 @@ func dataSourceFlattenSystemHaKey(v interface{}, d *schema.ResourceData, pre str
 }
 
 func dataSourceFlattenSystemHaHbdev(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemHaAutoVirtualMacInterface(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
+		if _, ok := i["interface-name"]; ok {
+			tmp["interface_name"] = dataSourceFlattenSystemHaAutoVirtualMacInterfaceInterfaceName(i["interface-name"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenSystemHaAutoVirtualMacInterfaceInterfaceName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemHaBackupHbdev(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = dataSourceFlattenSystemHaBackupHbdevName(i["name"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenSystemHaBackupHbdevName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1237,6 +1337,10 @@ func dataSourceFlattenSystemHaFailoverHoldTime(v interface{}, d *schema.Resource
 	return v
 }
 
+func dataSourceFlattenSystemHaCheckSecondaryDevHealth(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemHaIpsecPhase2Proposal(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -1275,6 +1379,18 @@ func dataSourceRefreshObjectSystemHa(d *schema.ResourceData, o map[string]interf
 	if err = d.Set("hbdev", dataSourceFlattenSystemHaHbdev(o["hbdev"], d, "hbdev")); err != nil {
 		if !fortiAPIPatch(o["hbdev"]) {
 			return fmt.Errorf("Error reading hbdev: %v", err)
+		}
+	}
+
+	if err = d.Set("auto_virtual_mac_interface", dataSourceFlattenSystemHaAutoVirtualMacInterface(o["auto-virtual-mac-interface"], d, "auto_virtual_mac_interface")); err != nil {
+		if !fortiAPIPatch(o["auto-virtual-mac-interface"]) {
+			return fmt.Errorf("Error reading auto_virtual_mac_interface: %v", err)
+		}
+	}
+
+	if err = d.Set("backup_hbdev", dataSourceFlattenSystemHaBackupHbdev(o["backup-hbdev"], d, "backup_hbdev")); err != nil {
+		if !fortiAPIPatch(o["backup-hbdev"]) {
+			return fmt.Errorf("Error reading backup_hbdev: %v", err)
 		}
 	}
 
@@ -1725,6 +1841,12 @@ func dataSourceRefreshObjectSystemHa(d *schema.ResourceData, o map[string]interf
 	if err = d.Set("failover_hold_time", dataSourceFlattenSystemHaFailoverHoldTime(o["failover-hold-time"], d, "failover_hold_time")); err != nil {
 		if !fortiAPIPatch(o["failover-hold-time"]) {
 			return fmt.Errorf("Error reading failover_hold_time: %v", err)
+		}
+	}
+
+	if err = d.Set("check_secondary_dev_health", dataSourceFlattenSystemHaCheckSecondaryDevHealth(o["check-secondary-dev-health"], d, "check_secondary_dev_health")); err != nil {
+		if !fortiAPIPatch(o["check-secondary-dev-health"]) {
+			return fmt.Errorf("Error reading check_secondary_dev_health: %v", err)
 		}
 	}
 

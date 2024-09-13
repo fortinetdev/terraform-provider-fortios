@@ -40,7 +40,11 @@ func resourceFirewallIppool6() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
-				Computed:     true,
+			},
+			"type": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"startip": &schema.Schema{
 				Type:     schema.TypeString,
@@ -49,6 +53,16 @@ func resourceFirewallIppool6() *schema.Resource {
 			"endip": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
+			},
+			"internal_prefix": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"external_prefix": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"comments": &schema.Schema{
 				Type:         schema.TypeString,
@@ -224,11 +238,23 @@ func flattenFirewallIppool6Name(v interface{}, d *schema.ResourceData, pre strin
 	return v
 }
 
+func flattenFirewallIppool6Type(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallIppool6Startip(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
 func flattenFirewallIppool6Endip(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallIppool6InternalPrefix(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallIppool6ExternalPrefix(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -253,6 +279,12 @@ func refreshObjectFirewallIppool6(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
+	if err = d.Set("type", flattenFirewallIppool6Type(o["type"], d, "type", sv)); err != nil {
+		if !fortiAPIPatch(o["type"]) {
+			return fmt.Errorf("Error reading type: %v", err)
+		}
+	}
+
 	if err = d.Set("startip", flattenFirewallIppool6Startip(o["startip"], d, "startip", sv)); err != nil {
 		if !fortiAPIPatch(o["startip"]) {
 			return fmt.Errorf("Error reading startip: %v", err)
@@ -262,6 +294,18 @@ func refreshObjectFirewallIppool6(d *schema.ResourceData, o map[string]interface
 	if err = d.Set("endip", flattenFirewallIppool6Endip(o["endip"], d, "endip", sv)); err != nil {
 		if !fortiAPIPatch(o["endip"]) {
 			return fmt.Errorf("Error reading endip: %v", err)
+		}
+	}
+
+	if err = d.Set("internal_prefix", flattenFirewallIppool6InternalPrefix(o["internal-prefix"], d, "internal_prefix", sv)); err != nil {
+		if !fortiAPIPatch(o["internal-prefix"]) {
+			return fmt.Errorf("Error reading internal_prefix: %v", err)
+		}
+	}
+
+	if err = d.Set("external_prefix", flattenFirewallIppool6ExternalPrefix(o["external-prefix"], d, "external_prefix", sv)); err != nil {
+		if !fortiAPIPatch(o["external-prefix"]) {
+			return fmt.Errorf("Error reading external_prefix: %v", err)
 		}
 	}
 
@@ -296,11 +340,23 @@ func expandFirewallIppool6Name(d *schema.ResourceData, v interface{}, pre string
 	return v, nil
 }
 
+func expandFirewallIppool6Type(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallIppool6Startip(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
 func expandFirewallIppool6Endip(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallIppool6InternalPrefix(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallIppool6ExternalPrefix(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -326,6 +382,17 @@ func getObjectFirewallIppool6(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
+	}
+
+	if v, ok := d.GetOk("type"); ok {
+		t, err := expandFirewallIppool6Type(d, v, "type", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["type"] = t
+		}
 	}
 
 	if v, ok := d.GetOk("startip"); ok {
@@ -346,6 +413,24 @@ func getObjectFirewallIppool6(d *schema.ResourceData, sv string) (*map[string]in
 		}
 	}
 
+	if v, ok := d.GetOk("internal_prefix"); ok {
+		t, err := expandFirewallIppool6InternalPrefix(d, v, "internal_prefix", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["internal-prefix"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("external_prefix"); ok {
+		t, err := expandFirewallIppool6ExternalPrefix(d, v, "external_prefix", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["external-prefix"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("comments"); ok {
 		t, err := expandFirewallIppool6Comments(d, v, "comments", sv)
 		if err != nil {
@@ -353,6 +438,8 @@ func getObjectFirewallIppool6(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["comments"] = t
 		}
+	} else if d.HasChange("comments") {
+		obj["comments"] = nil
 	}
 
 	if v, ok := d.GetOk("nat46"); ok {

@@ -66,13 +66,11 @@ func resourceSystemExternalResource() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(192, 221),
 				Optional:     true,
-				Computed:     true,
 			},
 			"username": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 64),
 				Optional:     true,
-				Computed:     true,
 			},
 			"password": &schema.Schema{
 				Type:         schema.TypeString,
@@ -120,7 +118,6 @@ func resourceSystemExternalResource() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -298,14 +295,10 @@ func flattenSystemExternalResourceUpdateMethod(v interface{}, d *schema.Resource
 }
 
 func flattenSystemExternalResourceCategory(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemExternalResourceUsername(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenSystemExternalResourcePassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -326,7 +319,7 @@ func flattenSystemExternalResourceServerIdentityCheck(v interface{}, d *schema.R
 }
 
 func flattenSystemExternalResourceRefreshRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemExternalResourceSourceIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -562,6 +555,8 @@ func getObjectSystemExternalResource(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["category"] = t
 		}
+	} else if d.HasChange("category") {
+		obj["category"] = nil
 	}
 
 	if v, ok := d.GetOk("username"); ok {
@@ -571,6 +566,8 @@ func getObjectSystemExternalResource(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["username"] = t
 		}
+	} else if d.HasChange("username") {
+		obj["username"] = nil
 	}
 
 	if v, ok := d.GetOk("password"); ok {
@@ -580,6 +577,8 @@ func getObjectSystemExternalResource(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["password"] = t
 		}
+	} else if d.HasChange("password") {
+		obj["password"] = nil
 	}
 
 	if v, ok := d.GetOk("comments"); ok {
@@ -589,6 +588,8 @@ func getObjectSystemExternalResource(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["comments"] = t
 		}
+	} else if d.HasChange("comments") {
+		obj["comments"] = nil
 	}
 
 	if v, ok := d.GetOk("resource"); ok {
@@ -598,6 +599,8 @@ func getObjectSystemExternalResource(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["resource"] = t
 		}
+	} else if d.HasChange("resource") {
+		obj["resource"] = nil
 	}
 
 	if v, ok := d.GetOk("user_agent"); ok {
@@ -652,6 +655,8 @@ func getObjectSystemExternalResource(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["interface"] = t
 		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
 	}
 
 	return &obj, nil

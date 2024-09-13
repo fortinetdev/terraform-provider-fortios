@@ -61,7 +61,6 @@ func resourceRouterbgpNetwork6() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -219,7 +218,7 @@ func resourceRouterbgpNetwork6Read(d *schema.ResourceData, m interface{}) error 
 }
 
 func flattenRouterbgpNetwork6Id(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenRouterbgpNetwork6Prefix6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -346,6 +345,8 @@ func getObjectRouterbgpNetwork6(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["route-map"] = t
 		}
+	} else if d.HasChange("route_map") {
+		obj["route-map"] = nil
 	}
 
 	return &obj, nil

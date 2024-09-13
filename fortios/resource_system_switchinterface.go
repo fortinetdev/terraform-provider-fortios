@@ -46,13 +46,11 @@ func resourceSystemSwitchInterface() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 31),
 				Optional:     true,
-				Computed:     true,
 			},
 			"span_dest_port": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"span_source_port": &schema.Schema{
 				Type:     schema.TypeSet,
@@ -63,7 +61,6 @@ func resourceSystemSwitchInterface() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -77,7 +74,6 @@ func resourceSystemSwitchInterface() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -378,7 +374,7 @@ func flattenSystemSwitchInterfaceIntraSwitchPolicy(v interface{}, d *schema.Reso
 }
 
 func flattenSystemSwitchInterfaceMacTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemSwitchInterfaceSpan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -594,6 +590,8 @@ func getObjectSystemSwitchInterface(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["vdom"] = t
 		}
+	} else if d.HasChange("vdom") {
+		obj["vdom"] = nil
 	}
 
 	if v, ok := d.GetOk("span_dest_port"); ok {
@@ -603,6 +601,8 @@ func getObjectSystemSwitchInterface(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["span-dest-port"] = t
 		}
+	} else if d.HasChange("span_dest_port") {
+		obj["span-dest-port"] = nil
 	}
 
 	if v, ok := d.GetOk("span_source_port"); ok || d.HasChange("span_source_port") {

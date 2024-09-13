@@ -50,38 +50,31 @@ func resourceSpamfilterProfile() *schema.Resource {
 			"flow_based": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"replacemsg_group": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"spam_log": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"spam_log_fortiguard_response": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"spam_filtering": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"external": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"options": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"imap": &schema.Schema{
 				Type:     schema.TypeList,
@@ -93,23 +86,19 @@ func resourceSpamfilterProfile() *schema.Resource {
 						"log": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"action": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"tag_type": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"tag_msg": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -124,23 +113,19 @@ func resourceSpamfilterProfile() *schema.Resource {
 						"log": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"action": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"tag_type": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"tag_msg": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -155,33 +140,27 @@ func resourceSpamfilterProfile() *schema.Resource {
 						"log": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"action": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"tag_type": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"tag_msg": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"hdrip": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"local_override": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -196,12 +175,10 @@ func resourceSpamfilterProfile() *schema.Resource {
 						"log": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"action": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -216,7 +193,6 @@ func resourceSpamfilterProfile() *schema.Resource {
 						"log": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -231,7 +207,6 @@ func resourceSpamfilterProfile() *schema.Resource {
 						"log": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -246,7 +221,6 @@ func resourceSpamfilterProfile() *schema.Resource {
 						"log": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -254,32 +228,26 @@ func resourceSpamfilterProfile() *schema.Resource {
 			"spam_bword_threshold": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"spam_bword_table": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"spam_bwl_table": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"spam_mheader_table": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"spam_rbl_table": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"spam_iptrust_table": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"get_all_tables": &schema.Schema{
 				Type:     schema.TypeString,
@@ -740,27 +708,27 @@ func flattenSpamfilterProfileGmailLog(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenSpamfilterProfileSpamBwordThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSpamfilterProfileSpamBwordTable(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSpamfilterProfileSpamBwlTable(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSpamfilterProfileSpamMheaderTable(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSpamfilterProfileSpamRblTable(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSpamfilterProfileSpamIptrustTable(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectSpamfilterProfile(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -1312,6 +1280,8 @@ func getObjectSpamfilterProfile(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("flow_based"); ok {
@@ -1321,6 +1291,8 @@ func getObjectSpamfilterProfile(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["flow-based"] = t
 		}
+	} else if d.HasChange("flow_based") {
+		obj["flow-based"] = nil
 	}
 
 	if v, ok := d.GetOk("replacemsg_group"); ok {
@@ -1330,6 +1302,8 @@ func getObjectSpamfilterProfile(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["replacemsg-group"] = t
 		}
+	} else if d.HasChange("replacemsg_group") {
+		obj["replacemsg-group"] = nil
 	}
 
 	if v, ok := d.GetOk("spam_log"); ok {
@@ -1339,6 +1313,8 @@ func getObjectSpamfilterProfile(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["spam-log"] = t
 		}
+	} else if d.HasChange("spam_log") {
+		obj["spam-log"] = nil
 	}
 
 	if v, ok := d.GetOk("spam_log_fortiguard_response"); ok {
@@ -1348,6 +1324,8 @@ func getObjectSpamfilterProfile(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["spam-log-fortiguard-response"] = t
 		}
+	} else if d.HasChange("spam_log_fortiguard_response") {
+		obj["spam-log-fortiguard-response"] = nil
 	}
 
 	if v, ok := d.GetOk("spam_filtering"); ok {
@@ -1357,6 +1335,8 @@ func getObjectSpamfilterProfile(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["spam-filtering"] = t
 		}
+	} else if d.HasChange("spam_filtering") {
+		obj["spam-filtering"] = nil
 	}
 
 	if v, ok := d.GetOk("external"); ok {
@@ -1366,6 +1346,8 @@ func getObjectSpamfilterProfile(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["external"] = t
 		}
+	} else if d.HasChange("external") {
+		obj["external"] = nil
 	}
 
 	if v, ok := d.GetOk("options"); ok {
@@ -1375,6 +1357,8 @@ func getObjectSpamfilterProfile(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["options"] = t
 		}
+	} else if d.HasChange("options") {
+		obj["options"] = nil
 	}
 
 	if v, ok := d.GetOk("imap"); ok {
@@ -1447,6 +1431,8 @@ func getObjectSpamfilterProfile(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["spam-bword-threshold"] = t
 		}
+	} else if d.HasChange("spam_bword_threshold") {
+		obj["spam-bword-threshold"] = nil
 	}
 
 	if v, ok := d.GetOkExists("spam_bword_table"); ok {
@@ -1456,6 +1442,8 @@ func getObjectSpamfilterProfile(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["spam-bword-table"] = t
 		}
+	} else if d.HasChange("spam_bword_table") {
+		obj["spam-bword-table"] = nil
 	}
 
 	if v, ok := d.GetOkExists("spam_bwl_table"); ok {
@@ -1465,6 +1453,8 @@ func getObjectSpamfilterProfile(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["spam-bwl-table"] = t
 		}
+	} else if d.HasChange("spam_bwl_table") {
+		obj["spam-bwl-table"] = nil
 	}
 
 	if v, ok := d.GetOkExists("spam_mheader_table"); ok {
@@ -1474,6 +1464,8 @@ func getObjectSpamfilterProfile(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["spam-mheader-table"] = t
 		}
+	} else if d.HasChange("spam_mheader_table") {
+		obj["spam-mheader-table"] = nil
 	}
 
 	if v, ok := d.GetOkExists("spam_rbl_table"); ok {
@@ -1483,6 +1475,8 @@ func getObjectSpamfilterProfile(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["spam-rbl-table"] = t
 		}
+	} else if d.HasChange("spam_rbl_table") {
+		obj["spam-rbl-table"] = nil
 	}
 
 	if v, ok := d.GetOkExists("spam_iptrust_table"); ok {
@@ -1492,6 +1486,8 @@ func getObjectSpamfilterProfile(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["spam-iptrust-table"] = t
 		}
+	} else if d.HasChange("spam_iptrust_table") {
+		obj["spam-iptrust-table"] = nil
 	}
 
 	return &obj, nil

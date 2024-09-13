@@ -47,7 +47,6 @@ func resourceSystemEvpn() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
-				Computed:     true,
 			},
 			"import_rt": &schema.Schema{
 				Type:     schema.TypeSet,
@@ -58,7 +57,6 @@ func resourceSystemEvpn() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -72,7 +70,6 @@ func resourceSystemEvpn() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -253,7 +250,7 @@ func resourceSystemEvpnRead(d *schema.ResourceData, m interface{}) error {
 }
 
 func flattenSystemEvpnId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemEvpnRd(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -517,6 +514,8 @@ func getObjectSystemEvpn(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["rd"] = t
 		}
+	} else if d.HasChange("rd") {
+		obj["rd"] = nil
 	}
 
 	if v, ok := d.GetOk("import_rt"); ok || d.HasChange("import_rt") {

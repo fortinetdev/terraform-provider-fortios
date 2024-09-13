@@ -60,7 +60,6 @@ func resourceSystemDdns() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 256),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -68,13 +67,11 @@ func resourceSystemDdns() *schema.Resource {
 			"ddns_server_ip": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"ddns_zone": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 64),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ddns_ttl": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -91,31 +88,26 @@ func resourceSystemDdns() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 64),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ddns_key": &schema.Schema{
 				Type:      schema.TypeString,
 				Optional:  true,
 				Sensitive: true,
-				Computed:  true,
 			},
 			"ddns_domain": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 64),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ddns_username": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 64),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ddns_sn": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 64),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ddns_password": &schema.Schema{
 				Type:         schema.TypeString,
@@ -164,7 +156,6 @@ func resourceSystemDdns() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -335,7 +326,7 @@ func resourceSystemDdnsRead(d *schema.ResourceData, m interface{}) error {
 }
 
 func flattenSystemDdnsDdnsid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemDdnsDdnsServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -397,7 +388,7 @@ func flattenSystemDdnsDdnsZone(v interface{}, d *schema.ResourceData, pre string
 }
 
 func flattenSystemDdnsDdnsTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemDdnsDdnsAuth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -405,10 +396,6 @@ func flattenSystemDdnsDdnsAuth(v interface{}, d *schema.ResourceData, pre string
 }
 
 func flattenSystemDdnsDdnsKeyname(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenSystemDdnsDdnsKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -424,10 +411,6 @@ func flattenSystemDdnsDdnsSn(v interface{}, d *schema.ResourceData, pre string, 
 	return v
 }
 
-func flattenSystemDdnsDdnsPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
 func flattenSystemDdnsUsePublicIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -437,7 +420,7 @@ func flattenSystemDdnsAddrType(v interface{}, d *schema.ResourceData, pre string
 }
 
 func flattenSystemDdnsUpdateInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemDdnsClearText(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -797,6 +780,8 @@ func getObjectSystemDdns(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["ddns-server"] = t
 		}
+	} else if d.HasChange("ddns_server") {
+		obj["ddns-server"] = nil
 	}
 
 	if v, ok := d.GetOk("server_type"); ok {
@@ -824,6 +809,8 @@ func getObjectSystemDdns(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["ddns-server-ip"] = t
 		}
+	} else if d.HasChange("ddns_server_ip") {
+		obj["ddns-server-ip"] = nil
 	}
 
 	if v, ok := d.GetOk("ddns_zone"); ok {
@@ -833,6 +820,8 @@ func getObjectSystemDdns(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["ddns-zone"] = t
 		}
+	} else if d.HasChange("ddns_zone") {
+		obj["ddns-zone"] = nil
 	}
 
 	if v, ok := d.GetOk("ddns_ttl"); ok {
@@ -860,6 +849,8 @@ func getObjectSystemDdns(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["ddns-keyname"] = t
 		}
+	} else if d.HasChange("ddns_keyname") {
+		obj["ddns-keyname"] = nil
 	}
 
 	if v, ok := d.GetOk("ddns_key"); ok {
@@ -869,6 +860,8 @@ func getObjectSystemDdns(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["ddns-key"] = t
 		}
+	} else if d.HasChange("ddns_key") {
+		obj["ddns-key"] = nil
 	}
 
 	if v, ok := d.GetOk("ddns_domain"); ok {
@@ -878,6 +871,8 @@ func getObjectSystemDdns(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["ddns-domain"] = t
 		}
+	} else if d.HasChange("ddns_domain") {
+		obj["ddns-domain"] = nil
 	}
 
 	if v, ok := d.GetOk("ddns_username"); ok {
@@ -887,6 +882,8 @@ func getObjectSystemDdns(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["ddns-username"] = t
 		}
+	} else if d.HasChange("ddns_username") {
+		obj["ddns-username"] = nil
 	}
 
 	if v, ok := d.GetOk("ddns_sn"); ok {
@@ -896,6 +893,8 @@ func getObjectSystemDdns(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["ddns-sn"] = t
 		}
+	} else if d.HasChange("ddns_sn") {
+		obj["ddns-sn"] = nil
 	}
 
 	if v, ok := d.GetOk("ddns_password"); ok {
@@ -905,6 +904,8 @@ func getObjectSystemDdns(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["ddns-password"] = t
 		}
+	} else if d.HasChange("ddns_password") {
+		obj["ddns-password"] = nil
 	}
 
 	if v, ok := d.GetOk("use_public_ip"); ok {

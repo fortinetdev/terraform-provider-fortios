@@ -40,18 +40,15 @@ func resourceFirewallAccessProxyVirtualHost() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ssl_certificate": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"host": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
-				Computed:     true,
 			},
 			"host_type": &schema.Schema{
 				Type:     schema.TypeString,
@@ -62,7 +59,6 @@ func resourceFirewallAccessProxyVirtualHost() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -224,7 +220,7 @@ func flattenFirewallAccessProxyVirtualHostName(v interface{}, d *schema.Resource
 }
 
 func flattenFirewallAccessProxyVirtualHostSslCertificate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convmap2str(v, d.Get("ssl_certificate"), "name")
 }
 
 func flattenFirewallAccessProxyVirtualHostHost(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -248,42 +244,9 @@ func refreshObjectFirewallAccessProxyVirtualHost(d *schema.ResourceData, o map[s
 		}
 	}
 
-	{
-		v := flattenFirewallAccessProxyVirtualHostSslCertificate(o["ssl-certificate"], d, "ssl_certificate", sv)
-		vx := ""
-		bstring := false
-		new_version_map := map[string][]string{
-			">=": []string{"7.4.2"},
-		}
-		if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
-			l := v.([]interface{})
-			if len(l) > 0 {
-				for k, r := range l {
-					i := r.(map[string]interface{})
-					if _, ok := i["name"]; ok {
-						if xv, ok := i["name"].(string); ok {
-							vx += xv
-							if k < len(l)-1 {
-								vx += ", "
-							}
-						}
-					}
-				}
-			}
-			bstring = true
-		}
-		if bstring == true {
-			if err = d.Set("ssl_certificate", vx); err != nil {
-				if !fortiAPIPatch(o["ssl-certificate"]) {
-					return fmt.Errorf("Error reading ssl_certificate: %v", err)
-				}
-			}
-		} else {
-			if err = d.Set("ssl_certificate", v); err != nil {
-				if !fortiAPIPatch(o["ssl-certificate"]) {
-					return fmt.Errorf("Error reading ssl_certificate: %v", err)
-				}
-			}
+	if err = d.Set("ssl_certificate", flattenFirewallAccessProxyVirtualHostSslCertificate(o["ssl-certificate"], d, "ssl_certificate", sv)); err != nil {
+		if !fortiAPIPatch(o["ssl-certificate"]) {
+			return fmt.Errorf("Error reading ssl_certificate: %v", err)
 		}
 	}
 
@@ -319,7 +282,25 @@ func expandFirewallAccessProxyVirtualHostName(d *schema.ResourceData, v interfac
 }
 
 func expandFirewallAccessProxyVirtualHostSslCertificate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
+	new_version_map := map[string][]string{
+		">=": []string{"7.4.2"},
+	}
+	if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
+		vx := fmt.Sprintf("%v", v)
+		vxx := strings.Split(vx, ", ")
+
+		tmps := make([]map[string]interface{}, 0, len(vxx))
+
+		for _, xv := range vxx {
+			xtmp := make(map[string]interface{})
+			xtmp["name"] = xv
+
+			tmps = append(tmps, xtmp)
+		}
+		return tmps, nil
+	} else {
+		return v, nil
+	}
 }
 
 func expandFirewallAccessProxyVirtualHostHost(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
@@ -344,6 +325,8 @@ func getObjectFirewallAccessProxyVirtualHost(d *schema.ResourceData, sv string) 
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("ssl_certificate"); ok {
@@ -351,26 +334,10 @@ func getObjectFirewallAccessProxyVirtualHost(d *schema.ResourceData, sv string) 
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
-			new_version_map := map[string][]string{
-				">=": []string{"7.4.2"},
-			}
-			if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
-				vx := fmt.Sprintf("%v", t)
-				vxx := strings.Split(vx, ", ")
-
-				tmps := make([]map[string]interface{}, 0, len(vxx))
-
-				for _, xv := range vxx {
-					xtmp := make(map[string]interface{})
-					xtmp["name"] = xv
-
-					tmps = append(tmps, xtmp)
-				}
-				obj["ssl-certificate"] = tmps
-			} else {
-				obj["ssl-certificate"] = t
-			}
+			obj["ssl-certificate"] = t
 		}
+	} else if d.HasChange("ssl_certificate") {
+		obj["ssl-certificate"] = nil
 	}
 
 	if v, ok := d.GetOk("host"); ok {
@@ -380,6 +347,8 @@ func getObjectFirewallAccessProxyVirtualHost(d *schema.ResourceData, sv string) 
 		} else if t != nil {
 			obj["host"] = t
 		}
+	} else if d.HasChange("host") {
+		obj["host"] = nil
 	}
 
 	if v, ok := d.GetOk("host_type"); ok {
@@ -398,6 +367,8 @@ func getObjectFirewallAccessProxyVirtualHost(d *schema.ResourceData, sv string) 
 		} else if t != nil {
 			obj["replacemsg-group"] = t
 		}
+	} else if d.HasChange("replacemsg_group") {
+		obj["replacemsg-group"] = nil
 	}
 
 	return &obj, nil

@@ -14,10 +14,12 @@ Coordinate federated upgrades within the Security Fabric. Applies to FortiOS Ver
 The following arguments are supported:
 
 * `status` - Current status of the upgrade.
+* `source` - Source that set up the federated upgrade config. Valid values: `user`, `auto-firmware-upgrade`.
 * `failure_reason` - Reason for upgrade failure.
 * `failure_device` - Serial number of the node to include.
 * `upgrade_id` - Unique identifier for this upgrade.
 * `next_path_index` - The index of the next image to upgrade to.
+* `ignore_signing_errors` - Allow/reject use of FortiGate firmware images that are unsigned. Valid values: `enable`, `disable`.
 * `ha_reboot_controller` - Serial number of the FortiGate unit that will control the reboot process for the federated upgrade of the HA cluster.
 * `known_ha_members` - Known members of the HA cluster. If a member is missing at upgrade time, the upgrade will be cancelled. The structure of `known_ha_members` block is documented below.
 * `node_list` - Nodes which will be included in the upgrade. The structure of `node_list` block is documented below.

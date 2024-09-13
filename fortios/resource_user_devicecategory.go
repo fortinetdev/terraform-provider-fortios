@@ -280,6 +280,8 @@ func getObjectUserDeviceCategory(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["desc"] = t
 		}
+	} else if d.HasChange("desc") {
+		obj["desc"] = nil
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
@@ -289,6 +291,8 @@ func getObjectUserDeviceCategory(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["comment"] = t
 		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	return &obj, nil

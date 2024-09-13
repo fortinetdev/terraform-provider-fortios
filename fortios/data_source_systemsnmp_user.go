@@ -118,6 +118,14 @@ func dataSourceSystemSnmpUser() *schema.Resource {
 				Sensitive: true,
 				Computed:  true,
 			},
+			"interface_select_method": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"interface": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -277,6 +285,14 @@ func dataSourceFlattenSystemSnmpUserPrivPwd(v interface{}, d *schema.ResourceDat
 	return v
 }
 
+func dataSourceFlattenSystemSnmpUserInterfaceSelectMethod(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemSnmpUserInterface(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceRefreshObjectSystemSnmpUser(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
 
@@ -385,6 +401,18 @@ func dataSourceRefreshObjectSystemSnmpUser(d *schema.ResourceData, o map[string]
 	if err = d.Set("priv_proto", dataSourceFlattenSystemSnmpUserPrivProto(o["priv-proto"], d, "priv_proto")); err != nil {
 		if !fortiAPIPatch(o["priv-proto"]) {
 			return fmt.Errorf("Error reading priv_proto: %v", err)
+		}
+	}
+
+	if err = d.Set("interface_select_method", dataSourceFlattenSystemSnmpUserInterfaceSelectMethod(o["interface-select-method"], d, "interface_select_method")); err != nil {
+		if !fortiAPIPatch(o["interface-select-method"]) {
+			return fmt.Errorf("Error reading interface_select_method: %v", err)
+		}
+	}
+
+	if err = d.Set("interface", dataSourceFlattenSystemSnmpUserInterface(o["interface"], d, "interface")); err != nil {
+		if !fortiAPIPatch(o["interface"]) {
+			return fmt.Errorf("Error reading interface: %v", err)
 		}
 	}
 

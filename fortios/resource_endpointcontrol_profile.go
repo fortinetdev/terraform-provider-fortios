@@ -53,17 +53,14 @@ func resourceEndpointControlProfile() *schema.Resource {
 						"forticlient_registration_compliance_action": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"forticlient_ems_compliance": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"forticlient_ems_compliance_action": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"forticlient_ems_entries": &schema.Schema{
 							Type:     schema.TypeList,
@@ -74,7 +71,6 @@ func resourceEndpointControlProfile() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 64),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -82,98 +78,80 @@ func resourceEndpointControlProfile() *schema.Resource {
 						"forticlient_security_posture": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"forticlient_security_posture_compliance_action": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"forticlient_av": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"av_realtime_protection": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"av_signature_up_to_date": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"sandbox_analysis": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"sandbox_address": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"os_av_software_installed": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"forticlient_application_firewall": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"forticlient_application_firewall_list": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"forticlient_wf": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"forticlient_wf_profile": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"forticlient_system_compliance": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"forticlient_system_compliance_action": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"forticlient_minimum_software_version": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"forticlient_win_ver": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"forticlient_mac_ver": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"forticlient_linux_ver": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"forticlient_operating_system": &schema.Schema{
 							Type:     schema.TypeList,
@@ -183,18 +161,15 @@ func resourceEndpointControlProfile() *schema.Resource {
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 									"os_type": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
 									},
 									"os_name": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 127),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -207,66 +182,55 @@ func resourceEndpointControlProfile() *schema.Resource {
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 									"app_name": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 127),
 										Optional:     true,
-										Computed:     true,
 									},
 									"application_check_rule": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
 									},
 									"process_name": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 127),
 										Optional:     true,
-										Computed:     true,
 									},
 									"app_sha256_signature": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 64),
 										Optional:     true,
-										Computed:     true,
 									},
 									"process_name2": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 127),
 										Optional:     true,
-										Computed:     true,
 									},
 									"app_sha256_signature2": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 64),
 										Optional:     true,
-										Computed:     true,
 									},
 									"process_name3": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 127),
 										Optional:     true,
-										Computed:     true,
 									},
 									"app_sha256_signature3": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 64),
 										Optional:     true,
-										Computed:     true,
 									},
 									"process_name4": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 127),
 										Optional:     true,
-										Computed:     true,
 									},
 									"app_sha256_signature4": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 64),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -279,13 +243,11 @@ func resourceEndpointControlProfile() *schema.Resource {
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 									"registry_entry": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 127),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -298,13 +260,11 @@ func resourceEndpointControlProfile() *schema.Resource {
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 									"file": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 127),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -312,44 +272,36 @@ func resourceEndpointControlProfile() *schema.Resource {
 						"forticlient_log_upload": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"forticlient_log_upload_level": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"forticlient_log_upload_server": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"forticlient_vuln_scan": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"forticlient_vuln_scan_compliance_action": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"forticlient_vuln_scan_enforce": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"forticlient_vuln_scan_enforce_grace": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 30),
 							Optional:     true,
-							Computed:     true,
 						},
 						"forticlient_vuln_scan_exempt": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -364,28 +316,23 @@ func resourceEndpointControlProfile() *schema.Resource {
 						"forticlient_wf": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"forticlient_wf_profile": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"disable_wf_when_protected": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"forticlient_vpn_provisioning": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"forticlient_advanced_vpn": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"forticlient_advanced_vpn_buffer": &schema.Schema{
 							Type:         schema.TypeString,
@@ -401,34 +348,28 @@ func resourceEndpointControlProfile() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 35),
 										Optional:     true,
-										Computed:     true,
 									},
 									"type": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
 									},
 									"remote_gw": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 255),
 										Optional:     true,
-										Computed:     true,
 									},
 									"sslvpn_access_port": &schema.Schema{
 										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(1, 65535),
 										Optional:     true,
-										Computed:     true,
 									},
 									"sslvpn_require_certificate": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
 									},
 									"auth_method": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
 									},
 									"preshared_key": &schema.Schema{
 										Type:         schema.TypeString,
@@ -452,23 +393,19 @@ func resourceEndpointControlProfile() *schema.Resource {
 						"forticlient_wf": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"forticlient_wf_profile": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"disable_wf_when_protected": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"client_vpn_provisioning": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"client_vpn_settings": &schema.Schema{
 							Type:     schema.TypeList,
@@ -479,18 +416,15 @@ func resourceEndpointControlProfile() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 35),
 										Optional:     true,
-										Computed:     true,
 									},
 									"type": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
 									},
 									"vpn_configuration_name": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 35),
 										Optional:     true,
-										Computed:     true,
 									},
 									"vpn_configuration_content": &schema.Schema{
 										Type:         schema.TypeString,
@@ -501,23 +435,19 @@ func resourceEndpointControlProfile() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 255),
 										Optional:     true,
-										Computed:     true,
 									},
 									"sslvpn_access_port": &schema.Schema{
 										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(1, 65535),
 										Optional:     true,
-										Computed:     true,
 									},
 									"sslvpn_require_certificate": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
 									},
 									"auth_method": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
 									},
 									"preshared_key": &schema.Schema{
 										Type:         schema.TypeString,
@@ -531,13 +461,11 @@ func resourceEndpointControlProfile() *schema.Resource {
 						"distribute_configuration_profile": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"configuration_name": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"configuration_content": &schema.Schema{
 							Type:         schema.TypeString,
@@ -561,7 +489,6 @@ func resourceEndpointControlProfile() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -575,7 +502,6 @@ func resourceEndpointControlProfile() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -589,7 +515,6 @@ func resourceEndpointControlProfile() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -603,7 +528,6 @@ func resourceEndpointControlProfile() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -617,7 +541,6 @@ func resourceEndpointControlProfile() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -626,7 +549,6 @@ func resourceEndpointControlProfile() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
@@ -1155,7 +1077,7 @@ func flattenEndpointControlProfileForticlientWinmacSettingsForticlientOperatingS
 }
 
 func flattenEndpointControlProfileForticlientWinmacSettingsForticlientOperatingSystemId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenEndpointControlProfileForticlientWinmacSettingsForticlientOperatingSystemOsType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1255,7 +1177,7 @@ func flattenEndpointControlProfileForticlientWinmacSettingsForticlientRunningApp
 }
 
 func flattenEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppAppName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1342,7 +1264,7 @@ func flattenEndpointControlProfileForticlientWinmacSettingsForticlientRegistryEn
 }
 
 func flattenEndpointControlProfileForticlientWinmacSettingsForticlientRegistryEntryId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenEndpointControlProfileForticlientWinmacSettingsForticlientRegistryEntryRegistryEntry(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1393,7 +1315,7 @@ func flattenEndpointControlProfileForticlientWinmacSettingsForticlientOwnFile(v 
 }
 
 func flattenEndpointControlProfileForticlientWinmacSettingsForticlientOwnFileId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenEndpointControlProfileForticlientWinmacSettingsForticlientOwnFileFile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1425,7 +1347,7 @@ func flattenEndpointControlProfileForticlientWinmacSettingsForticlientVulnScanEn
 }
 
 func flattenEndpointControlProfileForticlientWinmacSettingsForticlientVulnScanEnforceGrace(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenEndpointControlProfileForticlientWinmacSettingsForticlientVulnScanExempt(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1559,8 +1481,7 @@ func flattenEndpointControlProfileForticlientAndroidSettingsForticlientVpnSettin
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "preshared_key"
-		if cur_v, ok := i["preshared-key"]; ok {
-			tmp["preshared_key"] = flattenEndpointControlProfileForticlientAndroidSettingsForticlientVpnSettingsPresharedKey(cur_v, d, pre_append, sv)
+		if _, ok := i["preshared-key"]; ok {
 			c := d.Get(pre_append).(string)
 			if c != "" {
 				tmp["preshared_key"] = c
@@ -1589,7 +1510,7 @@ func flattenEndpointControlProfileForticlientAndroidSettingsForticlientVpnSettin
 }
 
 func flattenEndpointControlProfileForticlientAndroidSettingsForticlientVpnSettingsSslvpnAccessPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenEndpointControlProfileForticlientAndroidSettingsForticlientVpnSettingsSslvpnRequireCertificate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1597,10 +1518,6 @@ func flattenEndpointControlProfileForticlientAndroidSettingsForticlientVpnSettin
 }
 
 func flattenEndpointControlProfileForticlientAndroidSettingsForticlientVpnSettingsAuthMethod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenEndpointControlProfileForticlientAndroidSettingsForticlientVpnSettingsPresharedKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1738,8 +1655,7 @@ func flattenEndpointControlProfileForticlientIosSettingsClientVpnSettings(v inte
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "preshared_key"
-		if cur_v, ok := i["preshared-key"]; ok {
-			tmp["preshared_key"] = flattenEndpointControlProfileForticlientIosSettingsClientVpnSettingsPresharedKey(cur_v, d, pre_append, sv)
+		if _, ok := i["preshared-key"]; ok {
 			c := d.Get(pre_append).(string)
 			if c != "" {
 				tmp["preshared_key"] = c
@@ -1776,7 +1692,7 @@ func flattenEndpointControlProfileForticlientIosSettingsClientVpnSettingsRemoteG
 }
 
 func flattenEndpointControlProfileForticlientIosSettingsClientVpnSettingsSslvpnAccessPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenEndpointControlProfileForticlientIosSettingsClientVpnSettingsSslvpnRequireCertificate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1784,10 +1700,6 @@ func flattenEndpointControlProfileForticlientIosSettingsClientVpnSettingsSslvpnR
 }
 
 func flattenEndpointControlProfileForticlientIosSettingsClientVpnSettingsAuthMethod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenEndpointControlProfileForticlientIosSettingsClientVpnSettingsPresharedKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2378,6 +2290,8 @@ func expandEndpointControlProfileForticlientWinmacSettingsForticlientEmsEntries(
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientEmsEntriesName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		result = append(result, tmp)
@@ -2481,16 +2395,22 @@ func expandEndpointControlProfileForticlientWinmacSettingsForticlientOperatingSy
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientOperatingSystemId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "os_type"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["os-type"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientOperatingSystemOsType(d, i["os_type"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["os-type"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "os_name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["os-name"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientOperatingSystemOsName(d, i["os_name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["os-name"] = nil
 		}
 
 		result = append(result, tmp)
@@ -2530,56 +2450,78 @@ func expandEndpointControlProfileForticlientWinmacSettingsForticlientRunningApp(
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "app_name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["app-name"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppAppName(d, i["app_name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["app-name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "application_check_rule"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["application-check-rule"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppApplicationCheckRule(d, i["application_check_rule"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["application-check-rule"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "process_name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["process-name"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppProcessName(d, i["process_name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["process-name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "app_sha256_signature"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["app-sha256-signature"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppAppSha256Signature(d, i["app_sha256_signature"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["app-sha256-signature"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "process_name2"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["process-name2"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppProcessName2(d, i["process_name2"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["process-name2"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "app_sha256_signature2"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["app-sha256-signature2"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppAppSha256Signature2(d, i["app_sha256_signature2"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["app-sha256-signature2"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "process_name3"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["process-name3"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppProcessName3(d, i["process_name3"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["process-name3"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "app_sha256_signature3"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["app-sha256-signature3"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppAppSha256Signature3(d, i["app_sha256_signature3"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["app-sha256-signature3"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "process_name4"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["process-name4"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppProcessName4(d, i["process_name4"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["process-name4"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "app_sha256_signature4"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["app-sha256-signature4"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientRunningAppAppSha256Signature4(d, i["app_sha256_signature4"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["app-sha256-signature4"] = nil
 		}
 
 		result = append(result, tmp)
@@ -2651,11 +2593,15 @@ func expandEndpointControlProfileForticlientWinmacSettingsForticlientRegistryEnt
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientRegistryEntryId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "registry_entry"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["registry-entry"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientRegistryEntryRegistryEntry(d, i["registry_entry"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["registry-entry"] = nil
 		}
 
 		result = append(result, tmp)
@@ -2691,11 +2637,15 @@ func expandEndpointControlProfileForticlientWinmacSettingsForticlientOwnFile(d *
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientOwnFileId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "file"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["file"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientOwnFileFile(d, i["file"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["file"] = nil
 		}
 
 		result = append(result, tmp)
@@ -2831,36 +2781,50 @@ func expandEndpointControlProfileForticlientAndroidSettingsForticlientVpnSetting
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandEndpointControlProfileForticlientAndroidSettingsForticlientVpnSettingsName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["type"], _ = expandEndpointControlProfileForticlientAndroidSettingsForticlientVpnSettingsType(d, i["type"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["type"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "remote_gw"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["remote-gw"], _ = expandEndpointControlProfileForticlientAndroidSettingsForticlientVpnSettingsRemoteGw(d, i["remote_gw"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["remote-gw"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sslvpn_access_port"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["sslvpn-access-port"], _ = expandEndpointControlProfileForticlientAndroidSettingsForticlientVpnSettingsSslvpnAccessPort(d, i["sslvpn_access_port"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["sslvpn-access-port"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sslvpn_require_certificate"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["sslvpn-require-certificate"], _ = expandEndpointControlProfileForticlientAndroidSettingsForticlientVpnSettingsSslvpnRequireCertificate(d, i["sslvpn_require_certificate"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["sslvpn-require-certificate"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_method"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["auth-method"], _ = expandEndpointControlProfileForticlientAndroidSettingsForticlientVpnSettingsAuthMethod(d, i["auth_method"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["auth-method"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "preshared_key"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["preshared-key"], _ = expandEndpointControlProfileForticlientAndroidSettingsForticlientVpnSettingsPresharedKey(d, i["preshared_key"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["preshared-key"] = nil
 		}
 
 		result = append(result, tmp)
@@ -2980,46 +2944,64 @@ func expandEndpointControlProfileForticlientIosSettingsClientVpnSettings(d *sche
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandEndpointControlProfileForticlientIosSettingsClientVpnSettingsName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["type"], _ = expandEndpointControlProfileForticlientIosSettingsClientVpnSettingsType(d, i["type"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["type"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vpn_configuration_name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["vpn-configuration-name"], _ = expandEndpointControlProfileForticlientIosSettingsClientVpnSettingsVpnConfigurationName(d, i["vpn_configuration_name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["vpn-configuration-name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vpn_configuration_content"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["vpn-configuration-content"], _ = expandEndpointControlProfileForticlientIosSettingsClientVpnSettingsVpnConfigurationContent(d, i["vpn_configuration_content"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["vpn-configuration-content"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "remote_gw"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["remote-gw"], _ = expandEndpointControlProfileForticlientIosSettingsClientVpnSettingsRemoteGw(d, i["remote_gw"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["remote-gw"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sslvpn_access_port"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["sslvpn-access-port"], _ = expandEndpointControlProfileForticlientIosSettingsClientVpnSettingsSslvpnAccessPort(d, i["sslvpn_access_port"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["sslvpn-access-port"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sslvpn_require_certificate"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["sslvpn-require-certificate"], _ = expandEndpointControlProfileForticlientIosSettingsClientVpnSettingsSslvpnRequireCertificate(d, i["sslvpn_require_certificate"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["sslvpn-require-certificate"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_method"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["auth-method"], _ = expandEndpointControlProfileForticlientIosSettingsClientVpnSettingsAuthMethod(d, i["auth_method"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["auth-method"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "preshared_key"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["preshared-key"], _ = expandEndpointControlProfileForticlientIosSettingsClientVpnSettingsPresharedKey(d, i["preshared_key"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["preshared-key"] = nil
 		}
 
 		result = append(result, tmp)
@@ -3099,6 +3081,8 @@ func expandEndpointControlProfileSrcAddr(d *schema.ResourceData, v interface{}, 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandEndpointControlProfileSrcAddrName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		result = append(result, tmp)
@@ -3130,6 +3114,8 @@ func expandEndpointControlProfileDeviceGroups(d *schema.ResourceData, v interfac
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandEndpointControlProfileDeviceGroupsName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		result = append(result, tmp)
@@ -3161,6 +3147,8 @@ func expandEndpointControlProfileUsers(d *schema.ResourceData, v interface{}, pr
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandEndpointControlProfileUsersName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		result = append(result, tmp)
@@ -3192,6 +3180,8 @@ func expandEndpointControlProfileUserGroups(d *schema.ResourceData, v interface{
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandEndpointControlProfileUserGroupsName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		result = append(result, tmp)
@@ -3223,6 +3213,8 @@ func expandEndpointControlProfileOnNetAddr(d *schema.ResourceData, v interface{}
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandEndpointControlProfileOnNetAddrName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		result = append(result, tmp)
@@ -3287,6 +3279,8 @@ func getObjectEndpointControlProfile(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["description"] = t
 		}
+	} else if d.HasChange("description") {
+		obj["description"] = nil
 	}
 
 	if v, ok := d.GetOk("src_addr"); ok || d.HasChange("src_addr") {
@@ -3341,6 +3335,8 @@ func getObjectEndpointControlProfile(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["replacemsg-override-group"] = t
 		}
+	} else if d.HasChange("replacemsg_override_group") {
+		obj["replacemsg-override-group"] = nil
 	}
 
 	return &obj, nil

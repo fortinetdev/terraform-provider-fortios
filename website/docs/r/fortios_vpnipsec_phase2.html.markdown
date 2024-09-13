@@ -142,6 +142,13 @@ The following arguments are supported:
 * `pfs` - Enable/disable PFS feature. Valid values: `enable`, `disable`.
 * `ipv4_df` - Enable/disable setting and resetting of IPv4 'Don't Fragment' bit. Valid values: `enable`, `disable`.
 * `dhgrp` - Phase2 DH group. Valid values: `1`, `2`, `5`, `14`, `15`, `16`, `17`, `18`, `19`, `20`, `21`, `27`, `28`, `29`, `30`, `31`, `32`.
+* `addke1` - phase2 ADDKE1 group. Valid values: `0`, `1080`, `1081`, `1082`.
+* `addke2` - phase2 ADDKE2 group. Valid values: `0`, `1080`, `1081`, `1082`.
+* `addke3` - phase2 ADDKE3 group. Valid values: `0`, `1080`, `1081`, `1082`.
+* `addke4` - phase2 ADDKE4 group. Valid values: `0`, `1080`, `1081`, `1082`.
+* `addke5` - phase2 ADDKE5 group. Valid values: `0`, `1080`, `1081`, `1082`.
+* `addke6` - phase2 ADDKE6 group. Valid values: `0`, `1080`, `1081`, `1082`.
+* `addke7` - phase2 ADDKE7 group. Valid values: `0`, `1080`, `1081`, `1082`.
 * `replay` - Enable/disable replay detection. Valid values: `enable`, `disable`.
 * `keepalive` - Enable/disable keep alive. Valid values: `enable`, `disable`.
 * `auto_negotiate` - Enable/disable IPsec SA auto-negotiation. Valid values: `enable`, `disable`.

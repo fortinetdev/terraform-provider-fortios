@@ -40,7 +40,6 @@ func resourceSwitchControllerMacSyncSettings() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(30, 1800),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -161,7 +160,7 @@ func resourceSwitchControllerMacSyncSettingsRead(d *schema.ResourceData, m inter
 }
 
 func flattenSwitchControllerMacSyncSettingsMacSyncInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectSwitchControllerMacSyncSettings(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -200,6 +199,8 @@ func getObjectSwitchControllerMacSyncSettings(d *schema.ResourceData, setArgNil 
 				obj["mac-sync-interval"] = t
 			}
 		}
+	} else if d.HasChange("mac_sync_interval") {
+		obj["mac-sync-interval"] = nil
 	}
 
 	return &obj, nil

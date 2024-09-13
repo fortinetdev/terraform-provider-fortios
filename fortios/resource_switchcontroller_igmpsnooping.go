@@ -172,7 +172,7 @@ func resourceSwitchControllerIgmpSnoopingRead(d *schema.ResourceData, m interfac
 }
 
 func flattenSwitchControllerIgmpSnoopingAgingTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerIgmpSnoopingFloodUnknownMulticast(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -180,7 +180,7 @@ func flattenSwitchControllerIgmpSnoopingFloodUnknownMulticast(v interface{}, d *
 }
 
 func flattenSwitchControllerIgmpSnoopingQueryInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectSwitchControllerIgmpSnooping(d *schema.ResourceData, o map[string]interface{}, sv string) error {

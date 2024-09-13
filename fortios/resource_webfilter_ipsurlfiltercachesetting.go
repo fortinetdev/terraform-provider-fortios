@@ -40,13 +40,11 @@ func resourceWebfilterIpsUrlfilterCacheSetting() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 2147483),
 				Optional:     true,
-				Computed:     true,
 			},
 			"extended_ttl": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 2147483),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -167,11 +165,11 @@ func resourceWebfilterIpsUrlfilterCacheSettingRead(d *schema.ResourceData, m int
 }
 
 func flattenWebfilterIpsUrlfilterCacheSettingDnsRetryInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenWebfilterIpsUrlfilterCacheSettingExtendedTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectWebfilterIpsUrlfilterCacheSetting(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -220,6 +218,8 @@ func getObjectWebfilterIpsUrlfilterCacheSetting(d *schema.ResourceData, setArgNi
 				obj["dns-retry-interval"] = t
 			}
 		}
+	} else if d.HasChange("dns_retry_interval") {
+		obj["dns-retry-interval"] = nil
 	}
 
 	if v, ok := d.GetOkExists("extended_ttl"); ok {
@@ -233,6 +233,8 @@ func getObjectWebfilterIpsUrlfilterCacheSetting(d *schema.ResourceData, setArgNi
 				obj["extended-ttl"] = t
 			}
 		}
+	} else if d.HasChange("extended_ttl") {
+		obj["extended-ttl"] = nil
 	}
 
 	return &obj, nil

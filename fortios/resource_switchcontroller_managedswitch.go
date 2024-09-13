@@ -46,19 +46,16 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 16),
 				Optional:     true,
-				Computed:     true,
 			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"description": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"switch_profile": &schema.Schema{
 				Type:         schema.TypeString,
@@ -91,12 +88,10 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"fsw_wan2_admin": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"poe_pre_standard_detection": &schema.Schema{
 				Type:     schema.TypeString,
@@ -117,13 +112,11 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 			"poe_lldp_detection": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 			"directly_connected": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 1),
 				Optional:     true,
-				Computed:     true,
 			},
 			"version": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -147,42 +140,35 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 1),
 				Optional:     true,
-				Computed:     true,
 			},
 			"mgmt_mode": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"tunnel_discovered": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 1),
 				Optional:     true,
-				Computed:     true,
 			},
 			"tdr_supported": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 31),
 				Optional:     true,
-				Computed:     true,
 			},
 			"dynamic_capability": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"switch_device_tag": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 32),
 				Optional:     true,
-				Computed:     true,
 			},
 			"switch_dhcp_opt43_key": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"mclag_igmp_snooping_aware": &schema.Schema{
 				Type:     schema.TypeString,
@@ -193,7 +179,6 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 1),
 				Optional:     true,
-				Computed:     true,
 			},
 			"ptp_status": &schema.Schema{
 				Type:     schema.TypeString,
@@ -235,7 +220,6 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 						"router_ip": &schema.Schema{
 							Type:     schema.TypeString,
@@ -254,7 +238,6 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 						"assignment_priority": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -274,7 +257,6 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 31),
 				Optional:     true,
-				Computed:     true,
 			},
 			"flow_identity": &schema.Schema{
 				Type:     schema.TypeString,
@@ -285,13 +267,11 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
-				Computed:     true,
 			},
 			"delayed_restart_trigger": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
 				Optional:     true,
-				Computed:     true,
 			},
 			"firmware_provision": &schema.Schema{
 				Type:     schema.TypeString,
@@ -302,7 +282,6 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"firmware_provision_latest": &schema.Schema{
 				Type:     schema.TypeString,
@@ -319,19 +298,16 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 						"port_owner": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 						"switch_id": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 16),
 							Optional:     true,
-							Computed:     true,
 						},
 						"speed": &schema.Schema{
 							Type:     schema.TypeString,
@@ -341,7 +317,6 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 						"speed_mask": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -395,7 +370,6 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 120),
 							Optional:     true,
-							Computed:     true,
 						},
 						"rpvst_port": &schema.Schema{
 							Type:     schema.TypeString,
@@ -411,19 +385,16 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 64),
 							Optional:     true,
-							Computed:     true,
 						},
 						"port_prefix_type": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 1),
 							Optional:     true,
-							Computed:     true,
 						},
 						"fortilink_port": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 1),
 							Optional:     true,
-							Computed:     true,
 						},
 						"link_status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -434,73 +405,66 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 1),
 							Optional:     true,
-							Computed:     true,
+						},
+						"pd_capable": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(0, 1),
+							Optional:     true,
 						},
 						"stacking_port": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 1),
 							Optional:     true,
-							Computed:     true,
 						},
 						"p2p_port": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 1),
 							Optional:     true,
-							Computed:     true,
 						},
 						"mclag_icl_port": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 1),
 							Optional:     true,
-							Computed:     true,
 						},
 						"authenticated_port": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 1),
 							Optional:     true,
-							Computed:     true,
 						},
 						"restricted_auth_port": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 1),
 							Optional:     true,
-							Computed:     true,
 						},
 						"encrypted_port": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 1),
 							Optional:     true,
-							Computed:     true,
 						},
 						"fiber_port": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 1),
 							Optional:     true,
-							Computed:     true,
 						},
 						"media_type": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 31),
 							Optional:     true,
-							Computed:     true,
 						},
 						"poe_standard": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"poe_max_power": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"poe_mode_bt_cabable": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 1),
 							Optional:     true,
-							Computed:     true,
 						},
 						"poe_port_mode": &schema.Schema{
 							Type:     schema.TypeString,
@@ -520,55 +484,46 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 						"flags": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"virtual_port": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 1),
 							Optional:     true,
-							Computed:     true,
 						},
 						"isl_local_trunk_name": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 						"isl_peer_port_name": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 						"isl_peer_device_name": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 16),
 							Optional:     true,
-							Computed:     true,
 						},
 						"isl_peer_device_sn": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 16),
 							Optional:     true,
-							Computed:     true,
 						},
 						"fgt_peer_port_name": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 						"fgt_peer_device_name": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 16),
 							Optional:     true,
-							Computed:     true,
 						},
 						"vlan": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 						"allowed_vlans_all": &schema.Schema{
 							Type:     schema.TypeString,
@@ -584,7 +539,6 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -598,7 +552,6 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -617,13 +570,11 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"matched_dpp_intf_tags": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"acl_group": &schema.Schema{
 							Type:     schema.TypeSet,
@@ -634,7 +585,6 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -647,7 +597,6 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 								},
 							},
@@ -671,19 +620,16 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 15),
 										Optional:     true,
-										Computed:     true,
 									},
 									"circuit_id": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 254),
 										Optional:     true,
-										Computed:     true,
 									},
 									"remote_id": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 254),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -706,7 +652,6 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 						"igmp_snooping": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"igmps_flood_reports": &schema.Schema{
 							Type:     schema.TypeString,
@@ -763,19 +708,16 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 						"sflow_sampler": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"sflow_sample_rate": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 99999),
 							Optional:     true,
-							Computed:     true,
 						},
 						"sflow_counter_interval": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
 							Optional:     true,
-							Computed:     true,
 						},
 						"sample_direction": &schema.Schema{
 							Type:     schema.TypeString,
@@ -786,7 +728,6 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 1),
 							Optional:     true,
-							Computed:     true,
 						},
 						"fec_state": &schema.Schema{
 							Type:     schema.TypeString,
@@ -801,7 +742,6 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 						"pause_meter": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"pause_meter_resume": &schema.Schema{
 							Type:     schema.TypeString,
@@ -823,7 +763,6 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"qos_policy": &schema.Schema{
 							Type:         schema.TypeString,
@@ -841,13 +780,11 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 31),
 							Optional:     true,
-							Computed:     true,
 						},
 						"export_to_pool": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"interface_tags": &schema.Schema{
 							Type:     schema.TypeSet,
@@ -858,7 +795,6 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 63),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -872,7 +808,6 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 63),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -881,13 +816,11 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 1),
 							Optional:     true,
-							Computed:     true,
 						},
 						"learning_limit": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 128),
 							Optional:     true,
-							Computed:     true,
 						},
 						"sticky_mac": &schema.Schema{
 							Type:     schema.TypeString,
@@ -909,7 +842,6 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 31),
 							Optional:     true,
-							Computed:     true,
 						},
 						"mac_addr": &schema.Schema{
 							Type:     schema.TypeString,
@@ -917,6 +849,16 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							Computed: true,
 						},
 						"allow_arp_monitor": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"qnq": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 15),
+							Optional:     true,
+						},
+						"log_mac_event": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -930,7 +872,6 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"lacp_speed": &schema.Schema{
 							Type:     schema.TypeString,
@@ -978,7 +919,6 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -987,7 +927,6 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -1001,13 +940,11 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 						"description": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"binding_entry": &schema.Schema{
 							Type:     schema.TypeList,
@@ -1018,7 +955,6 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 16),
 										Optional:     true,
-										Computed:     true,
 									},
 									"ip": &schema.Schema{
 										Type:     schema.TypeString,
@@ -1052,18 +988,15 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 31),
 							Optional:     true,
-							Computed:     true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 						"revision": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 65535),
 							Optional:     true,
-							Computed:     true,
 						},
 						"hello_time": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -1107,7 +1040,6 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 2),
 							Optional:     true,
-							Computed:     true,
 						},
 						"priority": &schema.Schema{
 							Type:     schema.TypeString,
@@ -1138,25 +1070,21 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 24),
 							Optional:     true,
-							Computed:     true,
 						},
 						"description": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"contact_info": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"location": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -1204,13 +1132,11 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"name": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -1225,12 +1151,10 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
-										Computed: true,
 									},
 									"ip": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
-										Computed: true,
 									},
 								},
 							},
@@ -1313,7 +1237,6 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 32),
 							Optional:     true,
-							Computed:     true,
 						},
 						"queries": &schema.Schema{
 							Type:     schema.TypeString,
@@ -1377,7 +1300,6 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -1416,7 +1338,6 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -1427,7 +1348,6 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"port": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -1498,7 +1418,6 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -1514,7 +1433,6 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 						"src_ingress": &schema.Schema{
 							Type:     schema.TypeSet,
@@ -1525,7 +1443,6 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -1539,7 +1456,6 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
-										Computed:     true,
 									},
 								},
 							},
@@ -1555,7 +1471,6 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"type": &schema.Schema{
 							Type:     schema.TypeString,
@@ -1566,7 +1481,6 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 						"mac": &schema.Schema{
 							Type:     schema.TypeString,
@@ -1577,13 +1491,11 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"description": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -1597,13 +1509,11 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"command_name": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -1617,13 +1527,11 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"vlan": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 						"ip": &schema.Schema{
 							Type:     schema.TypeString,
@@ -1639,7 +1547,6 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 					},
 				},
@@ -1991,7 +1898,7 @@ func flattenSwitchControllerManagedSwitchDhcpServerAccessList(v interface{}, d *
 }
 
 func flattenSwitchControllerManagedSwitchPoeDetectionType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchPoeLldpDetection(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1999,31 +1906,31 @@ func flattenSwitchControllerManagedSwitchPoeLldpDetection(v interface{}, d *sche
 }
 
 func flattenSwitchControllerManagedSwitchDirectlyConnected(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchVersion(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchMaxAllowedTrunkMembers(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchPreProvisioned(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchL3Discovered(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchMgmtMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchTunnelDiscovered(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchTdrSupported(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2031,7 +1938,7 @@ func flattenSwitchControllerManagedSwitchTdrSupported(v interface{}, d *schema.R
 }
 
 func flattenSwitchControllerManagedSwitchDynamicCapability(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchSwitchDeviceTag(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2047,7 +1954,7 @@ func flattenSwitchControllerManagedSwitchMclagIgmpSnoopingAware(v interface{}, d
 }
 
 func flattenSwitchControllerManagedSwitchDynamicallyDiscovered(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchPtpStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2173,7 +2080,7 @@ func flattenSwitchControllerManagedSwitchVlanVlanName(v interface{}, d *schema.R
 }
 
 func flattenSwitchControllerManagedSwitchVlanAssignmentPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2193,7 +2100,7 @@ func flattenSwitchControllerManagedSwitchStagedImageVersion(v interface{}, d *sc
 }
 
 func flattenSwitchControllerManagedSwitchDelayedRestartTrigger(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchFirmwareProvision(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2340,6 +2247,11 @@ func flattenSwitchControllerManagedSwitchPorts(v interface{}, d *schema.Resource
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "poe_capable"
 		if cur_v, ok := i["poe-capable"]; ok {
 			tmp["poe_capable"] = flattenSwitchControllerManagedSwitchPortsPoeCapable(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "pd_capable"
+		if cur_v, ok := i["pd-capable"]; ok {
+			tmp["pd_capable"] = flattenSwitchControllerManagedSwitchPortsPdCapable(cur_v, d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "stacking_port"
@@ -2717,6 +2629,16 @@ func flattenSwitchControllerManagedSwitchPorts(v interface{}, d *schema.Resource
 			tmp["allow_arp_monitor"] = flattenSwitchControllerManagedSwitchPortsAllowArpMonitor(cur_v, d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "qnq"
+		if cur_v, ok := i["qnq"]; ok {
+			tmp["qnq"] = flattenSwitchControllerManagedSwitchPortsQnq(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "log_mac_event"
+		if cur_v, ok := i["log-mac-event"]; ok {
+			tmp["log_mac_event"] = flattenSwitchControllerManagedSwitchPortsLogMacEvent(cur_v, d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port_selection_criteria"
 		if cur_v, ok := i["port-selection-criteria"]; ok {
 			tmp["port_selection_criteria"] = flattenSwitchControllerManagedSwitchPortsPortSelectionCriteria(cur_v, d, pre_append, sv)
@@ -2798,7 +2720,7 @@ func flattenSwitchControllerManagedSwitchPortsSpeed(v interface{}, d *schema.Res
 }
 
 func flattenSwitchControllerManagedSwitchPortsSpeedMask(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchPortsStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2830,15 +2752,15 @@ func flattenSwitchControllerManagedSwitchPortsFlapguard(v interface{}, d *schema
 }
 
 func flattenSwitchControllerManagedSwitchPortsFlapRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchPortsFlapDuration(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchPortsFlapTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchPortsRpvstPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2850,15 +2772,15 @@ func flattenSwitchControllerManagedSwitchPortsPoePreStandardDetection(v interfac
 }
 
 func flattenSwitchControllerManagedSwitchPortsPortNumber(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchPortsPortPrefixType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchPortsFortilinkPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchPortsLinkStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2866,35 +2788,39 @@ func flattenSwitchControllerManagedSwitchPortsLinkStatus(v interface{}, d *schem
 }
 
 func flattenSwitchControllerManagedSwitchPortsPoeCapable(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
+}
+
+func flattenSwitchControllerManagedSwitchPortsPdCapable(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchPortsStackingPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchPortsP2PPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchPortsMclagIclPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchPortsAuthenticatedPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchPortsRestrictedAuthPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchPortsEncryptedPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchPortsFiberPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchPortsMediaType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2910,7 +2836,7 @@ func flattenSwitchControllerManagedSwitchPortsPoeMaxPower(v interface{}, d *sche
 }
 
 func flattenSwitchControllerManagedSwitchPortsPoeModeBtCabable(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchPortsPoePortMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2926,11 +2852,11 @@ func flattenSwitchControllerManagedSwitchPortsPoePortPower(v interface{}, d *sch
 }
 
 func flattenSwitchControllerManagedSwitchPortsFlags(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchPortsVirtualPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchPortsIslLocalTrunkName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -3146,7 +3072,7 @@ func flattenSwitchControllerManagedSwitchPortsFortiswitchAcls(v interface{}, d *
 }
 
 func flattenSwitchControllerManagedSwitchPortsFortiswitchAclsId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchPortsDhcpSnooping(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -3254,7 +3180,7 @@ func flattenSwitchControllerManagedSwitchPortsStpBpduGuard(v interface{}, d *sch
 }
 
 func flattenSwitchControllerManagedSwitchPortsStpBpduGuardTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchPortsEdgePort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -3270,7 +3196,7 @@ func flattenSwitchControllerManagedSwitchPortsPacketSampler(v interface{}, d *sc
 }
 
 func flattenSwitchControllerManagedSwitchPortsPacketSampleRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchPortsSflowSampler(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -3278,11 +3204,11 @@ func flattenSwitchControllerManagedSwitchPortsSflowSampler(v interface{}, d *sch
 }
 
 func flattenSwitchControllerManagedSwitchPortsSflowSampleRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchPortsSflowCounterInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchPortsSampleDirection(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -3290,7 +3216,7 @@ func flattenSwitchControllerManagedSwitchPortsSampleDirection(v interface{}, d *
 }
 
 func flattenSwitchControllerManagedSwitchPortsFecCapable(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchPortsFecState(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -3302,7 +3228,7 @@ func flattenSwitchControllerManagedSwitchPortsFlowControl(v interface{}, d *sche
 }
 
 func flattenSwitchControllerManagedSwitchPortsPauseMeter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchPortsPauseMeterResume(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -3314,7 +3240,7 @@ func flattenSwitchControllerManagedSwitchPortsLoopGuard(v interface{}, d *schema
 }
 
 func flattenSwitchControllerManagedSwitchPortsLoopGuardTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchPortsPortPolicy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -3422,11 +3348,11 @@ func flattenSwitchControllerManagedSwitchPortsExportTagsTagName(v interface{}, d
 }
 
 func flattenSwitchControllerManagedSwitchPortsExportToPoolFlag(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchPortsLearningLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchPortsStickyMac(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -3450,6 +3376,14 @@ func flattenSwitchControllerManagedSwitchPortsMacAddr(v interface{}, d *schema.R
 }
 
 func flattenSwitchControllerManagedSwitchPortsAllowArpMonitor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerManagedSwitchPortsQnq(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerManagedSwitchPortsLogMacEvent(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -3482,11 +3416,11 @@ func flattenSwitchControllerManagedSwitchPortsMclag(v interface{}, d *schema.Res
 }
 
 func flattenSwitchControllerManagedSwitchPortsMinBundle(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchPortsMaxBundle(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchPortsMembers(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -3722,27 +3656,27 @@ func flattenSwitchControllerManagedSwitchStpSettingsStatus(v interface{}, d *sch
 }
 
 func flattenSwitchControllerManagedSwitchStpSettingsRevision(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchStpSettingsHelloTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchStpSettingsForwardTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchStpSettingsMaxAge(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchStpSettingsMaxHops(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchStpSettingsPendingTimer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchStpInstance(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -3891,15 +3825,15 @@ func flattenSwitchControllerManagedSwitchSnmpTrapThreshold(v interface{}, d *sch
 }
 
 func flattenSwitchControllerManagedSwitchSnmpTrapThresholdTrapHighCpuThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchSnmpTrapThresholdTrapLowMemoryThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchSnmpTrapThresholdTrapLogFullThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchOverrideSnmpCommunity(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -4015,7 +3949,7 @@ func flattenSwitchControllerManagedSwitchSnmpCommunity(v interface{}, d *schema.
 }
 
 func flattenSwitchControllerManagedSwitchSnmpCommunityId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchSnmpCommunityName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -4070,7 +4004,7 @@ func flattenSwitchControllerManagedSwitchSnmpCommunityHosts(v interface{}, d *sc
 }
 
 func flattenSwitchControllerManagedSwitchSnmpCommunityHostsId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchSnmpCommunityHostsIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -4082,7 +4016,7 @@ func flattenSwitchControllerManagedSwitchSnmpCommunityQueryV1Status(v interface{
 }
 
 func flattenSwitchControllerManagedSwitchSnmpCommunityQueryV1Port(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchSnmpCommunityQueryV2CStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -4090,7 +4024,7 @@ func flattenSwitchControllerManagedSwitchSnmpCommunityQueryV2CStatus(v interface
 }
 
 func flattenSwitchControllerManagedSwitchSnmpCommunityQueryV2CPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchSnmpCommunityTrapV1Status(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -4098,11 +4032,11 @@ func flattenSwitchControllerManagedSwitchSnmpCommunityTrapV1Status(v interface{}
 }
 
 func flattenSwitchControllerManagedSwitchSnmpCommunityTrapV1Lport(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchSnmpCommunityTrapV1Rport(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchSnmpCommunityTrapV2CStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -4110,11 +4044,11 @@ func flattenSwitchControllerManagedSwitchSnmpCommunityTrapV2CStatus(v interface{
 }
 
 func flattenSwitchControllerManagedSwitchSnmpCommunityTrapV2CLport(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchSnmpCommunityTrapV2CRport(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchSnmpCommunityEvents(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -4175,8 +4109,7 @@ func flattenSwitchControllerManagedSwitchSnmpUser(v interface{}, d *schema.Resou
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_pwd"
-		if cur_v, ok := i["auth-pwd"]; ok {
-			tmp["auth_pwd"] = flattenSwitchControllerManagedSwitchSnmpUserAuthPwd(cur_v, d, pre_append, sv)
+		if _, ok := i["auth-pwd"]; ok {
 			c := d.Get(pre_append).(string)
 			if c != "" {
 				tmp["auth_pwd"] = c
@@ -4189,8 +4122,7 @@ func flattenSwitchControllerManagedSwitchSnmpUser(v interface{}, d *schema.Resou
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priv_pwd"
-		if cur_v, ok := i["priv-pwd"]; ok {
-			tmp["priv_pwd"] = flattenSwitchControllerManagedSwitchSnmpUserPrivPwd(cur_v, d, pre_append, sv)
+		if _, ok := i["priv-pwd"]; ok {
 			c := d.Get(pre_append).(string)
 			if c != "" {
 				tmp["priv_pwd"] = c
@@ -4215,7 +4147,7 @@ func flattenSwitchControllerManagedSwitchSnmpUserQueries(v interface{}, d *schem
 }
 
 func flattenSwitchControllerManagedSwitchSnmpUserQueryPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchSnmpUserSecurityLevel(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -4226,15 +4158,7 @@ func flattenSwitchControllerManagedSwitchSnmpUserAuthProto(v interface{}, d *sch
 	return v
 }
 
-func flattenSwitchControllerManagedSwitchSnmpUserAuthPwd(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
 func flattenSwitchControllerManagedSwitchSnmpUserPrivProto(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenSwitchControllerManagedSwitchSnmpUserPrivPwd(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -4243,7 +4167,7 @@ func flattenSwitchControllerManagedSwitchQosDropPolicy(v interface{}, d *schema.
 }
 
 func flattenSwitchControllerManagedSwitchQosRedProbability(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchSwitchStpSettings(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -4389,7 +4313,7 @@ func flattenSwitchControllerManagedSwitchRemoteLogServer(v interface{}, d *schem
 }
 
 func flattenSwitchControllerManagedSwitchRemoteLogPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchRemoteLogSeverity(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -4447,7 +4371,7 @@ func flattenSwitchControllerManagedSwitchStormControlLocalOverride(v interface{}
 }
 
 func flattenSwitchControllerManagedSwitchStormControlRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchStormControlUnknownUnicast(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -4689,7 +4613,7 @@ func flattenSwitchControllerManagedSwitchStaticMac(v interface{}, d *schema.Reso
 }
 
 func flattenSwitchControllerManagedSwitchStaticMacId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchStaticMacType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -4879,7 +4803,7 @@ func flattenSwitchControllerManagedSwitchIgmpSnoopingLocalOverride(v interface{}
 }
 
 func flattenSwitchControllerManagedSwitchIgmpSnoopingAgingTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitchIgmpSnoopingFloodUnknownMulticast(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -4961,7 +4885,7 @@ func flattenSwitchControllerManagedSwitchIgmpSnoopingVlansQuerierAddr(v interfac
 }
 
 func flattenSwitchControllerManagedSwitchIgmpSnoopingVlansVersion(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitch8021XSettings(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -5041,15 +4965,15 @@ func flattenSwitchControllerManagedSwitch8021XSettingsLinkDownAuth(v interface{}
 }
 
 func flattenSwitchControllerManagedSwitch8021XSettingsReauthPeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitch8021XSettingsMaxReauthAttempt(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitch8021XSettingsTxPeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSwitchControllerManagedSwitch8021XSettingsMabReauth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -5223,24 +5147,9 @@ func refreshObjectSwitchControllerManagedSwitch(d *schema.ResourceData, o map[st
 		}
 	}
 
-	{
-		v := flattenSwitchControllerManagedSwitchDynamicCapability(o["dynamic-capability"], d, "dynamic_capability", sv)
-		new_version_map := map[string][]string{
-			">=": []string{"6.4.2"},
-		}
-		if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
-			if vx, ok := v.(string); ok {
-				vxx, err := strconv.Atoi(vx)
-				if err == nil {
-					v = vxx
-				}
-			}
-		}
-
-		if err = d.Set("dynamic_capability", v); err != nil {
-			if !fortiAPIPatch(o["dynamic-capability"]) {
-				return fmt.Errorf("Error reading dynamic_capability: %v", err)
-			}
+	if err = d.Set("dynamic_capability", flattenSwitchControllerManagedSwitchDynamicCapability(o["dynamic-capability"], d, "dynamic_capability", sv)); err != nil {
+		if !fortiAPIPatch(o["dynamic-capability"]) {
+			return fmt.Errorf("Error reading dynamic_capability: %v", err)
 		}
 	}
 
@@ -5810,7 +5719,7 @@ func expandSwitchControllerManagedSwitchTdrSupported(d *schema.ResourceData, v i
 }
 
 func expandSwitchControllerManagedSwitchDynamicCapability(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
+	return convintf2i(v), nil
 }
 
 func expandSwitchControllerManagedSwitchSwitchDeviceTag(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
@@ -5870,6 +5779,8 @@ func expandSwitchControllerManagedSwitchRouteOffloadRouter(d *schema.ResourceDat
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan_name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["vlan-name"], _ = expandSwitchControllerManagedSwitchRouteOffloadRouterVlanName(d, i["vlan_name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["vlan-name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "router_ip"
@@ -5910,6 +5821,8 @@ func expandSwitchControllerManagedSwitchVlan(d *schema.ResourceData, v interface
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan_name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["vlan-name"], _ = expandSwitchControllerManagedSwitchVlanVlanName(d, i["vlan_name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["vlan-name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "assignment_priority"
@@ -5982,16 +5895,22 @@ func expandSwitchControllerManagedSwitchPorts(d *schema.ResourceData, v interfac
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port_name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["port-name"], _ = expandSwitchControllerManagedSwitchPortsPortName(d, i["port_name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["port-name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port_owner"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["port-owner"], _ = expandSwitchControllerManagedSwitchPortsPortOwner(d, i["port_owner"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["port-owner"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "switch_id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["switch-id"], _ = expandSwitchControllerManagedSwitchPortsSwitchId(d, i["switch_id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["switch-id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "speed"
@@ -6002,6 +5921,8 @@ func expandSwitchControllerManagedSwitchPorts(d *schema.ResourceData, v interfac
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "speed_mask"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["speed-mask"], _ = expandSwitchControllerManagedSwitchPortsSpeedMask(d, i["speed_mask"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["speed-mask"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
@@ -6052,6 +5973,8 @@ func expandSwitchControllerManagedSwitchPorts(d *schema.ResourceData, v interfac
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "flap_timeout"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["flap-timeout"], _ = expandSwitchControllerManagedSwitchPortsFlapTimeout(d, i["flap_timeout"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["flap-timeout"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rpvst_port"
@@ -6067,16 +5990,22 @@ func expandSwitchControllerManagedSwitchPorts(d *schema.ResourceData, v interfac
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port_number"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["port-number"], _ = expandSwitchControllerManagedSwitchPortsPortNumber(d, i["port_number"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["port-number"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port_prefix_type"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["port-prefix-type"], _ = expandSwitchControllerManagedSwitchPortsPortPrefixType(d, i["port_prefix_type"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["port-prefix-type"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "fortilink_port"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["fortilink-port"], _ = expandSwitchControllerManagedSwitchPortsFortilinkPort(d, i["fortilink_port"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["fortilink-port"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "link_status"
@@ -6087,61 +6016,92 @@ func expandSwitchControllerManagedSwitchPorts(d *schema.ResourceData, v interfac
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "poe_capable"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["poe-capable"], _ = expandSwitchControllerManagedSwitchPortsPoeCapable(d, i["poe_capable"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["poe-capable"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "pd_capable"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["pd-capable"], _ = expandSwitchControllerManagedSwitchPortsPdCapable(d, i["pd_capable"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["pd-capable"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "stacking_port"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["stacking-port"], _ = expandSwitchControllerManagedSwitchPortsStackingPort(d, i["stacking_port"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["stacking-port"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "p2p_port"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["p2p-port"], _ = expandSwitchControllerManagedSwitchPortsP2PPort(d, i["p2p_port"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["p2p-port"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mclag_icl_port"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["mclag-icl-port"], _ = expandSwitchControllerManagedSwitchPortsMclagIclPort(d, i["mclag_icl_port"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["mclag-icl-port"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "authenticated_port"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["authenticated-port"], _ = expandSwitchControllerManagedSwitchPortsAuthenticatedPort(d, i["authenticated_port"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["authenticated-port"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "restricted_auth_port"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["restricted-auth-port"], _ = expandSwitchControllerManagedSwitchPortsRestrictedAuthPort(d, i["restricted_auth_port"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["restricted-auth-port"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "encrypted_port"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["encrypted-port"], _ = expandSwitchControllerManagedSwitchPortsEncryptedPort(d, i["encrypted_port"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["encrypted-port"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "fiber_port"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["fiber-port"], _ = expandSwitchControllerManagedSwitchPortsFiberPort(d, i["fiber_port"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["fiber-port"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "media_type"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["media-type"], _ = expandSwitchControllerManagedSwitchPortsMediaType(d, i["media_type"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["media-type"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "poe_standard"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["poe-standard"], _ = expandSwitchControllerManagedSwitchPortsPoeStandard(d, i["poe_standard"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["poe-standard"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "poe_max_power"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["poe-max-power"], _ = expandSwitchControllerManagedSwitchPortsPoeMaxPower(d, i["poe_max_power"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["poe-max-power"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "poe_mode_bt_cabable"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["poe-mode-bt-cabable"], _ = expandSwitchControllerManagedSwitchPortsPoeModeBtCabable(d, i["poe_mode_bt_cabable"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["poe-mode-bt-cabable"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "poe_port_mode"
@@ -6162,46 +6122,64 @@ func expandSwitchControllerManagedSwitchPorts(d *schema.ResourceData, v interfac
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "flags"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["flags"], _ = expandSwitchControllerManagedSwitchPortsFlags(d, i["flags"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["flags"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "virtual_port"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["virtual-port"], _ = expandSwitchControllerManagedSwitchPortsVirtualPort(d, i["virtual_port"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["virtual-port"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "isl_local_trunk_name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["isl-local-trunk-name"], _ = expandSwitchControllerManagedSwitchPortsIslLocalTrunkName(d, i["isl_local_trunk_name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["isl-local-trunk-name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "isl_peer_port_name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["isl-peer-port-name"], _ = expandSwitchControllerManagedSwitchPortsIslPeerPortName(d, i["isl_peer_port_name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["isl-peer-port-name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "isl_peer_device_name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["isl-peer-device-name"], _ = expandSwitchControllerManagedSwitchPortsIslPeerDeviceName(d, i["isl_peer_device_name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["isl-peer-device-name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "isl_peer_device_sn"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["isl-peer-device-sn"], _ = expandSwitchControllerManagedSwitchPortsIslPeerDeviceSn(d, i["isl_peer_device_sn"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["isl-peer-device-sn"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "fgt_peer_port_name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["fgt-peer-port-name"], _ = expandSwitchControllerManagedSwitchPortsFgtPeerPortName(d, i["fgt_peer_port_name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["fgt-peer-port-name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "fgt_peer_device_name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["fgt-peer-device-name"], _ = expandSwitchControllerManagedSwitchPortsFgtPeerDeviceName(d, i["fgt_peer_device_name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["fgt-peer-device-name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["vlan"], _ = expandSwitchControllerManagedSwitchPortsVlan(d, i["vlan"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["vlan"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "allowed_vlans_all"
@@ -6210,16 +6188,16 @@ func expandSwitchControllerManagedSwitchPorts(d *schema.ResourceData, v interfac
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "allowed_vlans"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["allowed-vlans"], _ = expandSwitchControllerManagedSwitchPortsAllowedVlans(d, i["allowed_vlans"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["allowed-vlans"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "untagged_vlans"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["untagged-vlans"], _ = expandSwitchControllerManagedSwitchPortsUntaggedVlans(d, i["untagged_vlans"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["untagged-vlans"] = make([]string, 0)
 		}
 
@@ -6236,24 +6214,28 @@ func expandSwitchControllerManagedSwitchPorts(d *schema.ResourceData, v interfac
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "matched_dpp_policy"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["matched-dpp-policy"], _ = expandSwitchControllerManagedSwitchPortsMatchedDppPolicy(d, i["matched_dpp_policy"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["matched-dpp-policy"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "matched_dpp_intf_tags"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["matched-dpp-intf-tags"], _ = expandSwitchControllerManagedSwitchPortsMatchedDppIntfTags(d, i["matched_dpp_intf_tags"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["matched-dpp-intf-tags"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "acl_group"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["acl-group"], _ = expandSwitchControllerManagedSwitchPortsAclGroup(d, i["acl_group"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["acl-group"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "fortiswitch_acls"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["fortiswitch-acls"], _ = expandSwitchControllerManagedSwitchPortsFortiswitchAcls(d, i["fortiswitch_acls"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["fortiswitch-acls"] = make([]string, 0)
 		}
 
@@ -6268,9 +6250,9 @@ func expandSwitchControllerManagedSwitchPorts(d *schema.ResourceData, v interfac
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dhcp_snoop_option82_override"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["dhcp-snoop-option82-override"], _ = expandSwitchControllerManagedSwitchPortsDhcpSnoopOption82Override(d, i["dhcp_snoop_option82_override"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["dhcp-snoop-option82-override"] = make([]string, 0)
 		}
 
@@ -6292,6 +6274,8 @@ func expandSwitchControllerManagedSwitchPorts(d *schema.ResourceData, v interfac
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "igmp_snooping"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["igmp-snooping"], _ = expandSwitchControllerManagedSwitchPortsIgmpSnooping(d, i["igmp_snooping"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["igmp-snooping"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "igmps_flood_reports"
@@ -6347,16 +6331,22 @@ func expandSwitchControllerManagedSwitchPorts(d *schema.ResourceData, v interfac
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sflow_sampler"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["sflow-sampler"], _ = expandSwitchControllerManagedSwitchPortsSflowSampler(d, i["sflow_sampler"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["sflow-sampler"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sflow_sample_rate"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["sflow-sample-rate"], _ = expandSwitchControllerManagedSwitchPortsSflowSampleRate(d, i["sflow_sample_rate"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["sflow-sample-rate"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sflow_counter_interval"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["sflow-counter-interval"], _ = expandSwitchControllerManagedSwitchPortsSflowCounterInterval(d, i["sflow_counter_interval"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["sflow-counter-interval"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sample_direction"
@@ -6367,6 +6357,8 @@ func expandSwitchControllerManagedSwitchPorts(d *schema.ResourceData, v interfac
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "fec_capable"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["fec-capable"], _ = expandSwitchControllerManagedSwitchPortsFecCapable(d, i["fec_capable"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["fec-capable"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "fec_state"
@@ -6382,6 +6374,8 @@ func expandSwitchControllerManagedSwitchPorts(d *schema.ResourceData, v interfac
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pause_meter"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["pause-meter"], _ = expandSwitchControllerManagedSwitchPortsPauseMeter(d, i["pause_meter"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["pause-meter"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pause_meter_resume"
@@ -6402,6 +6396,8 @@ func expandSwitchControllerManagedSwitchPorts(d *schema.ResourceData, v interfac
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port_policy"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["port-policy"], _ = expandSwitchControllerManagedSwitchPortsPortPolicy(d, i["port_policy"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["port-policy"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "qos_policy"
@@ -6417,35 +6413,43 @@ func expandSwitchControllerManagedSwitchPorts(d *schema.ResourceData, v interfac
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port_security_policy"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["port-security-policy"], _ = expandSwitchControllerManagedSwitchPortsPortSecurityPolicy(d, i["port_security_policy"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["port-security-policy"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "export_to_pool"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["export-to-pool"], _ = expandSwitchControllerManagedSwitchPortsExportToPool(d, i["export_to_pool"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["export-to-pool"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_tags"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["interface-tags"], _ = expandSwitchControllerManagedSwitchPortsInterfaceTags(d, i["interface_tags"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["interface-tags"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "export_tags"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["export-tags"], _ = expandSwitchControllerManagedSwitchPortsExportTags(d, i["export_tags"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["export-tags"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "export_to_pool_flag"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["export-to-pool_flag"], _ = expandSwitchControllerManagedSwitchPortsExportToPoolFlag(d, i["export_to_pool_flag"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["export-to-pool_flag"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "learning_limit"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["learning-limit"], _ = expandSwitchControllerManagedSwitchPortsLearningLimit(d, i["learning_limit"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["learning-limit"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sticky_mac"
@@ -6466,6 +6470,8 @@ func expandSwitchControllerManagedSwitchPorts(d *schema.ResourceData, v interfac
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "export_to"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["export-to"], _ = expandSwitchControllerManagedSwitchPortsExportTo(d, i["export_to"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["export-to"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mac_addr"
@@ -6478,6 +6484,18 @@ func expandSwitchControllerManagedSwitchPorts(d *schema.ResourceData, v interfac
 			tmp["allow-arp-monitor"], _ = expandSwitchControllerManagedSwitchPortsAllowArpMonitor(d, i["allow_arp_monitor"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "qnq"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["qnq"], _ = expandSwitchControllerManagedSwitchPortsQnq(d, i["qnq"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["qnq"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "log_mac_event"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["log-mac-event"], _ = expandSwitchControllerManagedSwitchPortsLogMacEvent(d, i["log_mac_event"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port_selection_criteria"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["port-selection-criteria"], _ = expandSwitchControllerManagedSwitchPortsPortSelectionCriteria(d, i["port_selection_criteria"], pre_append, sv)
@@ -6486,6 +6504,8 @@ func expandSwitchControllerManagedSwitchPorts(d *schema.ResourceData, v interfac
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["description"], _ = expandSwitchControllerManagedSwitchPortsDescription(d, i["description"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["description"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "lacp_speed"
@@ -6524,15 +6544,17 @@ func expandSwitchControllerManagedSwitchPorts(d *schema.ResourceData, v interfac
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "members"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["members"], _ = expandSwitchControllerManagedSwitchPortsMembers(d, i["members"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["members"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "fallback_port"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["fallback-port"], _ = expandSwitchControllerManagedSwitchPortsFallbackPort(d, i["fallback_port"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["fallback-port"] = nil
 		}
 
 		result = append(result, tmp)
@@ -6628,6 +6650,10 @@ func expandSwitchControllerManagedSwitchPortsLinkStatus(d *schema.ResourceData, 
 }
 
 func expandSwitchControllerManagedSwitchPortsPoeCapable(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerManagedSwitchPortsPdCapable(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -6880,16 +6906,22 @@ func expandSwitchControllerManagedSwitchPortsDhcpSnoopOption82Override(d *schema
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan_name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["vlan-name"], _ = expandSwitchControllerManagedSwitchPortsDhcpSnoopOption82OverrideVlanName(d, i["vlan_name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["vlan-name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "circuit_id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["circuit-id"], _ = expandSwitchControllerManagedSwitchPortsDhcpSnoopOption82OverrideCircuitId(d, i["circuit_id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["circuit-id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "remote_id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["remote-id"], _ = expandSwitchControllerManagedSwitchPortsDhcpSnoopOption82OverrideRemoteId(d, i["remote_id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["remote-id"] = nil
 		}
 
 		result = append(result, tmp)
@@ -7120,6 +7152,14 @@ func expandSwitchControllerManagedSwitchPortsAllowArpMonitor(d *schema.ResourceD
 	return v, nil
 }
 
+func expandSwitchControllerManagedSwitchPortsQnq(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerManagedSwitchPortsLogMacEvent(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSwitchControllerManagedSwitchPortsPortSelectionCriteria(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -7205,17 +7245,21 @@ func expandSwitchControllerManagedSwitchIpSourceGuard(d *schema.ResourceData, v 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["port"], _ = expandSwitchControllerManagedSwitchIpSourceGuardPort(d, i["port"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["port"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["description"], _ = expandSwitchControllerManagedSwitchIpSourceGuardDescription(d, i["description"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["description"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "binding_entry"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["binding-entry"], _ = expandSwitchControllerManagedSwitchIpSourceGuardBindingEntry(d, i["binding_entry"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["binding-entry"] = make([]string, 0)
 		}
 
@@ -7252,6 +7296,8 @@ func expandSwitchControllerManagedSwitchIpSourceGuardBindingEntry(d *schema.Reso
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "entry_name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["entry-name"], _ = expandSwitchControllerManagedSwitchIpSourceGuardBindingEntryEntryName(d, i["entry_name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["entry-name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
@@ -7387,6 +7433,8 @@ func expandSwitchControllerManagedSwitchStpInstance(d *schema.ResourceData, v in
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSwitchControllerManagedSwitchStpInstanceId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
@@ -7531,11 +7579,15 @@ func expandSwitchControllerManagedSwitchSnmpCommunity(d *schema.ResourceData, v 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSwitchControllerManagedSwitchSnmpCommunityId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandSwitchControllerManagedSwitchSnmpCommunityName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
@@ -7544,9 +7596,9 @@ func expandSwitchControllerManagedSwitchSnmpCommunity(d *schema.ResourceData, v 
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "hosts"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["hosts"], _ = expandSwitchControllerManagedSwitchSnmpCommunityHosts(d, i["hosts"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["hosts"] = make([]string, 0)
 		}
 
@@ -7642,11 +7694,15 @@ func expandSwitchControllerManagedSwitchSnmpCommunityHosts(d *schema.ResourceDat
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSwitchControllerManagedSwitchSnmpCommunityHostsId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["ip"], _ = expandSwitchControllerManagedSwitchSnmpCommunityHostsIp(d, i["ip"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["ip"] = nil
 		}
 
 		result = append(result, tmp)
@@ -7730,6 +7786,8 @@ func expandSwitchControllerManagedSwitchSnmpUser(d *schema.ResourceData, v inter
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandSwitchControllerManagedSwitchSnmpUserName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "queries"
@@ -7755,6 +7813,8 @@ func expandSwitchControllerManagedSwitchSnmpUser(d *schema.ResourceData, v inter
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_pwd"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["auth-pwd"], _ = expandSwitchControllerManagedSwitchSnmpUserAuthPwd(d, i["auth_pwd"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["auth-pwd"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priv_proto"
@@ -7765,6 +7825,8 @@ func expandSwitchControllerManagedSwitchSnmpUser(d *schema.ResourceData, v inter
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priv_pwd"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["priv-pwd"], _ = expandSwitchControllerManagedSwitchSnmpUserPrivPwd(d, i["priv_pwd"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["priv-pwd"] = nil
 		}
 
 		result = append(result, tmp)
@@ -7892,6 +7954,8 @@ func expandSwitchControllerManagedSwitchRemoteLog(d *schema.ResourceData, v inte
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandSwitchControllerManagedSwitchRemoteLogName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
@@ -7902,6 +7966,8 @@ func expandSwitchControllerManagedSwitchRemoteLog(d *schema.ResourceData, v inte
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "server"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["server"], _ = expandSwitchControllerManagedSwitchRemoteLogServer(d, i["server"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["server"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
@@ -8031,6 +8097,8 @@ func expandSwitchControllerManagedSwitchMirror(d *schema.ResourceData, v interfa
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandSwitchControllerManagedSwitchMirrorName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
@@ -8046,19 +8114,21 @@ func expandSwitchControllerManagedSwitchMirror(d *schema.ResourceData, v interfa
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["dst"], _ = expandSwitchControllerManagedSwitchMirrorDst(d, i["dst"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["dst"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "src_ingress"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["src-ingress"], _ = expandSwitchControllerManagedSwitchMirrorSrcIngress(d, i["src_ingress"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["src-ingress"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "src_egress"
-		if _, ok := d.GetOk(pre_append); ok || d.HasChange(pre_append) {
+		if _, ok := d.GetOk(pre_append); ok {
 			tmp["src-egress"], _ = expandSwitchControllerManagedSwitchMirrorSrcEgress(d, i["src_egress"], pre_append, sv)
-		} else {
+		} else if d.HasChange(pre_append) {
 			tmp["src-egress"] = make([]string, 0)
 		}
 
@@ -8159,6 +8229,8 @@ func expandSwitchControllerManagedSwitchStaticMac(d *schema.ResourceData, v inte
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSwitchControllerManagedSwitchStaticMacId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
@@ -8169,6 +8241,8 @@ func expandSwitchControllerManagedSwitchStaticMac(d *schema.ResourceData, v inte
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["vlan"], _ = expandSwitchControllerManagedSwitchStaticMacVlan(d, i["vlan"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["vlan"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mac"
@@ -8179,11 +8253,15 @@ func expandSwitchControllerManagedSwitchStaticMac(d *schema.ResourceData, v inte
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["interface"], _ = expandSwitchControllerManagedSwitchStaticMacInterface(d, i["interface"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["interface"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["description"], _ = expandSwitchControllerManagedSwitchStaticMacDescription(d, i["description"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["description"] = nil
 		}
 
 		result = append(result, tmp)
@@ -8235,11 +8313,15 @@ func expandSwitchControllerManagedSwitchCustomCommand(d *schema.ResourceData, v 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "command_entry"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["command-entry"], _ = expandSwitchControllerManagedSwitchCustomCommandCommandEntry(d, i["command_entry"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["command-entry"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "command_name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["command-name"], _ = expandSwitchControllerManagedSwitchCustomCommandCommandName(d, i["command_name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["command-name"] = nil
 		}
 
 		result = append(result, tmp)
@@ -8275,11 +8357,15 @@ func expandSwitchControllerManagedSwitchDhcpSnoopingStaticClient(d *schema.Resou
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandSwitchControllerManagedSwitchDhcpSnoopingStaticClientName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["vlan"], _ = expandSwitchControllerManagedSwitchDhcpSnoopingStaticClientVlan(d, i["vlan"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["vlan"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
@@ -8295,6 +8381,8 @@ func expandSwitchControllerManagedSwitchDhcpSnoopingStaticClient(d *schema.Resou
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["port"], _ = expandSwitchControllerManagedSwitchDhcpSnoopingStaticClientPort(d, i["port"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["port"] = nil
 		}
 
 		result = append(result, tmp)
@@ -8557,6 +8645,8 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["sn"] = t
 		}
+	} else if d.HasChange("sn") {
+		obj["sn"] = nil
 	}
 
 	if v, ok := d.GetOk("name"); ok {
@@ -8566,6 +8656,8 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("description"); ok {
@@ -8575,6 +8667,8 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["description"] = t
 		}
+	} else if d.HasChange("description") {
+		obj["description"] = nil
 	}
 
 	if v, ok := d.GetOk("switch_profile"); ok {
@@ -8611,6 +8705,8 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["fsw-wan1-peer"] = t
 		}
+	} else if d.HasChange("fsw_wan1_peer") {
+		obj["fsw-wan1-peer"] = nil
 	}
 
 	if v, ok := d.GetOk("fsw_wan1_admin"); ok {
@@ -8629,6 +8725,8 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["fsw-wan2-peer"] = t
 		}
+	} else if d.HasChange("fsw_wan2_peer") {
+		obj["fsw-wan2-peer"] = nil
 	}
 
 	if v, ok := d.GetOk("fsw_wan2_admin"); ok {
@@ -8638,6 +8736,8 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["fsw-wan2-admin"] = t
 		}
+	} else if d.HasChange("fsw_wan2_admin") {
+		obj["fsw-wan2-admin"] = nil
 	}
 
 	if v, ok := d.GetOk("poe_pre_standard_detection"); ok {
@@ -8674,6 +8774,8 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["poe-lldp-detection"] = t
 		}
+	} else if d.HasChange("poe_lldp_detection") {
+		obj["poe-lldp-detection"] = nil
 	}
 
 	if v, ok := d.GetOkExists("directly_connected"); ok {
@@ -8683,6 +8785,8 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["directly-connected"] = t
 		}
+	} else if d.HasChange("directly_connected") {
+		obj["directly-connected"] = nil
 	}
 
 	if v, ok := d.GetOkExists("version"); ok {
@@ -8719,6 +8823,8 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["l3-discovered"] = t
 		}
+	} else if d.HasChange("l3_discovered") {
+		obj["l3-discovered"] = nil
 	}
 
 	if v, ok := d.GetOkExists("mgmt_mode"); ok {
@@ -8728,6 +8834,8 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["mgmt-mode"] = t
 		}
+	} else if d.HasChange("mgmt_mode") {
+		obj["mgmt-mode"] = nil
 	}
 
 	if v, ok := d.GetOkExists("tunnel_discovered"); ok {
@@ -8737,6 +8845,8 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["tunnel-discovered"] = t
 		}
+	} else if d.HasChange("tunnel_discovered") {
+		obj["tunnel-discovered"] = nil
 	}
 
 	if v, ok := d.GetOk("tdr_supported"); ok {
@@ -8746,6 +8856,8 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["tdr-supported"] = t
 		}
+	} else if d.HasChange("tdr_supported") {
+		obj["tdr-supported"] = nil
 	}
 
 	if v, ok := d.GetOkExists("dynamic_capability"); ok {
@@ -8753,15 +8865,10 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
-			new_version_map := map[string][]string{
-				">=": []string{"6.4.2"},
-			}
-			if versionMatch, _ := checkVersionMatch(sv, new_version_map); versionMatch {
-				obj["dynamic-capability"] = fmt.Sprintf("%v", t)
-			} else {
-				obj["dynamic-capability"] = t
-			}
+			obj["dynamic-capability"] = t
 		}
+	} else if d.HasChange("dynamic_capability") {
+		obj["dynamic-capability"] = nil
 	}
 
 	if v, ok := d.GetOk("switch_device_tag"); ok {
@@ -8771,6 +8878,8 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["switch-device-tag"] = t
 		}
+	} else if d.HasChange("switch_device_tag") {
+		obj["switch-device-tag"] = nil
 	}
 
 	if v, ok := d.GetOk("switch_dhcp_opt43_key"); ok {
@@ -8780,6 +8889,8 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["switch-dhcp_opt43_key"] = t
 		}
+	} else if d.HasChange("switch_dhcp_opt43_key") {
+		obj["switch-dhcp_opt43_key"] = nil
 	}
 
 	if v, ok := d.GetOk("mclag_igmp_snooping_aware"); ok {
@@ -8798,6 +8909,8 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["dynamically-discovered"] = t
 		}
+	} else if d.HasChange("dynamically_discovered") {
+		obj["dynamically-discovered"] = nil
 	}
 
 	if v, ok := d.GetOk("ptp_status"); ok {
@@ -8888,6 +9001,8 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["owner-vdom"] = t
 		}
+	} else if d.HasChange("owner_vdom") {
+		obj["owner-vdom"] = nil
 	}
 
 	if v, ok := d.GetOk("flow_identity"); ok {
@@ -8906,6 +9021,8 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["staged-image-version"] = t
 		}
+	} else if d.HasChange("staged_image_version") {
+		obj["staged-image-version"] = nil
 	}
 
 	if v, ok := d.GetOkExists("delayed_restart_trigger"); ok {
@@ -8915,6 +9032,8 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["delayed-restart-trigger"] = t
 		}
+	} else if d.HasChange("delayed_restart_trigger") {
+		obj["delayed-restart-trigger"] = nil
 	}
 
 	if v, ok := d.GetOk("firmware_provision"); ok {
@@ -8933,6 +9052,8 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["firmware-provision-version"] = t
 		}
+	} else if d.HasChange("firmware_provision_version") {
+		obj["firmware-provision-version"] = nil
 	}
 
 	if v, ok := d.GetOk("firmware_provision_latest"); ok {

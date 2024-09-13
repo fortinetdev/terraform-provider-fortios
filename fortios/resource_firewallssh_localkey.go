@@ -40,7 +40,6 @@ func resourceFirewallSshLocalKey() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"password": &schema.Schema{
 				Type:         schema.TypeString,
@@ -222,18 +221,6 @@ func flattenFirewallSshLocalKeyName(v interface{}, d *schema.ResourceData, pre s
 	return v
 }
 
-func flattenFirewallSshLocalKeyPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenFirewallSshLocalKeyPrivateKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenFirewallSshLocalKeyPublicKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
 func flattenFirewallSshLocalKeySource(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -292,6 +279,8 @@ func getObjectFirewallSshLocalKey(d *schema.ResourceData, sv string) (*map[strin
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	if v, ok := d.GetOk("password"); ok {
@@ -301,6 +290,8 @@ func getObjectFirewallSshLocalKey(d *schema.ResourceData, sv string) (*map[strin
 		} else if t != nil {
 			obj["password"] = t
 		}
+	} else if d.HasChange("password") {
+		obj["password"] = nil
 	}
 
 	if v, ok := d.GetOk("private_key"); ok {
@@ -310,6 +301,8 @@ func getObjectFirewallSshLocalKey(d *schema.ResourceData, sv string) (*map[strin
 		} else if t != nil {
 			obj["private-key"] = t
 		}
+	} else if d.HasChange("private_key") {
+		obj["private-key"] = nil
 	}
 
 	if v, ok := d.GetOk("public_key"); ok {
@@ -319,6 +312,8 @@ func getObjectFirewallSshLocalKey(d *schema.ResourceData, sv string) (*map[strin
 		} else if t != nil {
 			obj["public-key"] = t
 		}
+	} else if d.HasChange("public_key") {
+		obj["public-key"] = nil
 	}
 
 	if v, ok := d.GetOk("source"); ok {

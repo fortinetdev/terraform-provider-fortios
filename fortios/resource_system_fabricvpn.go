@@ -50,7 +50,6 @@ func resourceSystemFabricVpn() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"policy_rule": &schema.Schema{
 				Type:     schema.TypeString,
@@ -71,7 +70,6 @@ func resourceSystemFabricVpn() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 						"overlay_tunnel_block": &schema.Schema{
 							Type:     schema.TypeString,
@@ -87,50 +85,41 @@ func resourceSystemFabricVpn() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
-							Computed:     true,
 						},
 						"bgp_neighbor": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 45),
 							Optional:     true,
-							Computed:     true,
 						},
 						"overlay_policy": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"bgp_network": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"route_policy": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"bgp_neighbor_group": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 45),
 							Optional:     true,
-							Computed:     true,
 						},
 						"bgp_neighbor_range": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"ipsec_phase1": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
-							Computed:     true,
 						},
 						"sdwan_member": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -143,7 +132,6 @@ func resourceSystemFabricVpn() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"prefix": &schema.Schema{
 							Type:     schema.TypeString,
@@ -158,18 +146,15 @@ func resourceSystemFabricVpn() *schema.Resource {
 						"bgp_network": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 						"firewall_address": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
-							Computed:     true,
 						},
 						"policies": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
-							Computed: true,
 						},
 					},
 				},
@@ -183,12 +168,10 @@ func resourceSystemFabricVpn() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"loopback_advertised_subnet": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"psksecret": &schema.Schema{
 				Type:     schema.TypeString,
@@ -197,19 +180,16 @@ func resourceSystemFabricVpn() *schema.Resource {
 			"bgp_as": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"sdwan_zone": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"health_checks": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
@@ -473,15 +453,15 @@ func flattenSystemFabricVpnOverlaysBgpNeighbor(v interface{}, d *schema.Resource
 }
 
 func flattenSystemFabricVpnOverlaysOverlayPolicy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemFabricVpnOverlaysBgpNetwork(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemFabricVpnOverlaysRoutePolicy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemFabricVpnOverlaysBgpNeighborGroup(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -489,7 +469,7 @@ func flattenSystemFabricVpnOverlaysBgpNeighborGroup(v interface{}, d *schema.Res
 }
 
 func flattenSystemFabricVpnOverlaysBgpNeighborRange(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemFabricVpnOverlaysIpsecPhase1(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -497,7 +477,7 @@ func flattenSystemFabricVpnOverlaysIpsecPhase1(v interface{}, d *schema.Resource
 }
 
 func flattenSystemFabricVpnOverlaysSdwanMember(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemFabricVpnAdvertisedSubnets(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -564,7 +544,7 @@ func flattenSystemFabricVpnAdvertisedSubnets(v interface{}, d *schema.ResourceDa
 }
 
 func flattenSystemFabricVpnAdvertisedSubnetsId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemFabricVpnAdvertisedSubnetsPrefix(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -583,7 +563,7 @@ func flattenSystemFabricVpnAdvertisedSubnetsAccess(v interface{}, d *schema.Reso
 }
 
 func flattenSystemFabricVpnAdvertisedSubnetsBgpNetwork(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemFabricVpnAdvertisedSubnetsFirewallAddress(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -591,7 +571,7 @@ func flattenSystemFabricVpnAdvertisedSubnetsFirewallAddress(v interface{}, d *sc
 }
 
 func flattenSystemFabricVpnAdvertisedSubnetsPolicies(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemFabricVpnLoopbackAddressBlock(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -603,7 +583,7 @@ func flattenSystemFabricVpnLoopbackInterface(v interface{}, d *schema.ResourceDa
 }
 
 func flattenSystemFabricVpnLoopbackAdvertisedSubnet(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemFabricVpnPsksecret(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -611,7 +591,7 @@ func flattenSystemFabricVpnPsksecret(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenSystemFabricVpnBgpAs(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenSystemFabricVpnSdwanZone(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -781,6 +761,8 @@ func expandSystemFabricVpnOverlays(d *schema.ResourceData, v interface{}, pre st
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["name"], _ = expandSystemFabricVpnOverlaysName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "overlay_tunnel_block"
@@ -796,46 +778,64 @@ func expandSystemFabricVpnOverlays(d *schema.ResourceData, v interface{}, pre st
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["interface"], _ = expandSystemFabricVpnOverlaysInterface(d, i["interface"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["interface"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "bgp_neighbor"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["bgp-neighbor"], _ = expandSystemFabricVpnOverlaysBgpNeighbor(d, i["bgp_neighbor"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["bgp-neighbor"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "overlay_policy"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["overlay-policy"], _ = expandSystemFabricVpnOverlaysOverlayPolicy(d, i["overlay_policy"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["overlay-policy"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "bgp_network"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["bgp-network"], _ = expandSystemFabricVpnOverlaysBgpNetwork(d, i["bgp_network"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["bgp-network"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_policy"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["route-policy"], _ = expandSystemFabricVpnOverlaysRoutePolicy(d, i["route_policy"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["route-policy"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "bgp_neighbor_group"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["bgp-neighbor-group"], _ = expandSystemFabricVpnOverlaysBgpNeighborGroup(d, i["bgp_neighbor_group"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["bgp-neighbor-group"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "bgp_neighbor_range"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["bgp-neighbor-range"], _ = expandSystemFabricVpnOverlaysBgpNeighborRange(d, i["bgp_neighbor_range"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["bgp-neighbor-range"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ipsec_phase1"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["ipsec-phase1"], _ = expandSystemFabricVpnOverlaysIpsecPhase1(d, i["ipsec_phase1"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["ipsec-phase1"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sdwan_member"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["sdwan-member"], _ = expandSystemFabricVpnOverlaysSdwanMember(d, i["sdwan_member"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["sdwan-member"] = nil
 		}
 
 		result = append(result, tmp)
@@ -911,6 +911,8 @@ func expandSystemFabricVpnAdvertisedSubnets(d *schema.ResourceData, v interface{
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSystemFabricVpnAdvertisedSubnetsId(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"
@@ -926,16 +928,22 @@ func expandSystemFabricVpnAdvertisedSubnets(d *schema.ResourceData, v interface{
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "bgp_network"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["bgp-network"], _ = expandSystemFabricVpnAdvertisedSubnetsBgpNetwork(d, i["bgp_network"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["bgp-network"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "firewall_address"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["firewall-address"], _ = expandSystemFabricVpnAdvertisedSubnetsFirewallAddress(d, i["firewall_address"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["firewall-address"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "policies"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["policies"], _ = expandSystemFabricVpnAdvertisedSubnetsPolicies(d, i["policies"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["policies"] = nil
 		}
 
 		result = append(result, tmp)
@@ -1038,6 +1046,8 @@ func getObjectSystemFabricVpn(d *schema.ResourceData, setArgNil bool, sv string)
 				obj["branch-name"] = t
 			}
 		}
+	} else if d.HasChange("branch_name") {
+		obj["branch-name"] = nil
 	}
 
 	if v, ok := d.GetOk("policy_rule"); ok {
@@ -1116,6 +1126,8 @@ func getObjectSystemFabricVpn(d *schema.ResourceData, setArgNil bool, sv string)
 				obj["loopback-interface"] = t
 			}
 		}
+	} else if d.HasChange("loopback_interface") {
+		obj["loopback-interface"] = nil
 	}
 
 	if v, ok := d.GetOkExists("loopback_advertised_subnet"); ok {
@@ -1129,6 +1141,8 @@ func getObjectSystemFabricVpn(d *schema.ResourceData, setArgNil bool, sv string)
 				obj["loopback-advertised-subnet"] = t
 			}
 		}
+	} else if d.HasChange("loopback_advertised_subnet") {
+		obj["loopback-advertised-subnet"] = nil
 	}
 
 	if v, ok := d.GetOk("psksecret"); ok {
@@ -1142,6 +1156,8 @@ func getObjectSystemFabricVpn(d *schema.ResourceData, setArgNil bool, sv string)
 				obj["psksecret"] = t
 			}
 		}
+	} else if d.HasChange("psksecret") {
+		obj["psksecret"] = nil
 	}
 
 	if v, ok := d.GetOkExists("bgp_as"); ok {
@@ -1155,6 +1171,8 @@ func getObjectSystemFabricVpn(d *schema.ResourceData, setArgNil bool, sv string)
 				obj["bgp-as"] = t
 			}
 		}
+	} else if d.HasChange("bgp_as") {
+		obj["bgp-as"] = nil
 	}
 
 	if v, ok := d.GetOk("sdwan_zone"); ok {
@@ -1168,6 +1186,8 @@ func getObjectSystemFabricVpn(d *schema.ResourceData, setArgNil bool, sv string)
 				obj["sdwan-zone"] = t
 			}
 		}
+	} else if d.HasChange("sdwan_zone") {
+		obj["sdwan-zone"] = nil
 	}
 
 	if v, ok := d.GetOk("health_checks"); ok {
@@ -1181,6 +1201,8 @@ func getObjectSystemFabricVpn(d *schema.ResourceData, setArgNil bool, sv string)
 				obj["health-checks"] = t
 			}
 		}
+	} else if d.HasChange("health_checks") {
+		obj["health-checks"] = nil
 	}
 
 	return &obj, nil

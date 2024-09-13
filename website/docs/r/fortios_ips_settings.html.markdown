@@ -29,6 +29,7 @@ The following arguments are supported:
 * `packet_log_memory` - Maximum memory can be used by packet log (64 - 8192 kB).
 * `ips_packet_quota` - Maximum amount of disk space in MB for logged packets when logging to disk. Range depends on disk size.
 * `proxy_inline_ips` - Enable/disable proxy-mode policy inline IPS support. Valid values: `disable`, `enable`.
+* `ha_session_pickup` - IPS HA failover session pickup preference. Valid values: `connectivity`, `security`.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 

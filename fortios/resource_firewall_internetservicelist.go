@@ -39,13 +39,11 @@ func resourceFirewallInternetServiceList() *schema.Resource {
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
-				Computed: true,
 			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 		},
 	}
@@ -203,7 +201,7 @@ func resourceFirewallInternetServiceListRead(d *schema.ResourceData, m interface
 }
 
 func flattenFirewallInternetServiceListId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func flattenFirewallInternetServiceListName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -252,6 +250,8 @@ func getObjectFirewallInternetServiceList(d *schema.ResourceData, sv string) (*m
 		} else if t != nil {
 			obj["id"] = t
 		}
+	} else if d.HasChange("fosid") {
+		obj["id"] = nil
 	}
 
 	if v, ok := d.GetOk("name"); ok {
@@ -261,6 +261,8 @@ func getObjectFirewallInternetServiceList(d *schema.ResourceData, sv string) (*m
 		} else if t != nil {
 			obj["name"] = t
 		}
+	} else if d.HasChange("name") {
+		obj["name"] = nil
 	}
 
 	return &obj, nil

@@ -32,6 +32,7 @@ The following attributes are exported:
 * `icmpcode` - ICMP code.
 * `tcp_portrange` - Multiple TCP port ranges.
 * `udp_portrange` - Multiple UDP port ranges.
+* `udplite_portrange` - Multiple UDP-Lite port ranges.
 * `sctp_portrange` - Multiple SCTP port ranges.
 * `tcp_halfclose_timer` - Wait time to close a TCP session waiting for an unanswered FIN packet (1 - 86400 sec, 0 = default).
 * `tcp_halfopen_timer` - Wait time to close a TCP session waiting for an unanswered open session packet (1 - 86400 sec, 0 = default).

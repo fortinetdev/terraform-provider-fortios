@@ -47,13 +47,11 @@ func resourceSwitchControllerPtpInterfacePolicy() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
-				Computed:     true,
 			},
 			"vlan": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"vlan_pri": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -229,7 +227,7 @@ func flattenSwitchControllerPtpInterfacePolicyVlan(v interface{}, d *schema.Reso
 }
 
 func flattenSwitchControllerPtpInterfacePolicyVlanPri(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return convintf2i(v)
 }
 
 func refreshObjectSwitchControllerPtpInterfacePolicy(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -303,6 +301,8 @@ func getObjectSwitchControllerPtpInterfacePolicy(d *schema.ResourceData, sv stri
 		} else if t != nil {
 			obj["description"] = t
 		}
+	} else if d.HasChange("description") {
+		obj["description"] = nil
 	}
 
 	if v, ok := d.GetOk("vlan"); ok {
@@ -312,6 +312,8 @@ func getObjectSwitchControllerPtpInterfacePolicy(d *schema.ResourceData, sv stri
 		} else if t != nil {
 			obj["vlan"] = t
 		}
+	} else if d.HasChange("vlan") {
+		obj["vlan"] = nil
 	}
 
 	if v, ok := d.GetOkExists("vlan_pri"); ok {

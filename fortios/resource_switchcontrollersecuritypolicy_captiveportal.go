@@ -47,12 +47,10 @@ func resourceSwitchControllerSecurityPolicyCaptivePortal() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
-				Computed:     true,
 			},
 			"policy_type": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Computed: true,
 			},
 		},
 	}
@@ -282,6 +280,8 @@ func getObjectSwitchControllerSecurityPolicyCaptivePortal(d *schema.ResourceData
 		} else if t != nil {
 			obj["vlan"] = t
 		}
+	} else if d.HasChange("vlan") {
+		obj["vlan"] = nil
 	}
 
 	if v, ok := d.GetOk("policy_type"); ok {
@@ -291,6 +291,8 @@ func getObjectSwitchControllerSecurityPolicyCaptivePortal(d *schema.ResourceData
 		} else if t != nil {
 			obj["policy-type"] = t
 		}
+	} else if d.HasChange("policy_type") {
+		obj["policy-type"] = nil
 	}
 
 	return &obj, nil
