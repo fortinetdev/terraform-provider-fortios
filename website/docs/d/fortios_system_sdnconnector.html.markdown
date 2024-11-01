@@ -95,11 +95,13 @@ The `region_list` block contains:
 The `nic` block contains:
 
 * `name` - Network interface name.
+* `peer_nic` - Peer network interface name.
 * `ip` - Configure IP configuration. The structure of `ip` block is documented below.
 
 The `ip` block contains:
 
 * `name` - IP configuration name.
+* `private_ip` - Private IP address.
 * `public_ip` - Public IP name.
 * `resource_group` - Resource group of Azure public IP.
 

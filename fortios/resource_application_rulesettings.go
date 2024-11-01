@@ -39,6 +39,7 @@ func resourceApplicationRuleSettings() *schema.Resource {
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
+				Computed: true,
 			},
 		},
 	}
@@ -231,8 +232,6 @@ func getObjectApplicationRuleSettings(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["id"] = t
 		}
-	} else if d.HasChange("fosid") {
-		obj["id"] = nil
 	}
 
 	return &obj, nil

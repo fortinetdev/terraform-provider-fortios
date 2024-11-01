@@ -39,6 +39,7 @@ func resourceFirewallInternetServiceDefinition() *schema.Resource {
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
+				Computed: true,
 			},
 			"entry": &schema.Schema{
 				Type:     schema.TypeList,
@@ -72,6 +73,7 @@ func resourceFirewallInternetServiceDefinition() *schema.Resource {
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
+										Computed: true,
 									},
 									"start_port": &schema.Schema{
 										Type:         schema.TypeInt,
@@ -547,8 +549,6 @@ func expandFirewallInternetServiceDefinitionEntryPortRange(d *schema.ResourceDat
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandFirewallInternetServiceDefinitionEntryPortRangeId(d, i["id"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "start_port"
@@ -595,8 +595,6 @@ func getObjectFirewallInternetServiceDefinition(d *schema.ResourceData, sv strin
 		} else if t != nil {
 			obj["id"] = t
 		}
-	} else if d.HasChange("fosid") {
-		obj["id"] = nil
 	}
 
 	if v, ok := d.GetOk("entry"); ok || d.HasChange("entry") {

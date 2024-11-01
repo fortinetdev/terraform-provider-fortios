@@ -39,6 +39,7 @@ func resourceIpsRuleSettings() *schema.Resource {
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
+				Computed: true,
 			},
 		},
 	}
@@ -231,8 +232,6 @@ func getObjectIpsRuleSettings(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["id"] = t
 		}
-	} else if d.HasChange("fosid") {
-		obj["id"] = nil
 	}
 
 	return &obj, nil

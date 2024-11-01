@@ -88,11 +88,14 @@ func (r *Request) Send2(retries int, ignvdom bool) error {
 
 	r.HTTPRequest.Header.Set("Content-Type", "application/json")
 	r.HTTPRequest.Header.Set("accept", "application/json")
+	if token != "" {
+		r.HTTPRequest.Header.Set("Authorization", "Bearer "+token)
+	}
 	vdom := r.Config.Auth.Vdom
 	if ignvdom == true {
 		vdom = ""
 	}
-	u := r.buildURL(vdom, token)
+	u := r.buildURL(vdom, "")
 
 	r.HTTPRequest.URL, err = url.Parse(u)
 	if err != nil {
@@ -166,11 +169,14 @@ func (r *Request) Send3(vdomparam string) error {
 		}
 	}
 	r.HTTPRequest.Header.Set("Content-Type", "application/json")
+	if token != "" {
+		r.HTTPRequest.Header.Set("Authorization", "Bearer "+token)
+	}
 	vdom := vdomparam
 	if vdom == "" {
 		vdom = r.Config.Auth.Vdom
 	}
-	u := r.buildURL(vdom, token)
+	u := r.buildURL(vdom, "")
 	r.HTTPRequest.URL, err = url.Parse(u)
 	if err != nil {
 		return err
@@ -244,7 +250,6 @@ func (r *Request) CheckValid() error {
 			}
 			return nil
 		}
-		log.Printf("token: %v", token)
 		// logout token
 		errLogout := r.LogoutToken(token)
 		if errLogout != nil {
@@ -287,14 +292,14 @@ func (r *Request) CheckValid() error {
 	return err
 }
 
-func filterapikey(v string) string {
+func filterapikey(v string) string { // !!! need check whether need this or not
 	re, _ := regexp.Compile("access_token=.*?\"")
 	res := re.ReplaceAllString(v, "access_token=***************\"")
 
 	return res
 }
 
-func (r *Request) buildURL(vdom, token string) string {
+func (r *Request) buildURL(vdom, spvar string) string {
 	u := "https://"
 	u += r.Config.FwTarget
 	u += r.Path
@@ -307,9 +312,8 @@ func (r *Request) buildURL(vdom, token string) string {
 			param_list = append(param_list, "vdom="+vdom)
 		}
 	}
-
-	if token != "" {
-		param_list = append(param_list, "access_token="+token)
+	if spvar != "" {
+		param_list = append(param_list, spvar)
 	}
 
 	if len(param_list) > 0 {
@@ -341,16 +345,14 @@ func (r *Request) SendWithSpecialParams(s, vdomparam string) error {
 		}
 	}
 	r.HTTPRequest.Header.Set("Content-Type", "application/json")
+	if token != "" {
+		r.HTTPRequest.Header.Set("Authorization", "Bearer "+token)
+	}
 	vdom := vdomparam
 	if vdom == "" {
 		vdom = r.Config.Auth.Vdom
 	}
-	u := r.buildURL(vdom, token)
-
-	if s != "" {
-		u += "&"
-		u += s
-	}
+	u := r.buildURL(vdom, s)
 
 	r.HTTPRequest.URL, err = url.Parse(u)
 	if err != nil {
@@ -592,11 +594,10 @@ func (r *Request) LogoutToken(token string) error {
 
 	req, _ := http.NewRequest("DELETE", "", bodyBytes)
 	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Authorization", "Bearer "+token) // !!! check whether logout or not
 	u := "https://"
 	u += r.Config.FwTarget
 	u += "/api/v2/authentication"
-	u += "?access_token="
-	u += token
 	req.URL, err = url.Parse(u)
 	if err != nil {
 		err = fmt.Errorf("Could not parse URL: %s", err)

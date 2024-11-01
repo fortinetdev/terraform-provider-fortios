@@ -81,6 +81,7 @@ func resourceDnsfilterProfile() *schema.Resource {
 										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 255),
 										Optional:     true,
+										Computed:     true,
 									},
 									"category": &schema.Schema{
 										Type:         schema.TypeInt,
@@ -169,6 +170,7 @@ func resourceDnsfilterProfile() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
+							Computed: true,
 						},
 						"addr_type": &schema.Schema{
 							Type:     schema.TypeString,
@@ -1006,8 +1008,6 @@ func expandDnsfilterProfileFtgdDnsFilters(d *schema.ResourceData, v interface{},
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandDnsfilterProfileFtgdDnsFiltersId(d, i["id"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
@@ -1132,8 +1132,6 @@ func expandDnsfilterProfileDnsTranslation(d *schema.ResourceData, v interface{},
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandDnsfilterProfileDnsTranslationId(d, i["id"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr_type"

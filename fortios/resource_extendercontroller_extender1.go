@@ -46,6 +46,7 @@ func resourceExtenderControllerExtender1() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 19),
 				Optional:     true,
+				Computed:     true,
 			},
 			"authorized": &schema.Schema{
 				Type:     schema.TypeString,
@@ -1486,8 +1487,6 @@ func getObjectExtenderControllerExtender1(d *schema.ResourceData, sv string) (*m
 		} else if t != nil {
 			obj["id"] = t
 		}
-	} else if d.HasChange("fosid") {
-		obj["id"] = nil
 	}
 
 	if v, ok := d.GetOk("authorized"); ok {

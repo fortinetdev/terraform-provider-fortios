@@ -99,6 +99,7 @@ func resourceUserGroup() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
+							Computed: true,
 						},
 						"server_name": &schema.Schema{
 							Type:         schema.TypeString,
@@ -978,8 +979,6 @@ func expandUserGroupMatch(d *schema.ResourceData, v interface{}, pre string, sv 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandUserGroupMatchId(d, i["id"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "server_name"

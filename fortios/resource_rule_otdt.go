@@ -46,6 +46,7 @@ func resourceRuleOtdt() *schema.Resource {
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
+				Computed: true,
 			},
 			"category": &schema.Schema{
 				Type:     schema.TypeInt,
@@ -103,6 +104,7 @@ func resourceRuleOtdt() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
+							Computed: true,
 						},
 						"metaid": &schema.Schema{
 							Type:     schema.TypeInt,
@@ -622,8 +624,6 @@ func expandRuleOtdtMetadata(d *schema.ResourceData, v interface{}, pre string, s
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandRuleOtdtMetadataId(d, i["id"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "metaid"
@@ -679,8 +679,6 @@ func getObjectRuleOtdt(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["id"] = t
 		}
-	} else if d.HasChange("fosid") {
-		obj["id"] = nil
 	}
 
 	if v, ok := d.GetOkExists("category"); ok {

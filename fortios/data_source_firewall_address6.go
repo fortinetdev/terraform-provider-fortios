@@ -192,6 +192,14 @@ func dataSourceFirewallAddress6() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"filter": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"sdn_addr_type": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"fabric_object": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -547,6 +555,14 @@ func dataSourceFlattenFirewallAddress6SdnTag(v interface{}, d *schema.ResourceDa
 	return v
 }
 
+func dataSourceFlattenFirewallAddress6Filter(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallAddress6SdnAddrType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallAddress6FabricObject(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -713,6 +729,18 @@ func dataSourceRefreshObjectFirewallAddress6(d *schema.ResourceData, o map[strin
 	if err = d.Set("sdn_tag", dataSourceFlattenFirewallAddress6SdnTag(o["sdn-tag"], d, "sdn_tag")); err != nil {
 		if !fortiAPIPatch(o["sdn-tag"]) {
 			return fmt.Errorf("Error reading sdn_tag: %v", err)
+		}
+	}
+
+	if err = d.Set("filter", dataSourceFlattenFirewallAddress6Filter(o["filter"], d, "filter")); err != nil {
+		if !fortiAPIPatch(o["filter"]) {
+			return fmt.Errorf("Error reading filter: %v", err)
+		}
+	}
+
+	if err = d.Set("sdn_addr_type", dataSourceFlattenFirewallAddress6SdnAddrType(o["sdn-addr-type"], d, "sdn_addr_type")); err != nil {
+		if !fortiAPIPatch(o["sdn-addr-type"]) {
+			return fmt.Errorf("Error reading sdn_addr_type: %v", err)
 		}
 	}
 

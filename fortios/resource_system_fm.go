@@ -45,6 +45,7 @@ func resourceSystemFm() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
+				Computed:     true,
 			},
 			"ip": &schema.Schema{
 				Type:     schema.TypeString,
@@ -327,8 +328,6 @@ func getObjectSystemFm(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 				obj["id"] = t
 			}
 		}
-	} else if d.HasChange("fosid") {
-		obj["id"] = nil
 	}
 
 	if v, ok := d.GetOk("ip"); ok {

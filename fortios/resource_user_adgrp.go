@@ -55,6 +55,7 @@ func resourceUserAdgrp() *schema.Resource {
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
+				Computed: true,
 			},
 		},
 	}
@@ -320,8 +321,6 @@ func getObjectUserAdgrp(d *schema.ResourceData, sv string) (*map[string]interfac
 		} else if t != nil {
 			obj["id"] = t
 		}
-	} else if d.HasChange("fosid") {
-		obj["id"] = nil
 	}
 
 	return &obj, nil

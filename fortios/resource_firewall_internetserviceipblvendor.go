@@ -39,6 +39,7 @@ func resourceFirewallInternetServiceIpblVendor() *schema.Resource {
 			"fosid": &schema.Schema{
 				Type: schema.TypeInt,
 				Optional: true,
+				Computed: true,
 			},
 			"name": &schema.Schema{
 				Type: schema.TypeString,
@@ -259,8 +260,6 @@ func getObjectFirewallInternetServiceIpblVendor(d *schema.ResourceData, sv strin
 		} else if t != nil {
 			obj["id"] = t
 		}
-    } else if d.HasChange("fosid") {
-		obj["id"] = nil
 	}
 
 

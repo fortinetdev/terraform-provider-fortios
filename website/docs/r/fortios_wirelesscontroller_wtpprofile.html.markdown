@@ -510,6 +510,19 @@ The `lbs` block supports:
 * `fortipresence_unassoc` - Enable/disable FortiPresence finding and reporting unassociated stations. Valid values: `enable`, `disable`.
 * `fortipresence_ble` - Enable/disable FortiPresence finding and reporting BLE devices. Valid values: `enable`, `disable`.
 * `station_locate` - Enable/disable client station locating services for all clients, whether associated or not (default = disable). Valid values: `enable`, `disable`.
+* `ble_rtls` - Set BLE Real Time Location Service (RTLS) support (default = none). Valid values: `none`, `polestar`, `evresys`.
+* `ble_rtls_protocol` - Select the protocol to report Measurements, Advertising Data, or Location Data to Cloud Server. (default = WSS). Valid values: `WSS`.
+* `ble_rtls_server_fqdn` - FQDN of BLE Real Time Location Service (RTLS) Server.
+* `ble_rtls_server_path` - Path of BLE Real Time Location Service (RTLS) Server.
+* `ble_rtls_server_token` - Access Token of BLE Real Time Location Service (RTLS) Server.
+* `ble_rtls_server_port` - Port of BLE Real Time Location Service (RTLS) Server (default = 443).
+* `ble_rtls_accumulation_interval` - Time that measurements should be accumulated in seconds (default = 2).
+* `ble_rtls_reporting_interval` - Time between reporting accumulated measurements in seconds (default = 2).
+* `ble_rtls_asset_uuid_list1` - Tags and asset UUID list 1 to be reported (string in the format of 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX').
+* `ble_rtls_asset_uuid_list2` - Tags and asset UUID list 2 to be reported (string in the format of 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX').
+* `ble_rtls_asset_uuid_list3` - Tags and asset UUID list 3 to be reported (string in the format of 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX').
+* `ble_rtls_asset_uuid_list4` - Tags and asset UUID list 4 to be reported (string in the format of 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX').
+* `ble_rtls_asset_addrgrp_list` - Tags and asset addrgrp list to be reported.
 * `polestar` - Enable/disable PoleStar BLE NAO Track Real Time Location Service (RTLS) support (default = disable). Valid values: `enable`, `disable`.
 * `polestar_protocol` - Select the protocol to report Measurements, Advertising Data, or Location Data to NAO Cloud. (default = WSS). Valid values: `WSS`.
 * `polestar_server_fqdn` - FQDN of PoleStar Nao Track Server (default = ws.nao-cloud.com).

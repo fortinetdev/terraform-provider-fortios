@@ -224,6 +224,11 @@ func resourceSystemSdnConnector() *schema.Resource {
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
 						},
+						"peer_nic": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 63),
+							Optional:     true,
+						},
 						"ip": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
@@ -232,6 +237,11 @@ func resourceSystemSdnConnector() *schema.Resource {
 									"name": &schema.Schema{
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 63),
+										Optional:     true,
+									},
+									"private_ip": &schema.Schema{
+										Type:         schema.TypeString,
+										ValidateFunc: validation.StringLenBetween(0, 39),
 										Optional:     true,
 									},
 									"public_ip": &schema.Schema{
@@ -916,6 +926,11 @@ func flattenSystemSdnConnectorNic(v interface{}, d *schema.ResourceData, pre str
 			tmp["name"] = flattenSystemSdnConnectorNicName(cur_v, d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "peer_nic"
+		if cur_v, ok := i["peer-nic"]; ok {
+			tmp["peer_nic"] = flattenSystemSdnConnectorNicPeerNic(cur_v, d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if cur_v, ok := i["ip"]; ok {
 			tmp["ip"] = flattenSystemSdnConnectorNicIp(cur_v, d, pre_append, sv)
@@ -931,6 +946,10 @@ func flattenSystemSdnConnectorNic(v interface{}, d *schema.ResourceData, pre str
 }
 
 func flattenSystemSdnConnectorNicName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdnConnectorNicPeerNic(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -963,6 +982,11 @@ func flattenSystemSdnConnectorNicIp(v interface{}, d *schema.ResourceData, pre s
 			tmp["name"] = flattenSystemSdnConnectorNicIpName(cur_v, d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "private_ip"
+		if cur_v, ok := i["private-ip"]; ok {
+			tmp["private_ip"] = flattenSystemSdnConnectorNicIpPrivateIp(cur_v, d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "public_ip"
 		if cur_v, ok := i["public-ip"]; ok {
 			tmp["public_ip"] = flattenSystemSdnConnectorNicIpPublicIp(cur_v, d, pre_append, sv)
@@ -983,6 +1007,10 @@ func flattenSystemSdnConnectorNicIp(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenSystemSdnConnectorNicIpName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdnConnectorNicIpPrivateIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2134,6 +2162,13 @@ func expandSystemSdnConnectorNic(d *schema.ResourceData, v interface{}, pre stri
 			tmp["name"] = nil
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "peer_nic"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["peer-nic"], _ = expandSystemSdnConnectorNicPeerNic(d, i["peer_nic"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["peer-nic"] = nil
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["ip"], _ = expandSystemSdnConnectorNicIp(d, i["ip"], pre_append, sv)
@@ -2150,6 +2185,10 @@ func expandSystemSdnConnectorNic(d *schema.ResourceData, v interface{}, pre stri
 }
 
 func expandSystemSdnConnectorNicName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdnConnectorNicPeerNic(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2172,6 +2211,13 @@ func expandSystemSdnConnectorNicIp(d *schema.ResourceData, v interface{}, pre st
 			tmp["name"], _ = expandSystemSdnConnectorNicIpName(d, i["name"], pre_append, sv)
 		} else if d.HasChange(pre_append) {
 			tmp["name"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "private_ip"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["private-ip"], _ = expandSystemSdnConnectorNicIpPrivateIp(d, i["private_ip"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["private-ip"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "public_ip"
@@ -2197,6 +2243,10 @@ func expandSystemSdnConnectorNicIp(d *schema.ResourceData, v interface{}, pre st
 }
 
 func expandSystemSdnConnectorNicIpName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdnConnectorNicIpPrivateIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

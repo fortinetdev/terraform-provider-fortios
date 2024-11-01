@@ -274,6 +274,7 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
+							Computed: true,
 						},
 						"mac": &schema.Schema{
 							Type:     schema.TypeString,
@@ -321,6 +322,7 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
+							Computed: true,
 						},
 						"dest_ip": &schema.Schema{
 							Type:     schema.TypeString,
@@ -2292,6 +2294,74 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
+						},
+						"ble_rtls": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"ble_rtls_protocol": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"ble_rtls_server_fqdn": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 255),
+							Optional:     true,
+						},
+						"ble_rtls_server_path": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 255),
+							Optional:     true,
+						},
+						"ble_rtls_server_token": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 31),
+							Optional:     true,
+						},
+						"ble_rtls_server_port": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(1, 65535),
+							Optional:     true,
+							Computed:     true,
+						},
+						"ble_rtls_accumulation_interval": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(1, 60),
+							Optional:     true,
+							Computed:     true,
+						},
+						"ble_rtls_reporting_interval": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(1, 600),
+							Optional:     true,
+							Computed:     true,
+						},
+						"ble_rtls_asset_uuid_list1": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 36),
+							Optional:     true,
+						},
+						"ble_rtls_asset_uuid_list2": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 36),
+							Optional:     true,
+						},
+						"ble_rtls_asset_uuid_list3": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 36),
+							Optional:     true,
+						},
+						"ble_rtls_asset_uuid_list4": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 36),
+							Optional:     true,
+						},
+						"ble_rtls_asset_addrgrp_list": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
 						},
 						"polestar": &schema.Schema{
 							Type:     schema.TypeString,
@@ -6588,6 +6658,71 @@ func flattenWirelessControllerWtpProfileLbs(v interface{}, d *schema.ResourceDat
 		result["station_locate"] = flattenWirelessControllerWtpProfileLbsStationLocate(i["station-locate"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "ble_rtls"
+	if _, ok := i["ble-rtls"]; ok {
+		result["ble_rtls"] = flattenWirelessControllerWtpProfileLbsBleRtls(i["ble-rtls"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "ble_rtls_protocol"
+	if _, ok := i["ble-rtls-protocol"]; ok {
+		result["ble_rtls_protocol"] = flattenWirelessControllerWtpProfileLbsBleRtlsProtocol(i["ble-rtls-protocol"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "ble_rtls_server_fqdn"
+	if _, ok := i["ble-rtls-server-fqdn"]; ok {
+		result["ble_rtls_server_fqdn"] = flattenWirelessControllerWtpProfileLbsBleRtlsServerFqdn(i["ble-rtls-server-fqdn"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "ble_rtls_server_path"
+	if _, ok := i["ble-rtls-server-path"]; ok {
+		result["ble_rtls_server_path"] = flattenWirelessControllerWtpProfileLbsBleRtlsServerPath(i["ble-rtls-server-path"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "ble_rtls_server_token"
+	if _, ok := i["ble-rtls-server-token"]; ok {
+		result["ble_rtls_server_token"] = flattenWirelessControllerWtpProfileLbsBleRtlsServerToken(i["ble-rtls-server-token"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "ble_rtls_server_port"
+	if _, ok := i["ble-rtls-server-port"]; ok {
+		result["ble_rtls_server_port"] = flattenWirelessControllerWtpProfileLbsBleRtlsServerPort(i["ble-rtls-server-port"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "ble_rtls_accumulation_interval"
+	if _, ok := i["ble-rtls-accumulation-interval"]; ok {
+		result["ble_rtls_accumulation_interval"] = flattenWirelessControllerWtpProfileLbsBleRtlsAccumulationInterval(i["ble-rtls-accumulation-interval"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "ble_rtls_reporting_interval"
+	if _, ok := i["ble-rtls-reporting-interval"]; ok {
+		result["ble_rtls_reporting_interval"] = flattenWirelessControllerWtpProfileLbsBleRtlsReportingInterval(i["ble-rtls-reporting-interval"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "ble_rtls_asset_uuid_list1"
+	if _, ok := i["ble-rtls-asset-uuid-list1"]; ok {
+		result["ble_rtls_asset_uuid_list1"] = flattenWirelessControllerWtpProfileLbsBleRtlsAssetUuidList1(i["ble-rtls-asset-uuid-list1"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "ble_rtls_asset_uuid_list2"
+	if _, ok := i["ble-rtls-asset-uuid-list2"]; ok {
+		result["ble_rtls_asset_uuid_list2"] = flattenWirelessControllerWtpProfileLbsBleRtlsAssetUuidList2(i["ble-rtls-asset-uuid-list2"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "ble_rtls_asset_uuid_list3"
+	if _, ok := i["ble-rtls-asset-uuid-list3"]; ok {
+		result["ble_rtls_asset_uuid_list3"] = flattenWirelessControllerWtpProfileLbsBleRtlsAssetUuidList3(i["ble-rtls-asset-uuid-list3"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "ble_rtls_asset_uuid_list4"
+	if _, ok := i["ble-rtls-asset-uuid-list4"]; ok {
+		result["ble_rtls_asset_uuid_list4"] = flattenWirelessControllerWtpProfileLbsBleRtlsAssetUuidList4(i["ble-rtls-asset-uuid-list4"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "ble_rtls_asset_addrgrp_list"
+	if _, ok := i["ble-rtls-asset-addrgrp-list"]; ok {
+		result["ble_rtls_asset_addrgrp_list"] = flattenWirelessControllerWtpProfileLbsBleRtlsAssetAddrgrpList(i["ble-rtls-asset-addrgrp-list"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "polestar"
 	if _, ok := i["polestar"]; ok {
 		result["polestar"] = flattenWirelessControllerWtpProfileLbsPolestar(i["polestar"], d, pre_append, sv)
@@ -6746,6 +6881,58 @@ func flattenWirelessControllerWtpProfileLbsFortipresenceBle(v interface{}, d *sc
 }
 
 func flattenWirelessControllerWtpProfileLbsStationLocate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileLbsBleRtls(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileLbsBleRtlsProtocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileLbsBleRtlsServerFqdn(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileLbsBleRtlsServerPath(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileLbsBleRtlsServerToken(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileLbsBleRtlsServerPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenWirelessControllerWtpProfileLbsBleRtlsAccumulationInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenWirelessControllerWtpProfileLbsBleRtlsReportingInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenWirelessControllerWtpProfileLbsBleRtlsAssetUuidList1(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileLbsBleRtlsAssetUuidList2(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileLbsBleRtlsAssetUuidList3(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileLbsBleRtlsAssetUuidList4(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileLbsBleRtlsAssetAddrgrpList(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -7682,8 +7869,6 @@ func expandWirelessControllerWtpProfileDenyMacList(d *schema.ResourceData, v int
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandWirelessControllerWtpProfileDenyMacListId(d, i["id"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mac"
@@ -7748,8 +7933,6 @@ func expandWirelessControllerWtpProfileSplitTunnelingAcl(d *schema.ResourceData,
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandWirelessControllerWtpProfileSplitTunnelingAclId(d, i["id"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dest_ip"
@@ -10815,6 +10998,58 @@ func expandWirelessControllerWtpProfileLbs(d *schema.ResourceData, v interface{}
 	if _, ok := d.GetOk(pre_append); ok {
 		result["station-locate"], _ = expandWirelessControllerWtpProfileLbsStationLocate(d, i["station_locate"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "ble_rtls"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["ble-rtls"], _ = expandWirelessControllerWtpProfileLbsBleRtls(d, i["ble_rtls"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "ble_rtls_protocol"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["ble-rtls-protocol"], _ = expandWirelessControllerWtpProfileLbsBleRtlsProtocol(d, i["ble_rtls_protocol"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "ble_rtls_server_fqdn"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["ble-rtls-server-fqdn"], _ = expandWirelessControllerWtpProfileLbsBleRtlsServerFqdn(d, i["ble_rtls_server_fqdn"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "ble_rtls_server_path"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["ble-rtls-server-path"], _ = expandWirelessControllerWtpProfileLbsBleRtlsServerPath(d, i["ble_rtls_server_path"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "ble_rtls_server_token"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["ble-rtls-server-token"], _ = expandWirelessControllerWtpProfileLbsBleRtlsServerToken(d, i["ble_rtls_server_token"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "ble_rtls_server_port"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["ble-rtls-server-port"], _ = expandWirelessControllerWtpProfileLbsBleRtlsServerPort(d, i["ble_rtls_server_port"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "ble_rtls_accumulation_interval"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["ble-rtls-accumulation-interval"], _ = expandWirelessControllerWtpProfileLbsBleRtlsAccumulationInterval(d, i["ble_rtls_accumulation_interval"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "ble_rtls_reporting_interval"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["ble-rtls-reporting-interval"], _ = expandWirelessControllerWtpProfileLbsBleRtlsReportingInterval(d, i["ble_rtls_reporting_interval"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "ble_rtls_asset_uuid_list1"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["ble-rtls-asset-uuid-list1"], _ = expandWirelessControllerWtpProfileLbsBleRtlsAssetUuidList1(d, i["ble_rtls_asset_uuid_list1"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "ble_rtls_asset_uuid_list2"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["ble-rtls-asset-uuid-list2"], _ = expandWirelessControllerWtpProfileLbsBleRtlsAssetUuidList2(d, i["ble_rtls_asset_uuid_list2"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "ble_rtls_asset_uuid_list3"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["ble-rtls-asset-uuid-list3"], _ = expandWirelessControllerWtpProfileLbsBleRtlsAssetUuidList3(d, i["ble_rtls_asset_uuid_list3"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "ble_rtls_asset_uuid_list4"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["ble-rtls-asset-uuid-list4"], _ = expandWirelessControllerWtpProfileLbsBleRtlsAssetUuidList4(d, i["ble_rtls_asset_uuid_list4"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "ble_rtls_asset_addrgrp_list"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["ble-rtls-asset-addrgrp-list"], _ = expandWirelessControllerWtpProfileLbsBleRtlsAssetAddrgrpList(d, i["ble_rtls_asset_addrgrp_list"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "polestar"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["polestar"], _ = expandWirelessControllerWtpProfileLbsPolestar(d, i["polestar"], pre_append, sv)
@@ -10964,6 +11199,58 @@ func expandWirelessControllerWtpProfileLbsFortipresenceBle(d *schema.ResourceDat
 }
 
 func expandWirelessControllerWtpProfileLbsStationLocate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileLbsBleRtls(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileLbsBleRtlsProtocol(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileLbsBleRtlsServerFqdn(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileLbsBleRtlsServerPath(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileLbsBleRtlsServerToken(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileLbsBleRtlsServerPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileLbsBleRtlsAccumulationInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileLbsBleRtlsReportingInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileLbsBleRtlsAssetUuidList1(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileLbsBleRtlsAssetUuidList2(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileLbsBleRtlsAssetUuidList3(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileLbsBleRtlsAssetUuidList4(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileLbsBleRtlsAssetAddrgrpList(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

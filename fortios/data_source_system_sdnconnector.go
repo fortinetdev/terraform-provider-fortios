@@ -186,12 +186,20 @@ func dataSourceSystemSdnConnector() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"peer_nic": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"ip": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"name": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"private_ip": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
 									},
@@ -722,6 +730,11 @@ func dataSourceFlattenSystemSdnConnectorNic(v interface{}, d *schema.ResourceDat
 			tmp["name"] = dataSourceFlattenSystemSdnConnectorNicName(i["name"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "peer_nic"
+		if _, ok := i["peer-nic"]; ok {
+			tmp["peer_nic"] = dataSourceFlattenSystemSdnConnectorNicPeerNic(i["peer-nic"], d, pre_append)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if _, ok := i["ip"]; ok {
 			tmp["ip"] = dataSourceFlattenSystemSdnConnectorNicIp(i["ip"], d, pre_append)
@@ -736,6 +749,10 @@ func dataSourceFlattenSystemSdnConnectorNic(v interface{}, d *schema.ResourceDat
 }
 
 func dataSourceFlattenSystemSdnConnectorNicName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemSdnConnectorNicPeerNic(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -763,6 +780,11 @@ func dataSourceFlattenSystemSdnConnectorNicIp(v interface{}, d *schema.ResourceD
 			tmp["name"] = dataSourceFlattenSystemSdnConnectorNicIpName(i["name"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "private_ip"
+		if _, ok := i["private-ip"]; ok {
+			tmp["private_ip"] = dataSourceFlattenSystemSdnConnectorNicIpPrivateIp(i["private-ip"], d, pre_append)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "public_ip"
 		if _, ok := i["public-ip"]; ok {
 			tmp["public_ip"] = dataSourceFlattenSystemSdnConnectorNicIpPublicIp(i["public-ip"], d, pre_append)
@@ -782,6 +804,10 @@ func dataSourceFlattenSystemSdnConnectorNicIp(v interface{}, d *schema.ResourceD
 }
 
 func dataSourceFlattenSystemSdnConnectorNicIpName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemSdnConnectorNicIpPrivateIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 

@@ -328,8 +328,6 @@ func getObjectSystemAffinityPacketRedistribution(d *schema.ResourceData, sv stri
 		} else if t != nil {
 			obj["rxqid"] = t
 		}
-	} else if d.HasChange("rxqid") {
-		obj["rxqid"] = nil
 	}
 
 	if v, ok := d.GetOk("round_robin"); ok {

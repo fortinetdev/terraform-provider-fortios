@@ -101,7 +101,7 @@ func resourceWebProxyGlobal() *schema.Resource {
 			},
 			"max_waf_body_cache_length": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(10, 1024),
+				ValidateFunc: validation.IntBetween(1, 1024),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -179,6 +179,11 @@ func resourceWebProxyGlobal() *schema.Resource {
 				Computed: true,
 			},
 			"proxy_transparent_cert_inspection": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"request_obs_fold": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -491,6 +496,10 @@ func flattenWebProxyGlobalProxyTransparentCertInspection(v interface{}, d *schem
 	return v
 }
 
+func flattenWebProxyGlobalRequestObsFold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectWebProxyGlobal(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 	var b_get_all_tables bool
@@ -676,6 +685,12 @@ func refreshObjectWebProxyGlobal(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("request_obs_fold", flattenWebProxyGlobalRequestObsFold(o["request-obs-fold"], d, "request_obs_fold", sv)); err != nil {
+		if !fortiAPIPatch(o["request-obs-fold"]) {
+			return fmt.Errorf("Error reading request_obs_fold: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -834,6 +849,10 @@ func expandWebProxyGlobalLogAppId(d *schema.ResourceData, v interface{}, pre str
 }
 
 func expandWebProxyGlobalProxyTransparentCertInspection(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWebProxyGlobalRequestObsFold(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1186,6 +1205,19 @@ func getObjectWebProxyGlobal(d *schema.ResourceData, setArgNil bool, sv string) 
 				return &obj, err
 			} else if t != nil {
 				obj["proxy-transparent-cert-inspection"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("request_obs_fold"); ok {
+		if setArgNil {
+			obj["request-obs-fold"] = nil
+		} else {
+			t, err := expandWebProxyGlobalRequestObsFold(d, v, "request_obs_fold", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["request-obs-fold"] = t
 			}
 		}
 	}

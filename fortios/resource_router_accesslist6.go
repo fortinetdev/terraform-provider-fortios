@@ -73,6 +73,7 @@ func resourceRouterAccessList6() *schema.Resource {
 						"flags": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
+							Computed: true,
 						},
 					},
 				},
@@ -423,8 +424,6 @@ func expandRouterAccessList6Rule(d *schema.ResourceData, v interface{}, pre stri
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "flags"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["flags"], _ = expandRouterAccessList6RuleFlags(d, i["flags"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["flags"] = nil
 		}
 
 		result = append(result, tmp)

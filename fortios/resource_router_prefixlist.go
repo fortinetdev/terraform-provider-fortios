@@ -80,6 +80,7 @@ func resourceRouterPrefixList() *schema.Resource {
 						"flags": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
+							Computed: true,
 						},
 					},
 				},
@@ -444,8 +445,6 @@ func expandRouterPrefixListRule(d *schema.ResourceData, v interface{}, pre strin
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "flags"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["flags"], _ = expandRouterPrefixListRuleFlags(d, i["flags"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["flags"] = nil
 		}
 
 		result = append(result, tmp)

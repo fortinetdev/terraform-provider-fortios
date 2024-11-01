@@ -84,6 +84,7 @@ func resourceFirewallProxyAddress() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
+							Computed: true,
 						},
 					},
 				},
@@ -129,6 +130,7 @@ func resourceFirewallProxyAddress() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
+							Computed: true,
 						},
 						"header_name": &schema.Schema{
 							Type:         schema.TypeString,
@@ -989,8 +991,6 @@ func expandFirewallProxyAddressHeaderGroup(d *schema.ResourceData, v interface{}
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandFirewallProxyAddressHeaderGroupId(d, i["id"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "header_name"

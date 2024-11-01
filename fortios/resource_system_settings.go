@@ -297,6 +297,11 @@ func resourceSystemSettings() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"ses_denied_multicast_traffic": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"strict_src_check": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -1004,6 +1009,13 @@ func flattenSystemSettingsGateway(v interface{}, d *schema.ResourceData, pre str
 }
 
 func flattenSystemSettingsIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v1, ok := d.GetOkExists(pre); ok && v != nil {
+		if s, ok := v1.(string); ok {
+			v = validateConvIPMask2CIDR(s, v.(string))
+			return v
+		}
+	}
+
 	return v
 }
 
@@ -1190,6 +1202,10 @@ func flattenSystemSettingsTcpSessionWithoutSyn(v interface{}, d *schema.Resource
 }
 
 func flattenSystemSettingsSesDeniedTraffic(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSettingsSesDeniedMulticastTraffic(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1935,6 +1951,12 @@ func refreshObjectSystemSettings(d *schema.ResourceData, o map[string]interface{
 	if err = d.Set("ses_denied_traffic", flattenSystemSettingsSesDeniedTraffic(o["ses-denied-traffic"], d, "ses_denied_traffic", sv)); err != nil {
 		if !fortiAPIPatch(o["ses-denied-traffic"]) {
 			return fmt.Errorf("Error reading ses_denied_traffic: %v", err)
+		}
+	}
+
+	if err = d.Set("ses_denied_multicast_traffic", flattenSystemSettingsSesDeniedMulticastTraffic(o["ses-denied-multicast-traffic"], d, "ses_denied_multicast_traffic", sv)); err != nil {
+		if !fortiAPIPatch(o["ses-denied-multicast-traffic"]) {
+			return fmt.Errorf("Error reading ses_denied_multicast_traffic: %v", err)
 		}
 	}
 
@@ -2802,6 +2824,10 @@ func expandSystemSettingsTcpSessionWithoutSyn(d *schema.ResourceData, v interfac
 }
 
 func expandSystemSettingsSesDeniedTraffic(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSettingsSesDeniedMulticastTraffic(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3909,6 +3935,19 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 				return &obj, err
 			} else if t != nil {
 				obj["ses-denied-traffic"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("ses_denied_multicast_traffic"); ok {
+		if setArgNil {
+			obj["ses-denied-multicast-traffic"] = nil
+		} else {
+			t, err := expandSystemSettingsSesDeniedMulticastTraffic(d, v, "ses_denied_multicast_traffic", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ses-denied-multicast-traffic"] = t
 			}
 		}
 	}

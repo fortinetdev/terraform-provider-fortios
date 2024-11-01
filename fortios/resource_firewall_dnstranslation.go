@@ -39,6 +39,7 @@ func resourceFirewallDnstranslation() *schema.Resource {
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
+				Computed: true,
 			},
 			"src": &schema.Schema{
 				Type:     schema.TypeString,
@@ -288,8 +289,6 @@ func getObjectFirewallDnstranslation(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["id"] = t
 		}
-	} else if d.HasChange("fosid") {
-		obj["id"] = nil
 	}
 
 	if v, ok := d.GetOk("src"); ok {

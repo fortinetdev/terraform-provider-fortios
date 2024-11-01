@@ -45,7 +45,7 @@ The following arguments are supported:
 * `tunnel_non_http` - Enable/disable allowing non-HTTP traffic. Allowed non-HTTP traffic is tunneled. Valid values: `enable`, `disable`.
 * `unknown_http_version` - Action to take when an unknown version of HTTP is encountered: reject, allow (tunnel), or proceed with best-effort. Valid values: `reject`, `tunnel`, `best-effort`.
 * `forward_server_affinity_timeout` - Period of time before the source IP's traffic is no longer assigned to the forwarding server (6 - 60 min, default = 30).
-* `max_waf_body_cache_length` - Maximum length of HTTP messages processed by Web Application Firewall (WAF) (10 - 1024 Kbytes, default = 32).
+* `max_waf_body_cache_length` - Maximum length of HTTP messages processed by Web Application Firewall (WAF) On FortiOS versions 6.2.0-7.4.4, >= 7.6.0: 10 - 1024 Kbytes, default = 32. On FortiOS versions 7.4.5: 1 - 1024 Kbytes, default = 1.
 * `webproxy_profile` - Name of the web proxy profile to apply when explicit proxy traffic is allowed by default and traffic is accepted that does not match an explicit proxy policy.
 * `learn_client_ip` - Enable/disable learning the client's IP address from headers. Valid values: `enable`, `disable`.
 * `always_learn_client_ip` - Enable/disable learning the client's IP address from headers for every request. Valid values: `enable`, `disable`.
@@ -59,6 +59,7 @@ The following arguments are supported:
 * `log_forward_server` - Enable/disable forward server name logging in forward traffic log. Valid values: `enable`, `disable`.
 * `log_app_id` - Enable/disable always log application type in traffic log. Valid values: `enable`, `disable`.
 * `proxy_transparent_cert_inspection` - Enable/disable transparent proxy certificate inspection. Valid values: `enable`, `disable`.
+* `request_obs_fold` - Action when HTTP/1.x request header contains obs-fold. Valid values: `replace-with-sp`, `block`, `keep`.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
 * `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.

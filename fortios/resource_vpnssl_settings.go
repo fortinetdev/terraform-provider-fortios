@@ -365,6 +365,7 @@ func resourceVpnSslSettings() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
+							Computed: true,
 						},
 						"source_interface": &schema.Schema{
 							Type:     schema.TypeSet,
@@ -2449,8 +2450,6 @@ func expandVpnSslSettingsAuthenticationRule(d *schema.ResourceData, v interface{
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandVpnSslSettingsAuthenticationRuleId(d, i["id"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_interface"

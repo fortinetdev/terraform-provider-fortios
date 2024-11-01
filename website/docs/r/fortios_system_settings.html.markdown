@@ -76,6 +76,7 @@ The following arguments are supported:
 * `asymroute_icmp` - Enable/disable ICMP asymmetric routing. Valid values: `enable`, `disable`.
 * `tcp_session_without_syn` - Enable/disable allowing TCP session without SYN flags. Valid values: `enable`, `disable`.
 * `ses_denied_traffic` - Enable/disable including denied session in the session table. Valid values: `enable`, `disable`.
+* `ses_denied_multicast_traffic` - Enable/disable including denied multicast session in the session table. Valid values: `enable`, `disable`.
 * `strict_src_check` - Enable/disable strict source verification. Valid values: `enable`, `disable`.
 * `allow_linkdown_path` - Enable/disable link down path. Valid values: `enable`, `disable`.
 * `asymroute6` - Enable/disable asymmetric IPv6 routing. Valid values: `enable`, `disable`.

@@ -39,6 +39,7 @@ func resourceFirewallInternetServiceList() *schema.Resource {
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
+				Computed: true,
 			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
@@ -250,8 +251,6 @@ func getObjectFirewallInternetServiceList(d *schema.ResourceData, sv string) (*m
 		} else if t != nil {
 			obj["id"] = t
 		}
-	} else if d.HasChange("fosid") {
-		obj["id"] = nil
 	}
 
 	if v, ok := d.GetOk("name"); ok {

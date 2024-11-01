@@ -39,6 +39,7 @@ func resourceFirewallVendorMac() *schema.Resource {
 			"fosid": &schema.Schema{
 				Type: schema.TypeInt,
 				Optional: true,
+				Computed: true,
 			},
 			"name": &schema.Schema{
 				Type: schema.TypeString,
@@ -298,8 +299,6 @@ func getObjectFirewallVendorMac(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["id"] = t
 		}
-    } else if d.HasChange("fosid") {
-		obj["id"] = nil
 	}
 
 

@@ -201,6 +201,7 @@ func resourceRouterMulticast() *schema.Resource {
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
+										Computed: true,
 									},
 									"ip_address": &schema.Schema{
 										Type:     schema.TypeString,
@@ -1650,8 +1651,6 @@ func expandRouterMulticastPimSmGlobalRpAddress(d *schema.ResourceData, v interfa
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandRouterMulticastPimSmGlobalRpAddressId(d, i["id"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip_address"

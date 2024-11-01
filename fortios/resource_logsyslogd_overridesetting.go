@@ -120,6 +120,7 @@ func resourceLogSyslogdOverrideSetting() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
 							Optional:     true,
+							Computed:     true,
 						},
 						"name": &schema.Schema{
 							Type:         schema.TypeString,
@@ -628,8 +629,6 @@ func expandLogSyslogdOverrideSettingCustomFieldName(d *schema.ResourceData, v in
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandLogSyslogdOverrideSettingCustomFieldNameId(d, i["id"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"

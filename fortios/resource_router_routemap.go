@@ -303,11 +303,13 @@ func resourceRouterRouteMap() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 65535),
 							Optional:     true,
+							Computed:     true,
 						},
 						"match_flags": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 65535),
 							Optional:     true,
+							Computed:     true,
 						},
 						"set_route_tag": &schema.Schema{
 							Type:     schema.TypeInt,
@@ -1498,15 +1500,11 @@ func expandRouterRouteMapRule(d *schema.ResourceData, v interface{}, pre string,
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_flags"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["set-flags"], _ = expandRouterRouteMapRuleSetFlags(d, i["set_flags"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["set-flags"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_flags"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["match-flags"], _ = expandRouterRouteMapRuleMatchFlags(d, i["match_flags"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["match-flags"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_route_tag"

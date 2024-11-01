@@ -132,6 +132,7 @@ func resourceSystemFabricVpn() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
+							Computed: true,
 						},
 						"prefix": &schema.Schema{
 							Type:     schema.TypeString,
@@ -437,6 +438,13 @@ func flattenSystemFabricVpnOverlaysName(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenSystemFabricVpnOverlaysOverlayTunnelBlock(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v1, ok := d.GetOkExists(pre); ok && v != nil {
+		if s, ok := v1.(string); ok {
+			v = validateConvIPMask2CIDR(s, v.(string))
+			return v
+		}
+	}
+
 	return v
 }
 
@@ -575,6 +583,13 @@ func flattenSystemFabricVpnAdvertisedSubnetsPolicies(v interface{}, d *schema.Re
 }
 
 func flattenSystemFabricVpnLoopbackAddressBlock(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v1, ok := d.GetOkExists(pre); ok && v != nil {
+		if s, ok := v1.(string); ok {
+			v = validateConvIPMask2CIDR(s, v.(string))
+			return v
+		}
+	}
+
 	return v
 }
 
@@ -911,8 +926,6 @@ func expandSystemFabricVpnAdvertisedSubnets(d *schema.ResourceData, v interface{
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSystemFabricVpnAdvertisedSubnetsId(d, i["id"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"

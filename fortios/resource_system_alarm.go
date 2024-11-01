@@ -54,6 +54,7 @@ func resourceSystemAlarm() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
+							Computed: true,
 						},
 						"period": &schema.Schema{
 							Type:     schema.TypeInt,
@@ -112,6 +113,7 @@ func resourceSystemAlarm() *schema.Resource {
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
+										Computed: true,
 									},
 									"threshold": &schema.Schema{
 										Type:         schema.TypeInt,
@@ -602,8 +604,6 @@ func expandSystemAlarmGroups(d *schema.ResourceData, v interface{}, pre string, 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSystemAlarmGroupsId(d, i["id"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "period"
@@ -766,8 +766,6 @@ func expandSystemAlarmGroupsFwPolicyViolations(d *schema.ResourceData, v interfa
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSystemAlarmGroupsFwPolicyViolationsId(d, i["id"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "threshold"

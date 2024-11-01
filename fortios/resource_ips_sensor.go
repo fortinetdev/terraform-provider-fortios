@@ -75,6 +75,7 @@ func resourceIpsSensor() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
+							Computed: true,
 						},
 						"rule": &schema.Schema{
 							Type:     schema.TypeSet,
@@ -206,6 +207,7 @@ func resourceIpsSensor() *schema.Resource {
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
+										Computed: true,
 									},
 									"src_ip": &schema.Schema{
 										Type:     schema.TypeString,
@@ -344,6 +346,7 @@ func resourceIpsSensor() *schema.Resource {
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
+										Computed: true,
 									},
 									"src_ip": &schema.Schema{
 										Type:     schema.TypeString,
@@ -1517,8 +1520,6 @@ func expandIpsSensorEntries(d *schema.ResourceData, v interface{}, pre string, s
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandIpsSensorEntriesId(d, i["id"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rule"
@@ -1834,8 +1835,6 @@ func expandIpsSensorEntriesExemptIp(d *schema.ResourceData, v interface{}, pre s
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandIpsSensorEntriesExemptIpId(d, i["id"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "src_ip"
@@ -2179,8 +2178,6 @@ func expandIpsSensorOverrideExemptIp(d *schema.ResourceData, v interface{}, pre 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandIpsSensorOverrideExemptIpId(d, i["id"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "src_ip"

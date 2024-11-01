@@ -229,6 +229,16 @@ func resourceFirewallAddress6() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
 			},
+			"filter": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 2047),
+				Optional:     true,
+			},
+			"sdn_addr_type": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"fabric_object": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -733,6 +743,14 @@ func flattenFirewallAddress6SdnTag(v interface{}, d *schema.ResourceData, pre st
 	return v
 }
 
+func flattenFirewallAddress6Filter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallAddress6SdnAddrType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallAddress6FabricObject(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -945,6 +963,18 @@ func refreshObjectFirewallAddress6(d *schema.ResourceData, o map[string]interfac
 	if err = d.Set("sdn_tag", flattenFirewallAddress6SdnTag(o["sdn-tag"], d, "sdn_tag", sv)); err != nil {
 		if !fortiAPIPatch(o["sdn-tag"]) {
 			return fmt.Errorf("Error reading sdn_tag: %v", err)
+		}
+	}
+
+	if err = d.Set("filter", flattenFirewallAddress6Filter(o["filter"], d, "filter", sv)); err != nil {
+		if !fortiAPIPatch(o["filter"]) {
+			return fmt.Errorf("Error reading filter: %v", err)
+		}
+	}
+
+	if err = d.Set("sdn_addr_type", flattenFirewallAddress6SdnAddrType(o["sdn-addr-type"], d, "sdn_addr_type", sv)); err != nil {
+		if !fortiAPIPatch(o["sdn-addr-type"]) {
+			return fmt.Errorf("Error reading sdn_addr_type: %v", err)
 		}
 	}
 
@@ -1248,6 +1278,14 @@ func expandFirewallAddress6SdnTag(d *schema.ResourceData, v interface{}, pre str
 	return v, nil
 }
 
+func expandFirewallAddress6Filter(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallAddress6SdnAddrType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallAddress6FabricObject(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -1524,6 +1562,26 @@ func getObjectFirewallAddress6(d *schema.ResourceData, sv string) (*map[string]i
 		}
 	} else if d.HasChange("sdn_tag") {
 		obj["sdn-tag"] = nil
+	}
+
+	if v, ok := d.GetOk("filter"); ok {
+		t, err := expandFirewallAddress6Filter(d, v, "filter", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["filter"] = t
+		}
+	} else if d.HasChange("filter") {
+		obj["filter"] = nil
+	}
+
+	if v, ok := d.GetOk("sdn_addr_type"); ok {
+		t, err := expandFirewallAddress6SdnAddrType(d, v, "sdn_addr_type", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["sdn-addr-type"] = t
+		}
 	}
 
 	if v, ok := d.GetOk("fabric_object"); ok {

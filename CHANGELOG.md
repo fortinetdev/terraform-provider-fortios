@@ -1,7 +1,22 @@
 ## 1.22.0 (Unreleased)
 
 
-## 1.21.0 (Sep 12, 2024)
+## 1.21.1 (Nov 1, 2024)
+BUG FIXES:
+
+* Fix destroy issue of resource system_ftmpush;
+* Fix issue of timezone could not been unset of resource system_global;
+* Fix auto-generated id always show changes issue;
+* Fix ip format issue;
+* Fix error of set zero value of resource system_interface;
+* Fix token issue of 7.4.5;
+
+IMPROVEMENTS:
+
+* Support FortiOS version 7.2.10, 7.4.5;
+
+
+## 1.21.0 (Sep 13, 2024)
 BUG FIXES:
 
 * Fix global scope issue;

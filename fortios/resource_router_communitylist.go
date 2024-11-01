@@ -64,6 +64,7 @@ func resourceRouterCommunityList() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 255),
 							Optional:     true,
+							Computed:     true,
 						},
 						"match": &schema.Schema{
 							Type:         schema.TypeString,
@@ -398,8 +399,6 @@ func expandRouterCommunityListRule(d *schema.ResourceData, v interface{}, pre st
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "regexp"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["regexp"], _ = expandRouterCommunityListRuleRegexp(d, i["regexp"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["regexp"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "match"

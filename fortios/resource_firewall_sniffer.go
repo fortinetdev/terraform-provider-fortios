@@ -40,6 +40,7 @@ func resourceFirewallSniffer() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 9999),
 				Optional:     true,
+				Computed:     true,
 			},
 			"uuid": &schema.Schema{
 				Type:     schema.TypeString,
@@ -1301,8 +1302,6 @@ func getObjectFirewallSniffer(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["id"] = t
 		}
-	} else if d.HasChange("fosid") {
-		obj["id"] = nil
 	}
 
 	if v, ok := d.GetOk("uuid"); ok {

@@ -309,6 +309,7 @@ func resourceWebfilterProfile() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
+							Computed: true,
 						},
 						"channel_id": &schema.Schema{
 							Type:         schema.TypeString,
@@ -353,6 +354,7 @@ func resourceWebfilterProfile() *schema.Resource {
 										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 255),
 										Optional:     true,
+										Computed:     true,
 									},
 									"category": &schema.Schema{
 										Type:         schema.TypeInt,
@@ -413,6 +415,7 @@ func resourceWebfilterProfile() *schema.Resource {
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
+										Computed: true,
 									},
 									"category": &schema.Schema{
 										Type:     schema.TypeString,
@@ -2987,8 +2990,6 @@ func expandWebfilterProfileYoutubeChannelFilter(d *schema.ResourceData, v interf
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandWebfilterProfileYoutubeChannelFilterId(d, i["id"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "channel_id"
@@ -3112,8 +3113,6 @@ func expandWebfilterProfileFtgdWfFilters(d *schema.ResourceData, v interface{}, 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandWebfilterProfileFtgdWfFiltersId(d, i["id"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
@@ -3247,8 +3246,6 @@ func expandWebfilterProfileFtgdWfQuota(d *schema.ResourceData, v interface{}, pr
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandWebfilterProfileFtgdWfQuotaId(d, i["id"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"

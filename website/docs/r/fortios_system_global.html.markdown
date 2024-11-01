@@ -260,6 +260,7 @@ The following arguments are supported:
 * `log_uuid_address` - Enable/disable insertion of address UUIDs to traffic logs. Valid values: `enable`, `disable`.
 * `log_ssl_connection` - Enable/disable logging of SSL connection events. Valid values: `enable`, `disable`.
 * `gui_rest_api_cache` - Enable/disable REST API result caching on FortiGate. Valid values: `enable`, `disable`.
+* `rest_api_key_url_query` - Enable/disable support for passing REST API keys through URL query parameters. Valid values: `enable`, `disable`.
 * `gui_cdn_domain_override` - Domain of CDN server.
 * `gui_fortiguard_resource_fetch` - Enable/disable retrieving static GUI resources from FortiGuard. Disabling it will improve GUI load time for air-gapped environments. Valid values: `enable`, `disable`.
 * `arp_max_entry` - Maximum number of dynamically learned MAC addresses that can be added to the ARP table (131072 - 2147483647, default = 131072).

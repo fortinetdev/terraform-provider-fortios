@@ -338,15 +338,11 @@ func getObjectSystemFtmPush(d *schema.ResourceData, setArgNil bool, sv string) (
 	}
 
 	if v, ok := d.GetOk("server"); ok {
-		if setArgNil {
-			obj["server"] = nil
-		} else {
-			t, err := expandSystemFtmPushServer(d, v, "server", sv)
-			if err != nil {
-				return &obj, err
-			} else if t != nil {
-				obj["server"] = t
-			}
+		t, err := expandSystemFtmPushServer(d, v, "server", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["server"] = t
 		}
 	} else if d.HasChange("server") {
 		obj["server"] = nil

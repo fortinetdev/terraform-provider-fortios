@@ -718,6 +718,7 @@ func resourceVpnSslWebPortal() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
+							Computed: true,
 						},
 						"domains": &schema.Schema{
 							Type:         schema.TypeString,
@@ -3860,8 +3861,6 @@ func expandVpnSslWebPortalSplitDns(d *schema.ResourceData, v interface{}, pre st
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandVpnSslWebPortalSplitDnsId(d, i["id"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "domains"

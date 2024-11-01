@@ -39,6 +39,7 @@ func resourceFirewallInternetServiceSubapp() *schema.Resource {
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
+				Computed: true,
 			},
 			"sub_app": &schema.Schema{
 				Type:     schema.TypeSet,
@@ -345,8 +346,6 @@ func getObjectFirewallInternetServiceSubapp(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["id"] = t
 		}
-	} else if d.HasChange("fosid") {
-		obj["id"] = nil
 	}
 
 	if v, ok := d.GetOk("sub_app"); ok || d.HasChange("sub_app") {

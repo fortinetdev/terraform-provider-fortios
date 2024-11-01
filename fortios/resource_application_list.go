@@ -118,6 +118,7 @@ func resourceApplicationList() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
+							Computed: true,
 						},
 						"risk": &schema.Schema{
 							Type:     schema.TypeSet,
@@ -212,6 +213,7 @@ func resourceApplicationList() *schema.Resource {
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
+										Computed: true,
 									},
 									"members": &schema.Schema{
 										Type:     schema.TypeList,
@@ -221,6 +223,7 @@ func resourceApplicationList() *schema.Resource {
 												"id": &schema.Schema{
 													Type:     schema.TypeInt,
 													Optional: true,
+													Computed: true,
 												},
 												"name": &schema.Schema{
 													Type:         schema.TypeString,
@@ -1437,8 +1440,6 @@ func expandApplicationListEntries(d *schema.ResourceData, v interface{}, pre str
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandApplicationListEntriesId(d, i["id"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "risk"
@@ -1777,8 +1778,6 @@ func expandApplicationListEntriesParameters(d *schema.ResourceData, v interface{
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandApplicationListEntriesParametersId(d, i["id"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "members"
@@ -1824,8 +1823,6 @@ func expandApplicationListEntriesParametersMembers(d *schema.ResourceData, v int
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandApplicationListEntriesParametersMembersId(d, i["id"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"

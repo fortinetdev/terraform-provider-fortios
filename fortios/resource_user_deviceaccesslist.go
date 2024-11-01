@@ -54,6 +54,7 @@ func resourceUserDeviceAccessList() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
+							Computed: true,
 						},
 						"device": &schema.Schema{
 							Type:         schema.TypeString,
@@ -371,8 +372,6 @@ func expandUserDeviceAccessListDeviceList(d *schema.ResourceData, v interface{},
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandUserDeviceAccessListDeviceListId(d, i["id"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "device"

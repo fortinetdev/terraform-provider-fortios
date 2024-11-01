@@ -123,6 +123,7 @@ func resourceWanoptContentDeliveryNetworkRule() *schema.Resource {
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
+										Computed: true,
 									},
 									"target": &schema.Schema{
 										Type:     schema.TypeString,
@@ -153,6 +154,7 @@ func resourceWanoptContentDeliveryNetworkRule() *schema.Resource {
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
+										Computed: true,
 									},
 									"target": &schema.Schema{
 										Type:     schema.TypeString,
@@ -1082,8 +1084,6 @@ func expandWanoptContentDeliveryNetworkRuleRulesMatchEntries(d *schema.ResourceD
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandWanoptContentDeliveryNetworkRuleRulesMatchEntriesId(d, i["id"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "target"
@@ -1159,8 +1159,6 @@ func expandWanoptContentDeliveryNetworkRuleRulesSkipEntries(d *schema.ResourceDa
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandWanoptContentDeliveryNetworkRuleRulesSkipEntriesId(d, i["id"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "target"

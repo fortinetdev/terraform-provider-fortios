@@ -417,6 +417,7 @@ func resourceSystemGlobal() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
+				Computed:     true,
 			},
 			"strong_crypto": &schema.Schema{
 				Type:     schema.TypeString,
@@ -1262,6 +1263,11 @@ func resourceSystemGlobal() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"rest_api_key_url_query": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"gui_cdn_domain_override": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
@@ -1389,7 +1395,7 @@ func resourceSystemGlobal() *schema.Resource {
 			},
 			"user_device_store_max_unified_mem": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(20888780, 1682668748),
+				ValidateFunc: validation.IntBetween(20888698, 1682668748),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -1410,11 +1416,13 @@ func resourceSystemGlobal() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 19),
 				Optional:     true,
+				Computed:     true,
 			},
 			"gui_device_longitude": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 19),
 				Optional:     true,
+				Computed:     true,
 			},
 			"private_data_encryption": &schema.Schema{
 				Type:     schema.TypeString,
@@ -2459,6 +2467,13 @@ func flattenSystemGlobalFortiextender(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenSystemGlobalExtenderControllerReservedNetwork(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v1, ok := d.GetOkExists(pre); ok && v != nil {
+		if s, ok := v1.(string); ok {
+			v = validateConvIPMask2CIDR(s, v.(string))
+			return v
+		}
+	}
+
 	return v
 }
 
@@ -2674,6 +2689,10 @@ func flattenSystemGlobalLogSslConnection(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenSystemGlobalGuiRestApiCache(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemGlobalRestApiKeyUrlQuery(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -4386,6 +4405,12 @@ func refreshObjectSystemGlobal(d *schema.ResourceData, o map[string]interface{},
 		}
 	}
 
+	if err = d.Set("rest_api_key_url_query", flattenSystemGlobalRestApiKeyUrlQuery(o["rest-api-key-url-query"], d, "rest_api_key_url_query", sv)); err != nil {
+		if !fortiAPIPatch(o["rest-api-key-url-query"]) {
+			return fmt.Errorf("Error reading rest_api_key_url_query: %v", err)
+		}
+	}
+
 	if err = d.Set("gui_cdn_domain_override", flattenSystemGlobalGuiCdnDomainOverride(o["gui-cdn-domain-override"], d, "gui_cdn_domain_override", sv)); err != nil {
 		if !fortiAPIPatch(o["gui-cdn-domain-override"]) {
 			return fmt.Errorf("Error reading gui_cdn_domain_override: %v", err)
@@ -5727,6 +5752,10 @@ func expandSystemGlobalGuiRestApiCache(d *schema.ResourceData, v interface{}, pr
 	return v, nil
 }
 
+func expandSystemGlobalRestApiKeyUrlQuery(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemGlobalGuiCdnDomainOverride(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -6656,15 +6685,11 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 	}
 
 	if v, ok := d.GetOk("timezone"); ok {
-		if setArgNil {
-			obj["timezone"] = nil
-		} else {
-			t, err := expandSystemGlobalTimezone(d, v, "timezone", sv)
-			if err != nil {
-				return &obj, err
-			} else if t != nil {
-				obj["timezone"] = t
-			}
+		t, err := expandSystemGlobalTimezone(d, v, "timezone", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["timezone"] = t
 		}
 	}
 
@@ -6980,8 +7005,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 				obj["alias"] = t
 			}
 		}
-	} else if d.HasChange("alias") {
-		obj["alias"] = nil
 	}
 
 	if v, ok := d.GetOk("strong_crypto"); ok {
@@ -7788,15 +7811,11 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 	}
 
 	if v, ok := d.GetOk("vdom_mode"); ok {
-		if setArgNil {
-			obj["vdom-mode"] = nil
-		} else {
-			t, err := expandSystemGlobalVdomMode(d, v, "vdom_mode", sv)
-			if err != nil {
-				return &obj, err
-			} else if t != nil {
-				obj["vdom-mode"] = t
-			}
+		t, err := expandSystemGlobalVdomMode(d, v, "vdom_mode", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["vdom-mode"] = t
 		}
 	}
 
@@ -9140,6 +9159,19 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		}
 	}
 
+	if v, ok := d.GetOk("rest_api_key_url_query"); ok {
+		if setArgNil {
+			obj["rest-api-key-url-query"] = nil
+		} else {
+			t, err := expandSystemGlobalRestApiKeyUrlQuery(d, v, "rest_api_key_url_query", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["rest-api-key-url-query"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("gui_cdn_domain_override"); ok {
 		if setArgNil {
 			obj["gui-cdn-domain-override"] = nil
@@ -9516,8 +9548,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 				obj["gui-device-latitude"] = t
 			}
 		}
-	} else if d.HasChange("gui_device_latitude") {
-		obj["gui-device-latitude"] = nil
 	}
 
 	if v, ok := d.GetOk("gui_device_longitude"); ok {
@@ -9531,8 +9561,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 				obj["gui-device-longitude"] = t
 			}
 		}
-	} else if d.HasChange("gui_device_longitude") {
-		obj["gui-device-longitude"] = nil
 	}
 
 	if v, ok := d.GetOk("private_data_encryption"); ok {

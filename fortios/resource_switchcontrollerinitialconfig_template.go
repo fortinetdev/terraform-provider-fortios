@@ -231,6 +231,13 @@ func flattenSwitchControllerInitialConfigTemplateVlanid(v interface{}, d *schema
 }
 
 func flattenSwitchControllerInitialConfigTemplateIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v1, ok := d.GetOkExists(pre); ok && v != nil {
+		if s, ok := v1.(string); ok {
+			v = validateConvIPMask2CIDR(s, v.(string))
+			return v
+		}
+	}
+
 	return v
 }
 

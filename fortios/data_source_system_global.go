@@ -973,6 +973,10 @@ func dataSourceSystemGlobal() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"rest_api_key_url_query": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"gui_cdn_domain_override": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -2004,6 +2008,13 @@ func dataSourceFlattenSystemGlobalFortiextender(v interface{}, d *schema.Resourc
 }
 
 func dataSourceFlattenSystemGlobalExtenderControllerReservedNetwork(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	if v1, ok := d.GetOkExists(pre); ok && v != nil {
+		if s, ok := v1.(string); ok {
+			v = validateConvIPMask2CIDR(s, v.(string))
+			return v
+		}
+	}
+
 	return v
 }
 
@@ -2219,6 +2230,10 @@ func dataSourceFlattenSystemGlobalLogSslConnection(v interface{}, d *schema.Reso
 }
 
 func dataSourceFlattenSystemGlobalGuiRestApiCache(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalRestApiKeyUrlQuery(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -3916,6 +3931,12 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 	if err = d.Set("gui_rest_api_cache", dataSourceFlattenSystemGlobalGuiRestApiCache(o["gui-rest-api-cache"], d, "gui_rest_api_cache")); err != nil {
 		if !fortiAPIPatch(o["gui-rest-api-cache"]) {
 			return fmt.Errorf("Error reading gui_rest_api_cache: %v", err)
+		}
+	}
+
+	if err = d.Set("rest_api_key_url_query", dataSourceFlattenSystemGlobalRestApiKeyUrlQuery(o["rest-api-key-url-query"], d, "rest_api_key_url_query")); err != nil {
+		if !fortiAPIPatch(o["rest-api-key-url-query"]) {
+			return fmt.Errorf("Error reading rest_api_key_url_query: %v", err)
 		}
 	}
 

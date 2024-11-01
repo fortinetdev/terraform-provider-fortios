@@ -46,6 +46,8 @@ The following attributes are exported:
 * `tenant` - Tenant.
 * `epg_name` - Endpoint group name.
 * `sdn_tag` - SDN Tag.
+* `filter` - Match criteria filter.
+* `sdn_addr_type` - Type of addresses to collect.
 * `fabric_object` - Security Fabric global object setting.
 
 The `macaddr` block contains:

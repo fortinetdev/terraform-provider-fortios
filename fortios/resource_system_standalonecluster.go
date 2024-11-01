@@ -183,6 +183,7 @@ func resourceSystemStandaloneCluster() *schema.Resource {
 												"id": &schema.Schema{
 													Type:     schema.TypeInt,
 													Optional: true,
+													Computed: true,
 												},
 												"src_port_range": &schema.Schema{
 													Type:     schema.TypeString,
@@ -1185,8 +1186,6 @@ func expandSystemStandaloneClusterClusterPeerSessionSyncFilterCustomService(d *s
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSystemStandaloneClusterClusterPeerSessionSyncFilterCustomServiceId(d, i["id"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "src_port_range"

@@ -117,6 +117,7 @@ func resourceFirewallAccessProxy6() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
+							Computed: true,
 						},
 						"url_map": &schema.Schema{
 							Type:         schema.TypeString,
@@ -218,6 +219,7 @@ func resourceFirewallAccessProxy6() *schema.Resource {
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
+										Computed: true,
 									},
 									"addr_type": &schema.Schema{
 										Type:     schema.TypeString,
@@ -451,6 +453,7 @@ func resourceFirewallAccessProxy6() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
+							Computed: true,
 						},
 						"url_map": &schema.Schema{
 							Type:         schema.TypeString,
@@ -552,6 +555,7 @@ func resourceFirewallAccessProxy6() *schema.Resource {
 									"id": &schema.Schema{
 										Type:     schema.TypeInt,
 										Optional: true,
+										Computed: true,
 									},
 									"addr_type": &schema.Schema{
 										Type:     schema.TypeString,
@@ -2633,8 +2637,6 @@ func expandFirewallAccessProxy6ApiGateway(d *schema.ResourceData, v interface{},
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandFirewallAccessProxy6ApiGatewayId(d, i["id"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "url_map"
@@ -2927,8 +2929,6 @@ func expandFirewallAccessProxy6ApiGatewayRealservers(d *schema.ResourceData, v i
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandFirewallAccessProxy6ApiGatewayRealserversId(d, i["id"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr_type"
@@ -3312,8 +3312,6 @@ func expandFirewallAccessProxy6ApiGateway6(d *schema.ResourceData, v interface{}
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandFirewallAccessProxy6ApiGateway6Id(d, i["id"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "url_map"
@@ -3606,8 +3604,6 @@ func expandFirewallAccessProxy6ApiGateway6Realservers(d *schema.ResourceData, v 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandFirewallAccessProxy6ApiGateway6RealserversId(d, i["id"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr_type"
