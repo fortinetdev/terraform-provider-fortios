@@ -83,4 +83,5 @@ The following attributes are exported:
 * `ddns_server_port` - Port used to communicate with FortiDDNS servers.
 * `interface_select_method` - Specify how to select outgoing interface to reach server.
 * `interface` - Specify outgoing interface to reach server.
+* `vrf_select` - VRF ID used for connection to server.
 

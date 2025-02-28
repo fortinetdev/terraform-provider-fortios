@@ -152,6 +152,17 @@ func resourceSwitchControllerDynamicPortPolicy() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"bounce_port_duration": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(1, 30),
+							Optional:     true,
+							Computed:     true,
+						},
+						"poe_reset": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 					},
 				},
 			},
@@ -441,6 +452,16 @@ func flattenSwitchControllerDynamicPortPolicyPolicy(v interface{}, d *schema.Res
 			tmp["bounce_port_link"] = flattenSwitchControllerDynamicPortPolicyPolicyBouncePortLink(cur_v, d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "bounce_port_duration"
+		if cur_v, ok := i["bounce-port-duration"]; ok {
+			tmp["bounce_port_duration"] = flattenSwitchControllerDynamicPortPolicyPolicyBouncePortDuration(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "poe_reset"
+		if cur_v, ok := i["poe-reset"]; ok {
+			tmp["poe_reset"] = flattenSwitchControllerDynamicPortPolicyPolicyPoeReset(cur_v, d, pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -553,6 +574,14 @@ func flattenSwitchControllerDynamicPortPolicyPolicyVlanPolicy(v interface{}, d *
 }
 
 func flattenSwitchControllerDynamicPortPolicyPolicyBouncePortLink(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerDynamicPortPolicyPolicyBouncePortDuration(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenSwitchControllerDynamicPortPolicyPolicyPoeReset(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -745,6 +774,16 @@ func expandSwitchControllerDynamicPortPolicyPolicy(d *schema.ResourceData, v int
 			tmp["bounce-port-link"], _ = expandSwitchControllerDynamicPortPolicyPolicyBouncePortLink(d, i["bounce_port_link"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "bounce_port_duration"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["bounce-port-duration"], _ = expandSwitchControllerDynamicPortPolicyPolicyBouncePortDuration(d, i["bounce_port_duration"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "poe_reset"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["poe-reset"], _ = expandSwitchControllerDynamicPortPolicyPolicyPoeReset(d, i["poe_reset"], pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -842,6 +881,14 @@ func expandSwitchControllerDynamicPortPolicyPolicyVlanPolicy(d *schema.ResourceD
 }
 
 func expandSwitchControllerDynamicPortPolicyPolicyBouncePortLink(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerDynamicPortPolicyPolicyBouncePortDuration(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerDynamicPortPolicyPolicyPoeReset(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

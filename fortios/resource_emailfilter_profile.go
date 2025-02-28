@@ -38,7 +38,7 @@ func resourceEmailfilterProfile() *schema.Resource {
 			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				ForceNew:     true,
 				Optional:     true,
 				Computed:     true,

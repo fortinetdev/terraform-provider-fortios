@@ -3,6 +3,7 @@ package fortios
 import (
 	"fmt"
 
+	"github.com/hashicorp/go-cty/cty"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
@@ -16,7 +17,12 @@ func resourceSystemLicenseFortiFlex() *schema.Resource {
 		Schema: map[string]*schema.Schema{
 			"token": &schema.Schema{
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
+			},
+			"token_writeonly": &schema.Schema{
+				Type:      schema.TypeString,
+				WriteOnly: true,
+				Optional:  true,
 			},
 			"proxy_url": &schema.Schema{
 				Type:     schema.TypeString,
@@ -37,7 +43,19 @@ func resourceSystemLicenseFortiFlexCreateUpdate(d *schema.ResourceData, m interf
 
 	//Build input data
 	para := make(map[string]interface{})
-	para["token"] = d.Get("token").(string)
+	woToken, diags := d.GetRawConfigAt(cty.GetAttrPath("token_writeonly"))
+	if diags.HasError() {
+		return fmt.Errorf(diags[0].Summary + "\n" + diags[0].Detail)
+	}
+	if !woToken.Type().Equals(cty.String) {
+		return fmt.Errorf("error retrieving write-only attribute: token_writeonly - retrieved config value is not a string")
+	}
+
+	if !woToken.IsNull() {
+		para["token"] = woToken.AsString()
+	} else if v, ok := d.GetOk("token"); ok {
+		para["token"] = v.(string)
+	}
 	if v, ok := d.GetOk("proxy_url"); ok {
 		para["proxy_url"] = v
 	}

@@ -57,6 +57,12 @@ func resourceSystemSdwan() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"duplication_max_discrepancy": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(250, 1000),
+				Optional:     true,
+				Computed:     true,
+			},
 			"neighbor_hold_down": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -247,6 +253,16 @@ func resourceSystemSdwan() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 35),
+							Optional:     true,
+						},
+						"fortiguard": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"fortiguard_name": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
@@ -450,7 +466,7 @@ func resourceSystemSdwan() *schema.Resource {
 						},
 						"vrf": &schema.Schema{
 							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 251),
+							ValidateFunc: validation.IntBetween(0, 511),
 							Optional:     true,
 						},
 						"source": &schema.Schema{
@@ -880,6 +896,11 @@ func resourceSystemSdwan() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"route_metric": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"health_check": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
@@ -901,6 +922,7 @@ func resourceSystemSdwan() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 4000),
 							Optional:     true,
+							Computed:     true,
 						},
 						"name": &schema.Schema{
 							Type:         schema.TypeString,
@@ -996,10 +1018,12 @@ func resourceSystemSdwan() *schema.Resource {
 						"tos": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"tos_mask": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"protocol": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -1283,10 +1307,12 @@ func resourceSystemSdwan() *schema.Resource {
 						"dscp_forward_tag": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"dscp_reverse_tag": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							Computed: true,
 						},
 						"sla": &schema.Schema{
 							Type:     schema.TypeList,
@@ -1655,6 +1681,10 @@ func flattenSystemSdwanSpeedtestBypassRouting(v interface{}, d *schema.ResourceD
 }
 
 func flattenSystemSdwanDuplicationMaxNum(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenSystemSdwanDuplicationMaxDiscrepancy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return convintf2i(v)
 }
 
@@ -2040,6 +2070,16 @@ func flattenSystemSdwanHealthCheck(v interface{}, d *schema.ResourceData, pre st
 			tmp["name"] = flattenSystemSdwanHealthCheckName(cur_v, d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "fortiguard"
+		if cur_v, ok := i["fortiguard"]; ok {
+			tmp["fortiguard"] = flattenSystemSdwanHealthCheckFortiguardU(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "fortiguard_name"
+		if cur_v, ok := i["fortiguard-name"]; ok {
+			tmp["fortiguard_name"] = flattenSystemSdwanHealthCheckFortiguardName(cur_v, d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "probe_packets"
 		if cur_v, ok := i["probe-packets"]; ok {
 			tmp["probe_packets"] = flattenSystemSdwanHealthCheckProbePackets(cur_v, d, pre_append, sv)
@@ -2278,6 +2318,14 @@ func flattenSystemSdwanHealthCheck(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenSystemSdwanHealthCheckName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdwanHealthCheckFortiguardU(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdwanHealthCheckFortiguardName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -3249,6 +3297,11 @@ func flattenSystemSdwanNeighbor(v interface{}, d *schema.ResourceData, pre strin
 			tmp["role"] = flattenSystemSdwanNeighborRole(cur_v, d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_metric"
+		if cur_v, ok := i["route-metric"]; ok {
+			tmp["route_metric"] = flattenSystemSdwanNeighborRouteMetric(cur_v, d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "health_check"
 		if cur_v, ok := i["health-check"]; ok {
 			tmp["health_check"] = flattenSystemSdwanNeighborHealthCheck(cur_v, d, pre_append, sv)
@@ -3331,6 +3384,10 @@ func flattenSystemSdwanNeighborMode(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenSystemSdwanNeighborRole(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdwanNeighborRouteMetric(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -5178,6 +5235,12 @@ func refreshObjectSystemSdwan(d *schema.ResourceData, o map[string]interface{}, 
 		}
 	}
 
+	if err = d.Set("duplication_max_discrepancy", flattenSystemSdwanDuplicationMaxDiscrepancy(o["duplication-max-discrepancy"], d, "duplication_max_discrepancy", sv)); err != nil {
+		if !fortiAPIPatch(o["duplication-max-discrepancy"]) {
+			return fmt.Errorf("Error reading duplication_max_discrepancy: %v", err)
+		}
+	}
+
 	if err = d.Set("neighbor_hold_down", flattenSystemSdwanNeighborHoldDown(o["neighbor-hold-down"], d, "neighbor_hold_down", sv)); err != nil {
 		if !fortiAPIPatch(o["neighbor-hold-down"]) {
 			return fmt.Errorf("Error reading neighbor_hold_down: %v", err)
@@ -5358,6 +5421,10 @@ func expandSystemSdwanSpeedtestBypassRouting(d *schema.ResourceData, v interface
 }
 
 func expandSystemSdwanDuplicationMaxNum(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanDuplicationMaxDiscrepancy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -5721,6 +5788,18 @@ func expandSystemSdwanHealthCheck(d *schema.ResourceData, v interface{}, pre str
 			tmp["name"] = nil
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "fortiguard"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["fortiguard"], _ = expandSystemSdwanHealthCheckFortiguardU(d, i["fortiguard"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "fortiguard_name"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["fortiguard-name"], _ = expandSystemSdwanHealthCheckFortiguardName(d, i["fortiguard_name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["fortiguard-name"] = nil
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "probe_packets"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["probe-packets"], _ = expandSystemSdwanHealthCheckProbePackets(d, i["probe_packets"], pre_append, sv)
@@ -5993,6 +6072,14 @@ func expandSystemSdwanHealthCheck(d *schema.ResourceData, v interface{}, pre str
 }
 
 func expandSystemSdwanHealthCheckName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardU(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanHealthCheckFortiguardName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -6944,7 +7031,7 @@ func expandSystemSdwanNeighbor(d *schema.ResourceData, v interface{}, pre string
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "member"
 		if _, ok := d.GetOk(pre_append); ok {
 			new_version_map := map[string][]string{
-				"=": []string{"6.4.1", "6.4.2", "6.4.10", "6.4.11", "6.4.12", "6.4.13", "6.4.14", "6.4.15", "7.0.0", "7.0.1", "7.0.2", "7.0.3", "7.0.4", "7.0.5", "7.0.6", "7.0.7", "7.0.8", "7.0.9", "7.0.10", "7.0.11", "7.0.12", "7.0.13", "7.0.14", "7.0.15"},
+				"=": []string{"6.4.1", "6.4.2", "6.4.10", "6.4.11", "6.4.12", "6.4.13", "6.4.14", "6.4.15", "7.0.0", "7.0.1", "7.0.2", "7.0.3", "7.0.4", "7.0.5", "7.0.6", "7.0.7", "7.0.8", "7.0.9", "7.0.10", "7.0.11", "7.0.12", "7.0.13", "7.0.14", "7.0.15", "7.0.16", "7.0.17"},
 			}
 			if versionMatch, err := checkVersionMatch(sv, new_version_map); !versionMatch {
 				if _, ok := d.GetOk("member_block"); !ok && !d.HasChange("member_block") {
@@ -6973,6 +7060,11 @@ func expandSystemSdwanNeighbor(d *schema.ResourceData, v interface{}, pre string
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "role"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["role"], _ = expandSystemSdwanNeighborRole(d, i["role"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_metric"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["route-metric"], _ = expandSystemSdwanNeighborRouteMetric(d, i["route_metric"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "health_check"
@@ -7049,6 +7141,10 @@ func expandSystemSdwanNeighborRole(d *schema.ResourceData, v interface{}, pre st
 	return v, nil
 }
 
+func expandSystemSdwanNeighborRouteMetric(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemSdwanNeighborHealthCheck(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -7074,8 +7170,6 @@ func expandSystemSdwanService(d *schema.ResourceData, v interface{}, pre string,
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSystemSdwanServiceId(d, i["id"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
@@ -7166,15 +7260,11 @@ func expandSystemSdwanService(d *schema.ResourceData, v interface{}, pre string,
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tos"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["tos"], _ = expandSystemSdwanServiceTos(d, i["tos"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["tos"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tos_mask"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["tos-mask"], _ = expandSystemSdwanServiceTosMask(d, i["tos_mask"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["tos-mask"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
@@ -7387,15 +7477,11 @@ func expandSystemSdwanService(d *schema.ResourceData, v interface{}, pre string,
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dscp_forward_tag"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["dscp-forward-tag"], _ = expandSystemSdwanServiceDscpForwardTag(d, i["dscp_forward_tag"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["dscp-forward-tag"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dscp_reverse_tag"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["dscp-reverse-tag"], _ = expandSystemSdwanServiceDscpReverseTag(d, i["dscp_reverse_tag"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["dscp-reverse-tag"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sla"
@@ -8606,6 +8692,19 @@ func getObjectSystemSdwan(d *schema.ResourceData, setArgNil bool, sv string) (*m
 				return &obj, err
 			} else if t != nil {
 				obj["duplication-max-num"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("duplication_max_discrepancy"); ok {
+		if setArgNil {
+			obj["duplication-max-discrepancy"] = nil
+		} else {
+			t, err := expandSystemSdwanDuplicationMaxDiscrepancy(d, v, "duplication_max_discrepancy", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["duplication-max-discrepancy"] = t
 			}
 		}
 	}

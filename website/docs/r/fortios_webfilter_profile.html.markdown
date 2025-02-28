@@ -207,6 +207,7 @@ The `ftgd_wf` block supports:
 * `exempt_quota` - Do not stop quota for these categories.
 * `ovrd` - Allow web filter profile overrides.
 * `filters` - FortiGuard filters. The structure of `filters` block is documented below.
+* `risk` - FortiGuard risk level settings. The structure of `risk` block is documented below.
 * `quota` - FortiGuard traffic quota settings. The structure of `quota` block is documented below.
 * `max_quota_timeout` - Maximum FortiGuard quota used by single page view in seconds (excludes streams).
 * `rate_image_urls` - Enable/disable rating images by URL. Valid values: `disable`, `enable`.
@@ -229,6 +230,13 @@ The `filters` block supports:
 The `auth_usr_grp` block supports:
 
 * `name` - User group name.
+
+The `risk` block supports:
+
+* `id` - ID number.
+* `risk_level` - Risk level to be examined.
+* `action` - Action to take for matches. Valid values: `block`, `monitor`.
+* `log` - Enable/disable logging. Valid values: `enable`, `disable`.
 
 The `quota` block supports:
 

@@ -40,6 +40,8 @@ The `policy` block supports:
 * `n802_1x` - 802.1x security policy to be applied when using this policy.
 * `vlan_policy` - VLAN policy to be applied when using this policy.
 * `bounce_port_link` - Enable/disable bouncing (administratively bring the link down, up) of a switch port where this policy is applied. Helps to clear and reassign VLAN from lldp-profile. Valid values: `disable`, `enable`.
+* `bounce_port_duration` - Bounce duration in seconds of a switch port where this policy is applied.
+* `poe_reset` - Enable/disable POE reset of a switch port where this policy is applied. Valid values: `disable`, `enable`.
 
 The `interface_tags` block supports:
 

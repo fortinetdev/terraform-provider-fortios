@@ -180,6 +180,11 @@ The `neighbor` block contains:
 * `route_server_client_vpnv4` - Enable/disable VPNv4 AS route server client for this neighbor.
 * `route_server_client_vpnv6` - Enable/disable VPNv6 AS route server client for this neighbor.
 * `route_server_client_evpn` - Enable/disable L2VPN EVPN AS route server client for this neighbor.
+* `rr_attr_allow_change` - Enable/disable allowing change of route attributes when advertising to IPv4 route reflector clients.
+* `rr_attr_allow_change6` - Enable/disable allowing change of route attributes when advertising to IPv6 route reflector clients.
+* `rr_attr_allow_change_vpnv4` - Enable/disable allowing change of route attributes when advertising to VPNv4 route reflector clients.
+* `rr_attr_allow_change_vpnv6` - Enable/disable allowing change of route attributes when advertising to VPNv6 route reflector clients.
+* `rr_attr_allow_change_evpn` - Enable/disable allowing change of route attributes when advertising to L2VPN EVPN route reflector clients.
 * `shutdown` - Enable/disable shutdown this neighbor.
 * `soft_reconfiguration` - Enable/disable allow IPv4 inbound soft reconfiguration.
 * `soft_reconfiguration6` - Enable/disable allow IPv6 inbound soft reconfiguration.
@@ -352,6 +357,11 @@ The `neighbor_group` block contains:
 * `route_server_client_vpnv4` - Enable/disable VPNv4 AS route server client for this neighbor.
 * `route_server_client_vpnv6` - Enable/disable VPNv6 AS route server client for this neighbor.
 * `route_server_client_evpn` - Enable/disable L2VPN EVPN AS route server client for this neighbor.
+* `rr_attr_allow_change` - Enable/disable allowing change of route attributes when advertising to IPv4 route reflector clients.
+* `rr_attr_allow_change6` - Enable/disable allowing change of route attributes when advertising to IPv6 route reflector clients.
+* `rr_attr_allow_change_vpnv4` - Enable/disable allowing change of route attributes when advertising to VPNv4 route reflector clients.
+* `rr_attr_allow_change_vpnv6` - Enable/disable allowing change of route attributes when advertising to VPNv6 route reflector clients.
+* `rr_attr_allow_change_evpn` - Enable/disable allowing change of route attributes when advertising to L2VPN EVPN route reflector clients.
 * `shutdown` - Enable/disable shutdown this neighbor.
 * `soft_reconfiguration` - Enable/disable allow IPv4 inbound soft reconfiguration.
 * `soft_reconfiguration6` - Enable/disable allow IPv6 inbound soft reconfiguration.

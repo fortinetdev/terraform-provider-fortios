@@ -33,4 +33,5 @@ The following attributes are exported:
 * `ssl_min_proto_version` - Minimum supported protocol version for SSL/TLS connections (default is to follow system global setting).
 * `interface_select_method` - Specify how to select outgoing interface to reach server.
 * `interface` - Specify outgoing interface to reach server.
+* `vrf_select` - VRF ID used for connection to server.
 

@@ -11,22 +11,42 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"unicode"
 
 	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
-func validateConvIPMask2CIDR(oNewIP, oOldIP string) string {
-	if oNewIP != oOldIP && strings.Contains(oNewIP, "/") && strings.Contains(oOldIP, " ") {
-		line := strings.Split(oOldIP, " ")
-		if len(line) >= 2 {
-			ip := line[0]
-			mask := line[1]
-			prefixSize, _ := net.IPMask(net.ParseIP(mask).To4()).Size()
-			return ip + "/" + strconv.Itoa(prefixSize)
+func validateConvIPMask2CIDR(oOldIP, oNewIP string) string {
+	if oNewIP != oOldIP {
+		newCvt := convertIP(oNewIP)
+		oldCvt := convertIP(oOldIP)
+		if newCvt == oldCvt {
+			return oOldIP
+		} else {
+			return oNewIP
 		}
 	}
 	return oOldIP
+}
+
+func convertIP(inputIP string) string {
+	if inputIP == "" {
+		return ""
+	}
+	f := func(c rune) bool {
+		return c != '.' && c != '/' && !unicode.IsNumber(c)
+	}
+	line := strings.FieldsFunc(inputIP, f)
+	if len(line) == 1 {
+		return line[0]
+	} else if len(line) == 2 {
+		ip := line[0]
+		mask := line[1]
+		prefixSize, _ := net.IPMask(net.ParseIP(mask).To4()).Size()
+		return ip + "/" + strconv.Itoa(prefixSize)
+	}
+	return inputIP
 }
 
 func fortiStringValue(t interface{}) string {
@@ -313,6 +333,24 @@ func intBetweenWithZero(min, max int) schema.SchemaValidateFunc {
 		}
 
 		errors = append(errors, fmt.Errorf("expected %s to be in the range (%d - %d) or equal to 0, got %d", k, min, max, v))
+
+		return warnings, errors
+	}
+}
+
+func intBetweenWithMinus1(min, max int) schema.SchemaValidateFunc {
+	return func(i interface{}, k string) (warnings []string, errors []error) {
+		v, ok := i.(int)
+		if !ok {
+			errors = append(errors, fmt.Errorf("expected type of %s to be integer", k))
+			return warnings, errors
+		}
+
+		if (v >= min && v <= max) || (v == -1) {
+			return warnings, errors
+		}
+
+		errors = append(errors, fmt.Errorf("expected %s to be in the range (%d - %d) or equal to -1, got %d", k, min, max, v))
 
 		return warnings, errors
 	}

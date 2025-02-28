@@ -96,6 +96,12 @@ func resourceDpdkGlobal() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"session_table_percentage": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 60),
+				Optional:     true,
+				Computed:     true,
+			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -302,6 +308,10 @@ func flattenDpdkGlobalMbufpoolPercentage(v interface{}, d *schema.ResourceData, 
 	return convintf2i(v)
 }
 
+func flattenDpdkGlobalSessionTablePercentage(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
 func refreshObjectDpdkGlobal(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 	var b_get_all_tables bool
@@ -381,6 +391,12 @@ func refreshObjectDpdkGlobal(d *schema.ResourceData, o map[string]interface{}, s
 		}
 	}
 
+	if err = d.Set("session_table_percentage", flattenDpdkGlobalSessionTablePercentage(o["session-table-percentage"], d, "session_table_percentage", sv)); err != nil {
+		if !fortiAPIPatch(o["session-table-percentage"]) {
+			return fmt.Errorf("Error reading session_table_percentage: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -451,6 +467,10 @@ func expandDpdkGlobalHugepagePercentage(d *schema.ResourceData, v interface{}, p
 }
 
 func expandDpdkGlobalMbufpoolPercentage(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandDpdkGlobalSessionTablePercentage(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -585,6 +605,19 @@ func getObjectDpdkGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 				return &obj, err
 			} else if t != nil {
 				obj["mbufpool-percentage"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOkExists("session_table_percentage"); ok {
+		if setArgNil {
+			obj["session-table-percentage"] = nil
+		} else {
+			t, err := expandDpdkGlobalSessionTablePercentage(d, v, "session_table_percentage", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["session-table-percentage"] = t
 			}
 		}
 	}

@@ -30,10 +30,17 @@ The following arguments are supported:
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `status` - Enable/disable user resource. Valid values: `enable`, `disable`.
 * `type` - User resource type.
+* `namespace` - Generic external connector address namespace.
+* `object_array_path` - JSON Path to array of generic addresses in resource.
+* `address_name_field` - JSON Path to address name in generic address entry.
+* `address_data_field` - JSON Path to address data in generic address entry.
+* `address_comment_field` - JSON Path to address description in generic address entry.
 * `update_method` - External resource update method. Valid values: `feed`, `push`.
 * `category` - User resource category.
 * `username` - HTTP basic authentication user name.
 * `password` - HTTP basic authentication password.
+* `client_cert_auth` - Enable/disable using client certificate for TLS authentication. Valid values: `enable`, `disable`.
+* `client_cert` - Client certificate name.
 * `comments` - Comment.
 * `resource` - (Required) URI of external resource.
 * `user_agent` - HTTP User-Agent header (default = 'curl/7.58.0').
@@ -42,6 +49,7 @@ The following arguments are supported:
 * `source_ip` - Source IPv4 address used to communicate with server.
 * `interface_select_method` - Specify how to select outgoing interface to reach server. Valid values: `auto`, `sdwan`, `specify`.
 * `interface` - Specify outgoing interface to reach server.
+* `vrf_select` - VRF ID used for connection to server.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 

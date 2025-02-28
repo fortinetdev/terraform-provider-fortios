@@ -170,6 +170,7 @@ func resourceSystemDhcpServer() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
+							Computed: true,
 						},
 						"start_ip": &schema.Schema{
 							Type:     schema.TypeString,
@@ -261,6 +262,7 @@ func resourceSystemDhcpServer() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
+							Computed: true,
 						},
 						"code": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -424,6 +426,7 @@ func resourceSystemDhcpServer() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
+							Computed: true,
 						},
 						"start_ip": &schema.Schema{
 							Type:     schema.TypeString,
@@ -490,7 +493,7 @@ func resourceSystemDhcpServer() *schema.Resource {
 				Computed: true,
 			},
 			"reserved_address": &schema.Schema{
-				Type:     schema.TypeList,
+				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -2152,8 +2155,6 @@ func expandSystemDhcpServerIpRange(d *schema.ResourceData, v interface{}, pre st
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSystemDhcpServerIpRangeId(d, i["id"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "start_ip"
@@ -2342,8 +2343,6 @@ func expandSystemDhcpServerOptions(d *schema.ResourceData, v interface{}, pre st
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSystemDhcpServerOptionsId(d, i["id"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "code"
@@ -2597,8 +2596,6 @@ func expandSystemDhcpServerExcludeRange(d *schema.ResourceData, v interface{}, p
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandSystemDhcpServerExcludeRangeId(d, i["id"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "start_ip"
@@ -2739,7 +2736,7 @@ func expandSystemDhcpServerRelayAgent(d *schema.ResourceData, v interface{}, pre
 }
 
 func expandSystemDhcpServerReservedAddress(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
+	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -2752,61 +2749,25 @@ func expandSystemDhcpServerReservedAddress(d *schema.ResourceData, v interface{}
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandSystemDhcpServerReservedAddressId(d, i["id"], pre_append, sv)
-		}
+		tmp["id"], _ = expandSystemDhcpServerReservedAddressId(d, i["id"], pre_append, sv)
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["type"], _ = expandSystemDhcpServerReservedAddressType(d, i["type"], pre_append, sv)
-		}
+		tmp["type"], _ = expandSystemDhcpServerReservedAddressType(d, i["type"], pre_append, sv)
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["ip"], _ = expandSystemDhcpServerReservedAddressIp(d, i["ip"], pre_append, sv)
-		}
+		tmp["ip"], _ = expandSystemDhcpServerReservedAddressIp(d, i["ip"], pre_append, sv)
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "mac"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["mac"], _ = expandSystemDhcpServerReservedAddressMac(d, i["mac"], pre_append, sv)
-		}
+		tmp["mac"], _ = expandSystemDhcpServerReservedAddressMac(d, i["mac"], pre_append, sv)
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["action"], _ = expandSystemDhcpServerReservedAddressAction(d, i["action"], pre_append, sv)
-		}
+		tmp["action"], _ = expandSystemDhcpServerReservedAddressAction(d, i["action"], pre_append, sv)
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "circuit_id_type"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["circuit-id-type"], _ = expandSystemDhcpServerReservedAddressCircuitIdType(d, i["circuit_id_type"], pre_append, sv)
-		}
+		tmp["circuit-id-type"], _ = expandSystemDhcpServerReservedAddressCircuitIdType(d, i["circuit_id_type"], pre_append, sv)
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "circuit_id"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["circuit-id"], _ = expandSystemDhcpServerReservedAddressCircuitId(d, i["circuit_id"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["circuit-id"] = nil
-		}
+		tmp["circuit-id"], _ = expandSystemDhcpServerReservedAddressCircuitId(d, i["circuit_id"], pre_append, sv)
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "remote_id_type"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["remote-id-type"], _ = expandSystemDhcpServerReservedAddressRemoteIdType(d, i["remote_id_type"], pre_append, sv)
-		}
+		tmp["remote-id-type"], _ = expandSystemDhcpServerReservedAddressRemoteIdType(d, i["remote_id_type"], pre_append, sv)
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "remote_id"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["remote-id"], _ = expandSystemDhcpServerReservedAddressRemoteId(d, i["remote_id"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["remote-id"] = nil
-		}
+		tmp["remote-id"], _ = expandSystemDhcpServerReservedAddressRemoteId(d, i["remote_id"], pre_append, sv)
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["description"], _ = expandSystemDhcpServerReservedAddressDescription(d, i["description"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["description"] = nil
-		}
+		tmp["description"], _ = expandSystemDhcpServerReservedAddressDescription(d, i["description"], pre_append, sv)
 
 		result = append(result, tmp)
 

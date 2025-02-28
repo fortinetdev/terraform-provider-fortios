@@ -268,6 +268,26 @@ func dataSourceRouterbgpNeighbor() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"rr_attr_allow_change": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"rr_attr_allow_change6": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"rr_attr_allow_change_vpnv4": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"rr_attr_allow_change_vpnv6": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"rr_attr_allow_change_evpn": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"shutdown": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -973,6 +993,26 @@ func dataSourceFlattenRouterbgpNeighborRouteServerClientVpnv6(v interface{}, d *
 }
 
 func dataSourceFlattenRouterbgpNeighborRouteServerClientEvpn(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterbgpNeighborRrAttrAllowChange(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterbgpNeighborRrAttrAllowChange6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterbgpNeighborRrAttrAllowChangeVpnv4(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterbgpNeighborRrAttrAllowChangeVpnv6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterbgpNeighborRrAttrAllowChangeEvpn(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1824,6 +1864,36 @@ func dataSourceRefreshObjectRouterbgpNeighbor(d *schema.ResourceData, o map[stri
 	if err = d.Set("route_server_client_evpn", dataSourceFlattenRouterbgpNeighborRouteServerClientEvpn(o["route-server-client-evpn"], d, "route_server_client_evpn")); err != nil {
 		if !fortiAPIPatch(o["route-server-client-evpn"]) {
 			return fmt.Errorf("Error reading route_server_client_evpn: %v", err)
+		}
+	}
+
+	if err = d.Set("rr_attr_allow_change", dataSourceFlattenRouterbgpNeighborRrAttrAllowChange(o["rr-attr-allow-change"], d, "rr_attr_allow_change")); err != nil {
+		if !fortiAPIPatch(o["rr-attr-allow-change"]) {
+			return fmt.Errorf("Error reading rr_attr_allow_change: %v", err)
+		}
+	}
+
+	if err = d.Set("rr_attr_allow_change6", dataSourceFlattenRouterbgpNeighborRrAttrAllowChange6(o["rr-attr-allow-change6"], d, "rr_attr_allow_change6")); err != nil {
+		if !fortiAPIPatch(o["rr-attr-allow-change6"]) {
+			return fmt.Errorf("Error reading rr_attr_allow_change6: %v", err)
+		}
+	}
+
+	if err = d.Set("rr_attr_allow_change_vpnv4", dataSourceFlattenRouterbgpNeighborRrAttrAllowChangeVpnv4(o["rr-attr-allow-change-vpnv4"], d, "rr_attr_allow_change_vpnv4")); err != nil {
+		if !fortiAPIPatch(o["rr-attr-allow-change-vpnv4"]) {
+			return fmt.Errorf("Error reading rr_attr_allow_change_vpnv4: %v", err)
+		}
+	}
+
+	if err = d.Set("rr_attr_allow_change_vpnv6", dataSourceFlattenRouterbgpNeighborRrAttrAllowChangeVpnv6(o["rr-attr-allow-change-vpnv6"], d, "rr_attr_allow_change_vpnv6")); err != nil {
+		if !fortiAPIPatch(o["rr-attr-allow-change-vpnv6"]) {
+			return fmt.Errorf("Error reading rr_attr_allow_change_vpnv6: %v", err)
+		}
+	}
+
+	if err = d.Set("rr_attr_allow_change_evpn", dataSourceFlattenRouterbgpNeighborRrAttrAllowChangeEvpn(o["rr-attr-allow-change-evpn"], d, "rr_attr_allow_change_evpn")); err != nil {
+		if !fortiAPIPatch(o["rr-attr-allow-change-evpn"]) {
+			return fmt.Errorf("Error reading rr_attr_allow_change_evpn: %v", err)
 		}
 	}
 

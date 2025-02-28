@@ -58,6 +58,22 @@ func resourceUserScim() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
 			},
+			"auth_method": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"token_certificate": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 79),
+				Optional:     true,
+			},
+			"secret": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 128),
+				Optional:     true,
+				Sensitive:    true,
+			},
 			"client_authentication_method": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -250,6 +266,14 @@ func flattenUserScimBaseUrl(v interface{}, d *schema.ResourceData, pre string, s
 	return v
 }
 
+func flattenUserScimAuthMethod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserScimTokenCertificate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenUserScimClientAuthenticationMethod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -290,6 +314,18 @@ func refreshObjectUserScim(d *schema.ResourceData, o map[string]interface{}, sv 
 	if err = d.Set("base_url", flattenUserScimBaseUrl(o["base-url"], d, "base_url", sv)); err != nil {
 		if !fortiAPIPatch(o["base-url"]) {
 			return fmt.Errorf("Error reading base_url: %v", err)
+		}
+	}
+
+	if err = d.Set("auth_method", flattenUserScimAuthMethod(o["auth-method"], d, "auth_method", sv)); err != nil {
+		if !fortiAPIPatch(o["auth-method"]) {
+			return fmt.Errorf("Error reading auth_method: %v", err)
+		}
+	}
+
+	if err = d.Set("token_certificate", flattenUserScimTokenCertificate(o["token-certificate"], d, "token_certificate", sv)); err != nil {
+		if !fortiAPIPatch(o["token-certificate"]) {
+			return fmt.Errorf("Error reading token_certificate: %v", err)
 		}
 	}
 
@@ -339,6 +375,18 @@ func expandUserScimStatus(d *schema.ResourceData, v interface{}, pre string, sv 
 }
 
 func expandUserScimBaseUrl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserScimAuthMethod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserScimTokenCertificate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserScimSecret(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -397,6 +445,37 @@ func getObjectUserScim(d *schema.ResourceData, sv string) (*map[string]interface
 		}
 	} else if d.HasChange("base_url") {
 		obj["base-url"] = nil
+	}
+
+	if v, ok := d.GetOk("auth_method"); ok {
+		t, err := expandUserScimAuthMethod(d, v, "auth_method", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["auth-method"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("token_certificate"); ok {
+		t, err := expandUserScimTokenCertificate(d, v, "token_certificate", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["token-certificate"] = t
+		}
+	} else if d.HasChange("token_certificate") {
+		obj["token-certificate"] = nil
+	}
+
+	if v, ok := d.GetOk("secret"); ok {
+		t, err := expandUserScimSecret(d, v, "secret", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["secret"] = t
+		}
+	} else if d.HasChange("secret") {
+		obj["secret"] = nil
 	}
 
 	if v, ok := d.GetOk("client_authentication_method"); ok {

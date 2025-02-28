@@ -158,6 +158,7 @@ The following arguments are supported:
 * `geoip_match` - Match geography address based either on its physical location or registered location. Valid values: `physical-location`, `registered-location`.
 * `dynamic_shaping` - Enable/disable dynamic RADIUS defined traffic shaping. Valid values: `enable`, `disable`.
 * `passive_wan_health_measurement` - Enable/disable passive WAN health measurement. When enabled, auto-asic-offload is disabled. Valid values: `enable`, `disable`.
+* `app_monitor` - Enable/disable application TCP metrics in session logs.When enabled, auto-asic-offload is disabled. Valid values: `enable`, `disable`.
 * `utm_status` - Enable to add one or more security profiles (AV, IPS, etc.) to the firewall policy. Valid values: `enable`, `disable`.
 * `inspection_mode` - Policy inspection mode (Flow/proxy). Default is Flow mode. Valid values: `proxy`, `flow`.
 * `http_policy_redirect` - Redirect HTTP(S) traffic to matching transparent web proxy policy. Valid values: `enable`, `disable`.
@@ -218,6 +219,7 @@ The following arguments are supported:
 * `permit_stun_host` - Accept UDP packets from any Session Traversal Utilities for NAT (STUN) host. Valid values: `enable`, `disable`.
 * `fixedport` - Enable to prevent source NAT from changing a session's source port. Valid values: `enable`, `disable`.
 * `port_preserve` - Enable/disable preservation of the original source port from source NAT if it has not been used. Valid values: `enable`, `disable`.
+* `port_random` - Enable/disable random source port selection for source NAT. Valid values: `enable`, `disable`.
 * `ippool` - Enable to use IP Pools for source NAT. Valid values: `enable`, `disable`.
 * `poolname` - IP Pool names. The structure of `poolname` block is documented below.
 * `poolname6` - IPv6 pool names. The structure of `poolname6` block is documented below.
@@ -269,6 +271,7 @@ The following arguments are supported:
 * `srcaddr6_negate` - When enabled srcaddr6 specifies what the source address must NOT be. Valid values: `enable`, `disable`.
 * `dstaddr_negate` - When enabled dstaddr specifies what the destination address must NOT be. Valid values: `enable`, `disable`.
 * `dstaddr6_negate` - When enabled dstaddr6 specifies what the destination address must NOT be. Valid values: `enable`, `disable`.
+* `ztna_ems_tag_negate` - When enabled ztna-ems-tag specifies what the tags must NOT be. Valid values: `enable`, `disable`.
 * `service_negate` - When enabled service specifies what the service must NOT be. Valid values: `enable`, `disable`.
 * `internet_service_negate` - When enabled internet-service specifies what the service must NOT be. Valid values: `enable`, `disable`.
 * `internet_service_src_negate` - When enabled internet-service-src specifies what the service must NOT be. Valid values: `enable`, `disable`.

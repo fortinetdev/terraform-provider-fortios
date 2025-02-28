@@ -109,6 +109,11 @@ func resourceSystemEmailServer() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
 			},
+			"vrf_select": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 511),
+				Optional:     true,
+			},
 		},
 	}
 }
@@ -279,6 +284,10 @@ func flattenSystemEmailServerInterface(v interface{}, d *schema.ResourceData, pr
 	return v
 }
 
+func flattenSystemEmailServerVrfSelect(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
 func refreshObjectSystemEmailServer(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -360,6 +369,12 @@ func refreshObjectSystemEmailServer(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
+	if err = d.Set("vrf_select", flattenSystemEmailServerVrfSelect(o["vrf-select"], d, "vrf_select", sv)); err != nil {
+		if !fortiAPIPatch(o["vrf-select"]) {
+			return fmt.Errorf("Error reading vrf_select: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -422,6 +437,10 @@ func expandSystemEmailServerInterfaceSelectMethod(d *schema.ResourceData, v inte
 }
 
 func expandSystemEmailServerInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemEmailServerVrfSelect(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -616,6 +635,21 @@ func getObjectSystemEmailServer(d *schema.ResourceData, setArgNil bool, sv strin
 		}
 	} else if d.HasChange("interface") {
 		obj["interface"] = nil
+	}
+
+	if v, ok := d.GetOkExists("vrf_select"); ok {
+		if setArgNil {
+			obj["vrf-select"] = nil
+		} else {
+			t, err := expandSystemEmailServerVrfSelect(d, v, "vrf_select", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["vrf-select"] = t
+			}
+		}
+	} else if d.HasChange("vrf_select") {
+		obj["vrf-select"] = nil
 	}
 
 	return &obj, nil

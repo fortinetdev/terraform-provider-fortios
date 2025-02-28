@@ -180,6 +180,10 @@ func resourceWirelessControllerGlobal() *schema.Resource {
 				Type:     schema.TypeInt,
 				Optional: true,
 			},
+			"max_wids_entry": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+			},
 			"max_ble_device": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
@@ -419,6 +423,10 @@ func flattenWirelessControllerGlobalMaxRogueSta(v interface{}, d *schema.Resourc
 	return convintf2i(v)
 }
 
+func flattenWirelessControllerGlobalMaxWidsEntry(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
 func flattenWirelessControllerGlobalMaxBleDevice(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return convintf2i(v)
 }
@@ -598,6 +606,12 @@ func refreshObjectWirelessControllerGlobal(d *schema.ResourceData, o map[string]
 		}
 	}
 
+	if err = d.Set("max_wids_entry", flattenWirelessControllerGlobalMaxWidsEntry(o["max-wids-entry"], d, "max_wids_entry", sv)); err != nil {
+		if !fortiAPIPatch(o["max-wids-entry"]) {
+			return fmt.Errorf("Error reading max_wids_entry: %v", err)
+		}
+	}
+
 	if err = d.Set("max_ble_device", flattenWirelessControllerGlobalMaxBleDevice(o["max-ble-device"], d, "max_ble_device", sv)); err != nil {
 		if !fortiAPIPatch(o["max-ble-device"]) {
 			return fmt.Errorf("Error reading max_ble_device: %v", err)
@@ -728,6 +742,10 @@ func expandWirelessControllerGlobalMaxRogueApWtp(d *schema.ResourceData, v inter
 }
 
 func expandWirelessControllerGlobalMaxRogueSta(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerGlobalMaxWidsEntry(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1122,6 +1140,21 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData, setArgNil bool, s
 		}
 	} else if d.HasChange("max_rogue_sta") {
 		obj["max-rogue-sta"] = nil
+	}
+
+	if v, ok := d.GetOkExists("max_wids_entry"); ok {
+		if setArgNil {
+			obj["max-wids-entry"] = nil
+		} else {
+			t, err := expandWirelessControllerGlobalMaxWidsEntry(d, v, "max_wids_entry", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["max-wids-entry"] = t
+			}
+		}
+	} else if d.HasChange("max_wids_entry") {
+		obj["max-wids-entry"] = nil
 	}
 
 	if v, ok := d.GetOkExists("max_ble_device"); ok {

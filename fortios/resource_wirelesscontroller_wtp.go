@@ -67,6 +67,11 @@ func resourceWirelessControllerWtp() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
 			},
+			"comment": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 255),
+				Optional:     true,
+			},
 			"region": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -1021,6 +1026,10 @@ func flattenWirelessControllerWtpName(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenWirelessControllerWtpLocation(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpComment(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2470,6 +2479,12 @@ func refreshObjectWirelessControllerWtp(d *schema.ResourceData, o map[string]int
 		}
 	}
 
+	if err = d.Set("comment", flattenWirelessControllerWtpComment(o["comment"], d, "comment", sv)); err != nil {
+		if !fortiAPIPatch(o["comment"]) {
+			return fmt.Errorf("Error reading comment: %v", err)
+		}
+	}
+
 	if err = d.Set("region", flattenWirelessControllerWtpRegion(o["region"], d, "region", sv)); err != nil {
 		if !fortiAPIPatch(o["region"]) {
 			return fmt.Errorf("Error reading region: %v", err)
@@ -2788,6 +2803,10 @@ func expandWirelessControllerWtpName(d *schema.ResourceData, v interface{}, pre 
 }
 
 func expandWirelessControllerWtpLocation(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpComment(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -4054,6 +4073,17 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 		}
 	} else if d.HasChange("location") {
 		obj["location"] = nil
+	}
+
+	if v, ok := d.GetOk("comment"); ok {
+		t, err := expandWirelessControllerWtpComment(d, v, "comment", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["comment"] = t
+		}
+	} else if d.HasChange("comment") {
+		obj["comment"] = nil
 	}
 
 	if v, ok := d.GetOk("region"); ok {

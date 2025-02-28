@@ -50,6 +50,7 @@ The following attributes are exported:
 * `wildcard` - IP address and wildcard netmask.
 * `sdn` - SDN.
 * `fsso_group` - FSSO group(s). The structure of `fsso_group` block is documented below.
+* `sso_attribute_value` - Name(s) of the RADIUS user groups that this address includes. The structure of `sso_attribute_value` block is documented below.
 * `interface` - Name of interface whose IP address is to be used.
 * `tenant` - Tenant.
 * `organization` - Organization domain name (Syntax: organization/domain).
@@ -85,6 +86,10 @@ The `macaddr` block contains:
 The `fsso_group` block contains:
 
 * `name` - FSSO group name.
+
+The `sso_attribute_value` block contains:
+
+* `name` - RADIUS user group name.
 
 The `list` block contains:
 

@@ -23,8 +23,10 @@ The following arguments are supported:
 * `ip6_primary` - Primary IPv6 DNS server IP address for the VDOM.
 * `ip6_secondary` - Secondary IPv6 DNS server IP address for the VDOM.
 * `source_ip` - Source IP for communications with the DNS server.
+* `source_ip_interface` - IP address of the specified interface as the source IP address.
 * `interface_select_method` - Specify how to select outgoing interface to reach server. Valid values: `auto`, `sdwan`, `specify`.
 * `interface` - Specify outgoing interface to reach server.
+* `vrf_select` - VRF ID used for connection to server.
 * `server_select_method` - Specify how configured servers are prioritized. Valid values: `least-rtt`, `failover`.
 * `alt_primary` - Alternate primary DNS server. This is not used as a failover DNS server.
 * `alt_secondary` - Alternate secondary DNS server. This is not used as a failover DNS server.

@@ -161,6 +161,7 @@ The `http` block supports:
 * `streaming_content_bypass` - Enable/disable bypassing of streaming content from buffering. Valid values: `enable`, `disable`.
 * `switching_protocols` - Bypass from scanning, or block a connection that attempts to switch protocol. Valid values: `bypass`, `block`.
 * `unknown_http_version` - How to handle HTTP sessions that do not comply with HTTP 0.9, 1.0, or 1.1. Valid values: `reject`, `tunnel`, `best-effort`.
+* `http_09` - Configure action to take upon receipt of HTTP 0.9 request. Valid values: `allow`, `block`.
 * `tunnel_non_http` - Configure how to process non-HTTP traffic when a profile configured for HTTP traffic accepts a non-HTTP session. Can occur if an application sends non-HTTP traffic using an HTTP destination port. Valid values: `enable`, `disable`.
 * `h2c` - Enable/disable h2c HTTP connection upgrade. Valid values: `enable`, `disable`.
 * `unknown_content_encoding` - Configure the action the FortiGate unit will take on unknown content-encoding. Valid values: `block`, `inspect`, `bypass`.

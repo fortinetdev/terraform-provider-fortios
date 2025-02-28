@@ -76,6 +76,7 @@ The following arguments are supported:
 * `ztna_ems_tag` - ZTNA EMS Tag names. The structure of `ztna_ems_tag` block is documented below.
 * `ztna_tags_match_logic` - ZTNA tag matching logic. Valid values: `or`, `and`.
 * `device_ownership` - When enabled, the ownership enforcement will be done at policy level. Valid values: `enable`, `disable`.
+* `url_risk` - URL risk level name. The structure of `url_risk` block is documented below.
 * `internet_service` - Enable/disable use of Internet Services for this policy. If enabled, destination address and service are not used. Valid values: `enable`, `disable`.
 * `internet_service_negate` - When enabled, Internet Services match against any internet service EXCEPT the selected Internet Service. Valid values: `enable`, `disable`.
 * `internet_service_name` - Internet Service name. The structure of `internet_service_name` block is documented below.
@@ -92,8 +93,9 @@ The following arguments are supported:
 * `service` - Name of service objects. The structure of `service` block is documented below.
 * `srcaddr_negate` - When enabled, source addresses match against any address EXCEPT the specified source addresses. Valid values: `enable`, `disable`.
 * `dstaddr_negate` - When enabled, destination addresses match against any address EXCEPT the specified destination addresses. Valid values: `enable`, `disable`.
+* `ztna_ems_tag_negate` - When enabled, ZTNA EMS tags match against any tag EXCEPT the specified ZTNA EMS tags. Valid values: `enable`, `disable`.
 * `service_negate` - When enabled, services match against any service EXCEPT the specified destination services. Valid values: `enable`, `disable`.
-* `action` - Accept or deny traffic matching the policy parameters. Valid values: `accept`, `deny`, `redirect`.
+* `action` - Accept or deny traffic matching the policy parameters.
 * `status` - Enable/disable the active status of the policy. Valid values: `enable`, `disable`.
 * `schedule` - (Required) Name of schedule object.
 * `logtraffic` - Enable/disable logging traffic through the policy. Valid values: `all`, `utm`, `disable`.
@@ -105,6 +107,7 @@ The following arguments are supported:
 * `http_tunnel_auth` - Enable/disable HTTP tunnel authentication. Valid values: `enable`, `disable`.
 * `ssh_policy_redirect` - Redirect SSH traffic to matching transparent proxy policy. Valid values: `enable`, `disable`.
 * `webproxy_forward_server` - Web proxy forward server name.
+* `isolator_server` - Isolator server name.
 * `webproxy_profile` - Name of web proxy profile.
 * `transparent` - Enable to use the IP address of the client to connect to the server. Valid values: `enable`, `disable`.
 * `webcache` - Enable/disable web caching. Valid values: `enable`, `disable`.
@@ -186,6 +189,10 @@ The `dstaddr` block supports:
 The `ztna_ems_tag` block supports:
 
 * `name` - EMS Tag name.
+
+The `url_risk` block supports:
+
+* `name` - Risk level name.
 
 The `internet_service_name` block supports:
 

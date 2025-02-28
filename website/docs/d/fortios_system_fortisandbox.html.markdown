@@ -26,7 +26,10 @@ The following attributes are exported:
 * `source_ip` - Source IP address for communications to FortiSandbox.
 * `interface_select_method` - Specify how to select outgoing interface to reach server.
 * `interface` - Specify outgoing interface to reach server.
+* `vrf_select` - VRF ID used for connection to server.
 * `enc_algorithm` - Configure the level of SSL protection for secure communication with FortiSandbox.
 * `ssl_min_proto_version` - Minimum supported protocol version for SSL/TLS connections (default is to follow system global setting).
 * `email` - Notifier email address.
+* `ca` - The CA that signs remote FortiSandbox certificate, empty for no check.
+* `cn` - The CN of remote server certificate, case sensitive, empty for no check.
 

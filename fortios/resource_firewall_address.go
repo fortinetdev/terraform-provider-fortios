@@ -146,6 +146,19 @@ func resourceFirewallAddress() *schema.Resource {
 					},
 				},
 			},
+			"sso_attribute_value": &schema.Schema{
+				Type:     schema.TypeSet,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 511),
+							Optional:     true,
+						},
+					},
+				},
+			},
 			"interface": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -646,6 +659,48 @@ func flattenFirewallAddressFssoGroupName(v interface{}, d *schema.ResourceData, 
 	return v
 }
 
+func flattenFirewallAddressSsoAttributeValue(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallAddressSsoAttributeValueName(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenFirewallAddressSsoAttributeValueName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallAddressInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1029,6 +1084,22 @@ func refreshObjectFirewallAddress(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
+	if b_get_all_tables {
+		if err = d.Set("sso_attribute_value", flattenFirewallAddressSsoAttributeValue(o["sso-attribute-value"], d, "sso_attribute_value", sv)); err != nil {
+			if !fortiAPIPatch(o["sso-attribute-value"]) {
+				return fmt.Errorf("Error reading sso_attribute_value: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("sso_attribute_value"); ok {
+			if err = d.Set("sso_attribute_value", flattenFirewallAddressSsoAttributeValue(o["sso-attribute-value"], d, "sso_attribute_value", sv)); err != nil {
+				if !fortiAPIPatch(o["sso-attribute-value"]) {
+					return fmt.Errorf("Error reading sso_attribute_value: %v", err)
+				}
+			}
+		}
+	}
+
 	if err = d.Set("interface", flattenFirewallAddressInterface(o["interface"], d, "interface", sv)); err != nil {
 		if !fortiAPIPatch(o["interface"]) {
 			return fmt.Errorf("Error reading interface: %v", err)
@@ -1341,6 +1412,34 @@ func expandFirewallAddressFssoGroup(d *schema.ResourceData, v interface{}, pre s
 }
 
 func expandFirewallAddressFssoGroupName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallAddressSsoAttributeValue(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.(*schema.Set).List()
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		tmp["name"], _ = expandFirewallAddressSsoAttributeValueName(d, i["name"], pre_append, sv)
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandFirewallAddressSsoAttributeValueName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1741,6 +1840,15 @@ func getObjectFirewallAddress(d *schema.ResourceData, sv string) (*map[string]in
 			return &obj, err
 		} else if t != nil {
 			obj["fsso-group"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("sso_attribute_value"); ok || d.HasChange("sso_attribute_value") {
+		t, err := expandFirewallAddressSsoAttributeValue(d, v, "sso_attribute_value", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["sso-attribute-value"] = t
 		}
 	}
 

@@ -57,6 +57,24 @@ func resourceSystemAutomationStitch() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Required:     true,
 			},
+			"condition": &schema.Schema{
+				Type:     schema.TypeSet,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+						},
+					},
+				},
+			},
+			"condition_logic": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"actions": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -292,6 +310,52 @@ func flattenSystemAutomationStitchTrigger(v interface{}, d *schema.ResourceData,
 	return v
 }
 
+func flattenSystemAutomationStitchCondition(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemAutomationStitchConditionName(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenSystemAutomationStitchConditionName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemAutomationStitchConditionLogic(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemAutomationStitchActions(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -478,6 +542,28 @@ func refreshObjectSystemAutomationStitch(d *schema.ResourceData, o map[string]in
 		}
 	}
 
+	if b_get_all_tables {
+		if err = d.Set("condition", flattenSystemAutomationStitchCondition(o["condition"], d, "condition", sv)); err != nil {
+			if !fortiAPIPatch(o["condition"]) {
+				return fmt.Errorf("Error reading condition: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("condition"); ok {
+			if err = d.Set("condition", flattenSystemAutomationStitchCondition(o["condition"], d, "condition", sv)); err != nil {
+				if !fortiAPIPatch(o["condition"]) {
+					return fmt.Errorf("Error reading condition: %v", err)
+				}
+			}
+		}
+	}
+
+	if err = d.Set("condition_logic", flattenSystemAutomationStitchConditionLogic(o["condition-logic"], d, "condition_logic", sv)); err != nil {
+		if !fortiAPIPatch(o["condition-logic"]) {
+			return fmt.Errorf("Error reading condition_logic: %v", err)
+		}
+	}
+
 	if _, ok := o["actions"].([]interface{}); ok {
 		if b_get_all_tables {
 			if err = d.Set("actions", flattenSystemAutomationStitchActions(o["actions"], d, "actions", sv)); err != nil {
@@ -552,6 +638,38 @@ func expandSystemAutomationStitchStatus(d *schema.ResourceData, v interface{}, p
 }
 
 func expandSystemAutomationStitchTrigger(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAutomationStitchCondition(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.(*schema.Set).List()
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		tmp["name"], _ = expandSystemAutomationStitchConditionName(d, i["name"], pre_append, sv)
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemAutomationStitchConditionName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAutomationStitchConditionLogic(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -714,6 +832,24 @@ func getObjectSystemAutomationStitch(d *schema.ResourceData, sv string) (*map[st
 		}
 	} else if d.HasChange("trigger") {
 		obj["trigger"] = nil
+	}
+
+	if v, ok := d.GetOk("condition"); ok || d.HasChange("condition") {
+		t, err := expandSystemAutomationStitchCondition(d, v, "condition", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["condition"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("condition_logic"); ok {
+		t, err := expandSystemAutomationStitchConditionLogic(d, v, "condition_logic", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["condition-logic"] = t
+		}
 	}
 
 	if v, ok := d.GetOk("actions"); ok || d.HasChange("actions") {

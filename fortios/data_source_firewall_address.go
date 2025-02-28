@@ -120,6 +120,18 @@ func dataSourceFirewallAddress() *schema.Resource {
 					},
 				},
 			},
+			"sso_attribute_value": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
 			"interface": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -461,6 +473,42 @@ func dataSourceFlattenFirewallAddressFssoGroupName(v interface{}, d *schema.Reso
 	return v
 }
 
+func dataSourceFlattenFirewallAddressSsoAttributeValue(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = dataSourceFlattenFirewallAddressSsoAttributeValueName(i["name"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenFirewallAddressSsoAttributeValueName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallAddressInterface(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -797,6 +845,12 @@ func dataSourceRefreshObjectFirewallAddress(d *schema.ResourceData, o map[string
 	if err = d.Set("fsso_group", dataSourceFlattenFirewallAddressFssoGroup(o["fsso-group"], d, "fsso_group")); err != nil {
 		if !fortiAPIPatch(o["fsso-group"]) {
 			return fmt.Errorf("Error reading fsso_group: %v", err)
+		}
+	}
+
+	if err = d.Set("sso_attribute_value", dataSourceFlattenFirewallAddressSsoAttributeValue(o["sso-attribute-value"], d, "sso_attribute_value")); err != nil {
+		if !fortiAPIPatch(o["sso-attribute-value"]) {
+			return fmt.Errorf("Error reading sso_attribute_value: %v", err)
 		}
 	}
 

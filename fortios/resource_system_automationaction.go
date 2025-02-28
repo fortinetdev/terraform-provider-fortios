@@ -340,6 +340,12 @@ func resourceSystemAutomationAction() *schema.Resource {
 				ValidateFunc: validation.IntBetween(0, 300),
 				Optional:     true,
 			},
+			"duration": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1, 36000),
+				Optional:     true,
+				Computed:     true,
+			},
 			"execute_security_fabric": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -349,6 +355,7 @@ func resourceSystemAutomationAction() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
+				Computed:     true,
 			},
 			"security_tag": &schema.Schema{
 				Type:         schema.TypeString,
@@ -367,6 +374,11 @@ func resourceSystemAutomationAction() *schema.Resource {
 						},
 					},
 				},
+			},
+			"regular_expression": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 1023),
+				Optional:     true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
@@ -861,6 +873,10 @@ func flattenSystemAutomationActionTimeout(v interface{}, d *schema.ResourceData,
 	return convintf2i(v)
 }
 
+func flattenSystemAutomationActionDuration(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
 func flattenSystemAutomationActionExecuteSecurityFabric(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -912,6 +928,10 @@ func flattenSystemAutomationActionSdnConnector(v interface{}, d *schema.Resource
 }
 
 func flattenSystemAutomationActionSdnConnectorName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemAutomationActionRegularExpression(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1248,6 +1268,12 @@ func refreshObjectSystemAutomationAction(d *schema.ResourceData, o map[string]in
 		}
 	}
 
+	if err = d.Set("duration", flattenSystemAutomationActionDuration(o["duration"], d, "duration", sv)); err != nil {
+		if !fortiAPIPatch(o["duration"]) {
+			return fmt.Errorf("Error reading duration: %v", err)
+		}
+	}
+
 	if err = d.Set("execute_security_fabric", flattenSystemAutomationActionExecuteSecurityFabric(o["execute-security-fabric"], d, "execute_security_fabric", sv)); err != nil {
 		if !fortiAPIPatch(o["execute-security-fabric"]) {
 			return fmt.Errorf("Error reading execute_security_fabric: %v", err)
@@ -1279,6 +1305,12 @@ func refreshObjectSystemAutomationAction(d *schema.ResourceData, o map[string]in
 					return fmt.Errorf("Error reading sdn_connector: %v", err)
 				}
 			}
+		}
+	}
+
+	if err = d.Set("regular_expression", flattenSystemAutomationActionRegularExpression(o["regular-expression"], d, "regular_expression", sv)); err != nil {
+		if !fortiAPIPatch(o["regular-expression"]) {
+			return fmt.Errorf("Error reading regular_expression: %v", err)
 		}
 	}
 
@@ -1596,6 +1628,10 @@ func expandSystemAutomationActionTimeout(d *schema.ResourceData, v interface{}, 
 	return v, nil
 }
 
+func expandSystemAutomationActionDuration(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemAutomationActionExecuteSecurityFabric(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -1633,6 +1669,10 @@ func expandSystemAutomationActionSdnConnector(d *schema.ResourceData, v interfac
 }
 
 func expandSystemAutomationActionSdnConnectorName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAutomationActionRegularExpression(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2171,6 +2211,15 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 		obj["timeout"] = nil
 	}
 
+	if v, ok := d.GetOk("duration"); ok {
+		t, err := expandSystemAutomationActionDuration(d, v, "duration", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["duration"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("execute_security_fabric"); ok {
 		t, err := expandSystemAutomationActionExecuteSecurityFabric(d, v, "execute_security_fabric", sv)
 		if err != nil {
@@ -2187,8 +2236,6 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["accprofile"] = t
 		}
-	} else if d.HasChange("accprofile") {
-		obj["accprofile"] = nil
 	}
 
 	if v, ok := d.GetOk("security_tag"); ok {
@@ -2209,6 +2256,17 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["sdn-connector"] = t
 		}
+	}
+
+	if v, ok := d.GetOk("regular_expression"); ok {
+		t, err := expandSystemAutomationActionRegularExpression(d, v, "regular_expression", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["regular-expression"] = t
+		}
+	} else if d.HasChange("regular_expression") {
+		obj["regular-expression"] = nil
 	}
 
 	return &obj, nil

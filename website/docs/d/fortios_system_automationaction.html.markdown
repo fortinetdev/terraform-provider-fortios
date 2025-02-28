@@ -71,10 +71,12 @@ The following attributes are exported:
 * `script` - CLI script.
 * `output_size` - Number of megabytes to limit script output to (1 - 1024, default = 10).
 * `timeout` - Maximum running time for this script in seconds (0 = no timeout).
+* `duration` - Maximum running time for this script in seconds.
 * `execute_security_fabric` - Enable/disable execution of CLI script on all or only one FortiGate unit in the Security Fabric.
 * `accprofile` - Access profile for CLI script action to access FortiGate features.
 * `security_tag` - NSX security tag.
 * `sdn_connector` - NSX SDN connector names. The structure of `sdn_connector` block is documented below.
+* `regular_expression` - Regular expression string.
 
 The `email_to` block contains:
 

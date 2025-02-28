@@ -17,6 +17,7 @@ The following arguments are supported:
 * `load_balance_mode` - Algorithm or mode to use for load balancing Internet traffic to SD-WAN members. Valid values: `source-ip-based`, `weight-based`, `usage-based`, `source-dest-ip-based`, `measured-volume-based`.
 * `speedtest_bypass_routing` - Enable/disable bypass routing when speedtest on a SD-WAN member. Valid values: `disable`, `enable`.
 * `duplication_max_num` - Maximum number of interface members a packet is duplicated in the SD-WAN zone (2 - 4, default = 2; if set to 3, the original packet plus 2 more copies are created).
+* `duplication_max_discrepancy` - Maximum discrepancy between two packets for deduplication in milliseconds (250 - 1000, default = 250).
 * `neighbor_hold_down` - Enable/disable hold switching from the secondary neighbor to the primary neighbor. Valid values: `enable`, `disable`.
 * `neighbor_hold_down_time` - Waiting period in seconds when switching from the secondary neighbor to the primary neighbor when hold-down is disabled. (0 - 10000000, default = 0).
 * `app_perf_log_period` - Time interval in seconds that applicationperformance logs are generated (0 - 3600, default = 0).
@@ -72,6 +73,8 @@ The `members` block supports:
 The `health_check` block supports:
 
 * `name` - Status check or health check name.
+* `fortiguard` - Enable/disable use of FortiGuard predefined server. Valid values: `disable`, `enable`.
+* `fortiguard_name` - Predefined health-check target name.
 * `probe_packets` - Enable/disable transmission of probe packets. Valid values: `disable`, `enable`.
 * `addr_mode` - Address mode (IPv4 or IPv6). Valid values: `ipv4`, `ipv6`.
 * `system_dns` - Enable/disable system DNS as the probe server. Valid values: `disable`, `enable`.
@@ -92,8 +95,8 @@ The `health_check` block supports:
 * `http_match` - Response string expected from the server if the protocol is HTTP.
 * `dns_request_domain` - Fully qualified domain name to resolve for the DNS probe.
 * `dns_match_ip` - Response IP expected from DNS server if the protocol is DNS.
-* `interval` - Status check interval in milliseconds, or the time between attempting to connect to the server (default = 500). On FortiOS versions 6.4.1-7.0.10, 7.2.0-7.2.4: 500 - 3600*1000 msec. On FortiOS versions 7.0.11-7.0.15, >= 7.2.6: 20 - 3600*1000 msec.
-* `probe_timeout` - Time to wait before a probe packet is considered lost (default = 500). On FortiOS versions 6.4.2-7.0.10, 7.2.0-7.2.4: 500 - 3600*1000 msec. On FortiOS versions 6.4.1: 500 - 5000 msec. On FortiOS versions 7.0.11-7.0.15, >= 7.2.6: 20 - 3600*1000 msec.
+* `interval` - Status check interval in milliseconds, or the time between attempting to connect to the server (default = 500). On FortiOS versions 6.4.1-7.0.10, 7.2.0-7.2.4: 500 - 3600*1000 msec. On FortiOS versions 7.0.11-7.0.17, >= 7.2.6: 20 - 3600*1000 msec.
+* `probe_timeout` - Time to wait before a probe packet is considered lost (default = 500). On FortiOS versions 6.4.2-7.0.10, 7.2.0-7.2.4: 500 - 3600*1000 msec. On FortiOS versions 6.4.1: 500 - 5000 msec. On FortiOS versions 7.0.11-7.0.17, >= 7.2.6: 20 - 3600*1000 msec.
 * `failtime` - Number of failures before server is considered lost (1 - 3600, default = 5).
 * `recoverytime` - Number of successful responses received before server is considered recovered (1 - 3600, default = 5).
 * `probe_count` - Number of most recent probes that should be used to calculate latency and jitter (5 - 30, default = 30).
@@ -206,6 +209,7 @@ The `neighbor` block supports:
 * `service_id` - SD-WAN service ID to work with the neighbor.
 * `mode` - What metric to select the neighbor. Valid values: `sla`, `speedtest`.
 * `role` - Role of neighbor. Valid values: `standalone`, `primary`, `secondary`.
+* `route_metric` - Route-metric of neighbor. Valid values: `preferable`, `priority`.
 * `health_check` - SD-WAN health-check name.
 * `sla_id` - SLA ID.
 

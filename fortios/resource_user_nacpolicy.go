@@ -149,6 +149,7 @@ func resourceUserNacPolicy() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
+				Computed:     true,
 			},
 			"switch_group": &schema.Schema{
 				Type:     schema.TypeSet,
@@ -1212,8 +1213,6 @@ func getObjectUserNacPolicy(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["switch-fortilink"] = t
 		}
-	} else if d.HasChange("switch_fortilink") {
-		obj["switch-fortilink"] = nil
 	}
 
 	if v, ok := d.GetOk("switch_group"); ok || d.HasChange("switch_group") {

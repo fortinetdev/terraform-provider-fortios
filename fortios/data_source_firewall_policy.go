@@ -556,6 +556,10 @@ func dataSourceFirewallPolicy() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"app_monitor": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"utm_status": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -836,6 +840,10 @@ func dataSourceFirewallPolicy() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"port_random": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"ippool": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -1101,6 +1109,10 @@ func dataSourceFirewallPolicy() *schema.Resource {
 				Computed: true,
 			},
 			"dstaddr6_negate": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"ztna_ems_tag_negate": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -2535,6 +2547,10 @@ func dataSourceFlattenFirewallPolicyPassiveWanHealthMeasurement(v interface{}, d
 	return v
 }
 
+func dataSourceFlattenFirewallPolicyAppMonitor(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallPolicyUtmStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -2932,6 +2948,10 @@ func dataSourceFlattenFirewallPolicyFixedport(v interface{}, d *schema.ResourceD
 }
 
 func dataSourceFlattenFirewallPolicyPortPreserve(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallPolicyPortRandom(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -3399,6 +3419,10 @@ func dataSourceFlattenFirewallPolicyDstaddrNegate(v interface{}, d *schema.Resou
 }
 
 func dataSourceFlattenFirewallPolicyDstaddr6Negate(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallPolicyZtnaEmsTagNegate(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -3949,6 +3973,12 @@ func dataSourceRefreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]
 		}
 	}
 
+	if err = d.Set("app_monitor", dataSourceFlattenFirewallPolicyAppMonitor(o["app-monitor"], d, "app_monitor")); err != nil {
+		if !fortiAPIPatch(o["app-monitor"]) {
+			return fmt.Errorf("Error reading app_monitor: %v", err)
+		}
+	}
+
 	if err = d.Set("utm_status", dataSourceFlattenFirewallPolicyUtmStatus(o["utm-status"], d, "utm_status")); err != nil {
 		if !fortiAPIPatch(o["utm-status"]) {
 			return fmt.Errorf("Error reading utm_status: %v", err)
@@ -4309,6 +4339,12 @@ func dataSourceRefreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]
 		}
 	}
 
+	if err = d.Set("port_random", dataSourceFlattenFirewallPolicyPortRandom(o["port-random"], d, "port_random")); err != nil {
+		if !fortiAPIPatch(o["port-random"]) {
+			return fmt.Errorf("Error reading port_random: %v", err)
+		}
+	}
+
 	if err = d.Set("ippool", dataSourceFlattenFirewallPolicyIppool(o["ippool"], d, "ippool")); err != nil {
 		if !fortiAPIPatch(o["ippool"]) {
 			return fmt.Errorf("Error reading ippool: %v", err)
@@ -4612,6 +4648,12 @@ func dataSourceRefreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]
 	if err = d.Set("dstaddr6_negate", dataSourceFlattenFirewallPolicyDstaddr6Negate(o["dstaddr6-negate"], d, "dstaddr6_negate")); err != nil {
 		if !fortiAPIPatch(o["dstaddr6-negate"]) {
 			return fmt.Errorf("Error reading dstaddr6_negate: %v", err)
+		}
+	}
+
+	if err = d.Set("ztna_ems_tag_negate", dataSourceFlattenFirewallPolicyZtnaEmsTagNegate(o["ztna-ems-tag-negate"], d, "ztna_ems_tag_negate")); err != nil {
+		if !fortiAPIPatch(o["ztna-ems-tag-negate"]) {
+			return fmt.Errorf("Error reading ztna_ems_tag_negate: %v", err)
 		}
 	}
 

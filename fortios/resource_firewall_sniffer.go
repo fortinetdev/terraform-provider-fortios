@@ -99,7 +99,7 @@ func resourceFirewallSniffer() *schema.Resource {
 			},
 			"application_list": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"ips_sensor_status": &schema.Schema{
@@ -109,7 +109,7 @@ func resourceFirewallSniffer() *schema.Resource {
 			},
 			"ips_sensor": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"dsri": &schema.Schema{
@@ -124,7 +124,7 @@ func resourceFirewallSniffer() *schema.Resource {
 			},
 			"av_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"casb_profile_status": &schema.Schema{
@@ -144,7 +144,7 @@ func resourceFirewallSniffer() *schema.Resource {
 			},
 			"webfilter_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"emailfilter_profile_status": &schema.Schema{
@@ -154,7 +154,7 @@ func resourceFirewallSniffer() *schema.Resource {
 			},
 			"emailfilter_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"dlp_profile_status": &schema.Schema{
@@ -164,7 +164,7 @@ func resourceFirewallSniffer() *schema.Resource {
 			},
 			"dlp_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"spamfilter_profile_status": &schema.Schema{
@@ -211,7 +211,7 @@ func resourceFirewallSniffer() *schema.Resource {
 			},
 			"file_filter_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"ips_dos_status": &schema.Schema{

@@ -206,7 +206,7 @@ func resourceVpnCertificateLocal() *schema.Resource {
 			},
 			"est_http_password": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 63),
+				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
 			},
 			"est_client_cert": &schema.Schema{
@@ -226,8 +226,13 @@ func resourceVpnCertificateLocal() *schema.Resource {
 			},
 			"est_srp_password": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 63),
+				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+			},
+			"est_regeneration_method": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 		},
 	}
@@ -520,6 +525,10 @@ func flattenVpnCertificateLocalEstSrpPassword(v interface{}, d *schema.ResourceD
 	return v
 }
 
+func flattenVpnCertificateLocalEstRegenerationMethod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectVpnCertificateLocal(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -727,6 +736,12 @@ func refreshObjectVpnCertificateLocal(d *schema.ResourceData, o map[string]inter
 		}
 	}
 
+	if err = d.Set("est_regeneration_method", flattenVpnCertificateLocalEstRegenerationMethod(o["est-regeneration-method"], d, "est_regeneration_method", sv)); err != nil {
+		if !fortiAPIPatch(o["est-regeneration-method"]) {
+			return fmt.Errorf("Error reading est_regeneration_method: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -885,6 +900,10 @@ func expandVpnCertificateLocalEstSrpUsername(d *schema.ResourceData, v interface
 }
 
 func expandVpnCertificateLocalEstSrpPassword(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnCertificateLocalEstRegenerationMethod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1279,6 +1298,15 @@ func getObjectVpnCertificateLocal(d *schema.ResourceData, sv string) (*map[strin
 		}
 	} else if d.HasChange("est_srp_password") {
 		obj["est-srp-password"] = nil
+	}
+
+	if v, ok := d.GetOk("est_regeneration_method"); ok {
+		t, err := expandVpnCertificateLocalEstRegenerationMethod(d, v, "est_regeneration_method", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["est-regeneration-method"] = t
+		}
 	}
 
 	return &obj, nil

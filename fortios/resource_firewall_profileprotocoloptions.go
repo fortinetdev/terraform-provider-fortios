@@ -38,7 +38,7 @@ func resourceFirewallProfileProtocolOptions() *schema.Resource {
 			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Required:     true,
 			},
 			"comment": &schema.Schema{
@@ -146,6 +146,11 @@ func resourceFirewallProfileProtocolOptions() *schema.Resource {
 							Computed: true,
 						},
 						"unknown_http_version": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"http_09": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -1142,6 +1147,11 @@ func flattenFirewallProfileProtocolOptionsHttp(v interface{}, d *schema.Resource
 		result["unknown_http_version"] = flattenFirewallProfileProtocolOptionsHttpUnknownHttpVersion(i["unknown-http-version"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "http_09"
+	if _, ok := i["http-0.9"]; ok {
+		result["http_09"] = flattenFirewallProfileProtocolOptionsHttpHttp09(i["http-0.9"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "tunnel_non_http"
 	if _, ok := i["tunnel-non-http"]; ok {
 		result["tunnel_non_http"] = flattenFirewallProfileProtocolOptionsHttpTunnelNonHttp(i["tunnel-non-http"], d, pre_append, sv)
@@ -1297,6 +1307,10 @@ func flattenFirewallProfileProtocolOptionsHttpSwitchingProtocols(v interface{}, 
 }
 
 func flattenFirewallProfileProtocolOptionsHttpUnknownHttpVersion(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallProfileProtocolOptionsHttpHttp09(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2742,6 +2756,10 @@ func expandFirewallProfileProtocolOptionsHttp(d *schema.ResourceData, v interfac
 	if _, ok := d.GetOk(pre_append); ok {
 		result["unknown-http-version"], _ = expandFirewallProfileProtocolOptionsHttpUnknownHttpVersion(d, i["unknown_http_version"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "http_09"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["http-0.9"], _ = expandFirewallProfileProtocolOptionsHttpHttp09(d, i["http_09"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "tunnel_non_http"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["tunnel-non-http"], _ = expandFirewallProfileProtocolOptionsHttpTunnelNonHttp(d, i["tunnel_non_http"], pre_append, sv)
@@ -2879,6 +2897,10 @@ func expandFirewallProfileProtocolOptionsHttpSwitchingProtocols(d *schema.Resour
 }
 
 func expandFirewallProfileProtocolOptionsHttpUnknownHttpVersion(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallProfileProtocolOptionsHttpHttp09(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

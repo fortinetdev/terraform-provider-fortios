@@ -33,6 +33,9 @@ The following arguments are supported:
 * `ipv6` - Forward proxy server IPv6 address.
 * `fqdn` - Forward server Fully Qualified Domain Name (FQDN).
 * `port` - Port number that the forwarding server expects to receive HTTP sessions on (1 - 65535, default = 3128).
+* `interface_select_method` - Specify how to select outgoing interface to reach server. Valid values: `sdwan`, `specify`.
+* `interface` - Specify outgoing interface to reach server.
+* `vrf_select` - VRF ID used for connection to server. Set to -1 means unset this variable. CLI output may have different value on different FortiOS version.
 * `healthcheck` - Enable/disable forward server health checking. Attempts to connect through the remote forwarding server to a destination to verify that the forwarding server is operating normally. Valid values: `disable`, `enable`.
 * `monitor` - URL for forward server health check monitoring (default = www.google.com).
 * `server_down_option` - Action to take when the forward server is found to be down: block sessions until the server is back up or pass sessions to their destination. Valid values: `block`, `pass`.

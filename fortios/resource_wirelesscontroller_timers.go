@@ -94,6 +94,10 @@ func resourceWirelessControllerTimers() *schema.Resource {
 				Type:     schema.TypeInt,
 				Optional: true,
 			},
+			"wids_entry_cleanup": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+			},
 			"ble_device_cleanup": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
@@ -356,6 +360,10 @@ func flattenWirelessControllerTimersRogueStaCleanup(v interface{}, d *schema.Res
 	return convintf2i(v)
 }
 
+func flattenWirelessControllerTimersWidsEntryCleanup(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
 func flattenWirelessControllerTimersBleDeviceCleanup(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return convintf2i(v)
 }
@@ -529,6 +537,12 @@ func refreshObjectWirelessControllerTimers(d *schema.ResourceData, o map[string]
 		}
 	}
 
+	if err = d.Set("wids_entry_cleanup", flattenWirelessControllerTimersWidsEntryCleanup(o["wids-entry-cleanup"], d, "wids_entry_cleanup", sv)); err != nil {
+		if !fortiAPIPatch(o["wids-entry-cleanup"]) {
+			return fmt.Errorf("Error reading wids_entry_cleanup: %v", err)
+		}
+	}
+
 	if err = d.Set("ble_device_cleanup", flattenWirelessControllerTimersBleDeviceCleanup(o["ble-device-cleanup"], d, "ble_device_cleanup", sv)); err != nil {
 		if !fortiAPIPatch(o["ble-device-cleanup"]) {
 			return fmt.Errorf("Error reading ble_device_cleanup: %v", err)
@@ -679,6 +693,10 @@ func expandWirelessControllerTimersRogueApCleanup(d *schema.ResourceData, v inte
 }
 
 func expandWirelessControllerTimersRogueStaCleanup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerTimersWidsEntryCleanup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -925,6 +943,21 @@ func getObjectWirelessControllerTimers(d *schema.ResourceData, setArgNil bool, s
 		}
 	} else if d.HasChange("rogue_sta_cleanup") {
 		obj["rogue-sta-cleanup"] = nil
+	}
+
+	if v, ok := d.GetOkExists("wids_entry_cleanup"); ok {
+		if setArgNil {
+			obj["wids-entry-cleanup"] = nil
+		} else {
+			t, err := expandWirelessControllerTimersWidsEntryCleanup(d, v, "wids_entry_cleanup", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["wids-entry-cleanup"] = t
+			}
+		}
+	} else if d.HasChange("wids_entry_cleanup") {
+		obj["wids-entry-cleanup"] = nil
 	}
 
 	if v, ok := d.GetOkExists("ble_device_cleanup"); ok {

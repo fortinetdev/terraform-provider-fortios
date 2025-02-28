@@ -42,6 +42,16 @@ func resourceWirelessControllerVap() *schema.Resource {
 				ForceNew:     true,
 				Required:     true,
 			},
+			"pre_auth": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"external_pre_auth": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"fast_roaming": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -251,6 +261,11 @@ func resourceWirelessControllerVap() *schema.Resource {
 				Computed: true,
 			},
 			"mac_case": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"called_station_id_type": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -984,22 +999,22 @@ func resourceWirelessControllerVap() *schema.Resource {
 			},
 			"ips_sensor": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"application_list": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"antivirus_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"webfilter_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"scan_botnet_connections": &schema.Schema{
@@ -1294,6 +1309,14 @@ func flattenWirelessControllerVapName(v interface{}, d *schema.ResourceData, pre
 	return v
 }
 
+func flattenWirelessControllerVapPreAuth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerVapExternalPreAuth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerVapFastRoaming(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1459,6 +1482,10 @@ func flattenWirelessControllerVapMacCalledStationDelimiter(v interface{}, d *sch
 }
 
 func flattenWirelessControllerVapMacCase(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerVapCalledStationIdType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2464,6 +2491,18 @@ func refreshObjectWirelessControllerVap(d *schema.ResourceData, o map[string]int
 		}
 	}
 
+	if err = d.Set("pre_auth", flattenWirelessControllerVapPreAuth(o["pre-auth"], d, "pre_auth", sv)); err != nil {
+		if !fortiAPIPatch(o["pre-auth"]) {
+			return fmt.Errorf("Error reading pre_auth: %v", err)
+		}
+	}
+
+	if err = d.Set("external_pre_auth", flattenWirelessControllerVapExternalPreAuth(o["external-pre-auth"], d, "external_pre_auth", sv)); err != nil {
+		if !fortiAPIPatch(o["external-pre-auth"]) {
+			return fmt.Errorf("Error reading external_pre_auth: %v", err)
+		}
+	}
+
 	if err = d.Set("fast_roaming", flattenWirelessControllerVapFastRoaming(o["fast-roaming"], d, "fast_roaming", sv)); err != nil {
 		if !fortiAPIPatch(o["fast-roaming"]) {
 			return fmt.Errorf("Error reading fast_roaming: %v", err)
@@ -2713,6 +2752,12 @@ func refreshObjectWirelessControllerVap(d *schema.ResourceData, o map[string]int
 	if err = d.Set("mac_case", flattenWirelessControllerVapMacCase(o["mac-case"], d, "mac_case", sv)); err != nil {
 		if !fortiAPIPatch(o["mac-case"]) {
 			return fmt.Errorf("Error reading mac_case: %v", err)
+		}
+	}
+
+	if err = d.Set("called_station_id_type", flattenWirelessControllerVapCalledStationIdType(o["called-station-id-type"], d, "called_station_id_type", sv)); err != nil {
+		if !fortiAPIPatch(o["called-station-id-type"]) {
+			return fmt.Errorf("Error reading called_station_id_type: %v", err)
 		}
 	}
 
@@ -3649,6 +3694,14 @@ func expandWirelessControllerVapName(d *schema.ResourceData, v interface{}, pre 
 	return v, nil
 }
 
+func expandWirelessControllerVapPreAuth(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerVapExternalPreAuth(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWirelessControllerVapFastRoaming(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -3814,6 +3867,10 @@ func expandWirelessControllerVapMacCalledStationDelimiter(d *schema.ResourceData
 }
 
 func expandWirelessControllerVapMacCase(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerVapCalledStationIdType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -4761,6 +4818,24 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
+	if v, ok := d.GetOk("pre_auth"); ok {
+		t, err := expandWirelessControllerVapPreAuth(d, v, "pre_auth", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["pre-auth"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("external_pre_auth"); ok {
+		t, err := expandWirelessControllerVapExternalPreAuth(d, v, "external_pre_auth", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["external-pre-auth"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("fast_roaming"); ok {
 		t, err := expandWirelessControllerVapFastRoaming(d, v, "fast_roaming", sv)
 		if err != nil {
@@ -5152,6 +5227,15 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 			return &obj, err
 		} else if t != nil {
 			obj["mac-case"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("called_station_id_type"); ok {
+		t, err := expandWirelessControllerVapCalledStationIdType(d, v, "called_station_id_type", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["called-station-id-type"] = t
 		}
 	}
 

@@ -112,6 +112,10 @@ func dataSourceRouterStatic6() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"tag": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -267,6 +271,10 @@ func dataSourceFlattenRouterStatic6Bfd(v interface{}, d *schema.ResourceData, pr
 	return v
 }
 
+func dataSourceFlattenRouterStatic6Tag(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceRefreshObjectRouterStatic6(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
 
@@ -381,6 +389,12 @@ func dataSourceRefreshObjectRouterStatic6(d *schema.ResourceData, o map[string]i
 	if err = d.Set("bfd", dataSourceFlattenRouterStatic6Bfd(o["bfd"], d, "bfd")); err != nil {
 		if !fortiAPIPatch(o["bfd"]) {
 			return fmt.Errorf("Error reading bfd: %v", err)
+		}
+	}
+
+	if err = d.Set("tag", dataSourceFlattenRouterStatic6Tag(o["tag"], d, "tag")); err != nil {
+		if !fortiAPIPatch(o["tag"]) {
+			return fmt.Errorf("Error reading tag: %v", err)
 		}
 	}
 

@@ -67,6 +67,11 @@ func resourceLogTacacsAccounting2Setting() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
 			},
+			"vrf_select": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 511),
+				Optional:     true,
+			},
 		},
 	}
 }
@@ -205,6 +210,10 @@ func flattenLogTacacsAccounting2SettingInterface(v interface{}, d *schema.Resour
 	return v
 }
 
+func flattenLogTacacsAccounting2SettingVrfSelect(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
 func refreshObjectLogTacacsAccounting2Setting(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -238,6 +247,12 @@ func refreshObjectLogTacacsAccounting2Setting(d *schema.ResourceData, o map[stri
 		}
 	}
 
+	if err = d.Set("vrf_select", flattenLogTacacsAccounting2SettingVrfSelect(o["vrf-select"], d, "vrf_select", sv)); err != nil {
+		if !fortiAPIPatch(o["vrf-select"]) {
+			return fmt.Errorf("Error reading vrf_select: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -268,6 +283,10 @@ func expandLogTacacsAccounting2SettingInterfaceSelectMethod(d *schema.ResourceDa
 }
 
 func expandLogTacacsAccounting2SettingInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogTacacsAccounting2SettingVrfSelect(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -358,6 +377,21 @@ func getObjectLogTacacsAccounting2Setting(d *schema.ResourceData, setArgNil bool
 		}
 	} else if d.HasChange("interface") {
 		obj["interface"] = nil
+	}
+
+	if v, ok := d.GetOkExists("vrf_select"); ok {
+		if setArgNil {
+			obj["vrf-select"] = nil
+		} else {
+			t, err := expandLogTacacsAccounting2SettingVrfSelect(d, v, "vrf_select", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["vrf-select"] = t
+			}
+		}
+	} else if d.HasChange("vrf_select") {
+		obj["vrf-select"] = nil
 	}
 
 	return &obj, nil

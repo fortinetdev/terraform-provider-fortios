@@ -14,12 +14,17 @@ Configure ZTNA traffic forward proxy. Applies to FortiOS Version `>= 7.6.0`.
 The following arguments are supported:
 
 * `name` - Traffic forward proxy name
+* `vip` - Virtual IP name.
+* `host` - Virtual or real host name.
+* `decrypted_traffic_mirror` - Decrypted traffic mirror.
 * `status` - Enable/disable the traffic forward proxy for ZTNA traffic. Valid values: `enable`, `disable`.
 * `interface` - interface name
 * `port` - Accept incoming traffic on one or more ports (0 - 65535).
 * `client_cert` - Enable/disable to request client certificate. Valid values: `disable`, `enable`.
 * `user_agent_detect` - Enable/disable to detect device type by HTTP user-agent if no client certificate provided. Valid values: `disable`, `enable`.
 * `auth_portal` - Enable/disable authentication portal. Valid values: `disable`, `enable`.
+* `auth_virtual_host` - Virtual host for authentication portal.
+* `vip6` - Virtual IPv6 name.
 * `empty_cert_action` - Action of an empty client certificate. Valid values: `accept`, `block`, `accept-unmanageable`.
 * `log_blocked_traffic` - Enable/disable logging of blocked traffic. Valid values: `enable`, `disable`.
 * `svr_pool_multiplex` - Enable/disable server pool multiplexing. Share connected server in HTTP, HTTPS, and web-portal api-gateway. Valid values: `enable`, `disable`.

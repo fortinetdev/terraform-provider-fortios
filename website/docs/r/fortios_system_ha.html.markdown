@@ -55,7 +55,7 @@ resource "fortios_system_ha" "trname" {
 
 The following arguments are supported:
 
-* `group_id` - HA group ID. Must be the same for all members. On FortiOS versions 6.2.0-6.2.6: 0 - 255. On FortiOS versions 7.0.2-7.0.15: 0 - 1023. On FortiOS versions 7.2.0: 0 - 1023;  or 0 - 7 when there are more than 2 vclusters.
+* `group_id` - HA group ID. Must be the same for all members. On FortiOS versions 6.2.0-6.2.6: 0 - 255. On FortiOS versions 7.0.2-7.0.17: 0 - 1023. On FortiOS versions 7.2.0: 0 - 1023;  or 0 - 7 when there are more than 2 vclusters.
 * `group_name` - Cluster group name. Must be the same for all members.
 * `mode` - HA mode. Must be the same for all members. FGSP requires standalone. Valid values: `standalone`, `a-a`, `a-p`.
 * `sync_packet_balance` - Enable/disable HA packet distribution to multiple CPUs. Valid values: `enable`, `disable`.

@@ -144,6 +144,18 @@ func dataSourceSystemDnsDatabase() *schema.Resource {
 					},
 				},
 			},
+			"interface_select_method": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"interface": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"vrf_select": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -371,6 +383,18 @@ func dataSourceFlattenSystemDnsDatabaseDnsEntryCanonicalName(v interface{}, d *s
 	return v
 }
 
+func dataSourceFlattenSystemDnsDatabaseInterfaceSelectMethod(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemDnsDatabaseInterface(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemDnsDatabaseVrfSelect(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceRefreshObjectSystemDnsDatabase(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
 
@@ -485,6 +509,24 @@ func dataSourceRefreshObjectSystemDnsDatabase(d *schema.ResourceData, o map[stri
 	if err = d.Set("dns_entry", dataSourceFlattenSystemDnsDatabaseDnsEntry(o["dns-entry"], d, "dns_entry")); err != nil {
 		if !fortiAPIPatch(o["dns-entry"]) {
 			return fmt.Errorf("Error reading dns_entry: %v", err)
+		}
+	}
+
+	if err = d.Set("interface_select_method", dataSourceFlattenSystemDnsDatabaseInterfaceSelectMethod(o["interface-select-method"], d, "interface_select_method")); err != nil {
+		if !fortiAPIPatch(o["interface-select-method"]) {
+			return fmt.Errorf("Error reading interface_select_method: %v", err)
+		}
+	}
+
+	if err = d.Set("interface", dataSourceFlattenSystemDnsDatabaseInterface(o["interface"], d, "interface")); err != nil {
+		if !fortiAPIPatch(o["interface"]) {
+			return fmt.Errorf("Error reading interface: %v", err)
+		}
+	}
+
+	if err = d.Set("vrf_select", dataSourceFlattenSystemDnsDatabaseVrfSelect(o["vrf-select"], d, "vrf_select")); err != nil {
+		if !fortiAPIPatch(o["vrf-select"]) {
+			return fmt.Errorf("Error reading vrf_select: %v", err)
 		}
 	}
 

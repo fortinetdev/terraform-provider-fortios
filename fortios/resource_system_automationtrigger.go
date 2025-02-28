@@ -86,6 +86,11 @@ func resourceSystemAutomationTrigger() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"stitch_name": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+			},
 			"logid_block": &schema.Schema{
 				Type:     schema.TypeSet,
 				Optional: true,
@@ -422,6 +427,10 @@ func flattenSystemAutomationTriggerReportType(v interface{}, d *schema.ResourceD
 	return v
 }
 
+func flattenSystemAutomationTriggerStitchName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemAutomationTriggerLogidBlock(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -643,6 +652,12 @@ func refreshObjectSystemAutomationTrigger(d *schema.ResourceData, o map[string]i
 		}
 	}
 
+	if err = d.Set("stitch_name", flattenSystemAutomationTriggerStitchName(o["stitch-name"], d, "stitch_name", sv)); err != nil {
+		if !fortiAPIPatch(o["stitch-name"]) {
+			return fmt.Errorf("Error reading stitch_name: %v", err)
+		}
+	}
+
 	if _, ok := o["logid"].([]interface{}); ok {
 		if b_get_all_tables {
 			if err = d.Set("logid_block", flattenSystemAutomationTriggerLogidBlock(o["logid"], d, "logid_block", sv)); err != nil {
@@ -819,6 +834,10 @@ func expandSystemAutomationTriggerIocLevel(d *schema.ResourceData, v interface{}
 }
 
 func expandSystemAutomationTriggerReportType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAutomationTriggerStitchName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1030,6 +1049,17 @@ func getObjectSystemAutomationTrigger(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["report-type"] = t
 		}
+	}
+
+	if v, ok := d.GetOk("stitch_name"); ok {
+		t, err := expandSystemAutomationTriggerStitchName(d, v, "stitch_name", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["stitch-name"] = t
+		}
+	} else if d.HasChange("stitch_name") {
+		obj["stitch-name"] = nil
 	}
 
 	if v, ok := d.GetOk("logid_block"); ok || d.HasChange("logid_block") {

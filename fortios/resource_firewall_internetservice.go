@@ -83,10 +83,12 @@ func resourceFirewallInternetService() *schema.Resource {
 			"ip6_range_number": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
+				Computed: true,
 			},
 			"extra_ip6_range_number": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
+				Computed: true,
 			},
 			"singularity": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -575,8 +577,6 @@ func getObjectFirewallInternetService(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["ip6-range-number"] = t
 		}
-	} else if d.HasChange("ip6_range_number") {
-		obj["ip6-range-number"] = nil
 	}
 
 	if v, ok := d.GetOkExists("extra_ip6_range_number"); ok {
@@ -586,8 +586,6 @@ func getObjectFirewallInternetService(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["extra-ip6-range-number"] = t
 		}
-	} else if d.HasChange("extra_ip6_range_number") {
-		obj["extra-ip6-range-number"] = nil
 	}
 
 	if v, ok := d.GetOkExists("singularity"); ok {

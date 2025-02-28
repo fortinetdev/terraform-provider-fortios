@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_ztna_trafficforwardproxyreverseservice
-Configure ZTNA traffic forward proxy reverse service. Applies to FortiOS Version `>= 7.6.0`.
+Configure ZTNA traffic forward proxy reverse service. Applies to FortiOS Version `7.6.0`.
 
 ## Argument Reference
 

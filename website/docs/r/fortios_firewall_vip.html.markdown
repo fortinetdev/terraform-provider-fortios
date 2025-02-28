@@ -111,6 +111,9 @@ The following arguments are supported:
 * `gratuitous_arp_interval` - Enable to have the VIP send gratuitous ARPs. 0=disabled. Set from 5 up to 8640000 seconds to enable.
 * `srcintf_filter` - Interfaces to which the VIP applies. Separate the names with spaces. The structure of `srcintf_filter` block is documented below.
 * `portmapping_type` - Port mapping type. Valid values: `1-to-1`, `m-to-n`.
+* `empty_cert_action` - Action for an empty client certificate. Valid values: `accept`, `block`, `accept-unmanageable`.
+* `user_agent_detect` - Enable/disable detecting device type by HTTP user-agent if no client certificate is provided. Valid values: `disable`, `enable`.
+* `client_cert` - Enable/disable requesting client certificate. Valid values: `disable`, `enable`.
 * `realservers` - Select the real servers that this server load balancing VIP will distribute traffic to. The structure of `realservers` block is documented below.
 * `http_cookie_domain_from_host` - Enable/disable use of HTTP cookie domain from host field in HTTP. Valid values: `disable`, `enable`.
 * `http_cookie_domain` - Domain that HTTP cookie persistence should apply to.

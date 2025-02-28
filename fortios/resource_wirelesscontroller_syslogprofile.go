@@ -74,6 +74,11 @@ func resourceWirelessControllerSyslogProfile() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"server_type": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"log_level": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -262,6 +267,10 @@ func flattenWirelessControllerSyslogProfileServerPort(v interface{}, d *schema.R
 	return convintf2i(v)
 }
 
+func flattenWirelessControllerSyslogProfileServerType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerSyslogProfileLogLevel(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -311,6 +320,12 @@ func refreshObjectWirelessControllerSyslogProfile(d *schema.ResourceData, o map[
 		}
 	}
 
+	if err = d.Set("server_type", flattenWirelessControllerSyslogProfileServerType(o["server-type"], d, "server_type", sv)); err != nil {
+		if !fortiAPIPatch(o["server-type"]) {
+			return fmt.Errorf("Error reading server_type: %v", err)
+		}
+	}
+
 	if err = d.Set("log_level", flattenWirelessControllerSyslogProfileLogLevel(o["log-level"], d, "log_level", sv)); err != nil {
 		if !fortiAPIPatch(o["log-level"]) {
 			return fmt.Errorf("Error reading log_level: %v", err)
@@ -351,6 +366,10 @@ func expandWirelessControllerSyslogProfileServerIp(d *schema.ResourceData, v int
 }
 
 func expandWirelessControllerSyslogProfileServerPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerSyslogProfileServerType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -425,6 +444,15 @@ func getObjectWirelessControllerSyslogProfile(d *schema.ResourceData, sv string)
 			return &obj, err
 		} else if t != nil {
 			obj["server-port"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("server_type"); ok {
+		t, err := expandWirelessControllerSyslogProfileServerType(d, v, "server_type", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["server-type"] = t
 		}
 	}
 

@@ -103,6 +103,11 @@ func resourceSystemPasswordPolicy() *schema.Resource {
 				ValidateFunc: validation.IntBetween(0, 20),
 				Optional:     true,
 			},
+			"login_lockout_upon_downgrade": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -273,6 +278,10 @@ func flattenSystemPasswordPolicyReusePasswordLimit(v interface{}, d *schema.Reso
 	return convintf2i(v)
 }
 
+func flattenSystemPasswordPolicyLoginLockoutUponDowngrade(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectSystemPasswordPolicy(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -354,6 +363,12 @@ func refreshObjectSystemPasswordPolicy(d *schema.ResourceData, o map[string]inte
 		}
 	}
 
+	if err = d.Set("login_lockout_upon_downgrade", flattenSystemPasswordPolicyLoginLockoutUponDowngrade(o["login-lockout-upon-downgrade"], d, "login_lockout_upon_downgrade", sv)); err != nil {
+		if !fortiAPIPatch(o["login-lockout-upon-downgrade"]) {
+			return fmt.Errorf("Error reading login_lockout_upon_downgrade: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -412,6 +427,10 @@ func expandSystemPasswordPolicyReusePassword(d *schema.ResourceData, v interface
 }
 
 func expandSystemPasswordPolicyReusePasswordLimit(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemPasswordPolicyLoginLockoutUponDowngrade(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -597,6 +616,19 @@ func getObjectSystemPasswordPolicy(d *schema.ResourceData, setArgNil bool, sv st
 		}
 	} else if d.HasChange("reuse_password_limit") {
 		obj["reuse-password-limit"] = nil
+	}
+
+	if v, ok := d.GetOk("login_lockout_upon_downgrade"); ok {
+		if setArgNil {
+			obj["login-lockout-upon-downgrade"] = nil
+		} else {
+			t, err := expandSystemPasswordPolicyLoginLockoutUponDowngrade(d, v, "login_lockout_upon_downgrade", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["login-lockout-upon-downgrade"] = t
+			}
+		}
 	}
 
 	return &obj, nil

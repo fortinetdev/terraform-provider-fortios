@@ -219,6 +219,7 @@ func resourceSwitchControllerLocation() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},

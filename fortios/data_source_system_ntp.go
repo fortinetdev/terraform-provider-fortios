@@ -86,6 +86,10 @@ func dataSourceSystemNtp() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"vrf_select": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
 					},
 				},
 			},
@@ -244,6 +248,11 @@ func dataSourceFlattenSystemNtpNtpserver(v interface{}, d *schema.ResourceData, 
 			tmp["interface"] = dataSourceFlattenSystemNtpNtpserverInterface(i["interface"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrf_select"
+		if _, ok := i["vrf-select"]; ok {
+			tmp["vrf_select"] = dataSourceFlattenSystemNtpNtpserverVrfSelect(i["vrf-select"], d, pre_append)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -289,6 +298,10 @@ func dataSourceFlattenSystemNtpNtpserverInterfaceSelectMethod(v interface{}, d *
 }
 
 func dataSourceFlattenSystemNtpNtpserverInterface(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemNtpNtpserverVrfSelect(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 

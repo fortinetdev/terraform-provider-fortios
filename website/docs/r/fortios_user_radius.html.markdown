@@ -74,6 +74,7 @@ The following arguments are supported:
 * `group_override_attr_type` - RADIUS attribute type to override user group information. Valid values: `filter-Id`, `class`.
 * `class` - Class attribute name(s). The structure of `class` block is documented below.
 * `password_renewal` - Enable/disable password renewal. Valid values: `enable`, `disable`.
+* `require_message_authenticator` - Require message authenticator in authentication response. Valid values: `enable`, `disable`.
 * `password_encoding` - Password encoding. Valid values: `auto`, `ISO-8859-1`.
 * `mac_username_delimiter` - MAC authentication username delimiter (default = hyphen). Valid values: `hyphen`, `single-hyphen`, `colon`, `none`.
 * `mac_password_delimiter` - MAC authentication password delimiter (default = hyphen). Valid values: `hyphen`, `single-hyphen`, `colon`, `none`.
@@ -82,6 +83,7 @@ The following arguments are supported:
 * `switch_controller_acct_fast_framedip_detect` - Switch controller accounting message Framed-IP detection from DHCP snooping (seconds, default=2).
 * `interface_select_method` - Specify how to select outgoing interface to reach server. Valid values: `auto`, `sdwan`, `specify`.
 * `interface` - Specify outgoing interface to reach server.
+* `vrf_select` - VRF ID used for connection to server.
 * `switch_controller_service_type` - RADIUS service type. Valid values: `login`, `framed`, `callback-login`, `callback-framed`, `outbound`, `administrative`, `nas-prompt`, `authenticate-only`, `callback-nas-prompt`, `call-check`, `callback-administrative`.
 * `transport_protocol` - Transport protocol to be used (default = udp). Valid values: `udp`, `tcp`, `tls`.
 * `tls_min_proto_version` - Minimum supported protocol version for TLS connections (default is to follow system global setting).
@@ -125,6 +127,7 @@ The `accounting_server` block supports:
 * `source_ip` - Source IP address for communications to the RADIUS server.
 * `interface_select_method` - Specify how to select outgoing interface to reach server. Valid values: `auto`, `sdwan`, `specify`.
 * `interface` - Specify outgoing interface to reach server.
+* `vrf_select` - VRF ID used for connection to server.
 
 
 ## Attribute Reference

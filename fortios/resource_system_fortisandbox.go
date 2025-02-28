@@ -71,6 +71,11 @@ func resourceSystemFortisandbox() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
 			},
+			"vrf_select": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 511),
+				Optional:     true,
+			},
 			"enc_algorithm": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -84,6 +89,16 @@ func resourceSystemFortisandbox() *schema.Resource {
 			"email": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
+				Optional:     true,
+			},
+			"ca": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 79),
+				Optional:     true,
+			},
+			"cn": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
 			},
 		},
@@ -232,6 +247,10 @@ func flattenSystemFortisandboxInterface(v interface{}, d *schema.ResourceData, p
 	return v
 }
 
+func flattenSystemFortisandboxVrfSelect(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
 func flattenSystemFortisandboxEncAlgorithm(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -241,6 +260,14 @@ func flattenSystemFortisandboxSslMinProtoVersion(v interface{}, d *schema.Resour
 }
 
 func flattenSystemFortisandboxEmail(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemFortisandboxCa(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemFortisandboxCn(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -289,6 +316,12 @@ func refreshObjectSystemFortisandbox(d *schema.ResourceData, o map[string]interf
 		}
 	}
 
+	if err = d.Set("vrf_select", flattenSystemFortisandboxVrfSelect(o["vrf-select"], d, "vrf_select", sv)); err != nil {
+		if !fortiAPIPatch(o["vrf-select"]) {
+			return fmt.Errorf("Error reading vrf_select: %v", err)
+		}
+	}
+
 	if err = d.Set("enc_algorithm", flattenSystemFortisandboxEncAlgorithm(o["enc-algorithm"], d, "enc_algorithm", sv)); err != nil {
 		if !fortiAPIPatch(o["enc-algorithm"]) {
 			return fmt.Errorf("Error reading enc_algorithm: %v", err)
@@ -304,6 +337,18 @@ func refreshObjectSystemFortisandbox(d *schema.ResourceData, o map[string]interf
 	if err = d.Set("email", flattenSystemFortisandboxEmail(o["email"], d, "email", sv)); err != nil {
 		if !fortiAPIPatch(o["email"]) {
 			return fmt.Errorf("Error reading email: %v", err)
+		}
+	}
+
+	if err = d.Set("ca", flattenSystemFortisandboxCa(o["ca"], d, "ca", sv)); err != nil {
+		if !fortiAPIPatch(o["ca"]) {
+			return fmt.Errorf("Error reading ca: %v", err)
+		}
+	}
+
+	if err = d.Set("cn", flattenSystemFortisandboxCn(o["cn"], d, "cn", sv)); err != nil {
+		if !fortiAPIPatch(o["cn"]) {
+			return fmt.Errorf("Error reading cn: %v", err)
 		}
 	}
 
@@ -344,6 +389,10 @@ func expandSystemFortisandboxInterface(d *schema.ResourceData, v interface{}, pr
 	return v, nil
 }
 
+func expandSystemFortisandboxVrfSelect(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemFortisandboxEncAlgorithm(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -353,6 +402,14 @@ func expandSystemFortisandboxSslMinProtoVersion(d *schema.ResourceData, v interf
 }
 
 func expandSystemFortisandboxEmail(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemFortisandboxCa(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemFortisandboxCn(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -456,6 +513,21 @@ func getObjectSystemFortisandbox(d *schema.ResourceData, setArgNil bool, sv stri
 		obj["interface"] = nil
 	}
 
+	if v, ok := d.GetOkExists("vrf_select"); ok {
+		if setArgNil {
+			obj["vrf-select"] = nil
+		} else {
+			t, err := expandSystemFortisandboxVrfSelect(d, v, "vrf_select", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["vrf-select"] = t
+			}
+		}
+	} else if d.HasChange("vrf_select") {
+		obj["vrf-select"] = nil
+	}
+
 	if v, ok := d.GetOk("enc_algorithm"); ok {
 		if setArgNil {
 			obj["enc-algorithm"] = nil
@@ -495,6 +567,36 @@ func getObjectSystemFortisandbox(d *schema.ResourceData, setArgNil bool, sv stri
 		}
 	} else if d.HasChange("email") {
 		obj["email"] = nil
+	}
+
+	if v, ok := d.GetOk("ca"); ok {
+		if setArgNil {
+			obj["ca"] = nil
+		} else {
+			t, err := expandSystemFortisandboxCa(d, v, "ca", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ca"] = t
+			}
+		}
+	} else if d.HasChange("ca") {
+		obj["ca"] = nil
+	}
+
+	if v, ok := d.GetOk("cn"); ok {
+		if setArgNil {
+			obj["cn"] = nil
+		} else {
+			t, err := expandSystemFortisandboxCn(d, v, "cn", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["cn"] = t
+			}
+		}
+	} else if d.HasChange("cn") {
+		obj["cn"] = nil
 	}
 
 	return &obj, nil

@@ -40,6 +40,14 @@ The `wan_extension` block supports:
 
 * `modem1_extension` - FortiExtender interface name.
 * `modem2_extension` - FortiExtender interface name.
+* `modem1_pdn1_interface` - FortiExtender interface name.
+* `modem1_pdn2_interface` - FortiExtender interface name.
+* `modem1_pdn3_interface` - FortiExtender interface name.
+* `modem1_pdn4_interface` - FortiExtender interface name.
+* `modem2_pdn1_interface` - FortiExtender interface name.
+* `modem2_pdn2_interface` - FortiExtender interface name.
+* `modem2_pdn3_interface` - FortiExtender interface name.
+* `modem2_pdn4_interface` - FortiExtender interface name.
 
 
 ## Attribute Reference

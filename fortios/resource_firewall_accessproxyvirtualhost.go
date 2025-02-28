@@ -60,6 +60,21 @@ func resourceFirewallAccessProxyVirtualHost() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
 			},
+			"empty_cert_action": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"user_agent_detect": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"client_cert": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -235,6 +250,18 @@ func flattenFirewallAccessProxyVirtualHostReplacemsgGroup(v interface{}, d *sche
 	return v
 }
 
+func flattenFirewallAccessProxyVirtualHostEmptyCertAction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallAccessProxyVirtualHostUserAgentDetect(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallAccessProxyVirtualHostClientCert(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectFirewallAccessProxyVirtualHost(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -265,6 +292,24 @@ func refreshObjectFirewallAccessProxyVirtualHost(d *schema.ResourceData, o map[s
 	if err = d.Set("replacemsg_group", flattenFirewallAccessProxyVirtualHostReplacemsgGroup(o["replacemsg-group"], d, "replacemsg_group", sv)); err != nil {
 		if !fortiAPIPatch(o["replacemsg-group"]) {
 			return fmt.Errorf("Error reading replacemsg_group: %v", err)
+		}
+	}
+
+	if err = d.Set("empty_cert_action", flattenFirewallAccessProxyVirtualHostEmptyCertAction(o["empty-cert-action"], d, "empty_cert_action", sv)); err != nil {
+		if !fortiAPIPatch(o["empty-cert-action"]) {
+			return fmt.Errorf("Error reading empty_cert_action: %v", err)
+		}
+	}
+
+	if err = d.Set("user_agent_detect", flattenFirewallAccessProxyVirtualHostUserAgentDetect(o["user-agent-detect"], d, "user_agent_detect", sv)); err != nil {
+		if !fortiAPIPatch(o["user-agent-detect"]) {
+			return fmt.Errorf("Error reading user_agent_detect: %v", err)
+		}
+	}
+
+	if err = d.Set("client_cert", flattenFirewallAccessProxyVirtualHostClientCert(o["client-cert"], d, "client_cert", sv)); err != nil {
+		if !fortiAPIPatch(o["client-cert"]) {
+			return fmt.Errorf("Error reading client_cert: %v", err)
 		}
 	}
 
@@ -312,6 +357,18 @@ func expandFirewallAccessProxyVirtualHostHostType(d *schema.ResourceData, v inte
 }
 
 func expandFirewallAccessProxyVirtualHostReplacemsgGroup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallAccessProxyVirtualHostEmptyCertAction(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallAccessProxyVirtualHostUserAgentDetect(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallAccessProxyVirtualHostClientCert(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -369,6 +426,33 @@ func getObjectFirewallAccessProxyVirtualHost(d *schema.ResourceData, sv string) 
 		}
 	} else if d.HasChange("replacemsg_group") {
 		obj["replacemsg-group"] = nil
+	}
+
+	if v, ok := d.GetOk("empty_cert_action"); ok {
+		t, err := expandFirewallAccessProxyVirtualHostEmptyCertAction(d, v, "empty_cert_action", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["empty-cert-action"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("user_agent_detect"); ok {
+		t, err := expandFirewallAccessProxyVirtualHostUserAgentDetect(d, v, "user_agent_detect", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["user-agent-detect"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("client_cert"); ok {
+		t, err := expandFirewallAccessProxyVirtualHostClientCert(d, v, "client_cert", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["client-cert"] = t
+		}
 	}
 
 	return &obj, nil

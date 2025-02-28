@@ -44,6 +44,26 @@ func dataSourceSystemExternalResource() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"namespace": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"object_array_path": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"address_name_field": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"address_data_field": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"address_comment_field": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"update_method": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -60,6 +80,14 @@ func dataSourceSystemExternalResource() *schema.Resource {
 				Type:      schema.TypeString,
 				Sensitive: true,
 				Computed:  true,
+			},
+			"client_cert_auth": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"client_cert": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
 			},
 			"comments": &schema.Schema{
 				Type:     schema.TypeString,
@@ -91,6 +119,10 @@ func dataSourceSystemExternalResource() *schema.Resource {
 			},
 			"interface": &schema.Schema{
 				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"vrf_select": &schema.Schema{
+				Type:     schema.TypeInt,
 				Computed: true,
 			},
 		},
@@ -156,6 +188,26 @@ func dataSourceFlattenSystemExternalResourceType(v interface{}, d *schema.Resour
 	return v
 }
 
+func dataSourceFlattenSystemExternalResourceNamespace(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemExternalResourceObjectArrayPath(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemExternalResourceAddressNameField(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemExternalResourceAddressDataField(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemExternalResourceAddressCommentField(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemExternalResourceUpdateMethod(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -169,6 +221,14 @@ func dataSourceFlattenSystemExternalResourceUsername(v interface{}, d *schema.Re
 }
 
 func dataSourceFlattenSystemExternalResourcePassword(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemExternalResourceClientCertAuth(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemExternalResourceClientCert(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -204,6 +264,10 @@ func dataSourceFlattenSystemExternalResourceInterface(v interface{}, d *schema.R
 	return v
 }
 
+func dataSourceFlattenSystemExternalResourceVrfSelect(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceRefreshObjectSystemExternalResource(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
 
@@ -231,6 +295,36 @@ func dataSourceRefreshObjectSystemExternalResource(d *schema.ResourceData, o map
 		}
 	}
 
+	if err = d.Set("namespace", dataSourceFlattenSystemExternalResourceNamespace(o["namespace"], d, "namespace")); err != nil {
+		if !fortiAPIPatch(o["namespace"]) {
+			return fmt.Errorf("Error reading namespace: %v", err)
+		}
+	}
+
+	if err = d.Set("object_array_path", dataSourceFlattenSystemExternalResourceObjectArrayPath(o["object-array-path"], d, "object_array_path")); err != nil {
+		if !fortiAPIPatch(o["object-array-path"]) {
+			return fmt.Errorf("Error reading object_array_path: %v", err)
+		}
+	}
+
+	if err = d.Set("address_name_field", dataSourceFlattenSystemExternalResourceAddressNameField(o["address-name-field"], d, "address_name_field")); err != nil {
+		if !fortiAPIPatch(o["address-name-field"]) {
+			return fmt.Errorf("Error reading address_name_field: %v", err)
+		}
+	}
+
+	if err = d.Set("address_data_field", dataSourceFlattenSystemExternalResourceAddressDataField(o["address-data-field"], d, "address_data_field")); err != nil {
+		if !fortiAPIPatch(o["address-data-field"]) {
+			return fmt.Errorf("Error reading address_data_field: %v", err)
+		}
+	}
+
+	if err = d.Set("address_comment_field", dataSourceFlattenSystemExternalResourceAddressCommentField(o["address-comment-field"], d, "address_comment_field")); err != nil {
+		if !fortiAPIPatch(o["address-comment-field"]) {
+			return fmt.Errorf("Error reading address_comment_field: %v", err)
+		}
+	}
+
 	if err = d.Set("update_method", dataSourceFlattenSystemExternalResourceUpdateMethod(o["update-method"], d, "update_method")); err != nil {
 		if !fortiAPIPatch(o["update-method"]) {
 			return fmt.Errorf("Error reading update_method: %v", err)
@@ -246,6 +340,18 @@ func dataSourceRefreshObjectSystemExternalResource(d *schema.ResourceData, o map
 	if err = d.Set("username", dataSourceFlattenSystemExternalResourceUsername(o["username"], d, "username")); err != nil {
 		if !fortiAPIPatch(o["username"]) {
 			return fmt.Errorf("Error reading username: %v", err)
+		}
+	}
+
+	if err = d.Set("client_cert_auth", dataSourceFlattenSystemExternalResourceClientCertAuth(o["client-cert-auth"], d, "client_cert_auth")); err != nil {
+		if !fortiAPIPatch(o["client-cert-auth"]) {
+			return fmt.Errorf("Error reading client_cert_auth: %v", err)
+		}
+	}
+
+	if err = d.Set("client_cert", dataSourceFlattenSystemExternalResourceClientCert(o["client-cert"], d, "client_cert")); err != nil {
+		if !fortiAPIPatch(o["client-cert"]) {
+			return fmt.Errorf("Error reading client_cert: %v", err)
 		}
 	}
 
@@ -294,6 +400,12 @@ func dataSourceRefreshObjectSystemExternalResource(d *schema.ResourceData, o map
 	if err = d.Set("interface", dataSourceFlattenSystemExternalResourceInterface(o["interface"], d, "interface")); err != nil {
 		if !fortiAPIPatch(o["interface"]) {
 			return fmt.Errorf("Error reading interface: %v", err)
+		}
+	}
+
+	if err = d.Set("vrf_select", dataSourceFlattenSystemExternalResourceVrfSelect(o["vrf-select"], d, "vrf_select")); err != nil {
+		if !fortiAPIPatch(o["vrf-select"]) {
+			return fmt.Errorf("Error reading vrf_select: %v", err)
 		}
 	}
 

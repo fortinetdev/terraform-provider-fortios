@@ -23,6 +23,7 @@ The following arguments are supported:
 * `ipsec_offload` - Enable/disable DPDK IPsec phase 2 offloading. Valid values: `disable`, `enable`.
 * `hugepage_percentage` - Percentage of main memory allocated to hugepages, which are available for DPDK operation.
 * `mbufpool_percentage` - Percentage of main memory allocated to DPDK packet buffer.
+* `session_table_percentage` - Percentage of main memory allocated to DPDK session table.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
 * `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.

@@ -285,6 +285,10 @@ func dataSourceSystemFortiguard() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"vrf_select": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -576,6 +580,10 @@ func dataSourceFlattenSystemFortiguardInterfaceSelectMethod(v interface{}, d *sc
 }
 
 func dataSourceFlattenSystemFortiguardInterface(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemFortiguardVrfSelect(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -957,6 +965,12 @@ func dataSourceRefreshObjectSystemFortiguard(d *schema.ResourceData, o map[strin
 	if err = d.Set("interface", dataSourceFlattenSystemFortiguardInterface(o["interface"], d, "interface")); err != nil {
 		if !fortiAPIPatch(o["interface"]) {
 			return fmt.Errorf("Error reading interface: %v", err)
+		}
+	}
+
+	if err = d.Set("vrf_select", dataSourceFlattenSystemFortiguardVrfSelect(o["vrf-select"], d, "vrf_select")); err != nil {
+		if !fortiAPIPatch(o["vrf-select"]) {
+			return fmt.Errorf("Error reading vrf_select: %v", err)
 		}
 	}
 

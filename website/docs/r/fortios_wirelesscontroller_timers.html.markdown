@@ -24,6 +24,7 @@ The following arguments are supported:
 * `sta_cap_cleanup` - Time period in minutes to keep station capability data after it is gone (default = 0).
 * `rogue_ap_cleanup` - Time period in minutes to keep rogue AP after it is gone (default = 0).
 * `rogue_sta_cleanup` - Time period in minutes to keep rogue station after it is gone (default = 0).
+* `wids_entry_cleanup` - Time period in minutes to keep wids entry after it is gone (default = 0).
 * `ble_device_cleanup` - Time period in minutes to keep BLE device after it is gone (default = 60).
 * `darrp_optimize` - Time for running Dynamic Automatic Radio Resource Provisioning (DARRP) optimizations (0 - 86400 sec, default = 1800).
 * `darrp_day` - Weekday on which to run DARRP optimization. Valid values: `sunday`, `monday`, `tuesday`, `wednesday`, `thursday`, `friday`, `saturday`.

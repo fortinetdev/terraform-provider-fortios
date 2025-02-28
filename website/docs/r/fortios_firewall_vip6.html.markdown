@@ -97,6 +97,9 @@ The following arguments are supported:
 * `nat66` - Enable/disable DNAT66. Valid values: `disable`, `enable`.
 * `nat64` - Enable/disable DNAT64. Valid values: `disable`, `enable`.
 * `add_nat64_route` - Enable/disable adding NAT64 route. Valid values: `disable`, `enable`.
+* `empty_cert_action` - Action for an empty client certificate. Valid values: `accept`, `block`, `accept-unmanageable`.
+* `user_agent_detect` - Enable/disable detecting device type by HTTP user-agent if no client certificate is provided. Valid values: `disable`, `enable`.
+* `client_cert` - Enable/disable requesting client certificate. Valid values: `disable`, `enable`.
 * `realservers` - Select the real servers that this server load balancing VIP will distribute traffic to. The structure of `realservers` block is documented below.
 * `http_cookie_domain_from_host` - Enable/disable use of HTTP cookie domain from host field in HTTP. Valid values: `disable`, `enable`.
 * `http_cookie_domain` - Domain that HTTP cookie persistence should apply to.

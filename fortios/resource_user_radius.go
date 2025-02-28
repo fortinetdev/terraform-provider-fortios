@@ -185,6 +185,11 @@ func resourceUserRadius() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"require_message_authenticator": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"password_encoding": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -224,6 +229,11 @@ func resourceUserRadius() *schema.Resource {
 			"interface": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
+				Optional:     true,
+			},
+			"vrf_select": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 511),
 				Optional:     true,
 			},
 			"switch_controller_service_type": &schema.Schema{
@@ -390,6 +400,11 @@ func resourceUserRadius() *schema.Resource {
 						"interface": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
+							Optional:     true,
+						},
+						"vrf_select": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(0, 511),
 							Optional:     true,
 						},
 					},
@@ -694,6 +709,10 @@ func flattenUserRadiusPasswordRenewal(v interface{}, d *schema.ResourceData, pre
 	return v
 }
 
+func flattenUserRadiusRequireMessageAuthenticator(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenUserRadiusPasswordEncoding(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -724,6 +743,10 @@ func flattenUserRadiusInterfaceSelectMethod(v interface{}, d *schema.ResourceDat
 
 func flattenUserRadiusInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
+}
+
+func flattenUserRadiusVrfSelect(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
 }
 
 func flattenUserRadiusSwitchControllerServiceType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -881,6 +904,11 @@ func flattenUserRadiusAccountingServer(v interface{}, d *schema.ResourceData, pr
 			tmp["interface"] = flattenUserRadiusAccountingServerInterface(cur_v, d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrf_select"
+		if cur_v, ok := i["vrf-select"]; ok {
+			tmp["vrf_select"] = flattenUserRadiusAccountingServerVrfSelect(cur_v, d, pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -916,6 +944,10 @@ func flattenUserRadiusAccountingServerInterfaceSelectMethod(v interface{}, d *sc
 
 func flattenUserRadiusAccountingServerInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
+}
+
+func flattenUserRadiusAccountingServerVrfSelect(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
 }
 
 func refreshObjectUserRadius(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -1081,6 +1113,12 @@ func refreshObjectUserRadius(d *schema.ResourceData, o map[string]interface{}, s
 		}
 	}
 
+	if err = d.Set("require_message_authenticator", flattenUserRadiusRequireMessageAuthenticator(o["require-message-authenticator"], d, "require_message_authenticator", sv)); err != nil {
+		if !fortiAPIPatch(o["require-message-authenticator"]) {
+			return fmt.Errorf("Error reading require_message_authenticator: %v", err)
+		}
+	}
+
 	if err = d.Set("password_encoding", flattenUserRadiusPasswordEncoding(o["password-encoding"], d, "password_encoding", sv)); err != nil {
 		if !fortiAPIPatch(o["password-encoding"]) {
 			return fmt.Errorf("Error reading password_encoding: %v", err)
@@ -1126,6 +1164,12 @@ func refreshObjectUserRadius(d *schema.ResourceData, o map[string]interface{}, s
 	if err = d.Set("interface", flattenUserRadiusInterface(o["interface"], d, "interface", sv)); err != nil {
 		if !fortiAPIPatch(o["interface"]) {
 			return fmt.Errorf("Error reading interface: %v", err)
+		}
+	}
+
+	if err = d.Set("vrf_select", flattenUserRadiusVrfSelect(o["vrf-select"], d, "vrf_select", sv)); err != nil {
+		if !fortiAPIPatch(o["vrf-select"]) {
+			return fmt.Errorf("Error reading vrf_select: %v", err)
 		}
 	}
 
@@ -1418,6 +1462,10 @@ func expandUserRadiusPasswordRenewal(d *schema.ResourceData, v interface{}, pre 
 	return v, nil
 }
 
+func expandUserRadiusRequireMessageAuthenticator(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandUserRadiusPasswordEncoding(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -1447,6 +1495,10 @@ func expandUserRadiusInterfaceSelectMethod(d *schema.ResourceData, v interface{}
 }
 
 func expandUserRadiusInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserRadiusVrfSelect(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1610,6 +1662,13 @@ func expandUserRadiusAccountingServer(d *schema.ResourceData, v interface{}, pre
 			tmp["interface"] = nil
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrf_select"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["vrf-select"], _ = expandUserRadiusAccountingServerVrfSelect(d, i["vrf_select"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["vrf-select"] = nil
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -1647,6 +1706,10 @@ func expandUserRadiusAccountingServerInterfaceSelectMethod(d *schema.ResourceDat
 }
 
 func expandUserRadiusAccountingServerInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserRadiusAccountingServerVrfSelect(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1920,6 +1983,15 @@ func getObjectUserRadius(d *schema.ResourceData, sv string) (*map[string]interfa
 		}
 	}
 
+	if v, ok := d.GetOk("require_message_authenticator"); ok {
+		t, err := expandUserRadiusRequireMessageAuthenticator(d, v, "require_message_authenticator", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["require-message-authenticator"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("password_encoding"); ok {
 		t, err := expandUserRadiusPasswordEncoding(d, v, "password_encoding", sv)
 		if err != nil {
@@ -1992,6 +2064,17 @@ func getObjectUserRadius(d *schema.ResourceData, sv string) (*map[string]interfa
 		}
 	} else if d.HasChange("interface") {
 		obj["interface"] = nil
+	}
+
+	if v, ok := d.GetOkExists("vrf_select"); ok {
+		t, err := expandUserRadiusVrfSelect(d, v, "vrf_select", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["vrf-select"] = t
+		}
+	} else if d.HasChange("vrf_select") {
+		obj["vrf-select"] = nil
 	}
 
 	if v, ok := d.GetOk("switch_controller_service_type"); ok {

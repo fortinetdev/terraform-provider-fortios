@@ -211,6 +211,11 @@ func resourceSystemSettings() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
 			},
+			"dhcp_proxy_vrf_select": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 511),
+				Optional:     true,
+			},
 			"dhcp_server_ip": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -268,6 +273,11 @@ func resourceSystemSettings() *schema.Resource {
 				Computed: true,
 			},
 			"detect_unknown_esp": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"intree_ses_best_route": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -650,6 +660,11 @@ func resourceSystemSettings() *schema.Resource {
 				Computed: true,
 			},
 			"gui_dlp_profile": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"gui_dlp_advanced": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -1103,6 +1118,10 @@ func flattenSystemSettingsDhcpProxyInterface(v interface{}, d *schema.ResourceDa
 	return v
 }
 
+func flattenSystemSettingsDhcpProxyVrfSelect(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
 func flattenSystemSettingsDhcpServerIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1182,6 +1201,10 @@ func flattenSystemSettingsNat64ForceIpv6PacketForwarding(v interface{}, d *schem
 }
 
 func flattenSystemSettingsDetectUnknownEsp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSettingsIntreeSesBestRoute(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1486,6 +1509,10 @@ func flattenSystemSettingsGuiWafProfile(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenSystemSettingsGuiDlpProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSettingsGuiDlpAdvanced(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1848,6 +1875,12 @@ func refreshObjectSystemSettings(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("dhcp_proxy_vrf_select", flattenSystemSettingsDhcpProxyVrfSelect(o["dhcp-proxy-vrf-select"], d, "dhcp_proxy_vrf_select", sv)); err != nil {
+		if !fortiAPIPatch(o["dhcp-proxy-vrf-select"]) {
+			return fmt.Errorf("Error reading dhcp_proxy_vrf_select: %v", err)
+		}
+	}
+
 	if err = d.Set("dhcp_server_ip", flattenSystemSettingsDhcpServerIp(o["dhcp-server-ip"], d, "dhcp_server_ip", sv)); err != nil {
 		if !fortiAPIPatch(o["dhcp-server-ip"]) {
 			return fmt.Errorf("Error reading dhcp_server_ip: %v", err)
@@ -1921,6 +1954,12 @@ func refreshObjectSystemSettings(d *schema.ResourceData, o map[string]interface{
 	if err = d.Set("detect_unknown_esp", flattenSystemSettingsDetectUnknownEsp(o["detect-unknown-esp"], d, "detect_unknown_esp", sv)); err != nil {
 		if !fortiAPIPatch(o["detect-unknown-esp"]) {
 			return fmt.Errorf("Error reading detect_unknown_esp: %v", err)
+		}
+	}
+
+	if err = d.Set("intree_ses_best_route", flattenSystemSettingsIntreeSesBestRoute(o["intree-ses-best-route"], d, "intree_ses_best_route", sv)); err != nil {
+		if !fortiAPIPatch(o["intree-ses-best-route"]) {
+			return fmt.Errorf("Error reading intree_ses_best_route: %v", err)
 		}
 	}
 
@@ -2380,6 +2419,12 @@ func refreshObjectSystemSettings(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("gui_dlp_advanced", flattenSystemSettingsGuiDlpAdvanced(o["gui-dlp-advanced"], d, "gui_dlp_advanced", sv)); err != nil {
+		if !fortiAPIPatch(o["gui-dlp-advanced"]) {
+			return fmt.Errorf("Error reading gui_dlp_advanced: %v", err)
+		}
+	}
+
 	if err = d.Set("gui_virtual_patch_profile", flattenSystemSettingsGuiVirtualPatchProfile(o["gui-virtual-patch-profile"], d, "gui_virtual_patch_profile", sv)); err != nil {
 		if !fortiAPIPatch(o["gui-virtual-patch-profile"]) {
 			return fmt.Errorf("Error reading gui_virtual_patch_profile: %v", err)
@@ -2739,6 +2784,10 @@ func expandSystemSettingsDhcpProxyInterface(d *schema.ResourceData, v interface{
 	return v, nil
 }
 
+func expandSystemSettingsDhcpProxyVrfSelect(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemSettingsDhcpServerIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -2804,6 +2853,10 @@ func expandSystemSettingsNat64ForceIpv6PacketForwarding(d *schema.ResourceData, 
 }
 
 func expandSystemSettingsDetectUnknownEsp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSettingsIntreeSesBestRoute(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3108,6 +3161,10 @@ func expandSystemSettingsGuiWafProfile(d *schema.ResourceData, v interface{}, pr
 }
 
 func expandSystemSettingsGuiDlpProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSettingsGuiDlpAdvanced(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3727,6 +3784,21 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		obj["dhcp-proxy-interface"] = nil
 	}
 
+	if v, ok := d.GetOkExists("dhcp_proxy_vrf_select"); ok {
+		if setArgNil {
+			obj["dhcp-proxy-vrf-select"] = nil
+		} else {
+			t, err := expandSystemSettingsDhcpProxyVrfSelect(d, v, "dhcp_proxy_vrf_select", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["dhcp-proxy-vrf-select"] = t
+			}
+		}
+	} else if d.HasChange("dhcp_proxy_vrf_select") {
+		obj["dhcp-proxy-vrf-select"] = nil
+	}
+
 	if v, ok := d.GetOk("dhcp_server_ip"); ok {
 		if setArgNil {
 			obj["dhcp-server-ip"] = nil
@@ -3870,6 +3942,19 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 				return &obj, err
 			} else if t != nil {
 				obj["detect-unknown-esp"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("intree_ses_best_route"); ok {
+		if setArgNil {
+			obj["intree-ses-best-route"] = nil
+		} else {
+			t, err := expandSystemSettingsIntreeSesBestRoute(d, v, "intree_ses_best_route", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["intree-ses-best-route"] = t
 			}
 		}
 	}
@@ -4866,6 +4951,19 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 				return &obj, err
 			} else if t != nil {
 				obj["gui-dlp-profile"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("gui_dlp_advanced"); ok {
+		if setArgNil {
+			obj["gui-dlp-advanced"] = nil
+		} else {
+			t, err := expandSystemSettingsGuiDlpAdvanced(d, v, "gui_dlp_advanced", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["gui-dlp-advanced"] = t
 			}
 		}
 	}

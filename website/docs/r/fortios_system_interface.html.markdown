@@ -47,6 +47,7 @@ The following arguments are supported:
 * `priority` - Priority of learned routes.
 * `dhcp_relay_interface_select_method` - Specify how to select outgoing interface to reach server. Valid values: `auto`, `sdwan`, `specify`.
 * `dhcp_relay_interface` - Specify outgoing interface to reach server.
+* `dhcp_relay_vrf_select` - VRF ID used for connection to server. Set to -1 means unset this variable. CLI output may have different value on different FortiOS version.
 * `dhcp_broadcast_flag` - Enable/disable setting of the broadcast flag in messages sent by the DHCP client (default = enable). Valid values: `disable`, `enable`.
 * `dhcp_relay_service` - Enable/disable allowing this interface to act as a DHCP relay. Valid values: `disable`, `enable`.
 * `dhcp_relay_ip` - DHCP relay IP address.
@@ -152,8 +153,8 @@ The following arguments are supported:
 * `proxy_captive_portal` - Enable/disable proxy captive portal on this interface. Valid values: `enable`, `disable`.
 * `tcp_mss` - TCP maximum segment size. 0 means do not change segment size.
 * `mediatype` - Select SFP media interface type Valid values: `none`, `gmii`, `sgmii`, `sr`, `lr`, `cr`, `sr4`, `lr4`, `cr4`.
-* `inbandwidth` - Bandwidth limit for incoming traffic, 0 means unlimited. On FortiOS versions 6.2.0-6.4.2, 7.0.0-7.0.5, 7.2.0: 0 - 16776000 kbps. On FortiOS versions 6.4.10-6.4.15, 7.0.6-7.0.15, >= 7.2.1: 0 - 80000000 kbps.
-* `outbandwidth` - Bandwidth limit for outgoing traffic, 0 means unlimited. On FortiOS versions 6.2.0-6.2.6: 0 - 16776000 kbps. On FortiOS versions 6.4.10-6.4.15, 7.0.6-7.0.15, >= 7.2.1: 0 - 80000000 kbps.
+* `inbandwidth` - Bandwidth limit for incoming traffic, 0 means unlimited. On FortiOS versions 6.2.0-6.4.2, 7.0.0-7.0.5, 7.2.0: 0 - 16776000 kbps. On FortiOS versions 6.4.10-6.4.15, 7.0.6-7.0.17, >= 7.2.1: 0 - 80000000 kbps.
+* `outbandwidth` - Bandwidth limit for outgoing traffic, 0 means unlimited. On FortiOS versions 6.2.0-6.2.6: 0 - 16776000 kbps. On FortiOS versions 6.4.10-6.4.15, 7.0.6-7.0.17, >= 7.2.1: 0 - 80000000 kbps.
 * `egress_shaping_profile` - Outgoing traffic shaping profile.
 * `ingress_shaping_profile` - Incoming traffic shaping profile.
 * `disconnect_threshold` - Time in milliseconds to wait before sending a notification that this interface is down or disconnected.
@@ -204,6 +205,7 @@ The following arguments are supported:
 * `stp` - Enable/disable STP. Valid values: `disable`, `enable`.
 * `stp_ha_secondary` - Control STP behaviour on HA secondary. Valid values: `disable`, `enable`, `priority-adjust`.
 * `device_identification` - Enable/disable passively gathering of device identity information about the devices on the network connected to this interface. Valid values: `enable`, `disable`.
+* `exclude_signatures` - Exclude IOT or OT application signatures. Valid values: `iot`, `ot`.
 * `device_user_identification` - Enable/disable passive gathering of user identity information about users on this interface. Valid values: `enable`, `disable`.
 * `device_identification_active_scan` - Enable/disable active gathering of device identity information about the devices on the network connected to this interface. Valid values: `enable`, `disable`.
 * `device_access_list` - Device access list.
@@ -222,6 +224,7 @@ The following arguments are supported:
 * `monitor_bandwidth` - Enable monitoring bandwidth on this interface. Valid values: `enable`, `disable`.
 * `vrrp_virtual_mac` - Enable/disable use of virtual MAC for VRRP. Valid values: `enable`, `disable`.
 * `vrrp` - VRRP configuration. The structure of `vrrp` block is documented below.
+* `phy_setting` - PHY settings The structure of `phy_setting` block is documented below.
 * `role` - Interface role. Valid values: `lan`, `wan`, `dmz`, `undefined`.
 * `snmp_index` - Permanent SNMP Index of the interface.
 * `secondary_ip` - Enable/disable adding a secondary IP to this interface. Valid values: `enable`, `disable`.
@@ -306,7 +309,7 @@ The `vrrp` block supports:
 * `vrgrp` - VRRP group ID (1 - 65535).
 * `vrip` - IP address of the virtual router.
 * `priority` - Priority of the virtual router (1 - 255).
-* `adv_interval` - Advertisement interval. On FortiOS versions 6.2.0-7.4.5: 1 - 255 seconds. On FortiOS versions >= 7.6.0: 250 - 255000 milliseconds.
+* `adv_interval` - Advertisement interval. On FortiOS versions 6.2.0-7.4.7: 1 - 255 seconds. On FortiOS versions >= 7.6.0: 250 - 255000 milliseconds.
 * `start_time` - Startup time (1 - 255 seconds).
 * `preempt` - Enable/disable preempt mode. Valid values: `enable`, `disable`.
 * `accept_mode` - Enable/disable accept mode. Valid values: `enable`, `disable`.
@@ -320,6 +323,10 @@ The `proxy_arp` block supports:
 
 * `id` - ID.
 * `ip` - Set IP addresses of proxy ARP.
+
+The `phy_setting` block supports:
+
+* `signal_ok_threshold_value` - Signal-ok-threshold value(0 - 12).
 
 The `secondaryip` block supports:
 
@@ -374,6 +381,9 @@ The `ipv6` block supports:
 * `ip6_retrans_time` - IPv6 retransmit time (milliseconds; 0 means unspecified).
 * `ip6_default_life` - Default life (sec).
 * `ip6_hop_limit` - Hop limit (0 means unspecified).
+* `ip6_adv_rio` - Enable/disable sending advertisements with route information option. Valid values: `enable`, `disable`.
+* `ip6_route_pref` - Set route preference to the interface (default = medium). Valid values: `medium`, `high`, `low`.
+* `ip6_route_list` - Advertised route list. The structure of `ip6_route_list` block is documented below.
 * `autoconf` - Enable/disable address auto config. Valid values: `enable`, `disable`.
 * `unique_autoconf_addr` - Enable/disable unique auto config address. Valid values: `enable`, `disable`.
 * `interface_identifier` - IPv6 interface identifier.
@@ -382,6 +392,8 @@ The `ipv6` block supports:
 * `ip6_delegated_prefix_iaid` - IAID of obtained delegated-prefix from the upstream interface.
 * `ip6_subnet` -  Subnet to routing prefix, syntax: xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx/xxx
 * `ip6_prefix_list` - Advertised prefix list. The structure of `ip6_prefix_list` block is documented below.
+* `ip6_rdnss_list` - Advertised IPv6 RDNSS list. The structure of `ip6_rdnss_list` block is documented below.
+* `ip6_dnssl_list` - Advertised IPv6 DNSS list. The structure of `ip6_dnssl_list` block is documented below.
 * `ip6_delegated_prefix_list` - Advertised IPv6 delegated prefix list. The structure of `ip6_delegated_prefix_list` block is documented below.
 * `dhcp6_relay_service` - Enable/disable DHCPv6 relay. Valid values: `disable`, `enable`.
 * `dhcp6_relay_type` - DHCPv6 relay type. Valid values: `regular`.
@@ -413,6 +425,12 @@ The `ip6_extra_addr` block supports:
 
 * `prefix` - IPv6 address prefix.
 
+The `ip6_route_list` block supports:
+
+* `route` - IPv6 route.
+* `route_pref` - Set route preference to the interface (default = medium). Valid values: `medium`, `high`, `low`.
+* `route_life_time` - Route life time in seconds (0 - 65535, default = 1800).
+
 The `ip6_prefix_list` block supports:
 
 * `prefix` - IPv6 prefix.
@@ -426,6 +444,16 @@ The `ip6_prefix_list` block supports:
 The `dnssl` block supports:
 
 * `domain` - Domain name.
+
+The `ip6_rdnss_list` block supports:
+
+* `rdnss` - Recursive DNS server option.
+* `rdnss_life_time` - Recursive DNS server life time in seconds (0 - 4294967295, default = 1800).
+
+The `ip6_dnssl_list` block supports:
+
+* `domain` - Domain name.
+* `dnssl_life_time` - DNS search list time in seconds (0 - 4294967295, default = 1800).
 
 The `ip6_delegated_prefix_list` block supports:
 
@@ -451,7 +479,7 @@ The `vrrp6` block supports:
 * `vrgrp` - VRRP group ID (1 - 65535).
 * `vrip6` - IPv6 address of the virtual router.
 * `priority` - Priority of the virtual router (1 - 255).
-* `adv_interval` - Advertisement interval. On FortiOS versions 6.2.0-7.4.5: 1 - 255 seconds. On FortiOS versions >= 7.6.0: 250 - 255000 milliseconds.
+* `adv_interval` - Advertisement interval. On FortiOS versions 6.2.0-7.4.7: 1 - 255 seconds. On FortiOS versions >= 7.6.0: 250 - 255000 milliseconds.
 * `start_time` - Startup time (1 - 255 seconds).
 * `preempt` - Enable/disable preempt mode. Valid values: `enable`, `disable`.
 * `accept_mode` - Enable/disable accept mode. Valid values: `enable`, `disable`.

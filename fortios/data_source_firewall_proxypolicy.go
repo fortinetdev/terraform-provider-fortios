@@ -160,6 +160,18 @@ func dataSourceFirewallProxyPolicy() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"url_risk": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
 			"internet_service": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -304,6 +316,10 @@ func dataSourceFirewallProxyPolicy() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"ztna_ems_tag_negate": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"service_negate": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -385,6 +401,10 @@ func dataSourceFirewallProxyPolicy() *schema.Resource {
 				Computed: true,
 			},
 			"webproxy_forward_server": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"isolator_server": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -951,6 +971,42 @@ func dataSourceFlattenFirewallProxyPolicyDeviceOwnership(v interface{}, d *schem
 	return v
 }
 
+func dataSourceFlattenFirewallProxyPolicyUrlRisk(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = dataSourceFlattenFirewallProxyPolicyUrlRiskName(i["name"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenFirewallProxyPolicyUrlRiskName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallProxyPolicyInternetService(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -1335,6 +1391,10 @@ func dataSourceFlattenFirewallProxyPolicyDstaddrNegate(v interface{}, d *schema.
 	return v
 }
 
+func dataSourceFlattenFirewallProxyPolicyZtnaEmsTagNegate(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallProxyPolicyServiceNegate(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -1512,6 +1572,10 @@ func dataSourceFlattenFirewallProxyPolicySshPolicyRedirect(v interface{}, d *sch
 }
 
 func dataSourceFlattenFirewallProxyPolicyWebproxyForwardServer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallProxyPolicyIsolatorServer(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1776,6 +1840,12 @@ func dataSourceRefreshObjectFirewallProxyPolicy(d *schema.ResourceData, o map[st
 		}
 	}
 
+	if err = d.Set("url_risk", dataSourceFlattenFirewallProxyPolicyUrlRisk(o["url-risk"], d, "url_risk")); err != nil {
+		if !fortiAPIPatch(o["url-risk"]) {
+			return fmt.Errorf("Error reading url_risk: %v", err)
+		}
+	}
+
 	if err = d.Set("internet_service", dataSourceFlattenFirewallProxyPolicyInternetService(o["internet-service"], d, "internet_service")); err != nil {
 		if !fortiAPIPatch(o["internet-service"]) {
 			return fmt.Errorf("Error reading internet_service: %v", err)
@@ -1872,6 +1942,12 @@ func dataSourceRefreshObjectFirewallProxyPolicy(d *schema.ResourceData, o map[st
 		}
 	}
 
+	if err = d.Set("ztna_ems_tag_negate", dataSourceFlattenFirewallProxyPolicyZtnaEmsTagNegate(o["ztna-ems-tag-negate"], d, "ztna_ems_tag_negate")); err != nil {
+		if !fortiAPIPatch(o["ztna-ems-tag-negate"]) {
+			return fmt.Errorf("Error reading ztna_ems_tag_negate: %v", err)
+		}
+	}
+
 	if err = d.Set("service_negate", dataSourceFlattenFirewallProxyPolicyServiceNegate(o["service-negate"], d, "service_negate")); err != nil {
 		if !fortiAPIPatch(o["service-negate"]) {
 			return fmt.Errorf("Error reading service_negate: %v", err)
@@ -1947,6 +2023,12 @@ func dataSourceRefreshObjectFirewallProxyPolicy(d *schema.ResourceData, o map[st
 	if err = d.Set("webproxy_forward_server", dataSourceFlattenFirewallProxyPolicyWebproxyForwardServer(o["webproxy-forward-server"], d, "webproxy_forward_server")); err != nil {
 		if !fortiAPIPatch(o["webproxy-forward-server"]) {
 			return fmt.Errorf("Error reading webproxy_forward_server: %v", err)
+		}
+	}
+
+	if err = d.Set("isolator_server", dataSourceFlattenFirewallProxyPolicyIsolatorServer(o["isolator-server"], d, "isolator_server")); err != nil {
+		if !fortiAPIPatch(o["isolator-server"]) {
+			return fmt.Errorf("Error reading isolator_server: %v", err)
 		}
 	}
 

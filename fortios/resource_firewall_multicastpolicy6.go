@@ -127,7 +127,7 @@ func resourceFirewallMulticastPolicy6() *schema.Resource {
 			},
 			"ips_sensor": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"auto_asic_offload": &schema.Schema{

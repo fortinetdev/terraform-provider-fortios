@@ -106,6 +106,11 @@ func resourceSystemNtp() *schema.Resource {
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
 						},
+						"vrf_select": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(0, 511),
+							Optional:     true,
+						},
 					},
 				},
 			},
@@ -374,6 +379,11 @@ func flattenSystemNtpNtpserver(v interface{}, d *schema.ResourceData, pre string
 			tmp["interface"] = flattenSystemNtpNtpserverInterface(cur_v, d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrf_select"
+		if cur_v, ok := i["vrf-select"]; ok {
+			tmp["vrf_select"] = flattenSystemNtpNtpserverVrfSelect(cur_v, d, pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -417,6 +427,10 @@ func flattenSystemNtpNtpserverInterfaceSelectMethod(v interface{}, d *schema.Res
 
 func flattenSystemNtpNtpserverInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
+}
+
+func flattenSystemNtpNtpserverVrfSelect(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
 }
 
 func flattenSystemNtpSourceIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -675,6 +689,13 @@ func expandSystemNtpNtpserver(d *schema.ResourceData, v interface{}, pre string,
 			tmp["interface"] = nil
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrf_select"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["vrf-select"], _ = expandSystemNtpNtpserverVrfSelect(d, i["vrf_select"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["vrf-select"] = nil
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -720,6 +741,10 @@ func expandSystemNtpNtpserverInterfaceSelectMethod(d *schema.ResourceData, v int
 }
 
 func expandSystemNtpNtpserverInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemNtpNtpserverVrfSelect(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

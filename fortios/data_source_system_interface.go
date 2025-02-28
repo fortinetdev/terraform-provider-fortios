@@ -100,6 +100,10 @@ func dataSourceSystemInterface() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"dhcp_relay_vrf_select": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
 			"dhcp_broadcast_flag": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -758,6 +762,10 @@ func dataSourceSystemInterface() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"exclude_signatures": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"device_user_identification": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -898,6 +906,18 @@ func dataSourceSystemInterface() *schema.Resource {
 									},
 								},
 							},
+						},
+					},
+				},
+			},
+			"phy_setting": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"signal_ok_threshold_value": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
 						},
 					},
 				},
@@ -1300,6 +1320,34 @@ func dataSourceSystemInterface() *schema.Resource {
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
+						"ip6_adv_rio": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"ip6_route_pref": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"ip6_route_list": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"route": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"route_pref": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"route_life_time": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+								},
+							},
+						},
 						"autoconf": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
@@ -1368,6 +1416,38 @@ func dataSourceSystemInterface() *schema.Resource {
 												},
 											},
 										},
+									},
+								},
+							},
+						},
+						"ip6_rdnss_list": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"rdnss": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"rdnss_life_time": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"ip6_dnssl_list": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"domain": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"dnssl_life_time": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
 									},
 								},
 							},
@@ -1715,6 +1795,10 @@ func dataSourceFlattenSystemInterfaceDhcpRelayInterfaceSelectMethod(v interface{
 }
 
 func dataSourceFlattenSystemInterfaceDhcpRelayInterface(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceDhcpRelayVrfSelect(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -2518,6 +2602,10 @@ func dataSourceFlattenSystemInterfaceDeviceIdentification(v interface{}, d *sche
 	return v
 }
 
+func dataSourceFlattenSystemInterfaceExcludeSignatures(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemInterfaceDeviceUserIdentification(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -2777,6 +2865,28 @@ func dataSourceFlattenSystemInterfaceVrrpProxyArpId(v interface{}, d *schema.Res
 }
 
 func dataSourceFlattenSystemInterfaceVrrpProxyArpIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfacePhySetting(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	i := v.(map[string]interface{})
+	result := make(map[string]interface{})
+
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "signal_ok_threshold_value"
+	if _, ok := i["signal-ok-threshold-value"]; ok {
+		result["signal_ok_threshold_value"] = dataSourceFlattenSystemInterfacePhySettingSignalOkThresholdValue(i["signal-ok-threshold-value"], d, pre_append)
+	}
+
+	lastresult := []map[string]interface{}{result}
+	return lastresult
+}
+
+func dataSourceFlattenSystemInterfacePhySettingSignalOkThresholdValue(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -3331,6 +3441,21 @@ func dataSourceFlattenSystemInterfaceIpv6(v interface{}, d *schema.ResourceData,
 		result["ip6_hop_limit"] = dataSourceFlattenSystemInterfaceIpv6Ip6HopLimit(i["ip6-hop-limit"], d, pre_append)
 	}
 
+	pre_append = pre + ".0." + "ip6_adv_rio"
+	if _, ok := i["ip6-adv-rio"]; ok {
+		result["ip6_adv_rio"] = dataSourceFlattenSystemInterfaceIpv6Ip6AdvRio(i["ip6-adv-rio"], d, pre_append)
+	}
+
+	pre_append = pre + ".0." + "ip6_route_pref"
+	if _, ok := i["ip6-route-pref"]; ok {
+		result["ip6_route_pref"] = dataSourceFlattenSystemInterfaceIpv6Ip6RoutePref(i["ip6-route-pref"], d, pre_append)
+	}
+
+	pre_append = pre + ".0." + "ip6_route_list"
+	if _, ok := i["ip6-route-list"]; ok {
+		result["ip6_route_list"] = dataSourceFlattenSystemInterfaceIpv6Ip6RouteList(i["ip6-route-list"], d, pre_append)
+	}
+
 	pre_append = pre + ".0." + "autoconf"
 	if _, ok := i["autoconf"]; ok {
 		result["autoconf"] = dataSourceFlattenSystemInterfaceIpv6Autoconf(i["autoconf"], d, pre_append)
@@ -3369,6 +3494,16 @@ func dataSourceFlattenSystemInterfaceIpv6(v interface{}, d *schema.ResourceData,
 	pre_append = pre + ".0." + "ip6_prefix_list"
 	if _, ok := i["ip6-prefix-list"]; ok {
 		result["ip6_prefix_list"] = dataSourceFlattenSystemInterfaceIpv6Ip6PrefixList(i["ip6-prefix-list"], d, pre_append)
+	}
+
+	pre_append = pre + ".0." + "ip6_rdnss_list"
+	if _, ok := i["ip6-rdnss-list"]; ok {
+		result["ip6_rdnss_list"] = dataSourceFlattenSystemInterfaceIpv6Ip6RdnssList(i["ip6-rdnss-list"], d, pre_append)
+	}
+
+	pre_append = pre + ".0." + "ip6_dnssl_list"
+	if _, ok := i["ip6-dnssl-list"]; ok {
+		result["ip6_dnssl_list"] = dataSourceFlattenSystemInterfaceIpv6Ip6DnsslList(i["ip6-dnssl-list"], d, pre_append)
 	}
 
 	pre_append = pre + ".0." + "ip6_delegated_prefix_list"
@@ -3661,6 +3796,68 @@ func dataSourceFlattenSystemInterfaceIpv6Ip6HopLimit(v interface{}, d *schema.Re
 	return v
 }
 
+func dataSourceFlattenSystemInterfaceIpv6Ip6AdvRio(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceIpv6Ip6RoutePref(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceIpv6Ip6RouteList(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "route"
+		if _, ok := i["route"]; ok {
+			tmp["route"] = dataSourceFlattenSystemInterfaceIpv6Ip6RouteListRoute(i["route"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_pref"
+		if _, ok := i["route-pref"]; ok {
+			tmp["route_pref"] = dataSourceFlattenSystemInterfaceIpv6Ip6RouteListRoutePref(i["route-pref"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_life_time"
+		if _, ok := i["route-life-time"]; ok {
+			tmp["route_life_time"] = dataSourceFlattenSystemInterfaceIpv6Ip6RouteListRouteLifeTime(i["route-life-time"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenSystemInterfaceIpv6Ip6RouteListRoute(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceIpv6Ip6RouteListRoutePref(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceIpv6Ip6RouteListRouteLifeTime(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemInterfaceIpv6Autoconf(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -3808,6 +4005,96 @@ func dataSourceFlattenSystemInterfaceIpv6Ip6PrefixListDnssl(v interface{}, d *sc
 }
 
 func dataSourceFlattenSystemInterfaceIpv6Ip6PrefixListDnsslDomain(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceIpv6Ip6RdnssList(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "rdnss"
+		if _, ok := i["rdnss"]; ok {
+			tmp["rdnss"] = dataSourceFlattenSystemInterfaceIpv6Ip6RdnssListRdnss(i["rdnss"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "rdnss_life_time"
+		if _, ok := i["rdnss-life-time"]; ok {
+			tmp["rdnss_life_time"] = dataSourceFlattenSystemInterfaceIpv6Ip6RdnssListRdnssLifeTime(i["rdnss-life-time"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenSystemInterfaceIpv6Ip6RdnssListRdnss(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceIpv6Ip6RdnssListRdnssLifeTime(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceIpv6Ip6DnsslList(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "domain"
+		if _, ok := i["domain"]; ok {
+			tmp["domain"] = dataSourceFlattenSystemInterfaceIpv6Ip6DnsslListDomain(i["domain"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "dnssl_life_time"
+		if _, ok := i["dnssl-life-time"]; ok {
+			tmp["dnssl_life_time"] = dataSourceFlattenSystemInterfaceIpv6Ip6DnsslListDnsslLifeTime(i["dnssl-life-time"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenSystemInterfaceIpv6Ip6DnsslListDomain(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceIpv6Ip6DnsslListDnsslLifeTime(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -4240,6 +4527,12 @@ func dataSourceRefreshObjectSystemInterface(d *schema.ResourceData, o map[string
 	if err = d.Set("dhcp_relay_interface", dataSourceFlattenSystemInterfaceDhcpRelayInterface(o["dhcp-relay-interface"], d, "dhcp_relay_interface")); err != nil {
 		if !fortiAPIPatch(o["dhcp-relay-interface"]) {
 			return fmt.Errorf("Error reading dhcp_relay_interface: %v", err)
+		}
+	}
+
+	if err = d.Set("dhcp_relay_vrf_select", dataSourceFlattenSystemInterfaceDhcpRelayVrfSelect(o["dhcp-relay-vrf-select"], d, "dhcp_relay_vrf_select")); err != nil {
+		if !fortiAPIPatch(o["dhcp-relay-vrf-select"]) {
+			return fmt.Errorf("Error reading dhcp_relay_vrf_select: %v", err)
 		}
 	}
 
@@ -5167,6 +5460,12 @@ func dataSourceRefreshObjectSystemInterface(d *schema.ResourceData, o map[string
 		}
 	}
 
+	if err = d.Set("exclude_signatures", dataSourceFlattenSystemInterfaceExcludeSignatures(o["exclude-signatures"], d, "exclude_signatures")); err != nil {
+		if !fortiAPIPatch(o["exclude-signatures"]) {
+			return fmt.Errorf("Error reading exclude_signatures: %v", err)
+		}
+	}
+
 	if err = d.Set("device_user_identification", dataSourceFlattenSystemInterfaceDeviceUserIdentification(o["device-user-identification"], d, "device_user_identification")); err != nil {
 		if !fortiAPIPatch(o["device-user-identification"]) {
 			return fmt.Errorf("Error reading device_user_identification: %v", err)
@@ -5272,6 +5571,12 @@ func dataSourceRefreshObjectSystemInterface(d *schema.ResourceData, o map[string
 	if err = d.Set("vrrp", dataSourceFlattenSystemInterfaceVrrp(o["vrrp"], d, "vrrp")); err != nil {
 		if !fortiAPIPatch(o["vrrp"]) {
 			return fmt.Errorf("Error reading vrrp: %v", err)
+		}
+	}
+
+	if err = d.Set("phy_setting", dataSourceFlattenSystemInterfacePhySetting(o["phy-setting"], d, "phy_setting")); err != nil {
+		if !fortiAPIPatch(o["phy-setting"]) {
+			return fmt.Errorf("Error reading phy_setting: %v", err)
 		}
 	}
 

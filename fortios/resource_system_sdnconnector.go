@@ -90,6 +90,11 @@ func resourceSystemSdnConnector() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"message_server_port": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 65535),
+				Optional:     true,
+			},
 			"username": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 64),
@@ -744,6 +749,10 @@ func flattenSystemSdnConnectorServerListIp(v interface{}, d *schema.ResourceData
 }
 
 func flattenSystemSdnConnectorServerPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenSystemSdnConnectorMessageServerPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return convintf2i(v)
 }
 
@@ -1591,6 +1600,12 @@ func refreshObjectSystemSdnConnector(d *schema.ResourceData, o map[string]interf
 		}
 	}
 
+	if err = d.Set("message_server_port", flattenSystemSdnConnectorMessageServerPort(o["message-server-port"], d, "message_server_port", sv)); err != nil {
+		if !fortiAPIPatch(o["message-server-port"]) {
+			return fmt.Errorf("Error reading message_server_port: %v", err)
+		}
+	}
+
 	if err = d.Set("username", flattenSystemSdnConnectorUsername(o["username"], d, "username", sv)); err != nil {
 		if !fortiAPIPatch(o["username"]) {
 			return fmt.Errorf("Error reading username: %v", err)
@@ -1987,6 +2002,10 @@ func expandSystemSdnConnectorServerListIp(d *schema.ResourceData, v interface{},
 }
 
 func expandSystemSdnConnectorServerPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdnConnectorMessageServerPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2782,6 +2801,17 @@ func getObjectSystemSdnConnector(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["server-port"] = t
 		}
+	}
+
+	if v, ok := d.GetOkExists("message_server_port"); ok {
+		t, err := expandSystemSdnConnectorMessageServerPort(d, v, "message_server_port", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["message-server-port"] = t
+		}
+	} else if d.HasChange("message_server_port") {
+		obj["message-server-port"] = nil
 	}
 
 	if v, ok := d.GetOk("username"); ok {

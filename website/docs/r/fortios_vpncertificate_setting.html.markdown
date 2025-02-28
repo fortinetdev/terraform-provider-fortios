@@ -47,6 +47,7 @@ The following arguments are supported:
 * `ocsp_default_server` - Default OCSP server.
 * `interface_select_method` - Specify how to select outgoing interface to reach server. Valid values: `auto`, `sdwan`, `specify`.
 * `interface` - Specify outgoing interface to reach server.
+* `vrf_select` - VRF ID used for connection to server.
 * `check_ca_cert` - Enable/disable verification of the user certificate and pass authentication if any CA in the chain is trusted (default = enable). Valid values: `enable`, `disable`.
 * `check_ca_chain` - Enable/disable verification of the entire certificate chain and pass authentication only if the chain is complete and all of the CAs in the chain are trusted (default = disable). Valid values: `enable`, `disable`.
 * `subject_match` - When searching for a matching certificate, control how to do RDN value matching with certificate subject name (default = substring). Valid values: `substring`, `value`.

@@ -55,6 +55,7 @@ func resourceSystemAffinityInterrupt() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
+				Computed:     true,
 			},
 		},
 	}
@@ -320,8 +321,6 @@ func getObjectSystemAffinityInterrupt(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["default-affinity-cpumask"] = t
 		}
-	} else if d.HasChange("default_affinity_cpumask") {
-		obj["default-affinity-cpumask"] = nil
 	}
 
 	return &obj, nil

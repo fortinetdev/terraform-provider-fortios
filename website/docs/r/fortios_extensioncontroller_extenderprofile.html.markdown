@@ -82,6 +82,11 @@ The `modem1` block supports:
 * `sim2_pin_code` - SIM #2 PIN password.
 * `preferred_carrier` - Preferred carrier.
 * `auto_switch` - FortiExtender auto switch configuration. The structure of `auto_switch` block is documented below.
+* `multiple_pdn` - Multiple-PDN enable/disable. Valid values: `disable`, `enable`.
+* `pdn1_dataplan` - PDN1-dataplan.
+* `pdn2_dataplan` - PDN2-dataplan.
+* `pdn3_dataplan` - PDN3-dataplan.
+* `pdn4_dataplan` - PDN4-dataplan.
 
 The `auto_switch` block supports:
 
@@ -107,6 +112,11 @@ The `modem2` block supports:
 * `sim2_pin_code` - SIM #2 PIN password.
 * `preferred_carrier` - Preferred carrier.
 * `auto_switch` - FortiExtender auto switch configuration. The structure of `auto_switch` block is documented below.
+* `multiple_pdn` - Multiple-PDN enable/disable. Valid values: `disable`, `enable`.
+* `pdn1_dataplan` - PDN1-dataplan.
+* `pdn2_dataplan` - PDN2-dataplan.
+* `pdn3_dataplan` - PDN3-dataplan.
+* `pdn4_dataplan` - PDN4-dataplan.
 
 The `auto_switch` block supports:
 
@@ -127,6 +137,7 @@ The `lan_extension` block supports:
 * `backhaul_ip` - IPsec phase1 IPv4/FQDN. Used to specify the external IP/FQDN when the FortiGate unit is behind a NAT device.
 * `backhaul` - LAN extension backhaul tunnel configuration. The structure of `backhaul` block is documented below.
 * `downlinks` - Config FortiExtender downlink interface for LAN extension. The structure of `downlinks` block is documented below.
+* `traffic_split_services` - Config FortiExtender traffic split interface for LAN extension. The structure of `traffic_split_services` block is documented below.
 
 The `backhaul` block supports:
 
@@ -142,6 +153,13 @@ The `downlinks` block supports:
 * `port` - FortiExtender LAN extension downlink port. Valid values: `port1`, `port2`, `port3`, `port4`, `port5`, `lan1`, `lan2`.
 * `vap` - FortiExtender LAN extension downlink vap.
 * `pvid` - FortiExtender LAN extension downlink PVID.
+
+The `traffic_split_services` block supports:
+
+* `name` - FortiExtender LAN extension tunnel split entry name.
+* `vsdb` - Select vsdb [enable/disable]. Valid values: `disable`, `enable`.
+* `address` - Address selection.
+* `service` - Service selection.
 
 The `wifi` block supports:
 

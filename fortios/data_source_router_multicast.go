@@ -172,6 +172,62 @@ func dataSourceRouterMulticast() *schema.Resource {
 					},
 				},
 			},
+			"pim_sm_global_vrf": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"vrf": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"bsr_candidate": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"bsr_interface": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"bsr_priority": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"bsr_hash": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"bsr_allow_quick_refresh": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"cisco_crp_prefix": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"rp_address": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"id": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+									"ip_address": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"group": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+					},
+				},
+			},
 			"interface": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
@@ -672,6 +728,155 @@ func dataSourceFlattenRouterMulticastPimSmGlobalRpAddressGroup(v interface{}, d 
 	return v
 }
 
+func dataSourceFlattenRouterMulticastPimSmGlobalVrf(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrf"
+		if _, ok := i["vrf"]; ok {
+			tmp["vrf"] = dataSourceFlattenRouterMulticastPimSmGlobalVrfVrf(i["vrf"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "bsr_candidate"
+		if _, ok := i["bsr-candidate"]; ok {
+			tmp["bsr_candidate"] = dataSourceFlattenRouterMulticastPimSmGlobalVrfBsrCandidate(i["bsr-candidate"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "bsr_interface"
+		if _, ok := i["bsr-interface"]; ok {
+			tmp["bsr_interface"] = dataSourceFlattenRouterMulticastPimSmGlobalVrfBsrInterface(i["bsr-interface"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "bsr_priority"
+		if _, ok := i["bsr-priority"]; ok {
+			tmp["bsr_priority"] = dataSourceFlattenRouterMulticastPimSmGlobalVrfBsrPriority(i["bsr-priority"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "bsr_hash"
+		if _, ok := i["bsr-hash"]; ok {
+			tmp["bsr_hash"] = dataSourceFlattenRouterMulticastPimSmGlobalVrfBsrHash(i["bsr-hash"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "bsr_allow_quick_refresh"
+		if _, ok := i["bsr-allow-quick-refresh"]; ok {
+			tmp["bsr_allow_quick_refresh"] = dataSourceFlattenRouterMulticastPimSmGlobalVrfBsrAllowQuickRefresh(i["bsr-allow-quick-refresh"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "cisco_crp_prefix"
+		if _, ok := i["cisco-crp-prefix"]; ok {
+			tmp["cisco_crp_prefix"] = dataSourceFlattenRouterMulticastPimSmGlobalVrfCiscoCrpPrefix(i["cisco-crp-prefix"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "rp_address"
+		if _, ok := i["rp-address"]; ok {
+			tmp["rp_address"] = dataSourceFlattenRouterMulticastPimSmGlobalVrfRpAddress(i["rp-address"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenRouterMulticastPimSmGlobalVrfVrf(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterMulticastPimSmGlobalVrfBsrCandidate(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterMulticastPimSmGlobalVrfBsrInterface(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterMulticastPimSmGlobalVrfBsrPriority(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterMulticastPimSmGlobalVrfBsrHash(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterMulticastPimSmGlobalVrfBsrAllowQuickRefresh(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterMulticastPimSmGlobalVrfCiscoCrpPrefix(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterMulticastPimSmGlobalVrfRpAddress(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := i["id"]; ok {
+			tmp["id"] = dataSourceFlattenRouterMulticastPimSmGlobalVrfRpAddressId(i["id"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip_address"
+		if _, ok := i["ip-address"]; ok {
+			tmp["ip_address"] = dataSourceFlattenRouterMulticastPimSmGlobalVrfRpAddressIpAddress(i["ip-address"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "group"
+		if _, ok := i["group"]; ok {
+			tmp["group"] = dataSourceFlattenRouterMulticastPimSmGlobalVrfRpAddressGroup(i["group"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenRouterMulticastPimSmGlobalVrfRpAddressId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterMulticastPimSmGlobalVrfRpAddressIpAddress(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterMulticastPimSmGlobalVrfRpAddressGroup(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenRouterMulticastInterface(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -1043,6 +1248,12 @@ func dataSourceRefreshObjectRouterMulticast(d *schema.ResourceData, o map[string
 	if err = d.Set("pim_sm_global", dataSourceFlattenRouterMulticastPimSmGlobal(o["pim-sm-global"], d, "pim_sm_global")); err != nil {
 		if !fortiAPIPatch(o["pim-sm-global"]) {
 			return fmt.Errorf("Error reading pim_sm_global: %v", err)
+		}
+	}
+
+	if err = d.Set("pim_sm_global_vrf", dataSourceFlattenRouterMulticastPimSmGlobalVrf(o["pim-sm-global-vrf"], d, "pim_sm_global_vrf")); err != nil {
+		if !fortiAPIPatch(o["pim-sm-global-vrf"]) {
+			return fmt.Errorf("Error reading pim_sm_global_vrf: %v", err)
 		}
 	}
 

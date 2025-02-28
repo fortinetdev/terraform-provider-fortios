@@ -72,6 +72,10 @@ func dataSourceSystemSdnConnector() *schema.Resource {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+			"message_server_port": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
 			"username": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -545,6 +549,10 @@ func dataSourceFlattenSystemSdnConnectorServerListIp(v interface{}, d *schema.Re
 }
 
 func dataSourceFlattenSystemSdnConnectorServerPort(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemSdnConnectorMessageServerPort(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1331,6 +1339,12 @@ func dataSourceRefreshObjectSystemSdnConnector(d *schema.ResourceData, o map[str
 	if err = d.Set("server_port", dataSourceFlattenSystemSdnConnectorServerPort(o["server-port"], d, "server_port")); err != nil {
 		if !fortiAPIPatch(o["server-port"]) {
 			return fmt.Errorf("Error reading server_port: %v", err)
+		}
+	}
+
+	if err = d.Set("message_server_port", dataSourceFlattenSystemSdnConnectorMessageServerPort(o["message-server-port"], d, "message_server_port")); err != nil {
+		if !fortiAPIPatch(o["message-server-port"]) {
+			return fmt.Errorf("Error reading message_server_port: %v", err)
 		}
 	}
 

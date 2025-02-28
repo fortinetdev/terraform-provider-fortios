@@ -33,16 +33,19 @@ The `match` block supports:
 * `id` - CASB user activity match rules ID.
 * `strategy` - CASB user activity rules strategy. Valid values: `and`, `or`.
 * `rules` - CASB user activity rules. The structure of `rules` block is documented below.
+* `tenant_extraction` - CASB user activity tenant extraction. The structure of `tenant_extraction` block is documented below.
 
 The `rules` block supports:
 
 * `id` - CASB user activity rule ID.
-* `type` - CASB user activity rule type. Valid values: `domains`, `host`, `path`, `header`, `header-value`, `method`.
+* `type` - CASB user activity rule type.
 * `domains` - CASB user activity domain list. The structure of `domains` block is documented below.
 * `methods` - CASB user activity method list. The structure of `methods` block is documented below.
 * `match_pattern` - CASB user activity rule match pattern. Valid values: `simple`, `substr`, `regexp`.
 * `match_value` - CASB user activity rule match value.
 * `header_name` - CASB user activity rule header name.
+* `body_type` - CASB user activity match rule body type. Valid values: `json`.
+* `jq` - CASB user activity rule match jq script.
 * `case_sensitive` - CASB user activity match case sensitive. Valid values: `enable`, `disable`.
 * `negate` - Enable/disable what the matching strategy must not be. Valid values: `enable`, `disable`.
 
@@ -54,6 +57,21 @@ The `methods` block supports:
 
 * `method` - User activity method.
 
+The `tenant_extraction` block supports:
+
+* `status` - Enable/disable CASB tenant extraction. Valid values: `disable`, `enable`.
+* `type` - CASB user activity tenant extraction type. Valid values: `json-query`.
+* `jq` - CASB user activity tenant extraction jq script.
+* `filters` - CASB user activity tenant extraction filters. The structure of `filters` block is documented below.
+
+The `filters` block supports:
+
+* `id` - CASB tenant extraction filter ID.
+* `direction` - CASB tenant extraction filter direction. Valid values: `request`, `response`.
+* `place` - CASB tenant extraction filter place type. Valid values: `path`, `header`, `body`.
+* `header_name` - CASB tenant extraction filter header name.
+* `body_type` - CASB tenant extraction filter body type. Valid values: `json`.
+
 The `control_options` block supports:
 
 * `name` - CASB control option name.
@@ -63,9 +81,9 @@ The `control_options` block supports:
 The `operations` block supports:
 
 * `name` - CASB control option operation name.
-* `target` - CASB operation target. Valid values: `header`, `path`.
+* `target` - CASB operation target.
 * `action` - CASB operation action. Valid values: `append`, `prepend`, `replace`, `new`, `new-on-not-found`, `delete`.
-* `direction` - CASB operation direction. Valid values: `request`.
+* `direction` - CASB operation direction.
 * `header_name` - CASB operation header name to search.
 * `search_pattern` - CASB operation search pattern. Valid values: `simple`, `substr`, `regexp`.
 * `search_key` - CASB operation key to search.

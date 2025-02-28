@@ -35,7 +35,7 @@ The following arguments are supported:
 * `query` - Match the query part of the URL as a regular expression.
 * `referrer` - Enable/disable use of referrer field in the HTTP header to match the address. Valid values: `enable`, `disable`.
 * `category` - FortiGuard category ID. The structure of `category` block is documented below.
-* `method` - HTTP request methods to be used. Valid values: `get`, `post`, `put`, `head`, `connect`, `trace`, `options`, `delete`.
+* `method` - HTTP request methods to be used.
 * `ua` - Names of browsers to be used as user agent.
 * `ua_min_ver` - Minimum version of the user agent specified in dotted notation. For example, use 90.0.1 with the ua field set to "chrome" to require Google Chrome's minimum version must be 90.0.1.
 * `ua_max_ver` - Maximum version of the user agent specified in dotted notation. For example, use 120 with the ua field set to "chrome" to require Google Chrome's maximum version must be 120.

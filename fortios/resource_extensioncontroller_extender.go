@@ -140,6 +140,46 @@ func resourceExtensionControllerExtender() *schema.Resource {
 							ValidateFunc: validation.StringLenBetween(0, 31),
 							Optional:     true,
 						},
+						"modem1_pdn1_interface": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 31),
+							Optional:     true,
+						},
+						"modem1_pdn2_interface": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 31),
+							Optional:     true,
+						},
+						"modem1_pdn3_interface": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 31),
+							Optional:     true,
+						},
+						"modem1_pdn4_interface": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 31),
+							Optional:     true,
+						},
+						"modem2_pdn1_interface": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 31),
+							Optional:     true,
+						},
+						"modem2_pdn2_interface": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 31),
+							Optional:     true,
+						},
+						"modem2_pdn3_interface": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 31),
+							Optional:     true,
+						},
+						"modem2_pdn4_interface": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 31),
+							Optional:     true,
+						},
 					},
 				},
 			},
@@ -391,6 +431,46 @@ func flattenExtensionControllerExtenderWanExtension(v interface{}, d *schema.Res
 		result["modem2_extension"] = flattenExtensionControllerExtenderWanExtensionModem2Extension(i["modem2-extension"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "modem1_pdn1_interface"
+	if _, ok := i["modem1-pdn1-interface"]; ok {
+		result["modem1_pdn1_interface"] = flattenExtensionControllerExtenderWanExtensionModem1Pdn1Interface(i["modem1-pdn1-interface"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "modem1_pdn2_interface"
+	if _, ok := i["modem1-pdn2-interface"]; ok {
+		result["modem1_pdn2_interface"] = flattenExtensionControllerExtenderWanExtensionModem1Pdn2Interface(i["modem1-pdn2-interface"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "modem1_pdn3_interface"
+	if _, ok := i["modem1-pdn3-interface"]; ok {
+		result["modem1_pdn3_interface"] = flattenExtensionControllerExtenderWanExtensionModem1Pdn3Interface(i["modem1-pdn3-interface"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "modem1_pdn4_interface"
+	if _, ok := i["modem1-pdn4-interface"]; ok {
+		result["modem1_pdn4_interface"] = flattenExtensionControllerExtenderWanExtensionModem1Pdn4Interface(i["modem1-pdn4-interface"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "modem2_pdn1_interface"
+	if _, ok := i["modem2-pdn1-interface"]; ok {
+		result["modem2_pdn1_interface"] = flattenExtensionControllerExtenderWanExtensionModem2Pdn1Interface(i["modem2-pdn1-interface"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "modem2_pdn2_interface"
+	if _, ok := i["modem2-pdn2-interface"]; ok {
+		result["modem2_pdn2_interface"] = flattenExtensionControllerExtenderWanExtensionModem2Pdn2Interface(i["modem2-pdn2-interface"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "modem2_pdn3_interface"
+	if _, ok := i["modem2-pdn3-interface"]; ok {
+		result["modem2_pdn3_interface"] = flattenExtensionControllerExtenderWanExtensionModem2Pdn3Interface(i["modem2-pdn3-interface"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "modem2_pdn4_interface"
+	if _, ok := i["modem2-pdn4-interface"]; ok {
+		result["modem2_pdn4_interface"] = flattenExtensionControllerExtenderWanExtensionModem2Pdn4Interface(i["modem2-pdn4-interface"], d, pre_append, sv)
+	}
+
 	lastresult := []map[string]interface{}{result}
 	return lastresult
 }
@@ -400,6 +480,38 @@ func flattenExtensionControllerExtenderWanExtensionModem1Extension(v interface{}
 }
 
 func flattenExtensionControllerExtenderWanExtensionModem2Extension(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenExtensionControllerExtenderWanExtensionModem1Pdn1Interface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenExtensionControllerExtenderWanExtensionModem1Pdn2Interface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenExtensionControllerExtenderWanExtensionModem1Pdn3Interface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenExtensionControllerExtenderWanExtensionModem1Pdn4Interface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenExtensionControllerExtenderWanExtensionModem2Pdn1Interface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenExtensionControllerExtenderWanExtensionModem2Pdn2Interface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenExtensionControllerExtenderWanExtensionModem2Pdn3Interface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenExtensionControllerExtenderWanExtensionModem2Pdn4Interface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -629,6 +741,38 @@ func expandExtensionControllerExtenderWanExtension(d *schema.ResourceData, v int
 	if _, ok := d.GetOk(pre_append); ok {
 		result["modem2-extension"], _ = expandExtensionControllerExtenderWanExtensionModem2Extension(d, i["modem2_extension"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "modem1_pdn1_interface"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["modem1-pdn1-interface"], _ = expandExtensionControllerExtenderWanExtensionModem1Pdn1Interface(d, i["modem1_pdn1_interface"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "modem1_pdn2_interface"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["modem1-pdn2-interface"], _ = expandExtensionControllerExtenderWanExtensionModem1Pdn2Interface(d, i["modem1_pdn2_interface"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "modem1_pdn3_interface"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["modem1-pdn3-interface"], _ = expandExtensionControllerExtenderWanExtensionModem1Pdn3Interface(d, i["modem1_pdn3_interface"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "modem1_pdn4_interface"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["modem1-pdn4-interface"], _ = expandExtensionControllerExtenderWanExtensionModem1Pdn4Interface(d, i["modem1_pdn4_interface"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "modem2_pdn1_interface"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["modem2-pdn1-interface"], _ = expandExtensionControllerExtenderWanExtensionModem2Pdn1Interface(d, i["modem2_pdn1_interface"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "modem2_pdn2_interface"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["modem2-pdn2-interface"], _ = expandExtensionControllerExtenderWanExtensionModem2Pdn2Interface(d, i["modem2_pdn2_interface"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "modem2_pdn3_interface"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["modem2-pdn3-interface"], _ = expandExtensionControllerExtenderWanExtensionModem2Pdn3Interface(d, i["modem2_pdn3_interface"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "modem2_pdn4_interface"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["modem2-pdn4-interface"], _ = expandExtensionControllerExtenderWanExtensionModem2Pdn4Interface(d, i["modem2_pdn4_interface"], pre_append, sv)
+	}
 
 	return result, nil
 }
@@ -638,6 +782,38 @@ func expandExtensionControllerExtenderWanExtensionModem1Extension(d *schema.Reso
 }
 
 func expandExtensionControllerExtenderWanExtensionModem2Extension(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandExtensionControllerExtenderWanExtensionModem1Pdn1Interface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandExtensionControllerExtenderWanExtensionModem1Pdn2Interface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandExtensionControllerExtenderWanExtensionModem1Pdn3Interface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandExtensionControllerExtenderWanExtensionModem1Pdn4Interface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandExtensionControllerExtenderWanExtensionModem2Pdn1Interface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandExtensionControllerExtenderWanExtensionModem2Pdn2Interface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandExtensionControllerExtenderWanExtensionModem2Pdn3Interface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandExtensionControllerExtenderWanExtensionModem2Pdn4Interface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

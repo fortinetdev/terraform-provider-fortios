@@ -121,6 +121,10 @@ func dataSourceSystemNetflow() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"vrf_select": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
 					},
 				},
 			},
@@ -333,6 +337,11 @@ func dataSourceFlattenSystemNetflowCollectors(v interface{}, d *schema.ResourceD
 			tmp["interface"] = dataSourceFlattenSystemNetflowCollectorsInterface(i["interface"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrf_select"
+		if _, ok := i["vrf-select"]; ok {
+			tmp["vrf_select"] = dataSourceFlattenSystemNetflowCollectorsVrfSelect(i["vrf-select"], d, pre_append)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -366,6 +375,10 @@ func dataSourceFlattenSystemNetflowCollectorsInterfaceSelectMethod(v interface{}
 }
 
 func dataSourceFlattenSystemNetflowCollectorsInterface(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemNetflowCollectorsVrfSelect(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 

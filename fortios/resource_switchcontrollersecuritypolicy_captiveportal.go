@@ -51,6 +51,7 @@ func resourceSwitchControllerSecurityPolicyCaptivePortal() *schema.Resource {
 			"policy_type": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Computed: true,
 			},
 		},
 	}
@@ -291,8 +292,6 @@ func getObjectSwitchControllerSecurityPolicyCaptivePortal(d *schema.ResourceData
 		} else if t != nil {
 			obj["policy-type"] = t
 		}
-	} else if d.HasChange("policy_type") {
-		obj["policy-type"] = nil
 	}
 
 	return &obj, nil

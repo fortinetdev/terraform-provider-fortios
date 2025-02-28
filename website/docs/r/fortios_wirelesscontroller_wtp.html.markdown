@@ -19,6 +19,7 @@ The following arguments are supported:
 * `admin` - Configure how the FortiGate operating as a wireless controller discovers and manages this WTP, AP or FortiAP. Valid values: `discovered`, `disable`, `enable`.
 * `name` - WTP, AP or FortiAP configuration name.
 * `location` - Field for describing the physical location of the WTP, AP or FortiAP.
+* `comment` - Comment.
 * `region` - Region name WTP is associated with.
 * `region_x` - Relative horizontal region coordinate (between 0 and 1).
 * `region_y` - Relative vertical region coordinate (between 0 and 1).

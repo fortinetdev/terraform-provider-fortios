@@ -77,6 +77,11 @@ The following arguments are supported:
 * `route_server_client_vpnv4` - Enable/disable VPNv4 AS route server client for this neighbor. Valid values: `enable`, `disable`.
 * `route_server_client_vpnv6` - Enable/disable VPNv6 AS route server client for this neighbor. Valid values: `enable`, `disable`.
 * `route_server_client_evpn` - Enable/disable L2VPN EVPN AS route server client for this neighbor. Valid values: `enable`, `disable`.
+* `rr_attr_allow_change` - Enable/disable allowing change of route attributes when advertising to IPv4 route reflector clients. Valid values: `enable`, `disable`.
+* `rr_attr_allow_change6` - Enable/disable allowing change of route attributes when advertising to IPv6 route reflector clients. Valid values: `enable`, `disable`.
+* `rr_attr_allow_change_vpnv4` - Enable/disable allowing change of route attributes when advertising to VPNv4 route reflector clients. Valid values: `enable`, `disable`.
+* `rr_attr_allow_change_vpnv6` - Enable/disable allowing change of route attributes when advertising to VPNv6 route reflector clients. Valid values: `enable`, `disable`.
+* `rr_attr_allow_change_evpn` - Enable/disable allowing change of route attributes when advertising to L2VPN EVPN route reflector clients. Valid values: `enable`, `disable`.
 * `shutdown` - Enable/disable shutdown this neighbor. Valid values: `enable`, `disable`.
 * `soft_reconfiguration` - Enable/disable allow IPv4 inbound soft reconfiguration. Valid values: `enable`, `disable`.
 * `soft_reconfiguration6` - Enable/disable allow IPv6 inbound soft reconfiguration. Valid values: `enable`, `disable`.
@@ -154,13 +159,13 @@ The following arguments are supported:
 * `send_community_vpnv4` - Send community attribute to neighbor for VPNv4 address family. Valid values: `standard`, `extended`, `both`, `disable`.
 * `send_community_vpnv6` - Enable/disable sending community attribute to this neighbor for VPNv6 address family. Valid values: `standard`, `extended`, `both`, `disable`.
 * `send_community_evpn` - Enable/disable sending community attribute to neighbor for L2VPN EVPN address family. Valid values: `standard`, `extended`, `both`, `disable`.
-* `keep_alive_timer` - Keep alive timer interval (sec).
-* `holdtime_timer` - Interval (sec) before peer considered dead.
-* `connect_timer` - Interval (sec) for connect timer.
+* `keep_alive_timer` - Keep alive timer interval (sec). Set to -1 means unset this variable. CLI output may have different value on different FortiOS version.
+* `holdtime_timer` - Interval (sec) before peer considered dead. Set to -1 means unset this variable. CLI output may have different value on different FortiOS version.
+* `connect_timer` - Interval (sec) for connect timer. Set to -1 means unset this variable. CLI output may have different value on different FortiOS version.
 * `unsuppress_map` - IPv4 Route map to selectively unsuppress suppressed routes.
 * `unsuppress_map6` - IPv6 Route map to selectively unsuppress suppressed routes.
 * `update_source` - Interface to use as source IP/IPv6 address of TCP connections.
-* `weight` - Neighbor weight.
+* `weight` - Neighbor weight. Set to -1 means unset this variable. CLI output may have different value on different FortiOS version.
 * `restart_time` - Graceful restart delay time (sec, 0 = global default).
 * `additional_path` - Enable/disable IPv4 additional-path capability. Valid values: `send`, `receive`, `both`, `disable`.
 * `additional_path6` - Enable/disable IPv6 additional-path capability. Valid values: `send`, `receive`, `both`, `disable`.

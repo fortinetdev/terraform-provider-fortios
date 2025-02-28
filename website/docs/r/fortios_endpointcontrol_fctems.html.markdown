@@ -13,7 +13,7 @@ Configure FortiClient Enterprise Management Server (EMS) entries. Applies to For
 
 The following arguments are supported:
 
-* `ems_id` - EMS ID in order. On FortiOS versions 7.0.8-7.0.15, 7.2.1-7.2.3: 1 - 5. On FortiOS versions >= 7.2.4: 1 - 7.
+* `ems_id` - EMS ID in order. On FortiOS versions 7.0.8-7.0.17, 7.2.1-7.2.3: 1 - 5. On FortiOS versions >= 7.2.4: 1 - 7.
 * `status` - Enable or disable this EMS configuration. Valid values: `enable`, `disable`.
 * `name` - FortiClient Enterprise Management Server (EMS) name.
 * `dirty_reason` - Dirty Reason for FortiClient EMS. Valid values: `none`, `mismatched-ems-sn`.

@@ -29,6 +29,9 @@ The following arguments are supported:
 * `socks_incoming_port` - Accept incoming SOCKS proxy requests on one or more ports (0 - 65535, default = 0; use the same as HTTP).
 * `incoming_ip` - Restrict the explicit HTTP proxy to only accept sessions from this IP address. An interface must have this IP address.
 * `outgoing_ip` - Outgoing HTTP requests will have this IP address as their source address. An interface must have this IP address.
+* `interface_select_method` - Specify how to select outgoing interface to reach server. Valid values: `sdwan`, `specify`.
+* `interface` - Specify outgoing interface to reach server.
+* `vrf_select` - VRF ID used for connection to server. Set to -1 means unset this variable. CLI output may have different value on different FortiOS version.
 * `ipv6_status` - Enable/disable allowing an IPv6 web proxy destination in policies and all IPv6 related entries in this command. Valid values: `enable`, `disable`.
 * `incoming_ip6` - Restrict the explicit web proxy to only accept sessions from this IPv6 address. An interface must have this IPv6 address.
 * `outgoing_ip6` - Outgoing HTTP requests will leave this IPv6. Multiple interfaces can be specified. Interfaces must have these IPv6 addresses.

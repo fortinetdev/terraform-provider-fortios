@@ -55,6 +55,7 @@ func resourceRouterAccessList() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
+							Computed: true,
 						},
 						"action": &schema.Schema{
 							Type:     schema.TypeString,
@@ -327,6 +328,13 @@ func flattenRouterAccessListRuleAction(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenRouterAccessListRulePrefix(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v1, ok := d.GetOkExists(pre); ok && v != nil {
+		if s, ok := v1.(string); ok {
+			v = validateConvIPMask2CIDR(s, v.(string))
+			return v
+		}
+	}
+
 	return v
 }
 
@@ -413,8 +421,6 @@ func expandRouterAccessListRule(d *schema.ResourceData, v interface{}, pre strin
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["id"], _ = expandRouterAccessListRuleId(d, i["id"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"

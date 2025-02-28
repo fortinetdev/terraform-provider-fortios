@@ -111,6 +111,11 @@ func resourceAuthenticationScheme() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
 			},
+			"external_idp": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -366,6 +371,10 @@ func flattenAuthenticationSchemeSshCa(v interface{}, d *schema.ResourceData, pre
 	return v
 }
 
+func flattenAuthenticationSchemeExternalIdp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectAuthenticationScheme(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 	var b_get_all_tables bool
@@ -463,6 +472,12 @@ func refreshObjectAuthenticationScheme(d *schema.ResourceData, o map[string]inte
 		}
 	}
 
+	if err = d.Set("external_idp", flattenAuthenticationSchemeExternalIdp(o["external-idp"], d, "external_idp", sv)); err != nil {
+		if !fortiAPIPatch(o["external-idp"]) {
+			return fmt.Errorf("Error reading external_idp: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -545,6 +560,10 @@ func expandAuthenticationSchemeUserDatabaseName(d *schema.ResourceData, v interf
 }
 
 func expandAuthenticationSchemeSshCa(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAuthenticationSchemeExternalIdp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -678,6 +697,17 @@ func getObjectAuthenticationScheme(d *schema.ResourceData, sv string) (*map[stri
 		}
 	} else if d.HasChange("ssh_ca") {
 		obj["ssh-ca"] = nil
+	}
+
+	if v, ok := d.GetOk("external_idp"); ok {
+		t, err := expandAuthenticationSchemeExternalIdp(d, v, "external_idp", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["external-idp"] = t
+		}
+	} else if d.HasChange("external_idp") {
+		obj["external-idp"] = nil
 	}
 
 	return &obj, nil

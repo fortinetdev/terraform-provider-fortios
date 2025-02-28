@@ -14,6 +14,8 @@ Configure Virtual Access Points (VAPs).
 The following arguments are supported:
 
 * `name` - (Required) Virtual AP name.
+* `pre_auth` - Enable/disable pre-authentication, where supported by clients (default = enable). Valid values: `enable`, `disable`.
+* `external_pre_auth` - Enable/disable pre-authentication with external APs not managed by the FortiGate (default = disable). Valid values: `enable`, `disable`.
 * `fast_roaming` - Enable/disable fast-roaming, or pre-authentication, where supported by clients (default = disable). Valid values: `enable`, `disable`.
 * `external_fast_roaming` - Enable/disable fast roaming or pre-authentication with external APs not managed by the FortiGate (default = disable). Valid values: `enable`, `disable`.
 * `mesh_backhaul` - Enable/disable using this VAP as a WiFi mesh backhaul (default = disable). This entry is only available when security is set to a WPA type or open. Valid values: `enable`, `disable`.
@@ -56,12 +58,13 @@ The following arguments are supported:
 * `mac_calling_station_delimiter` - MAC calling station delimiter (default = hyphen). Valid values: `hyphen`, `single-hyphen`, `colon`, `none`.
 * `mac_called_station_delimiter` - MAC called station delimiter (default = hyphen). Valid values: `hyphen`, `single-hyphen`, `colon`, `none`.
 * `mac_case` - MAC case (default = uppercase). Valid values: `uppercase`, `lowercase`.
+* `called_station_id_type` - The format type of RADIUS attribute Called-Station-Id (default = mac). Valid values: `mac`, `ip`, `apname`.
 * `mac_auth_bypass` - Enable/disable MAC authentication bypass. Valid values: `enable`, `disable`.
 * `radius_mac_auth` - Enable/disable RADIUS-based MAC authentication of clients (default = disable). Valid values: `enable`, `disable`.
 * `radius_mac_auth_server` - RADIUS-based MAC authentication server.
 * `radius_mac_auth_block_interval` - Don't send RADIUS MAC auth request again if the client has been rejected within specific interval (0 or 30 - 864000 seconds, default = 0, 0 to disable blocking).
 * `radius_mac_mpsk_auth` - Enable/disable RADIUS-based MAC authentication of clients for MPSK authentication (default = disable). Valid values: `enable`, `disable`.
-* `radius_mac_mpsk_timeout` - RADIUS MAC MPSK cache timeout interval (default = 86400). On FortiOS versions 7.0.2-7.0.8, 7.2.0: 1800 - 864000. On FortiOS versions 7.0.9-7.0.15, >= 7.2.1: 0 or 300 - 864000, 0 to disable caching.
+* `radius_mac_mpsk_timeout` - RADIUS MAC MPSK cache timeout interval (default = 86400). On FortiOS versions 7.0.2-7.0.8, 7.2.0: 1800 - 864000. On FortiOS versions 7.0.9-7.0.17, >= 7.2.1: 0 or 300 - 864000, 0 to disable caching.
 * `radius_mac_auth_usergroups` - Selective user groups that are permitted for RADIUS mac authentication. The structure of `radius_mac_auth_usergroups` block is documented below.
 * `auth` - Authentication protocol.
 * `encrypt` - Encryption protocol to use (only available when security is set to a WPA type). Valid values: `TKIP`, `AES`, `TKIP-AES`.

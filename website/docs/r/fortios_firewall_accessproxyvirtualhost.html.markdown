@@ -18,6 +18,9 @@ The following arguments are supported:
 * `host` - The host name.
 * `host_type` - Type of host pattern. Valid values: `sub-string`, `wildcard`.
 * `replacemsg_group` - Access-proxy-virtual-host replacement message override group.
+* `empty_cert_action` - Action for an empty client certificate. Valid values: `accept`, `block`, `accept-unmanageable`.
+* `user_agent_detect` - Enable/disable detecting device type by HTTP user-agent if no client certificate is provided. Valid values: `disable`, `enable`.
+* `client_cert` - Enable/disable requesting client certificate. Valid values: `disable`, `enable`.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 

@@ -132,7 +132,7 @@ func resourceRouterStatic6() *schema.Resource {
 			},
 			"vrf": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 251),
+				ValidateFunc: validation.IntBetween(0, 511),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -140,6 +140,10 @@ func resourceRouterStatic6() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
+			},
+			"tag": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
@@ -420,6 +424,10 @@ func flattenRouterStatic6Bfd(v interface{}, d *schema.ResourceData, pre string, 
 	return v
 }
 
+func flattenRouterStatic6Tag(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
 func refreshObjectRouterStatic6(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 	var b_get_all_tables bool
@@ -553,6 +561,12 @@ func refreshObjectRouterStatic6(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
+	if err = d.Set("tag", flattenRouterStatic6Tag(o["tag"], d, "tag", sv)); err != nil {
+		if !fortiAPIPatch(o["tag"]) {
+			return fmt.Errorf("Error reading tag: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -659,6 +673,10 @@ func expandRouterStatic6Vrf(d *schema.ResourceData, v interface{}, pre string, s
 }
 
 func expandRouterStatic6Bfd(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterStatic6Tag(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -844,6 +862,17 @@ func getObjectRouterStatic6(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["bfd"] = t
 		}
+	}
+
+	if v, ok := d.GetOkExists("tag"); ok {
+		t, err := expandRouterStatic6Tag(d, v, "tag", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["tag"] = t
+		}
+	} else if d.HasChange("tag") {
+		obj["tag"] = nil
 	}
 
 	return &obj, nil

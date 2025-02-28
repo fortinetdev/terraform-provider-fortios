@@ -63,6 +63,8 @@ The following arguments are supported:
 * `wan_port_auth_methods` - WAN port 802.1x supplicant EAP methods (default = all). Valid values: `all`, `EAP-FAST`, `EAP-TLS`, `EAP-PEAP`.
 * `wan_port_auth_macsec` - Enable/disable WAN port 802.1x supplicant MACsec policy (default = disable). Valid values: `enable`, `disable`.
 * `unii_4_5ghz_band` - Enable/disable UNII-4 5Ghz band channels (default = disable). Valid values: `enable`, `disable`.
+* `admin_auth_tacacs` - Remote authentication server for admin user.
+* `admin_restrict_local` - Enable/disable local admin authentication restriction when remote authenticator is up and running (default = disable). Valid values: `enable`, `disable`.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
 * `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
@@ -157,7 +159,7 @@ The `radio_1` block supports:
 * `ap_sniffer_data` - Enable/disable sniffer on WiFi data frame (default = enable). Valid values: `enable`, `disable`.
 * `sam_ssid` - SSID for WiFi network.
 * `sam_bssid` - BSSID for WiFi network.
-* `sam_security_type` - Select WiFi network security type (default = "wpa-personal").
+* `sam_security_type` - Select WiFi network security type. On FortiOS versions 7.0.1-7.6.0: default = "wpa-personal". On FortiOS versions >= 7.6.1: default = "wpa-personal" for 2.4/5G radio, "wpa3-sae" for 6G radio.
 * `sam_captive_portal` - Enable/disable Captive Portal Authentication (default = disable). Valid values: `enable`, `disable`.
 * `sam_cwp_username` - Username for captive portal authentication.
 * `sam_cwp_password` - Password for captive portal authentication.
@@ -251,7 +253,7 @@ The `radio_2` block supports:
 * `ap_sniffer_data` - Enable/disable sniffer on WiFi data frame (default = enable). Valid values: `enable`, `disable`.
 * `sam_ssid` - SSID for WiFi network.
 * `sam_bssid` - BSSID for WiFi network.
-* `sam_security_type` - Select WiFi network security type (default = "wpa-personal").
+* `sam_security_type` - Select WiFi network security type. On FortiOS versions 7.0.1-7.6.0: default = "wpa-personal". On FortiOS versions >= 7.6.1: default = "wpa-personal" for 2.4/5G radio, "wpa3-sae" for 6G radio.
 * `sam_captive_portal` - Enable/disable Captive Portal Authentication (default = disable). Valid values: `enable`, `disable`.
 * `sam_cwp_username` - Username for captive portal authentication.
 * `sam_cwp_password` - Password for captive portal authentication.
@@ -344,7 +346,7 @@ The `radio_3` block supports:
 * `ap_sniffer_data` - Enable/disable sniffer on WiFi data frame (default = enable). Valid values: `enable`, `disable`.
 * `sam_ssid` - SSID for WiFi network.
 * `sam_bssid` - BSSID for WiFi network.
-* `sam_security_type` - Select WiFi network security type (default = "wpa-personal").
+* `sam_security_type` - Select WiFi network security type. On FortiOS versions 7.0.1-7.6.0: default = "wpa-personal". On FortiOS versions >= 7.6.1: default = "wpa-personal" for 2.4/5G radio, "wpa3-sae" for 6G radio.
 * `sam_captive_portal` - Enable/disable Captive Portal Authentication (default = disable). Valid values: `enable`, `disable`.
 * `sam_cwp_username` - Username for captive portal authentication.
 * `sam_cwp_password` - Password for captive portal authentication.
@@ -437,7 +439,7 @@ The `radio_4` block supports:
 * `ap_sniffer_data` - Enable/disable sniffer on WiFi data frame (default = enable). Valid values: `enable`, `disable`.
 * `sam_ssid` - SSID for WiFi network.
 * `sam_bssid` - BSSID for WiFi network.
-* `sam_security_type` - Select WiFi network security type (default = "wpa-personal").
+* `sam_security_type` - Select WiFi network security type. On FortiOS versions 7.0.1-7.6.0: default = "wpa-personal". On FortiOS versions >= 7.6.1: default = "wpa-personal" for 2.4/5G radio, "wpa3-sae" for 6G radio.
 * `sam_captive_portal` - Enable/disable Captive Portal Authentication (default = disable). Valid values: `enable`, `disable`.
 * `sam_cwp_username` - Username for captive portal authentication.
 * `sam_cwp_password` - Password for captive portal authentication.
@@ -526,7 +528,7 @@ The `lbs` block supports:
 * `polestar` - Enable/disable PoleStar BLE NAO Track Real Time Location Service (RTLS) support (default = disable). Valid values: `enable`, `disable`.
 * `polestar_protocol` - Select the protocol to report Measurements, Advertising Data, or Location Data to NAO Cloud. (default = WSS). Valid values: `WSS`.
 * `polestar_server_fqdn` - FQDN of PoleStar Nao Track Server (default = ws.nao-cloud.com).
-* `polestar_server_path` - Path of PoleStar Nao Track Server. On FortiOS versions 7.4.1-7.4.4: default = /v1/token/<access_token>/pst-v2. On FortiOS versions >= 7.6.0: default = /v1/token/<access_token>/pst-v2-fortinet.
+* `polestar_server_path` - Path of PoleStar Nao Track Server. On FortiOS versions 7.4.1-7.4.4: default = /v1/token/<access_token>/pst-v2. On FortiOS versions 7.6.0: default = /v1/token/<access_token>/pst-v2-fortinet.
 * `polestar_server_token` - Access Token of PoleStar Nao Track Server.
 * `polestar_server_port` - Port of PoleStar Nao Track Server (default = 443).
 * `polestar_accumulation_interval` - Time that measurements should be accumulated in seconds (default = 2).

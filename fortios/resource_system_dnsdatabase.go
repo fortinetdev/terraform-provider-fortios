@@ -177,6 +177,21 @@ func resourceSystemDnsDatabase() *schema.Resource {
 					},
 				},
 			},
+			"interface_select_method": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"interface": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 15),
+				Optional:     true,
+			},
+			"vrf_select": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 511),
+				Optional:     true,
+			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -528,6 +543,18 @@ func flattenSystemDnsDatabaseDnsEntryCanonicalName(v interface{}, d *schema.Reso
 	return v
 }
 
+func flattenSystemDnsDatabaseInterfaceSelectMethod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemDnsDatabaseInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemDnsDatabaseVrfSelect(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
 func refreshObjectSystemDnsDatabase(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 	var b_get_all_tables bool
@@ -658,6 +685,24 @@ func refreshObjectSystemDnsDatabase(d *schema.ResourceData, o map[string]interfa
 					return fmt.Errorf("Error reading dns_entry: %v", err)
 				}
 			}
+		}
+	}
+
+	if err = d.Set("interface_select_method", flattenSystemDnsDatabaseInterfaceSelectMethod(o["interface-select-method"], d, "interface_select_method", sv)); err != nil {
+		if !fortiAPIPatch(o["interface-select-method"]) {
+			return fmt.Errorf("Error reading interface_select_method: %v", err)
+		}
+	}
+
+	if err = d.Set("interface", flattenSystemDnsDatabaseInterface(o["interface"], d, "interface", sv)); err != nil {
+		if !fortiAPIPatch(o["interface"]) {
+			return fmt.Errorf("Error reading interface: %v", err)
+		}
+	}
+
+	if err = d.Set("vrf_select", flattenSystemDnsDatabaseVrfSelect(o["vrf-select"], d, "vrf_select", sv)); err != nil {
+		if !fortiAPIPatch(o["vrf-select"]) {
+			return fmt.Errorf("Error reading vrf_select: %v", err)
 		}
 	}
 
@@ -851,6 +896,18 @@ func expandSystemDnsDatabaseDnsEntryCanonicalName(d *schema.ResourceData, v inte
 	return v, nil
 }
 
+func expandSystemDnsDatabaseInterfaceSelectMethod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemDnsDatabaseInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemDnsDatabaseVrfSelect(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectSystemDnsDatabase(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
@@ -1031,6 +1088,37 @@ func getObjectSystemDnsDatabase(d *schema.ResourceData, sv string) (*map[string]
 		} else if t != nil {
 			obj["dns-entry"] = t
 		}
+	}
+
+	if v, ok := d.GetOk("interface_select_method"); ok {
+		t, err := expandSystemDnsDatabaseInterfaceSelectMethod(d, v, "interface_select_method", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["interface-select-method"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("interface"); ok {
+		t, err := expandSystemDnsDatabaseInterface(d, v, "interface", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["interface"] = t
+		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
+	}
+
+	if v, ok := d.GetOkExists("vrf_select"); ok {
+		t, err := expandSystemDnsDatabaseVrfSelect(d, v, "vrf_select", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["vrf-select"] = t
+		}
+	} else if d.HasChange("vrf_select") {
+		obj["vrf-select"] = nil
 	}
 
 	return &obj, nil

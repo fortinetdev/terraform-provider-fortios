@@ -24,7 +24,8 @@ The following arguments are supported:
 * `loopback_interface` - Loopback interface.
 * `loopback_advertised_subnet` - Loopback advertised subnet reference.
 * `psksecret` - Pre-shared secret for ADVPN.
-* `bgp_as` - BGP Router AS number, valid from 1 to 4294967295.
+* `bgp_as_string` - BGP Router AS number, asplain/asdot/asdot+ format. *Due to the data type change of API, for other versions of FortiOS, please check variable `bgp-as`.*
+* `bgp_as` - BGP Router AS number, valid from 1 to 4294967295. *Due to the data type change of API, for other versions of FortiOS, please check variable `bgp-as_string`.*
 * `sdwan_zone` - Reference to created SD-WAN zone.
 * `health_checks` - Underlying health checks.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].

@@ -108,6 +108,11 @@ func resourceVpnKmipServer() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
 			},
+			"vrf_select": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 511),
+				Optional:     true,
+			},
 			"source_ip": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
@@ -380,6 +385,10 @@ func flattenVpnKmipServerInterface(v interface{}, d *schema.ResourceData, pre st
 	return v
 }
 
+func flattenVpnKmipServerVrfSelect(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
 func flattenVpnKmipServerSourceIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -442,6 +451,12 @@ func refreshObjectVpnKmipServer(d *schema.ResourceData, o map[string]interface{}
 	if err = d.Set("interface", flattenVpnKmipServerInterface(o["interface"], d, "interface", sv)); err != nil {
 		if !fortiAPIPatch(o["interface"]) {
 			return fmt.Errorf("Error reading interface: %v", err)
+		}
+	}
+
+	if err = d.Set("vrf_select", flattenVpnKmipServerVrfSelect(o["vrf-select"], d, "vrf_select", sv)); err != nil {
+		if !fortiAPIPatch(o["vrf-select"]) {
+			return fmt.Errorf("Error reading vrf_select: %v", err)
 		}
 	}
 
@@ -559,6 +574,10 @@ func expandVpnKmipServerInterface(d *schema.ResourceData, v interface{}, pre str
 	return v, nil
 }
 
+func expandVpnKmipServerVrfSelect(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandVpnKmipServerSourceIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -642,6 +661,17 @@ func getObjectVpnKmipServer(d *schema.ResourceData, sv string) (*map[string]inte
 		}
 	} else if d.HasChange("interface") {
 		obj["interface"] = nil
+	}
+
+	if v, ok := d.GetOkExists("vrf_select"); ok {
+		t, err := expandVpnKmipServerVrfSelect(d, v, "vrf_select", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["vrf-select"] = t
+		}
+	} else if d.HasChange("vrf_select") {
+		obj["vrf-select"] = nil
 	}
 
 	if v, ok := d.GetOk("source_ip"); ok {

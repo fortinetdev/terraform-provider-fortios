@@ -82,6 +82,11 @@ func resourceSystemVdomNetflow() *schema.Resource {
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
 						},
+						"vrf_select": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(0, 511),
+							Optional:     true,
+						},
 					},
 				},
 			},
@@ -302,6 +307,11 @@ func flattenSystemVdomNetflowCollectors(v interface{}, d *schema.ResourceData, p
 			tmp["interface"] = flattenSystemVdomNetflowCollectorsInterface(cur_v, d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrf_select"
+		if cur_v, ok := i["vrf-select"]; ok {
+			tmp["vrf_select"] = flattenSystemVdomNetflowCollectorsVrfSelect(cur_v, d, pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -337,6 +347,10 @@ func flattenSystemVdomNetflowCollectorsInterfaceSelectMethod(v interface{}, d *s
 
 func flattenSystemVdomNetflowCollectorsInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
+}
+
+func flattenSystemVdomNetflowCollectorsVrfSelect(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
 }
 
 func flattenSystemVdomNetflowCollectorIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -492,6 +506,13 @@ func expandSystemVdomNetflowCollectors(d *schema.ResourceData, v interface{}, pr
 			tmp["interface"] = nil
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrf_select"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["vrf-select"], _ = expandSystemVdomNetflowCollectorsVrfSelect(d, i["vrf_select"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["vrf-select"] = nil
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -525,6 +546,10 @@ func expandSystemVdomNetflowCollectorsInterfaceSelectMethod(d *schema.ResourceDa
 }
 
 func expandSystemVdomNetflowCollectorsInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemVdomNetflowCollectorsVrfSelect(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

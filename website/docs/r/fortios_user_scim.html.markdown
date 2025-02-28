@@ -17,6 +17,9 @@ The following arguments are supported:
 * `fosid` - SCIM client ID.
 * `status` - Enable/disable System for Cross-domain Identity Management (SCIM). Valid values: `enable`, `disable`.
 * `base_url` - Server URL to receive SCIM create, read, update, delete (CRUD) requests.
+* `auth_method` - TLS client authentication methods (default = bearer token). Valid values: `token`, `base`.
+* `token_certificate` - Certificate for token verification.
+* `secret` - Secret for token verification or base authentication.
 * `client_authentication_method` - TLS client authentication methods (default = bearer token). Valid values: `token`, `base`.
 * `client_secret_token` - Client secret token for authentication.
 * `certificate` - Certificate name.

@@ -45,7 +45,7 @@ The following arguments are supported:
 * `tunnel_non_http` - Enable/disable allowing non-HTTP traffic. Allowed non-HTTP traffic is tunneled. Valid values: `enable`, `disable`.
 * `unknown_http_version` - Action to take when an unknown version of HTTP is encountered: reject, allow (tunnel), or proceed with best-effort. Valid values: `reject`, `tunnel`, `best-effort`.
 * `forward_server_affinity_timeout` - Period of time before the source IP's traffic is no longer assigned to the forwarding server (6 - 60 min, default = 30).
-* `max_waf_body_cache_length` - Maximum length of HTTP messages processed by Web Application Firewall (WAF) On FortiOS versions 6.2.0-7.4.4, >= 7.6.0: 10 - 1024 Kbytes, default = 32. On FortiOS versions 7.4.5: 1 - 1024 Kbytes, default = 1.
+* `max_waf_body_cache_length` - Maximum length of HTTP messages processed by Web Application Firewall (WAF) On FortiOS versions 6.2.0-7.4.4, 7.6.0: 10 - 1024 Kbytes, default = 32. On FortiOS versions 7.4.5-7.4.7, >= 7.6.1: 1 - 1024 Kbytes, default = 1.
 * `webproxy_profile` - Name of the web proxy profile to apply when explicit proxy traffic is allowed by default and traffic is accepted that does not match an explicit proxy policy.
 * `learn_client_ip` - Enable/disable learning the client's IP address from headers. Valid values: `enable`, `disable`.
 * `always_learn_client_ip` - Enable/disable learning the client's IP address from headers for every request. Valid values: `enable`, `disable`.

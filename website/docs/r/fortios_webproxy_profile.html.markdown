@@ -55,7 +55,7 @@ The `headers` block supports:
 * `action` - Action when the HTTP header is forwarded.
 * `content` - HTTP header content.
 * `base64_encoding` - Enable/disable use of base64 encoding of HTTP content. Valid values: `disable`, `enable`.
-* `add_option` - Configure options to append content to existing HTTP header or add new HTTP header. Valid values: `append`, `new-on-not-found`, `new`.
+* `add_option` - Configure options to append content to existing HTTP header or add new HTTP header.
 * `protocol` - Configure protocol(s) to take add-option action on (HTTP, HTTPS, or both). Valid values: `https`, `http`.
 
 The `dstaddr` block supports:

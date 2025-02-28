@@ -44,6 +44,7 @@ The `ntpserver` block contains:
 * `ip_type` - Choose to connect to IPv4 or/and IPv6 NTP server.
 * `interface_select_method` - Specify how to select outgoing interface to reach server.
 * `interface` - Specify outgoing interface to reach server.
+* `vrf_select` - VRF ID used for connection to server.
 
 The `interface` block contains:
 

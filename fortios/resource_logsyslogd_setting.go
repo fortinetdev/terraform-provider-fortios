@@ -137,6 +137,11 @@ func resourceLogSyslogdSetting() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
 			},
+			"vrf_select": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 511),
+				Optional:     true,
+			},
 			"syslog_type": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
@@ -390,6 +395,10 @@ func flattenLogSyslogdSettingInterface(v interface{}, d *schema.ResourceData, pr
 	return v
 }
 
+func flattenLogSyslogdSettingVrfSelect(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
 func flattenLogSyslogdSettingSyslogType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return convintf2i(v)
 }
@@ -506,6 +515,12 @@ func refreshObjectLogSyslogdSetting(d *schema.ResourceData, o map[string]interfa
 	if err = d.Set("interface", flattenLogSyslogdSettingInterface(o["interface"], d, "interface", sv)); err != nil {
 		if !fortiAPIPatch(o["interface"]) {
 			return fmt.Errorf("Error reading interface: %v", err)
+		}
+	}
+
+	if err = d.Set("vrf_select", flattenLogSyslogdSettingVrfSelect(o["vrf-select"], d, "vrf_select", sv)); err != nil {
+		if !fortiAPIPatch(o["vrf-select"]) {
+			return fmt.Errorf("Error reading vrf_select: %v", err)
 		}
 	}
 
@@ -634,6 +649,10 @@ func expandLogSyslogdSettingInterfaceSelectMethod(d *schema.ResourceData, v inte
 }
 
 func expandLogSyslogdSettingInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogSyslogdSettingVrfSelect(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -860,6 +879,21 @@ func getObjectLogSyslogdSetting(d *schema.ResourceData, setArgNil bool, sv strin
 		}
 	} else if d.HasChange("interface") {
 		obj["interface"] = nil
+	}
+
+	if v, ok := d.GetOkExists("vrf_select"); ok {
+		if setArgNil {
+			obj["vrf-select"] = nil
+		} else {
+			t, err := expandLogSyslogdSettingVrfSelect(d, v, "vrf_select", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["vrf-select"] = t
+			}
+		}
+	} else if d.HasChange("vrf_select") {
+		obj["vrf-select"] = nil
 	}
 
 	if v, ok := d.GetOkExists("syslog_type"); ok {

@@ -43,6 +43,7 @@ The following attributes are exported:
 * `priority` - Priority of learned routes.
 * `dhcp_relay_interface_select_method` - Specify how to select outgoing interface to reach server.
 * `dhcp_relay_interface` - Specify outgoing interface to reach server.
+* `dhcp_relay_vrf_select` - VRF ID used for connection to server.
 * `dhcp_broadcast_flag` - Enable/disable setting of the broadcast flag in messages sent by the DHCP client (default = enable).
 * `dhcp_relay_service` - Enable/disable allowing this interface to act as a DHCP relay.
 * `dhcp_relay_ip` - DHCP relay IP address.
@@ -200,6 +201,7 @@ The following attributes are exported:
 * `stp` - Enable/disable STP.
 * `stp_ha_secondary` - Control STP behaviour on HA secondary.
 * `device_identification` - Enable/disable passively gathering of device identity information about the devices on the network connected to this interface.
+* `exclude_signatures` - Exclude IOT or OT application signatures.
 * `device_user_identification` - Enable/disable passive gathering of user identity information about users on this interface.
 * `device_identification_active_scan` - Enable/disable active gathering of device identity information about the devices on the network connected to this interface.
 * `device_access_list` - Device access list.
@@ -218,6 +220,7 @@ The following attributes are exported:
 * `monitor_bandwidth` - Enable monitoring bandwidth on this interface.
 * `vrrp_virtual_mac` - Enable/disable use of virtual MAC for VRRP.
 * `vrrp` - VRRP configuration. The structure of `vrrp` block is documented below.
+* `phy_setting` - PHY settings The structure of `phy_setting` block is documented below.
 * `role` - Interface role.
 * `snmp_index` - Permanent SNMP Index of the interface.
 * `secondary_ip` - Enable/disable adding a secondary IP to this interface.
@@ -313,6 +316,10 @@ The `proxy_arp` block contains:
 * `id` - ID.
 * `ip` - Set IP addresses of proxy ARP.
 
+The `phy_setting` block contains:
+
+* `signal_ok_threshold_value` - Signal-ok-threshold value(0 - 12).
+
 The `secondaryip` block contains:
 
 * `id` - ID.
@@ -366,6 +373,9 @@ The `ipv6` block contains:
 * `ip6_retrans_time` - IPv6 retransmit time (milliseconds; 0 means unspecified).
 * `ip6_default_life` - Default life (sec).
 * `ip6_hop_limit` - Hop limit (0 means unspecified).
+* `ip6_adv_rio` - Enable/disable sending advertisements with route information option.
+* `ip6_route_pref` - Set route preference to the interface (default = medium).
+* `ip6_route_list` - Advertised route list. The structure of `ip6_route_list` block is documented below.
 * `autoconf` - Enable/disable address auto config.
 * `unique_autoconf_addr` - Enable/disable unique auto config address.
 * `interface_identifier` - IPv6 interface identifier.
@@ -374,6 +384,8 @@ The `ipv6` block contains:
 * `ip6_delegated_prefix_iaid` - IAID of obtained delegated-prefix from the upstream interface.
 * `ip6_subnet` -  Subnet to routing prefix, syntax: xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx/xxx
 * `ip6_prefix_list` - Advertised prefix list. The structure of `ip6_prefix_list` block is documented below.
+* `ip6_rdnss_list` - Advertised IPv6 RDNSS list. The structure of `ip6_rdnss_list` block is documented below.
+* `ip6_dnssl_list` - Advertised IPv6 DNSS list. The structure of `ip6_dnssl_list` block is documented below.
 * `ip6_delegated_prefix_list` - Advertised IPv6 delegated prefix list. The structure of `ip6_delegated_prefix_list` block is documented below.
 * `dhcp6_relay_service` - Enable/disable DHCPv6 relay.
 * `dhcp6_relay_type` - DHCPv6 relay type.
@@ -405,6 +417,12 @@ The `ip6_extra_addr` block contains:
 
 * `prefix` - IPv6 address prefix.
 
+The `ip6_route_list` block contains:
+
+* `route` - IPv6 route.
+* `route_pref` - Set route preference to the interface (default = medium).
+* `route_life_time` - Route life time in seconds (0 - 65535, default = 1800).
+
 The `ip6_prefix_list` block contains:
 
 * `prefix` - IPv6 prefix.
@@ -418,6 +436,16 @@ The `ip6_prefix_list` block contains:
 The `dnssl` block contains:
 
 * `domain` - Domain name.
+
+The `ip6_rdnss_list` block contains:
+
+* `rdnss` - Recursive DNS server option.
+* `rdnss_life_time` - Recursive DNS server life time in seconds (0 - 4294967295, default = 1800).
+
+The `ip6_dnssl_list` block contains:
+
+* `domain` - Domain name.
+* `dnssl_life_time` - DNS search list time in seconds (0 - 4294967295, default = 1800).
 
 The `ip6_delegated_prefix_list` block contains:
 

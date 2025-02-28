@@ -80,6 +80,10 @@ func dataSourceSystemPasswordPolicy() *schema.Resource {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+			"login_lockout_upon_downgrade": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -170,6 +174,10 @@ func dataSourceFlattenSystemPasswordPolicyReusePasswordLimit(v interface{}, d *s
 	return v
 }
 
+func dataSourceFlattenSystemPasswordPolicyLoginLockoutUponDowngrade(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceRefreshObjectSystemPasswordPolicy(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
 
@@ -248,6 +256,12 @@ func dataSourceRefreshObjectSystemPasswordPolicy(d *schema.ResourceData, o map[s
 	if err = d.Set("reuse_password_limit", dataSourceFlattenSystemPasswordPolicyReusePasswordLimit(o["reuse-password-limit"], d, "reuse_password_limit")); err != nil {
 		if !fortiAPIPatch(o["reuse-password-limit"]) {
 			return fmt.Errorf("Error reading reuse_password_limit: %v", err)
+		}
+	}
+
+	if err = d.Set("login_lockout_upon_downgrade", dataSourceFlattenSystemPasswordPolicyLoginLockoutUponDowngrade(o["login-lockout-upon-downgrade"], d, "login_lockout_upon_downgrade")); err != nil {
+		if !fortiAPIPatch(o["login-lockout-upon-downgrade"]) {
+			return fmt.Errorf("Error reading login_lockout_upon_downgrade: %v", err)
 		}
 	}
 

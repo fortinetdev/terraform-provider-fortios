@@ -241,6 +241,11 @@ func resourceUserLdap() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
 			},
+			"vrf_select": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 511),
+				Optional:     true,
+			},
 			"antiphish": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -563,6 +568,10 @@ func flattenUserLdapInterface(v interface{}, d *schema.ResourceData, pre string,
 	return v
 }
 
+func flattenUserLdapVrfSelect(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
 func flattenUserLdapAntiphish(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -808,6 +817,12 @@ func refreshObjectUserLdap(d *schema.ResourceData, o map[string]interface{}, sv 
 		}
 	}
 
+	if err = d.Set("vrf_select", flattenUserLdapVrfSelect(o["vrf-select"], d, "vrf_select", sv)); err != nil {
+		if !fortiAPIPatch(o["vrf-select"]) {
+			return fmt.Errorf("Error reading vrf_select: %v", err)
+		}
+	}
+
 	if err = d.Set("antiphish", flattenUserLdapAntiphish(o["antiphish"], d, "antiphish", sv)); err != nil {
 		if !fortiAPIPatch(o["antiphish"]) {
 			return fmt.Errorf("Error reading antiphish: %v", err)
@@ -986,6 +1001,10 @@ func expandUserLdapInterfaceSelectMethod(d *schema.ResourceData, v interface{}, 
 }
 
 func expandUserLdapInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserLdapVrfSelect(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1394,6 +1413,17 @@ func getObjectUserLdap(d *schema.ResourceData, sv string) (*map[string]interface
 		}
 	} else if d.HasChange("interface") {
 		obj["interface"] = nil
+	}
+
+	if v, ok := d.GetOkExists("vrf_select"); ok {
+		t, err := expandUserLdapVrfSelect(d, v, "vrf_select", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["vrf-select"] = t
+		}
+	} else if d.HasChange("vrf_select") {
+		obj["vrf-select"] = nil
 	}
 
 	if v, ok := d.GetOk("antiphish"); ok {

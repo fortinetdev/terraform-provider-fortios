@@ -63,6 +63,12 @@ func resourceDlpSettings() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"config_builder_timeout": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(10, 100000),
+				Optional:     true,
+				Computed:     true,
+			},
 		},
 	}
 }
@@ -201,6 +207,10 @@ func flattenDlpSettingsChunkSize(v interface{}, d *schema.ResourceData, pre stri
 	return convintf2i(v)
 }
 
+func flattenDlpSettingsConfigBuilderTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
 func refreshObjectDlpSettings(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -234,6 +244,12 @@ func refreshObjectDlpSettings(d *schema.ResourceData, o map[string]interface{}, 
 		}
 	}
 
+	if err = d.Set("config_builder_timeout", flattenDlpSettingsConfigBuilderTimeout(o["config-builder-timeout"], d, "config_builder_timeout", sv)); err != nil {
+		if !fortiAPIPatch(o["config-builder-timeout"]) {
+			return fmt.Errorf("Error reading config_builder_timeout: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -260,6 +276,10 @@ func expandDlpSettingsCacheMemPercent(d *schema.ResourceData, v interface{}, pre
 }
 
 func expandDlpSettingsChunkSize(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandDlpSettingsConfigBuilderTimeout(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -329,6 +349,19 @@ func getObjectDlpSettings(d *schema.ResourceData, setArgNil bool, sv string) (*m
 				return &obj, err
 			} else if t != nil {
 				obj["chunk-size"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("config_builder_timeout"); ok {
+		if setArgNil {
+			obj["config-builder-timeout"] = nil
+		} else {
+			t, err := expandDlpSettingsConfigBuilderTimeout(d, v, "config_builder_timeout", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["config-builder-timeout"] = t
 			}
 		}
 	}

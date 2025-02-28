@@ -41,6 +41,7 @@ The following attributes are exported:
 * `enc_algorithm` - Encryption strength for communications between the FortiGate and central management.
 * `interface_select_method` - Specify how to select outgoing interface to reach server.
 * `interface` - Specify outgoing interface to reach server.
+* `vrf_select` - VRF ID used for connection to server.
 
 The `server_list` block contains:
 

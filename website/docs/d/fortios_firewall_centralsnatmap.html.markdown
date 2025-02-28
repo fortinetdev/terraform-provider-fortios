@@ -32,6 +32,7 @@ The following attributes are exported:
 * `nat_ippool` - Name of the IP pools to be used to translate addresses from available IP Pools. The structure of `nat_ippool` block is documented below.
 * `nat_ippool6` - IPv6 pools to be used for source NAT. The structure of `nat_ippool6` block is documented below.
 * `port_preserve` - Enable/disable preservation of the original source port from source NAT if it has not been used.
+* `port_random` - Enable/disable random source port selection for source NAT.
 * `protocol` - Integer value for the protocol type (0 - 255).
 * `orig_port` - Original TCP port (0 to 65535).
 * `nat_port` - Translated port or port range (0 to 65535).

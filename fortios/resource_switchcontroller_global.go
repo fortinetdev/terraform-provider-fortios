@@ -189,6 +189,11 @@ func resourceSwitchControllerGlobal() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"switch_on_deauth": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -506,6 +511,10 @@ func flattenSwitchControllerGlobalFirmwareProvisionOnAuthorization(v interface{}
 	return v
 }
 
+func flattenSwitchControllerGlobalSwitchOnDeauth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectSwitchControllerGlobal(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 	var b_get_all_tables bool
@@ -691,6 +700,12 @@ func refreshObjectSwitchControllerGlobal(d *schema.ResourceData, o map[string]in
 		}
 	}
 
+	if err = d.Set("switch_on_deauth", flattenSwitchControllerGlobalSwitchOnDeauth(o["switch-on-deauth"], d, "switch_on_deauth", sv)); err != nil {
+		if !fortiAPIPatch(o["switch-on-deauth"]) {
+			return fmt.Errorf("Error reading switch_on_deauth: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -865,6 +880,10 @@ func expandSwitchControllerGlobalFipsEnforce(d *schema.ResourceData, v interface
 }
 
 func expandSwitchControllerGlobalFirmwareProvisionOnAuthorization(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerGlobalSwitchOnDeauth(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1211,6 +1230,19 @@ func getObjectSwitchControllerGlobal(d *schema.ResourceData, setArgNil bool, sv 
 				return &obj, err
 			} else if t != nil {
 				obj["firmware-provision-on-authorization"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("switch_on_deauth"); ok {
+		if setArgNil {
+			obj["switch-on-deauth"] = nil
+		} else {
+			t, err := expandSwitchControllerGlobalSwitchOnDeauth(d, v, "switch_on_deauth", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["switch-on-deauth"] = t
 			}
 		}
 	}

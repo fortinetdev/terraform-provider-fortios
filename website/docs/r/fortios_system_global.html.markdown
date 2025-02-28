@@ -159,6 +159,7 @@ The following arguments are supported:
 * `cpu_use_threshold` - Threshold at which CPU usage is reported. (% of total CPU, default = 90).
 * `log_single_cpu_high` - Enable/disable logging the event of a single CPU core reaching CPU usage threshold. Valid values: `enable`, `disable`.
 * `check_reset_range` - Configure ICMP error message verification. You can either apply strict RST range checking or disable it. Valid values: `strict`, `disable`.
+* `upgrade_report` - Enable/disable the generation of an upgrade report when upgrading the firmware. Valid values: `enable`, `disable`.
 * `vdom_mode` - Enable/disable support for split/multiple virtual domains (VDOMs). Valid values: `no-vdom`, `split-vdom`, `multi-vdom`.
 * `vdom_admin` - Enable/disable support for multiple virtual domains (VDOMs). Valid values: `enable`, `disable`.
 * `long_vdom_name` - Enable/disable long VDOM name support. Valid values: `enable`, `disable`.
@@ -324,6 +325,7 @@ The following arguments are supported:
 * `scim_https_port` - SCIM port (0 - 65535, default = 44559).
 * `scim_http_port` - SCIM http port (0 - 65535, default = 44558).
 * `scim_server_cert` - Server certificate that the FortiGate uses for SCIM connections.
+* `application_bandwidth_tracking` - Enable/disable application bandwidth tracking. Valid values: `disable`, `enable`.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
 * `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.

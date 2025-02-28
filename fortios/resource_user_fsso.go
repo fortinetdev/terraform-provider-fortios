@@ -210,6 +210,11 @@ func resourceUserFsso() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
 			},
+			"vrf_select": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 511),
+				Optional:     true,
+			},
 		},
 	}
 }
@@ -473,6 +478,10 @@ func flattenUserFssoInterface(v interface{}, d *schema.ResourceData, pre string,
 	return v
 }
 
+func flattenUserFssoVrfSelect(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
 func refreshObjectUserFsso(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -638,6 +647,12 @@ func refreshObjectUserFsso(d *schema.ResourceData, o map[string]interface{}, sv 
 		}
 	}
 
+	if err = d.Set("vrf_select", flattenUserFssoVrfSelect(o["vrf-select"], d, "vrf_select", sv)); err != nil {
+		if !fortiAPIPatch(o["vrf-select"]) {
+			return fmt.Errorf("Error reading vrf_select: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -772,6 +787,10 @@ func expandUserFssoInterfaceSelectMethod(d *schema.ResourceData, v interface{}, 
 }
 
 func expandUserFssoInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserFssoVrfSelect(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1096,6 +1115,17 @@ func getObjectUserFsso(d *schema.ResourceData, sv string) (*map[string]interface
 		}
 	} else if d.HasChange("interface") {
 		obj["interface"] = nil
+	}
+
+	if v, ok := d.GetOkExists("vrf_select"); ok {
+		t, err := expandUserFssoVrfSelect(d, v, "vrf_select", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["vrf-select"] = t
+		}
+	} else if d.HasChange("vrf_select") {
+		obj["vrf-select"] = nil
 	}
 
 	return &obj, nil

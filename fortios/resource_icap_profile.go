@@ -43,7 +43,7 @@ func resourceIcapProfile() *schema.Resource {
 			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				ForceNew:     true,
 				Optional:     true,
 				Computed:     true,
@@ -68,6 +68,11 @@ func resourceIcapProfile() *schema.Resource {
 				Optional: true,
 			},
 			"streaming_content_bypass": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"ocr_only": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -464,6 +469,10 @@ func flattenIcapProfileStreamingContentBypass(v interface{}, d *schema.ResourceD
 	return v
 }
 
+func flattenIcapProfileOcrOnly(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenIcapProfile204SizeLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return convintf2i(v)
 }
@@ -849,6 +858,12 @@ func refreshObjectIcapProfile(d *schema.ResourceData, o map[string]interface{}, 
 		}
 	}
 
+	if err = d.Set("ocr_only", flattenIcapProfileOcrOnly(o["ocr-only"], d, "ocr_only", sv)); err != nil {
+		if !fortiAPIPatch(o["ocr-only"]) {
+			return fmt.Errorf("Error reading ocr_only: %v", err)
+		}
+	}
+
 	if err = d.Set("n204_size_limit", flattenIcapProfile204SizeLimit(o["204-size-limit"], d, "n204_size_limit", sv)); err != nil {
 		if !fortiAPIPatch(o["204-size-limit"]) {
 			return fmt.Errorf("Error reading n204_size_limit: %v", err)
@@ -1041,6 +1056,10 @@ func expandIcapProfileFileTransfer(d *schema.ResourceData, v interface{}, pre st
 }
 
 func expandIcapProfileStreamingContentBypass(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandIcapProfileOcrOnly(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1416,6 +1435,15 @@ func getObjectIcapProfile(d *schema.ResourceData, sv string) (*map[string]interf
 			return &obj, err
 		} else if t != nil {
 			obj["streaming-content-bypass"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ocr_only"); ok {
+		t, err := expandIcapProfileOcrOnly(d, v, "ocr_only", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ocr-only"] = t
 		}
 	}
 

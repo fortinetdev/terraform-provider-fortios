@@ -40,6 +40,9 @@ The following attributes are exported:
 * `source_ip_interface` - IP address of the specified interface as the source IP address.
 * `rr_max` - Maximum number of resource records (10 - 65536, 0 means infinite).
 * `dns_entry` - DNS entry. The structure of `dns_entry` block is documented below.
+* `interface_select_method` - Specify how to select outgoing interface to reach server.
+* `interface` - Specify outgoing interface to reach server.
+* `vrf_select` - VRF ID used for connection to server.
 
 The `dns_entry` block contains:
 

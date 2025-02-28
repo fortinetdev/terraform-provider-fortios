@@ -271,6 +271,10 @@ func dataSourceSystemAutomationAction() *schema.Resource {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+			"duration": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
 			"execute_security_fabric": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -294,6 +298,10 @@ func dataSourceSystemAutomationAction() *schema.Resource {
 						},
 					},
 				},
+			},
+			"regular_expression": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
 			},
 		},
 	}
@@ -664,6 +672,10 @@ func dataSourceFlattenSystemAutomationActionTimeout(v interface{}, d *schema.Res
 	return v
 }
 
+func dataSourceFlattenSystemAutomationActionDuration(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemAutomationActionExecuteSecurityFabric(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -709,6 +721,10 @@ func dataSourceFlattenSystemAutomationActionSdnConnector(v interface{}, d *schem
 }
 
 func dataSourceFlattenSystemAutomationActionSdnConnectorName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemAutomationActionRegularExpression(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1009,6 +1025,12 @@ func dataSourceRefreshObjectSystemAutomationAction(d *schema.ResourceData, o map
 		}
 	}
 
+	if err = d.Set("duration", dataSourceFlattenSystemAutomationActionDuration(o["duration"], d, "duration")); err != nil {
+		if !fortiAPIPatch(o["duration"]) {
+			return fmt.Errorf("Error reading duration: %v", err)
+		}
+	}
+
 	if err = d.Set("execute_security_fabric", dataSourceFlattenSystemAutomationActionExecuteSecurityFabric(o["execute-security-fabric"], d, "execute_security_fabric")); err != nil {
 		if !fortiAPIPatch(o["execute-security-fabric"]) {
 			return fmt.Errorf("Error reading execute_security_fabric: %v", err)
@@ -1030,6 +1052,12 @@ func dataSourceRefreshObjectSystemAutomationAction(d *schema.ResourceData, o map
 	if err = d.Set("sdn_connector", dataSourceFlattenSystemAutomationActionSdnConnector(o["sdn-connector"], d, "sdn_connector")); err != nil {
 		if !fortiAPIPatch(o["sdn-connector"]) {
 			return fmt.Errorf("Error reading sdn_connector: %v", err)
+		}
+	}
+
+	if err = d.Set("regular_expression", dataSourceFlattenSystemAutomationActionRegularExpression(o["regular-expression"], d, "regular_expression")); err != nil {
+		if !fortiAPIPatch(o["regular-expression"]) {
+			return fmt.Errorf("Error reading regular_expression: %v", err)
 		}
 	}
 

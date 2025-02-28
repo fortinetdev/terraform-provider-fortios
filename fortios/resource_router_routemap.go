@@ -132,7 +132,7 @@ func resourceRouterRouteMap() *schema.Resource {
 						},
 						"match_vrf": &schema.Schema{
 							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 251),
+							ValidateFunc: validation.IntBetween(0, 511),
 							Optional:     true,
 						},
 						"set_aggregator_as": &schema.Schema{

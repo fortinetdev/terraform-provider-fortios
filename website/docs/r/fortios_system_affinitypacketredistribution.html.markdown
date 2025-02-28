@@ -17,7 +17,7 @@ The following arguments are supported:
 * `interface` - (Required) Physical interface name on which to perform packet redistribution.
 * `rxqid` - (Required) ID of the receive queue (when the interface has multiple queues) on which to perform packet redistribution (255 = all queues).
 * `round_robin` - Enable/disable round-robin redistribution to multiple CPUs. Valid values: `enable`, `disable`.
-* `affinity_cpumask` - (Required) Affinity setting for VM throughput (64-bit hexadecimal value in the format of 0xxxxxxxxxxxxxxxxx).
+* `affinity_cpumask` - (Required) Hexadecimal cpumask, empty value means all CPUs.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 

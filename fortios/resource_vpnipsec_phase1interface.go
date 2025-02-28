@@ -778,6 +778,11 @@ func resourceVpnIpsecPhase1Interface() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"auto_discovery_dialup_placeholder": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"encapsulation": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -2019,6 +2024,10 @@ func flattenVpnIpsecPhase1InterfaceAutoDiscoveryOfferInterval(v interface{}, d *
 	return convintf2i(v)
 }
 
+func flattenVpnIpsecPhase1InterfaceAutoDiscoveryDialupPlaceholder(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenVpnIpsecPhase1InterfaceEncapsulation(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -3159,6 +3168,12 @@ func refreshObjectVpnIpsecPhase1Interface(d *schema.ResourceData, o map[string]i
 		}
 	}
 
+	if err = d.Set("auto_discovery_dialup_placeholder", flattenVpnIpsecPhase1InterfaceAutoDiscoveryDialupPlaceholder(o["auto-discovery-dialup-placeholder"], d, "auto_discovery_dialup_placeholder", sv)); err != nil {
+		if !fortiAPIPatch(o["auto-discovery-dialup-placeholder"]) {
+			return fmt.Errorf("Error reading auto_discovery_dialup_placeholder: %v", err)
+		}
+	}
+
 	if err = d.Set("encapsulation", flattenVpnIpsecPhase1InterfaceEncapsulation(o["encapsulation"], d, "encapsulation", sv)); err != nil {
 		if !fortiAPIPatch(o["encapsulation"]) {
 			return fmt.Errorf("Error reading encapsulation: %v", err)
@@ -4277,6 +4292,10 @@ func expandVpnIpsecPhase1InterfaceAutoDiscoveryCrossover(d *schema.ResourceData,
 }
 
 func expandVpnIpsecPhase1InterfaceAutoDiscoveryOfferInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnIpsecPhase1InterfaceAutoDiscoveryDialupPlaceholder(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -5861,6 +5880,15 @@ func getObjectVpnIpsecPhase1Interface(d *schema.ResourceData, sv string) (*map[s
 			return &obj, err
 		} else if t != nil {
 			obj["auto-discovery-offer-interval"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("auto_discovery_dialup_placeholder"); ok {
+		t, err := expandVpnIpsecPhase1InterfaceAutoDiscoveryDialupPlaceholder(d, v, "auto_discovery_dialup_placeholder", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["auto-discovery-dialup-placeholder"] = t
 		}
 	}
 

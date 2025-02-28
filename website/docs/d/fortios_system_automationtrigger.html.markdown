@@ -27,6 +27,7 @@ The following attributes are exported:
 * `license_type` - License type.
 * `ioc_level` - IOC threat level.
 * `report_type` - Security Rating report.
+* `stitch_name` - Triggering stitch name.
 * `logid_block` - Log IDs to trigger event. The structure of `logid_block` block is documented below.
 * `logid` - Log ID to trigger event.
 * `trigger_frequency` - Scheduled trigger frequency (default = daily).

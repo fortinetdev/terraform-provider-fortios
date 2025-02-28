@@ -63,6 +63,7 @@ The following arguments are supported:
 * `max_rogue_ap` - Maximum number of rogue APs stored on the controller (default = 0).
 * `max_rogue_ap_wtp` - Maximum number of rogue AP's wtp info stored on the controller (1 - 16, default = 16).
 * `max_rogue_sta` - Maximum number of rogue stations stored on the controller (default = 0).
+* `max_wids_entry` - Maximum number of wids entries stored on the controller (default = 0).
 * `max_ble_device` - Maximum number of BLE devices stored on the controller (default = 0).
 * `dfs_lab_test` - Enable/disable DFS certificate lab test mode. Valid values: `enable`, `disable`.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.

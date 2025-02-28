@@ -739,6 +739,11 @@ func resourceSystemGlobal() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"upgrade_report": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"vdom_mode": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -1609,6 +1614,12 @@ func resourceSystemGlobal() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
+				Computed:     true,
+			},
+			"application_bandwidth_tracking": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
@@ -2271,6 +2282,10 @@ func flattenSystemGlobalLogSingleCpuHigh(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenSystemGlobalCheckResetRange(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemGlobalUpgradeReport(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2983,6 +2998,10 @@ func flattenSystemGlobalScimHttpPort(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenSystemGlobalScimServerCert(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemGlobalApplicationBandwidthTracking(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -3796,6 +3815,12 @@ func refreshObjectSystemGlobal(d *schema.ResourceData, o map[string]interface{},
 	if err = d.Set("check_reset_range", flattenSystemGlobalCheckResetRange(o["check-reset-range"], d, "check_reset_range", sv)); err != nil {
 		if !fortiAPIPatch(o["check-reset-range"]) {
 			return fmt.Errorf("Error reading check_reset_range: %v", err)
+		}
+	}
+
+	if err = d.Set("upgrade_report", flattenSystemGlobalUpgradeReport(o["upgrade-report"], d, "upgrade_report", sv)); err != nil {
+		if !fortiAPIPatch(o["upgrade-report"]) {
+			return fmt.Errorf("Error reading upgrade_report: %v", err)
 		}
 	}
 
@@ -4799,6 +4824,12 @@ func refreshObjectSystemGlobal(d *schema.ResourceData, o map[string]interface{},
 		}
 	}
 
+	if err = d.Set("application_bandwidth_tracking", flattenSystemGlobalApplicationBandwidthTracking(o["application-bandwidth-tracking"], d, "application_bandwidth_tracking", sv)); err != nil {
+		if !fortiAPIPatch(o["application-bandwidth-tracking"]) {
+			return fmt.Errorf("Error reading application_bandwidth_tracking: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -5345,6 +5376,10 @@ func expandSystemGlobalLogSingleCpuHigh(d *schema.ResourceData, v interface{}, p
 }
 
 func expandSystemGlobalCheckResetRange(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemGlobalUpgradeReport(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -6029,6 +6064,10 @@ func expandSystemGlobalScimHttpPort(d *schema.ResourceData, v interface{}, pre s
 }
 
 func expandSystemGlobalScimServerCert(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemGlobalApplicationBandwidthTracking(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -7806,6 +7845,19 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 				return &obj, err
 			} else if t != nil {
 				obj["check-reset-range"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("upgrade_report"); ok {
+		if setArgNil {
+			obj["upgrade-report"] = nil
+		} else {
+			t, err := expandSystemGlobalUpgradeReport(d, v, "upgrade_report", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["upgrade-report"] = t
 			}
 		}
 	}
@@ -10007,8 +10059,19 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 				obj["scim-server-cert"] = t
 			}
 		}
-	} else if d.HasChange("scim_server_cert") {
-		obj["scim-server-cert"] = nil
+	}
+
+	if v, ok := d.GetOk("application_bandwidth_tracking"); ok {
+		if setArgNil {
+			obj["application-bandwidth-tracking"] = nil
+		} else {
+			t, err := expandSystemGlobalApplicationBandwidthTracking(d, v, "application_bandwidth_tracking", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["application-bandwidth-tracking"] = t
+			}
+		}
 	}
 
 	return &obj, nil

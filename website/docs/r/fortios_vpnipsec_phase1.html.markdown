@@ -170,13 +170,13 @@ The following arguments are supported:
 * `npu_offload` - Enable/disable offloading NPU. Valid values: `enable`, `disable`.
 * `send_cert_chain` - Enable/disable sending certificate chain. Valid values: `enable`, `disable`.
 * `dhgrp` - DH group. Valid values: `1`, `2`, `5`, `14`, `15`, `16`, `17`, `18`, `19`, `20`, `21`, `27`, `28`, `29`, `30`, `31`, `32`.
-* `addke1` - ADDKE1 group. Valid values: `0`, `1080`, `1081`, `1082`.
-* `addke2` - ADDKE2 group. Valid values: `0`, `1080`, `1081`, `1082`.
-* `addke3` - ADDKE3 group. Valid values: `0`, `1080`, `1081`, `1082`.
-* `addke4` - ADDKE4 group. Valid values: `0`, `1080`, `1081`, `1082`.
-* `addke5` - ADDKE5 group. Valid values: `0`, `1080`, `1081`, `1082`.
-* `addke6` - ADDKE6 group. Valid values: `0`, `1080`, `1081`, `1082`.
-* `addke7` - ADDKE7 group. Valid values: `0`, `1080`, `1081`, `1082`.
+* `addke1` - ADDKE1 group.
+* `addke2` - ADDKE2 group.
+* `addke3` - ADDKE3 group.
+* `addke4` - ADDKE4 group.
+* `addke5` - ADDKE5 group.
+* `addke6` - ADDKE6 group.
+* `addke7` - ADDKE7 group.
 * `suite_b` - Use Suite-B. Valid values: `disable`, `suite-b-gcm-128`, `suite-b-gcm-256`.
 * `eap` - Enable/disable IKEv2 EAP authentication. Valid values: `enable`, `disable`.
 * `eap_identity` - IKEv2 EAP peer identity type. Valid values: `use-id-payload`, `send-request`.

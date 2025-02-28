@@ -104,6 +104,10 @@ func dataSourceSystemDns() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"source_ip_interface": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"root_servers": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -114,6 +118,10 @@ func dataSourceSystemDns() *schema.Resource {
 			},
 			"interface": &schema.Schema{
 				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"vrf_select": &schema.Schema{
+				Type:     schema.TypeInt,
 				Computed: true,
 			},
 			"server_select_method": &schema.Schema{
@@ -314,6 +322,10 @@ func dataSourceFlattenSystemDnsSourceIp(v interface{}, d *schema.ResourceData, p
 	return v
 }
 
+func dataSourceFlattenSystemDnsSourceIpInterface(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemDnsRootServers(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -323,6 +335,10 @@ func dataSourceFlattenSystemDnsInterfaceSelectMethod(v interface{}, d *schema.Re
 }
 
 func dataSourceFlattenSystemDnsInterface(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemDnsVrfSelect(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -455,6 +471,12 @@ func dataSourceRefreshObjectSystemDns(d *schema.ResourceData, o map[string]inter
 		}
 	}
 
+	if err = d.Set("source_ip_interface", dataSourceFlattenSystemDnsSourceIpInterface(o["source-ip-interface"], d, "source_ip_interface")); err != nil {
+		if !fortiAPIPatch(o["source-ip-interface"]) {
+			return fmt.Errorf("Error reading source_ip_interface: %v", err)
+		}
+	}
+
 	if err = d.Set("root_servers", dataSourceFlattenSystemDnsRootServers(o["root-servers"], d, "root_servers")); err != nil {
 		if !fortiAPIPatch(o["root-servers"]) {
 			return fmt.Errorf("Error reading root_servers: %v", err)
@@ -470,6 +492,12 @@ func dataSourceRefreshObjectSystemDns(d *schema.ResourceData, o map[string]inter
 	if err = d.Set("interface", dataSourceFlattenSystemDnsInterface(o["interface"], d, "interface")); err != nil {
 		if !fortiAPIPatch(o["interface"]) {
 			return fmt.Errorf("Error reading interface: %v", err)
+		}
+	}
+
+	if err = d.Set("vrf_select", dataSourceFlattenSystemDnsVrfSelect(o["vrf-select"], d, "vrf_select")); err != nil {
+		if !fortiAPIPatch(o["vrf-select"]) {
+			return fmt.Errorf("Error reading vrf_select: %v", err)
 		}
 	}
 

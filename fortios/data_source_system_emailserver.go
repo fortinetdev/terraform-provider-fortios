@@ -85,6 +85,10 @@ func dataSourceSystemEmailServer() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"vrf_select": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -179,6 +183,10 @@ func dataSourceFlattenSystemEmailServerInterface(v interface{}, d *schema.Resour
 	return v
 }
 
+func dataSourceFlattenSystemEmailServerVrfSelect(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceRefreshObjectSystemEmailServer(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
 
@@ -257,6 +265,12 @@ func dataSourceRefreshObjectSystemEmailServer(d *schema.ResourceData, o map[stri
 	if err = d.Set("interface", dataSourceFlattenSystemEmailServerInterface(o["interface"], d, "interface")); err != nil {
 		if !fortiAPIPatch(o["interface"]) {
 			return fmt.Errorf("Error reading interface: %v", err)
+		}
+	}
+
+	if err = d.Set("vrf_select", dataSourceFlattenSystemEmailServerVrfSelect(o["vrf-select"], d, "vrf_select")); err != nil {
+		if !fortiAPIPatch(o["vrf-select"]) {
+			return fmt.Errorf("Error reading vrf_select: %v", err)
 		}
 	}
 

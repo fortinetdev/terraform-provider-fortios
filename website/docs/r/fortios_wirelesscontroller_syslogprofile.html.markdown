@@ -20,6 +20,7 @@ The following arguments are supported:
 * `server_fqdn` - FQDN of syslog server that FortiAP units send log messages to.
 * `server_ip` - IP address of syslog server that FortiAP units send log messages to.
 * `server_port` - Port number of syslog server that FortiAP units send log messages to (default = 514).
+* `server_type` - Configure syslog server type (default = standard). Valid values: `standard`, `fortianalyzer`.
 * `log_level` - Lowest level of log messages that FortiAP units send to this server (default = information) Valid values: `emergency`, `alert`, `critical`, `error`, `warning`, `notification`, `information`, `debugging`.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 

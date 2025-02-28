@@ -55,22 +55,22 @@ func resourceWirelessControllerUtmProfile() *schema.Resource {
 			},
 			"ips_sensor": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"application_list": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"antivirus_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"webfilter_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"scan_botnet_connections": &schema.Schema{

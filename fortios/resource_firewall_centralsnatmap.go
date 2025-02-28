@@ -166,6 +166,11 @@ func resourceFirewallCentralSnatMap() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"port_random": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"protocol": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
@@ -725,6 +730,10 @@ func flattenFirewallCentralSnatMapPortPreserve(v interface{}, d *schema.Resource
 	return v
 }
 
+func flattenFirewallCentralSnatMapPortRandom(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallCentralSnatMapProtocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return convintf2i(v)
 }
@@ -921,6 +930,12 @@ func refreshObjectFirewallCentralSnatMap(d *schema.ResourceData, o map[string]in
 	if err = d.Set("port_preserve", flattenFirewallCentralSnatMapPortPreserve(o["port-preserve"], d, "port_preserve", sv)); err != nil {
 		if !fortiAPIPatch(o["port-preserve"]) {
 			return fmt.Errorf("Error reading port_preserve: %v", err)
+		}
+	}
+
+	if err = d.Set("port_random", flattenFirewallCentralSnatMapPortRandom(o["port-random"], d, "port_random", sv)); err != nil {
+		if !fortiAPIPatch(o["port-random"]) {
+			return fmt.Errorf("Error reading port_random: %v", err)
 		}
 	}
 
@@ -1225,6 +1240,10 @@ func expandFirewallCentralSnatMapPortPreserve(d *schema.ResourceData, v interfac
 	return v, nil
 }
 
+func expandFirewallCentralSnatMapPortRandom(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallCentralSnatMapProtocol(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -1374,6 +1393,15 @@ func getObjectFirewallCentralSnatMap(d *schema.ResourceData, sv string) (*map[st
 			return &obj, err
 		} else if t != nil {
 			obj["port-preserve"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("port_random"); ok {
+		t, err := expandFirewallCentralSnatMapPortRandom(d, v, "port_random", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["port-random"] = t
 		}
 	}
 

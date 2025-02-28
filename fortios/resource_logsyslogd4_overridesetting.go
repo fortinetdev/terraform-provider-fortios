@@ -145,6 +145,11 @@ func resourceLogSyslogd4OverrideSetting() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
 			},
+			"vrf_select": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 511),
+				Optional:     true,
+			},
 			"syslog_type": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
@@ -406,6 +411,10 @@ func flattenLogSyslogd4OverrideSettingInterface(v interface{}, d *schema.Resourc
 	return v
 }
 
+func flattenLogSyslogd4OverrideSettingVrfSelect(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
 func flattenLogSyslogd4OverrideSettingSyslogType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return convintf2i(v)
 }
@@ -534,6 +543,12 @@ func refreshObjectLogSyslogd4OverrideSetting(d *schema.ResourceData, o map[strin
 	if err = d.Set("interface", flattenLogSyslogd4OverrideSettingInterface(o["interface"], d, "interface", sv)); err != nil {
 		if !fortiAPIPatch(o["interface"]) {
 			return fmt.Errorf("Error reading interface: %v", err)
+		}
+	}
+
+	if err = d.Set("vrf_select", flattenLogSyslogd4OverrideSettingVrfSelect(o["vrf-select"], d, "vrf_select", sv)); err != nil {
+		if !fortiAPIPatch(o["vrf-select"]) {
+			return fmt.Errorf("Error reading vrf_select: %v", err)
 		}
 	}
 
@@ -670,6 +685,10 @@ func expandLogSyslogd4OverrideSettingInterfaceSelectMethod(d *schema.ResourceDat
 }
 
 func expandLogSyslogd4OverrideSettingInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogSyslogd4OverrideSettingVrfSelect(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -926,6 +945,21 @@ func getObjectLogSyslogd4OverrideSetting(d *schema.ResourceData, setArgNil bool,
 		}
 	} else if d.HasChange("interface") {
 		obj["interface"] = nil
+	}
+
+	if v, ok := d.GetOkExists("vrf_select"); ok {
+		if setArgNil {
+			obj["vrf-select"] = nil
+		} else {
+			t, err := expandLogSyslogd4OverrideSettingVrfSelect(d, v, "vrf_select", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["vrf-select"] = t
+			}
+		}
+	} else if d.HasChange("vrf_select") {
+		obj["vrf-select"] = nil
 	}
 
 	if v, ok := d.GetOkExists("syslog_type"); ok {

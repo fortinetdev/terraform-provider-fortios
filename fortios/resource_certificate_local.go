@@ -205,7 +205,7 @@ func resourceCertificateLocal() *schema.Resource {
 			},
 			"est_http_password": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 63),
+				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
 			},
 			"est_client_cert": &schema.Schema{
@@ -225,8 +225,13 @@ func resourceCertificateLocal() *schema.Resource {
 			},
 			"est_srp_password": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 63),
+				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+			},
+			"est_regeneration_method": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 		},
 	}
@@ -523,6 +528,10 @@ func flattenCertificateLocalEstSrpPassword(v interface{}, d *schema.ResourceData
 	return v
 }
 
+func flattenCertificateLocalEstRegenerationMethod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectCertificateLocal(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -736,6 +745,12 @@ func refreshObjectCertificateLocal(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
+	if err = d.Set("est_regeneration_method", flattenCertificateLocalEstRegenerationMethod(o["est-regeneration-method"], d, "est_regeneration_method", sv)); err != nil {
+		if !fortiAPIPatch(o["est-regeneration-method"]) {
+			return fmt.Errorf("Error reading est_regeneration_method: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -894,6 +909,10 @@ func expandCertificateLocalEstSrpUsername(d *schema.ResourceData, v interface{},
 }
 
 func expandCertificateLocalEstSrpPassword(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandCertificateLocalEstRegenerationMethod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1288,6 +1307,15 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 		}
 	} else if d.HasChange("est_srp_password") {
 		obj["est-srp-password"] = nil
+	}
+
+	if v, ok := d.GetOk("est_regeneration_method"); ok {
+		t, err := expandCertificateLocalEstRegenerationMethod(d, v, "est_regeneration_method", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["est-regeneration-method"] = t
+		}
 	}
 
 	return &obj, nil

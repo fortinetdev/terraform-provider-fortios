@@ -51,6 +51,7 @@ The following arguments are supported:
 * `est_server_cert` - EST server's certificate must be verifiable by this certificate to be authenticated.
 * `est_srp_username` - EST SRP authentication username.
 * `est_srp_password` - EST SRP authentication password.
+* `est_regeneration_method` - EST behavioral options during re-enrollment. Valid values: `create-new-key`, `use-existing-key`.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 

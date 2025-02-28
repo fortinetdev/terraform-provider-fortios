@@ -69,6 +69,22 @@ func resourceWebProxyForwardServer() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"interface_select_method": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"interface": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 15),
+				Optional:     true,
+			},
+			"vrf_select": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: intBetweenWithMinus1(0, 511),
+				Optional:     true,
+				Computed:     true,
+			},
 			"healthcheck": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -285,6 +301,23 @@ func flattenWebProxyForwardServerPort(v interface{}, d *schema.ResourceData, pre
 	return convintf2i(v)
 }
 
+func flattenWebProxyForwardServerInterfaceSelectMethod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWebProxyForwardServerInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWebProxyForwardServerVrfSelect(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if vf, ok := v.(float64); ok && (vf < 0 || vf == 4294967295) {
+		var vi interface{}
+		vi = -1
+		return vi
+	}
+	return v
+}
+
 func flattenWebProxyForwardServerHealthcheck(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -345,6 +378,24 @@ func refreshObjectWebProxyForwardServer(d *schema.ResourceData, o map[string]int
 	if err = d.Set("port", flattenWebProxyForwardServerPort(o["port"], d, "port", sv)); err != nil {
 		if !fortiAPIPatch(o["port"]) {
 			return fmt.Errorf("Error reading port: %v", err)
+		}
+	}
+
+	if err = d.Set("interface_select_method", flattenWebProxyForwardServerInterfaceSelectMethod(o["interface-select-method"], d, "interface_select_method", sv)); err != nil {
+		if !fortiAPIPatch(o["interface-select-method"]) {
+			return fmt.Errorf("Error reading interface_select_method: %v", err)
+		}
+	}
+
+	if err = d.Set("interface", flattenWebProxyForwardServerInterface(o["interface"], d, "interface", sv)); err != nil {
+		if !fortiAPIPatch(o["interface"]) {
+			return fmt.Errorf("Error reading interface: %v", err)
+		}
+	}
+
+	if err = d.Set("vrf_select", flattenWebProxyForwardServerVrfSelect(o["vrf-select"], d, "vrf_select", sv)); err != nil {
+		if !fortiAPIPatch(o["vrf-select"]) {
+			return fmt.Errorf("Error reading vrf_select: %v", err)
 		}
 	}
 
@@ -414,6 +465,21 @@ func expandWebProxyForwardServerFqdn(d *schema.ResourceData, v interface{}, pre 
 }
 
 func expandWebProxyForwardServerPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWebProxyForwardServerInterfaceSelectMethod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWebProxyForwardServerInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWebProxyForwardServerVrfSelect(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	if vi, ok := v.(int); ok && vi < 0 {
+		return nil, nil
+	}
 	return v, nil
 }
 
@@ -502,6 +568,34 @@ func getObjectWebProxyForwardServer(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["port"] = t
 		}
+	}
+
+	if v, ok := d.GetOk("interface_select_method"); ok {
+		t, err := expandWebProxyForwardServerInterfaceSelectMethod(d, v, "interface_select_method", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["interface-select-method"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("interface"); ok {
+		t, err := expandWebProxyForwardServerInterface(d, v, "interface", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["interface"] = t
+		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
+	}
+
+	if v, ok := d.GetOkExists("vrf_select"); ok {
+		t, err := expandWebProxyForwardServerVrfSelect(d, v, "vrf_select", sv)
+		if err != nil {
+			return &obj, err
+		}
+		obj["vrf-select"] = t
 	}
 
 	if v, ok := d.GetOk("healthcheck"); ok {

@@ -88,6 +88,11 @@ func resourceUserExternalIdentityProvider() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
 			},
+			"vrf_select": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 511),
+				Optional:     true,
+			},
 			"server_identity_check": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -294,6 +299,10 @@ func flattenUserExternalIdentityProviderInterface(v interface{}, d *schema.Resou
 	return v
 }
 
+func flattenUserExternalIdentityProviderVrfSelect(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
 func flattenUserExternalIdentityProviderServerIdentityCheck(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -365,6 +374,12 @@ func refreshObjectUserExternalIdentityProvider(d *schema.ResourceData, o map[str
 		}
 	}
 
+	if err = d.Set("vrf_select", flattenUserExternalIdentityProviderVrfSelect(o["vrf-select"], d, "vrf_select", sv)); err != nil {
+		if !fortiAPIPatch(o["vrf-select"]) {
+			return fmt.Errorf("Error reading vrf_select: %v", err)
+		}
+	}
+
 	if err = d.Set("server_identity_check", flattenUserExternalIdentityProviderServerIdentityCheck(o["server-identity-check"], d, "server_identity_check", sv)); err != nil {
 		if !fortiAPIPatch(o["server-identity-check"]) {
 			return fmt.Errorf("Error reading server_identity_check: %v", err)
@@ -423,6 +438,10 @@ func expandUserExternalIdentityProviderInterfaceSelectMethod(d *schema.ResourceD
 }
 
 func expandUserExternalIdentityProviderInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserExternalIdentityProviderVrfSelect(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -537,6 +556,17 @@ func getObjectUserExternalIdentityProvider(d *schema.ResourceData, sv string) (*
 		}
 	} else if d.HasChange("interface") {
 		obj["interface"] = nil
+	}
+
+	if v, ok := d.GetOkExists("vrf_select"); ok {
+		t, err := expandUserExternalIdentityProviderVrfSelect(d, v, "vrf_select", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["vrf-select"] = t
+		}
+	} else if d.HasChange("vrf_select") {
+		obj["vrf-select"] = nil
 	}
 
 	if v, ok := d.GetOk("server_identity_check"); ok {

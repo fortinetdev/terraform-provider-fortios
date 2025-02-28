@@ -527,44 +527,44 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 			},
 			"profile_group": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"profile_protocol_options": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 				Computed:     true,
 			},
 			"ssl_ssh_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 				Computed:     true,
 			},
 			"av_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"webfilter_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"dnsfilter_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"emailfilter_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"dlp_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"dlp_sensor": &schema.Schema{
@@ -574,47 +574,47 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 			},
 			"file_filter_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"ips_sensor": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"application_list": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"voip_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"ips_voip_filter": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"sctp_filter_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"diameter_filter_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"virtual_patch_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"icap_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"cifs_profile": &schema.Schema{
@@ -624,17 +624,17 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 			},
 			"videofilter_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"ssh_filter_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"casb_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"application": &schema.Schema{
@@ -5339,7 +5339,7 @@ func getObjectFirewallSecurityPolicy(d *schema.ResourceData, sv string) (*map[st
 
 	if v, ok := d.GetOk("url_category"); ok || d.HasChange("url_category") {
 		new_version_map := map[string][]string{
-			"=": []string{"6.2.4", "6.2.6", "6.4.0", "6.4.1", "6.4.2", "6.4.10", "6.4.11", "6.4.12", "6.4.13", "6.4.14", "6.4.15", "7.0.0", "7.0.1", "7.0.2", "7.0.3", "7.0.4", "7.0.5", "7.0.6", "7.0.7", "7.0.8", "7.0.9", "7.0.10", "7.0.11", "7.0.12", "7.0.13", "7.0.14", "7.0.15"},
+			"=": []string{"6.2.4", "6.2.6", "6.4.0", "6.4.1", "6.4.2", "6.4.10", "6.4.11", "6.4.12", "6.4.13", "6.4.14", "6.4.15", "7.0.0", "7.0.1", "7.0.2", "7.0.3", "7.0.4", "7.0.5", "7.0.6", "7.0.7", "7.0.8", "7.0.9", "7.0.10", "7.0.11", "7.0.12", "7.0.13", "7.0.14", "7.0.15", "7.0.16", "7.0.17"},
 		}
 		if versionMatch, err := checkVersionMatch(sv, new_version_map); !versionMatch {
 			if _, ok := d.GetOk("url_category_unitary"); !ok && !d.HasChange("url_category_unitary") {

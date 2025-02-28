@@ -144,6 +144,10 @@ func dataSourceFirewallCentralSnatMap() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"port_random": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"protocol": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
@@ -531,6 +535,10 @@ func dataSourceFlattenFirewallCentralSnatMapPortPreserve(v interface{}, d *schem
 	return v
 }
 
+func dataSourceFlattenFirewallCentralSnatMapPortRandom(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallCentralSnatMapProtocol(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -641,6 +649,12 @@ func dataSourceRefreshObjectFirewallCentralSnatMap(d *schema.ResourceData, o map
 	if err = d.Set("port_preserve", dataSourceFlattenFirewallCentralSnatMapPortPreserve(o["port-preserve"], d, "port_preserve")); err != nil {
 		if !fortiAPIPatch(o["port-preserve"]) {
 			return fmt.Errorf("Error reading port_preserve: %v", err)
+		}
+	}
+
+	if err = d.Set("port_random", dataSourceFlattenFirewallCentralSnatMapPortRandom(o["port-random"], d, "port_random")); err != nil {
+		if !fortiAPIPatch(o["port-random"]) {
+			return fmt.Errorf("Error reading port_random: %v", err)
 		}
 	}
 

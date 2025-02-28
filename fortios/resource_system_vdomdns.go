@@ -95,6 +95,11 @@ func resourceSystemVdomDns() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"source_ip_interface": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 15),
+				Optional:     true,
+			},
 			"interface_select_method": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -103,6 +108,11 @@ func resourceSystemVdomDns() *schema.Resource {
 			"interface": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
+				Optional:     true,
+			},
+			"vrf_select": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 511),
 				Optional:     true,
 			},
 			"server_select_method": &schema.Schema{
@@ -326,12 +336,20 @@ func flattenSystemVdomDnsSourceIp(v interface{}, d *schema.ResourceData, pre str
 	return v
 }
 
+func flattenSystemVdomDnsSourceIpInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemVdomDnsInterfaceSelectMethod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
 func flattenSystemVdomDnsInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
+}
+
+func flattenSystemVdomDnsVrfSelect(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
 }
 
 func flattenSystemVdomDnsServerSelectMethod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -425,6 +443,12 @@ func refreshObjectSystemVdomDns(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
+	if err = d.Set("source_ip_interface", flattenSystemVdomDnsSourceIpInterface(o["source-ip-interface"], d, "source_ip_interface", sv)); err != nil {
+		if !fortiAPIPatch(o["source-ip-interface"]) {
+			return fmt.Errorf("Error reading source_ip_interface: %v", err)
+		}
+	}
+
 	if err = d.Set("interface_select_method", flattenSystemVdomDnsInterfaceSelectMethod(o["interface-select-method"], d, "interface_select_method", sv)); err != nil {
 		if !fortiAPIPatch(o["interface-select-method"]) {
 			return fmt.Errorf("Error reading interface_select_method: %v", err)
@@ -434,6 +458,12 @@ func refreshObjectSystemVdomDns(d *schema.ResourceData, o map[string]interface{}
 	if err = d.Set("interface", flattenSystemVdomDnsInterface(o["interface"], d, "interface", sv)); err != nil {
 		if !fortiAPIPatch(o["interface"]) {
 			return fmt.Errorf("Error reading interface: %v", err)
+		}
+	}
+
+	if err = d.Set("vrf_select", flattenSystemVdomDnsVrfSelect(o["vrf-select"], d, "vrf_select", sv)); err != nil {
+		if !fortiAPIPatch(o["vrf-select"]) {
+			return fmt.Errorf("Error reading vrf_select: %v", err)
 		}
 	}
 
@@ -528,11 +558,19 @@ func expandSystemVdomDnsSourceIp(d *schema.ResourceData, v interface{}, pre stri
 	return v, nil
 }
 
+func expandSystemVdomDnsSourceIpInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemVdomDnsInterfaceSelectMethod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
 func expandSystemVdomDnsInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemVdomDnsVrfSelect(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -681,6 +719,21 @@ func getObjectSystemVdomDns(d *schema.ResourceData, setArgNil bool, sv string) (
 		}
 	}
 
+	if v, ok := d.GetOk("source_ip_interface"); ok {
+		if setArgNil {
+			obj["source-ip-interface"] = nil
+		} else {
+			t, err := expandSystemVdomDnsSourceIpInterface(d, v, "source_ip_interface", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["source-ip-interface"] = t
+			}
+		}
+	} else if d.HasChange("source_ip_interface") {
+		obj["source-ip-interface"] = nil
+	}
+
 	if v, ok := d.GetOk("interface_select_method"); ok {
 		if setArgNil {
 			obj["interface-select-method"] = nil
@@ -707,6 +760,21 @@ func getObjectSystemVdomDns(d *schema.ResourceData, setArgNil bool, sv string) (
 		}
 	} else if d.HasChange("interface") {
 		obj["interface"] = nil
+	}
+
+	if v, ok := d.GetOkExists("vrf_select"); ok {
+		if setArgNil {
+			obj["vrf-select"] = nil
+		} else {
+			t, err := expandSystemVdomDnsVrfSelect(d, v, "vrf_select", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["vrf-select"] = t
+			}
+		}
+	} else if d.HasChange("vrf_select") {
+		obj["vrf-select"] = nil
 	}
 
 	if v, ok := d.GetOk("server_select_method"); ok {

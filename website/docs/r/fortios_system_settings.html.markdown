@@ -60,6 +60,7 @@ The following arguments are supported:
 * `dhcp_proxy` - Enable/disable the DHCP Proxy. Valid values: `enable`, `disable`.
 * `dhcp_proxy_interface_select_method` - Specify how to select outgoing interface to reach server. Valid values: `auto`, `sdwan`, `specify`.
 * `dhcp_proxy_interface` - Specify outgoing interface to reach server.
+* `dhcp_proxy_vrf_select` - VRF ID used for connection to server.
 * `dhcp_server_ip` - DHCP Server IPv4 address.
 * `dhcp6_server_ip` - DHCPv6 server IPv6 address.
 * `central_nat` - Enable/disable central NAT. Valid values: `enable`, `disable`.
@@ -71,6 +72,7 @@ The following arguments are supported:
 * `nat46_force_ipv4_packet_forwarding` - Enable/disable mandatory IPv4 packet forwarding in NAT46. Valid values: `enable`, `disable`.
 * `nat64_force_ipv6_packet_forwarding` - Enable/disable mandatory IPv6 packet forwarding in NAT64. Valid values: `enable`, `disable`.
 * `detect_unknown_esp` - Enable/disable detection of unknown ESP packets (default = enable). Valid values: `enable`, `disable`.
+* `intree_ses_best_route` - Force the intree session to always use the best route. Valid values: `force`, `disable`.
 * `auxiliary_session` - Enable/disable auxiliary session. Valid values: `enable`, `disable`.
 * `asymroute` - Enable/disable IPv4 asymmetric routing. Valid values: `enable`, `disable`.
 * `asymroute_icmp` - Enable/disable ICMP asymmetric routing. Valid values: `enable`, `disable`.
@@ -147,6 +149,7 @@ The following arguments are supported:
 * `gui_dnsfilter` - Enable/disable DNS Filtering on the GUI. Valid values: `enable`, `disable`.
 * `gui_waf_profile` - Enable/disable Web Application Firewall on the GUI. Valid values: `enable`, `disable`.
 * `gui_dlp_profile` - Enable/disable Data Leak Prevention on the GUI. Valid values: `enable`, `disable`.
+* `gui_dlp_advanced` - Enable/disable Show advanced DLP expressions on the GUI. Valid values: `enable`, `disable`.
 * `gui_virtual_patch_profile` - Enable/disable Virtual Patching on the GUI. Valid values: `enable`, `disable`.
 * `gui_casb` - Enable/disable Inline-CASB on the GUI. Valid values: `enable`, `disable`.
 * `gui_fortiextender_controller` - Enable/disable FortiExtender on the GUI. Valid values: `enable`, `disable`.
@@ -170,7 +173,7 @@ The following arguments are supported:
 * `ike_dn_format` - Configure IKE ASN.1 Distinguished Name format conventions. Valid values: `with-space`, `no-space`.
 * `ike_policy_route` - Enable/disable IKE Policy Based Routing (PBR). Valid values: `enable`, `disable`.
 * `ike_port` - UDP port for IKE/IPsec traffic (default 500).
-* `ike_tcp_port` - TCP port for IKE/IPsec traffic (default 4500).
+* `ike_tcp_port` - TCP port for IKE/IPsec traffic. On FortiOS versions 7.4.2-7.6.0: default 4500. On FortiOS versions >= 7.6.1: default 443.
 * `ike_natt_port` - UDP port for IKE/IPsec traffic in NAT-T mode (default 4500).
 * `block_land_attack` - Enable/disable blocking of land attacks. Valid values: `disable`, `enable`.
 * `default_app_port_as_service` - Enable/disable policy service enforcement based on application default ports. Valid values: `enable`, `disable`.

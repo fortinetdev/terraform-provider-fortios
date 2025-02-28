@@ -56,6 +56,10 @@ func dataSourceSystemFortisandbox() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"vrf_select": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
 			"enc_algorithm": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -65,6 +69,14 @@ func dataSourceSystemFortisandbox() *schema.Resource {
 				Computed: true,
 			},
 			"email": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"ca": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"cn": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -134,6 +146,10 @@ func dataSourceFlattenSystemFortisandboxInterface(v interface{}, d *schema.Resou
 	return v
 }
 
+func dataSourceFlattenSystemFortisandboxVrfSelect(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemFortisandboxEncAlgorithm(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -143,6 +159,14 @@ func dataSourceFlattenSystemFortisandboxSslMinProtoVersion(v interface{}, d *sch
 }
 
 func dataSourceFlattenSystemFortisandboxEmail(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemFortisandboxCa(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemFortisandboxCn(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -191,6 +215,12 @@ func dataSourceRefreshObjectSystemFortisandbox(d *schema.ResourceData, o map[str
 		}
 	}
 
+	if err = d.Set("vrf_select", dataSourceFlattenSystemFortisandboxVrfSelect(o["vrf-select"], d, "vrf_select")); err != nil {
+		if !fortiAPIPatch(o["vrf-select"]) {
+			return fmt.Errorf("Error reading vrf_select: %v", err)
+		}
+	}
+
 	if err = d.Set("enc_algorithm", dataSourceFlattenSystemFortisandboxEncAlgorithm(o["enc-algorithm"], d, "enc_algorithm")); err != nil {
 		if !fortiAPIPatch(o["enc-algorithm"]) {
 			return fmt.Errorf("Error reading enc_algorithm: %v", err)
@@ -206,6 +236,18 @@ func dataSourceRefreshObjectSystemFortisandbox(d *schema.ResourceData, o map[str
 	if err = d.Set("email", dataSourceFlattenSystemFortisandboxEmail(o["email"], d, "email")); err != nil {
 		if !fortiAPIPatch(o["email"]) {
 			return fmt.Errorf("Error reading email: %v", err)
+		}
+	}
+
+	if err = d.Set("ca", dataSourceFlattenSystemFortisandboxCa(o["ca"], d, "ca")); err != nil {
+		if !fortiAPIPatch(o["ca"]) {
+			return fmt.Errorf("Error reading ca: %v", err)
+		}
+	}
+
+	if err = d.Set("cn", dataSourceFlattenSystemFortisandboxCn(o["cn"], d, "cn")); err != nil {
+		if !fortiAPIPatch(o["cn"]) {
+			return fmt.Errorf("Error reading cn: %v", err)
 		}
 	}
 

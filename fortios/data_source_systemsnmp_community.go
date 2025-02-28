@@ -73,6 +73,10 @@ func dataSourceSystemSnmpCommunity() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"vrf_select": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
 					},
 				},
 			},
@@ -107,6 +111,10 @@ func dataSourceSystemSnmpCommunity() *schema.Resource {
 						},
 						"interface": &schema.Schema{
 							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"vrf_select": &schema.Schema{
+							Type:     schema.TypeInt,
 							Computed: true,
 						},
 					},
@@ -285,6 +293,11 @@ func dataSourceFlattenSystemSnmpCommunityHosts(v interface{}, d *schema.Resource
 			tmp["interface"] = dataSourceFlattenSystemSnmpCommunityHostsInterface(i["interface"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrf_select"
+		if _, ok := i["vrf-select"]; ok {
+			tmp["vrf_select"] = dataSourceFlattenSystemSnmpCommunityHostsVrfSelect(i["vrf-select"], d, pre_append)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -302,6 +315,13 @@ func dataSourceFlattenSystemSnmpCommunityHostsSourceIp(v interface{}, d *schema.
 }
 
 func dataSourceFlattenSystemSnmpCommunityHostsIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	if v1, ok := d.GetOkExists(pre); ok && v != nil {
+		if s, ok := v1.(string); ok {
+			v = validateConvIPMask2CIDR(s, v.(string))
+			return v
+		}
+	}
+
 	return v
 }
 
@@ -318,6 +338,10 @@ func dataSourceFlattenSystemSnmpCommunityHostsInterfaceSelectMethod(v interface{
 }
 
 func dataSourceFlattenSystemSnmpCommunityHostsInterface(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemSnmpCommunityHostsVrfSelect(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -375,6 +399,11 @@ func dataSourceFlattenSystemSnmpCommunityHosts6(v interface{}, d *schema.Resourc
 			tmp["interface"] = dataSourceFlattenSystemSnmpCommunityHosts6Interface(i["interface"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrf_select"
+		if _, ok := i["vrf-select"]; ok {
+			tmp["vrf_select"] = dataSourceFlattenSystemSnmpCommunityHosts6VrfSelect(i["vrf-select"], d, pre_append)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -408,6 +437,10 @@ func dataSourceFlattenSystemSnmpCommunityHosts6InterfaceSelectMethod(v interface
 }
 
 func dataSourceFlattenSystemSnmpCommunityHosts6Interface(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemSnmpCommunityHosts6VrfSelect(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 

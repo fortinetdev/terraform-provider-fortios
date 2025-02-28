@@ -69,12 +69,12 @@ func resourceWebfilterOverride() *schema.Resource {
 			},
 			"old_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Required:     true,
 			},
 			"new_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Required:     true,
 			},
 			"ip6": &schema.Schema{

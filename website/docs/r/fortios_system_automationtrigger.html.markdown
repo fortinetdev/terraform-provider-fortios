@@ -36,6 +36,7 @@ The following arguments are supported:
 * `license_type` - License type.
 * `ioc_level` - IOC threat level. Valid values: `medium`, `high`.
 * `report_type` - Security Rating report.
+* `stitch_name` - Triggering stitch name.
 * `logid_block` - Log IDs to trigger event. *Due to the data type change of API, for other versions of FortiOS, please check variable `logid`.* The structure of `logid_block` block is documented below.
 * `logid` - Log ID to trigger event. *Due to the data type change of API, for other versions of FortiOS, please check variable `logid_block`.*
 * `trigger_frequency` - Scheduled trigger frequency (default = daily).

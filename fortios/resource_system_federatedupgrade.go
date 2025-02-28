@@ -88,6 +88,16 @@ func resourceSystemFederatedUpgrade() *schema.Resource {
 					},
 				},
 			},
+			"initial_version": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"starter_admin": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 64),
+				Optional:     true,
+			},
 			"node_list": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -336,6 +346,14 @@ func flattenSystemFederatedUpgradeKnownHaMembersSerial(v interface{}, d *schema.
 	return v
 }
 
+func flattenSystemFederatedUpgradeInitialVersion(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemFederatedUpgradeStarterAdmin(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemFederatedUpgradeNodeList(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -514,6 +532,18 @@ func refreshObjectSystemFederatedUpgrade(d *schema.ResourceData, o map[string]in
 		}
 	}
 
+	if err = d.Set("initial_version", flattenSystemFederatedUpgradeInitialVersion(o["initial-version"], d, "initial_version", sv)); err != nil {
+		if !fortiAPIPatch(o["initial-version"]) {
+			return fmt.Errorf("Error reading initial_version: %v", err)
+		}
+	}
+
+	if err = d.Set("starter_admin", flattenSystemFederatedUpgradeStarterAdmin(o["starter-admin"], d, "starter_admin", sv)); err != nil {
+		if !fortiAPIPatch(o["starter-admin"]) {
+			return fmt.Errorf("Error reading starter_admin: %v", err)
+		}
+	}
+
 	if b_get_all_tables {
 		if err = d.Set("node_list", flattenSystemFederatedUpgradeNodeList(o["node-list"], d, "node_list", sv)); err != nil {
 			if !fortiAPIPatch(o["node-list"]) {
@@ -601,6 +631,14 @@ func expandSystemFederatedUpgradeKnownHaMembers(d *schema.ResourceData, v interf
 }
 
 func expandSystemFederatedUpgradeKnownHaMembersSerial(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemFederatedUpgradeInitialVersion(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemFederatedUpgradeStarterAdmin(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -834,6 +872,34 @@ func getObjectSystemFederatedUpgrade(d *schema.ResourceData, setArgNil bool, sv 
 				obj["known-ha-members"] = t
 			}
 		}
+	}
+
+	if v, ok := d.GetOk("initial_version"); ok {
+		if setArgNil {
+			obj["initial-version"] = nil
+		} else {
+			t, err := expandSystemFederatedUpgradeInitialVersion(d, v, "initial_version", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["initial-version"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("starter_admin"); ok {
+		if setArgNil {
+			obj["starter-admin"] = nil
+		} else {
+			t, err := expandSystemFederatedUpgradeStarterAdmin(d, v, "starter_admin", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["starter-admin"] = t
+			}
+		}
+	} else if d.HasChange("starter_admin") {
+		obj["starter-admin"] = nil
 	}
 
 	if v, ok := d.GetOk("node_list"); ok || d.HasChange("node_list") {

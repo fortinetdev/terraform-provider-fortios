@@ -68,6 +68,10 @@ func dataSourceSystemAutomationTrigger() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"stitch_name": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"logid_block": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
@@ -263,6 +267,10 @@ func dataSourceFlattenSystemAutomationTriggerReportType(v interface{}, d *schema
 	return v
 }
 
+func dataSourceFlattenSystemAutomationTriggerStitchName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemAutomationTriggerLogidBlock(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -453,6 +461,12 @@ func dataSourceRefreshObjectSystemAutomationTrigger(d *schema.ResourceData, o ma
 	if err = d.Set("report_type", dataSourceFlattenSystemAutomationTriggerReportType(o["report-type"], d, "report_type")); err != nil {
 		if !fortiAPIPatch(o["report-type"]) {
 			return fmt.Errorf("Error reading report_type: %v", err)
+		}
+	}
+
+	if err = d.Set("stitch_name", dataSourceFlattenSystemAutomationTriggerStitchName(o["stitch-name"], d, "stitch_name")); err != nil {
+		if !fortiAPIPatch(o["stitch-name"]) {
+			return fmt.Errorf("Error reading stitch_name: %v", err)
 		}
 	}
 

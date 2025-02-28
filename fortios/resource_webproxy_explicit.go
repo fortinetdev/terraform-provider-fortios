@@ -120,6 +120,22 @@ func resourceWebProxyExplicit() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 			},
+			"interface_select_method": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"interface": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 15),
+				Optional:     true,
+			},
+			"vrf_select": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: intBetweenWithMinus1(0, 511),
+				Optional:     true,
+				Computed:     true,
+			},
 			"ipv6_status": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -507,6 +523,23 @@ func flattenWebProxyExplicitIncomingIp(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenWebProxyExplicitOutgoingIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWebProxyExplicitInterfaceSelectMethod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWebProxyExplicitInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWebProxyExplicitVrfSelect(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if vf, ok := v.(float64); ok && (vf < 0 || vf == 4294967295) {
+		var vi interface{}
+		vi = -1
+		return vi
+	}
 	return v
 }
 
@@ -916,6 +949,24 @@ func refreshObjectWebProxyExplicit(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
+	if err = d.Set("interface_select_method", flattenWebProxyExplicitInterfaceSelectMethod(o["interface-select-method"], d, "interface_select_method", sv)); err != nil {
+		if !fortiAPIPatch(o["interface-select-method"]) {
+			return fmt.Errorf("Error reading interface_select_method: %v", err)
+		}
+	}
+
+	if err = d.Set("interface", flattenWebProxyExplicitInterface(o["interface"], d, "interface", sv)); err != nil {
+		if !fortiAPIPatch(o["interface"]) {
+			return fmt.Errorf("Error reading interface: %v", err)
+		}
+	}
+
+	if err = d.Set("vrf_select", flattenWebProxyExplicitVrfSelect(o["vrf-select"], d, "vrf_select", sv)); err != nil {
+		if !fortiAPIPatch(o["vrf-select"]) {
+			return fmt.Errorf("Error reading vrf_select: %v", err)
+		}
+	}
+
 	if err = d.Set("ipv6_status", flattenWebProxyExplicitIpv6Status(o["ipv6-status"], d, "ipv6_status", sv)); err != nil {
 		if !fortiAPIPatch(o["ipv6-status"]) {
 			return fmt.Errorf("Error reading ipv6_status: %v", err)
@@ -1134,6 +1185,21 @@ func expandWebProxyExplicitIncomingIp(d *schema.ResourceData, v interface{}, pre
 }
 
 func expandWebProxyExplicitOutgoingIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWebProxyExplicitInterfaceSelectMethod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWebProxyExplicitInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWebProxyExplicitVrfSelect(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	if vi, ok := v.(int); ok && vi < 0 {
+		return nil, nil
+	}
 	return v, nil
 }
 
@@ -1606,6 +1672,46 @@ func getObjectWebProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 		}
 	} else if d.HasChange("outgoing_ip") {
 		obj["outgoing-ip"] = nil
+	}
+
+	if v, ok := d.GetOk("interface_select_method"); ok {
+		if setArgNil {
+			obj["interface-select-method"] = nil
+		} else {
+			t, err := expandWebProxyExplicitInterfaceSelectMethod(d, v, "interface_select_method", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["interface-select-method"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("interface"); ok {
+		if setArgNil {
+			obj["interface"] = nil
+		} else {
+			t, err := expandWebProxyExplicitInterface(d, v, "interface", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["interface"] = t
+			}
+		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
+	}
+
+	if v, ok := d.GetOkExists("vrf_select"); ok {
+		if setArgNil {
+			obj["vrf-select"] = nil
+		} else {
+			t, err := expandWebProxyExplicitVrfSelect(d, v, "vrf_select", sv)
+			if err != nil {
+				return &obj, err
+			}
+			obj["vrf-select"] = t
+		}
 	}
 
 	if v, ok := d.GetOk("ipv6_status"); ok {

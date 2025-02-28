@@ -165,6 +165,7 @@ The following attributes are exported:
 * `cpu_use_threshold` - Threshold at which CPU usage is reported. (% of total CPU, default = 90).
 * `log_single_cpu_high` - Enable/disable logging the event of a single CPU core reaching CPU usage threshold.
 * `check_reset_range` - Configure ICMP error message verification. You can either apply strict RST range checking or disable it.
+* `upgrade_report` - Enable/disable the generation of an upgrade report when upgrading the firmware.
 * `vdom_mode` - Enable/disable support for split/multiple virtual domains (VDOMs).
 * `vdom_admin` - Enable/disable support for multiple virtual domains (VDOMs).
 * `long_vdom_name` - Enable/disable long VDOM name support.
@@ -330,6 +331,7 @@ The following attributes are exported:
 * `scim_https_port` - SCIM port (0 - 65535, default = 44559).
 * `scim_http_port` - SCIM http port (0 - 65535, default = 44558).
 * `scim_server_cert` - Server certificate that the FortiGate uses for SCIM connections.
+* `application_bandwidth_tracking` - Enable/disable application bandwidth tracking.
 
 The `internet_service_download_list` block contains:
 

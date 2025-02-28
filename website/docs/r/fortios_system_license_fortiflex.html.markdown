@@ -20,5 +20,6 @@ resource "fortios_system_license_fortiflex" "test" {
 ## Argument Reference
 The following arguments are supported:
 
-* `token` - (Required) FortiFlex VM license token.
+* `token` - FortiFlex VM license token.
+* `token_writeonly` - FortiFlex VM license token for ephemeral value.
 * `proxy_url` - HTTP proxy URL in the form: http://user:pass@proxyip:proxyport.

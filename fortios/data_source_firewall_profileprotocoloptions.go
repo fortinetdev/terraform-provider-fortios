@@ -121,6 +121,10 @@ func dataSourceFirewallProfileProtocolOptions() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"http_09": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"tunnel_non_http": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
@@ -832,6 +836,11 @@ func dataSourceFlattenFirewallProfileProtocolOptionsHttp(v interface{}, d *schem
 		result["unknown_http_version"] = dataSourceFlattenFirewallProfileProtocolOptionsHttpUnknownHttpVersion(i["unknown-http-version"], d, pre_append)
 	}
 
+	pre_append = pre + ".0." + "http_09"
+	if _, ok := i["http-0.9"]; ok {
+		result["http_09"] = dataSourceFlattenFirewallProfileProtocolOptionsHttpHttp09(i["http-0.9"], d, pre_append)
+	}
+
 	pre_append = pre + ".0." + "tunnel_non_http"
 	if _, ok := i["tunnel-non-http"]; ok {
 		result["tunnel_non_http"] = dataSourceFlattenFirewallProfileProtocolOptionsHttpTunnelNonHttp(i["tunnel-non-http"], d, pre_append)
@@ -987,6 +996,10 @@ func dataSourceFlattenFirewallProfileProtocolOptionsHttpSwitchingProtocols(v int
 }
 
 func dataSourceFlattenFirewallProfileProtocolOptionsHttpUnknownHttpVersion(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallProfileProtocolOptionsHttpHttp09(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 

@@ -38,6 +38,7 @@ The following attributes are exported:
 * `link_monitor_exempt` - Enable/disable withdrawal of this static route when link monitor or health check is down.
 * `vrf` - Virtual Routing Forwarding ID.
 * `bfd` - Enable/disable Bidirectional Forwarding Detection (BFD).
+* `tag` - Route tag.
 
 The `sdwan_zone` block contains:
 

@@ -203,6 +203,11 @@ func resourceLogFortianalyzerOverrideSetting() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
 			},
+			"vrf_select": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 511),
+				Optional:     true,
+			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -497,6 +502,10 @@ func flattenLogFortianalyzerOverrideSettingInterface(v interface{}, d *schema.Re
 	return v
 }
 
+func flattenLogFortianalyzerOverrideSettingVrfSelect(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
 func refreshObjectLogFortianalyzerOverrideSetting(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 	var b_get_all_tables bool
@@ -708,6 +717,12 @@ func refreshObjectLogFortianalyzerOverrideSetting(d *schema.ResourceData, o map[
 		}
 	}
 
+	if err = d.Set("vrf_select", flattenLogFortianalyzerOverrideSettingVrfSelect(o["vrf-select"], d, "vrf_select", sv)); err != nil {
+		if !fortiAPIPatch(o["vrf-select"]) {
+			return fmt.Errorf("Error reading vrf_select: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -866,6 +881,10 @@ func expandLogFortianalyzerOverrideSettingInterfaceSelectMethod(d *schema.Resour
 }
 
 func expandLogFortianalyzerOverrideSettingInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogFortianalyzerOverrideSettingVrfSelect(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1314,6 +1333,21 @@ func getObjectLogFortianalyzerOverrideSetting(d *schema.ResourceData, setArgNil 
 		}
 	} else if d.HasChange("interface") {
 		obj["interface"] = nil
+	}
+
+	if v, ok := d.GetOkExists("vrf_select"); ok {
+		if setArgNil {
+			obj["vrf-select"] = nil
+		} else {
+			t, err := expandLogFortianalyzerOverrideSettingVrfSelect(d, v, "vrf_select", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["vrf-select"] = t
+			}
+		}
+	} else if d.HasChange("vrf_select") {
+		obj["vrf-select"] = nil
 	}
 
 	return &obj, nil

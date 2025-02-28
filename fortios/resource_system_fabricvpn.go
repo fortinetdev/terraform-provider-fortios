@@ -175,6 +175,11 @@ func resourceSystemFabricVpn() *schema.Resource {
 				Optional: true,
 			},
 			"psksecret": &schema.Schema{
+				Type:      schema.TypeString,
+				Optional:  true,
+				Sensitive: true,
+			},
+			"bgp_as_string": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 			},
@@ -601,7 +606,7 @@ func flattenSystemFabricVpnLoopbackAdvertisedSubnet(v interface{}, d *schema.Res
 	return convintf2i(v)
 }
 
-func flattenSystemFabricVpnPsksecret(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+func flattenSystemFabricVpnBgpAsString(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -706,15 +711,19 @@ func refreshObjectSystemFabricVpn(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
-	if err = d.Set("psksecret", flattenSystemFabricVpnPsksecret(o["psksecret"], d, "psksecret", sv)); err != nil {
-		if !fortiAPIPatch(o["psksecret"]) {
-			return fmt.Errorf("Error reading psksecret: %v", err)
+	if _, ok := o["bgp-as"].(string); ok {
+		if err = d.Set("bgp_as_string", flattenSystemFabricVpnBgpAsString(o["bgp-as"], d, "bgp_as_string", sv)); err != nil {
+			if !fortiAPIPatch(o["bgp-as"]) {
+				return fmt.Errorf("Error reading bgp_as_string: %v", err)
+			}
 		}
 	}
 
-	if err = d.Set("bgp_as", flattenSystemFabricVpnBgpAs(o["bgp-as"], d, "bgp_as", sv)); err != nil {
-		if !fortiAPIPatch(o["bgp-as"]) {
-			return fmt.Errorf("Error reading bgp_as: %v", err)
+	if _, ok := o["bgp-as"].(float64); ok {
+		if err = d.Set("bgp_as", flattenSystemFabricVpnBgpAs(o["bgp-as"], d, "bgp_as", sv)); err != nil {
+			if !fortiAPIPatch(o["bgp-as"]) {
+				return fmt.Errorf("Error reading bgp_as: %v", err)
+			}
 		}
 	}
 
@@ -1007,6 +1016,10 @@ func expandSystemFabricVpnPsksecret(d *schema.ResourceData, v interface{}, pre s
 	return v, nil
 }
 
+func expandSystemFabricVpnBgpAsString(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemFabricVpnBgpAs(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -1169,19 +1182,52 @@ func getObjectSystemFabricVpn(d *schema.ResourceData, setArgNil bool, sv string)
 				obj["psksecret"] = t
 			}
 		}
-	} else if d.HasChange("psksecret") {
-		obj["psksecret"] = nil
+	}
+
+	if v, ok := d.GetOk("bgp_as_string"); ok {
+		if setArgNil {
+			obj["bgp-as"] = nil
+		} else {
+			new_version_map := map[string][]string{
+				">=": []string{"7.6.1"},
+			}
+			if versionMatch, err := checkVersionMatch(sv, new_version_map); !versionMatch {
+				if _, ok := d.GetOk("bgp_as"); !ok && !d.HasChange("bgp_as") {
+					err := fmt.Errorf("Argument 'bgp_as_string' %s.", err)
+					return nil, err
+				}
+			} else {
+				t, err := expandSystemFabricVpnBgpAsString(d, v, "bgp_as_string", sv)
+				if err != nil {
+					return &obj, err
+				} else if t != nil {
+					obj["bgp-as"] = t
+				}
+			}
+		}
+	} else if d.HasChange("bgp_as_string") {
+		obj["bgp-as"] = nil
 	}
 
 	if v, ok := d.GetOkExists("bgp_as"); ok {
 		if setArgNil {
 			obj["bgp-as"] = nil
 		} else {
-			t, err := expandSystemFabricVpnBgpAs(d, v, "bgp_as", sv)
-			if err != nil {
-				return &obj, err
-			} else if t != nil {
-				obj["bgp-as"] = t
+			new_version_map := map[string][]string{
+				"=": []string{"7.2.4", "7.2.6", "7.2.7", "7.2.8", "7.2.9", "7.2.10", "7.4.0", "7.4.1", "7.4.2", "7.4.3", "7.4.4", "7.4.5", "7.4.6", "7.4.7", "7.6.0"},
+			}
+			if versionMatch, err := checkVersionMatch(sv, new_version_map); !versionMatch {
+				if _, ok := d.GetOk("bgp_as_string"); !ok && !d.HasChange("bgp_as_string") {
+					err := fmt.Errorf("Argument 'bgp_as' %s.", err)
+					return nil, err
+				}
+			} else {
+				t, err := expandSystemFabricVpnBgpAs(d, v, "bgp_as", sv)
+				if err != nil {
+					return &obj, err
+				} else if t != nil {
+					obj["bgp-as"] = t
+				}
 			}
 		}
 	} else if d.HasChange("bgp_as") {

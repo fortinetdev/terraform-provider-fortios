@@ -45,9 +45,11 @@ The following arguments are supported:
 * `dns_cache_ttl` - Duration in seconds that the DNS cache retains information.
 * `cache_notfound_responses` - Enable/disable response from the DNS server when a record is not in cache. Valid values: `disable`, `enable`.
 * `source_ip` - IP address used by the DNS server as its source IP.
+* `source_ip_interface` - IP address of the specified interface as the source IP address.
 * `root_servers` - Configure up to two preferred servers that serve the DNS root zone (default uses all 13 root servers).
 * `interface_select_method` - Specify how to select outgoing interface to reach server. Valid values: `auto`, `sdwan`, `specify`.
 * `interface` - Specify outgoing interface to reach server.
+* `vrf_select` - VRF ID used for connection to server.
 * `server_select_method` - Specify how configured servers are prioritized. Valid values: `least-rtt`, `failover`.
 * `alt_primary` - Alternate primary DNS server. This is not used as a failover DNS server.
 * `alt_secondary` - Alternate secondary DNS server. This is not used as a failover DNS server.

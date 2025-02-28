@@ -339,6 +339,31 @@ func resourceRouterbgpNeighbor() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"rr_attr_allow_change": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"rr_attr_allow_change6": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"rr_attr_allow_change_vpnv4": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"rr_attr_allow_change_vpnv6": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"rr_attr_allow_change_evpn": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"shutdown": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -725,19 +750,19 @@ func resourceRouterbgpNeighbor() *schema.Resource {
 			},
 			"keep_alive_timer": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 65535),
+				ValidateFunc: intBetweenWithMinus1(0, 65535),
 				Optional:     true,
 				Computed:     true,
 			},
 			"holdtime_timer": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(3, 65535),
+				ValidateFunc: intBetweenWithMinus1(3, 65535),
 				Optional:     true,
 				Computed:     true,
 			},
 			"connect_timer": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 65535),
+				ValidateFunc: intBetweenWithMinus1(0, 65535),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -758,7 +783,7 @@ func resourceRouterbgpNeighbor() *schema.Resource {
 			},
 			"weight": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 65535),
+				ValidateFunc: intBetweenWithMinus1(0, 65535),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -1271,6 +1296,26 @@ func flattenRouterbgpNeighborRouteServerClientEvpn(v interface{}, d *schema.Reso
 	return v
 }
 
+func flattenRouterbgpNeighborRrAttrAllowChange(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterbgpNeighborRrAttrAllowChange6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterbgpNeighborRrAttrAllowChangeVpnv4(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterbgpNeighborRrAttrAllowChangeVpnv6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterbgpNeighborRrAttrAllowChangeEvpn(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenRouterbgpNeighborShutdown(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1580,15 +1625,30 @@ func flattenRouterbgpNeighborSendCommunityEvpn(v interface{}, d *schema.Resource
 }
 
 func flattenRouterbgpNeighborKeepAliveTimer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return convintf2i(v)
+	if vf, ok := v.(float64); ok && (vf < 0 || vf == 4294967295) {
+		var vi interface{}
+		vi = -1
+		return vi
+	}
+	return v
 }
 
 func flattenRouterbgpNeighborHoldtimeTimer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return convintf2i(v)
+	if vf, ok := v.(float64); ok && (vf < 0 || vf == 4294967295) {
+		var vi interface{}
+		vi = -1
+		return vi
+	}
+	return v
 }
 
 func flattenRouterbgpNeighborConnectTimer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return convintf2i(v)
+	if vf, ok := v.(float64); ok && (vf < 0 || vf == 4294967295) {
+		var vi interface{}
+		vi = -1
+		return vi
+	}
+	return v
 }
 
 func flattenRouterbgpNeighborUnsuppressMap(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1604,7 +1664,12 @@ func flattenRouterbgpNeighborUpdateSource(v interface{}, d *schema.ResourceData,
 }
 
 func flattenRouterbgpNeighborWeight(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return convintf2i(v)
+	if vf, ok := v.(float64); ok && (vf < 0 || vf == 4294967295) {
+		var vi interface{}
+		vi = -1
+		return vi
+	}
+	return v
 }
 
 func flattenRouterbgpNeighborRestartTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2133,6 +2198,36 @@ func refreshObjectRouterbgpNeighbor(d *schema.ResourceData, o map[string]interfa
 	if err = d.Set("route_server_client_evpn", flattenRouterbgpNeighborRouteServerClientEvpn(o["route-server-client-evpn"], d, "route_server_client_evpn", sv)); err != nil {
 		if !fortiAPIPatch(o["route-server-client-evpn"]) {
 			return fmt.Errorf("Error reading route_server_client_evpn: %v", err)
+		}
+	}
+
+	if err = d.Set("rr_attr_allow_change", flattenRouterbgpNeighborRrAttrAllowChange(o["rr-attr-allow-change"], d, "rr_attr_allow_change", sv)); err != nil {
+		if !fortiAPIPatch(o["rr-attr-allow-change"]) {
+			return fmt.Errorf("Error reading rr_attr_allow_change: %v", err)
+		}
+	}
+
+	if err = d.Set("rr_attr_allow_change6", flattenRouterbgpNeighborRrAttrAllowChange6(o["rr-attr-allow-change6"], d, "rr_attr_allow_change6", sv)); err != nil {
+		if !fortiAPIPatch(o["rr-attr-allow-change6"]) {
+			return fmt.Errorf("Error reading rr_attr_allow_change6: %v", err)
+		}
+	}
+
+	if err = d.Set("rr_attr_allow_change_vpnv4", flattenRouterbgpNeighborRrAttrAllowChangeVpnv4(o["rr-attr-allow-change-vpnv4"], d, "rr_attr_allow_change_vpnv4", sv)); err != nil {
+		if !fortiAPIPatch(o["rr-attr-allow-change-vpnv4"]) {
+			return fmt.Errorf("Error reading rr_attr_allow_change_vpnv4: %v", err)
+		}
+	}
+
+	if err = d.Set("rr_attr_allow_change_vpnv6", flattenRouterbgpNeighborRrAttrAllowChangeVpnv6(o["rr-attr-allow-change-vpnv6"], d, "rr_attr_allow_change_vpnv6", sv)); err != nil {
+		if !fortiAPIPatch(o["rr-attr-allow-change-vpnv6"]) {
+			return fmt.Errorf("Error reading rr_attr_allow_change_vpnv6: %v", err)
+		}
+	}
+
+	if err = d.Set("rr_attr_allow_change_evpn", flattenRouterbgpNeighborRrAttrAllowChangeEvpn(o["rr-attr-allow-change-evpn"], d, "rr_attr_allow_change_evpn", sv)); err != nil {
+		if !fortiAPIPatch(o["rr-attr-allow-change-evpn"]) {
+			return fmt.Errorf("Error reading rr_attr_allow_change_evpn: %v", err)
 		}
 	}
 
@@ -2981,6 +3076,26 @@ func expandRouterbgpNeighborRouteServerClientEvpn(d *schema.ResourceData, v inte
 	return v, nil
 }
 
+func expandRouterbgpNeighborRrAttrAllowChange(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterbgpNeighborRrAttrAllowChange6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterbgpNeighborRrAttrAllowChangeVpnv4(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterbgpNeighborRrAttrAllowChangeVpnv6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterbgpNeighborRrAttrAllowChangeEvpn(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandRouterbgpNeighborShutdown(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -3290,14 +3405,23 @@ func expandRouterbgpNeighborSendCommunityEvpn(d *schema.ResourceData, v interfac
 }
 
 func expandRouterbgpNeighborKeepAliveTimer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	if vi, ok := v.(int); ok && vi < 0 {
+		return nil, nil
+	}
 	return v, nil
 }
 
 func expandRouterbgpNeighborHoldtimeTimer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	if vi, ok := v.(int); ok && vi < 0 {
+		return nil, nil
+	}
 	return v, nil
 }
 
 func expandRouterbgpNeighborConnectTimer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	if vi, ok := v.(int); ok && vi < 0 {
+		return nil, nil
+	}
 	return v, nil
 }
 
@@ -3314,6 +3438,9 @@ func expandRouterbgpNeighborUpdateSource(d *schema.ResourceData, v interface{}, 
 }
 
 func expandRouterbgpNeighborWeight(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	if vi, ok := v.(int); ok && vi < 0 {
+		return nil, nil
+	}
 	return v, nil
 }
 
@@ -4051,6 +4178,51 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 			return &obj, err
 		} else if t != nil {
 			obj["route-server-client-evpn"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("rr_attr_allow_change"); ok {
+		t, err := expandRouterbgpNeighborRrAttrAllowChange(d, v, "rr_attr_allow_change", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["rr-attr-allow-change"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("rr_attr_allow_change6"); ok {
+		t, err := expandRouterbgpNeighborRrAttrAllowChange6(d, v, "rr_attr_allow_change6", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["rr-attr-allow-change6"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("rr_attr_allow_change_vpnv4"); ok {
+		t, err := expandRouterbgpNeighborRrAttrAllowChangeVpnv4(d, v, "rr_attr_allow_change_vpnv4", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["rr-attr-allow-change-vpnv4"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("rr_attr_allow_change_vpnv6"); ok {
+		t, err := expandRouterbgpNeighborRrAttrAllowChangeVpnv6(d, v, "rr_attr_allow_change_vpnv6", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["rr-attr-allow-change-vpnv6"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("rr_attr_allow_change_evpn"); ok {
+		t, err := expandRouterbgpNeighborRrAttrAllowChangeEvpn(d, v, "rr_attr_allow_change_evpn", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["rr-attr-allow-change-evpn"] = t
 		}
 	}
 
@@ -4851,27 +5023,24 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		t, err := expandRouterbgpNeighborKeepAliveTimer(d, v, "keep_alive_timer", sv)
 		if err != nil {
 			return &obj, err
-		} else if t != nil {
-			obj["keep-alive-timer"] = t
 		}
+		obj["keep-alive-timer"] = t
 	}
 
 	if v, ok := d.GetOk("holdtime_timer"); ok {
 		t, err := expandRouterbgpNeighborHoldtimeTimer(d, v, "holdtime_timer", sv)
 		if err != nil {
 			return &obj, err
-		} else if t != nil {
-			obj["holdtime-timer"] = t
 		}
+		obj["holdtime-timer"] = t
 	}
 
 	if v, ok := d.GetOkExists("connect_timer"); ok {
 		t, err := expandRouterbgpNeighborConnectTimer(d, v, "connect_timer", sv)
 		if err != nil {
 			return &obj, err
-		} else if t != nil {
-			obj["connect-timer"] = t
 		}
+		obj["connect-timer"] = t
 	}
 
 	if v, ok := d.GetOk("unsuppress_map"); ok {
@@ -4911,9 +5080,8 @@ func getObjectRouterbgpNeighbor(d *schema.ResourceData, sv string) (*map[string]
 		t, err := expandRouterbgpNeighborWeight(d, v, "weight", sv)
 		if err != nil {
 			return &obj, err
-		} else if t != nil {
-			obj["weight"] = t
 		}
+		obj["weight"] = t
 	}
 
 	if v, ok := d.GetOkExists("restart_time"); ok {

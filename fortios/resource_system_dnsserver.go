@@ -50,7 +50,7 @@ func resourceSystemDnsServer() *schema.Resource {
 			},
 			"dnsfilter_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"doh": &schema.Schema{

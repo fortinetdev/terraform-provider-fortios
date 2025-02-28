@@ -545,6 +545,26 @@ func dataSourceRouterBgp() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"rr_attr_allow_change": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"rr_attr_allow_change6": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"rr_attr_allow_change_vpnv4": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"rr_attr_allow_change_vpnv6": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"rr_attr_allow_change_evpn": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"shutdown": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
@@ -1211,6 +1231,26 @@ func dataSourceRouterBgp() *schema.Resource {
 							Computed: true,
 						},
 						"route_server_client_evpn": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"rr_attr_allow_change": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"rr_attr_allow_change6": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"rr_attr_allow_change_vpnv4": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"rr_attr_allow_change_vpnv6": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"rr_attr_allow_change_evpn": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -2712,6 +2752,31 @@ func dataSourceFlattenRouterBgpNeighbor(v interface{}, d *schema.ResourceData, p
 			tmp["route_server_client_evpn"] = dataSourceFlattenRouterBgpNeighborRouteServerClientEvpn(i["route-server-client-evpn"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "rr_attr_allow_change"
+		if _, ok := i["rr-attr-allow-change"]; ok {
+			tmp["rr_attr_allow_change"] = dataSourceFlattenRouterBgpNeighborRrAttrAllowChange(i["rr-attr-allow-change"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "rr_attr_allow_change6"
+		if _, ok := i["rr-attr-allow-change6"]; ok {
+			tmp["rr_attr_allow_change6"] = dataSourceFlattenRouterBgpNeighborRrAttrAllowChange6(i["rr-attr-allow-change6"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "rr_attr_allow_change_vpnv4"
+		if _, ok := i["rr-attr-allow-change-vpnv4"]; ok {
+			tmp["rr_attr_allow_change_vpnv4"] = dataSourceFlattenRouterBgpNeighborRrAttrAllowChangeVpnv4(i["rr-attr-allow-change-vpnv4"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "rr_attr_allow_change_vpnv6"
+		if _, ok := i["rr-attr-allow-change-vpnv6"]; ok {
+			tmp["rr_attr_allow_change_vpnv6"] = dataSourceFlattenRouterBgpNeighborRrAttrAllowChangeVpnv6(i["rr-attr-allow-change-vpnv6"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "rr_attr_allow_change_evpn"
+		if _, ok := i["rr-attr-allow-change-evpn"]; ok {
+			tmp["rr_attr_allow_change_evpn"] = dataSourceFlattenRouterBgpNeighborRrAttrAllowChangeEvpn(i["rr-attr-allow-change-evpn"], d, pre_append)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "shutdown"
 		if _, ok := i["shutdown"]; ok {
 			tmp["shutdown"] = dataSourceFlattenRouterBgpNeighborShutdown(i["shutdown"], d, pre_append)
@@ -3437,6 +3502,26 @@ func dataSourceFlattenRouterBgpNeighborRouteServerClientVpnv6(v interface{}, d *
 }
 
 func dataSourceFlattenRouterBgpNeighborRouteServerClientEvpn(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborRrAttrAllowChange(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborRrAttrAllowChange6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborRrAttrAllowChangeVpnv4(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborRrAttrAllowChangeVpnv6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborRrAttrAllowChangeEvpn(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -4247,6 +4332,31 @@ func dataSourceFlattenRouterBgpNeighborGroup(v interface{}, d *schema.ResourceDa
 			tmp["route_server_client_evpn"] = dataSourceFlattenRouterBgpNeighborGroupRouteServerClientEvpn(i["route-server-client-evpn"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "rr_attr_allow_change"
+		if _, ok := i["rr-attr-allow-change"]; ok {
+			tmp["rr_attr_allow_change"] = dataSourceFlattenRouterBgpNeighborGroupRrAttrAllowChange(i["rr-attr-allow-change"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "rr_attr_allow_change6"
+		if _, ok := i["rr-attr-allow-change6"]; ok {
+			tmp["rr_attr_allow_change6"] = dataSourceFlattenRouterBgpNeighborGroupRrAttrAllowChange6(i["rr-attr-allow-change6"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "rr_attr_allow_change_vpnv4"
+		if _, ok := i["rr-attr-allow-change-vpnv4"]; ok {
+			tmp["rr_attr_allow_change_vpnv4"] = dataSourceFlattenRouterBgpNeighborGroupRrAttrAllowChangeVpnv4(i["rr-attr-allow-change-vpnv4"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "rr_attr_allow_change_vpnv6"
+		if _, ok := i["rr-attr-allow-change-vpnv6"]; ok {
+			tmp["rr_attr_allow_change_vpnv6"] = dataSourceFlattenRouterBgpNeighborGroupRrAttrAllowChangeVpnv6(i["rr-attr-allow-change-vpnv6"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "rr_attr_allow_change_evpn"
+		if _, ok := i["rr-attr-allow-change-evpn"]; ok {
+			tmp["rr_attr_allow_change_evpn"] = dataSourceFlattenRouterBgpNeighborGroupRrAttrAllowChangeEvpn(i["rr-attr-allow-change-evpn"], d, pre_append)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "shutdown"
 		if _, ok := i["shutdown"]; ok {
 			tmp["shutdown"] = dataSourceFlattenRouterBgpNeighborGroupShutdown(i["shutdown"], d, pre_append)
@@ -4967,6 +5077,26 @@ func dataSourceFlattenRouterBgpNeighborGroupRouteServerClientVpnv6(v interface{}
 }
 
 func dataSourceFlattenRouterBgpNeighborGroupRouteServerClientEvpn(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupRrAttrAllowChange(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupRrAttrAllowChange6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupRrAttrAllowChangeVpnv4(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupRrAttrAllowChangeVpnv6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupRrAttrAllowChangeEvpn(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 

@@ -48,6 +48,7 @@ The following arguments are supported:
 * `route_limit` - Maximum number of multicast routes.
 * `multicast_routing` - Enable/disable IP multicast routing. Valid values: `enable`, `disable`.
 * `pim_sm_global` - PIM sparse-mode global settings. The structure of `pim_sm_global` block is documented below.
+* `pim_sm_global_vrf` - per-VRF PIM sparse-mode global settings. The structure of `pim_sm_global_vrf` block is documented below.
 * `interface` - PIM interfaces. The structure of `interface` block is documented below.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
 * `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
@@ -81,6 +82,23 @@ The `pim_sm_global` block supports:
 * `ssm_range` - Groups allowed to source specific multicast.
 * `register_rate_limit` - Limit of packets/sec per source registered through this RP (0 - 65535, default = 0 which means unlimited).
 * `pim_use_sdwan` - Enable/disable use of SDWAN when checking RPF neighbor and sending of REG packet. Valid values: `enable`, `disable`.
+* `rp_address` - Statically configure RP addresses. The structure of `rp_address` block is documented below.
+
+The `rp_address` block supports:
+
+* `id` - ID.
+* `ip_address` - RP router address.
+* `group` - Groups to use this RP.
+
+The `pim_sm_global_vrf` block supports:
+
+* `vrf` - VRF ID.
+* `bsr_candidate` - Enable/disable allowing this router to become a bootstrap router (BSR). Valid values: `enable`, `disable`.
+* `bsr_interface` - Interface to advertise as candidate BSR.
+* `bsr_priority` - BSR priority (0 - 255, default = 0).
+* `bsr_hash` - BSR hash length (0 - 32, default = 10).
+* `bsr_allow_quick_refresh` - Enable/disable accept BSR quick refresh packets from neighbors. Valid values: `enable`, `disable`.
+* `cisco_crp_prefix` - Enable/disable making candidate RP compatible with old Cisco IOS. Valid values: `enable`, `disable`.
 * `rp_address` - Statically configure RP addresses. The structure of `rp_address` block is documented below.
 
 The `rp_address` block supports:

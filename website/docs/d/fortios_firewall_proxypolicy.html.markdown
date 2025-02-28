@@ -34,6 +34,7 @@ The following attributes are exported:
 * `ztna_ems_tag` - ZTNA EMS Tag names. The structure of `ztna_ems_tag` block is documented below.
 * `ztna_tags_match_logic` - ZTNA tag matching logic.
 * `device_ownership` - When enabled, the ownership enforcement will be done at policy level.
+* `url_risk` - URL risk level name. The structure of `url_risk` block is documented below.
 * `internet_service` - Enable/disable use of Internet Services for this policy. If enabled, destination address and service are not used.
 * `internet_service_negate` - When enabled, Internet Services match against any internet service EXCEPT the selected Internet Service.
 * `internet_service_name` - Internet Service name. The structure of `internet_service_name` block is documented below.
@@ -50,6 +51,7 @@ The following attributes are exported:
 * `service` - Name of service objects. The structure of `service` block is documented below.
 * `srcaddr_negate` - When enabled, source addresses match against any address EXCEPT the specified source addresses.
 * `dstaddr_negate` - When enabled, destination addresses match against any address EXCEPT the specified destination addresses.
+* `ztna_ems_tag_negate` - When enabled, ZTNA EMS tags match against any tag EXCEPT the specified ZTNA EMS tags.
 * `service_negate` - When enabled, services match against any service EXCEPT the specified destination services.
 * `action` - Accept or deny traffic matching the policy parameters.
 * `status` - Enable/disable the active status of the policy.
@@ -63,6 +65,7 @@ The following attributes are exported:
 * `http_tunnel_auth` - Enable/disable HTTP tunnel authentication.
 * `ssh_policy_redirect` - Redirect SSH traffic to matching transparent proxy policy.
 * `webproxy_forward_server` - Web proxy forward server name.
+* `isolator_server` - Isolator server name.
 * `webproxy_profile` - Name of web proxy profile.
 * `transparent` - Enable to use the IP address of the client to connect to the server.
 * `webcache` - Enable/disable web caching.
@@ -141,6 +144,10 @@ The `dstaddr` block contains:
 The `ztna_ems_tag` block contains:
 
 * `name` - EMS Tag name.
+
+The `url_risk` block contains:
+
+* `name` - Risk level name.
 
 The `internet_service_name` block contains:
 

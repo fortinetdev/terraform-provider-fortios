@@ -41,6 +41,7 @@ The following attributes are exported:
 * `priv_pwd` - Password for privacy (encryption) protocol.
 * `interface_select_method` - Specify how to select outgoing interface to reach server.
 * `interface` - Specify outgoing interface to reach server.
+* `vrf_select` - VRF ID used for connection to server.
 
 The `vdoms` block contains:
 

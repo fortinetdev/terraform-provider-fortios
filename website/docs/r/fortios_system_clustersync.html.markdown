@@ -31,8 +31,8 @@ The following arguments are supported:
 * `peerip` - IP address of the interface on the peer unit that is used for the session synchronization link.
 * `syncvd` - Sessions from these VDOMs are synchronized using this session synchronization configuration. The structure of `syncvd` block is documented below.
 * `down_intfs_before_sess_sync` - List of interfaces to be turned down before session synchronization is complete. The structure of `down_intfs_before_sess_sync` block is documented below.
-* `hb_interval` - Heartbeat interval. Increase to reduce false positives. On FortiOS versions 6.2.0-6.4.2, 7.0.0-7.0.5, 7.2.0: 1 - 10 sec. On FortiOS versions 6.4.10-6.4.15, 7.0.6-7.0.15: 1 - 20 (100*ms).
-* `hb_lost_threshold` - Lost heartbeat threshold. Increase to reduce false positives. On FortiOS versions 6.2.0-6.4.2, 7.0.0-7.0.5, 7.2.0: 1 - 10. On FortiOS versions 6.4.10-6.4.15, 7.0.6-7.0.15: 1 - 60.
+* `hb_interval` - Heartbeat interval. Increase to reduce false positives. On FortiOS versions 6.2.0-6.4.2, 7.0.0-7.0.5, 7.2.0: 1 - 10 sec. On FortiOS versions 6.4.10-6.4.15, 7.0.6-7.0.17: 1 - 20 (100*ms).
+* `hb_lost_threshold` - Lost heartbeat threshold. Increase to reduce false positives. On FortiOS versions 6.2.0-6.4.2, 7.0.0-7.0.5, 7.2.0: 1 - 10. On FortiOS versions 6.4.10-6.4.15, 7.0.6-7.0.17: 1 - 60.
 * `ipsec_tunnel_sync` - Enable/disable IPsec tunnel synchronization. Valid values: `enable`, `disable`.
 * `ike_monitor` - Enable/disable IKE HA monitor. Valid values: `enable`, `disable`.
 * `ike_monitor_interval` - IKE HA monitor interval (10 - 300 secs).

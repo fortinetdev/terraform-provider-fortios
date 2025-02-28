@@ -59,8 +59,8 @@ The following arguments are supported:
 * `http_get` - If you are monitoring an HTML server you can send an HTTP-GET request with a custom string. Use this option to define the string.
 * `http_agent` - String in the http-agent field in the HTTP header.
 * `http_match` - String that you expect to see in the HTTP-GET requests of the traffic to be monitored.
-* `interval` - Detection interval. On FortiOS versions 6.2.0: 1 - 3600 sec, default = 5. On FortiOS versions 6.2.4-7.0.10, 7.2.0-7.2.4: 500 - 3600 * 1000 msec, default = 500. On FortiOS versions 7.0.11-7.0.15, >= 7.2.6: 20 - 3600 * 1000 msec, default = 500.
-* `probe_timeout` - Time to wait before a probe packet is considered lost (default = 500). On FortiOS versions 6.2.4-7.0.10, 7.2.0-7.2.4: 500 - 5000 msec. On FortiOS versions 7.0.11-7.0.15, >= 7.2.6: 20 - 5000 msec.
+* `interval` - Detection interval. On FortiOS versions 6.2.0: 1 - 3600 sec, default = 5. On FortiOS versions 6.2.4-7.0.10, 7.2.0-7.2.4: 500 - 3600 * 1000 msec, default = 500. On FortiOS versions 7.0.11-7.0.17, >= 7.2.6: 20 - 3600 * 1000 msec, default = 500.
+* `probe_timeout` - Time to wait before a probe packet is considered lost (default = 500). On FortiOS versions 6.2.4-7.0.10, 7.2.0-7.2.4: 500 - 5000 msec. On FortiOS versions 7.0.11-7.0.17, >= 7.2.6: 20 - 5000 msec.
 * `failtime` - Number of retry attempts before the server is considered down (default = 5). On FortiOS versions 6.2.0-7.0.5: 1 - 10. On FortiOS versions >= 7.0.6: 1 - 3600.
 * `recoverytime` - Number of successful responses received before server is considered recovered (default = 5). On FortiOS versions 6.2.0-7.0.5: 1 - 10. On FortiOS versions >= 7.0.6: 1 - 3600.
 * `probe_count` - Number of most recent probes that should be used to calculate latency and jitter (5 - 30, default = 30).

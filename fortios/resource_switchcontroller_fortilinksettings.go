@@ -47,6 +47,7 @@ func resourceSwitchControllerFortilinkSettings() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
+				Computed:     true,
 			},
 			"inactive_timer": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -610,8 +611,6 @@ func getObjectSwitchControllerFortilinkSettings(d *schema.ResourceData, sv strin
 		} else if t != nil {
 			obj["fortilink"] = t
 		}
-	} else if d.HasChange("fortilink") {
-		obj["fortilink"] = nil
 	}
 
 	if v, ok := d.GetOk("inactive_timer"); ok {

@@ -144,6 +144,10 @@ func dataSourceSystemCentralManagement() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"vrf_select": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -347,6 +351,10 @@ func dataSourceFlattenSystemCentralManagementInterface(v interface{}, d *schema.
 	return v
 }
 
+func dataSourceFlattenSystemCentralManagementVrfSelect(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceRefreshObjectSystemCentralManagement(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
 
@@ -479,6 +487,12 @@ func dataSourceRefreshObjectSystemCentralManagement(d *schema.ResourceData, o ma
 	if err = d.Set("interface", dataSourceFlattenSystemCentralManagementInterface(o["interface"], d, "interface")); err != nil {
 		if !fortiAPIPatch(o["interface"]) {
 			return fmt.Errorf("Error reading interface: %v", err)
+		}
+	}
+
+	if err = d.Set("vrf_select", dataSourceFlattenSystemCentralManagementVrfSelect(o["vrf-select"], d, "vrf_select")); err != nil {
+		if !fortiAPIPatch(o["vrf-select"]) {
+			return fmt.Errorf("Error reading vrf_select: %v", err)
 		}
 	}
 

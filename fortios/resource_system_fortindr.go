@@ -56,6 +56,11 @@ func resourceSystemFortindr() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
 			},
+			"vrf_select": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 511),
+				Optional:     true,
+			},
 		},
 	}
 }
@@ -190,6 +195,10 @@ func flattenSystemFortindrInterface(v interface{}, d *schema.ResourceData, pre s
 	return v
 }
 
+func flattenSystemFortindrVrfSelect(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
 func refreshObjectSystemFortindr(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -217,6 +226,12 @@ func refreshObjectSystemFortindr(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("vrf_select", flattenSystemFortindrVrfSelect(o["vrf-select"], d, "vrf_select", sv)); err != nil {
+		if !fortiAPIPatch(o["vrf-select"]) {
+			return fmt.Errorf("Error reading vrf_select: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -239,6 +254,10 @@ func expandSystemFortindrInterfaceSelectMethod(d *schema.ResourceData, v interfa
 }
 
 func expandSystemFortindrInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemFortindrVrfSelect(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -299,6 +318,21 @@ func getObjectSystemFortindr(d *schema.ResourceData, setArgNil bool, sv string) 
 		}
 	} else if d.HasChange("interface") {
 		obj["interface"] = nil
+	}
+
+	if v, ok := d.GetOkExists("vrf_select"); ok {
+		if setArgNil {
+			obj["vrf-select"] = nil
+		} else {
+			t, err := expandSystemFortindrVrfSelect(d, v, "vrf_select", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["vrf-select"] = t
+			}
+		}
+	} else if d.HasChange("vrf_select") {
+		obj["vrf-select"] = nil
 	}
 
 	return &obj, nil

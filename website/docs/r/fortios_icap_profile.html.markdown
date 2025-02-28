@@ -41,6 +41,7 @@ The following arguments are supported:
 * `response` - Enable/disable whether an HTTP response is passed to an ICAP server. Valid values: `disable`, `enable`.
 * `file_transfer` - Configure the file transfer protocols to pass transferred files to an ICAP server as REQMOD. Valid values: `ssh`, `ftp`.
 * `streaming_content_bypass` - Enable/disable bypassing of ICAP server for streaming content. Valid values: `disable`, `enable`.
+* `ocr_only` - Enable/disable this FortiGate unit to submit only OCR interested content to the ICAP server. Valid values: `disable`, `enable`.
 * `n204_size_limit` - 204 response size limit to be saved by ICAP client in megabytes (1 - 10, default = 1 MB).
 * `n204_response` - Enable/disable allowance of 204 response from ICAP server. Valid values: `disable`, `enable`.
 * `preview` - Enable/disable preview of data to ICAP server. Valid values: `disable`, `enable`.

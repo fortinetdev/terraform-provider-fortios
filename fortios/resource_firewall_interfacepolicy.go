@@ -65,6 +65,7 @@ func resourceFirewallInterfacePolicy() *schema.Resource {
 			"address_type": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Computed: true,
 			},
 			"interface": &schema.Schema{
 				Type:         schema.TypeString,
@@ -117,7 +118,7 @@ func resourceFirewallInterfacePolicy() *schema.Resource {
 			},
 			"application_list": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"ips_sensor_status": &schema.Schema{
@@ -127,7 +128,7 @@ func resourceFirewallInterfacePolicy() *schema.Resource {
 			},
 			"ips_sensor": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"dsri": &schema.Schema{
@@ -142,7 +143,7 @@ func resourceFirewallInterfacePolicy() *schema.Resource {
 			},
 			"av_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"webfilter_profile_status": &schema.Schema{
@@ -152,7 +153,7 @@ func resourceFirewallInterfacePolicy() *schema.Resource {
 			},
 			"webfilter_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"casb_profile_status": &schema.Schema{
@@ -162,7 +163,7 @@ func resourceFirewallInterfacePolicy() *schema.Resource {
 			},
 			"casb_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"emailfilter_profile_status": &schema.Schema{
@@ -172,7 +173,7 @@ func resourceFirewallInterfacePolicy() *schema.Resource {
 			},
 			"emailfilter_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"dlp_profile_status": &schema.Schema{
@@ -182,7 +183,7 @@ func resourceFirewallInterfacePolicy() *schema.Resource {
 			},
 			"dlp_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"spamfilter_profile_status": &schema.Schema{
@@ -1103,8 +1104,6 @@ func getObjectFirewallInterfacePolicy(d *schema.ResourceData, sv string) (*map[s
 		} else if t != nil {
 			obj["address-type"] = t
 		}
-	} else if d.HasChange("address_type") {
-		obj["address-type"] = nil
 	}
 
 	if v, ok := d.GetOk("interface"); ok {

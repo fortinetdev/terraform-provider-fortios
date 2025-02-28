@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_vpnipsec_forticlient
-Configure FortiClient policy realm.
+Configure FortiClient policy realm. Applies to FortiOS Version `<= 7.6.0`.
 
 ## Example Usage
 

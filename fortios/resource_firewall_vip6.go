@@ -229,6 +229,21 @@ func resourceFirewallVip6() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"empty_cert_action": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"user_agent_detect": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"client_cert": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"realservers": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -999,6 +1014,18 @@ func flattenFirewallVip6AddNat64Route(v interface{}, d *schema.ResourceData, pre
 	return v
 }
 
+func flattenFirewallVip6EmptyCertAction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallVip6UserAgentDetect(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallVip6ClientCert(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallVip6Realservers(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -1693,6 +1720,24 @@ func refreshObjectFirewallVip6(d *schema.ResourceData, o map[string]interface{},
 		}
 	}
 
+	if err = d.Set("empty_cert_action", flattenFirewallVip6EmptyCertAction(o["empty-cert-action"], d, "empty_cert_action", sv)); err != nil {
+		if !fortiAPIPatch(o["empty-cert-action"]) {
+			return fmt.Errorf("Error reading empty_cert_action: %v", err)
+		}
+	}
+
+	if err = d.Set("user_agent_detect", flattenFirewallVip6UserAgentDetect(o["user-agent-detect"], d, "user_agent_detect", sv)); err != nil {
+		if !fortiAPIPatch(o["user-agent-detect"]) {
+			return fmt.Errorf("Error reading user_agent_detect: %v", err)
+		}
+	}
+
+	if err = d.Set("client_cert", flattenFirewallVip6ClientCert(o["client-cert"], d, "client_cert", sv)); err != nil {
+		if !fortiAPIPatch(o["client-cert"]) {
+			return fmt.Errorf("Error reading client_cert: %v", err)
+		}
+	}
+
 	if b_get_all_tables {
 		if err = d.Set("realservers", flattenFirewallVip6Realservers(o["realservers"], d, "realservers", sv)); err != nil {
 			if !fortiAPIPatch(o["realservers"]) {
@@ -2269,6 +2314,18 @@ func expandFirewallVip6Nat64(d *schema.ResourceData, v interface{}, pre string, 
 }
 
 func expandFirewallVip6AddNat64Route(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallVip6EmptyCertAction(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallVip6UserAgentDetect(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallVip6ClientCert(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3035,6 +3092,33 @@ func getObjectFirewallVip6(d *schema.ResourceData, sv string) (*map[string]inter
 			return &obj, err
 		} else if t != nil {
 			obj["add-nat64-route"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("empty_cert_action"); ok {
+		t, err := expandFirewallVip6EmptyCertAction(d, v, "empty_cert_action", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["empty-cert-action"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("user_agent_detect"); ok {
+		t, err := expandFirewallVip6UserAgentDetect(d, v, "user_agent_detect", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["user-agent-detect"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("client_cert"); ok {
+		t, err := expandFirewallVip6ClientCert(d, v, "client_cert", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["client-cert"] = t
 		}
 	}
 

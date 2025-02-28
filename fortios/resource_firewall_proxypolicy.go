@@ -183,6 +183,19 @@ func resourceFirewallProxyPolicy() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"url_risk": &schema.Schema{
+				Type:     schema.TypeSet,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+						},
+					},
+				},
+			},
 			"internet_service": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -343,6 +356,11 @@ func resourceFirewallProxyPolicy() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"ztna_ems_tag_negate": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"service_negate": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -440,6 +458,11 @@ func resourceFirewallProxyPolicy() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
 			},
+			"isolator_server": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 63),
+				Optional:     true,
+			},
 			"webproxy_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
@@ -477,32 +500,32 @@ func resourceFirewallProxyPolicy() *schema.Resource {
 			},
 			"profile_group": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"av_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"webfilter_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"dnsfilter_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"emailfilter_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"dlp_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"spamfilter_profile": &schema.Schema{
@@ -517,22 +540,22 @@ func resourceFirewallProxyPolicy() *schema.Resource {
 			},
 			"file_filter_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"ips_sensor": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"application_list": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"ips_voip_filter": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"voip_profile": &schema.Schema{
@@ -542,7 +565,7 @@ func resourceFirewallProxyPolicy() *schema.Resource {
 			},
 			"sctp_filter_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"diameter_filter_profile": &schema.Schema{
@@ -557,7 +580,7 @@ func resourceFirewallProxyPolicy() *schema.Resource {
 			},
 			"icap_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"cifs_profile": &schema.Schema{
@@ -567,33 +590,33 @@ func resourceFirewallProxyPolicy() *schema.Resource {
 			},
 			"videofilter_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"waf_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"ssh_filter_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"casb_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"profile_protocol_options": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 				Computed:     true,
 			},
 			"ssl_ssh_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -1218,6 +1241,48 @@ func flattenFirewallProxyPolicyDeviceOwnership(v interface{}, d *schema.Resource
 	return v
 }
 
+func flattenFirewallProxyPolicyUrlRisk(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallProxyPolicyUrlRiskName(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenFirewallProxyPolicyUrlRiskName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallProxyPolicyInternetService(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1662,6 +1727,10 @@ func flattenFirewallProxyPolicyDstaddrNegate(v interface{}, d *schema.ResourceDa
 	return v
 }
 
+func flattenFirewallProxyPolicyZtnaEmsTagNegate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallProxyPolicyServiceNegate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1863,6 +1932,10 @@ func flattenFirewallProxyPolicySshPolicyRedirect(v interface{}, d *schema.Resour
 }
 
 func flattenFirewallProxyPolicyWebproxyForwardServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallProxyPolicyIsolatorServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2223,6 +2296,22 @@ func refreshObjectFirewallProxyPolicy(d *schema.ResourceData, o map[string]inter
 		}
 	}
 
+	if b_get_all_tables {
+		if err = d.Set("url_risk", flattenFirewallProxyPolicyUrlRisk(o["url-risk"], d, "url_risk", sv)); err != nil {
+			if !fortiAPIPatch(o["url-risk"]) {
+				return fmt.Errorf("Error reading url_risk: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("url_risk"); ok {
+			if err = d.Set("url_risk", flattenFirewallProxyPolicyUrlRisk(o["url-risk"], d, "url_risk", sv)); err != nil {
+				if !fortiAPIPatch(o["url-risk"]) {
+					return fmt.Errorf("Error reading url_risk: %v", err)
+				}
+			}
+		}
+	}
+
 	if err = d.Set("internet_service", flattenFirewallProxyPolicyInternetService(o["internet-service"], d, "internet_service", sv)); err != nil {
 		if !fortiAPIPatch(o["internet-service"]) {
 			return fmt.Errorf("Error reading internet_service: %v", err)
@@ -2419,6 +2508,12 @@ func refreshObjectFirewallProxyPolicy(d *schema.ResourceData, o map[string]inter
 		}
 	}
 
+	if err = d.Set("ztna_ems_tag_negate", flattenFirewallProxyPolicyZtnaEmsTagNegate(o["ztna-ems-tag-negate"], d, "ztna_ems_tag_negate", sv)); err != nil {
+		if !fortiAPIPatch(o["ztna-ems-tag-negate"]) {
+			return fmt.Errorf("Error reading ztna_ems_tag_negate: %v", err)
+		}
+	}
+
 	if err = d.Set("service_negate", flattenFirewallProxyPolicyServiceNegate(o["service-negate"], d, "service_negate", sv)); err != nil {
 		if !fortiAPIPatch(o["service-negate"]) {
 			return fmt.Errorf("Error reading service_negate: %v", err)
@@ -2534,6 +2629,12 @@ func refreshObjectFirewallProxyPolicy(d *schema.ResourceData, o map[string]inter
 	if err = d.Set("webproxy_forward_server", flattenFirewallProxyPolicyWebproxyForwardServer(o["webproxy-forward-server"], d, "webproxy_forward_server", sv)); err != nil {
 		if !fortiAPIPatch(o["webproxy-forward-server"]) {
 			return fmt.Errorf("Error reading webproxy_forward_server: %v", err)
+		}
+	}
+
+	if err = d.Set("isolator_server", flattenFirewallProxyPolicyIsolatorServer(o["isolator-server"], d, "isolator_server", sv)); err != nil {
+		if !fortiAPIPatch(o["isolator-server"]) {
+			return fmt.Errorf("Error reading isolator_server: %v", err)
 		}
 	}
 
@@ -3074,6 +3175,34 @@ func expandFirewallProxyPolicyDeviceOwnership(d *schema.ResourceData, v interfac
 	return v, nil
 }
 
+func expandFirewallProxyPolicyUrlRisk(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.(*schema.Set).List()
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		tmp["name"], _ = expandFirewallProxyPolicyUrlRiskName(d, i["name"], pre_append, sv)
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandFirewallProxyPolicyUrlRiskName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallProxyPolicyInternetService(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -3378,6 +3507,10 @@ func expandFirewallProxyPolicyDstaddrNegate(d *schema.ResourceData, v interface{
 	return v, nil
 }
 
+func expandFirewallProxyPolicyZtnaEmsTagNegate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallProxyPolicyServiceNegate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -3523,6 +3656,10 @@ func expandFirewallProxyPolicySshPolicyRedirect(d *schema.ResourceData, v interf
 }
 
 func expandFirewallProxyPolicyWebproxyForwardServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallProxyPolicyIsolatorServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3836,6 +3973,15 @@ func getObjectFirewallProxyPolicy(d *schema.ResourceData, sv string) (*map[strin
 		}
 	}
 
+	if v, ok := d.GetOk("url_risk"); ok || d.HasChange("url_risk") {
+		t, err := expandFirewallProxyPolicyUrlRisk(d, v, "url_risk", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["url-risk"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("internet_service"); ok {
 		t, err := expandFirewallProxyPolicyInternetService(d, v, "internet_service", sv)
 		if err != nil {
@@ -3980,6 +4126,15 @@ func getObjectFirewallProxyPolicy(d *schema.ResourceData, sv string) (*map[strin
 		}
 	}
 
+	if v, ok := d.GetOk("ztna_ems_tag_negate"); ok {
+		t, err := expandFirewallProxyPolicyZtnaEmsTagNegate(d, v, "ztna_ems_tag_negate", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ztna-ems-tag-negate"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("service_negate"); ok {
 		t, err := expandFirewallProxyPolicyServiceNegate(d, v, "service_negate", sv)
 		if err != nil {
@@ -4101,6 +4256,17 @@ func getObjectFirewallProxyPolicy(d *schema.ResourceData, sv string) (*map[strin
 		}
 	} else if d.HasChange("webproxy_forward_server") {
 		obj["webproxy-forward-server"] = nil
+	}
+
+	if v, ok := d.GetOk("isolator_server"); ok {
+		t, err := expandFirewallProxyPolicyIsolatorServer(d, v, "isolator_server", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["isolator-server"] = t
+		}
+	} else if d.HasChange("isolator_server") {
+		obj["isolator-server"] = nil
 	}
 
 	if v, ok := d.GetOk("webproxy_profile"); ok {

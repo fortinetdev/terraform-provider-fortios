@@ -28,6 +28,7 @@ The `saas_application` block supports:
 * `safe_search_control` - CASB profile safe search control. The structure of `safe_search_control` block is documented below.
 * `tenant_control` - Enable/disable tenant control. Valid values: `enable`, `disable`.
 * `tenant_control_tenants` - CASB profile tenant control tenants. The structure of `tenant_control_tenants` block is documented below.
+* `advanced_tenant_control` - CASB profile advanced tenant control. The structure of `advanced_tenant_control` block is documented below.
 * `domain_control` - Enable/disable domain control. Valid values: `enable`, `disable`.
 * `domain_control_domains` - CASB profile domain control domains. The structure of `domain_control_domains` block is documented below.
 * `log` - Enable/disable log settings. Valid values: `enable`, `disable`.
@@ -42,6 +43,20 @@ The `tenant_control_tenants` block supports:
 
 * `name` - Tenant control tenants name.
 
+The `advanced_tenant_control` block supports:
+
+* `name` - CASB advanced tenant control name.
+* `attribute` - CASB advanced tenant control attribute. The structure of `attribute` block is documented below.
+
+The `attribute` block supports:
+
+* `name` - CASB extend user input name.
+* `input` - CASB extend user input value. The structure of `input` block is documented below.
+
+The `input` block supports:
+
+* `value` - User input value.
+
 The `domain_control_domains` block supports:
 
 * `name` - Domain control domain name.
@@ -51,11 +66,19 @@ The `access_rule` block supports:
 * `name` - CASB access rule activity name.
 * `action` - CASB access rule action. Valid values: `bypass`, `block`, `monitor`.
 * `bypass` - CASB bypass options. Valid values: `av`, `dlp`, `web-filter`, `file-filter`, `video-filter`.
+* `attribute_filter` - CASB profile attribute filter. The structure of `attribute_filter` block is documented below.
+
+The `attribute_filter` block supports:
+
+* `id` - CASB tenant control ID.
+* `attribute_match` - CASB access rule tenant match.
+* `action` - CASB access rule tenant control action. Valid values: `monitor`, `bypass`, `block`.
 
 The `custom_control` block supports:
 
 * `name` - CASB custom control user activity name.
 * `option` - CASB custom control option. The structure of `option` block is documented below.
+* `attribute_filter` - CASB attribute filter. The structure of `attribute_filter` block is documented below.
 
 The `option` block supports:
 
@@ -65,6 +88,12 @@ The `option` block supports:
 The `user_input` block supports:
 
 * `value` - user input value.
+
+The `attribute_filter` block supports:
+
+* `id` - CASB tenant control ID.
+* `attribute_match` - CASB access rule tenant match.
+* `action` - CASB access rule tenant control action. Valid values: `monitor`, `bypass`, `block`.
 
 
 ## Attribute Reference

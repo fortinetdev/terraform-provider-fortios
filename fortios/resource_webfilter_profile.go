@@ -38,7 +38,7 @@ func resourceWebfilterProfile() *schema.Resource {
 			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				ForceNew:     true,
 				Required:     true,
 			},
@@ -400,6 +400,35 @@ func resourceWebfilterProfile() *schema.Resource {
 										Computed: true,
 									},
 									"warning_duration_type": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"risk": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"id": &schema.Schema{
+										Type:         schema.TypeInt,
+										ValidateFunc: validation.IntBetween(0, 255),
+										Optional:     true,
+										Computed:     true,
+									},
+									"risk_level": &schema.Schema{
+										Type:         schema.TypeString,
+										ValidateFunc: validation.StringLenBetween(0, 35),
+										Optional:     true,
+									},
+									"action": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
+									},
+									"log": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
@@ -1502,6 +1531,11 @@ func flattenWebfilterProfileFtgdWf(v interface{}, d *schema.ResourceData, pre st
 		result["filters"] = flattenWebfilterProfileFtgdWfFilters(i["filters"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "risk"
+	if _, ok := i["risk"]; ok {
+		result["risk"] = flattenWebfilterProfileFtgdWfRisk(i["risk"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "quota"
 	if _, ok := i["quota"]; ok {
 		result["quota"] = flattenWebfilterProfileFtgdWfQuota(i["quota"], d, pre_append, sv)
@@ -1697,6 +1731,75 @@ func flattenWebfilterProfileFtgdWfFiltersWarningPrompt(v interface{}, d *schema.
 }
 
 func flattenWebfilterProfileFtgdWfFiltersWarningDurationType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWebfilterProfileFtgdWfRisk(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenWebfilterProfileFtgdWfRiskId(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "risk_level"
+		if cur_v, ok := i["risk-level"]; ok {
+			tmp["risk_level"] = flattenWebfilterProfileFtgdWfRiskRiskLevel(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
+		if cur_v, ok := i["action"]; ok {
+			tmp["action"] = flattenWebfilterProfileFtgdWfRiskAction(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "log"
+		if cur_v, ok := i["log"]; ok {
+			tmp["log"] = flattenWebfilterProfileFtgdWfRiskLog(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "id", d)
+	return result
+}
+
+func flattenWebfilterProfileFtgdWfRiskId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenWebfilterProfileFtgdWfRiskRiskLevel(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWebfilterProfileFtgdWfRiskAction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWebfilterProfileFtgdWfRiskLog(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -3054,6 +3157,12 @@ func expandWebfilterProfileFtgdWf(d *schema.ResourceData, v interface{}, pre str
 	} else {
 		result["filters"] = make([]string, 0)
 	}
+	pre_append = pre + ".0." + "risk"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["risk"], _ = expandWebfilterProfileFtgdWfRisk(d, i["risk"], pre_append, sv)
+	} else {
+		result["risk"] = make([]string, 0)
+	}
 	pre_append = pre + ".0." + "quota"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["quota"], _ = expandWebfilterProfileFtgdWfQuota(d, i["quota"], pre_append, sv)
@@ -3226,6 +3335,66 @@ func expandWebfilterProfileFtgdWfFiltersWarningPrompt(d *schema.ResourceData, v 
 }
 
 func expandWebfilterProfileFtgdWfFiltersWarningDurationType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWebfilterProfileFtgdWfRisk(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["id"], _ = expandWebfilterProfileFtgdWfRiskId(d, i["id"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "risk_level"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["risk-level"], _ = expandWebfilterProfileFtgdWfRiskRiskLevel(d, i["risk_level"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["risk-level"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["action"], _ = expandWebfilterProfileFtgdWfRiskAction(d, i["action"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "log"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["log"], _ = expandWebfilterProfileFtgdWfRiskLog(d, i["log"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandWebfilterProfileFtgdWfRiskId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWebfilterProfileFtgdWfRiskRiskLevel(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWebfilterProfileFtgdWfRiskAction(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWebfilterProfileFtgdWfRiskLog(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

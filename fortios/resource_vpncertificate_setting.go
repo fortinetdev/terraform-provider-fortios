@@ -93,6 +93,11 @@ func resourceVpnCertificateSetting() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Optional:     true,
 			},
+			"vrf_select": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 511),
+				Optional:     true,
+			},
 			"check_ca_cert": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -396,6 +401,10 @@ func flattenVpnCertificateSettingInterface(v interface{}, d *schema.ResourceData
 	return v
 }
 
+func flattenVpnCertificateSettingVrfSelect(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
 func flattenVpnCertificateSettingCheckCaCert(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -590,6 +599,12 @@ func refreshObjectVpnCertificateSetting(d *schema.ResourceData, o map[string]int
 	if err = d.Set("interface", flattenVpnCertificateSettingInterface(o["interface"], d, "interface", sv)); err != nil {
 		if !fortiAPIPatch(o["interface"]) {
 			return fmt.Errorf("Error reading interface: %v", err)
+		}
+	}
+
+	if err = d.Set("vrf_select", flattenVpnCertificateSettingVrfSelect(o["vrf-select"], d, "vrf_select", sv)); err != nil {
+		if !fortiAPIPatch(o["vrf-select"]) {
+			return fmt.Errorf("Error reading vrf_select: %v", err)
 		}
 	}
 
@@ -791,6 +806,10 @@ func expandVpnCertificateSettingInterfaceSelectMethod(d *schema.ResourceData, v 
 }
 
 func expandVpnCertificateSettingInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnCertificateSettingVrfSelect(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1088,6 +1107,21 @@ func getObjectVpnCertificateSetting(d *schema.ResourceData, setArgNil bool, sv s
 		}
 	} else if d.HasChange("interface") {
 		obj["interface"] = nil
+	}
+
+	if v, ok := d.GetOkExists("vrf_select"); ok {
+		if setArgNil {
+			obj["vrf-select"] = nil
+		} else {
+			t, err := expandVpnCertificateSettingVrfSelect(d, v, "vrf_select", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["vrf-select"] = t
+			}
+		}
+	} else if d.HasChange("vrf_select") {
+		obj["vrf-select"] = nil
 	}
 
 	if v, ok := d.GetOk("check_ca_cert"); ok {

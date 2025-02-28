@@ -40,6 +40,7 @@ The following arguments are supported:
 * `server` - Server address of the remote SDN connector.
 * `server_list` - Server address list of the remote SDN connector. The structure of `server_list` block is documented below.
 * `server_port` - Port number of the remote SDN connector.
+* `message_server_port` - HTTP port number of the SAP message server.
 * `username` - Username of the remote SDN connector as login credentials.
 * `password` - Password of the remote SDN connector as login credentials.
 * `vcenter_server` - vCenter server address for NSX quarantine.

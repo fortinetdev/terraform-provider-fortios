@@ -628,6 +628,11 @@ func resourceFirewallPolicy() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"app_monitor": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"utm_status": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -665,32 +670,32 @@ func resourceFirewallPolicy() *schema.Resource {
 			},
 			"profile_group": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"av_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"webfilter_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"dnsfilter_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"emailfilter_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"dlp_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"spamfilter_profile": &schema.Schema{
@@ -705,47 +710,47 @@ func resourceFirewallPolicy() *schema.Resource {
 			},
 			"file_filter_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"ips_sensor": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"application_list": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"voip_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"ips_voip_filter": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"sctp_filter_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"diameter_filter_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"virtual_patch_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"icap_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"cifs_profile": &schema.Schema{
@@ -755,33 +760,33 @@ func resourceFirewallPolicy() *schema.Resource {
 			},
 			"videofilter_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"waf_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"ssh_filter_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"casb_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
 			"profile_protocol_options": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 				Computed:     true,
 			},
 			"ssl_ssh_profile": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -963,6 +968,11 @@ func resourceFirewallPolicy() *schema.Resource {
 				Computed: true,
 			},
 			"port_preserve": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"port_random": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -1281,6 +1291,11 @@ func resourceFirewallPolicy() *schema.Resource {
 				Computed: true,
 			},
 			"dstaddr6_negate": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"ztna_ems_tag_negate": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -3040,6 +3055,10 @@ func flattenFirewallPolicyPassiveWanHealthMeasurement(v interface{}, d *schema.R
 	return v
 }
 
+func flattenFirewallPolicyAppMonitor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallPolicyUtmStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -3467,6 +3486,10 @@ func flattenFirewallPolicyFixedport(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenFirewallPolicyPortPreserve(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallPolicyPortRandom(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -3982,6 +4005,10 @@ func flattenFirewallPolicyDstaddrNegate(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenFirewallPolicyDstaddr6Negate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallPolicyZtnaEmsTagNegate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -4870,6 +4897,12 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("app_monitor", flattenFirewallPolicyAppMonitor(o["app-monitor"], d, "app_monitor", sv)); err != nil {
+		if !fortiAPIPatch(o["app-monitor"]) {
+			return fmt.Errorf("Error reading app_monitor: %v", err)
+		}
+	}
+
 	if err = d.Set("utm_status", flattenFirewallPolicyUtmStatus(o["utm-status"], d, "utm_status", sv)); err != nil {
 		if !fortiAPIPatch(o["utm-status"]) {
 			return fmt.Errorf("Error reading utm_status: %v", err)
@@ -5280,6 +5313,12 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("port_random", flattenFirewallPolicyPortRandom(o["port-random"], d, "port_random", sv)); err != nil {
+		if !fortiAPIPatch(o["port-random"]) {
+			return fmt.Errorf("Error reading port_random: %v", err)
+		}
+	}
+
 	if err = d.Set("ippool", flattenFirewallPolicyIppool(o["ippool"], d, "ippool", sv)); err != nil {
 		if !fortiAPIPatch(o["ippool"]) {
 			return fmt.Errorf("Error reading ippool: %v", err)
@@ -5663,6 +5702,12 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 	if err = d.Set("dstaddr6_negate", flattenFirewallPolicyDstaddr6Negate(o["dstaddr6-negate"], d, "dstaddr6_negate", sv)); err != nil {
 		if !fortiAPIPatch(o["dstaddr6-negate"]) {
 			return fmt.Errorf("Error reading dstaddr6_negate: %v", err)
+		}
+	}
+
+	if err = d.Set("ztna_ems_tag_negate", flattenFirewallPolicyZtnaEmsTagNegate(o["ztna-ems-tag-negate"], d, "ztna_ems_tag_negate", sv)); err != nil {
+		if !fortiAPIPatch(o["ztna-ems-tag-negate"]) {
+			return fmt.Errorf("Error reading ztna_ems_tag_negate: %v", err)
 		}
 	}
 
@@ -6843,6 +6888,10 @@ func expandFirewallPolicyPassiveWanHealthMeasurement(d *schema.ResourceData, v i
 	return v, nil
 }
 
+func expandFirewallPolicyAppMonitor(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallPolicyUtmStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -7200,6 +7249,10 @@ func expandFirewallPolicyFixedport(d *schema.ResourceData, v interface{}, pre st
 }
 
 func expandFirewallPolicyPortPreserve(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallPolicyPortRandom(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -7601,6 +7654,10 @@ func expandFirewallPolicyDstaddrNegate(d *schema.ResourceData, v interface{}, pr
 }
 
 func expandFirewallPolicyDstaddr6Negate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallPolicyZtnaEmsTagNegate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -8351,6 +8408,15 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		}
 	}
 
+	if v, ok := d.GetOk("app_monitor"); ok {
+		t, err := expandFirewallPolicyAppMonitor(d, v, "app_monitor", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["app-monitor"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("utm_status"); ok {
 		t, err := expandFirewallPolicyUtmStatus(d, v, "utm_status", sv)
 		if err != nil {
@@ -8949,6 +9015,15 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		}
 	}
 
+	if v, ok := d.GetOk("port_random"); ok {
+		t, err := expandFirewallPolicyPortRandom(d, v, "port_random", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["port-random"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("ippool"); ok {
 		t, err := expandFirewallPolicyIppool(d, v, "ippool", sv)
 		if err != nil {
@@ -9437,6 +9512,15 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 			return &obj, err
 		} else if t != nil {
 			obj["dstaddr6-negate"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ztna_ems_tag_negate"); ok {
+		t, err := expandFirewallPolicyZtnaEmsTagNegate(d, v, "ztna_ems_tag_negate", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ztna-ems-tag-negate"] = t
 		}
 	}
 

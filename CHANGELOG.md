@@ -1,5 +1,37 @@
-## 1.22.0 (Unreleased)
+## 1.23.0 (Unreleased)
 
+
+## 1.22.0 (Feb 28, 2025)
+BUG FIXES:
+
+* Fix default value could not be set issue;
+* Fix IP format convert issue;
+
+IMPROVEMENTS:
+
+* Support FortiOS version 7.0.16, 7.0.17, 7.4.6, 7.4.7, 7.6.1, 7.6.2;
+* Add write_only variable for resource system_license_fortiflex;
+
+FEATURES:
+
+* **New Resource:** `fortios_casb_attributematch`
+* **New Resource:** `fortios_system_automationcondition`
+* **New Resource:** `fortios_system_healthcheckfortiguard`
+* **New Resource:** `fortios_system_ngfwsettings`
+* **New Resource:** `fortios_system_sdnvpn`
+* **New Resource:** `fortios_systemsecurityrating_controls`
+* **New Resource:** `fortios_systemsecurityrating_settings`
+* **New Resource:** `fortios_webproxy_isolatorserver`
+* **New Resource:** `fortios_webfilter_ftgdlocalrisk`
+* **New Resource:** `fortios_webfilter_ftgdrisklevel`
+* **New Resource:** `fortios_ztna_reverseconnector`
+* **New Resource:** `fortios_ztna_webportal`
+* **New Resource:** `fortios_ztna_webportalbookmark`
+* **New Resource:** `fortios_ztna_webproxy`
+* **New Resource:** `fortios_firewall_localinpolicy_sort`
+* **New Resource:** `fortios_firewall_localinpolicy_move`
+* **New Resource:** `fortios_firewall_localinpolicy6_sort`
+* **New Resource:** `fortios_firewall_localinpolicy6_move`
 
 ## 1.21.1 (Nov 1, 2024)
 BUG FIXES:

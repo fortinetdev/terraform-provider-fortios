@@ -36,6 +36,11 @@ func resourceSystemDeviceUpgrade() *schema.Resource {
 				ForceNew: true,
 				Computed: true,
 			},
+			"vdom": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 31),
+				Optional:     true,
+			},
 			"serial": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
@@ -105,6 +110,16 @@ func resourceSystemDeviceUpgrade() *schema.Resource {
 						},
 					},
 				},
+			},
+			"initial_version": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"starter_admin": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 64),
+				Optional:     true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
@@ -271,6 +286,10 @@ func resourceSystemDeviceUpgradeRead(d *schema.ResourceData, m interface{}) erro
 	return nil
 }
 
+func flattenSystemDeviceUpgradeVdom(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemDeviceUpgradeSerial(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -357,6 +376,14 @@ func flattenSystemDeviceUpgradeKnownHaMembersSerial(v interface{}, d *schema.Res
 	return v
 }
 
+func flattenSystemDeviceUpgradeInitialVersion(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemDeviceUpgradeStarterAdmin(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectSystemDeviceUpgrade(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 	var b_get_all_tables bool
@@ -364,6 +391,12 @@ func refreshObjectSystemDeviceUpgrade(d *schema.ResourceData, o map[string]inter
 		b_get_all_tables = get_all_tables.(string) == "true"
 	} else {
 		b_get_all_tables = isImportTable()
+	}
+
+	if err = d.Set("vdom", flattenSystemDeviceUpgradeVdom(o["vdom"], d, "vdom", sv)); err != nil {
+		if !fortiAPIPatch(o["vdom"]) {
+			return fmt.Errorf("Error reading vdom: %v", err)
+		}
 	}
 
 	if err = d.Set("serial", flattenSystemDeviceUpgradeSerial(o["serial"], d, "serial", sv)); err != nil {
@@ -448,6 +481,18 @@ func refreshObjectSystemDeviceUpgrade(d *schema.ResourceData, o map[string]inter
 		}
 	}
 
+	if err = d.Set("initial_version", flattenSystemDeviceUpgradeInitialVersion(o["initial-version"], d, "initial_version", sv)); err != nil {
+		if !fortiAPIPatch(o["initial-version"]) {
+			return fmt.Errorf("Error reading initial_version: %v", err)
+		}
+	}
+
+	if err = d.Set("starter_admin", flattenSystemDeviceUpgradeStarterAdmin(o["starter-admin"], d, "starter_admin", sv)); err != nil {
+		if !fortiAPIPatch(o["starter-admin"]) {
+			return fmt.Errorf("Error reading starter_admin: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -455,6 +500,10 @@ func flattenSystemDeviceUpgradeFortiTestDebug(d *schema.ResourceData, fosdebugsn
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
+}
+
+func expandSystemDeviceUpgradeVdom(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
 }
 
 func expandSystemDeviceUpgradeSerial(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
@@ -534,8 +583,27 @@ func expandSystemDeviceUpgradeKnownHaMembersSerial(d *schema.ResourceData, v int
 	return v, nil
 }
 
+func expandSystemDeviceUpgradeInitialVersion(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemDeviceUpgradeStarterAdmin(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectSystemDeviceUpgrade(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
+
+	if v, ok := d.GetOk("vdom"); ok {
+		t, err := expandSystemDeviceUpgradeVdom(d, v, "vdom", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["vdom"] = t
+		}
+	} else if d.HasChange("vdom") {
+		obj["vdom"] = nil
+	}
 
 	if v, ok := d.GetOk("serial"); ok {
 		t, err := expandSystemDeviceUpgradeSerial(d, v, "serial", sv)
@@ -649,6 +717,26 @@ func getObjectSystemDeviceUpgrade(d *schema.ResourceData, sv string) (*map[strin
 		} else if t != nil {
 			obj["known-ha-members"] = t
 		}
+	}
+
+	if v, ok := d.GetOk("initial_version"); ok {
+		t, err := expandSystemDeviceUpgradeInitialVersion(d, v, "initial_version", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["initial-version"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("starter_admin"); ok {
+		t, err := expandSystemDeviceUpgradeStarterAdmin(d, v, "starter_admin", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["starter-admin"] = t
+		}
+	} else if d.HasChange("starter_admin") {
+		obj["starter-admin"] = nil
 	}
 
 	return &obj, nil

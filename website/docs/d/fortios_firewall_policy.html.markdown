@@ -87,6 +87,7 @@ The following attributes are exported:
 * `geoip_match` - Match geography address based either on its physical location or registered location.
 * `dynamic_shaping` - Enable/disable dynamic RADIUS defined traffic shaping.
 * `passive_wan_health_measurement` - Enable/disable passive WAN health measurement. When enabled, auto-asic-offload is disabled.
+* `app_monitor` - Enable/disable application TCP metrics in session logs.When enabled, auto-asic-offload is disabled.
 * `utm_status` - Enable to add one or more security profiles (AV, IPS, etc.) to the firewall policy.
 * `inspection_mode` - Policy inspection mode (Flow/proxy). Default is Flow mode.
 * `http_policy_redirect` - Redirect HTTP(S) traffic to matching transparent web proxy policy.
@@ -147,6 +148,7 @@ The following attributes are exported:
 * `permit_stun_host` - Accept UDP packets from any Session Traversal Utilities for NAT (STUN) host.
 * `fixedport` - Enable to prevent source NAT from changing a session's source port.
 * `port_preserve` - Enable/disable preservation of the original source port from source NAT if it has not been used.
+* `port_random` - Enable/disable random source port selection for source NAT.
 * `ippool` - Enable to use IP Pools for source NAT.
 * `poolname` - IP Pool names. The structure of `poolname` block is documented below.
 * `poolname6` - IPv6 pool names. The structure of `poolname6` block is documented below.
@@ -198,6 +200,7 @@ The following attributes are exported:
 * `srcaddr6_negate` - When enabled srcaddr6 specifies what the source address must NOT be.
 * `dstaddr_negate` - When enabled dstaddr specifies what the destination address must NOT be.
 * `dstaddr6_negate` - When enabled dstaddr6 specifies what the destination address must NOT be.
+* `ztna_ems_tag_negate` - When enabled ztna-ems-tag specifies what the tags must NOT be.
 * `service_negate` - When enabled service specifies what the service must NOT be.
 * `internet_service_negate` - When enabled internet-service specifies what the service must NOT be.
 * `internet_service_src_negate` - When enabled internet-service-src specifies what the service must NOT be.

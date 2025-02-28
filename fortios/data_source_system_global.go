@@ -569,6 +569,10 @@ func dataSourceSystemGlobal() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"upgrade_report": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"vdom_mode": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -1237,6 +1241,10 @@ func dataSourceSystemGlobal() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"application_bandwidth_tracking": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -1812,6 +1820,10 @@ func dataSourceFlattenSystemGlobalLogSingleCpuHigh(v interface{}, d *schema.Reso
 }
 
 func dataSourceFlattenSystemGlobalCheckResetRange(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalUpgradeReport(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -2518,6 +2530,10 @@ func dataSourceFlattenSystemGlobalScimHttpPort(v interface{}, d *schema.Resource
 }
 
 func dataSourceFlattenSystemGlobalScimServerCert(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalApplicationBandwidthTracking(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -3325,6 +3341,12 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 	if err = d.Set("check_reset_range", dataSourceFlattenSystemGlobalCheckResetRange(o["check-reset-range"], d, "check_reset_range")); err != nil {
 		if !fortiAPIPatch(o["check-reset-range"]) {
 			return fmt.Errorf("Error reading check_reset_range: %v", err)
+		}
+	}
+
+	if err = d.Set("upgrade_report", dataSourceFlattenSystemGlobalUpgradeReport(o["upgrade-report"], d, "upgrade_report")); err != nil {
+		if !fortiAPIPatch(o["upgrade-report"]) {
+			return fmt.Errorf("Error reading upgrade_report: %v", err)
 		}
 	}
 
@@ -4315,6 +4337,12 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 	if err = d.Set("scim_server_cert", dataSourceFlattenSystemGlobalScimServerCert(o["scim-server-cert"], d, "scim_server_cert")); err != nil {
 		if !fortiAPIPatch(o["scim-server-cert"]) {
 			return fmt.Errorf("Error reading scim_server_cert: %v", err)
+		}
+	}
+
+	if err = d.Set("application_bandwidth_tracking", dataSourceFlattenSystemGlobalApplicationBandwidthTracking(o["application-bandwidth-tracking"], d, "application_bandwidth_tracking")); err != nil {
+		if !fortiAPIPatch(o["application-bandwidth-tracking"]) {
+			return fmt.Errorf("Error reading application_bandwidth_tracking: %v", err)
 		}
 	}
 

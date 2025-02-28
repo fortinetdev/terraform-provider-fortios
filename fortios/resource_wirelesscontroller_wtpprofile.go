@@ -2547,6 +2547,16 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"admin_auth_tacacs": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+			},
+			"admin_restrict_local": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -7132,6 +7142,14 @@ func flattenWirelessControllerWtpProfileUnii45GhzBand(v interface{}, d *schema.R
 	return v
 }
 
+func flattenWirelessControllerWtpProfileAdminAuthTacacs(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileAdminRestrictLocal(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectWirelessControllerWtpProfile(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 	var b_get_all_tables bool
@@ -7536,6 +7554,18 @@ func refreshObjectWirelessControllerWtpProfile(d *schema.ResourceData, o map[str
 	if err = d.Set("unii_4_5ghz_band", flattenWirelessControllerWtpProfileUnii45GhzBand(o["unii-4-5ghz-band"], d, "unii_4_5ghz_band", sv)); err != nil {
 		if !fortiAPIPatch(o["unii-4-5ghz-band"]) {
 			return fmt.Errorf("Error reading unii_4_5ghz_band: %v", err)
+		}
+	}
+
+	if err = d.Set("admin_auth_tacacs", flattenWirelessControllerWtpProfileAdminAuthTacacs(o["admin-auth-tacacs+"], d, "admin_auth_tacacs", sv)); err != nil {
+		if !fortiAPIPatch(o["admin-auth-tacacs+"]) {
+			return fmt.Errorf("Error reading admin_auth_tacacs: %v", err)
+		}
+	}
+
+	if err = d.Set("admin_restrict_local", flattenWirelessControllerWtpProfileAdminRestrictLocal(o["admin-restrict-local"], d, "admin_restrict_local", sv)); err != nil {
+		if !fortiAPIPatch(o["admin-restrict-local"]) {
+			return fmt.Errorf("Error reading admin_restrict_local: %v", err)
 		}
 	}
 
@@ -11444,6 +11474,14 @@ func expandWirelessControllerWtpProfileUnii45GhzBand(d *schema.ResourceData, v i
 	return v, nil
 }
 
+func expandWirelessControllerWtpProfileAdminAuthTacacs(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileAdminRestrictLocal(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectWirelessControllerWtpProfile(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
@@ -11918,6 +11956,26 @@ func getObjectWirelessControllerWtpProfile(d *schema.ResourceData, sv string) (*
 			return &obj, err
 		} else if t != nil {
 			obj["unii-4-5ghz-band"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("admin_auth_tacacs"); ok {
+		t, err := expandWirelessControllerWtpProfileAdminAuthTacacs(d, v, "admin_auth_tacacs", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["admin-auth-tacacs+"] = t
+		}
+	} else if d.HasChange("admin_auth_tacacs") {
+		obj["admin-auth-tacacs+"] = nil
+	}
+
+	if v, ok := d.GetOk("admin_restrict_local"); ok {
+		t, err := expandWirelessControllerWtpProfileAdminRestrictLocal(d, v, "admin_restrict_local", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["admin-restrict-local"] = t
 		}
 	}
 

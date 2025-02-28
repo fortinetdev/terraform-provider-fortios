@@ -38,7 +38,7 @@ func resourceFirewallSslSshProfile() *schema.Resource {
 			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 47),
 				Required:     true,
 			},
 			"comment": &schema.Schema{
@@ -155,6 +155,11 @@ func resourceFirewallSslSshProfile() *schema.Resource {
 							Computed: true,
 						},
 						"quic": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"udp_not_quic": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -649,6 +654,11 @@ func resourceFirewallSslSshProfile() *schema.Resource {
 							Computed: true,
 						},
 						"quic": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"udp_not_quic": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -1310,6 +1320,11 @@ func flattenFirewallSslSshProfileHttps(v interface{}, d *schema.ResourceData, pr
 		result["quic"] = flattenFirewallSslSshProfileHttpsQuic(i["quic"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "udp_not_quic"
+	if _, ok := i["udp-not-quic"]; ok {
+		result["udp_not_quic"] = flattenFirewallSslSshProfileHttpsUdpNotQuic(i["udp-not-quic"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "proxy_after_tcp_handshake"
 	if _, ok := i["proxy-after-tcp-handshake"]; ok {
 		result["proxy_after_tcp_handshake"] = flattenFirewallSslSshProfileHttpsProxyAfterTcpHandshake(i["proxy-after-tcp-handshake"], d, pre_append, sv)
@@ -1408,6 +1423,10 @@ func flattenFirewallSslSshProfileHttpsStatus(v interface{}, d *schema.ResourceDa
 }
 
 func flattenFirewallSslSshProfileHttpsQuic(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallSslSshProfileHttpsUdpNotQuic(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2211,6 +2230,11 @@ func flattenFirewallSslSshProfileDot(v interface{}, d *schema.ResourceData, pre 
 		result["quic"] = flattenFirewallSslSshProfileDotQuic(i["quic"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "udp_not_quic"
+	if _, ok := i["udp-not-quic"]; ok {
+		result["udp_not_quic"] = flattenFirewallSslSshProfileDotUdpNotQuic(i["udp-not-quic"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "proxy_after_tcp_handshake"
 	if _, ok := i["proxy-after-tcp-handshake"]; ok {
 		result["proxy_after_tcp_handshake"] = flattenFirewallSslSshProfileDotProxyAfterTcpHandshake(i["proxy-after-tcp-handshake"], d, pre_append, sv)
@@ -2275,6 +2299,10 @@ func flattenFirewallSslSshProfileDotStatus(v interface{}, d *schema.ResourceData
 }
 
 func flattenFirewallSslSshProfileDotQuic(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallSslSshProfileDotUdpNotQuic(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -3214,6 +3242,10 @@ func expandFirewallSslSshProfileHttps(d *schema.ResourceData, v interface{}, pre
 	if _, ok := d.GetOk(pre_append); ok {
 		result["quic"], _ = expandFirewallSslSshProfileHttpsQuic(d, i["quic"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "udp_not_quic"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["udp-not-quic"], _ = expandFirewallSslSshProfileHttpsUdpNotQuic(d, i["udp_not_quic"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "proxy_after_tcp_handshake"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["proxy-after-tcp-handshake"], _ = expandFirewallSslSshProfileHttpsProxyAfterTcpHandshake(d, i["proxy_after_tcp_handshake"], pre_append, sv)
@@ -3295,6 +3327,10 @@ func expandFirewallSslSshProfileHttpsStatus(d *schema.ResourceData, v interface{
 }
 
 func expandFirewallSslSshProfileHttpsQuic(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallSslSshProfileHttpsUdpNotQuic(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -4030,6 +4066,10 @@ func expandFirewallSslSshProfileDot(d *schema.ResourceData, v interface{}, pre s
 	if _, ok := d.GetOk(pre_append); ok {
 		result["quic"], _ = expandFirewallSslSshProfileDotQuic(d, i["quic"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "udp_not_quic"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["udp-not-quic"], _ = expandFirewallSslSshProfileDotUdpNotQuic(d, i["udp_not_quic"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "proxy_after_tcp_handshake"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["proxy-after-tcp-handshake"], _ = expandFirewallSslSshProfileDotProxyAfterTcpHandshake(d, i["proxy_after_tcp_handshake"], pre_append, sv)
@@ -4083,6 +4123,10 @@ func expandFirewallSslSshProfileDotStatus(d *schema.ResourceData, v interface{},
 }
 
 func expandFirewallSslSshProfileDotQuic(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallSslSshProfileDotUdpNotQuic(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
