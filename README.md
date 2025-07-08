@@ -10,7 +10,7 @@
 
 - [Terraform](https://www.terraform.io/downloads.html) 0.12.x +
 - [Go](https://golang.org/doc/install) 1.21.x (to build the provider plugin)
-- The provider can cover FortiOS 6.0, 6.2, 6.4, 7.0, 7.2, 7.4 and 7.6 versions, the configuration of all parameters should be based on the relevant FortiOS version manual. For FortiManager, the support on this provider is deprecated, please use [FortiManager Terraform provider](https://registry.terraform.io/providers/fortinetdev/fortimanager/latest) instead.
+- The provider can cover FortiOS 6.0, 6.2, 6.4, 7.0, 7.2, 7.4, 7.6 versions, the configuration of all parameters should be based on the relevant FortiOS version manual. For FortiManager, the support on this provider is deprecated, please use [FortiManager Terraform provider](https://registry.terraform.io/providers/fortinetdev/fortimanager/latest) instead.
 
 ## Building the Provider
 
