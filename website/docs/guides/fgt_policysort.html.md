@@ -1,19 +1,23 @@
 ---
 subcategory: ""
 layout: "fortios"
-page_title: "To sort security policies"
+page_title: "To sort policies"
 description: |-
-  Methods used to sort security policies.
+  Methods used to sort policies.
 ---
 
-# Sort security policies
+# Sort policies
 
-Methods used to sort security policies.
+Methods used to sort policies.
 
-## Option I: Sort security policies on FGT by policyid with fortios_firewall_policy_sort
-* See resource [fortios_firewall_policy_sort](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/fortios_firewall_policy_sort) for further information.
+## Option I: Sort policies on FGT with sort resource. 
+Sort resources will with the surfix of '_sort'. e.g. [fortios_firewall_policy_sort](https://registry.terraform.io/providers/fortinetdev/fortios/latest/docs/resources/fortios_firewall_policy_sort).
 
-## Option II: Sort security policies with terraform depends_on during configuration
+You can specify sort the resources by which argument. Check each resource's argument `sortby` about the supported sort variable.
+
+By default, the sort resource is one-time run. Specify argument `force_recreate` to run it multiple times. If set to 'True', then the value on state file will always be set to False to trigger the re-create operation for every terraform plan/apply. Otherwise, the state file will set to the given value, which means you can set it to depend on other resource changes.  
+
+## Option II: Sort policies with terraform depends_on during configuration
 Terraform is a parallel system, that means when Terraform walks the dependency tree, it will create as many resources in parallel as it can, so terraform can figure out the most efficient way to make it happen. We can make resources be submitted to the device in order with the help of terraform's depends_on feature, which includes 'depends_on for resource' and 'depends_on for modules' (supported in terraform0.13). For example, let's suppose there are the following modules:
 
 ```

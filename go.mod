@@ -1,8 +1,8 @@
 module github.com/terraform-providers/terraform-provider-fortios
 
-go 1.22.0
+go 1.24.0
 
-toolchain go1.22.1
+toolchain go1.24.5
 
 require (
 	github.com/fortinetdev/forti-sdk-go v1.9.2

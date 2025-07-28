@@ -78,18 +78,22 @@ func resourceApplicationName() *schema.Resource {
 			"protocol": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Computed: true,
 			},
 			"technology": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Computed: true,
 			},
 			"behavior": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Computed: true,
 			},
 			"vendor": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Computed: true,
 			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
@@ -778,8 +782,6 @@ func getObjectApplicationName(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["protocol"] = t
 		}
-	} else if d.HasChange("protocol") {
-		obj["protocol"] = nil
 	}
 
 	if v, ok := d.GetOk("technology"); ok {
@@ -789,8 +791,6 @@ func getObjectApplicationName(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["technology"] = t
 		}
-	} else if d.HasChange("technology") {
-		obj["technology"] = nil
 	}
 
 	if v, ok := d.GetOk("behavior"); ok {
@@ -800,8 +800,6 @@ func getObjectApplicationName(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["behavior"] = t
 		}
-	} else if d.HasChange("behavior") {
-		obj["behavior"] = nil
 	}
 
 	if v, ok := d.GetOk("vendor"); ok {
@@ -811,8 +809,6 @@ func getObjectApplicationName(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["vendor"] = t
 		}
-	} else if d.HasChange("vendor") {
-		obj["vendor"] = nil
 	}
 
 	if v, ok := d.GetOk("parameters"); ok || d.HasChange("parameters") {

@@ -62,10 +62,12 @@ func resourceRuleFmwp() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
+				Computed:     true,
 			},
 			"severity": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Computed: true,
 			},
 			"location": &schema.Schema{
 				Type:     schema.TypeString,
@@ -74,14 +76,17 @@ func resourceRuleFmwp() *schema.Resource {
 			"os": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Computed: true,
 			},
 			"application": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Computed: true,
 			},
 			"service": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Computed: true,
 			},
 			"rule_id": &schema.Schema{
 				Type:     schema.TypeInt,
@@ -659,8 +664,6 @@ func getObjectRuleFmwp(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["group"] = t
 		}
-	} else if d.HasChange("group") {
-		obj["group"] = nil
 	}
 
 	if v, ok := d.GetOk("severity"); ok {
@@ -670,8 +673,6 @@ func getObjectRuleFmwp(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["severity"] = t
 		}
-	} else if d.HasChange("severity") {
-		obj["severity"] = nil
 	}
 
 	if v, ok := d.GetOk("location"); ok {
@@ -692,8 +693,6 @@ func getObjectRuleFmwp(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["os"] = t
 		}
-	} else if d.HasChange("os") {
-		obj["os"] = nil
 	}
 
 	if v, ok := d.GetOk("application"); ok {
@@ -703,8 +702,6 @@ func getObjectRuleFmwp(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["application"] = t
 		}
-	} else if d.HasChange("application") {
-		obj["application"] = nil
 	}
 
 	if v, ok := d.GetOk("service"); ok {
@@ -714,8 +711,6 @@ func getObjectRuleFmwp(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["service"] = t
 		}
-	} else if d.HasChange("service") {
-		obj["service"] = nil
 	}
 
 	if v, ok := d.GetOkExists("rule_id"); ok {

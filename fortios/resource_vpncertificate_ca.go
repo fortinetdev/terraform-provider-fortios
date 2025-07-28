@@ -43,9 +43,8 @@ func resourceVpnCertificateCa() *schema.Resource {
 				Required:     true,
 			},
 			"ca": &schema.Schema{
-				Type:      schema.TypeString,
-				Required:  true,
-				Sensitive: true,
+				Type:     schema.TypeString,
+				Required: true,
 			},
 			"range": &schema.Schema{
 				Type:     schema.TypeString,
@@ -267,6 +266,10 @@ func flattenVpnCertificateCaName(v interface{}, d *schema.ResourceData, pre stri
 	return v
 }
 
+func flattenVpnCertificateCaCa(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenVpnCertificateCaRange(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -325,6 +328,12 @@ func refreshObjectVpnCertificateCa(d *schema.ResourceData, o map[string]interfac
 	if err = d.Set("name", flattenVpnCertificateCaName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
+		}
+	}
+
+	if err = d.Set("ca", flattenVpnCertificateCaCa(o["ca"], d, "ca", sv)); err != nil {
+		if !fortiAPIPatch(o["ca"]) {
+			return fmt.Errorf("Error reading ca: %v", err)
 		}
 	}
 
@@ -420,7 +429,14 @@ func expandVpnCertificateCaName(d *schema.ResourceData, v interface{}, pre strin
 }
 
 func expandVpnCertificateCaCa(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return toCertFormat(v), nil
+	new_version_map := map[string][]string{
+		">=": []string{"7.4.4"},
+	}
+	if versionMatch, _ := checkVersionMatch(sv, new_version_map); !versionMatch {
+		return toCertFormat(v), nil
+	} else {
+		return v, nil
+	}
 }
 
 func expandVpnCertificateCaRange(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {

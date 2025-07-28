@@ -3615,55 +3615,75 @@ func expandRouterOspfRedistribute(d *schema.ResourceData, v interface{}, pre str
 			tmp["name"] = nil
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
-		if _, ok := d.GetOk(pre_append); ok {
-			if setArgNil {
-				tmp["status"] = nil
-			} else {
-				tmp["status"], _ = expandRouterOspfRedistributeStatus(d, i["status"], pre_append, sv)
+		if setArgNil {
+			tmp["status"] = nil
+		} else {
+			pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
+			if _, ok := d.GetOk(pre_append); ok {
+				if setArgNil {
+					tmp["status"] = nil
+				} else {
+					tmp["status"], _ = expandRouterOspfRedistributeStatus(d, i["status"], pre_append, sv)
+				}
 			}
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "metric"
-		if _, ok := d.GetOk(pre_append); ok {
-			if setArgNil {
-				tmp["metric"] = nil
-			} else {
-				tmp["metric"], _ = expandRouterOspfRedistributeMetric(d, i["metric"], pre_append, sv)
-			}
-		} else if d.HasChange(pre_append) {
+		if setArgNil {
 			tmp["metric"] = nil
+		} else {
+			pre_append = pre + "." + strconv.Itoa(con) + "." + "metric"
+			if _, ok := d.GetOk(pre_append); ok {
+				if setArgNil {
+					tmp["metric"] = nil
+				} else {
+					tmp["metric"], _ = expandRouterOspfRedistributeMetric(d, i["metric"], pre_append, sv)
+				}
+			} else if d.HasChange(pre_append) {
+				tmp["metric"] = nil
+			}
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "routemap"
-		if _, ok := d.GetOk(pre_append); ok {
-			if setArgNil {
-				tmp["routemap"] = nil
-			} else {
-				tmp["routemap"], _ = expandRouterOspfRedistributeRoutemap(d, i["routemap"], pre_append, sv)
-			}
-		} else if d.HasChange(pre_append) {
+		if setArgNil {
 			tmp["routemap"] = nil
-		}
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "metric_type"
-		if _, ok := d.GetOk(pre_append); ok {
-			if setArgNil {
-				tmp["metric-type"] = nil
-			} else {
-				tmp["metric-type"], _ = expandRouterOspfRedistributeMetricType(d, i["metric_type"], pre_append, sv)
+		} else {
+			pre_append = pre + "." + strconv.Itoa(con) + "." + "routemap"
+			if _, ok := d.GetOk(pre_append); ok {
+				if setArgNil {
+					tmp["routemap"] = nil
+				} else {
+					tmp["routemap"], _ = expandRouterOspfRedistributeRoutemap(d, i["routemap"], pre_append, sv)
+				}
+			} else if d.HasChange(pre_append) {
+				tmp["routemap"] = nil
 			}
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "tag"
-		if _, ok := d.GetOk(pre_append); ok {
-			if setArgNil {
-				tmp["tag"] = nil
-			} else {
-				tmp["tag"], _ = expandRouterOspfRedistributeTag(d, i["tag"], pre_append, sv)
+		if setArgNil {
+			tmp["metric-type"] = nil
+		} else {
+			pre_append = pre + "." + strconv.Itoa(con) + "." + "metric_type"
+			if _, ok := d.GetOk(pre_append); ok {
+				if setArgNil {
+					tmp["metric-type"] = nil
+				} else {
+					tmp["metric-type"], _ = expandRouterOspfRedistributeMetricType(d, i["metric_type"], pre_append, sv)
+				}
 			}
-		} else if d.HasChange(pre_append) {
+		}
+
+		if setArgNil {
 			tmp["tag"] = nil
+		} else {
+			pre_append = pre + "." + strconv.Itoa(con) + "." + "tag"
+			if _, ok := d.GetOk(pre_append); ok {
+				if setArgNil {
+					tmp["tag"] = nil
+				} else {
+					tmp["tag"], _ = expandRouterOspfRedistributeTag(d, i["tag"], pre_append, sv)
+				}
+			} else if d.HasChange(pre_append) {
+				tmp["tag"] = nil
+			}
 		}
 
 		result = append(result, tmp)

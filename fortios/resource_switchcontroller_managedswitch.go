@@ -92,6 +92,7 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 			"fsw_wan2_admin": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Computed: true,
 			},
 			"poe_pre_standard_detection": &schema.Schema{
 				Type:     schema.TypeString,
@@ -308,6 +309,7 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 16),
 							Optional:     true,
+							Computed:     true,
 						},
 						"speed": &schema.Schema{
 							Type:     schema.TypeString,
@@ -524,6 +526,7 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
 							Optional:     true,
+							Computed:     true,
 						},
 						"allowed_vlans_all": &schema.Schema{
 							Type:     schema.TypeString,
@@ -539,6 +542,7 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
+										Computed:     true,
 									},
 								},
 							},
@@ -552,6 +556,7 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
+										Computed:     true,
 									},
 								},
 							},
@@ -843,6 +848,7 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 31),
 							Optional:     true,
+							Computed:     true,
 						},
 						"mac_addr": &schema.Schema{
 							Type:     schema.TypeString,
@@ -5912,8 +5918,6 @@ func expandSwitchControllerManagedSwitchPorts(d *schema.ResourceData, v interfac
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "switch_id"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["switch-id"], _ = expandSwitchControllerManagedSwitchPortsSwitchId(d, i["switch_id"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["switch-id"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "speed"
@@ -6181,8 +6185,6 @@ func expandSwitchControllerManagedSwitchPorts(d *schema.ResourceData, v interfac
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["vlan"], _ = expandSwitchControllerManagedSwitchPortsVlan(d, i["vlan"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["vlan"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "allowed_vlans_all"
@@ -6473,8 +6475,6 @@ func expandSwitchControllerManagedSwitchPorts(d *schema.ResourceData, v interfac
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "export_to"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["export-to"], _ = expandSwitchControllerManagedSwitchPortsExportTo(d, i["export_to"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["export-to"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mac_addr"
@@ -8735,8 +8735,6 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["fsw-wan2-admin"] = t
 		}
-	} else if d.HasChange("fsw_wan2_admin") {
-		obj["fsw-wan2-admin"] = nil
 	}
 
 	if v, ok := d.GetOk("poe_pre_standard_detection"); ok {

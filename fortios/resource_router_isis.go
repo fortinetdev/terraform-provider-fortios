@@ -2333,7 +2333,7 @@ func expandRouterIsisSummaryAddress6Level(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
-func expandRouterIsisRedistribute(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+func expandRouterIsisRedistribute(d *schema.ResourceData, v interface{}, pre string, sv string, setArgNil bool) (interface{}, error) {
 	l := v.([]interface{})
 	result := make([]map[string]interface{}, 0, len(l))
 
@@ -2354,33 +2354,53 @@ func expandRouterIsisRedistribute(d *schema.ResourceData, v interface{}, pre str
 			tmp["protocol"] = nil
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["status"], _ = expandRouterIsisRedistributeStatus(d, i["status"], pre_append, sv)
+		if setArgNil {
+			tmp["status"] = nil
+		} else {
+			pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
+			if _, ok := d.GetOk(pre_append); ok {
+				tmp["status"], _ = expandRouterIsisRedistributeStatus(d, i["status"], pre_append, sv)
+			}
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "metric"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["metric"], _ = expandRouterIsisRedistributeMetric(d, i["metric"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
+		if setArgNil {
 			tmp["metric"] = nil
+		} else {
+			pre_append = pre + "." + strconv.Itoa(con) + "." + "metric"
+			if _, ok := d.GetOk(pre_append); ok {
+				tmp["metric"], _ = expandRouterIsisRedistributeMetric(d, i["metric"], pre_append, sv)
+			} else if d.HasChange(pre_append) {
+				tmp["metric"] = nil
+			}
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "metric_type"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["metric-type"], _ = expandRouterIsisRedistributeMetricType(d, i["metric_type"], pre_append, sv)
+		if setArgNil {
+			tmp["metric-type"] = nil
+		} else {
+			pre_append = pre + "." + strconv.Itoa(con) + "." + "metric_type"
+			if _, ok := d.GetOk(pre_append); ok {
+				tmp["metric-type"], _ = expandRouterIsisRedistributeMetricType(d, i["metric_type"], pre_append, sv)
+			}
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "level"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["level"], _ = expandRouterIsisRedistributeLevel(d, i["level"], pre_append, sv)
+		if setArgNil {
+			tmp["level"] = nil
+		} else {
+			pre_append = pre + "." + strconv.Itoa(con) + "." + "level"
+			if _, ok := d.GetOk(pre_append); ok {
+				tmp["level"], _ = expandRouterIsisRedistributeLevel(d, i["level"], pre_append, sv)
+			}
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "routemap"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["routemap"], _ = expandRouterIsisRedistributeRoutemap(d, i["routemap"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
+		if setArgNil {
 			tmp["routemap"] = nil
+		} else {
+			pre_append = pre + "." + strconv.Itoa(con) + "." + "routemap"
+			if _, ok := d.GetOk(pre_append); ok {
+				tmp["routemap"], _ = expandRouterIsisRedistributeRoutemap(d, i["routemap"], pre_append, sv)
+			} else if d.HasChange(pre_append) {
+				tmp["routemap"] = nil
+			}
 		}
 
 		result = append(result, tmp)
@@ -2415,7 +2435,7 @@ func expandRouterIsisRedistributeRoutemap(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
-func expandRouterIsisRedistribute6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+func expandRouterIsisRedistribute6(d *schema.ResourceData, v interface{}, pre string, sv string, setArgNil bool) (interface{}, error) {
 	l := v.([]interface{})
 	result := make([]map[string]interface{}, 0, len(l))
 
@@ -2436,33 +2456,53 @@ func expandRouterIsisRedistribute6(d *schema.ResourceData, v interface{}, pre st
 			tmp["protocol"] = nil
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["status"], _ = expandRouterIsisRedistribute6Status(d, i["status"], pre_append, sv)
+		if setArgNil {
+			tmp["status"] = nil
+		} else {
+			pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
+			if _, ok := d.GetOk(pre_append); ok {
+				tmp["status"], _ = expandRouterIsisRedistribute6Status(d, i["status"], pre_append, sv)
+			}
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "metric"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["metric"], _ = expandRouterIsisRedistribute6Metric(d, i["metric"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
+		if setArgNil {
 			tmp["metric"] = nil
+		} else {
+			pre_append = pre + "." + strconv.Itoa(con) + "." + "metric"
+			if _, ok := d.GetOk(pre_append); ok {
+				tmp["metric"], _ = expandRouterIsisRedistribute6Metric(d, i["metric"], pre_append, sv)
+			} else if d.HasChange(pre_append) {
+				tmp["metric"] = nil
+			}
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "metric_type"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["metric-type"], _ = expandRouterIsisRedistribute6MetricType(d, i["metric_type"], pre_append, sv)
+		if setArgNil {
+			tmp["metric-type"] = nil
+		} else {
+			pre_append = pre + "." + strconv.Itoa(con) + "." + "metric_type"
+			if _, ok := d.GetOk(pre_append); ok {
+				tmp["metric-type"], _ = expandRouterIsisRedistribute6MetricType(d, i["metric_type"], pre_append, sv)
+			}
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "level"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["level"], _ = expandRouterIsisRedistribute6Level(d, i["level"], pre_append, sv)
+		if setArgNil {
+			tmp["level"] = nil
+		} else {
+			pre_append = pre + "." + strconv.Itoa(con) + "." + "level"
+			if _, ok := d.GetOk(pre_append); ok {
+				tmp["level"], _ = expandRouterIsisRedistribute6Level(d, i["level"], pre_append, sv)
+			}
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "routemap"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["routemap"], _ = expandRouterIsisRedistribute6Routemap(d, i["routemap"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
+		if setArgNil {
 			tmp["routemap"] = nil
+		} else {
+			pre_append = pre + "." + strconv.Itoa(con) + "." + "routemap"
+			if _, ok := d.GetOk(pre_append); ok {
+				tmp["routemap"], _ = expandRouterIsisRedistribute6Routemap(d, i["routemap"], pre_append, sv)
+			} else if d.HasChange(pre_append) {
+				tmp["routemap"] = nil
+			}
 		}
 
 		result = append(result, tmp)
@@ -3032,28 +3072,20 @@ func getObjectRouterIsis(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 	}
 
 	if v, ok := d.GetOk("redistribute"); ok || d.HasChange("redistribute") {
-		if setArgNil {
-			obj["redistribute"] = make([]struct{}, 0)
-		} else {
-			t, err := expandRouterIsisRedistribute(d, v, "redistribute", sv)
-			if err != nil {
-				return &obj, err
-			} else if t != nil {
-				obj["redistribute"] = t
-			}
+		t, err := expandRouterIsisRedistribute(d, v, "redistribute", sv, setArgNil)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["redistribute"] = t
 		}
 	}
 
 	if v, ok := d.GetOk("redistribute6"); ok || d.HasChange("redistribute6") {
-		if setArgNil {
-			obj["redistribute6"] = make([]struct{}, 0)
-		} else {
-			t, err := expandRouterIsisRedistribute6(d, v, "redistribute6", sv)
-			if err != nil {
-				return &obj, err
-			} else if t != nil {
-				obj["redistribute6"] = t
-			}
+		t, err := expandRouterIsisRedistribute6(d, v, "redistribute6", sv, setArgNil)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["redistribute6"] = t
 		}
 	}
 

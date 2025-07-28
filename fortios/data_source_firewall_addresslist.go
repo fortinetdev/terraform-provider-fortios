@@ -59,11 +59,10 @@ func dataSourceFirewallAddressListRead(d *schema.ResourceData, m interface{}) er
 
 	var tmps []string
 	if o != nil {
-		if len(o) == 0 || o[0] == nil {
-			return nil
-		}
-
 		for _, r := range o {
+			if r == nil {
+				continue
+			}
 			i := r.(map[string]interface{})
 
 			if _, ok := i["name"]; ok {

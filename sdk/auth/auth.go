@@ -114,7 +114,7 @@ func (m *Auth) GetEnvInsecure() (bool, error) {
 	return false, nil
 }
 
-//////////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////////
 // GetEnvPeerAuth gets PeerAuth from OS environment
 // It returns the PeerAuth value
 func (m *Auth) GetEnvPeerAuth() (string, error) {

@@ -269,7 +269,14 @@ func expandCertificateRemoteName(d *schema.ResourceData, v interface{}, pre stri
 }
 
 func expandCertificateRemoteRemote(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return toCertFormat(v), nil
+	new_version_map := map[string][]string{
+		">=": []string{"7.4.4"},
+	}
+	if versionMatch, _ := checkVersionMatch(sv, new_version_map); !versionMatch {
+		return toCertFormat(v), nil
+	} else {
+		return v, nil
+	}
 }
 
 func expandCertificateRemoteRange(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {

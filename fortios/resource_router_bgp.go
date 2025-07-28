@@ -11925,7 +11925,7 @@ func expandRouterBgpNetwork6RouteMap(d *schema.ResourceData, v interface{}, pre 
 	return v, nil
 }
 
-func expandRouterBgpRedistribute(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+func expandRouterBgpRedistribute(d *schema.ResourceData, v interface{}, pre string, sv string, setArgNil bool) (interface{}, error) {
 	l := v.([]interface{})
 	result := make([]map[string]interface{}, 0, len(l))
 
@@ -11946,16 +11946,24 @@ func expandRouterBgpRedistribute(d *schema.ResourceData, v interface{}, pre stri
 			tmp["name"] = nil
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["status"], _ = expandRouterBgpRedistributeStatus(d, i["status"], pre_append, sv)
+		if setArgNil {
+			tmp["status"] = nil
+		} else {
+			pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
+			if _, ok := d.GetOk(pre_append); ok {
+				tmp["status"], _ = expandRouterBgpRedistributeStatus(d, i["status"], pre_append, sv)
+			}
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["route-map"], _ = expandRouterBgpRedistributeRouteMap(d, i["route_map"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
+		if setArgNil {
 			tmp["route-map"] = nil
+		} else {
+			pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map"
+			if _, ok := d.GetOk(pre_append); ok {
+				tmp["route-map"], _ = expandRouterBgpRedistributeRouteMap(d, i["route_map"], pre_append, sv)
+			} else if d.HasChange(pre_append) {
+				tmp["route-map"] = nil
+			}
 		}
 
 		result = append(result, tmp)
@@ -11978,7 +11986,7 @@ func expandRouterBgpRedistributeRouteMap(d *schema.ResourceData, v interface{}, 
 	return v, nil
 }
 
-func expandRouterBgpRedistribute6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+func expandRouterBgpRedistribute6(d *schema.ResourceData, v interface{}, pre string, sv string, setArgNil bool) (interface{}, error) {
 	l := v.([]interface{})
 	result := make([]map[string]interface{}, 0, len(l))
 
@@ -11999,16 +12007,24 @@ func expandRouterBgpRedistribute6(d *schema.ResourceData, v interface{}, pre str
 			tmp["name"] = nil
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["status"], _ = expandRouterBgpRedistribute6Status(d, i["status"], pre_append, sv)
+		if setArgNil {
+			tmp["status"] = nil
+		} else {
+			pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
+			if _, ok := d.GetOk(pre_append); ok {
+				tmp["status"], _ = expandRouterBgpRedistribute6Status(d, i["status"], pre_append, sv)
+			}
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["route-map"], _ = expandRouterBgpRedistribute6RouteMap(d, i["route_map"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
+		if setArgNil {
 			tmp["route-map"] = nil
+		} else {
+			pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map"
+			if _, ok := d.GetOk(pre_append); ok {
+				tmp["route-map"], _ = expandRouterBgpRedistribute6RouteMap(d, i["route_map"], pre_append, sv)
+			} else if d.HasChange(pre_append) {
+				tmp["route-map"] = nil
+			}
 		}
 
 		result = append(result, tmp)
@@ -13517,28 +13533,20 @@ func getObjectRouterBgp(d *schema.ResourceData, setArgNil bool, sv string) (*map
 	}
 
 	if v, ok := d.GetOk("redistribute"); ok || d.HasChange("redistribute") {
-		if setArgNil {
-			obj["redistribute"] = make([]struct{}, 0)
-		} else {
-			t, err := expandRouterBgpRedistribute(d, v, "redistribute", sv)
-			if err != nil {
-				return &obj, err
-			} else if t != nil {
-				obj["redistribute"] = t
-			}
+		t, err := expandRouterBgpRedistribute(d, v, "redistribute", sv, setArgNil)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["redistribute"] = t
 		}
 	}
 
 	if v, ok := d.GetOk("redistribute6"); ok || d.HasChange("redistribute6") {
-		if setArgNil {
-			obj["redistribute6"] = make([]struct{}, 0)
-		} else {
-			t, err := expandRouterBgpRedistribute6(d, v, "redistribute6", sv)
-			if err != nil {
-				return &obj, err
-			} else if t != nil {
-				obj["redistribute6"] = t
-			}
+		t, err := expandRouterBgpRedistribute6(d, v, "redistribute6", sv, setArgNil)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["redistribute6"] = t
 		}
 	}
 

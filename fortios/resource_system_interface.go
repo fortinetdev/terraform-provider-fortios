@@ -726,6 +726,7 @@ func resourceSystemInterface() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 4094),
 				Optional:     true,
+				Computed:     true,
 			},
 			"trunk": &schema.Schema{
 				Type:     schema.TypeString,
@@ -10456,8 +10457,6 @@ func getObjectSystemInterface(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["vlanid"] = t
 		}
-	} else if d.HasChange("vlanid") {
-		obj["vlanid"] = nil
 	}
 
 	if v, ok := d.GetOk("trunk"); ok {

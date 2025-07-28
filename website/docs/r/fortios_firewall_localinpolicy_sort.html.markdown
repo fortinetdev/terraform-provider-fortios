@@ -25,7 +25,7 @@ The following arguments are supported:
 * `sortby` - (Required) Sort security policies by the value, it currently supports "policyid".
 * `sortdirection` - (Required) Sort dirction, supports "ascending" and "descending".
 * `manual_order` - Manual order for resources you want to be sorted. Content must be the category of `sortby`. Available when `sortdirection` set to "manual".
-* `force_recreate` - The argument is optional, if it is set, when the value changes, the resource will be re-created. It is usually used when new policies are added, or old policies are deleted.
+* `force_recreate` - The argument is optional, if it is set, when the value changes, the resource will be re-created. If set to 'True', then the value on state file will always be set to False to trigger the re-create operation for every terraform plan/apply. Otherwise, will set to the given value. 
 * `comment` - Comment.
 * `vdomparam` - Specifies the vdom to which the data source will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
@@ -36,7 +36,7 @@ The following attributes are exported:
 * `sortdirection` - Sort dirction, supports "ascending" and "descending".
 * `manual_order` - Manual order for resources you want to be sorted. Content must be the category of `sortby`. Available when `sortdirection` set to "manual".
 * `status` - The parameter is read-only, it is used to indicate whether the sorting of the policies on FGT matches the terraform configuration, if matched, the value is empty(that means ""), otherwise the value is "unsorted", usually the modification outside of the terrform will cause that the status value is "unsorted".
-* `force_recreate` - The argument is optional, if it is set, when the value changes, the resource will be re-created. It is usually used when new policies are added, or old policies are deleted.
+* `force_recreate` - The argument is optional, if it is set, when the value changes, the resource will be re-created. If set to 'True', then the value on state file will always be set to False to trigger the re-create operation for every terraform plan/apply. Otherwise, will set to the given value. 
 * `comment` - Comment.
 * `state_policy_list` - The parameter is read-only, it is used to get the latest policy list. It will be updated after each terraform apply or terraform refresh.
 

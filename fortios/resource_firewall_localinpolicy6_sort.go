@@ -191,7 +191,9 @@ func resourceFirewallLocalinpolicy6SortRead(d *schema.ResourceData, m interface{
 		d.Set("status", "")
 	}
 
-	d.Set("force_recreate", "False")
+	if fr, ok := d.GetOk("force_recreate"); !ok || fr == "True" {
+		d.Set("force_recreate", "False")
+	}
 
 	if o != nil {
 		if err := d.Set("state_policy_list", o); err != nil {

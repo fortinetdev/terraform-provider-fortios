@@ -1610,7 +1610,7 @@ func expandRouterRipngPassiveInterfaceName(d *schema.ResourceData, v interface{}
 	return v, nil
 }
 
-func expandRouterRipngRedistribute(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+func expandRouterRipngRedistribute(d *schema.ResourceData, v interface{}, pre string, sv string, setArgNil bool) (interface{}, error) {
 	l := v.([]interface{})
 	result := make([]map[string]interface{}, 0, len(l))
 
@@ -1631,23 +1631,35 @@ func expandRouterRipngRedistribute(d *schema.ResourceData, v interface{}, pre st
 			tmp["name"] = nil
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["status"], _ = expandRouterRipngRedistributeStatus(d, i["status"], pre_append, sv)
+		if setArgNil {
+			tmp["status"] = nil
+		} else {
+			pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
+			if _, ok := d.GetOk(pre_append); ok {
+				tmp["status"], _ = expandRouterRipngRedistributeStatus(d, i["status"], pre_append, sv)
+			}
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "metric"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["metric"], _ = expandRouterRipngRedistributeMetric(d, i["metric"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
+		if setArgNil {
 			tmp["metric"] = nil
+		} else {
+			pre_append = pre + "." + strconv.Itoa(con) + "." + "metric"
+			if _, ok := d.GetOk(pre_append); ok {
+				tmp["metric"], _ = expandRouterRipngRedistributeMetric(d, i["metric"], pre_append, sv)
+			} else if d.HasChange(pre_append) {
+				tmp["metric"] = nil
+			}
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "routemap"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["routemap"], _ = expandRouterRipngRedistributeRoutemap(d, i["routemap"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
+		if setArgNil {
 			tmp["routemap"] = nil
+		} else {
+			pre_append = pre + "." + strconv.Itoa(con) + "." + "routemap"
+			if _, ok := d.GetOk(pre_append); ok {
+				tmp["routemap"], _ = expandRouterRipngRedistributeRoutemap(d, i["routemap"], pre_append, sv)
+			} else if d.HasChange(pre_append) {
+				tmp["routemap"] = nil
+			}
 		}
 
 		result = append(result, tmp)
@@ -1882,15 +1894,11 @@ func getObjectRouterRipng(d *schema.ResourceData, setArgNil bool, sv string) (*m
 	}
 
 	if v, ok := d.GetOk("redistribute"); ok || d.HasChange("redistribute") {
-		if setArgNil {
-			obj["redistribute"] = make([]struct{}, 0)
-		} else {
-			t, err := expandRouterRipngRedistribute(d, v, "redistribute", sv)
-			if err != nil {
-				return &obj, err
-			} else if t != nil {
-				obj["redistribute"] = t
-			}
+		t, err := expandRouterRipngRedistribute(d, v, "redistribute", sv, setArgNil)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["redistribute"] = t
 		}
 	}
 

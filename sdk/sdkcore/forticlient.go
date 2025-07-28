@@ -142,7 +142,7 @@ func (c *FortiSDKClient) GetDeviceVersion() (version string, err error) {
 			return "", err
 		}
 
-		return strings.TrimLeft(result["version"].(string), "v"), err
+		return result["version"].(string), err
 	}
 
 	return "", err
