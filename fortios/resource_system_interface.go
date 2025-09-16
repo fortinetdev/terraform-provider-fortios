@@ -60,6 +60,7 @@ func resourceSystemInterface() *schema.Resource {
 			"cli_conn_status": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
+				Computed: true,
 			},
 			"fortilink": &schema.Schema{
 				Type:     schema.TypeString,

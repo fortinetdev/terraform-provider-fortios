@@ -106,6 +106,7 @@ func resourceVpnCertificateCa() *schema.Resource {
 			"last_updated": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
+				Computed: true,
 			},
 		},
 	}

@@ -123,6 +123,7 @@ func resourceUserLocal() *schema.Resource {
 			"passwd_time": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Computed: true,
 			},
 			"authtimeout": &schema.Schema{
 				Type:         schema.TypeInt,

@@ -1,6 +1,13 @@
 ## 1.23.0 (Unreleased)
 
 
+## 1.22.2 (Sep. 11, 2025)
+BUG FIXES:
+
+* Upgrade the Go version and all associated dependencies;
+* Fix the issue that the default value set to null in some resources;
+* Fix the authentication issue using username and password in FOS 7.6.4.
+
 ## 1.22.1 (July 29, 2025)
 BUG FIXES:
 

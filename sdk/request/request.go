@@ -72,7 +72,12 @@ func (r *Request) Send2(retries int, ignvdom bool) error {
 	var login_method string
 	token := r.Config.Auth.Token
 	if r.Config.Auth.Token == "" {
-		token, err = r.LoginToken()
+		token, cookies, err = r.LoginToken()
+		if cookies != nil {
+			r.HTTPRequest.Header.Set("X-CSRFTOKEN", cookies.CSRFToken)
+			r.HTTPRequest.Header.Set("Cookie", cookies.Cookie)
+		}
+
 		login_method = "token"
 		if err != nil {
 			cookies, err = r.LoginSession()
@@ -127,17 +132,15 @@ func (r *Request) Send2(retries int, ignvdom bool) error {
 		}
 	}
 
-	if r.Config.Auth.Token == "" {
-		if login_method == "session" {
-			errLogout := r.LogoutSession(cookies)
-			if errLogout != nil {
-				log.Printf("[WARNING] Issue occurs when logout session: %v", errLogout)
-			}
-		} else if login_method == "token" {
-			errLogout := r.LogoutToken(token)
-			if errLogout != nil {
-				log.Printf("[WARNING] Issue occurs when logout token: %v", errLogout)
-			}
+	if login_method == "session" {
+		errLogout := r.LogoutSession(cookies)
+		if errLogout != nil {
+			log.Printf("[WARNING] Issue occurs when logout session: %v", errLogout)
+		}
+	} else if login_method == "token" {
+		errLogout := r.LogoutToken(token, cookies)
+		if errLogout != nil {
+			log.Printf("[WARNING] Issue occurs when logout token: %v", errLogout)
 		}
 	}
 
@@ -155,8 +158,13 @@ func (r *Request) Send3(vdomparam string) error {
 	token := r.Config.Auth.Token
 
 	if r.Config.Auth.Token == "" {
-		token, err = r.LoginToken()
+		token, cookies, err = r.LoginToken()
+		if cookies != nil {
+			r.HTTPRequest.Header.Set("X-CSRFTOKEN", cookies.CSRFToken)
+			r.HTTPRequest.Header.Set("Cookie", cookies.Cookie)
+		}
 		login_method = "token"
+
 		if err != nil {
 			cookies, err = r.LoginSession()
 			if err != nil {
@@ -181,7 +189,7 @@ func (r *Request) Send3(vdomparam string) error {
 	if err != nil {
 		return err
 	}
-
+	log.Printf("[DEBUG] Logged in successfully - Send3 URL: %s, %+v", u, r.HTTPRequest.Header)
 	retry := 0
 	for {
 		//Send
@@ -189,16 +197,16 @@ func (r *Request) Send3(vdomparam string) error {
 		r.HTTPResponse = rsp
 		if errdo != nil {
 			if strings.Contains(errdo.Error(), "x509: ") {
-				err = fmt.Errorf("Error found: %v", filterapikey(errdo.Error()))
+				err = fmt.Errorf("[ERROR] Error found: %v", filterapikey(errdo.Error()))
 				break
 			}
 
 			if retry > retries {
-				err = fmt.Errorf("lost connection to firewall with error: %v", filterapikey(errdo.Error()))
+				err = fmt.Errorf("[ERROR] lost connection to firewall with error: %v", filterapikey(errdo.Error()))
 				break
 			}
 			time.Sleep(time.Second)
-			log.Printf("Error found: %v, will resend again %s, %d", filterapikey(errdo.Error()), u, retry)
+			log.Printf("[ERROR] Error found: %v, will resend again %s, %d", filterapikey(errdo.Error()), u, retry)
 
 			retry++
 
@@ -207,17 +215,15 @@ func (r *Request) Send3(vdomparam string) error {
 		}
 	}
 
-	if r.Config.Auth.Token == "" {
-		if login_method == "session" {
-			errLogout := r.LogoutSession(cookies)
-			if errLogout != nil {
-				log.Printf("[WARNING] Issue occurs when logout session: %v", errLogout)
-			}
-		} else if login_method == "token" {
-			errLogout := r.LogoutToken(token)
-			if errLogout != nil {
-				log.Printf("[WARNING] Issue occurs when logout token: %v", errLogout)
-			}
+	if login_method == "session" {
+		errLogout := r.LogoutSession(cookies)
+		if errLogout != nil {
+			log.Printf("[WARNING] Issue occurs when logout session: %v", errLogout)
+		}
+	} else if login_method == "token" {
+		errLogout := r.LogoutToken(token, cookies)
+		if errLogout != nil {
+			log.Printf("[WARNING] Issue occurs when logout token: %v", errLogout)
 		}
 	}
 
@@ -234,8 +240,13 @@ func (r *Request) CheckValid() error {
 	token := r.Config.Auth.Token
 
 	if r.Config.Auth.Token == "" {
-		token, err = r.LoginToken()
+		token, cookies, err = r.LoginToken()
+		if cookies != nil {
+			r.HTTPRequest.Header.Set("X-CSRFTOKEN", cookies.CSRFToken)
+			r.HTTPRequest.Header.Set("Cookie", cookies.Cookie)
+		}
 		if err != nil {
+			log.Printf("[DEBUG] LoginToken error, try loginSession: %v", err)
 			cookies, err = r.LoginSession()
 			if err != nil {
 				log.Printf("[ERROR] Failed to login: %v", err)
@@ -250,8 +261,9 @@ func (r *Request) CheckValid() error {
 			}
 			return nil
 		}
+
 		// logout token
-		errLogout := r.LogoutToken(token)
+		errLogout := r.LogoutToken(token, cookies)
 		if errLogout != nil {
 			log.Printf("[WARNING] Issue occurs when logout token: %v", errLogout)
 		}
@@ -331,7 +343,11 @@ func (r *Request) SendWithSpecialParams(s, vdomparam string) error {
 	var login_method string
 	token := r.Config.Auth.Token
 	if r.Config.Auth.Token == "" {
-		token, err = r.LoginToken()
+		token, cookies, err = r.LoginToken()
+		if cookies != nil {
+			r.HTTPRequest.Header.Set("X-CSRFTOKEN", cookies.CSRFToken)
+			r.HTTPRequest.Header.Set("Cookie", cookies.Cookie)
+		}
 		login_method = "token"
 		if err != nil {
 			cookies, err = r.LoginSession()
@@ -384,17 +400,15 @@ func (r *Request) SendWithSpecialParams(s, vdomparam string) error {
 		}
 	}
 
-	if r.Config.Auth.Token == "" {
-		if login_method == "session" {
-			errLogout := r.LogoutSession(cookies)
-			if errLogout != nil {
-				log.Printf("[WARNING] Issue occurs when logout session: %v", errLogout)
-			}
-		} else if login_method == "token" {
-			errLogout := r.LogoutToken(token)
-			if errLogout != nil {
-				log.Printf("[WARNING] Issue occurs when logout token: %v", errLogout)
-			}
+	if login_method == "session" {
+		errLogout := r.LogoutSession(cookies)
+		if errLogout != nil {
+			log.Printf("[WARNING] Issue occurs when logout session: %v", errLogout)
+		}
+	} else if login_method == "token" {
+		errLogout := r.LogoutToken(token, cookies)
+		if errLogout != nil {
+			log.Printf("[WARNING] Issue occurs when logout token: %v", errLogout)
 		}
 	}
 
@@ -403,21 +417,23 @@ func (r *Request) SendWithSpecialParams(s, vdomparam string) error {
 
 // Login FortiOS using username and password in token mode, and return Cookies.
 // If errors are encountered, it returns the error.
-func (r *Request) LoginToken() (string, error) {
+func (r *Request) LoginToken() (string, *Cookies, error) {
 	var err error
 	var token string
-
+	var cookies *Cookies
 	data := make(map[string]interface{})
 	data["username"] = r.Config.Auth.Username
 	data["secretkey"] = r.Config.Auth.Password
+	data["password"] = r.Config.Auth.Password
 	data["request_key"] = true
 	data["ack_pre_disclaimer"] = true
 	data["ack_post_disclaimer"] = true
 
+	log.Printf("[DEBUG] Trying LoginToken")
 	locJSON, err := json.Marshal(data)
 	if err != nil {
 		log.Printf("[ERROR] Encoding body data failed.")
-		return token, err
+		return token, cookies, err
 	}
 
 	bodyBytes := bytes.NewBuffer(locJSON)
@@ -430,25 +446,32 @@ func (r *Request) LoginToken() (string, error) {
 	req.URL, err = url.Parse(u)
 	if err != nil {
 		err = fmt.Errorf("Could not parse URL: %s", err)
-		return token, err
+		return token, cookies, err
 	}
 
 	rsp, err := r.Config.HTTPCon.Do(req)
 	if err != nil {
 		if strings.Contains(err.Error(), "x509: ") {
 			err = fmt.Errorf("HTTP request error: %v", err)
-			return token, err
+			return token, cookies, err
 		}
 	}
 
+	if rsp.StatusCode != http.StatusOK {
+		err = fmt.Errorf("Login failed with status code: %d", rsp.StatusCode)
+		return token, cookies, err
+	}
+
+	log.Printf("[DEBUG] LoginToken HTTP response: %+v", rsp)
+
 	if rsp == nil {
 		err = fmt.Errorf("Host is unreachable. HTTP response is nil.")
-		return token, err
+		return token, cookies, err
 	}
 
 	if rsp.Header == nil {
 		err = fmt.Errorf("HTTP response header is nil.")
-		return token, err
+		return token, cookies, err
 	}
 
 	body, err := ioutil.ReadAll(rsp.Body)
@@ -456,18 +479,36 @@ func (r *Request) LoginToken() (string, error) {
 
 	if err != nil || body == nil {
 		err = fmt.Errorf("cannot get response body, %s", err)
-		return token, err
+		return token, cookies, err
 	}
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
 
-	if sc, ok := result["status_code"]; ok && int(sc.(float64)) == 5 {
-		token = result["session_key"].(string)
-	} else {
-		err = fmt.Errorf("Login failed: %S.", result["status_message"])
+	if sc, ok := result["status"]; ok && (int(sc.(float64)) == 5 || int(sc.(float64)) == 6) {
+		if session_key, ok := result["session_key"]; ok {
+			token = session_key.(string)
+		}
+		if token == "" {
+			err = fmt.Errorf("Login failed: cannot get token with response status %s.", result["status"])
+		}
+	} else if sc, ok := result["status_code"]; ok && (int(sc.(float64)) == 5 || int(sc.(float64)) == 6) {
+		if session_key, ok := result["session_key"]; ok {
+			token = session_key.(string)
+		}
+		if token == "" {
+			err = fmt.Errorf("Login failed: cannot get token with response status code %s.", result["status_code"])
+		}
 	}
 
-	return token, err
+	if token == "" {
+		cookies, err = r.ParseCookies(rsp)
+		if err != nil {
+			log.Printf("[ERROR] Parsing cookies failed, %v, %+v", err, rsp.Header)
+			err = fmt.Errorf("LoginToken failed: %+v.", result)
+		}
+	}
+
+	return token, cookies, err
 }
 
 // Login FortiOS using username and password in session mode, and return Cookies.
@@ -481,6 +522,7 @@ func (r *Request) LoginSession() (*Cookies, error) {
 	data += r.Config.Auth.Password
 	data += "&ajax=1"
 
+	log.Printf("[DEBUG] Trying LoginSession")
 	bodyBytes := bytes.NewBufferString(data)
 
 	req, _ := http.NewRequest("POST", "", bodyBytes)
@@ -512,22 +554,39 @@ func (r *Request) LoginSession() (*Cookies, error) {
 		return nil, err
 	}
 
+	return r.ParseCookies(rsp)
+}
+
+func (r *Request) ParseCookies(rsp *http.Response) (*Cookies, error) {
 	csrfToken := ""
 	cookie := ""
+	err := error(nil)
 	if setCookie, ok := rsp.Header["Set-Cookie"]; ok {
 		for _, item := range setCookie {
-			reg := regexp.MustCompile(`ccsrftoken.*?="(.*)".*`)
-			match := reg.FindStringSubmatch(item)
+			// reg := regexp.MustCompile(`ccsrf[_]{0,1}token.*?=(.*)`)
+			reg := regexp.MustCompile(`^(ccsrf_token|ccsrftoken)[^=]*=(?:"([^"]+)"|([^;]+))`)
+			full_cookie := strings.Split(item, ";")[0]
+			match := reg.FindStringSubmatch(full_cookie)
 			if match != nil {
-				csrfToken = match[1]
-			} else if strings.HasPrefix(item, "APSCOOKIE_") {
-				cookie = item
+				if len(match) > 3 && match[2] == "" {
+					csrfToken = match[3]
+				} else {
+					csrfToken = match[2]
+				}
+			}
+
+			if cookie == "" {
+				cookie = full_cookie
+			} else {
+				cookie = fmt.Sprintf("%s; %s", cookie, full_cookie)
 			}
 		}
-		if csrfToken == "" {
+
+		switch csrfToken {
+		case "":
 			err = fmt.Errorf("Could not get CSRF Token from HTTP request response.")
 			return nil, err
-		} else if csrfToken == "0%260" {
+		case "0%260":
 			err = fmt.Errorf("Username or password not valid.")
 			return nil, err
 		}
@@ -536,7 +595,7 @@ func (r *Request) LoginSession() (*Cookies, error) {
 			return nil, err
 		}
 	} else {
-		err = fmt.Errorf("Logincheck response do not contains Set-Cookie.")
+		err = fmt.Errorf("Logincheck response do not contains Set-Cookie [%+v]", rsp.Header)
 		return nil, err
 	}
 
@@ -544,7 +603,6 @@ func (r *Request) LoginSession() (*Cookies, error) {
 		CSRFToken: csrfToken,
 		Cookie:    cookie,
 	}
-
 	return ck, nil
 }
 
@@ -571,7 +629,7 @@ func (r *Request) LogoutSession(cookies *Cookies) error {
 		return err
 	}
 
-	_, err = r.Config.HTTPCon.Do(req)
+	resp, err := r.Config.HTTPCon.Do(req)
 	if err != nil {
 		if strings.Contains(err.Error(), "x509: ") {
 			err = fmt.Errorf("HTTP request error: %v", err)
@@ -579,12 +637,14 @@ func (r *Request) LogoutSession(cookies *Cookies) error {
 		}
 	}
 
+	log.Printf("[DEBUG] Logged out session successfully: %d", resp.StatusCode)
+
 	return nil
 }
 
 // Logout current token based authentication.
 // If errors are encountered, it returns the error.
-func (r *Request) LogoutToken(token string) error {
+func (r *Request) LogoutToken(token string, cookies *Cookies) error {
 	var err error
 
 	data := "session_key="
@@ -594,7 +654,15 @@ func (r *Request) LogoutToken(token string) error {
 
 	req, _ := http.NewRequest("DELETE", "", bodyBytes)
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", "Bearer "+token) // !!! check whether logout or not
+	if token != "" {
+		req.Header.Set("Authorization", "Bearer "+token) // !!! check whether logout or not
+	}
+
+	if cookies != nil {
+		req.Header.Set("X-CSRFTOKEN", cookies.CSRFToken)
+		req.Header.Set("Cookie", cookies.Cookie)
+	}
+
 	u := "https://"
 	u += r.Config.FwTarget
 	u += "/api/v2/authentication"
@@ -604,7 +672,7 @@ func (r *Request) LogoutToken(token string) error {
 		return err
 	}
 
-	_, err = r.Config.HTTPCon.Do(req)
+	resp, err := r.Config.HTTPCon.Do(req)
 	if err != nil {
 		if strings.Contains(err.Error(), "x509: ") {
 			err = fmt.Errorf("HTTP request error: %v", err)
@@ -612,5 +680,6 @@ func (r *Request) LogoutToken(token string) error {
 		}
 	}
 
+	log.Printf("[DEBUG] Logged out token successfully: %d, req header %+v, resp: %+v", resp.StatusCode, req.Header, resp)
 	return nil
 }
