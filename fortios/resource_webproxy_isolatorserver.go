@@ -90,6 +90,11 @@ func resourceWebProxyIsolatorServer() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
 			},
+			"masquerade": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -290,6 +295,10 @@ func flattenWebProxyIsolatorServerComment(v interface{}, d *schema.ResourceData,
 	return v
 }
 
+func flattenWebProxyIsolatorServerMasquerade(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectWebProxyIsolatorServer(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -353,6 +362,12 @@ func refreshObjectWebProxyIsolatorServer(d *schema.ResourceData, o map[string]in
 		}
 	}
 
+	if err = d.Set("masquerade", flattenWebProxyIsolatorServerMasquerade(o["masquerade"], d, "masquerade", sv)); err != nil {
+		if !fortiAPIPatch(o["masquerade"]) {
+			return fmt.Errorf("Error reading masquerade: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -402,6 +417,10 @@ func expandWebProxyIsolatorServerVrfSelect(d *schema.ResourceData, v interface{}
 }
 
 func expandWebProxyIsolatorServerComment(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWebProxyIsolatorServerMasquerade(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -501,6 +520,15 @@ func getObjectWebProxyIsolatorServer(d *schema.ResourceData, sv string) (*map[st
 		}
 	} else if d.HasChange("comment") {
 		obj["comment"] = nil
+	}
+
+	if v, ok := d.GetOk("masquerade"); ok {
+		t, err := expandWebProxyIsolatorServerMasquerade(d, v, "masquerade", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["masquerade"] = t
+		}
 	}
 
 	return &obj, nil

@@ -49,7 +49,7 @@ func resourceSwitchControllerAutoConfigCustom() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 						"switch_id": &schema.Schema{
 							Type:         schema.TypeString,
-							ValidateFunc: validation.StringLenBetween(0, 16),
+							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
 						},
 						"policy": &schema.Schema{

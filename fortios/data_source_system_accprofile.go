@@ -257,6 +257,10 @@ func dataSourceSystemAccprofile() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"telemetry": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 					},
 				},
 			},
@@ -698,6 +702,11 @@ func dataSourceFlattenSystemAccprofileUtmgrpPermission(v interface{}, d *schema.
 		result["casb"] = dataSourceFlattenSystemAccprofileUtmgrpPermissionCasb(i["casb"], d, pre_append)
 	}
 
+	pre_append = pre + ".0." + "telemetry"
+	if _, ok := i["telemetry"]; ok {
+		result["telemetry"] = dataSourceFlattenSystemAccprofileUtmgrpPermissionTelemetry(i["telemetry"], d, pre_append)
+	}
+
 	lastresult := []map[string]interface{}{result}
 	return lastresult
 }
@@ -771,6 +780,10 @@ func dataSourceFlattenSystemAccprofileUtmgrpPermissionVirtualPatch(v interface{}
 }
 
 func dataSourceFlattenSystemAccprofileUtmgrpPermissionCasb(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemAccprofileUtmgrpPermissionTelemetry(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 

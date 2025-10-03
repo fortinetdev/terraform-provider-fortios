@@ -75,6 +75,16 @@ func resourceWebProxyGlobal() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"http2_client_window_size": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
+			},
+			"http2_server_window_size": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
+			},
 			"strict_web_check": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -344,6 +354,14 @@ func flattenWebProxyGlobalMaxMessageLength(v interface{}, d *schema.ResourceData
 	return convintf2i(v)
 }
 
+func flattenWebProxyGlobalHttp2ClientWindowSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenWebProxyGlobalHttp2ServerWindowSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
 func flattenWebProxyGlobalStrictWebCheck(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -551,6 +569,18 @@ func refreshObjectWebProxyGlobal(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("http2_client_window_size", flattenWebProxyGlobalHttp2ClientWindowSize(o["http2-client-window-size"], d, "http2_client_window_size", sv)); err != nil {
+		if !fortiAPIPatch(o["http2-client-window-size"]) {
+			return fmt.Errorf("Error reading http2_client_window_size: %v", err)
+		}
+	}
+
+	if err = d.Set("http2_server_window_size", flattenWebProxyGlobalHttp2ServerWindowSize(o["http2-server-window-size"], d, "http2_server_window_size", sv)); err != nil {
+		if !fortiAPIPatch(o["http2-server-window-size"]) {
+			return fmt.Errorf("Error reading http2_server_window_size: %v", err)
+		}
+	}
+
 	if err = d.Set("strict_web_check", flattenWebProxyGlobalStrictWebCheck(o["strict-web-check"], d, "strict_web_check", sv)); err != nil {
 		if !fortiAPIPatch(o["strict-web-check"]) {
 			return fmt.Errorf("Error reading strict_web_check: %v", err)
@@ -725,6 +755,14 @@ func expandWebProxyGlobalMaxRequestLength(d *schema.ResourceData, v interface{},
 }
 
 func expandWebProxyGlobalMaxMessageLength(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWebProxyGlobalHttp2ClientWindowSize(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWebProxyGlobalHttp2ServerWindowSize(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -946,6 +984,32 @@ func getObjectWebProxyGlobal(d *schema.ResourceData, setArgNil bool, sv string) 
 				return &obj, err
 			} else if t != nil {
 				obj["max-message-length"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("http2_client_window_size"); ok {
+		if setArgNil {
+			obj["http2-client-window-size"] = nil
+		} else {
+			t, err := expandWebProxyGlobalHttp2ClientWindowSize(d, v, "http2_client_window_size", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["http2-client-window-size"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("http2_server_window_size"); ok {
+		if setArgNil {
+			obj["http2-server-window-size"] = nil
+		} else {
+			t, err := expandWebProxyGlobalHttp2ServerWindowSize(d, v, "http2_server_window_size", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["http2-server-window-size"] = t
 			}
 		}
 	}

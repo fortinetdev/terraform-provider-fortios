@@ -36,6 +36,7 @@ The following arguments are supported:
 * `email` - Notifier email address.
 * `ca` - The CA that signs remote FortiSandbox certificate, empty for no check.
 * `cn` - The CN of remote server certificate, case sensitive, empty for no check.
+* `certificate_verification` - Enable/disable identity verification of FortiSandbox by use of certificate. Valid values: `enable`, `disable`.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 

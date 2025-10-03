@@ -775,6 +775,11 @@ func resourceSystemSettings() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"ike_detailed_event_logs": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"ike_port": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1024, 65535),
@@ -1601,6 +1606,10 @@ func flattenSystemSettingsIkeDnFormat(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenSystemSettingsIkePolicyRoute(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSettingsIkeDetailedEventLogs(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2557,6 +2566,12 @@ func refreshObjectSystemSettings(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("ike_detailed_event_logs", flattenSystemSettingsIkeDetailedEventLogs(o["ike-detailed-event-logs"], d, "ike_detailed_event_logs", sv)); err != nil {
+		if !fortiAPIPatch(o["ike-detailed-event-logs"]) {
+			return fmt.Errorf("Error reading ike_detailed_event_logs: %v", err)
+		}
+	}
+
 	if err = d.Set("ike_port", flattenSystemSettingsIkePort(o["ike-port"], d, "ike_port", sv)); err != nil {
 		if !fortiAPIPatch(o["ike-port"]) {
 			return fmt.Errorf("Error reading ike_port: %v", err)
@@ -3253,6 +3268,10 @@ func expandSystemSettingsIkeDnFormat(d *schema.ResourceData, v interface{}, pre 
 }
 
 func expandSystemSettingsIkePolicyRoute(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSettingsIkeDetailedEventLogs(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -5258,6 +5277,19 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 				return &obj, err
 			} else if t != nil {
 				obj["ike-policy-route"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("ike_detailed_event_logs"); ok {
+		if setArgNil {
+			obj["ike-detailed-event-logs"] = nil
+		} else {
+			t, err := expandSystemSettingsIkeDetailedEventLogs(d, v, "ike_detailed_event_logs", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ike-detailed-event-logs"] = t
 			}
 		}
 	}

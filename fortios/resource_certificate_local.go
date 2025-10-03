@@ -176,6 +176,17 @@ func resourceCertificateLocal() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
 			},
+			"acme_eab_key_id": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 255),
+				Optional:     true,
+			},
+			"acme_eab_key_hmac": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 128),
+				Optional:     true,
+				Sensitive:    true,
+			},
 			"acme_rsa_key_size": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(2048, 4096),
@@ -488,6 +499,10 @@ func flattenCertificateLocalAcmeEmail(v interface{}, d *schema.ResourceData, pre
 	return v
 }
 
+func flattenCertificateLocalAcmeEabKeyId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenCertificateLocalAcmeRsaKeySize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return convintf2i(v)
 }
@@ -682,6 +697,12 @@ func refreshObjectCertificateLocal(d *schema.ResourceData, o map[string]interfac
 	if err = d.Set("acme_email", flattenCertificateLocalAcmeEmail(o["acme-email"], d, "acme_email", sv)); err != nil {
 		if !fortiAPIPatch(o["acme-email"]) {
 			return fmt.Errorf("Error reading acme_email: %v", err)
+		}
+	}
+
+	if err = d.Set("acme_eab_key_id", flattenCertificateLocalAcmeEabKeyId(o["acme-eab-key-id"], d, "acme_eab_key_id", sv)); err != nil {
+		if !fortiAPIPatch(o["acme-eab-key-id"]) {
+			return fmt.Errorf("Error reading acme_eab_key_id: %v", err)
 		}
 	}
 
@@ -883,6 +904,14 @@ func expandCertificateLocalAcmeDomain(d *schema.ResourceData, v interface{}, pre
 }
 
 func expandCertificateLocalAcmeEmail(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandCertificateLocalAcmeEabKeyId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandCertificateLocalAcmeEabKeyHmac(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1215,6 +1244,28 @@ func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]i
 		}
 	} else if d.HasChange("acme_email") {
 		obj["acme-email"] = nil
+	}
+
+	if v, ok := d.GetOk("acme_eab_key_id"); ok {
+		t, err := expandCertificateLocalAcmeEabKeyId(d, v, "acme_eab_key_id", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["acme-eab-key-id"] = t
+		}
+	} else if d.HasChange("acme_eab_key_id") {
+		obj["acme-eab-key-id"] = nil
+	}
+
+	if v, ok := d.GetOk("acme_eab_key_hmac"); ok {
+		t, err := expandCertificateLocalAcmeEabKeyHmac(d, v, "acme_eab_key_hmac", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["acme-eab-key-hmac"] = t
+		}
+	} else if d.HasChange("acme_eab_key_hmac") {
+		obj["acme-eab-key-hmac"] = nil
 	}
 
 	if v, ok := d.GetOk("acme_rsa_key_size"); ok {

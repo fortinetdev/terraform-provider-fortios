@@ -260,6 +260,11 @@ func resourceZtnaWebProxy() *schema.Resource {
 										Optional: true,
 										Computed: true,
 									},
+									"verify_cert": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
+									},
 								},
 							},
 						},
@@ -512,6 +517,11 @@ func resourceZtnaWebProxy() *schema.Resource {
 										Computed: true,
 									},
 									"translate_host": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
+									},
+									"verify_cert": &schema.Schema{
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
@@ -1166,6 +1176,11 @@ func flattenZtnaWebProxyApiGatewayRealservers(v interface{}, d *schema.ResourceD
 			tmp["translate_host"] = flattenZtnaWebProxyApiGatewayRealserversTranslateHost(cur_v, d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "verify_cert"
+		if cur_v, ok := i["verify-cert"]; ok {
+			tmp["verify_cert"] = flattenZtnaWebProxyApiGatewayRealserversVerifyCert(cur_v, d, pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -1220,6 +1235,10 @@ func flattenZtnaWebProxyApiGatewayRealserversHolddownInterval(v interface{}, d *
 }
 
 func flattenZtnaWebProxyApiGatewayRealserversTranslateHost(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenZtnaWebProxyApiGatewayRealserversVerifyCert(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1680,6 +1699,11 @@ func flattenZtnaWebProxyApiGateway6Realservers(v interface{}, d *schema.Resource
 			tmp["translate_host"] = flattenZtnaWebProxyApiGateway6RealserversTranslateHost(cur_v, d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "verify_cert"
+		if cur_v, ok := i["verify-cert"]; ok {
+			tmp["verify_cert"] = flattenZtnaWebProxyApiGateway6RealserversVerifyCert(cur_v, d, pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -1734,6 +1758,10 @@ func flattenZtnaWebProxyApiGateway6RealserversHolddownInterval(v interface{}, d 
 }
 
 func flattenZtnaWebProxyApiGateway6RealserversTranslateHost(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenZtnaWebProxyApiGateway6RealserversVerifyCert(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2352,6 +2380,11 @@ func expandZtnaWebProxyApiGatewayRealservers(d *schema.ResourceData, v interface
 			tmp["translate-host"], _ = expandZtnaWebProxyApiGatewayRealserversTranslateHost(d, i["translate_host"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "verify_cert"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["verify-cert"], _ = expandZtnaWebProxyApiGatewayRealserversVerifyCert(d, i["verify_cert"], pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -2405,6 +2438,10 @@ func expandZtnaWebProxyApiGatewayRealserversHolddownInterval(d *schema.ResourceD
 }
 
 func expandZtnaWebProxyApiGatewayRealserversTranslateHost(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandZtnaWebProxyApiGatewayRealserversVerifyCert(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2846,6 +2883,11 @@ func expandZtnaWebProxyApiGateway6Realservers(d *schema.ResourceData, v interfac
 			tmp["translate-host"], _ = expandZtnaWebProxyApiGateway6RealserversTranslateHost(d, i["translate_host"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "verify_cert"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["verify-cert"], _ = expandZtnaWebProxyApiGateway6RealserversVerifyCert(d, i["verify_cert"], pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -2899,6 +2941,10 @@ func expandZtnaWebProxyApiGateway6RealserversHolddownInterval(d *schema.Resource
 }
 
 func expandZtnaWebProxyApiGateway6RealserversTranslateHost(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandZtnaWebProxyApiGateway6RealserversVerifyCert(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

@@ -51,6 +51,7 @@ The following arguments are supported:
 * `internet_service_src_group` - Internet Service source group name. The structure of `internet_service_src_group` block is documented below.
 * `internet_service_src_custom` - Custom Internet Service source name. The structure of `internet_service_src_custom` block is documented below.
 * `internet_service_src_custom_group` - Custom Internet Service source group name. The structure of `internet_service_src_custom_group` block is documented below.
+* `internet_service_src_fortiguard` - FortiGuard Internet Service source name. The structure of `internet_service_src_fortiguard` block is documented below.
 * `dstaddr_negate` - When enabled dstaddr specifies what the destination address must NOT be. Valid values: `enable`, `disable`.
 * `action` - Action performed on traffic matching the policy (default = deny). Valid values: `accept`, `deny`.
 * `service` - Service object from available options. The structure of `service` block is documented below.
@@ -92,6 +93,10 @@ The `internet_service_src_custom` block supports:
 The `internet_service_src_custom_group` block supports:
 
 * `name` - Custom Internet Service group name.
+
+The `internet_service_src_fortiguard` block supports:
+
+* `name` - FortiGuard Internet Service name.
 
 The `service` block supports:
 

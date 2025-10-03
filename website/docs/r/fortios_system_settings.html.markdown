@@ -56,7 +56,7 @@ The following arguments are supported:
 * `mac_ttl` - Duration of MAC addresses in Transparent mode (300 - 8640000 sec, default = 300).
 * `fw_session_hairpin` - Enable/disable checking for a matching policy each time hairpin traffic goes through the FortiGate. Valid values: `enable`, `disable`.
 * `prp_trailer_action` - Enable/disable action to take on PRP trailer. Valid values: `enable`, `disable`.
-* `snat_hairpin_traffic` - Enable/disable source NAT (SNAT) for hairpin traffic. Valid values: `enable`, `disable`.
+* `snat_hairpin_traffic` - Enable/disable source NAT (SNAT) for VIP hairpin traffic. Valid values: `enable`, `disable`.
 * `dhcp_proxy` - Enable/disable the DHCP Proxy. Valid values: `enable`, `disable`.
 * `dhcp_proxy_interface_select_method` - Specify how to select outgoing interface to reach server. Valid values: `auto`, `sdwan`, `specify`.
 * `dhcp_proxy_interface` - Specify outgoing interface to reach server.
@@ -172,6 +172,7 @@ The following arguments are supported:
 * `ike_quick_crash_detect` - Enable/disable IKE quick crash detection (RFC 6290). Valid values: `enable`, `disable`.
 * `ike_dn_format` - Configure IKE ASN.1 Distinguished Name format conventions. Valid values: `with-space`, `no-space`.
 * `ike_policy_route` - Enable/disable IKE Policy Based Routing (PBR). Valid values: `enable`, `disable`.
+* `ike_detailed_event_logs` - Enable/disable detail log for IKE events. Valid values: `disable`, `enable`.
 * `ike_port` - UDP port for IKE/IPsec traffic (default 500).
 * `ike_tcp_port` - TCP port for IKE/IPsec traffic. On FortiOS versions 7.4.2-7.6.0: default 4500. On FortiOS versions >= 7.6.1: default 443.
 * `ike_natt_port` - UDP port for IKE/IPsec traffic in NAT-T mode (default 4500).

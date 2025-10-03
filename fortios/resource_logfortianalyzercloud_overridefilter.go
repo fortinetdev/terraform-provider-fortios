@@ -96,6 +96,11 @@ func resourceLogFortianalyzerCloudOverrideFilter() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"debug": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"free_style": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -310,6 +315,10 @@ func flattenLogFortianalyzerCloudOverrideFilterFortiSwitch(v interface{}, d *sch
 	return v
 }
 
+func flattenLogFortianalyzerCloudOverrideFilterDebug(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenLogFortianalyzerCloudOverrideFilterFreeStyle(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -468,6 +477,12 @@ func refreshObjectLogFortianalyzerCloudOverrideFilter(d *schema.ResourceData, o 
 		}
 	}
 
+	if err = d.Set("debug", flattenLogFortianalyzerCloudOverrideFilterDebug(o["debug"], d, "debug", sv)); err != nil {
+		if !fortiAPIPatch(o["debug"]) {
+			return fmt.Errorf("Error reading debug: %v", err)
+		}
+	}
+
 	if b_get_all_tables {
 		if err = d.Set("free_style", flattenLogFortianalyzerCloudOverrideFilterFreeStyle(o["free-style"], d, "free_style", sv)); err != nil {
 			if !fortiAPIPatch(o["free-style"]) {
@@ -550,6 +565,10 @@ func expandLogFortianalyzerCloudOverrideFilterGtp(d *schema.ResourceData, v inte
 }
 
 func expandLogFortianalyzerCloudOverrideFilterFortiSwitch(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogFortianalyzerCloudOverrideFilterDebug(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -776,6 +795,19 @@ func getObjectLogFortianalyzerCloudOverrideFilter(d *schema.ResourceData, setArg
 				return &obj, err
 			} else if t != nil {
 				obj["forti-switch"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("debug"); ok {
+		if setArgNil {
+			obj["debug"] = nil
+		} else {
+			t, err := expandLogFortianalyzerCloudOverrideFilterDebug(d, v, "debug", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["debug"] = t
 			}
 		}
 	}

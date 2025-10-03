@@ -158,6 +158,19 @@ func resourceFirewallLocalInPolicy() *schema.Resource {
 					},
 				},
 			},
+			"internet_service_src_fortiguard": &schema.Schema{
+				Type:     schema.TypeSet,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+						},
+					},
+				},
+			},
 			"dstaddr_negate": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -699,6 +712,48 @@ func flattenFirewallLocalInPolicyInternetServiceSrcCustomGroupName(v interface{}
 	return v
 }
 
+func flattenFirewallLocalInPolicyInternetServiceSrcFortiguard(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallLocalInPolicyInternetServiceSrcFortiguardName(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenFirewallLocalInPolicyInternetServiceSrcFortiguardName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallLocalInPolicyDstaddrNegate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -933,6 +988,22 @@ func refreshObjectFirewallLocalInPolicy(d *schema.ResourceData, o map[string]int
 			if err = d.Set("internet_service_src_custom_group", flattenFirewallLocalInPolicyInternetServiceSrcCustomGroup(o["internet-service-src-custom-group"], d, "internet_service_src_custom_group", sv)); err != nil {
 				if !fortiAPIPatch(o["internet-service-src-custom-group"]) {
 					return fmt.Errorf("Error reading internet_service_src_custom_group: %v", err)
+				}
+			}
+		}
+	}
+
+	if b_get_all_tables {
+		if err = d.Set("internet_service_src_fortiguard", flattenFirewallLocalInPolicyInternetServiceSrcFortiguard(o["internet-service-src-fortiguard"], d, "internet_service_src_fortiguard", sv)); err != nil {
+			if !fortiAPIPatch(o["internet-service-src-fortiguard"]) {
+				return fmt.Errorf("Error reading internet_service_src_fortiguard: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("internet_service_src_fortiguard"); ok {
+			if err = d.Set("internet_service_src_fortiguard", flattenFirewallLocalInPolicyInternetServiceSrcFortiguard(o["internet-service-src-fortiguard"], d, "internet_service_src_fortiguard", sv)); err != nil {
+				if !fortiAPIPatch(o["internet-service-src-fortiguard"]) {
+					return fmt.Errorf("Error reading internet_service_src_fortiguard: %v", err)
 				}
 			}
 		}
@@ -1237,6 +1308,34 @@ func expandFirewallLocalInPolicyInternetServiceSrcCustomGroupName(d *schema.Reso
 	return v, nil
 }
 
+func expandFirewallLocalInPolicyInternetServiceSrcFortiguard(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.(*schema.Set).List()
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		tmp["name"], _ = expandFirewallLocalInPolicyInternetServiceSrcFortiguardName(d, i["name"], pre_append, sv)
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandFirewallLocalInPolicyInternetServiceSrcFortiguardName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallLocalInPolicyDstaddrNegate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -1440,6 +1539,15 @@ func getObjectFirewallLocalInPolicy(d *schema.ResourceData, sv string) (*map[str
 			return &obj, err
 		} else if t != nil {
 			obj["internet-service-src-custom-group"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("internet_service_src_fortiguard"); ok || d.HasChange("internet_service_src_fortiguard") {
+		t, err := expandFirewallLocalInPolicyInternetServiceSrcFortiguard(d, v, "internet_service_src_fortiguard", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["internet-service-src-fortiguard"] = t
 		}
 	}
 

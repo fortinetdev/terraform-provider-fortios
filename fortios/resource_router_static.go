@@ -139,6 +139,11 @@ func resourceRouterStatic() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 64),
 				Optional:     true,
 			},
+			"internet_service_fortiguard": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 64),
+				Optional:     true,
+			},
 			"link_monitor_exempt": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -452,6 +457,10 @@ func flattenRouterStaticInternetServiceCustom(v interface{}, d *schema.ResourceD
 	return v
 }
 
+func flattenRouterStaticInternetServiceFortiguard(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenRouterStaticLinkMonitorExempt(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -601,6 +610,12 @@ func refreshObjectRouterStatic(d *schema.ResourceData, o map[string]interface{},
 		}
 	}
 
+	if err = d.Set("internet_service_fortiguard", flattenRouterStaticInternetServiceFortiguard(o["internet-service-fortiguard"], d, "internet_service_fortiguard", sv)); err != nil {
+		if !fortiAPIPatch(o["internet-service-fortiguard"]) {
+			return fmt.Errorf("Error reading internet_service_fortiguard: %v", err)
+		}
+	}
+
 	if err = d.Set("link_monitor_exempt", flattenRouterStaticLinkMonitorExempt(o["link-monitor-exempt"], d, "link_monitor_exempt", sv)); err != nil {
 		if !fortiAPIPatch(o["link-monitor-exempt"]) {
 			return fmt.Errorf("Error reading link_monitor_exempt: %v", err)
@@ -731,6 +746,10 @@ func expandRouterStaticInternetService(d *schema.ResourceData, v interface{}, pr
 }
 
 func expandRouterStaticInternetServiceCustom(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterStaticInternetServiceFortiguard(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -936,6 +955,17 @@ func getObjectRouterStatic(d *schema.ResourceData, sv string) (*map[string]inter
 		}
 	} else if d.HasChange("internet_service_custom") {
 		obj["internet-service-custom"] = nil
+	}
+
+	if v, ok := d.GetOk("internet_service_fortiguard"); ok {
+		t, err := expandRouterStaticInternetServiceFortiguard(d, v, "internet_service_fortiguard", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["internet-service-fortiguard"] = t
+		}
+	} else if d.HasChange("internet_service_fortiguard") {
+		obj["internet-service-fortiguard"] = nil
 	}
 
 	if v, ok := d.GetOk("link_monitor_exempt"); ok {

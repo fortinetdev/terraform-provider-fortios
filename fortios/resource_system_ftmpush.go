@@ -41,6 +41,11 @@ func resourceSystemFtmPush() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"interface": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+			},
 			"server_port": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 65535),
@@ -190,6 +195,10 @@ func flattenSystemFtmPushProxy(v interface{}, d *schema.ResourceData, pre string
 	return v
 }
 
+func flattenSystemFtmPushInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemFtmPushServerPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return convintf2i(v)
 }
@@ -216,6 +225,12 @@ func refreshObjectSystemFtmPush(d *schema.ResourceData, o map[string]interface{}
 	if err = d.Set("proxy", flattenSystemFtmPushProxy(o["proxy"], d, "proxy", sv)); err != nil {
 		if !fortiAPIPatch(o["proxy"]) {
 			return fmt.Errorf("Error reading proxy: %v", err)
+		}
+	}
+
+	if err = d.Set("interface", flattenSystemFtmPushInterface(o["interface"], d, "interface", sv)); err != nil {
+		if !fortiAPIPatch(o["interface"]) {
+			return fmt.Errorf("Error reading interface: %v", err)
 		}
 	}
 
@@ -262,6 +277,10 @@ func expandSystemFtmPushProxy(d *schema.ResourceData, v interface{}, pre string,
 	return v, nil
 }
 
+func expandSystemFtmPushInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemFtmPushServerPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -296,6 +315,21 @@ func getObjectSystemFtmPush(d *schema.ResourceData, setArgNil bool, sv string) (
 				obj["proxy"] = t
 			}
 		}
+	}
+
+	if v, ok := d.GetOk("interface"); ok {
+		if setArgNil {
+			obj["interface"] = nil
+		} else {
+			t, err := expandSystemFtmPushInterface(d, v, "interface", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["interface"] = t
+			}
+		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
 	}
 
 	if v, ok := d.GetOk("server_port"); ok {

@@ -36,6 +36,7 @@ The `output_attributes` block supports:
 * `attr_type` - CASB attribute type. Valid values: `tenant`.
 * `description` - CASB attribute description.
 * `type` - CASB attribute format type. Valid values: `string`, `string-list`, `integer`, `integer-list`, `boolean`.
+* `optional` - CASB output attribute optional. Valid values: `enable`, `disable`.
 * `required` - CASB attribute required. Valid values: `enable`, `disable`.
 
 The `input_attributes` block supports:
@@ -43,7 +44,7 @@ The `input_attributes` block supports:
 * `name` - CASB attribute name.
 * `attr_type` - CASB attribute type. Valid values: `tenant`.
 * `description` - CASB attribute description.
-* `type` - CASB attribute format type. Valid values: `string`, `string-list`, `integer`, `integer-list`, `boolean`.
+* `type` - CASB attribute format type.
 * `required` - CASB attribute required. Valid values: `enable`, `disable`.
 * `default` - CASB attribute default value. Valid values: `string`, `string-list`.
 * `fallback_input` - CASB attribute legacy input. Valid values: `enable`, `disable`.

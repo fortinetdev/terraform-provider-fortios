@@ -59,6 +59,11 @@ func resourceSwitchControllerStormControlPolicy() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"burst_size_level": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 4),
+				Optional:     true,
+			},
 			"unknown_unicast": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -245,6 +250,10 @@ func flattenSwitchControllerStormControlPolicyRate(v interface{}, d *schema.Reso
 	return convintf2i(v)
 }
 
+func flattenSwitchControllerStormControlPolicyBurstSizeLevel(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
 func flattenSwitchControllerStormControlPolicyUnknownUnicast(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -281,6 +290,12 @@ func refreshObjectSwitchControllerStormControlPolicy(d *schema.ResourceData, o m
 	if err = d.Set("rate", flattenSwitchControllerStormControlPolicyRate(o["rate"], d, "rate", sv)); err != nil {
 		if !fortiAPIPatch(o["rate"]) {
 			return fmt.Errorf("Error reading rate: %v", err)
+		}
+	}
+
+	if err = d.Set("burst_size_level", flattenSwitchControllerStormControlPolicyBurstSizeLevel(o["burst-size-level"], d, "burst_size_level", sv)); err != nil {
+		if !fortiAPIPatch(o["burst-size-level"]) {
+			return fmt.Errorf("Error reading burst_size_level: %v", err)
 		}
 	}
 
@@ -324,6 +339,10 @@ func expandSwitchControllerStormControlPolicyStormControlMode(d *schema.Resource
 }
 
 func expandSwitchControllerStormControlPolicyRate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerStormControlPolicyBurstSizeLevel(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -378,6 +397,17 @@ func getObjectSwitchControllerStormControlPolicy(d *schema.ResourceData, sv stri
 		} else if t != nil {
 			obj["rate"] = t
 		}
+	}
+
+	if v, ok := d.GetOkExists("burst_size_level"); ok {
+		t, err := expandSwitchControllerStormControlPolicyBurstSizeLevel(d, v, "burst_size_level", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["burst-size-level"] = t
+		}
+	} else if d.HasChange("burst_size_level") {
+		obj["burst-size-level"] = nil
 	}
 
 	if v, ok := d.GetOk("unknown_unicast"); ok {

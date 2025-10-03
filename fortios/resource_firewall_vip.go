@@ -386,6 +386,11 @@ func resourceFirewallVip() *schema.Resource {
 							Type:     schema.TypeString,
 							Optional: true,
 						},
+						"verify_cert": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 					},
 				},
 			},
@@ -1428,6 +1433,11 @@ func flattenFirewallVipRealservers(v interface{}, d *schema.ResourceData, pre st
 			tmp["client_ip"] = flattenFirewallVipRealserversClientIp(cur_v, d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "verify_cert"
+		if cur_v, ok := i["verify-cert"]; ok {
+			tmp["verify_cert"] = flattenFirewallVipRealserversVerifyCert(cur_v, d, pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -1490,6 +1500,10 @@ func flattenFirewallVipRealserversMonitor(v interface{}, d *schema.ResourceData,
 }
 
 func flattenFirewallVipRealserversClientIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallVipRealserversVerifyCert(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -3094,6 +3108,11 @@ func expandFirewallVipRealservers(d *schema.ResourceData, v interface{}, pre str
 			tmp["client-ip"] = nil
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "verify_cert"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["verify-cert"], _ = expandFirewallVipRealserversVerifyCert(d, i["verify_cert"], pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -3173,6 +3192,10 @@ func expandFirewallVipRealserversMonitor(d *schema.ResourceData, v interface{}, 
 }
 
 func expandFirewallVipRealserversClientIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallVipRealserversVerifyCert(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

@@ -116,6 +116,21 @@ func resourceAuthenticationScheme() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
 			},
+			"group_attr_type": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"digest_algo": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"digest_rfc2069": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -375,6 +390,18 @@ func flattenAuthenticationSchemeExternalIdp(v interface{}, d *schema.ResourceDat
 	return v
 }
 
+func flattenAuthenticationSchemeGroupAttrType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAuthenticationSchemeDigestAlgo(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAuthenticationSchemeDigestRfc2069(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectAuthenticationScheme(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 	var b_get_all_tables bool
@@ -478,6 +505,24 @@ func refreshObjectAuthenticationScheme(d *schema.ResourceData, o map[string]inte
 		}
 	}
 
+	if err = d.Set("group_attr_type", flattenAuthenticationSchemeGroupAttrType(o["group-attr-type"], d, "group_attr_type", sv)); err != nil {
+		if !fortiAPIPatch(o["group-attr-type"]) {
+			return fmt.Errorf("Error reading group_attr_type: %v", err)
+		}
+	}
+
+	if err = d.Set("digest_algo", flattenAuthenticationSchemeDigestAlgo(o["digest-algo"], d, "digest_algo", sv)); err != nil {
+		if !fortiAPIPatch(o["digest-algo"]) {
+			return fmt.Errorf("Error reading digest_algo: %v", err)
+		}
+	}
+
+	if err = d.Set("digest_rfc2069", flattenAuthenticationSchemeDigestRfc2069(o["digest-rfc2069"], d, "digest_rfc2069", sv)); err != nil {
+		if !fortiAPIPatch(o["digest-rfc2069"]) {
+			return fmt.Errorf("Error reading digest_rfc2069: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -564,6 +609,18 @@ func expandAuthenticationSchemeSshCa(d *schema.ResourceData, v interface{}, pre 
 }
 
 func expandAuthenticationSchemeExternalIdp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAuthenticationSchemeGroupAttrType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAuthenticationSchemeDigestAlgo(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAuthenticationSchemeDigestRfc2069(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -708,6 +765,33 @@ func getObjectAuthenticationScheme(d *schema.ResourceData, sv string) (*map[stri
 		}
 	} else if d.HasChange("external_idp") {
 		obj["external-idp"] = nil
+	}
+
+	if v, ok := d.GetOk("group_attr_type"); ok {
+		t, err := expandAuthenticationSchemeGroupAttrType(d, v, "group_attr_type", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["group-attr-type"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("digest_algo"); ok {
+		t, err := expandAuthenticationSchemeDigestAlgo(d, v, "digest_algo", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["digest-algo"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("digest_rfc2069"); ok {
+		t, err := expandAuthenticationSchemeDigestRfc2069(d, v, "digest_rfc2069", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["digest-rfc2069"] = t
+		}
 	}
 
 	return &obj, nil

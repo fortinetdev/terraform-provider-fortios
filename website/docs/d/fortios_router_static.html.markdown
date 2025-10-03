@@ -50,6 +50,7 @@ The following attributes are exported:
 * `dstaddr` - Name of firewall address or address group.
 * `internet_service` - Application ID in the Internet service database.
 * `internet_service_custom` - Application name in the Internet service custom database.
+* `internet_service_fortiguard` - Application name in the Internet service fortiguard database.
 * `link_monitor_exempt` - Enable/disable withdrawing this route when link monitor or health check is down.
 * `tag` - Route tag.
 * `vrf` - Virtual Routing Forwarding ID.

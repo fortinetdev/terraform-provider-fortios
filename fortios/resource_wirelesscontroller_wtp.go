@@ -341,6 +341,16 @@ func resourceWirelessControllerWtp() *schema.Resource {
 				Optional:     true,
 				Sensitive:    true,
 			},
+			"override_default_mesh_root": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"default_mesh_root": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"radio_1": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
@@ -1389,6 +1399,14 @@ func flattenWirelessControllerWtpOverrideLoginPasswdChange(v interface{}, d *sch
 }
 
 func flattenWirelessControllerWtpLoginPasswdChange(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpOverrideDefaultMeshRoot(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpDefaultMeshRoot(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2679,6 +2697,18 @@ func refreshObjectWirelessControllerWtp(d *schema.ResourceData, o map[string]int
 		}
 	}
 
+	if err = d.Set("override_default_mesh_root", flattenWirelessControllerWtpOverrideDefaultMeshRoot(o["override-default-mesh-root"], d, "override_default_mesh_root", sv)); err != nil {
+		if !fortiAPIPatch(o["override-default-mesh-root"]) {
+			return fmt.Errorf("Error reading override_default_mesh_root: %v", err)
+		}
+	}
+
+	if err = d.Set("default_mesh_root", flattenWirelessControllerWtpDefaultMeshRoot(o["default-mesh-root"], d, "default_mesh_root", sv)); err != nil {
+		if !fortiAPIPatch(o["default-mesh-root"]) {
+			return fmt.Errorf("Error reading default_mesh_root: %v", err)
+		}
+	}
+
 	if b_get_all_tables {
 		if err = d.Set("radio_1", flattenWirelessControllerWtpRadio1(o["radio-1"], d, "radio_1", sv)); err != nil {
 			if !fortiAPIPatch(o["radio-1"]) {
@@ -3133,6 +3163,14 @@ func expandWirelessControllerWtpLoginPasswdChange(d *schema.ResourceData, v inte
 }
 
 func expandWirelessControllerWtpLoginPasswd(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpOverrideDefaultMeshRoot(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpDefaultMeshRoot(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -4378,6 +4416,24 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 		}
 	} else if d.HasChange("login_passwd") {
 		obj["login-passwd"] = nil
+	}
+
+	if v, ok := d.GetOk("override_default_mesh_root"); ok {
+		t, err := expandWirelessControllerWtpOverrideDefaultMeshRoot(d, v, "override_default_mesh_root", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["override-default-mesh-root"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("default_mesh_root"); ok {
+		t, err := expandWirelessControllerWtpDefaultMeshRoot(d, v, "default_mesh_root", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["default-mesh-root"] = t
+		}
 	}
 
 	if v, ok := d.GetOk("radio_1"); ok {

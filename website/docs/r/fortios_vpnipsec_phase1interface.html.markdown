@@ -154,6 +154,8 @@ The following arguments are supported:
 * `aggregate_member` - Enable/disable use as an aggregate member. Valid values: `enable`, `disable`.
 * `aggregate_weight` - Link weight for aggregate.
 * `packet_redistribution` - Enable/disable packet distribution (RPS) on the IPsec interface. Valid values: `enable`, `disable`.
+* `peer_egress_shaping` - Enable/disable peer egress shaping. Valid values: `enable`, `disable`.
+* `peer_egress_shaping_value` - Configure outbound bandwidth to use for peer egress shaping in kbps (0 - 80000000, default = 0).
 * `mode_cfg` - Enable/disable configuration method. Valid values: `disable`, `enable`.
 * `mode_cfg_allow_client_selector` - Enable/disable mode-cfg client to use custom phase2 selectors. Valid values: `disable`, `enable`.
 * `assign_ip` - Enable/disable assignment of IP to IPsec interface via configuration method. Valid values: `disable`, `enable`.
@@ -168,6 +170,7 @@ The following arguments are supported:
 * `ipv4_dns_server2` - IPv4 DNS server 2.
 * `ipv4_dns_server3` - IPv4 DNS server 3.
 * `internal_domain_list` - One or more internal domain names in quotes separated by spaces. The structure of `internal_domain_list` block is documented below.
+* `dns_suffix_search` - One or more DNS domain name suffixes in quotes separated by spaces. The structure of `dns_suffix_search` block is documented below.
 * `ipv4_wins_server1` - WINS server 1.
 * `ipv4_wins_server2` - WINS server 2.
 * `ipv4_exclude_range` - Configuration Method IPv4 exclude ranges. The structure of `ipv4_exclude_range` block is documented below.
@@ -311,6 +314,7 @@ The following arguments are supported:
 * `cert_peer_username_strip` - Enable/disable domain stripping on certificate identity. Valid values: `disable`, `enable`.
 * `cert_trust_store` - CA certificate trust store. Valid values: `local`, `ems`.
 * `qkd` - Enable/disable use of Quantum Key Distribution (QKD) server. Valid values: `disable`, `allow`, `require`.
+* `qkd_hybrid` - Enable/disable use of Quantum Key Distribution (QKD) hybrid keys. Valid values: `disable`, `allow`, `require`.
 * `qkd_profile` - Quantum Key Distribution (QKD) server profile.
 * `transport` - Set IKE transport protocol.
 * `fortinet_esp` - Enable/disable Fortinet ESP encapsulaton. Valid values: `enable`, `disable`.
@@ -327,6 +331,10 @@ The `certificate` block supports:
 The `internal_domain_list` block supports:
 
 * `domain_name` - Domain name.
+
+The `dns_suffix_search` block supports:
+
+* `dns_suffix` - DNS suffix.
 
 The `ipv4_exclude_range` block supports:
 

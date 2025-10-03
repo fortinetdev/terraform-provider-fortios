@@ -80,6 +80,10 @@ func dataSourceSystemFortisandbox() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"certificate_verification": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -170,6 +174,10 @@ func dataSourceFlattenSystemFortisandboxCn(v interface{}, d *schema.ResourceData
 	return v
 }
 
+func dataSourceFlattenSystemFortisandboxCertificateVerification(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceRefreshObjectSystemFortisandbox(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
 
@@ -248,6 +256,12 @@ func dataSourceRefreshObjectSystemFortisandbox(d *schema.ResourceData, o map[str
 	if err = d.Set("cn", dataSourceFlattenSystemFortisandboxCn(o["cn"], d, "cn")); err != nil {
 		if !fortiAPIPatch(o["cn"]) {
 			return fmt.Errorf("Error reading cn: %v", err)
+		}
+	}
+
+	if err = d.Set("certificate_verification", dataSourceFlattenSystemFortisandboxCertificateVerification(o["certificate-verification"], d, "certificate_verification")); err != nil {
+		if !fortiAPIPatch(o["certificate-verification"]) {
+			return fmt.Errorf("Error reading certificate_verification: %v", err)
 		}
 	}
 

@@ -20,7 +20,9 @@ The following arguments are supported:
 * `client_idle_rehome_timeout` - Time after which a client is considered idle and disconnected from the home controller (2 - 3600 sec, default = 20, 0 for no timeout).
 * `auth_timeout` - Time after which a client is considered failed in RADIUS authentication and times out (5 - 30 sec, default = 5).
 * `rogue_ap_log` - Time between logging rogue AP messages if periodic rogue AP logging is configured (0 - 1440 min, default = 0).
-* `fake_ap_log` - Time between recording logs about fake APs if periodic fake AP logging is configured (0 - 1440 min, default = 1).
+* `fake_ap_log` - Time between recording logs about fake APs if periodic fake AP logging is configured (default = 1). On FortiOS versions 6.2.0-7.4.7, 7.6.0-7.6.2: 0 - 1440 min. On FortiOS versions 7.4.8, >= 7.6.3: 1 - 1440 min.
+* `sta_offline_cleanup` - Time period in seconds to keep station offline data after it is gone (default = 300).
+* `sta_offline_ip2mac_cleanup` - Time period in seconds to keep station offline Ip2mac data after it is gone (default = 300).
 * `sta_cap_cleanup` - Time period in minutes to keep station capability data after it is gone (default = 0).
 * `rogue_ap_cleanup` - Time period in minutes to keep rogue AP after it is gone (default = 0).
 * `rogue_sta_cleanup` - Time period in minutes to keep rogue station after it is gone (default = 0).
@@ -36,7 +38,7 @@ The following arguments are supported:
 * `sta_locate_timer` - Time between running client presence flushes to remove clients that are listed but no longer present (0 - 86400 sec, default = 1800).
 * `ipsec_intf_cleanup` - Time period to keep IPsec VPN interfaces up after WTP sessions are disconnected (30 - 3600 sec, default = 120).
 * `ble_scan_report_intv` - Time between running Bluetooth Low Energy (BLE) reports (10 - 3600 sec, default = 30).
-* `drma_interval` - Dynamic radio mode assignment (DRMA) schedule interval in minutes (10 - 1440, default = 60).
+* `drma_interval` - Dynamic radio mode assignment (DRMA) schedule interval in minutes (default = 60). On FortiOS versions 6.4.10-7.4.7, 7.6.0-7.6.2: 10 - 1440. On FortiOS versions 7.4.8, >= 7.6.3: 1 - 1440.
 * `ap_reboot_wait_interval1` - Time in minutes to wait before AP reboots when there is no controller detected (5 - 65535, default = 0, 0 for no reboot).
 * `ap_reboot_wait_time` - Time to reboot the AP when there is no controller detected and standalone SSIDs are pushed to the AP in the previous session, format hh:mm.
 * `ap_reboot_wait_interval2` - Time in minutes to wait before AP reboots when there is no controller detected and standalone SSIDs are pushed to the AP in the previous session (5 - 65535, default = 0, 0 for no reboot).

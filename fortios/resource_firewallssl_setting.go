@@ -53,6 +53,17 @@ func resourceFirewallSslSetting() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"cert_manager_cache_timeout": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(24, 720),
+				Optional:     true,
+				Computed:     true,
+			},
+			"resigned_short_lived_certificate": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"cert_cache_capacity": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 500),
@@ -224,6 +235,14 @@ func flattenFirewallSslSettingNoMatchingCipherAction(v interface{}, d *schema.Re
 	return v
 }
 
+func flattenFirewallSslSettingCertManagerCacheTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenFirewallSslSettingResignedShortLivedCertificate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallSslSettingCertCacheCapacity(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return convintf2i(v)
 }
@@ -276,6 +295,18 @@ func refreshObjectFirewallSslSetting(d *schema.ResourceData, o map[string]interf
 	if err = d.Set("no_matching_cipher_action", flattenFirewallSslSettingNoMatchingCipherAction(o["no-matching-cipher-action"], d, "no_matching_cipher_action", sv)); err != nil {
 		if !fortiAPIPatch(o["no-matching-cipher-action"]) {
 			return fmt.Errorf("Error reading no_matching_cipher_action: %v", err)
+		}
+	}
+
+	if err = d.Set("cert_manager_cache_timeout", flattenFirewallSslSettingCertManagerCacheTimeout(o["cert-manager-cache-timeout"], d, "cert_manager_cache_timeout", sv)); err != nil {
+		if !fortiAPIPatch(o["cert-manager-cache-timeout"]) {
+			return fmt.Errorf("Error reading cert_manager_cache_timeout: %v", err)
+		}
+	}
+
+	if err = d.Set("resigned_short_lived_certificate", flattenFirewallSslSettingResignedShortLivedCertificate(o["resigned-short-lived-certificate"], d, "resigned_short_lived_certificate", sv)); err != nil {
+		if !fortiAPIPatch(o["resigned-short-lived-certificate"]) {
+			return fmt.Errorf("Error reading resigned_short_lived_certificate: %v", err)
 		}
 	}
 
@@ -343,6 +374,14 @@ func expandFirewallSslSettingSslSendEmptyFrags(d *schema.ResourceData, v interfa
 }
 
 func expandFirewallSslSettingNoMatchingCipherAction(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallSslSettingCertManagerCacheTimeout(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallSslSettingResignedShortLivedCertificate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -425,6 +464,32 @@ func getObjectFirewallSslSetting(d *schema.ResourceData, setArgNil bool, sv stri
 				return &obj, err
 			} else if t != nil {
 				obj["no-matching-cipher-action"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("cert_manager_cache_timeout"); ok {
+		if setArgNil {
+			obj["cert-manager-cache-timeout"] = nil
+		} else {
+			t, err := expandFirewallSslSettingCertManagerCacheTimeout(d, v, "cert_manager_cache_timeout", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["cert-manager-cache-timeout"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("resigned_short_lived_certificate"); ok {
+		if setArgNil {
+			obj["resigned-short-lived-certificate"] = nil
+		} else {
+			t, err := expandFirewallSslSettingResignedShortLivedCertificate(d, v, "resigned_short_lived_certificate", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["resigned-short-lived-certificate"] = t
 			}
 		}
 	}

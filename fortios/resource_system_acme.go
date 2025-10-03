@@ -95,6 +95,17 @@ func resourceSystemAcme() *schema.Resource {
 							ValidateFunc: validation.StringLenBetween(0, 255),
 							Optional:     true,
 						},
+						"eab_key_id": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 255),
+							Optional:     true,
+						},
+						"eab_key_hmac": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 128),
+							Optional:     true,
+							Sensitive:    true,
+						},
 						"privatekey": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 8191),
@@ -334,6 +345,19 @@ func flattenSystemAcmeAccounts(v interface{}, d *schema.ResourceData, pre string
 			tmp["email"] = flattenSystemAcmeAccountsEmail(cur_v, d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "eab_key_id"
+		if cur_v, ok := i["eab-key-id"]; ok {
+			tmp["eab_key_id"] = flattenSystemAcmeAccountsEabKeyId(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "eab_key_hmac"
+		if _, ok := i["eab-key-hmac"]; ok {
+			c := d.Get(pre_append).(string)
+			if c != "" {
+				tmp["eab_key_hmac"] = c
+			}
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "privatekey"
 		if cur_v, ok := i["privatekey"]; ok {
 			tmp["privatekey"] = flattenSystemAcmeAccountsPrivatekey(cur_v, d, pre_append, sv)
@@ -365,6 +389,10 @@ func flattenSystemAcmeAccountsCaUrl(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenSystemAcmeAccountsEmail(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemAcmeAccountsEabKeyId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -527,6 +555,20 @@ func expandSystemAcmeAccounts(d *schema.ResourceData, v interface{}, pre string,
 			tmp["email"] = nil
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "eab_key_id"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["eab-key-id"], _ = expandSystemAcmeAccountsEabKeyId(d, i["eab_key_id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["eab-key-id"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "eab_key_hmac"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["eab-key-hmac"], _ = expandSystemAcmeAccountsEabKeyHmac(d, i["eab_key_hmac"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["eab-key-hmac"] = nil
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "privatekey"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["privatekey"], _ = expandSystemAcmeAccountsPrivatekey(d, i["privatekey"], pre_append, sv)
@@ -559,6 +601,14 @@ func expandSystemAcmeAccountsCaUrl(d *schema.ResourceData, v interface{}, pre st
 }
 
 func expandSystemAcmeAccountsEmail(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAcmeAccountsEabKeyId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAcmeAccountsEabKeyHmac(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

@@ -50,6 +50,8 @@ The following arguments are supported:
 * `override_login_passwd_change` - Enable to override the WTP profile login-password (administrator password) setting. Valid values: `enable`, `disable`.
 * `login_passwd_change` - Change or reset the administrator password of a managed WTP, FortiAP or AP (yes, default, or no, default = no). Valid values: `yes`, `default`, `no`.
 * `login_passwd` - Set the managed WTP, FortiAP, or AP's administrator password.
+* `override_default_mesh_root` - Enable to override the WTP profile default mesh root SSID setting. Valid values: `enable`, `disable`.
+* `default_mesh_root` - Configure default mesh root SSID when it is not included by radio's SSID configuration. Valid values: `enable`, `disable`.
 * `radio_1` - Configuration options for radio 1. The structure of `radio_1` block is documented below.
 * `radio_2` - Configuration options for radio 2. The structure of `radio_2` block is documented below.
 * `radio_3` - Configuration options for radio 3. The structure of `radio_3` block is documented below.

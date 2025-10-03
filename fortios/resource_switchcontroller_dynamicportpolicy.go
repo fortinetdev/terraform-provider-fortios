@@ -89,6 +89,11 @@ func resourceSwitchControllerDynamicPortPolicy() *schema.Resource {
 							ValidateFunc: validation.IntBetween(0, 120),
 							Optional:     true,
 						},
+						"match_remove": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"interface_tags": &schema.Schema{
 							Type:     schema.TypeSet,
 							Optional: true,
@@ -397,6 +402,11 @@ func flattenSwitchControllerDynamicPortPolicyPolicy(v interface{}, d *schema.Res
 			tmp["match_period"] = flattenSwitchControllerDynamicPortPolicyPolicyMatchPeriod(cur_v, d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_remove"
+		if cur_v, ok := i["match-remove"]; ok {
+			tmp["match_remove"] = flattenSwitchControllerDynamicPortPolicyPolicyMatchRemove(cur_v, d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_tags"
 		if cur_v, ok := i["interface-tags"]; ok {
 			tmp["interface_tags"] = flattenSwitchControllerDynamicPortPolicyPolicyInterfaceTags(cur_v, d, pre_append, sv)
@@ -493,6 +503,10 @@ func flattenSwitchControllerDynamicPortPolicyPolicyMatchType(v interface{}, d *s
 
 func flattenSwitchControllerDynamicPortPolicyPolicyMatchPeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return convintf2i(v)
+}
+
+func flattenSwitchControllerDynamicPortPolicyPolicyMatchRemove(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
 }
 
 func flattenSwitchControllerDynamicPortPolicyPolicyInterfaceTags(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -699,6 +713,11 @@ func expandSwitchControllerDynamicPortPolicyPolicy(d *schema.ResourceData, v int
 			tmp["match-period"] = nil
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_remove"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["match-remove"], _ = expandSwitchControllerDynamicPortPolicyPolicyMatchRemove(d, i["match_remove"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_tags"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["interface-tags"], _ = expandSwitchControllerDynamicPortPolicyPolicyInterfaceTags(d, i["interface_tags"], pre_append, sv)
@@ -813,6 +832,10 @@ func expandSwitchControllerDynamicPortPolicyPolicyMatchType(d *schema.ResourceDa
 }
 
 func expandSwitchControllerDynamicPortPolicyPolicyMatchPeriod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerDynamicPortPolicyPolicyMatchRemove(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

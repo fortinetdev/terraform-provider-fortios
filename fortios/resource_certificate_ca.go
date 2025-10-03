@@ -107,6 +107,7 @@ func resourceCertificateCa() *schema.Resource {
 			"last_updated": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
+				Computed: true,
 			},
 		},
 	}
@@ -632,8 +633,6 @@ func getObjectCertificateCa(d *schema.ResourceData, sv string) (*map[string]inte
 		} else if t != nil {
 			obj["last-updated"] = t
 		}
-	} else if d.HasChange("last_updated") {
-		obj["last-updated"] = nil
 	}
 
 	return &obj, nil

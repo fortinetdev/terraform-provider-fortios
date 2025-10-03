@@ -14,7 +14,7 @@ Coordinate federated upgrades within the Security Fabric. Applies to FortiOS Ver
 The following arguments are supported:
 
 * `status` - Current status of the upgrade.
-* `source` - Source that set up the federated upgrade config. Valid values: `user`, `auto-firmware-upgrade`.
+* `source` - Source that set up the federated upgrade config.
 * `failure_reason` - Reason for upgrade failure.
 * `failure_device` - Serial number of the node to include.
 * `upgrade_id` - Unique identifier for this upgrade.
@@ -42,7 +42,9 @@ The `node_list` block supports:
 * `setup_time` - Upgrade preparation start time in UTC (hh:mm yyyy/mm/dd UTC).
 * `upgrade_path` - Image IDs to upgrade through.
 * `device_type` - What type of device this node represents.
+* `allow_download` - Enable/disable download firmware images. Valid values: `enable`, `disable`.
 * `coordinating_fortigate` - The serial of the FortiGate that controls this device
+* `failure_reason` - Upgrade failure reason.
 
 
 ## Attribute Reference

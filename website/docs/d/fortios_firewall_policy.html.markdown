@@ -171,6 +171,10 @@ The following attributes are exported:
 * `groups` - Names of user groups that can authenticate with this policy. The structure of `groups` block is documented below.
 * `users` - Names of individual users that can authenticate with this policy. The structure of `users` block is documented below.
 * `fsso_groups` - Names of FSSO groups. The structure of `fsso_groups` block is documented below.
+* `scim` - Enable/disable SCIM (default = disable).
+* `saml_server` - SAML server name.
+* `scim_users` - Names of SCIM users. The structure of `scim_users` block is documented below.
+* `scim_groups` - Names of SCIM groups. The structure of `scim_groups` block is documented below.
 * `devices` - Names of devices or device groups that can be matched by the policy. The structure of `devices` block is documented below.
 * `auth_path` - Enable/disable authentication-based routing.
 * `disclaimer` - Enable/disable user authentication disclaimer.
@@ -219,6 +223,10 @@ The following attributes are exported:
 * `vlan_filter` - Set VLAN filters.
 * `sgt_check` - Enable/disable security group tags (SGT) check.
 * `sgt` - Security group tags. The structure of `sgt` block is documented below.
+* `internet_service_fortiguard` - FortiGuard Internet Service name. The structure of `internet_service_fortiguard` block is documented below.
+* `internet_service_src_fortiguard` - FortiGuard Internet Service source name. The structure of `internet_service_src_fortiguard` block is documented below.
+* `internet_service6_fortiguard` - FortiGuard IPv6 Internet Service name. The structure of `internet_service6_fortiguard` block is documented below.
+* `internet_service6_src_fortiguard` - FortiGuard IPv6 Internet Service source name. The structure of `internet_service6_src_fortiguard` block is documented below.
 
 The `srcintf` block contains:
 
@@ -392,6 +400,14 @@ The `fsso_groups` block contains:
 
 * `name` - Names of FSSO groups.
 
+The `scim_users` block contains:
+
+* `name` - Names of SCIM users.
+
+The `scim_groups` block contains:
+
+* `name` - Names of SCIM groups.
+
 The `devices` block contains:
 
 * `name` - Device or group name.
@@ -407,4 +423,20 @@ The `ssl_mirror_intf` block contains:
 The `sgt` block contains:
 
 * `id` - Security group tag.
+
+The `internet_service_fortiguard` block contains:
+
+* `name` - FortiGuard Internet Service name.
+
+The `internet_service_src_fortiguard` block contains:
+
+* `name` - FortiGuard Internet Service name.
+
+The `internet_service6_fortiguard` block contains:
+
+* `name` - FortiGuard Internet Service name.
+
+The `internet_service6_src_fortiguard` block contains:
+
+* `name` - FortiGuard Internet Service name.
 

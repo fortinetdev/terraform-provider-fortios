@@ -227,6 +227,10 @@ func dataSourceSystemHa() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"dst6": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"gateway6": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
@@ -523,6 +527,10 @@ func dataSourceSystemHa() *schema.Resource {
 				Computed: true,
 			},
 			"ipsec_phase2_proposal": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"bounce_intf_upon_failover": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -831,6 +839,11 @@ func dataSourceFlattenSystemHaHaMgmtInterfaces(v interface{}, d *schema.Resource
 			tmp["gateway"] = dataSourceFlattenSystemHaHaMgmtInterfacesGateway(i["gateway"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst6"
+		if _, ok := i["dst6"]; ok {
+			tmp["dst6"] = dataSourceFlattenSystemHaHaMgmtInterfacesDst6(i["dst6"], d, pre_append)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "gateway6"
 		if _, ok := i["gateway6"]; ok {
 			tmp["gateway6"] = dataSourceFlattenSystemHaHaMgmtInterfacesGateway6(i["gateway6"], d, pre_append)
@@ -864,6 +877,10 @@ func dataSourceFlattenSystemHaHaMgmtInterfacesDst(v interface{}, d *schema.Resou
 }
 
 func dataSourceFlattenSystemHaHaMgmtInterfacesGateway(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemHaHaMgmtInterfacesDst6(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1342,6 +1359,10 @@ func dataSourceFlattenSystemHaCheckSecondaryDevHealth(v interface{}, d *schema.R
 }
 
 func dataSourceFlattenSystemHaIpsecPhase2Proposal(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemHaBounceIntfUponFailover(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1853,6 +1874,12 @@ func dataSourceRefreshObjectSystemHa(d *schema.ResourceData, o map[string]interf
 	if err = d.Set("ipsec_phase2_proposal", dataSourceFlattenSystemHaIpsecPhase2Proposal(o["ipsec-phase2-proposal"], d, "ipsec_phase2_proposal")); err != nil {
 		if !fortiAPIPatch(o["ipsec-phase2-proposal"]) {
 			return fmt.Errorf("Error reading ipsec_phase2_proposal: %v", err)
+		}
+	}
+
+	if err = d.Set("bounce_intf_upon_failover", dataSourceFlattenSystemHaBounceIntfUponFailover(o["bounce-intf-upon-failover"], d, "bounce_intf_upon_failover")); err != nil {
+		if !fortiAPIPatch(o["bounce-intf-upon-failover"]) {
+			return fmt.Errorf("Error reading bounce_intf_upon_failover: %v", err)
 		}
 	}
 

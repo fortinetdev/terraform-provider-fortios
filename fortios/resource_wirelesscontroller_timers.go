@@ -82,6 +82,16 @@ func resourceWirelessControllerTimers() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"sta_offline_cleanup": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
+			},
+			"sta_offline_ip2mac_cleanup": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
+			},
 			"sta_cap_cleanup": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
@@ -348,6 +358,14 @@ func flattenWirelessControllerTimersFakeApLog(v interface{}, d *schema.ResourceD
 	return convintf2i(v)
 }
 
+func flattenWirelessControllerTimersStaOfflineCleanup(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenWirelessControllerTimersStaOfflineIp2MacCleanup(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
 func flattenWirelessControllerTimersStaCapCleanup(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return convintf2i(v)
 }
@@ -519,6 +537,18 @@ func refreshObjectWirelessControllerTimers(d *schema.ResourceData, o map[string]
 		}
 	}
 
+	if err = d.Set("sta_offline_cleanup", flattenWirelessControllerTimersStaOfflineCleanup(o["sta-offline-cleanup"], d, "sta_offline_cleanup", sv)); err != nil {
+		if !fortiAPIPatch(o["sta-offline-cleanup"]) {
+			return fmt.Errorf("Error reading sta_offline_cleanup: %v", err)
+		}
+	}
+
+	if err = d.Set("sta_offline_ip2mac_cleanup", flattenWirelessControllerTimersStaOfflineIp2MacCleanup(o["sta-offline-ip2mac-cleanup"], d, "sta_offline_ip2mac_cleanup", sv)); err != nil {
+		if !fortiAPIPatch(o["sta-offline-ip2mac-cleanup"]) {
+			return fmt.Errorf("Error reading sta_offline_ip2mac_cleanup: %v", err)
+		}
+	}
+
 	if err = d.Set("sta_cap_cleanup", flattenWirelessControllerTimersStaCapCleanup(o["sta-cap-cleanup"], d, "sta_cap_cleanup", sv)); err != nil {
 		if !fortiAPIPatch(o["sta-cap-cleanup"]) {
 			return fmt.Errorf("Error reading sta_cap_cleanup: %v", err)
@@ -681,6 +711,14 @@ func expandWirelessControllerTimersRogueApLog(d *schema.ResourceData, v interfac
 }
 
 func expandWirelessControllerTimersFakeApLog(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerTimersStaOfflineCleanup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerTimersStaOfflineIp2MacCleanup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -896,6 +934,32 @@ func getObjectWirelessControllerTimers(d *schema.ResourceData, setArgNil bool, s
 				return &obj, err
 			} else if t != nil {
 				obj["fake-ap-log"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOkExists("sta_offline_cleanup"); ok {
+		if setArgNil {
+			obj["sta-offline-cleanup"] = nil
+		} else {
+			t, err := expandWirelessControllerTimersStaOfflineCleanup(d, v, "sta_offline_cleanup", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["sta-offline-cleanup"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOkExists("sta_offline_ip2mac_cleanup"); ok {
+		if setArgNil {
+			obj["sta-offline-ip2mac-cleanup"] = nil
+		} else {
+			t, err := expandWirelessControllerTimersStaOfflineIp2MacCleanup(d, v, "sta_offline_ip2mac_cleanup", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["sta-offline-ip2mac-cleanup"] = t
 			}
 		}
 	}

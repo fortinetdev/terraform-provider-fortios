@@ -28,6 +28,7 @@ The following attributes are exported:
 * `end_mac` - Last MAC address in the range.
 * `sdn` - SDN.
 * `ip6` - IPv6 address prefix (format: xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx/xxx).
+* `wildcard` - IPv6 address and wildcard netmask.
 * `start_ip` - First IP address (inclusive) in the range for the address (format: xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx).
 * `end_ip` - Final IP address (inclusive) in the range for the address (format: xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx).
 * `fqdn` - Fully qualified domain name.

@@ -306,6 +306,29 @@ func resourceSystemAutomationAction() *schema.Resource {
 					},
 				},
 			},
+			"form_data": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
+						},
+						"key": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 1023),
+							Optional:     true,
+						},
+						"value": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 4095),
+							Optional:     true,
+						},
+					},
+				},
+			},
 			"headers": &schema.Schema{
 				Type:     schema.TypeSet,
 				Optional: true,
@@ -346,6 +369,16 @@ func resourceSystemAutomationAction() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"output_interval": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 36000),
+				Optional:     true,
+			},
+			"file_only": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"execute_security_fabric": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -379,6 +412,11 @@ func resourceSystemAutomationAction() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 1023),
 				Optional:     true,
+			},
+			"log_debug_print": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
@@ -815,6 +853,66 @@ func flattenSystemAutomationActionHttpHeadersValue(v interface{}, d *schema.Reso
 	return v
 }
 
+func flattenSystemAutomationActionFormData(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenSystemAutomationActionFormDataId(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "key"
+		if cur_v, ok := i["key"]; ok {
+			tmp["key"] = flattenSystemAutomationActionFormDataKey(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
+		if cur_v, ok := i["value"]; ok {
+			tmp["value"] = flattenSystemAutomationActionFormDataValue(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "id", d)
+	return result
+}
+
+func flattenSystemAutomationActionFormDataId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenSystemAutomationActionFormDataKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemAutomationActionFormDataValue(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemAutomationActionHeaders(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -877,6 +975,14 @@ func flattenSystemAutomationActionDuration(v interface{}, d *schema.ResourceData
 	return convintf2i(v)
 }
 
+func flattenSystemAutomationActionOutputInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenSystemAutomationActionFileOnly(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemAutomationActionExecuteSecurityFabric(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -932,6 +1038,10 @@ func flattenSystemAutomationActionSdnConnectorName(v interface{}, d *schema.Reso
 }
 
 func flattenSystemAutomationActionRegularExpression(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemAutomationActionLogDebugPrint(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1229,6 +1339,22 @@ func refreshObjectSystemAutomationAction(d *schema.ResourceData, o map[string]in
 	}
 
 	if b_get_all_tables {
+		if err = d.Set("form_data", flattenSystemAutomationActionFormData(o["form-data"], d, "form_data", sv)); err != nil {
+			if !fortiAPIPatch(o["form-data"]) {
+				return fmt.Errorf("Error reading form_data: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("form_data"); ok {
+			if err = d.Set("form_data", flattenSystemAutomationActionFormData(o["form-data"], d, "form_data", sv)); err != nil {
+				if !fortiAPIPatch(o["form-data"]) {
+					return fmt.Errorf("Error reading form_data: %v", err)
+				}
+			}
+		}
+	}
+
+	if b_get_all_tables {
 		if err = d.Set("headers", flattenSystemAutomationActionHeaders(o["headers"], d, "headers", sv)); err != nil {
 			if !fortiAPIPatch(o["headers"]) {
 				return fmt.Errorf("Error reading headers: %v", err)
@@ -1274,6 +1400,18 @@ func refreshObjectSystemAutomationAction(d *schema.ResourceData, o map[string]in
 		}
 	}
 
+	if err = d.Set("output_interval", flattenSystemAutomationActionOutputInterval(o["output-interval"], d, "output_interval", sv)); err != nil {
+		if !fortiAPIPatch(o["output-interval"]) {
+			return fmt.Errorf("Error reading output_interval: %v", err)
+		}
+	}
+
+	if err = d.Set("file_only", flattenSystemAutomationActionFileOnly(o["file-only"], d, "file_only", sv)); err != nil {
+		if !fortiAPIPatch(o["file-only"]) {
+			return fmt.Errorf("Error reading file_only: %v", err)
+		}
+	}
+
 	if err = d.Set("execute_security_fabric", flattenSystemAutomationActionExecuteSecurityFabric(o["execute-security-fabric"], d, "execute_security_fabric", sv)); err != nil {
 		if !fortiAPIPatch(o["execute-security-fabric"]) {
 			return fmt.Errorf("Error reading execute_security_fabric: %v", err)
@@ -1311,6 +1449,12 @@ func refreshObjectSystemAutomationAction(d *schema.ResourceData, o map[string]in
 	if err = d.Set("regular_expression", flattenSystemAutomationActionRegularExpression(o["regular-expression"], d, "regular_expression", sv)); err != nil {
 		if !fortiAPIPatch(o["regular-expression"]) {
 			return fmt.Errorf("Error reading regular_expression: %v", err)
+		}
+	}
+
+	if err = d.Set("log_debug_print", flattenSystemAutomationActionLogDebugPrint(o["log-debug-print"], d, "log_debug_print", sv)); err != nil {
+		if !fortiAPIPatch(o["log-debug-print"]) {
+			return fmt.Errorf("Error reading log_debug_print: %v", err)
 		}
 	}
 
@@ -1584,6 +1728,59 @@ func expandSystemAutomationActionHttpHeadersValue(d *schema.ResourceData, v inte
 	return v, nil
 }
 
+func expandSystemAutomationActionFormData(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["id"], _ = expandSystemAutomationActionFormDataId(d, i["id"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "key"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["key"], _ = expandSystemAutomationActionFormDataKey(d, i["key"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["key"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["value"], _ = expandSystemAutomationActionFormDataValue(d, i["value"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["value"] = nil
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemAutomationActionFormDataId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAutomationActionFormDataKey(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAutomationActionFormDataValue(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemAutomationActionHeaders(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
@@ -1632,6 +1829,14 @@ func expandSystemAutomationActionDuration(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
+func expandSystemAutomationActionOutputInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAutomationActionFileOnly(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemAutomationActionExecuteSecurityFabric(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -1673,6 +1878,10 @@ func expandSystemAutomationActionSdnConnectorName(d *schema.ResourceData, v inte
 }
 
 func expandSystemAutomationActionRegularExpression(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAutomationActionLogDebugPrint(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2162,6 +2371,15 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 		}
 	}
 
+	if v, ok := d.GetOk("form_data"); ok || d.HasChange("form_data") {
+		t, err := expandSystemAutomationActionFormData(d, v, "form_data", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["form-data"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("headers"); ok || d.HasChange("headers") {
 		t, err := expandSystemAutomationActionHeaders(d, v, "headers", sv)
 		if err != nil {
@@ -2220,6 +2438,26 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 		}
 	}
 
+	if v, ok := d.GetOkExists("output_interval"); ok {
+		t, err := expandSystemAutomationActionOutputInterval(d, v, "output_interval", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["output-interval"] = t
+		}
+	} else if d.HasChange("output_interval") {
+		obj["output-interval"] = nil
+	}
+
+	if v, ok := d.GetOk("file_only"); ok {
+		t, err := expandSystemAutomationActionFileOnly(d, v, "file_only", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["file-only"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("execute_security_fabric"); ok {
 		t, err := expandSystemAutomationActionExecuteSecurityFabric(d, v, "execute_security_fabric", sv)
 		if err != nil {
@@ -2267,6 +2505,15 @@ func getObjectSystemAutomationAction(d *schema.ResourceData, sv string) (*map[st
 		}
 	} else if d.HasChange("regular_expression") {
 		obj["regular-expression"] = nil
+	}
+
+	if v, ok := d.GetOk("log_debug_print"); ok {
+		t, err := expandSystemAutomationActionLogDebugPrint(d, v, "log_debug_print", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["log-debug-print"] = t
+		}
 	}
 
 	return &obj, nil

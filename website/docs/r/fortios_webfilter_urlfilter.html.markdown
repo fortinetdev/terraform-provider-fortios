@@ -30,6 +30,7 @@ The following arguments are supported:
 * `one_arm_ips_urlfilter` - Enable/disable DNS resolver for one-arm IPS URL filter operation. Valid values: `enable`, `disable`.
 * `ip_addr_block` - Enable/disable blocking URLs when the hostname appears as an IP address. Valid values: `enable`, `disable`.
 * `ip4_mapped_ip6` - Enable/disable matching of IPv4 mapped IPv6 URLs. Valid values: `enable`, `disable`.
+* `include_subdomains` - Enable/disable matching subdomains. Applies only to simple type (default = enable). Valid values: `enable`, `disable`.
 * `entries` - URL filter entries. The structure of `entries` block is documented below.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
 * `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
@@ -47,6 +48,7 @@ The `entries` block supports:
 * `web_proxy_profile` - Web proxy profile.
 * `referrer_host` - Referrer host name.
 * `dns_address_family` - Resolve IPv4 address, IPv6 address, or both from DNS server. Valid values: `ipv4`, `ipv6`, `both`.
+* `comment` - Comment.
 
 
 ## Attribute Reference

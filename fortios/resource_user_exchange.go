@@ -74,6 +74,11 @@ func resourceUserExchange() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"validate_server_certificate": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"auth_type": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -301,6 +306,10 @@ func flattenUserExchangeConnectProtocol(v interface{}, d *schema.ResourceData, p
 	return v
 }
 
+func flattenUserExchangeValidateServerCertificate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenUserExchangeAuthType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -408,6 +417,12 @@ func refreshObjectUserExchange(d *schema.ResourceData, o map[string]interface{},
 		}
 	}
 
+	if err = d.Set("validate_server_certificate", flattenUserExchangeValidateServerCertificate(o["validate-server-certificate"], d, "validate_server_certificate", sv)); err != nil {
+		if !fortiAPIPatch(o["validate-server-certificate"]) {
+			return fmt.Errorf("Error reading validate_server_certificate: %v", err)
+		}
+	}
+
 	if err = d.Set("auth_type", flattenUserExchangeAuthType(o["auth-type"], d, "auth_type", sv)); err != nil {
 		if !fortiAPIPatch(o["auth-type"]) {
 			return fmt.Errorf("Error reading auth_type: %v", err)
@@ -488,6 +503,10 @@ func expandUserExchangeIp(d *schema.ResourceData, v interface{}, pre string, sv 
 }
 
 func expandUserExchangeConnectProtocol(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserExchangeValidateServerCertificate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -610,6 +629,15 @@ func getObjectUserExchange(d *schema.ResourceData, sv string) (*map[string]inter
 			return &obj, err
 		} else if t != nil {
 			obj["connect-protocol"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("validate_server_certificate"); ok {
+		t, err := expandUserExchangeValidateServerCertificate(d, v, "validate_server_certificate", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["validate-server-certificate"] = t
 		}
 	}
 

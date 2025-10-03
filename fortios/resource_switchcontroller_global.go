@@ -194,6 +194,12 @@ func resourceSwitchControllerGlobal() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"firewall_auth_user_hold_period": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(5, 1440),
+				Optional:     true,
+				Computed:     true,
+			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -515,6 +521,10 @@ func flattenSwitchControllerGlobalSwitchOnDeauth(v interface{}, d *schema.Resour
 	return v
 }
 
+func flattenSwitchControllerGlobalFirewallAuthUserHoldPeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
 func refreshObjectSwitchControllerGlobal(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 	var b_get_all_tables bool
@@ -706,6 +716,12 @@ func refreshObjectSwitchControllerGlobal(d *schema.ResourceData, o map[string]in
 		}
 	}
 
+	if err = d.Set("firewall_auth_user_hold_period", flattenSwitchControllerGlobalFirewallAuthUserHoldPeriod(o["firewall-auth-user-hold-period"], d, "firewall_auth_user_hold_period", sv)); err != nil {
+		if !fortiAPIPatch(o["firewall-auth-user-hold-period"]) {
+			return fmt.Errorf("Error reading firewall_auth_user_hold_period: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -884,6 +900,10 @@ func expandSwitchControllerGlobalFirmwareProvisionOnAuthorization(d *schema.Reso
 }
 
 func expandSwitchControllerGlobalSwitchOnDeauth(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerGlobalFirewallAuthUserHoldPeriod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1243,6 +1263,19 @@ func getObjectSwitchControllerGlobal(d *schema.ResourceData, setArgNil bool, sv 
 				return &obj, err
 			} else if t != nil {
 				obj["switch-on-deauth"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("firewall_auth_user_hold_period"); ok {
+		if setArgNil {
+			obj["firewall-auth-user-hold-period"] = nil
+		} else {
+			t, err := expandSwitchControllerGlobalFirewallAuthUserHoldPeriod(d, v, "firewall_auth_user_hold_period", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["firewall-auth-user-hold-period"] = t
 			}
 		}
 	}

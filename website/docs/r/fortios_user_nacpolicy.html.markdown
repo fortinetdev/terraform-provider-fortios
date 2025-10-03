@@ -19,6 +19,7 @@ The following arguments are supported:
 * `status` - Enable/disable NAC policy. Valid values: `enable`, `disable`.
 * `match_type` - Match and retain the devices based on the type. Valid values: `dynamic`, `override`.
 * `match_period` - Number of days the matched devices will be retained (0 - always retain)
+* `match_remove` - Options to remove the matched override devices. Valid values: `default`, `link-down`.
 * `mac` - NAC policy matching MAC address.
 * `hw_vendor` - NAC policy matching hardware vendor.
 * `type` - NAC policy matching type.

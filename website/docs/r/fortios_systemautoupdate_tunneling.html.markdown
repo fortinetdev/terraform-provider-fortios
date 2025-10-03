@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_systemautoupdate_tunneling
-Configure web proxy tunnelling for the FDN.
+Configure web proxy tunnelling for the FDN. Applies to FortiOS Version `<= 7.6.3`.
 
 ## Example Usage
 

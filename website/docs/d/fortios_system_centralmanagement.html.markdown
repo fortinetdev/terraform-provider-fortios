@@ -37,6 +37,7 @@ The following attributes are exported:
 * `vdom` - Virtual domain (VDOM) name to use when communicating with FortiManager.
 * `server_list` - Additional severs that the FortiGate can use for updates (for AV, IPS, updates) and ratings (for web filter and antispam ratings) servers. The structure of `server_list` block is documented below.
 * `fmg_update_port` - Port used to communicate with FortiManager that is acting as a FortiGuard update server.
+* `fmg_update_http_header` - Enable/disable inclusion of HTTP header in update request.
 * `include_default_servers` - Enable/disable inclusion of public FortiGuard servers in the override server list.
 * `enc_algorithm` - Encryption strength for communications between the FortiGate and central management.
 * `interface_select_method` - Specify how to select outgoing interface to reach server.

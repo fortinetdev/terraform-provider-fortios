@@ -24,6 +24,7 @@ resource "fortios_system_ftmpush" "trname" {
 The following arguments are supported:
 
 * `proxy` - Enable/disable communication to the proxy server in FortiGuard configuration. Valid values: `enable`, `disable`.
+* `interface` - Interface of FortiToken Mobile push services server.
 * `server_port` - Port to communicate with FortiToken Mobile push services server (1 - 65535, default = 4433).
 * `server_cert` - Name of the server certificate to be used for SSL. On FortiOS versions 6.4.0-7.4.3: default = Fortinet_Factory.
 * `server_ip` - IPv4 address of FortiToken Mobile push services server (format: xxx.xxx.xxx.xxx).

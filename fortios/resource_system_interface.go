@@ -9272,8 +9272,6 @@ func getObjectSystemInterface(d *schema.ResourceData, sv string) (*map[string]in
 		} else if t != nil {
 			obj["cli-conn-status"] = t
 		}
-	} else if d.HasChange("cli_conn_status") {
-		obj["cli-conn-status"] = nil
 	}
 
 	if v, ok := d.GetOk("fortilink"); ok {

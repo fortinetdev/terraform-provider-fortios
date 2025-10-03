@@ -26,6 +26,7 @@ The following attributes are exported:
 * `inactive_flow_timeout` - Timeout for periodic report of finished flows (10 - 600 sec, default = 15).
 * `template_tx_timeout` - Timeout for periodic template flowset transmission (1 - 1440 min, default = 30).
 * `template_tx_counter` - Counter of flowset records before resending a template flowset record.
+* `session_cache_size` - Maximum RAM usage allowed for Netflow session cache.
 * `exclusion_filters` - Exclusion filters The structure of `exclusion_filters` block is documented below.
 * `collectors` - Netflow collectors. The structure of `collectors` block is documented below.
 * `interface_select_method` - Specify how to select outgoing interface to reach server.

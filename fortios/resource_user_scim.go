@@ -95,6 +95,11 @@ func resourceUserScim() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"cascade": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -290,6 +295,10 @@ func flattenUserScimClientIdentityCheck(v interface{}, d *schema.ResourceData, p
 	return v
 }
 
+func flattenUserScimCascade(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectUserScim(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -353,6 +362,12 @@ func refreshObjectUserScim(d *schema.ResourceData, o map[string]interface{}, sv 
 		}
 	}
 
+	if err = d.Set("cascade", flattenUserScimCascade(o["cascade"], d, "cascade", sv)); err != nil {
+		if !fortiAPIPatch(o["cascade"]) {
+			return fmt.Errorf("Error reading cascade: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -403,6 +418,10 @@ func expandUserScimCertificate(d *schema.ResourceData, v interface{}, pre string
 }
 
 func expandUserScimClientIdentityCheck(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserScimCascade(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -513,6 +532,15 @@ func getObjectUserScim(d *schema.ResourceData, sv string) (*map[string]interface
 			return &obj, err
 		} else if t != nil {
 			obj["client-identity-check"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("cascade"); ok {
+		t, err := expandUserScimCascade(d, v, "cascade", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["cascade"] = t
 		}
 	}
 

@@ -53,11 +53,12 @@ The following arguments are supported:
 * `name` - User name.
 * `fosid` - User ID.
 * `status` - (Required) Enable/disable allowing the local user to authenticate with the FortiGate unit. Valid values: `enable`, `disable`.
-* `type` - (Required) Authentication method. Valid values: `password`, `radius`, `tacacs+`, `ldap`.
+* `type` - (Required) Authentication method.
 * `passwd` - User's password.
 * `ldap_server` - Name of LDAP server with which the user must authenticate.
 * `radius_server` - Name of RADIUS server with which the user must authenticate.
 * `tacacs_server` - Name of TACACS+ server with which the user must authenticate.
+* `saml_server` - Name of SAML server with which the user must authenticate.
 * `two_factor` - Enable/disable two-factor authentication.
 * `two_factor_authentication` - Authentication method by FortiToken Cloud. Valid values: `fortitoken`, `email`, `sms`.
 * `two_factor_notification` - Notification method for user activation by FortiToken Cloud. Valid values: `email`, `sms`.

@@ -128,6 +128,10 @@ func dataSourceSystemCentralManagement() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"fmg_update_http_header": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"include_default_servers": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -335,6 +339,10 @@ func dataSourceFlattenSystemCentralManagementFmgUpdatePort(v interface{}, d *sch
 	return v
 }
 
+func dataSourceFlattenSystemCentralManagementFmgUpdateHttpHeader(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemCentralManagementIncludeDefaultServers(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -463,6 +471,12 @@ func dataSourceRefreshObjectSystemCentralManagement(d *schema.ResourceData, o ma
 	if err = d.Set("fmg_update_port", dataSourceFlattenSystemCentralManagementFmgUpdatePort(o["fmg-update-port"], d, "fmg_update_port")); err != nil {
 		if !fortiAPIPatch(o["fmg-update-port"]) {
 			return fmt.Errorf("Error reading fmg_update_port: %v", err)
+		}
+	}
+
+	if err = d.Set("fmg_update_http_header", dataSourceFlattenSystemCentralManagementFmgUpdateHttpHeader(o["fmg-update-http-header"], d, "fmg_update_http_header")); err != nil {
+		if !fortiAPIPatch(o["fmg-update-http-header"]) {
+			return fmt.Errorf("Error reading fmg_update_http_header: %v", err)
 		}
 	}
 

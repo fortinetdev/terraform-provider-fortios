@@ -116,6 +116,10 @@ func dataSourceSystemFortiguard() *schema.Resource {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+			"subscribe_update_notification": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"fortiguard_anycast": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -412,6 +416,10 @@ func dataSourceFlattenSystemFortiguardGuiPromptAutoUpgrade(v interface{}, d *sch
 }
 
 func dataSourceFlattenSystemFortiguardFdsLicenseExpiringDays(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemFortiguardSubscribeUpdateNotification(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -719,6 +727,12 @@ func dataSourceRefreshObjectSystemFortiguard(d *schema.ResourceData, o map[strin
 	if err = d.Set("fds_license_expiring_days", dataSourceFlattenSystemFortiguardFdsLicenseExpiringDays(o["FDS-license-expiring-days"], d, "fds_license_expiring_days")); err != nil {
 		if !fortiAPIPatch(o["FDS-license-expiring-days"]) {
 			return fmt.Errorf("Error reading fds_license_expiring_days: %v", err)
+		}
+	}
+
+	if err = d.Set("subscribe_update_notification", dataSourceFlattenSystemFortiguardSubscribeUpdateNotification(o["subscribe-update-notification"], d, "subscribe_update_notification")); err != nil {
+		if !fortiAPIPatch(o["subscribe-update-notification"]) {
+			return fmt.Errorf("Error reading subscribe_update_notification: %v", err)
 		}
 	}
 

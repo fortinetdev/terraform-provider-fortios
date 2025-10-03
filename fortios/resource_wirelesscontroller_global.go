@@ -156,6 +156,14 @@ func resourceWirelessControllerGlobal() *schema.Resource {
 				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
 			},
+			"max_sta_offline": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+			},
+			"max_sta_offline_ip2mac": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+			},
 			"max_sta_cap": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
@@ -403,6 +411,14 @@ func flattenWirelessControllerGlobalApLogServerPort(v interface{}, d *schema.Res
 	return convintf2i(v)
 }
 
+func flattenWirelessControllerGlobalMaxStaOffline(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenWirelessControllerGlobalMaxStaOfflineIp2Mac(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
 func flattenWirelessControllerGlobalMaxStaCap(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return convintf2i(v)
 }
@@ -576,6 +592,18 @@ func refreshObjectWirelessControllerGlobal(d *schema.ResourceData, o map[string]
 		}
 	}
 
+	if err = d.Set("max_sta_offline", flattenWirelessControllerGlobalMaxStaOffline(o["max-sta-offline"], d, "max_sta_offline", sv)); err != nil {
+		if !fortiAPIPatch(o["max-sta-offline"]) {
+			return fmt.Errorf("Error reading max_sta_offline: %v", err)
+		}
+	}
+
+	if err = d.Set("max_sta_offline_ip2mac", flattenWirelessControllerGlobalMaxStaOfflineIp2Mac(o["max-sta-offline-ip2mac"], d, "max_sta_offline_ip2mac", sv)); err != nil {
+		if !fortiAPIPatch(o["max-sta-offline-ip2mac"]) {
+			return fmt.Errorf("Error reading max_sta_offline_ip2mac: %v", err)
+		}
+	}
+
 	if err = d.Set("max_sta_cap", flattenWirelessControllerGlobalMaxStaCap(o["max-sta-cap"], d, "max_sta_cap", sv)); err != nil {
 		if !fortiAPIPatch(o["max-sta-cap"]) {
 			return fmt.Errorf("Error reading max_sta_cap: %v", err)
@@ -722,6 +750,14 @@ func expandWirelessControllerGlobalApLogServerIp(d *schema.ResourceData, v inter
 }
 
 func expandWirelessControllerGlobalApLogServerPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerGlobalMaxStaOffline(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerGlobalMaxStaOfflineIp2Mac(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1069,6 +1105,36 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData, setArgNil bool, s
 		}
 	} else if d.HasChange("ap_log_server_port") {
 		obj["ap-log-server-port"] = nil
+	}
+
+	if v, ok := d.GetOkExists("max_sta_offline"); ok {
+		if setArgNil {
+			obj["max-sta-offline"] = nil
+		} else {
+			t, err := expandWirelessControllerGlobalMaxStaOffline(d, v, "max_sta_offline", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["max-sta-offline"] = t
+			}
+		}
+	} else if d.HasChange("max_sta_offline") {
+		obj["max-sta-offline"] = nil
+	}
+
+	if v, ok := d.GetOkExists("max_sta_offline_ip2mac"); ok {
+		if setArgNil {
+			obj["max-sta-offline-ip2mac"] = nil
+		} else {
+			t, err := expandWirelessControllerGlobalMaxStaOfflineIp2Mac(d, v, "max_sta_offline_ip2mac", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["max-sta-offline-ip2mac"] = t
+			}
+		}
+	} else if d.HasChange("max_sta_offline_ip2mac") {
+		obj["max-sta-offline-ip2mac"] = nil
 	}
 
 	if v, ok := d.GetOkExists("max_sta_cap"); ok {

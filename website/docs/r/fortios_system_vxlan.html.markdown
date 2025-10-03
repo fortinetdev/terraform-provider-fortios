@@ -33,7 +33,9 @@ The following arguments are supported:
 * `vni` - (Required) VXLAN network ID.
 * `ip_version` - (Required) IP version to use for the VXLAN interface and so for communication over the VXLAN. IPv4 or IPv6 unicast or multicast. Valid values: `ipv4-unicast`, `ipv6-unicast`, `ipv4-multicast`, `ipv6-multicast`.
 * `remote_ip` - IPv4 address of the VXLAN interface on the device at the remote end of the VXLAN. The structure of `remote_ip` block is documented below.
+* `local_ip` - IPv4 address to use as the source address for egress VXLAN packets.
 * `remote_ip6` - IPv6 IP address of the VXLAN interface on the device at the remote end of the VXLAN. The structure of `remote_ip6` block is documented below.
+* `local_ip6` - IPv6 address to use as the source address for egress VXLAN packets.
 * `dstport` - VXLAN destination port (1 - 65535, default = 4789).
 * `multicast_ttl` - VXLAN multicast TTL (1-255, default = 0).
 * `evpn_id` - EVPN instance.

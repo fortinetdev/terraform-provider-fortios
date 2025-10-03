@@ -97,4 +97,5 @@ The `utmgrp_permission` block contains:
 * `videofilter` - Video filter profiles and settings.
 * `virtual_patch` - Virtual patch profiles and settings.
 * `casb` - Inline CASB filter profile and settings
+* `telemetry` - Telemetry profile and settings.
 

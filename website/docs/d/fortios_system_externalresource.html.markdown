@@ -40,6 +40,7 @@ The following attributes are exported:
 * `server_identity_check` - Certificate verification option.
 * `refresh_rate` - Time interval to refresh external resource (1 - 43200 min, default = 5 min).
 * `source_ip` - Source IPv4 address used to communicate with server.
+* `source_ip_interface` - IPv4 Source interface for communication with the server.
 * `interface_select_method` - Specify how to select outgoing interface to reach server.
 * `interface` - Specify outgoing interface to reach server.
 * `vrf_select` - VRF ID used for connection to server.

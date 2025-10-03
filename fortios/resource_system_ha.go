@@ -287,6 +287,11 @@ func resourceSystemHa() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"dst6": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"gateway6": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -654,6 +659,11 @@ func resourceSystemHa() *schema.Resource {
 			"ipsec_phase2_proposal": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+			},
+			"bounce_intf_upon_failover": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"inter_cluster_session_sync": &schema.Schema{
 				Type:     schema.TypeString,
@@ -1059,6 +1069,11 @@ func flattenSystemHaHaMgmtInterfaces(v interface{}, d *schema.ResourceData, pre 
 			tmp["gateway"] = flattenSystemHaHaMgmtInterfacesGateway(cur_v, d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst6"
+		if cur_v, ok := i["dst6"]; ok {
+			tmp["dst6"] = flattenSystemHaHaMgmtInterfacesDst6(cur_v, d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "gateway6"
 		if cur_v, ok := i["gateway6"]; ok {
 			tmp["gateway6"] = flattenSystemHaHaMgmtInterfacesGateway6(cur_v, d, pre_append, sv)
@@ -1093,6 +1108,10 @@ func flattenSystemHaHaMgmtInterfacesDst(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenSystemHaHaMgmtInterfacesGateway(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemHaHaMgmtInterfacesDst6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1589,6 +1608,10 @@ func flattenSystemHaCheckSecondaryDevHealth(v interface{}, d *schema.ResourceDat
 }
 
 func flattenSystemHaIpsecPhase2Proposal(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemHaBounceIntfUponFailover(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2169,6 +2192,12 @@ func refreshObjectSystemHa(d *schema.ResourceData, o map[string]interface{}, sv 
 		}
 	}
 
+	if err = d.Set("bounce_intf_upon_failover", flattenSystemHaBounceIntfUponFailover(o["bounce-intf-upon-failover"], d, "bounce_intf_upon_failover", sv)); err != nil {
+		if !fortiAPIPatch(o["bounce-intf-upon-failover"]) {
+			return fmt.Errorf("Error reading bounce_intf_upon_failover: %v", err)
+		}
+	}
+
 	if err = d.Set("inter_cluster_session_sync", flattenSystemHaInterClusterSessionSync(o["inter-cluster-session-sync"], d, "inter_cluster_session_sync", sv)); err != nil {
 		if !fortiAPIPatch(o["inter-cluster-session-sync"]) {
 			return fmt.Errorf("Error reading inter_cluster_session_sync: %v", err)
@@ -2428,6 +2457,11 @@ func expandSystemHaHaMgmtInterfaces(d *schema.ResourceData, v interface{}, pre s
 			tmp["gateway"], _ = expandSystemHaHaMgmtInterfacesGateway(d, i["gateway"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst6"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["dst6"], _ = expandSystemHaHaMgmtInterfacesDst6(d, i["dst6"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "gateway6"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["gateway6"], _ = expandSystemHaHaMgmtInterfacesGateway6(d, i["gateway6"], pre_append, sv)
@@ -2454,6 +2488,10 @@ func expandSystemHaHaMgmtInterfacesDst(d *schema.ResourceData, v interface{}, pr
 }
 
 func expandSystemHaHaMgmtInterfacesGateway(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemHaHaMgmtInterfacesDst6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2955,6 +2993,10 @@ func expandSystemHaCheckSecondaryDevHealth(d *schema.ResourceData, v interface{}
 }
 
 func expandSystemHaIpsecPhase2Proposal(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemHaBounceIntfUponFailover(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -4109,6 +4151,19 @@ func getObjectSystemHa(d *schema.ResourceData, setArgNil bool, sv string) (*map[
 		}
 	} else if d.HasChange("ipsec_phase2_proposal") {
 		obj["ipsec-phase2-proposal"] = nil
+	}
+
+	if v, ok := d.GetOk("bounce_intf_upon_failover"); ok {
+		if setArgNil {
+			obj["bounce-intf-upon-failover"] = nil
+		} else {
+			t, err := expandSystemHaBounceIntfUponFailover(d, v, "bounce_intf_upon_failover", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["bounce-intf-upon-failover"] = t
+			}
+		}
 	}
 
 	if v, ok := d.GetOk("inter_cluster_session_sync"); ok {

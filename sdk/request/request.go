@@ -457,11 +457,6 @@ func (r *Request) LoginToken() (string, *Cookies, error) {
 		}
 	}
 
-	if rsp.StatusCode != http.StatusOK {
-		err = fmt.Errorf("Login failed with status code: %d", rsp.StatusCode)
-		return token, cookies, err
-	}
-
 	log.Printf("[DEBUG] LoginToken HTTP response: %+v", rsp)
 
 	if rsp == nil {
@@ -471,6 +466,11 @@ func (r *Request) LoginToken() (string, *Cookies, error) {
 
 	if rsp.Header == nil {
 		err = fmt.Errorf("HTTP response header is nil.")
+		return token, cookies, err
+	}
+
+	if rsp.StatusCode != http.StatusOK {
+		err = fmt.Errorf("Login failed with status code: %d", rsp.StatusCode)
 		return token, cookies, err
 	}
 

@@ -46,6 +46,7 @@ The following arguments are supported:
 * `dlp_archive` - Enable/disable DLP archive logging. Valid values: `enable`, `disable`.
 * `gtp` - Enable/disable GTP messages logging. Valid values: `enable`, `disable`.
 * `forti_switch` - Enable/disable Forti-Switch logging. Valid values: `enable`, `disable`.
+* `debug` - Enable/disable debug logging. Valid values: `enable`, `disable`.
 * `free_style` - Free Style Filters The structure of `free_style` block is documented below.
 * `dns` - Enable/disable detailed DNS event logging. Valid values: `enable`, `disable`.
 * `ssh` - Enable/disable SSH logging. Valid values: `enable`, `disable`.

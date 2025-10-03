@@ -99,6 +99,11 @@ func resourceLogWebtrendsFilter() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"debug": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"free_style": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -325,6 +330,10 @@ func flattenLogWebtrendsFilterFortiSwitch(v interface{}, d *schema.ResourceData,
 	return v
 }
 
+func flattenLogWebtrendsFilterDebug(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenLogWebtrendsFilterFreeStyle(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -497,6 +506,12 @@ func refreshObjectLogWebtrendsFilter(d *schema.ResourceData, o map[string]interf
 		}
 	}
 
+	if err = d.Set("debug", flattenLogWebtrendsFilterDebug(o["debug"], d, "debug", sv)); err != nil {
+		if !fortiAPIPatch(o["debug"]) {
+			return fmt.Errorf("Error reading debug: %v", err)
+		}
+	}
+
 	if b_get_all_tables {
 		if err = d.Set("free_style", flattenLogWebtrendsFilterFreeStyle(o["free-style"], d, "free_style", sv)); err != nil {
 			if !fortiAPIPatch(o["free-style"]) {
@@ -595,6 +610,10 @@ func expandLogWebtrendsFilterGtp(d *schema.ResourceData, v interface{}, pre stri
 }
 
 func expandLogWebtrendsFilterFortiSwitch(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogWebtrendsFilterDebug(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -846,6 +865,19 @@ func getObjectLogWebtrendsFilter(d *schema.ResourceData, setArgNil bool, sv stri
 				return &obj, err
 			} else if t != nil {
 				obj["forti-switch"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("debug"); ok {
+		if setArgNil {
+			obj["debug"] = nil
+		} else {
+			t, err := expandLogWebtrendsFilterDebug(d, v, "debug", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["debug"] = t
 			}
 		}
 	}

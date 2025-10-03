@@ -1,5 +1,23 @@
-## 1.23.0 (Unreleased)
+## 1.24.0 (Unreleased)
 
+
+## 1.23.0 (Oct 02, 2025)
+BUG FIXES:
+
+* Fix null pointer issue;
+
+IMPROVEMENTS:
+
+* Support FortiOS version  7.2.11, 7.2.12, 7.4.8, 7.4.9, 7.6.3, 7.6.4;
+
+FEATURES:
+
+* **New Resource:** `fortios_dlp_label`
+* **New Resource:** `fortios_firewall_internetservicefortiguard`
+* **New Resource:** `fortios_switchcontroller_ipsourceguardlog`
+* **New Resource:** `fortios_system_cloudservice`
+* **New Resource:** `fortios_system_deviceupgradeexemptions`
+* **New Resource:** `fortios_system_fortidata`
 
 ## 1.22.2 (Sep. 11, 2025)
 BUG FIXES:

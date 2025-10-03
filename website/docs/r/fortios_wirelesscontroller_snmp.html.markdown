@@ -46,7 +46,7 @@ The `user` block supports:
 * `queries` - Enable/disable SNMP queries for this user. Valid values: `enable`, `disable`.
 * `trap_status` - Enable/disable traps for this SNMP user. Valid values: `enable`, `disable`.
 * `security_level` - Security level for message authentication and encryption. Valid values: `no-auth-no-priv`, `auth-no-priv`, `auth-priv`.
-* `auth_proto` - Authentication protocol. Valid values: `md5`, `sha`.
+* `auth_proto` - Authentication protocol.
 * `auth_pwd` - Password for authentication protocol.
 * `priv_proto` - Privacy (encryption) protocol. Valid values: `aes`, `des`, `aes256`, `aes256cisco`.
 * `priv_pwd` - Password for privacy (encryption) protocol.

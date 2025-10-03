@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_vpnsslweb_hostchecksoftware
-SSL-VPN host check software.
+SSL-VPN host check software. Applies to FortiOS Version `<= 7.6.2`.
 
 ## Example Usage
 

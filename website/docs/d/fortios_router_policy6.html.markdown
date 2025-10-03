@@ -42,6 +42,9 @@ The following attributes are exported:
 * `comments` - Optional comments.
 * `internet_service_id` - Destination Internet Service ID. The structure of `internet_service_id` block is documented below.
 * `internet_service_custom` - Custom Destination Internet Service name. The structure of `internet_service_custom` block is documented below.
+* `internet_service_fortiguard` - FortiGuard Destination Internet Service name. The structure of `internet_service_fortiguard` block is documented below.
+* `users` - List of users. The structure of `users` block is documented below.
+* `groups` - List of user groups. The structure of `groups` block is documented below.
 
 The `srcaddr` block contains:
 
@@ -58,4 +61,16 @@ The `internet_service_id` block contains:
 The `internet_service_custom` block contains:
 
 * `name` - Custom Destination Internet Service name.
+
+The `internet_service_fortiguard` block contains:
+
+* `name` - FortiGuard Destination Internet Service name.
+
+The `users` block contains:
+
+* `name` - User name.
+
+The `groups` block contains:
+
+* `name` - Group name.
 

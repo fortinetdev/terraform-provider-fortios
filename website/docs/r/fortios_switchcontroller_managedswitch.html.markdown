@@ -81,6 +81,10 @@ The following arguments are supported:
 * `dhcp_snooping_static_client` - Configure FortiSwitch DHCP snooping static clients. The structure of `dhcp_snooping_static_client` block is documented below.
 * `igmp_snooping` - Configure FortiSwitch IGMP snooping global settings. The structure of `igmp_snooping` block is documented below.
 * `n802_1x_settings` - Configuration method to edit FortiSwitch 802.1X global settings. The structure of `n802_1x_settings` block is documented below.
+* `router_vrf` - Configure VRF. The structure of `router_vrf` block is documented below.
+* `system_interface` - Configure system interface on FortiSwitch. The structure of `system_interface` block is documented below.
+* `router_static` - Configure static routes. The structure of `router_static` block is documented below.
+* `system_dhcp_server` - Configure DHCP servers. The structure of `system_dhcp_server` block is documented below.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
 * `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
@@ -343,7 +347,8 @@ The `remote_log` block supports:
 The `storm_control` block supports:
 
 * `local_override` - Enable to override global FortiSwitch storm control settings for this FortiSwitch. Valid values: `enable`, `disable`.
-* `rate` - Rate in packets per second at which storm control drops excess traffic, default=500. On FortiOS versions 6.2.0-7.2.10: 1 - 10000000. On FortiOS versions >= 7.4.0: 0-10000000, drop-all=0.
+* `rate` - Rate in packets per second at which storm control drops excess traffic, default=500. On FortiOS versions 6.2.0-7.2.12: 1 - 10000000. On FortiOS versions >= 7.4.0: 0-10000000, drop-all=0.
+* `burst_size_level` - Increase level to handle bursty traffic (0 - 4, default = 0).
 * `unknown_unicast` - Enable/disable storm control to drop unknown unicast traffic. Valid values: `enable`, `disable`.
 * `unknown_multicast` - Enable/disable storm control to drop unknown multicast traffic. Valid values: `enable`, `disable`.
 * `broadcast` - Enable/disable storm control to drop broadcast traffic. Valid values: `enable`, `disable`.
@@ -415,6 +420,73 @@ The `n802_1x_settings` block supports:
 * `mac_calling_station_delimiter` - MAC calling station delimiter (default = hyphen). Valid values: `colon`, `hyphen`, `none`, `single-hyphen`.
 * `mac_called_station_delimiter` - MAC called station delimiter (default = hyphen). Valid values: `colon`, `hyphen`, `none`, `single-hyphen`.
 * `mac_case` - MAC case (default = lowercase). Valid values: `lowercase`, `uppercase`.
+
+The `router_vrf` block supports:
+
+* `name` - VRF entry name.
+* `switch_id` - Switch ID.
+* `vrfid` - VRF ID.
+
+The `system_interface` block supports:
+
+* `name` - Interface name.
+* `switch_id` - Switch ID.
+* `mode` - Interface addressing mode. Valid values: `static`, `dhcp`.
+* `ip` - IP and mask for this interface.
+* `status` - Enable/disable interface status. Valid values: `disable`, `enable`.
+* `allowaccess` - Permitted types of management access to this interface. Valid values: `ping`, `https`, `http`, `ssh`, `snmp`, `telnet`, `radius-acct`.
+* `vlan` - VLAN name.
+* `type` - Interface type. Valid values: `vlan`, `physical`.
+* `interface` - Interface name.
+* `vrf` - VRF for this route.
+
+The `router_static` block supports:
+
+* `id` - Entry sequence number.
+* `switch_id` - Switch ID.
+* `blackhole` - Enable/disable blackhole on this route. Valid values: `disable`, `enable`.
+* `comment` - Comment.
+* `device` - Gateway out interface.
+* `distance` - Administrative distance for the route (1 - 255, default = 10).
+* `dst` - Destination ip and mask for this route.
+* `dynamic_gateway` - Enable/disable dynamic gateway. Valid values: `disable`, `enable`.
+* `gateway` - Gateway ip for this route.
+* `status` - Enable/disable route status. Valid values: `disable`, `enable`.
+* `vrf` - VRF for this route.
+
+The `system_dhcp_server` block supports:
+
+* `id` - ID.
+* `switch_id` - Switch ID.
+* `status` - Enable/disable this DHCP configuration. Valid values: `disable`, `enable`.
+* `lease_time` - Lease time in seconds, 0 means unlimited.
+* `dns_service` - Options for assigning DNS servers to DHCP clients. Valid values: `local`, `default`, `specify`.
+* `dns_server1` - DNS server 1.
+* `dns_server2` - DNS server 2.
+* `dns_server3` - DNS server 3.
+* `ntp_service` - Options for assigning Network Time Protocol (NTP) servers to DHCP clients. Valid values: `local`, `default`, `specify`.
+* `ntp_server1` - NTP server 1.
+* `ntp_server2` - NTP server 2.
+* `ntp_server3` - NTP server 3.
+* `default_gateway` - Default gateway IP address assigned by the DHCP server.
+* `netmask` - Netmask assigned by the DHCP server.
+* `interface` - DHCP server can assign IP configurations to clients connected to this interface.
+* `ip_range` - DHCP IP range configuration. The structure of `ip_range` block is documented below.
+* `options` - DHCP options. The structure of `options` block is documented below.
+
+The `ip_range` block supports:
+
+* `id` - ID.
+* `start_ip` - Start of IP range.
+* `end_ip` - End of IP range.
+
+The `options` block supports:
+
+* `id` - ID.
+* `code` - DHCP option code.
+* `type` - DHCP option type. Valid values: `hex`, `string`, `ip`, `fqdn`.
+* `value` - DHCP option value.
+* `ip` - DHCP option IPs.
 
 
 ## Attribute Reference

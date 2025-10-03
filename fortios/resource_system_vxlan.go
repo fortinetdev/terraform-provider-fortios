@@ -70,6 +70,11 @@ func resourceSystemVxlan() *schema.Resource {
 					},
 				},
 			},
+			"local_ip": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"remote_ip6": &schema.Schema{
 				Type:     schema.TypeSet,
 				Optional: true,
@@ -82,6 +87,11 @@ func resourceSystemVxlan() *schema.Resource {
 						},
 					},
 				},
+			},
+			"local_ip6": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"dstport": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -327,6 +337,10 @@ func flattenSystemVxlanRemoteIpIp(v interface{}, d *schema.ResourceData, pre str
 	return v
 }
 
+func flattenSystemVxlanLocalIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemVxlanRemoteIp6(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -366,6 +380,10 @@ func flattenSystemVxlanRemoteIp6(v interface{}, d *schema.ResourceData, pre stri
 }
 
 func flattenSystemVxlanRemoteIp6Ip6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemVxlanLocalIp6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -434,6 +452,12 @@ func refreshObjectSystemVxlan(d *schema.ResourceData, o map[string]interface{}, 
 		}
 	}
 
+	if err = d.Set("local_ip", flattenSystemVxlanLocalIp(o["local-ip"], d, "local_ip", sv)); err != nil {
+		if !fortiAPIPatch(o["local-ip"]) {
+			return fmt.Errorf("Error reading local_ip: %v", err)
+		}
+	}
+
 	if b_get_all_tables {
 		if err = d.Set("remote_ip6", flattenSystemVxlanRemoteIp6(o["remote-ip6"], d, "remote_ip6", sv)); err != nil {
 			if !fortiAPIPatch(o["remote-ip6"]) {
@@ -447,6 +471,12 @@ func refreshObjectSystemVxlan(d *schema.ResourceData, o map[string]interface{}, 
 					return fmt.Errorf("Error reading remote_ip6: %v", err)
 				}
 			}
+		}
+	}
+
+	if err = d.Set("local_ip6", flattenSystemVxlanLocalIp6(o["local-ip6"], d, "local_ip6", sv)); err != nil {
+		if !fortiAPIPatch(o["local-ip6"]) {
+			return fmt.Errorf("Error reading local_ip6: %v", err)
 		}
 	}
 
@@ -527,6 +557,10 @@ func expandSystemVxlanRemoteIpIp(d *schema.ResourceData, v interface{}, pre stri
 	return v, nil
 }
 
+func expandSystemVxlanLocalIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemVxlanRemoteIp6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
@@ -552,6 +586,10 @@ func expandSystemVxlanRemoteIp6(d *schema.ResourceData, v interface{}, pre strin
 }
 
 func expandSystemVxlanRemoteIp6Ip6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemVxlanLocalIp6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -623,12 +661,30 @@ func getObjectSystemVxlan(d *schema.ResourceData, sv string) (*map[string]interf
 		}
 	}
 
+	if v, ok := d.GetOk("local_ip"); ok {
+		t, err := expandSystemVxlanLocalIp(d, v, "local_ip", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["local-ip"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("remote_ip6"); ok || d.HasChange("remote_ip6") {
 		t, err := expandSystemVxlanRemoteIp6(d, v, "remote_ip6", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
 			obj["remote-ip6"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("local_ip6"); ok {
+		t, err := expandSystemVxlanLocalIp6(d, v, "local_ip6", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["local-ip6"] = t
 		}
 	}
 

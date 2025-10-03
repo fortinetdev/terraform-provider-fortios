@@ -103,6 +103,11 @@ func resourceLogFortiguardFilter() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"debug": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"free_style": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -333,6 +338,10 @@ func flattenLogFortiguardFilterFortiSwitch(v interface{}, d *schema.ResourceData
 	return v
 }
 
+func flattenLogFortiguardFilterDebug(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenLogFortiguardFilterFreeStyle(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -511,6 +520,12 @@ func refreshObjectLogFortiguardFilter(d *schema.ResourceData, o map[string]inter
 		}
 	}
 
+	if err = d.Set("debug", flattenLogFortiguardFilterDebug(o["debug"], d, "debug", sv)); err != nil {
+		if !fortiAPIPatch(o["debug"]) {
+			return fmt.Errorf("Error reading debug: %v", err)
+		}
+	}
+
 	if b_get_all_tables {
 		if err = d.Set("free_style", flattenLogFortiguardFilterFreeStyle(o["free-style"], d, "free_style", sv)); err != nil {
 			if !fortiAPIPatch(o["free-style"]) {
@@ -613,6 +628,10 @@ func expandLogFortiguardFilterGtp(d *schema.ResourceData, v interface{}, pre str
 }
 
 func expandLogFortiguardFilterFortiSwitch(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogFortiguardFilterDebug(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -879,6 +898,19 @@ func getObjectLogFortiguardFilter(d *schema.ResourceData, setArgNil bool, sv str
 				return &obj, err
 			} else if t != nil {
 				obj["forti-switch"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("debug"); ok {
+		if setArgNil {
+			obj["debug"] = nil
+		} else {
+			t, err := expandLogFortiguardFilterDebug(d, v, "debug", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["debug"] = t
 			}
 		}
 	}

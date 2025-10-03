@@ -67,6 +67,7 @@ The following attributes are exported:
 * `wad_restart_mode` - WAD worker restart mode (default = none).
 * `wad_restart_start_time` - WAD workers daily restart time (hh:mm).
 * `wad_restart_end_time` - WAD workers daily restart end time (hh:mm).
+* `wad_p2s_max_body_size` - Maximum size of the body of the local out HTTP request (1 - 32 Mbytes, default = 4).
 * `radius_port` - RADIUS service port number.
 * `speedtestd_server_port` - Speedtest server port number.
 * `speedtestd_ctrl_port` - Speedtest server controller port number.
@@ -118,6 +119,7 @@ The following attributes are exported:
 * `ssh_hostkey_password` - Password for ssh-hostkey.
 * `ssh_hostkey` - Config SSH host key.
 * `snat_route_change` - Enable/disable the ability to change the static NAT route.
+* `ipv6_snat_route_change` - Enable/disable the ability to change the IPv6 source NAT route.
 * `speedtest_server` - Enable/disable speed test server.
 * `cli_audit_log` - Enable/disable CLI audit log.
 * `dh_params` - Number of bits to use in the Diffie-Hellman exchange for HTTPS/SSH protocols.
@@ -239,6 +241,7 @@ The following attributes are exported:
 * `wimax_4g_usb` - Enable/disable comparability with WiMAX 4G USB devices.
 * `cert_chain_max` - Maximum number of certificates that can be traversed in a certificate chain.
 * `sslvpn_max_worker_count` - Maximum number of SSL VPN processes. Upper limit for this value is the number of CPUs and depends on the model.
+* `sslvpn_affinity` - Agentless VPN CPU affinity.
 * `vpn_ems_sn_check` - Enable/disable verification of EMS serial number in SSL-VPN and IPsec VPN connection.
 * `sslvpn_web_mode` - Enable/disable SSL-VPN web mode.
 * `sslvpn_ems_sn_check` - Enable/disable verification of EMS serial number in SSL-VPN connection.
@@ -280,6 +283,7 @@ The following attributes are exported:
 * `miglog_affinity` - Affinity setting for logging (64-bit hexadecimal value in the format of xxxxxxxxxxxxxxxx).
 * `syslog_affinity` - Affinity setting for syslog (hexadecimal value up to 256 bits in the format of xxxxxxxxxxxxxxxx).
 * `url_filter_affinity` - URL filter CPU affinity.
+* `router_affinity` - Affinity setting for BFD/VRRP/BGP/OSPF daemons (hexadecimal value up to 256 bits in the format of xxxxxxxxxxxxxxxx).
 * `ndp_max_entry` - Maximum number of NDP table entries (set to 65,536 or higher; if set to 0, kernel holds 65,536 entries).
 * `br_fdb_max_entry` - Maximum number of bridge forwarding database (FDB) entries.
 * `max_route_cache_size` - Maximum number of IP route cache entries (0 - 2147483647).
@@ -290,6 +294,7 @@ The following attributes are exported:
 * `ike_embryonic_limit` - Maximum number of IPsec tunnels to negotiate simultaneously.
 * `device_idle_timeout` - Time in seconds that a device must be idle to automatically log the device user out. (30 - 31536000 sec (30 sec to 1 year), default = 300).
 * `user_device_store_max_devices` - Maximum number of devices allowed in user device store.
+* `user_device_store_max_device_mem` - Maximum percentage of total system memory allowed to be used for devices in the user device store.
 * `user_device_store_max_users` - Maximum number of users allowed in user device store.
 * `user_device_store_max_unified_mem` - Maximum unified memory allowed in user device store.
 * `device_identification_active_scan_delay` - Number of seconds to passively scan a device before performing an active scan. (20 - 3600 sec, (20 sec to 1 hour), default = 90).
@@ -308,6 +313,7 @@ The following attributes are exported:
 * `ipsec_ha_seqjump_rate` - ESP jump ahead rate (1G - 10G pps equivalent).
 * `fortitoken_cloud` - Enable/disable FortiToken Cloud service.
 * `fortitoken_cloud_push_status` - Enable/disable FTM push service of FortiToken Cloud.
+* `fortitoken_cloud_region` - Region domain of FortiToken Cloud(unset to non-region).
 * `fortitoken_cloud_sync_interval` - Interval in which to clean up remote users in FortiToken Cloud (0 - 336 hours (14 days), default = 24, disable = 0).
 * `faz_disk_buffer_size` - Maximum disk buffer size to temporarily store logs destined for FortiAnalyzer. To be used in the event that FortiAnalyzer is unavailalble.
 * `irq_time_accounting` - Configure CPU IRQ time accounting mode.
@@ -332,6 +338,7 @@ The following attributes are exported:
 * `scim_http_port` - SCIM http port (0 - 65535, default = 44558).
 * `scim_server_cert` - Server certificate that the FortiGate uses for SCIM connections.
 * `application_bandwidth_tracking` - Enable/disable application bandwidth tracking.
+* `tls_session_cache` - Enable/disable TLS session cache.
 
 The `internet_service_download_list` block contains:
 

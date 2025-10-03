@@ -106,6 +106,11 @@ func resourceCasbSaasApplication() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"optional": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"required": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -432,6 +437,11 @@ func flattenCasbSaasApplicationOutputAttributes(v interface{}, d *schema.Resourc
 			tmp["type"] = flattenCasbSaasApplicationOutputAttributesType(cur_v, d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "optional"
+		if cur_v, ok := i["optional"]; ok {
+			tmp["optional"] = flattenCasbSaasApplicationOutputAttributesOptional(cur_v, d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "required"
 		if cur_v, ok := i["required"]; ok {
 			tmp["required"] = flattenCasbSaasApplicationOutputAttributesRequired(cur_v, d, pre_append, sv)
@@ -459,6 +469,10 @@ func flattenCasbSaasApplicationOutputAttributesDescription(v interface{}, d *sch
 }
 
 func flattenCasbSaasApplicationOutputAttributesType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenCasbSaasApplicationOutputAttributesOptional(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -754,6 +768,11 @@ func expandCasbSaasApplicationOutputAttributes(d *schema.ResourceData, v interfa
 			tmp["type"], _ = expandCasbSaasApplicationOutputAttributesType(d, i["type"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "optional"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["optional"], _ = expandCasbSaasApplicationOutputAttributesOptional(d, i["optional"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "required"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["required"], _ = expandCasbSaasApplicationOutputAttributesRequired(d, i["required"], pre_append, sv)
@@ -780,6 +799,10 @@ func expandCasbSaasApplicationOutputAttributesDescription(d *schema.ResourceData
 }
 
 func expandCasbSaasApplicationOutputAttributesType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandCasbSaasApplicationOutputAttributesOptional(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

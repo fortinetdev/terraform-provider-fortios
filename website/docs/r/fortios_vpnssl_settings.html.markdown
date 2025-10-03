@@ -45,10 +45,10 @@ The following arguments are supported:
 * `servercert` - Name of the server certificate to be used for SSL-VPNs.
 * `algorithm` - Force the SSL-VPN security level. High allows only high. Medium allows medium and high. Low allows any. Valid values: `high`, `medium`, `default`, `low`.
 * `idle_timeout` - SSL VPN disconnects if idle for specified time in seconds.
-* `auth_timeout` - SSL-VPN authentication timeout (1 - 259200 sec (3 days), 0 for no timeout).
-* `login_attempt_limit` - SSL VPN maximum login attempt times before block (0 - 10, default = 2, 0 = no limit).
+* `auth_timeout` - Agentless VPN authentication timeout (1 - 259200 sec (3 days), 0 for no timeout).
+* `login_attempt_limit` - Agentless VPN maximum login attempt times before block (0 - 10, default = 2, 0 = no limit).
 * `login_block_time` - Time for which a user is blocked from logging in after too many failed login attempts (0 - 86400 sec, default = 60).
-* `login_timeout` - SSLVPN maximum login timeout (10 - 180 sec, default = 30).
+* `login_timeout` - Agentless VPN maximum login timeout (10 - 180 sec, default = 30).
 * `dtls_hello_timeout` - SSLVPN maximum DTLS hello timeout (10 - 60 sec, default = 10).
 * `dtls_heartbeat_idle_timeout` - Idle timeout before DTLS heartbeat is sent.
 * `dtls_heartbeat_interval` - Interval between DTLS heartbeat.
@@ -70,7 +70,7 @@ The following arguments are supported:
 * `http_only_cookie` - Enable/disable SSL-VPN support for HttpOnly cookies. Valid values: `enable`, `disable`.
 * `deflate_compression_level` - Compression level (0~9).
 * `deflate_min_data_size` - Minimum amount of data that triggers compression (200 - 65535 bytes).
-* `port` - SSL-VPN access port (1 - 65535).
+* `port` - Agentless VPN access port (1 - 65535).
 * `port_precedence` - Enable means that if SSL-VPN connections are allowed on an interface admin GUI connections are blocked on that interface. Valid values: `enable`, `disable`.
 * `auto_tunnel_static_route` - Enable to auto-create static routes for the SSL-VPN tunnel IP addresses. Valid values: `enable`, `disable`.
 * `header_x_forwarded_for` - Forward the same, add, or remove HTTP header. Valid values: `pass`, `add`, `remove`.
@@ -86,11 +86,11 @@ The following arguments are supported:
 * `dtls_max_proto_ver` - DTLS maximum protocol version. Valid values: `dtls1-0`, `dtls1-2`.
 * `dtls_min_proto_ver` - DTLS minimum protocol version. Valid values: `dtls1-0`, `dtls1-2`.
 * `check_referer` - Enable/disable verification of referer field in HTTP request header. Valid values: `enable`, `disable`.
-* `http_request_header_timeout` - SSL-VPN session is disconnected if an HTTP request header is not received within this time (1 - 60 sec, default = 20).
-* `http_request_body_timeout` - SSL-VPN session is disconnected if an HTTP request body is not received within this time (1 - 60 sec, default = 20).
+* `http_request_header_timeout` - Agentless VPN session is disconnected if an HTTP request header is not received within this time (1 - 60 sec, default = 20).
+* `http_request_body_timeout` - Agentless VPN session is disconnected if an HTTP request body is not received within this time (1 - 60 sec, default = 20).
 * `auth_session_check_source_ip` - Enable/disable checking of source IP for authentication session. Valid values: `enable`, `disable`.
 * `tunnel_connect_without_reauth` - Enable/disable tunnel connection without re-authorization if previous connection dropped. Valid values: `enable`, `disable`.
-* `tunnel_user_session_timeout` - Number of seconds after which user sessions are cleaned up after tunnel connection is dropped (default = 30). On FortiOS versions 6.2.0-7.4.3: 1 - 255 sec. On FortiOS versions >= 7.4.4: 1 - 86400 sec.
+* `tunnel_user_session_timeout` - Number of seconds after which user sessions are cleaned up after tunnel connection is dropped (default = 30). On FortiOS versions 6.2.0-7.4.3: 1 - 255 sec. On FortiOS versions 7.4.4-7.6.2: 1 - 86400 sec.
 * `hsts_include_subdomains` - Add HSTS includeSubDomains response header. Valid values: `enable`, `disable`.
 * `transform_backward_slashes` - Transform backward slashes to forward slashes in URLs. Valid values: `enable`, `disable`.
 * `encode_2f_sequence` - Encode \2F sequence to forward slash in URLs. Valid values: `enable`, `disable`.

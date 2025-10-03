@@ -325,6 +325,11 @@ func resourceFirewallAccessProxy() *schema.Resource {
 											},
 										},
 									},
+									"verify_cert": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
+									},
 								},
 							},
 						},
@@ -660,6 +665,11 @@ func resourceFirewallAccessProxy() *schema.Resource {
 												},
 											},
 										},
+									},
+									"verify_cert": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
 									},
 								},
 							},
@@ -1420,6 +1430,11 @@ func flattenFirewallAccessProxyApiGatewayRealservers(v interface{}, d *schema.Re
 			tmp["ssh_host_key"] = flattenFirewallAccessProxyApiGatewayRealserversSshHostKey(cur_v, d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "verify_cert"
+		if cur_v, ok := i["verify-cert"]; ok {
+			tmp["verify_cert"] = flattenFirewallAccessProxyApiGatewayRealserversVerifyCert(cur_v, d, pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -1544,6 +1559,10 @@ func flattenFirewallAccessProxyApiGatewayRealserversSshHostKey(v interface{}, d 
 }
 
 func flattenFirewallAccessProxyApiGatewayRealserversSshHostKeyName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallAccessProxyApiGatewayRealserversVerifyCert(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2127,6 +2146,11 @@ func flattenFirewallAccessProxyApiGateway6Realservers(v interface{}, d *schema.R
 			tmp["ssh_host_key"] = flattenFirewallAccessProxyApiGateway6RealserversSshHostKey(cur_v, d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "verify_cert"
+		if cur_v, ok := i["verify-cert"]; ok {
+			tmp["verify_cert"] = flattenFirewallAccessProxyApiGateway6RealserversVerifyCert(cur_v, d, pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -2251,6 +2275,10 @@ func flattenFirewallAccessProxyApiGateway6RealserversSshHostKey(v interface{}, d
 }
 
 func flattenFirewallAccessProxyApiGateway6RealserversSshHostKeyName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallAccessProxyApiGateway6RealserversVerifyCert(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -3038,6 +3066,11 @@ func expandFirewallAccessProxyApiGatewayRealservers(d *schema.ResourceData, v in
 			tmp["ssh-host-key"] = make([]string, 0)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "verify_cert"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["verify-cert"], _ = expandFirewallAccessProxyApiGatewayRealserversVerifyCert(d, i["verify_cert"], pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -3147,6 +3180,10 @@ func expandFirewallAccessProxyApiGatewayRealserversSshHostKey(d *schema.Resource
 }
 
 func expandFirewallAccessProxyApiGatewayRealserversSshHostKeyName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallAccessProxyApiGatewayRealserversVerifyCert(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3713,6 +3750,11 @@ func expandFirewallAccessProxyApiGateway6Realservers(d *schema.ResourceData, v i
 			tmp["ssh-host-key"] = make([]string, 0)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "verify_cert"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["verify-cert"], _ = expandFirewallAccessProxyApiGateway6RealserversVerifyCert(d, i["verify_cert"], pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -3822,6 +3864,10 @@ func expandFirewallAccessProxyApiGateway6RealserversSshHostKey(d *schema.Resourc
 }
 
 func expandFirewallAccessProxyApiGateway6RealserversSshHostKeyName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallAccessProxyApiGateway6RealserversVerifyCert(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

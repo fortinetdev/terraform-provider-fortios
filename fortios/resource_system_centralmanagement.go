@@ -156,6 +156,11 @@ func resourceSystemCentralManagement() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"fmg_update_http_header": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"include_default_servers": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -464,6 +469,10 @@ func flattenSystemCentralManagementFmgUpdatePort(v interface{}, d *schema.Resour
 	return v
 }
 
+func flattenSystemCentralManagementFmgUpdateHttpHeader(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemCentralManagementIncludeDefaultServers(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -608,6 +617,12 @@ func refreshObjectSystemCentralManagement(d *schema.ResourceData, o map[string]i
 	if err = d.Set("fmg_update_port", flattenSystemCentralManagementFmgUpdatePort(o["fmg-update-port"], d, "fmg_update_port", sv)); err != nil {
 		if !fortiAPIPatch(o["fmg-update-port"]) {
 			return fmt.Errorf("Error reading fmg_update_port: %v", err)
+		}
+	}
+
+	if err = d.Set("fmg_update_http_header", flattenSystemCentralManagementFmgUpdateHttpHeader(o["fmg-update-http-header"], d, "fmg_update_http_header", sv)); err != nil {
+		if !fortiAPIPatch(o["fmg-update-http-header"]) {
+			return fmt.Errorf("Error reading fmg_update_http_header: %v", err)
 		}
 	}
 
@@ -795,6 +810,10 @@ func expandSystemCentralManagementServerListFqdn(d *schema.ResourceData, v inter
 }
 
 func expandSystemCentralManagementFmgUpdatePort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemCentralManagementFmgUpdateHttpHeader(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1061,6 +1080,19 @@ func getObjectSystemCentralManagement(d *schema.ResourceData, setArgNil bool, sv
 				return &obj, err
 			} else if t != nil {
 				obj["fmg-update-port"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("fmg_update_http_header"); ok {
+		if setArgNil {
+			obj["fmg-update-http-header"] = nil
+		} else {
+			t, err := expandSystemCentralManagementFmgUpdateHttpHeader(d, v, "fmg_update_http_header", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fmg-update-http-header"] = t
 			}
 		}
 	}

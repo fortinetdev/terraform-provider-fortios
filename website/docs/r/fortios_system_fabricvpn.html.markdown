@@ -35,6 +35,7 @@ The following arguments are supported:
 The `overlays` block supports:
 
 * `name` - Overlay name.
+* `ipsec_network_id` - VPN gateway network ID.
 * `overlay_tunnel_block` - IPv4 address and subnet mask for the overlay tunnel , syntax: X.X.X.X/24.
 * `remote_gw` - IP address of the hub gateway (Set by hub).
 * `interface` - Underlying interface name.

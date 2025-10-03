@@ -30,11 +30,11 @@ func (c *FortiSDKClient) CreateUpdateFirewallCentralsnatmapMove(srcId, dstId, mv
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
 	req.HTTPResponse.Body.Close()
 
-	if err != nil || body == nil {
-		err = fmt.Errorf("cannot get response body %s", err)
+	if err != nil || body == nil || req.HTTPResponse.StatusCode != 200 {
+		err = fmt.Errorf("cannot get response body, status %d,  %s", req.HTTPResponse.StatusCode, err)
 		return
 	}
-	log.Printf("FOS-fortios response: %s", string(body))
+	log.Printf("FOS-fortios CREATE response: %s", string(body))
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
@@ -69,11 +69,11 @@ func (c *FortiSDKClient) GetFirewallCentralsnatmapList(vdomparam string) (out []
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
 	req.HTTPResponse.Body.Close()
 
-	if err != nil || body == nil {
-		err = fmt.Errorf("cannot get response body %s", err)
+	if err != nil || body == nil || req.HTTPResponse.StatusCode != 200 {
+		err = fmt.Errorf("cannot get response body, status %d, %s", req.HTTPResponse.StatusCode, err)
 		return
 	}
-	log.Printf("FOS-fortios response: %s", string(body))
+	log.Printf("FOS-fortios GET response: %s", string(body))
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)

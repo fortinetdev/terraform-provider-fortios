@@ -78,6 +78,11 @@ func resourceSystemDeviceUpgrade() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"allow_download": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -318,6 +323,10 @@ func flattenSystemDeviceUpgradeDeviceType(v interface{}, d *schema.ResourceData,
 	return v
 }
 
+func flattenSystemDeviceUpgradeAllowDownload(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemDeviceUpgradeStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -441,6 +450,12 @@ func refreshObjectSystemDeviceUpgrade(d *schema.ResourceData, o map[string]inter
 		}
 	}
 
+	if err = d.Set("allow_download", flattenSystemDeviceUpgradeAllowDownload(o["allow-download"], d, "allow_download", sv)); err != nil {
+		if !fortiAPIPatch(o["allow-download"]) {
+			return fmt.Errorf("Error reading allow_download: %v", err)
+		}
+	}
+
 	if err = d.Set("status", flattenSystemDeviceUpgradeStatus(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
 			return fmt.Errorf("Error reading status: %v", err)
@@ -531,6 +546,10 @@ func expandSystemDeviceUpgradeUpgradePath(d *schema.ResourceData, v interface{},
 }
 
 func expandSystemDeviceUpgradeDeviceType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemDeviceUpgradeAllowDownload(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -667,6 +686,15 @@ func getObjectSystemDeviceUpgrade(d *schema.ResourceData, sv string) (*map[strin
 			return &obj, err
 		} else if t != nil {
 			obj["device-type"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("allow_download"); ok {
+		t, err := expandSystemDeviceUpgradeAllowDownload(d, v, "allow_download", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["allow-download"] = t
 		}
 	}
 

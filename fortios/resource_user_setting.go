@@ -166,6 +166,24 @@ func resourceUserSetting() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
 			},
+			"cors": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"cors_allowed_origins": &schema.Schema{
+				Type:     schema.TypeSet,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+						},
+					},
+				},
+			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -438,6 +456,52 @@ func flattenUserSettingDefaultUserPasswordPolicy(v interface{}, d *schema.Resour
 	return v
 }
 
+func flattenUserSettingCors(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserSettingCorsAllowedOrigins(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenUserSettingCorsAllowedOriginsName(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenUserSettingCorsAllowedOriginsName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectUserSetting(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 	var b_get_all_tables bool
@@ -589,6 +653,28 @@ func refreshObjectUserSetting(d *schema.ResourceData, o map[string]interface{}, 
 		}
 	}
 
+	if err = d.Set("cors", flattenUserSettingCors(o["cors"], d, "cors", sv)); err != nil {
+		if !fortiAPIPatch(o["cors"]) {
+			return fmt.Errorf("Error reading cors: %v", err)
+		}
+	}
+
+	if b_get_all_tables {
+		if err = d.Set("cors_allowed_origins", flattenUserSettingCorsAllowedOrigins(o["cors-allowed-origins"], d, "cors_allowed_origins", sv)); err != nil {
+			if !fortiAPIPatch(o["cors-allowed-origins"]) {
+				return fmt.Errorf("Error reading cors_allowed_origins: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("cors_allowed_origins"); ok {
+			if err = d.Set("cors_allowed_origins", flattenUserSettingCorsAllowedOrigins(o["cors-allowed-origins"], d, "cors_allowed_origins", sv)); err != nil {
+				if !fortiAPIPatch(o["cors-allowed-origins"]) {
+					return fmt.Errorf("Error reading cors_allowed_origins: %v", err)
+				}
+			}
+		}
+	}
+
 	return nil
 }
 
@@ -730,6 +816,38 @@ func expandUserSettingAuthSslSigalgs(d *schema.ResourceData, v interface{}, pre 
 }
 
 func expandUserSettingDefaultUserPasswordPolicy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserSettingCors(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserSettingCorsAllowedOrigins(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.(*schema.Set).List()
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		tmp["name"], _ = expandUserSettingCorsAllowedOriginsName(d, i["name"], pre_append, sv)
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandUserSettingCorsAllowedOriginsName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1032,6 +1150,32 @@ func getObjectUserSetting(d *schema.ResourceData, setArgNil bool, sv string) (*m
 		}
 	} else if d.HasChange("default_user_password_policy") {
 		obj["default-user-password-policy"] = nil
+	}
+
+	if v, ok := d.GetOk("cors"); ok {
+		if setArgNil {
+			obj["cors"] = nil
+		} else {
+			t, err := expandUserSettingCors(d, v, "cors", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["cors"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("cors_allowed_origins"); ok || d.HasChange("cors_allowed_origins") {
+		if setArgNil {
+			obj["cors-allowed-origins"] = make([]struct{}, 0)
+		} else {
+			t, err := expandUserSettingCorsAllowedOrigins(d, v, "cors_allowed_origins", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["cors-allowed-origins"] = t
+			}
+		}
 	}
 
 	return &obj, nil

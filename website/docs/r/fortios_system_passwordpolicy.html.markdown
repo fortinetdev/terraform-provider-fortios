@@ -44,6 +44,7 @@ The following arguments are supported:
 * `expire_day` - Number of days after which passwords expire (1 - 999 days, default = 90).
 * `reuse_password` - Enable/disable reuse of password. On FortiOS versions 6.2.0-7.0.0: If both reuse-password and change-4-characters are enabled, change-4-characters overrides.. On FortiOS versions >= 7.0.1: If both reuse-password and min-change-characters are enabled, min-change-characters overrides.. Valid values: `enable`, `disable`.
 * `reuse_password_limit` - Number of times passwords can be reused (0 - 20, default = 0. If set to 0, can reuse password an unlimited number of times.).
+* `login_lockout_upon_weaker_encryption` - Enable/disable administrative user login lockout upon downgrade (defaut = disable). If enabled, changing the FortiOS firmware to a version where safer passwords are unsupported will lock out administrative users. Valid values: `enable`, `disable`.
 * `login_lockout_upon_downgrade` - Enable/disable administrative user login lockout upon downgrade (defaut = disable). If enabled, downgrading the FortiOS firmware to a lower version where safer passwords are unsupported will lock out administrative users. Valid values: `enable`, `disable`.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 

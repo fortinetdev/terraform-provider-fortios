@@ -66,17 +66,21 @@ The following attributes are exported:
 * `http_body` - Request body (if necessary). Should be serialized json string.
 * `port` - Protocol port.
 * `http_headers` - Request headers. The structure of `http_headers` block is documented below.
+* `form_data` - Form data parts for content type multipart/form-data. The structure of `form_data` block is documented below.
 * `headers` - Request headers. The structure of `headers` block is documented below.
 * `verify_host_cert` - Enable/disable verification of the remote host certificate.
 * `script` - CLI script.
 * `output_size` - Number of megabytes to limit script output to (1 - 1024, default = 10).
 * `timeout` - Maximum running time for this script in seconds (0 = no timeout).
 * `duration` - Maximum running time for this script in seconds.
+* `output_interval` - Collect the outputs for each output-interval in seconds (0 = no intermediate output).
+* `file_only` - Enable/disable the output in files only.
 * `execute_security_fabric` - Enable/disable execution of CLI script on all or only one FortiGate unit in the Security Fabric.
 * `accprofile` - Access profile for CLI script action to access FortiGate features.
 * `security_tag` - NSX security tag.
 * `sdn_connector` - NSX SDN connector names. The structure of `sdn_connector` block is documented below.
 * `regular_expression` - Regular expression string.
+* `log_debug_print` - Enable/disable logging debug print output from diagnose action.
 
 The `email_to` block contains:
 
@@ -87,6 +91,12 @@ The `http_headers` block contains:
 * `id` - Entry ID.
 * `key` - Request header key.
 * `value` - Request header value.
+
+The `form_data` block contains:
+
+* `id` - Entry ID.
+* `key` - Key of the part of Multipart/form-data.
+* `value` - Value of the part of Multipart/form-data.
 
 The `headers` block contains:
 

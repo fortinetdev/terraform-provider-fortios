@@ -52,6 +52,10 @@ func dataSourceSystemSdnConnector() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"vdom": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"server": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -373,6 +377,10 @@ func dataSourceSystemSdnConnector() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"microsoft_365": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"gcp_project": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -505,6 +513,10 @@ func dataSourceFlattenSystemSdnConnectorHaStatus(v interface{}, d *schema.Resour
 }
 
 func dataSourceFlattenSystemSdnConnectorVerifyCertificate(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemSdnConnectorVdom(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1225,6 +1237,10 @@ func dataSourceFlattenSystemSdnConnectorUseMetadataIam(v interface{}, d *schema.
 	return v
 }
 
+func dataSourceFlattenSystemSdnConnectorMicrosoft365(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemSdnConnectorGcpProject(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -1321,6 +1337,12 @@ func dataSourceRefreshObjectSystemSdnConnector(d *schema.ResourceData, o map[str
 	if err = d.Set("verify_certificate", dataSourceFlattenSystemSdnConnectorVerifyCertificate(o["verify-certificate"], d, "verify_certificate")); err != nil {
 		if !fortiAPIPatch(o["verify-certificate"]) {
 			return fmt.Errorf("Error reading verify_certificate: %v", err)
+		}
+	}
+
+	if err = d.Set("vdom", dataSourceFlattenSystemSdnConnectorVdom(o["vdom"], d, "vdom")); err != nil {
+		if !fortiAPIPatch(o["vdom"]) {
+			return fmt.Errorf("Error reading vdom: %v", err)
 		}
 	}
 
@@ -1519,6 +1541,12 @@ func dataSourceRefreshObjectSystemSdnConnector(d *schema.ResourceData, o map[str
 	if err = d.Set("use_metadata_iam", dataSourceFlattenSystemSdnConnectorUseMetadataIam(o["use-metadata-iam"], d, "use_metadata_iam")); err != nil {
 		if !fortiAPIPatch(o["use-metadata-iam"]) {
 			return fmt.Errorf("Error reading use_metadata_iam: %v", err)
+		}
+	}
+
+	if err = d.Set("microsoft_365", dataSourceFlattenSystemSdnConnectorMicrosoft365(o["microsoft-365"], d, "microsoft_365")); err != nil {
+		if !fortiAPIPatch(o["microsoft-365"]) {
+			return fmt.Errorf("Error reading microsoft_365: %v", err)
 		}
 	}
 

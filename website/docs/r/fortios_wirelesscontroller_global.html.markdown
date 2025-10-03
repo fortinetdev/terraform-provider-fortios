@@ -58,6 +58,8 @@ The following arguments are supported:
 * `ap_log_server` - Enable/disable configuring FortiGate to redirect wireless event log messages or FortiAPs to send UTM log messages to a syslog server (default = disable). Valid values: `enable`, `disable`.
 * `ap_log_server_ip` - IP address that APs or FortiAPs send log messages to.
 * `ap_log_server_port` - Port that APs or FortiAPs send log messages to.
+* `max_sta_offline` - Maximum number of station offline stored on the controller (default = 0).
+* `max_sta_offline_ip2mac` - Maximum number of station offline ip2mac stored on the controller (default = 0).
 * `max_sta_cap` - Maximum number of station cap stored on the controller (default = 0).
 * `max_sta_cap_wtp` - Maximum number of station cap's wtp info stored on the controller (1 - 16, default = 8).
 * `max_rogue_ap` - Maximum number of rogue APs stored on the controller (default = 0).

@@ -66,6 +66,11 @@ func resourceSystemSdnConnector() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"vdom": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 31),
+				Optional:     true,
+			},
 			"server": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
@@ -436,6 +441,11 @@ func resourceSystemSdnConnector() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"microsoft_365": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"gcp_project": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
@@ -699,6 +709,10 @@ func flattenSystemSdnConnectorHaStatus(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenSystemSdnConnectorVerifyCertificate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdnConnectorVdom(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1483,6 +1497,10 @@ func flattenSystemSdnConnectorUseMetadataIam(v interface{}, d *schema.ResourceDa
 	return v
 }
 
+func flattenSystemSdnConnectorMicrosoft365(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemSdnConnectorGcpProject(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1569,6 +1587,12 @@ func refreshObjectSystemSdnConnector(d *schema.ResourceData, o map[string]interf
 	if err = d.Set("verify_certificate", flattenSystemSdnConnectorVerifyCertificate(o["verify-certificate"], d, "verify_certificate", sv)); err != nil {
 		if !fortiAPIPatch(o["verify-certificate"]) {
 			return fmt.Errorf("Error reading verify_certificate: %v", err)
+		}
+	}
+
+	if err = d.Set("vdom", flattenSystemSdnConnectorVdom(o["vdom"], d, "vdom", sv)); err != nil {
+		if !fortiAPIPatch(o["vdom"]) {
+			return fmt.Errorf("Error reading vdom: %v", err)
 		}
 	}
 
@@ -1870,6 +1894,12 @@ func refreshObjectSystemSdnConnector(d *schema.ResourceData, o map[string]interf
 		}
 	}
 
+	if err = d.Set("microsoft_365", flattenSystemSdnConnectorMicrosoft365(o["microsoft-365"], d, "microsoft_365", sv)); err != nil {
+		if !fortiAPIPatch(o["microsoft-365"]) {
+			return fmt.Errorf("Error reading microsoft_365: %v", err)
+		}
+	}
+
 	if err = d.Set("gcp_project", flattenSystemSdnConnectorGcpProject(o["gcp-project"], d, "gcp_project", sv)); err != nil {
 		if !fortiAPIPatch(o["gcp-project"]) {
 			return fmt.Errorf("Error reading gcp_project: %v", err)
@@ -1966,6 +1996,10 @@ func expandSystemSdnConnectorHaStatus(d *schema.ResourceData, v interface{}, pre
 }
 
 func expandSystemSdnConnectorVerifyCertificate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdnConnectorVdom(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2655,6 +2689,10 @@ func expandSystemSdnConnectorUseMetadataIam(d *schema.ResourceData, v interface{
 	return v, nil
 }
 
+func expandSystemSdnConnectorMicrosoft365(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemSdnConnectorGcpProject(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -2772,6 +2810,17 @@ func getObjectSystemSdnConnector(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["verify-certificate"] = t
 		}
+	}
+
+	if v, ok := d.GetOk("vdom"); ok {
+		t, err := expandSystemSdnConnectorVdom(d, v, "vdom", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["vdom"] = t
+		}
+	} else if d.HasChange("vdom") {
+		obj["vdom"] = nil
 	}
 
 	if v, ok := d.GetOk("server"); ok {
@@ -3159,6 +3208,15 @@ func getObjectSystemSdnConnector(d *schema.ResourceData, sv string) (*map[string
 			return &obj, err
 		} else if t != nil {
 			obj["use-metadata-iam"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("microsoft_365"); ok {
+		t, err := expandSystemSdnConnectorMicrosoft365(d, v, "microsoft_365", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["microsoft-365"] = t
 		}
 	}
 

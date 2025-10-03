@@ -52,6 +52,9 @@ The following arguments are supported:
 * `user_database` - Authentication server to contain user information; "local" (default) or "123" (for LDAP). The structure of `user_database` block is documented below.
 * `ssh_ca` - SSH CA name.
 * `external_idp` - External identity provider configuration.
+* `group_attr_type` - Group attribute type used to match SCIM groups (default = display-name). Valid values: `display-name`, `external-id`.
+* `digest_algo` - Digest Authentication Algorithms. Valid values: `md5`, `sha-256`.
+* `digest_rfc2069` - Enable/disable support for the deprecated RFC2069 Digest Client (no cnonce field, default = disable). Valid values: `enable`, `disable`.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
 * `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.

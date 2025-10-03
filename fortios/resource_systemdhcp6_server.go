@@ -101,6 +101,11 @@ func resourceSystemDhcp6Server() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Required:     true,
 			},
+			"delegated_prefix_route": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"options": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -465,6 +470,10 @@ func flattenSystemDhcp6ServerSubnet(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenSystemDhcp6ServerInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemDhcp6ServerDelegatedPrefixRoute(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -902,6 +911,12 @@ func refreshObjectSystemDhcp6Server(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
+	if err = d.Set("delegated_prefix_route", flattenSystemDhcp6ServerDelegatedPrefixRoute(o["delegated-prefix-route"], d, "delegated_prefix_route", sv)); err != nil {
+		if !fortiAPIPatch(o["delegated-prefix-route"]) {
+			return fmt.Errorf("Error reading delegated_prefix_route: %v", err)
+		}
+	}
+
 	if b_get_all_tables {
 		if err = d.Set("options", flattenSystemDhcp6ServerOptions(o["options"], d, "options", sv)); err != nil {
 			if !fortiAPIPatch(o["options"]) {
@@ -1050,6 +1065,10 @@ func expandSystemDhcp6ServerSubnet(d *schema.ResourceData, v interface{}, pre st
 }
 
 func expandSystemDhcp6ServerInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemDhcp6ServerDelegatedPrefixRoute(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1479,6 +1498,15 @@ func getObjectSystemDhcp6Server(d *schema.ResourceData, sv string) (*map[string]
 		}
 	} else if d.HasChange("interface") {
 		obj["interface"] = nil
+	}
+
+	if v, ok := d.GetOk("delegated_prefix_route"); ok {
+		t, err := expandSystemDhcp6ServerDelegatedPrefixRoute(d, v, "delegated_prefix_route", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["delegated-prefix-route"] = t
+		}
 	}
 
 	if v, ok := d.GetOk("options"); ok || d.HasChange("options") {

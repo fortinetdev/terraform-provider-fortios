@@ -99,6 +99,11 @@ func resourceLogSyslogd4Filter() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"debug": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"free_style": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -325,6 +330,10 @@ func flattenLogSyslogd4FilterFortiSwitch(v interface{}, d *schema.ResourceData, 
 	return v
 }
 
+func flattenLogSyslogd4FilterDebug(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenLogSyslogd4FilterFreeStyle(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -497,6 +506,12 @@ func refreshObjectLogSyslogd4Filter(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
+	if err = d.Set("debug", flattenLogSyslogd4FilterDebug(o["debug"], d, "debug", sv)); err != nil {
+		if !fortiAPIPatch(o["debug"]) {
+			return fmt.Errorf("Error reading debug: %v", err)
+		}
+	}
+
 	if b_get_all_tables {
 		if err = d.Set("free_style", flattenLogSyslogd4FilterFreeStyle(o["free-style"], d, "free_style", sv)); err != nil {
 			if !fortiAPIPatch(o["free-style"]) {
@@ -595,6 +610,10 @@ func expandLogSyslogd4FilterGtp(d *schema.ResourceData, v interface{}, pre strin
 }
 
 func expandLogSyslogd4FilterFortiSwitch(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogSyslogd4FilterDebug(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -846,6 +865,19 @@ func getObjectLogSyslogd4Filter(d *schema.ResourceData, setArgNil bool, sv strin
 				return &obj, err
 			} else if t != nil {
 				obj["forti-switch"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("debug"); ok {
+		if setArgNil {
+			obj["debug"] = nil
+		} else {
+			t, err := expandLogSyslogd4FilterDebug(d, v, "debug", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["debug"] = t
 			}
 		}
 	}

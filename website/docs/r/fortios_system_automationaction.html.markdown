@@ -66,7 +66,7 @@ The following arguments are supported:
 * `alicloud_function_authorization` - AliCloud function authorization type. Valid values: `anonymous`, `function`.
 * `alicloud_access_key_id` - AliCloud AccessKey ID.
 * `alicloud_access_key_secret` - AliCloud AccessKey secret.
-* `message_type` - Message type. Valid values: `text`, `json`.
+* `message_type` - Message type.
 * `message` - Message content.
 * `replacement_message` - Enable/disable replacement message. Valid values: `enable`, `disable`.
 * `replacemsg_group` - Replacement message group.
@@ -76,17 +76,21 @@ The following arguments are supported:
 * `http_body` - Request body (if necessary). Should be serialized json string.
 * `port` - Protocol port.
 * `http_headers` - Request headers. The structure of `http_headers` block is documented below.
+* `form_data` - Form data parts for content type multipart/form-data. The structure of `form_data` block is documented below.
 * `headers` - Request headers. The structure of `headers` block is documented below.
 * `verify_host_cert` - Enable/disable verification of the remote host certificate. Valid values: `enable`, `disable`.
 * `script` - CLI script.
 * `output_size` - Number of megabytes to limit script output to (1 - 1024, default = 10).
 * `timeout` - Maximum running time for this script in seconds (0 = no timeout).
 * `duration` - Maximum running time for this script in seconds.
+* `output_interval` - Collect the outputs for each output-interval in seconds (0 = no intermediate output).
+* `file_only` - Enable/disable the output in files only. Valid values: `enable`, `disable`.
 * `execute_security_fabric` - Enable/disable execution of CLI script on all or only one FortiGate unit in the Security Fabric. Valid values: `enable`, `disable`.
 * `accprofile` - Access profile for CLI script action to access FortiGate features.
 * `security_tag` - NSX security tag.
 * `sdn_connector` - NSX SDN connector names. The structure of `sdn_connector` block is documented below.
 * `regular_expression` - Regular expression string.
+* `log_debug_print` - Enable/disable logging debug print output from diagnose action. Valid values: `enable`, `disable`.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
 * `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
@@ -100,6 +104,12 @@ The `http_headers` block supports:
 * `id` - Entry ID.
 * `key` - Request header key.
 * `value` - Request header value.
+
+The `form_data` block supports:
+
+* `id` - Entry ID.
+* `key` - Key of the part of Multipart/form-data.
+* `value` - Value of the part of Multipart/form-data.
 
 The `headers` block supports:
 

@@ -39,6 +39,7 @@ The following arguments are supported:
 * `domain` - Domain name suffix for the IP addresses that the DHCP server assigns to clients.
 * `subnet` - (Required) Subnet or subnet-id if the IP mode is delegated.
 * `interface` - (Required) DHCP server can assign IP configurations to clients connected to this interface.
+* `delegated_prefix_route` - Enable/disable automatically adding of routing for delegated prefix. Valid values: `disable`, `enable`.
 * `options` - DHCPv6 options. The structure of `options` block is documented below.
 * `option1` - Option 1.
 * `option2` - Option 2.

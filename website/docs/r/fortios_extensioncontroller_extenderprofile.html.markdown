@@ -150,9 +150,14 @@ The `downlinks` block supports:
 
 * `name` - FortiExtender LAN extension downlink config entry name.
 * `type` - FortiExtender LAN extension downlink type [port/vap]. Valid values: `port`, `vap`.
-* `port` - FortiExtender LAN extension downlink port. Valid values: `port1`, `port2`, `port3`, `port4`, `port5`, `lan1`, `lan2`.
+* `port` - FortiExtender LAN extension downlink port.
 * `vap` - FortiExtender LAN extension downlink vap.
-* `pvid` - FortiExtender LAN extension downlink PVID.
+* `pvid` - FortiExtender LAN extension downlink PVID (1 - 4089).
+* `vids` - FortiExtender LAN extension downlink VIDs. The structure of `vids` block is documented below.
+
+The `vids` block supports:
+
+* `vid` - Please enter VID numbers (1 - 4089) with space separated. Up to 50 VIDs are accepted.
 
 The `traffic_split_services` block supports:
 
@@ -163,7 +168,7 @@ The `traffic_split_services` block supports:
 
 The `wifi` block supports:
 
-* `country` - Country in which this FEX will operate (default = NA). Valid values: `--`, `AF`, `AL`, `DZ`, `AS`, `AO`, `AR`, `AM`, `AU`, `AT`, `AZ`, `BS`, `BH`, `BD`, `BB`, `BY`, `BE`, `BZ`, `BJ`, `BM`, `BT`, `BO`, `BA`, `BW`, `BR`, `BN`, `BG`, `BF`, `KH`, `CM`, `KY`, `CF`, `TD`, `CL`, `CN`, `CX`, `CO`, `CG`, `CD`, `CR`, `HR`, `CY`, `CZ`, `DK`, `DJ`, `DM`, `DO`, `EC`, `EG`, `SV`, `ET`, `EE`, `GF`, `PF`, `FO`, `FJ`, `FI`, `FR`, `GA`, `GE`, `GM`, `DE`, `GH`, `GI`, `GR`, `GL`, `GD`, `GP`, `GU`, `GT`, `GY`, `HT`, `HN`, `HK`, `HU`, `IS`, `IN`, `ID`, `IQ`, `IE`, `IM`, `IL`, `IT`, `CI`, `JM`, `JO`, `KZ`, `KE`, `KR`, `KW`, `LA`, `LV`, `LB`, `LS`, `LR`, `LY`, `LI`, `LT`, `LU`, `MO`, `MK`, `MG`, `MW`, `MY`, `MV`, `ML`, `MT`, `MH`, `MQ`, `MR`, `MU`, `YT`, `MX`, `FM`, `MD`, `MC`, `MN`, `MA`, `MZ`, `MM`, `NA`, `NP`, `NL`, `AN`, `AW`, `NZ`, `NI`, `NE`, `NG`, `NO`, `MP`, `OM`, `PK`, `PW`, `PA`, `PG`, `PY`, `PE`, `PH`, `PL`, `PT`, `PR`, `QA`, `RE`, `RO`, `RU`, `RW`, `BL`, `KN`, `LC`, `MF`, `PM`, `VC`, `SA`, `SN`, `RS`, `ME`, `SL`, `SG`, `SK`, `SI`, `SO`, `ZA`, `ES`, `LK`, `SR`, `SZ`, `SE`, `CH`, `TW`, `TZ`, `TH`, `TG`, `TT`, `TN`, `TR`, `TM`, `AE`, `TC`, `UG`, `UA`, `GB`, `US`, `PS`, `UY`, `UZ`, `VU`, `VE`, `VN`, `VI`, `WF`, `YE`, `ZM`, `ZW`, `JP`, `CA`.
+* `country` - Country in which this FEX will operate (default = NA).
 * `radio_1` - Radio-1 config for Wi-Fi 2.4GHz The structure of `radio_1` block is documented below.
 * `radio_2` - Radio-2 config for Wi-Fi 5GHz The structure of `radio_2` block is documented below.
 

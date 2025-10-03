@@ -90,7 +90,7 @@ func resourceWirelessControllerHotspot20H2QpAdviceOfCharge() *schema.Resource {
 									},
 									"info_file": &schema.Schema{
 										Type:         schema.TypeString,
-										ValidateFunc: validation.StringLenBetween(0, 64),
+										ValidateFunc: validation.StringLenBetween(0, 255),
 										Optional:     true,
 									},
 								},

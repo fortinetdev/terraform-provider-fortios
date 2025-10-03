@@ -112,6 +112,10 @@ func dataSourceRouterStatic() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"internet_service_fortiguard": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"link_monitor_exempt": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -297,6 +301,10 @@ func dataSourceFlattenRouterStaticInternetServiceCustom(v interface{}, d *schema
 	return v
 }
 
+func dataSourceFlattenRouterStaticInternetServiceFortiguard(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenRouterStaticLinkMonitorExempt(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -427,6 +435,12 @@ func dataSourceRefreshObjectRouterStatic(d *schema.ResourceData, o map[string]in
 	if err = d.Set("internet_service_custom", dataSourceFlattenRouterStaticInternetServiceCustom(o["internet-service-custom"], d, "internet_service_custom")); err != nil {
 		if !fortiAPIPatch(o["internet-service-custom"]) {
 			return fmt.Errorf("Error reading internet_service_custom: %v", err)
+		}
+	}
+
+	if err = d.Set("internet_service_fortiguard", dataSourceFlattenRouterStaticInternetServiceFortiguard(o["internet-service-fortiguard"], d, "internet_service_fortiguard")); err != nil {
+		if !fortiAPIPatch(o["internet-service-fortiguard"]) {
+			return fmt.Errorf("Error reading internet_service_fortiguard: %v", err)
 		}
 	}
 

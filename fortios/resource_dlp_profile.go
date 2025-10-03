@@ -178,6 +178,11 @@ func resourceDlpProfile() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 			},
+			"fortidata_error_action": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -623,6 +628,10 @@ func flattenDlpProfileSummaryProto(v interface{}, d *schema.ResourceData, pre st
 	return v
 }
 
+func flattenDlpProfileFortidataErrorAction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectDlpProfile(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 	var b_get_all_tables bool
@@ -699,6 +708,12 @@ func refreshObjectDlpProfile(d *schema.ResourceData, o map[string]interface{}, s
 	if err = d.Set("summary_proto", flattenDlpProfileSummaryProto(o["summary-proto"], d, "summary_proto", sv)); err != nil {
 		if !fortiAPIPatch(o["summary-proto"]) {
 			return fmt.Errorf("Error reading summary_proto: %v", err)
+		}
+	}
+
+	if err = d.Set("fortidata_error_action", flattenDlpProfileFortidataErrorAction(o["fortidata-error-action"], d, "fortidata_error_action", sv)); err != nil {
+		if !fortiAPIPatch(o["fortidata-error-action"]) {
+			return fmt.Errorf("Error reading fortidata_error_action: %v", err)
 		}
 	}
 
@@ -966,6 +981,10 @@ func expandDlpProfileSummaryProto(d *schema.ResourceData, v interface{}, pre str
 	return v, nil
 }
 
+func expandDlpProfileFortidataErrorAction(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectDlpProfile(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
@@ -1065,6 +1084,15 @@ func getObjectDlpProfile(d *schema.ResourceData, sv string) (*map[string]interfa
 		}
 	} else if d.HasChange("summary_proto") {
 		obj["summary-proto"] = nil
+	}
+
+	if v, ok := d.GetOk("fortidata_error_action"); ok {
+		t, err := expandDlpProfileFortidataErrorAction(d, v, "fortidata_error_action", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fortidata-error-action"] = t
+		}
 	}
 
 	return &obj, nil

@@ -20,6 +20,7 @@ The following arguments are supported:
 * `password` - Password for the specified username.
 * `ip` - Server IPv4 address.
 * `connect_protocol` - Connection protocol used to connect to MS Exchange service. Valid values: `rpc-over-tcp`, `rpc-over-http`, `rpc-over-https`.
+* `validate_server_certificate` - Enable/disable exchange server certificate validation. Valid values: `disable`, `enable`.
 * `auth_type` - Authentication security type used for the RPC protocol layer. Valid values: `spnego`, `ntlm`, `kerberos`.
 * `auth_level` - Authentication security level used for the RPC protocol layer. Valid values: `connect`, `call`, `packet`, `integrity`, `privacy`.
 * `http_auth_type` - Authentication security type used for the HTTP transport. Valid values: `basic`, `ntlm`.

@@ -20,6 +20,7 @@ Use this data source to get information on fortios system ftmpush
 The following attributes are exported:
 
 * `proxy` - Enable/disable communication to the proxy server in FortiGuard configuration.
+* `interface` - Interface of FortiToken Mobile push services server.
 * `server_port` - Port to communicate with FortiToken Mobile push services server (1 - 65535, default = 4433).
 * `server_cert` - Name of the server certificate to be used for SSL (default = Fortinet_Factory).
 * `server_ip` - IPv4 address of FortiToken Mobile push services server (format: xxx.xxx.xxx.xxx).

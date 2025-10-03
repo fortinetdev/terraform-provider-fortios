@@ -141,6 +141,7 @@ The following arguments are supported:
 * `failover_hold_time` - Time to wait before failover (0 - 300 sec, default = 0), to avoid flip.
 * `check_secondary_dev_health` - Enable/disable secondary dev health check for session load-balance in HA A-A mode. Valid values: `enable`, `disable`.
 * `ipsec_phase2_proposal` - IPsec phase2 proposal. Valid values: `aes128-sha1`, `aes128-sha256`, `aes128-sha384`, `aes128-sha512`, `aes192-sha1`, `aes192-sha256`, `aes192-sha384`, `aes192-sha512`, `aes256-sha1`, `aes256-sha256`, `aes256-sha384`, `aes256-sha512`, `aes128gcm`, `aes256gcm`, `chacha20poly1305`.
+* `bounce_intf_upon_failover` - Enable/disable notification of kernel to bring down and up all monitored interfaces. The setting is used during failovers if gratuitous ARPs do not update the network. Valid values: `enable`, `disable`.
 * `inter_cluster_session_sync` - Enable/disable synchronization of sessions among HA clusters. Valid values: `enable`, `disable`.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
 * `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
@@ -160,6 +161,7 @@ The `ha_mgmt_interfaces` block supports:
 * `interface` - Interface to reserve for HA management.
 * `dst` - Default route destination for reserved HA management interface.
 * `gateway` - Default route gateway for reserved HA management interface.
+* `dst6` - Default IPv6 destination for reserved HA management interface.
 * `gateway6` - Default IPv6 gateway for reserved HA management interface.
 
 The `unicast_peers` block supports:

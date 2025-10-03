@@ -105,6 +105,7 @@ The following attributes are exported:
 * `failover_hold_time` - Time to wait before failover (0 - 300 sec, default = 0), to avoid flip.
 * `check_secondary_dev_health` - Enable/disable secondary dev health check for session load-balance in HA A-A mode.
 * `ipsec_phase2_proposal` - IPsec phase2 proposal.
+* `bounce_intf_upon_failover` - Enable/disable notification of kernel to bring down and up all monitored interfaces. The setting is used during failovers if gratuitous ARPs do not update the network.
 * `inter_cluster_session_sync` - Enable/disable synchronization of sessions among HA clusters.
 
 The `auto_virtual_mac_interface` block contains:
@@ -121,6 +122,7 @@ The `ha_mgmt_interfaces` block contains:
 * `interface` - Interface to reserve for HA management.
 * `dst` - Default route destination for reserved HA management interface.
 * `gateway` - Default route gateway for reserved HA management interface.
+* `dst6` - Default IPv6 destination for reserved HA management interface.
 * `gateway6` - Default IPv6 gateway for reserved HA management interface.
 
 The `unicast_peers` block contains:

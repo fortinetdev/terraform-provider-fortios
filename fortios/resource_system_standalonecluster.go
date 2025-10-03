@@ -257,6 +257,16 @@ func resourceSystemStandaloneCluster() *schema.Resource {
 					},
 				},
 			},
+			"helper_traffic_bounce": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"utm_traffic_bounce": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -910,6 +920,14 @@ func flattenSystemStandaloneClusterMonitorPrefixPrefix(v interface{}, d *schema.
 	return v
 }
 
+func flattenSystemStandaloneClusterHelperTrafficBounce(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemStandaloneClusterUtmTrafficBounce(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectSystemStandaloneCluster(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 	var b_get_all_tables bool
@@ -1016,6 +1034,18 @@ func refreshObjectSystemStandaloneCluster(d *schema.ResourceData, o map[string]i
 					return fmt.Errorf("Error reading monitor_prefix: %v", err)
 				}
 			}
+		}
+	}
+
+	if err = d.Set("helper_traffic_bounce", flattenSystemStandaloneClusterHelperTrafficBounce(o["helper-traffic-bounce"], d, "helper_traffic_bounce", sv)); err != nil {
+		if !fortiAPIPatch(o["helper-traffic-bounce"]) {
+			return fmt.Errorf("Error reading helper_traffic_bounce: %v", err)
+		}
+	}
+
+	if err = d.Set("utm_traffic_bounce", flattenSystemStandaloneClusterUtmTrafficBounce(o["utm-traffic-bounce"], d, "utm_traffic_bounce", sv)); err != nil {
+		if !fortiAPIPatch(o["utm-traffic-bounce"]) {
+			return fmt.Errorf("Error reading utm_traffic_bounce: %v", err)
 		}
 	}
 
@@ -1457,6 +1487,14 @@ func expandSystemStandaloneClusterMonitorPrefixPrefix(d *schema.ResourceData, v 
 	return v, nil
 }
 
+func expandSystemStandaloneClusterHelperTrafficBounce(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemStandaloneClusterUtmTrafficBounce(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectSystemStandaloneCluster(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
@@ -1607,6 +1645,32 @@ func getObjectSystemStandaloneCluster(d *schema.ResourceData, setArgNil bool, sv
 				return &obj, err
 			} else if t != nil {
 				obj["monitor-prefix"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("helper_traffic_bounce"); ok {
+		if setArgNil {
+			obj["helper-traffic-bounce"] = nil
+		} else {
+			t, err := expandSystemStandaloneClusterHelperTrafficBounce(d, v, "helper_traffic_bounce", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["helper-traffic-bounce"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("utm_traffic_bounce"); ok {
+		if setArgNil {
+			obj["utm-traffic-bounce"] = nil
+		} else {
+			t, err := expandSystemStandaloneClusterUtmTrafficBounce(d, v, "utm_traffic_bounce", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["utm-traffic-bounce"] = t
 			}
 		}
 	}

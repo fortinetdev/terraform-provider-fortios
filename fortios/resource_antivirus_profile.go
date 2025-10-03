@@ -153,6 +153,11 @@ func resourceAntivirusProfile() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"malware_stream": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"fortindr": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -220,6 +225,11 @@ func resourceAntivirusProfile() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"malware_stream": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"fortindr": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -283,6 +293,11 @@ func resourceAntivirusProfile() *schema.Resource {
 							Computed: true,
 						},
 						"external_blocklist": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"malware_stream": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -359,6 +374,11 @@ func resourceAntivirusProfile() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"malware_stream": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"fortindr": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -427,6 +447,11 @@ func resourceAntivirusProfile() *schema.Resource {
 							Computed: true,
 						},
 						"external_blocklist": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"malware_stream": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -503,6 +528,11 @@ func resourceAntivirusProfile() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"malware_stream": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"fortindr": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -561,6 +591,11 @@ func resourceAntivirusProfile() *schema.Resource {
 							Computed: true,
 						},
 						"external_blocklist": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"malware_stream": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -627,6 +662,11 @@ func resourceAntivirusProfile() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"malware_stream": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"fortindr": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -685,6 +725,11 @@ func resourceAntivirusProfile() *schema.Resource {
 							Computed: true,
 						},
 						"external_blocklist": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"malware_stream": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -1249,6 +1294,11 @@ func flattenAntivirusProfileHttp(v interface{}, d *schema.ResourceData, pre stri
 		result["external_blocklist"] = flattenAntivirusProfileHttpExternalBlocklist(i["external-blocklist"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "malware_stream"
+	if _, ok := i["malware-stream"]; ok {
+		result["malware_stream"] = flattenAntivirusProfileHttpMalwareStream(i["malware-stream"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "fortindr"
 	if _, ok := i["fortindr"]; ok {
 		result["fortindr"] = flattenAntivirusProfileHttpFortindr(i["fortindr"], d, pre_append, sv)
@@ -1307,6 +1357,10 @@ func flattenAntivirusProfileHttpOutbreakPrevention(v interface{}, d *schema.Reso
 }
 
 func flattenAntivirusProfileHttpExternalBlocklist(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAntivirusProfileHttpMalwareStream(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1374,6 +1428,11 @@ func flattenAntivirusProfileFtp(v interface{}, d *schema.ResourceData, pre strin
 		result["external_blocklist"] = flattenAntivirusProfileFtpExternalBlocklist(i["external-blocklist"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "malware_stream"
+	if _, ok := i["malware-stream"]; ok {
+		result["malware_stream"] = flattenAntivirusProfileFtpMalwareStream(i["malware-stream"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "fortindr"
 	if _, ok := i["fortindr"]; ok {
 		result["fortindr"] = flattenAntivirusProfileFtpFortindr(i["fortindr"], d, pre_append, sv)
@@ -1423,6 +1482,10 @@ func flattenAntivirusProfileFtpOutbreakPrevention(v interface{}, d *schema.Resou
 }
 
 func flattenAntivirusProfileFtpExternalBlocklist(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAntivirusProfileFtpMalwareStream(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1491,6 +1554,11 @@ func flattenAntivirusProfileImap(v interface{}, d *schema.ResourceData, pre stri
 		result["external_blocklist"] = flattenAntivirusProfileImapExternalBlocklist(i["external-blocklist"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "malware_stream"
+	if _, ok := i["malware-stream"]; ok {
+		result["malware_stream"] = flattenAntivirusProfileImapMalwareStream(i["malware-stream"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "fortindr"
 	if _, ok := i["fortindr"]; ok {
 		result["fortindr"] = flattenAntivirusProfileImapFortindr(i["fortindr"], d, pre_append, sv)
@@ -1549,6 +1617,10 @@ func flattenAntivirusProfileImapOutbreakPrevention(v interface{}, d *schema.Reso
 }
 
 func flattenAntivirusProfileImapExternalBlocklist(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAntivirusProfileImapMalwareStream(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1621,6 +1693,11 @@ func flattenAntivirusProfilePop3(v interface{}, d *schema.ResourceData, pre stri
 		result["external_blocklist"] = flattenAntivirusProfilePop3ExternalBlocklist(i["external-blocklist"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "malware_stream"
+	if _, ok := i["malware-stream"]; ok {
+		result["malware_stream"] = flattenAntivirusProfilePop3MalwareStream(i["malware-stream"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "fortindr"
 	if _, ok := i["fortindr"]; ok {
 		result["fortindr"] = flattenAntivirusProfilePop3Fortindr(i["fortindr"], d, pre_append, sv)
@@ -1679,6 +1756,10 @@ func flattenAntivirusProfilePop3OutbreakPrevention(v interface{}, d *schema.Reso
 }
 
 func flattenAntivirusProfilePop3ExternalBlocklist(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAntivirusProfilePop3MalwareStream(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1751,6 +1832,11 @@ func flattenAntivirusProfileSmtp(v interface{}, d *schema.ResourceData, pre stri
 		result["external_blocklist"] = flattenAntivirusProfileSmtpExternalBlocklist(i["external-blocklist"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "malware_stream"
+	if _, ok := i["malware-stream"]; ok {
+		result["malware_stream"] = flattenAntivirusProfileSmtpMalwareStream(i["malware-stream"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "fortindr"
 	if _, ok := i["fortindr"]; ok {
 		result["fortindr"] = flattenAntivirusProfileSmtpFortindr(i["fortindr"], d, pre_append, sv)
@@ -1809,6 +1895,10 @@ func flattenAntivirusProfileSmtpOutbreakPrevention(v interface{}, d *schema.Reso
 }
 
 func flattenAntivirusProfileSmtpExternalBlocklist(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAntivirusProfileSmtpMalwareStream(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1881,6 +1971,11 @@ func flattenAntivirusProfileMapi(v interface{}, d *schema.ResourceData, pre stri
 		result["external_blocklist"] = flattenAntivirusProfileMapiExternalBlocklist(i["external-blocklist"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "malware_stream"
+	if _, ok := i["malware-stream"]; ok {
+		result["malware_stream"] = flattenAntivirusProfileMapiMalwareStream(i["malware-stream"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "fortindr"
 	if _, ok := i["fortindr"]; ok {
 		result["fortindr"] = flattenAntivirusProfileMapiFortindr(i["fortindr"], d, pre_append, sv)
@@ -1934,6 +2029,10 @@ func flattenAntivirusProfileMapiOutbreakPrevention(v interface{}, d *schema.Reso
 }
 
 func flattenAntivirusProfileMapiExternalBlocklist(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAntivirusProfileMapiMalwareStream(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1997,6 +2096,11 @@ func flattenAntivirusProfileNntp(v interface{}, d *schema.ResourceData, pre stri
 		result["external_blocklist"] = flattenAntivirusProfileNntpExternalBlocklist(i["external-blocklist"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "malware_stream"
+	if _, ok := i["malware-stream"]; ok {
+		result["malware_stream"] = flattenAntivirusProfileNntpMalwareStream(i["malware-stream"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "fortindr"
 	if _, ok := i["fortindr"]; ok {
 		result["fortindr"] = flattenAntivirusProfileNntpFortindr(i["fortindr"], d, pre_append, sv)
@@ -2046,6 +2150,10 @@ func flattenAntivirusProfileNntpOutbreakPrevention(v interface{}, d *schema.Reso
 }
 
 func flattenAntivirusProfileNntpExternalBlocklist(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAntivirusProfileNntpMalwareStream(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2109,6 +2217,11 @@ func flattenAntivirusProfileCifs(v interface{}, d *schema.ResourceData, pre stri
 		result["external_blocklist"] = flattenAntivirusProfileCifsExternalBlocklist(i["external-blocklist"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "malware_stream"
+	if _, ok := i["malware-stream"]; ok {
+		result["malware_stream"] = flattenAntivirusProfileCifsMalwareStream(i["malware-stream"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "fortindr"
 	if _, ok := i["fortindr"]; ok {
 		result["fortindr"] = flattenAntivirusProfileCifsFortindr(i["fortindr"], d, pre_append, sv)
@@ -2158,6 +2271,10 @@ func flattenAntivirusProfileCifsOutbreakPrevention(v interface{}, d *schema.Reso
 }
 
 func flattenAntivirusProfileCifsExternalBlocklist(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAntivirusProfileCifsMalwareStream(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2221,6 +2338,11 @@ func flattenAntivirusProfileSsh(v interface{}, d *schema.ResourceData, pre strin
 		result["external_blocklist"] = flattenAntivirusProfileSshExternalBlocklist(i["external-blocklist"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "malware_stream"
+	if _, ok := i["malware-stream"]; ok {
+		result["malware_stream"] = flattenAntivirusProfileSshMalwareStream(i["malware-stream"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "fortindr"
 	if _, ok := i["fortindr"]; ok {
 		result["fortindr"] = flattenAntivirusProfileSshFortindr(i["fortindr"], d, pre_append, sv)
@@ -2270,6 +2392,10 @@ func flattenAntivirusProfileSshOutbreakPrevention(v interface{}, d *schema.Resou
 }
 
 func flattenAntivirusProfileSshExternalBlocklist(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAntivirusProfileSshMalwareStream(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -3217,6 +3343,10 @@ func expandAntivirusProfileHttp(d *schema.ResourceData, v interface{}, pre strin
 	if _, ok := d.GetOk(pre_append); ok {
 		result["external-blocklist"], _ = expandAntivirusProfileHttpExternalBlocklist(d, i["external_blocklist"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "malware_stream"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["malware-stream"], _ = expandAntivirusProfileHttpMalwareStream(d, i["malware_stream"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "fortindr"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["fortindr"], _ = expandAntivirusProfileHttpFortindr(d, i["fortindr"], pre_append, sv)
@@ -3270,6 +3400,10 @@ func expandAntivirusProfileHttpOutbreakPrevention(d *schema.ResourceData, v inte
 }
 
 func expandAntivirusProfileHttpExternalBlocklist(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAntivirusProfileHttpMalwareStream(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3331,6 +3465,10 @@ func expandAntivirusProfileFtp(d *schema.ResourceData, v interface{}, pre string
 	if _, ok := d.GetOk(pre_append); ok {
 		result["external-blocklist"], _ = expandAntivirusProfileFtpExternalBlocklist(d, i["external_blocklist"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "malware_stream"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["malware-stream"], _ = expandAntivirusProfileFtpMalwareStream(d, i["malware_stream"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "fortindr"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["fortindr"], _ = expandAntivirusProfileFtpFortindr(d, i["fortindr"], pre_append, sv)
@@ -3376,6 +3514,10 @@ func expandAntivirusProfileFtpOutbreakPrevention(d *schema.ResourceData, v inter
 }
 
 func expandAntivirusProfileFtpExternalBlocklist(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAntivirusProfileFtpMalwareStream(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3437,6 +3579,10 @@ func expandAntivirusProfileImap(d *schema.ResourceData, v interface{}, pre strin
 	if _, ok := d.GetOk(pre_append); ok {
 		result["external-blocklist"], _ = expandAntivirusProfileImapExternalBlocklist(d, i["external_blocklist"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "malware_stream"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["malware-stream"], _ = expandAntivirusProfileImapMalwareStream(d, i["malware_stream"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "fortindr"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["fortindr"], _ = expandAntivirusProfileImapFortindr(d, i["fortindr"], pre_append, sv)
@@ -3490,6 +3636,10 @@ func expandAntivirusProfileImapOutbreakPrevention(d *schema.ResourceData, v inte
 }
 
 func expandAntivirusProfileImapExternalBlocklist(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAntivirusProfileImapMalwareStream(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3555,6 +3705,10 @@ func expandAntivirusProfilePop3(d *schema.ResourceData, v interface{}, pre strin
 	if _, ok := d.GetOk(pre_append); ok {
 		result["external-blocklist"], _ = expandAntivirusProfilePop3ExternalBlocklist(d, i["external_blocklist"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "malware_stream"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["malware-stream"], _ = expandAntivirusProfilePop3MalwareStream(d, i["malware_stream"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "fortindr"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["fortindr"], _ = expandAntivirusProfilePop3Fortindr(d, i["fortindr"], pre_append, sv)
@@ -3608,6 +3762,10 @@ func expandAntivirusProfilePop3OutbreakPrevention(d *schema.ResourceData, v inte
 }
 
 func expandAntivirusProfilePop3ExternalBlocklist(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAntivirusProfilePop3MalwareStream(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3673,6 +3831,10 @@ func expandAntivirusProfileSmtp(d *schema.ResourceData, v interface{}, pre strin
 	if _, ok := d.GetOk(pre_append); ok {
 		result["external-blocklist"], _ = expandAntivirusProfileSmtpExternalBlocklist(d, i["external_blocklist"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "malware_stream"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["malware-stream"], _ = expandAntivirusProfileSmtpMalwareStream(d, i["malware_stream"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "fortindr"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["fortindr"], _ = expandAntivirusProfileSmtpFortindr(d, i["fortindr"], pre_append, sv)
@@ -3726,6 +3888,10 @@ func expandAntivirusProfileSmtpOutbreakPrevention(d *schema.ResourceData, v inte
 }
 
 func expandAntivirusProfileSmtpExternalBlocklist(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAntivirusProfileSmtpMalwareStream(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3791,6 +3957,10 @@ func expandAntivirusProfileMapi(d *schema.ResourceData, v interface{}, pre strin
 	if _, ok := d.GetOk(pre_append); ok {
 		result["external-blocklist"], _ = expandAntivirusProfileMapiExternalBlocklist(d, i["external_blocklist"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "malware_stream"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["malware-stream"], _ = expandAntivirusProfileMapiMalwareStream(d, i["malware_stream"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "fortindr"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["fortindr"], _ = expandAntivirusProfileMapiFortindr(d, i["fortindr"], pre_append, sv)
@@ -3840,6 +4010,10 @@ func expandAntivirusProfileMapiOutbreakPrevention(d *schema.ResourceData, v inte
 }
 
 func expandAntivirusProfileMapiExternalBlocklist(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAntivirusProfileMapiMalwareStream(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3897,6 +4071,10 @@ func expandAntivirusProfileNntp(d *schema.ResourceData, v interface{}, pre strin
 	if _, ok := d.GetOk(pre_append); ok {
 		result["external-blocklist"], _ = expandAntivirusProfileNntpExternalBlocklist(d, i["external_blocklist"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "malware_stream"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["malware-stream"], _ = expandAntivirusProfileNntpMalwareStream(d, i["malware_stream"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "fortindr"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["fortindr"], _ = expandAntivirusProfileNntpFortindr(d, i["fortindr"], pre_append, sv)
@@ -3942,6 +4120,10 @@ func expandAntivirusProfileNntpOutbreakPrevention(d *schema.ResourceData, v inte
 }
 
 func expandAntivirusProfileNntpExternalBlocklist(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAntivirusProfileNntpMalwareStream(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3999,6 +4181,10 @@ func expandAntivirusProfileCifs(d *schema.ResourceData, v interface{}, pre strin
 	if _, ok := d.GetOk(pre_append); ok {
 		result["external-blocklist"], _ = expandAntivirusProfileCifsExternalBlocklist(d, i["external_blocklist"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "malware_stream"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["malware-stream"], _ = expandAntivirusProfileCifsMalwareStream(d, i["malware_stream"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "fortindr"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["fortindr"], _ = expandAntivirusProfileCifsFortindr(d, i["fortindr"], pre_append, sv)
@@ -4044,6 +4230,10 @@ func expandAntivirusProfileCifsOutbreakPrevention(d *schema.ResourceData, v inte
 }
 
 func expandAntivirusProfileCifsExternalBlocklist(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAntivirusProfileCifsMalwareStream(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -4101,6 +4291,10 @@ func expandAntivirusProfileSsh(d *schema.ResourceData, v interface{}, pre string
 	if _, ok := d.GetOk(pre_append); ok {
 		result["external-blocklist"], _ = expandAntivirusProfileSshExternalBlocklist(d, i["external_blocklist"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "malware_stream"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["malware-stream"], _ = expandAntivirusProfileSshMalwareStream(d, i["malware_stream"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "fortindr"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["fortindr"], _ = expandAntivirusProfileSshFortindr(d, i["fortindr"], pre_append, sv)
@@ -4146,6 +4340,10 @@ func expandAntivirusProfileSshOutbreakPrevention(d *schema.ResourceData, v inter
 }
 
 func expandAntivirusProfileSshExternalBlocklist(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAntivirusProfileSshMalwareStream(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

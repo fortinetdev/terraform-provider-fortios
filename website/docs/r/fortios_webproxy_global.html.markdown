@@ -37,15 +37,17 @@ The following arguments are supported:
 * `ssl_ca_cert` - SSL CA certificate for SSL interception.
 * `fast_policy_match` - Enable/disable fast matching algorithm for explicit and transparent proxy policy. Valid values: `enable`, `disable`.
 * `ldap_user_cache` - Enable/disable LDAP user cache for explicit and transparent proxy user. Valid values: `enable`, `disable`.
-* `proxy_fqdn` - (Required) Fully Qualified Domain Name (FQDN) that clients connect to (default = default.fqdn) to connect to the explicit web proxy.
+* `proxy_fqdn` - (Required) Fully Qualified Domain Name of the explicit web proxy (default = default.fqdn) that clients connect to.
 * `max_request_length` - Maximum length of HTTP request line (2 - 64 Kbytes). On FortiOS versions 6.2.0: default = 4. On FortiOS versions >= 6.2.4: default = 8.
 * `max_message_length` - Maximum length of HTTP message, not including body (16 - 256 Kbytes, default = 32).
+* `http2_client_window_size` - HTTP/2 client initial window size in bytes (65535 - 2147483647, default = 1048576 (1MB)).
+* `http2_server_window_size` - HTTP/2 server initial window size in bytes (65535 - 2147483647, default = 1048576 (1MB)).
 * `strict_web_check` - Enable/disable strict web checking to block web sites that send incorrect headers that don't conform to HTTP 1.1. Valid values: `enable`, `disable`.
 * `forward_proxy_auth` - Enable/disable forwarding proxy authentication headers. Valid values: `enable`, `disable`.
 * `tunnel_non_http` - Enable/disable allowing non-HTTP traffic. Allowed non-HTTP traffic is tunneled. Valid values: `enable`, `disable`.
 * `unknown_http_version` - Action to take when an unknown version of HTTP is encountered: reject, allow (tunnel), or proceed with best-effort. Valid values: `reject`, `tunnel`, `best-effort`.
 * `forward_server_affinity_timeout` - Period of time before the source IP's traffic is no longer assigned to the forwarding server (6 - 60 min, default = 30).
-* `max_waf_body_cache_length` - Maximum length of HTTP messages processed by Web Application Firewall (WAF) On FortiOS versions 6.2.0-7.4.4, 7.6.0: 10 - 1024 Kbytes, default = 32. On FortiOS versions 7.4.5-7.4.7, >= 7.6.1: 1 - 1024 Kbytes, default = 1.
+* `max_waf_body_cache_length` - Maximum length of HTTP messages processed by Web Application Firewall (WAF) On FortiOS versions 6.2.0-7.2.10, 7.4.0-7.4.4, 7.6.0: 10 - 1024 Kbytes, default = 32. On FortiOS versions 7.4.5-7.4.7, >= 7.6.1: 1 - 1024 Kbytes, default = 1.
 * `webproxy_profile` - Name of the web proxy profile to apply when explicit proxy traffic is allowed by default and traffic is accepted that does not match an explicit proxy policy.
 * `learn_client_ip` - Enable/disable learning the client's IP address from headers. Valid values: `enable`, `disable`.
 * `always_learn_client_ip` - Enable/disable learning the client's IP address from headers for every request. Valid values: `enable`, `disable`.

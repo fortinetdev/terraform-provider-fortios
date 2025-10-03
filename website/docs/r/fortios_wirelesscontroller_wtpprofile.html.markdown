@@ -19,12 +19,16 @@ The following arguments are supported:
 * `control_message_offload` - Enable/disable CAPWAP control message data channel offload.
 * `bonjour_profile` - Bonjour profile name.
 * `apcfg_profile` - AP local configuration profile name.
+* `apcfg_mesh` - Enable/disable AP local mesh configuration (default = disable). Valid values: `enable`, `disable`.
+* `apcfg_mesh_ap_type` - Mesh AP Type (default = ethernet). Valid values: `ethernet`, `mesh`, `auto`.
+* `apcfg_mesh_ssid` -  Mesh SSID (default = none).
+* `apcfg_mesh_eth_bridge` - Enable/disable mesh ethernet bridge (default = disable). Valid values: `enable`, `disable`.
 * `ble_profile` - Bluetooth Low Energy profile name.
 * `syslog_profile` - System log server configuration profile name.
 * `wan_port_mode` - Enable/disable using a WAN port as a LAN port. Valid values: `wan-lan`, `wan-only`.
 * `lan` - WTP LAN port mapping. The structure of `lan` block is documented below.
 * `energy_efficient_ethernet` - Enable/disable use of energy efficient Ethernet on WTP. Valid values: `enable`, `disable`.
-* `led_state` - Enable/disable use of LEDs on WTP (default = disable). Valid values: `enable`, `disable`.
+* `led_state` - Enable/disable use of LEDs on WTP. On FortiOS versions 6.2.0-7.4.7, 7.6.0-7.6.3: default = disable. On FortiOS versions 7.4.8, >= 7.6.4: default = enable. Valid values: `enable`, `disable`.
 * `led_schedules` - Recurring firewall schedules for illuminating LEDs on the FortiAP. If led-state is enabled, LEDs will be visible when at least one of the schedules is valid. Separate multiple schedule names with a space. The structure of `led_schedules` block is documented below.
 * `dtls_policy` - WTP data channel DTLS policy (default = clear-text).
 * `dtls_in_kernel` - Enable/disable data channel DTLS in kernel. Valid values: `enable`, `disable`.
@@ -48,6 +52,7 @@ The following arguments are supported:
 * `usb_port` - Enable/disable USB port of the WTP (default = enable). Valid values: `enable`, `disable`.
 * `frequency_handoff` - Enable/disable frequency handoff of clients to other channels (default = disable). Valid values: `enable`, `disable`.
 * `ap_handoff` - Enable/disable AP handoff of clients to other APs (default = disable). Valid values: `enable`, `disable`.
+* `default_mesh_root` - Configure default mesh root SSID when it is not included by radio's SSID configuration. Valid values: `enable`, `disable`.
 * `radio_1` - Configuration options for radio 1. The structure of `radio_1` block is documented below.
 * `radio_2` - Configuration options for radio 2. The structure of `radio_2` block is documented below.
 * `radio_3` - Configuration options for radio 3. The structure of `radio_3` block is documented below.
@@ -135,7 +140,7 @@ The `radio_1` block supports:
 * `channel_bonding_ext` - Channel bandwidth extension: 320 MHz-1 and 320 MHz-2 (default = 320 MHz-2). Valid values: `320MHz-1`, `320MHz-2`.
 * `optional_antenna` - Optional antenna used on FAP (default = none).
 * `optional_antenna_gain` - Optional antenna gain in dBi (0 to 20, default = 0).
-* `auto_power_level` - Enable/disable automatic power-level adjustment to prevent co-channel interference. On FortiOS versions 6.2.0: default = disable. On FortiOS versions >= 6.2.4: default = enable. Valid values: `enable`, `disable`.
+* `auto_power_level` - Enable/disable automatic power-level adjustment to prevent co-channel interference. On FortiOS versions 6.2.0, 7.4.8, >= 7.6.4: default = disable. On FortiOS versions 6.2.4-7.4.7, 7.6.0-7.6.3: default = enable. Valid values: `enable`, `disable`.
 * `auto_power_high` - The upper bound of automatic transmit power adjustment in dBm (the actual range of transmit power depends on the AP platform type).
 * `auto_power_low` - The lower bound of automatic transmit power adjustment in dBm (the actual range of transmit power depends on the AP platform type).
 * `auto_power_target` - Target of automatic transmit power adjustment in dBm (-95 to -20, default = -70).
@@ -229,7 +234,7 @@ The `radio_2` block supports:
 * `channel_bonding_ext` - Channel bandwidth extension: 320 MHz-1 and 320 MHz-2 (default = 320 MHz-2). Valid values: `320MHz-1`, `320MHz-2`.
 * `optional_antenna` - Optional antenna used on FAP (default = none).
 * `optional_antenna_gain` - Optional antenna gain in dBi (0 to 20, default = 0).
-* `auto_power_level` - Enable/disable automatic power-level adjustment to prevent co-channel interference. On FortiOS versions 6.2.0: default = disable. On FortiOS versions >= 6.2.4: default = enable. Valid values: `enable`, `disable`.
+* `auto_power_level` - Enable/disable automatic power-level adjustment to prevent co-channel interference. On FortiOS versions 6.2.0, 7.4.8, >= 7.6.4: default = disable. On FortiOS versions 6.2.4-7.4.7, 7.6.0-7.6.3: default = enable. Valid values: `enable`, `disable`.
 * `auto_power_high` - The upper bound of automatic transmit power adjustment in dBm (the actual range of transmit power depends on the AP platform type).
 * `auto_power_low` - The lower bound of automatic transmit power adjustment in dBm (the actual range of transmit power depends on the AP platform type).
 * `auto_power_target` - Target of automatic transmit power adjustment in dBm (-95 to -20, default = -70).
@@ -322,7 +327,7 @@ The `radio_3` block supports:
 * `channel_bonding_ext` - Channel bandwidth extension: 320 MHz-1 and 320 MHz-2 (default = 320 MHz-2). Valid values: `320MHz-1`, `320MHz-2`.
 * `optional_antenna` - Optional antenna used on FAP (default = none).
 * `optional_antenna_gain` - Optional antenna gain in dBi (0 to 20, default = 0).
-* `auto_power_level` - Enable/disable automatic power-level adjustment to prevent co-channel interference (default = enable). Valid values: `enable`, `disable`.
+* `auto_power_level` - Enable/disable automatic power-level adjustment to prevent co-channel interference. On FortiOS versions 6.2.4-7.4.7, 7.6.0-7.6.3: default = enable. On FortiOS versions 7.4.8, >= 7.6.4: default = disable. Valid values: `enable`, `disable`.
 * `auto_power_high` - The upper bound of automatic transmit power adjustment in dBm (the actual range of transmit power depends on the AP platform type).
 * `auto_power_low` - The lower bound of automatic transmit power adjustment in dBm (the actual range of transmit power depends on the AP platform type).
 * `auto_power_target` - Target of automatic transmit power adjustment in dBm (-95 to -20, default = -70).
@@ -415,7 +420,7 @@ The `radio_4` block supports:
 * `channel_bonding_ext` - Channel bandwidth extension: 320 MHz-1 and 320 MHz-2 (default = 320 MHz-2). Valid values: `320MHz-1`, `320MHz-2`.
 * `optional_antenna` - Optional antenna used on FAP (default = none).
 * `optional_antenna_gain` - Optional antenna gain in dBi (0 to 20, default = 0).
-* `auto_power_level` - Enable/disable automatic power-level adjustment to prevent co-channel interference (default = enable). Valid values: `enable`, `disable`.
+* `auto_power_level` - Enable/disable automatic power-level adjustment to prevent co-channel interference. On FortiOS versions 6.2.4-7.4.7, 7.6.0-7.6.3: default = enable. On FortiOS versions 7.4.8, >= 7.6.4: default = disable. Valid values: `enable`, `disable`.
 * `auto_power_high` - The upper bound of automatic transmit power adjustment in dBm (the actual range of transmit power depends on the AP platform type).
 * `auto_power_low` - The lower bound of automatic transmit power adjustment in dBm (the actual range of transmit power depends on the AP platform type).
 * `auto_power_target` - Target of automatic transmit power adjustment in dBm (-95 to -20, default = -70).
@@ -551,7 +556,7 @@ The `esl_ses_dongle` block supports:
 * `apc_port` - Port of ESL SES-imagotag Access Point Controller (APC).
 * `coex_level` - ESL SES-imagotag dongle coexistence level (default = none). Valid values: `none`.
 * `tls_cert_verification` - Enable/disable TLS Certificate verification. (default = enable). Valid values: `enable`, `disable`.
-* `tls_fqdn_verification` - Enable/disable TLS Certificate verification. (default = disable). Valid values: `enable`, `disable`.
+* `tls_fqdn_verification` - Enable/disable TLS FQDN verification (default = disable). Valid values: `enable`, `disable`.
 
 
 ## Attribute Reference

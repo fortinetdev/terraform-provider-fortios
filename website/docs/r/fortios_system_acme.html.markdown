@@ -33,6 +33,8 @@ The `accounts` block supports:
 * `url` - Account url.
 * `ca_url` - Account ca_url.
 * `email` - Account email.
+* `eab_key_id` - External Acccount Binding Key ID.
+* `eab_key_hmac` - External Acccount Binding Key HMAC.
 * `privatekey` - Account Private Key.
 
 

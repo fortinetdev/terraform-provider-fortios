@@ -151,6 +151,11 @@ func resourceSystemFortiguard() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"subscribe_update_notification": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"fortiguard_anycast": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -580,6 +585,10 @@ func flattenSystemFortiguardFdsLicenseExpiringDays(v interface{}, d *schema.Reso
 	return convintf2i(v)
 }
 
+func flattenSystemFortiguardSubscribeUpdateNotification(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemFortiguardFortiguardAnycast(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -880,6 +889,12 @@ func refreshObjectSystemFortiguard(d *schema.ResourceData, o map[string]interfac
 	if err = d.Set("fds_license_expiring_days", flattenSystemFortiguardFdsLicenseExpiringDays(o["FDS-license-expiring-days"], d, "fds_license_expiring_days", sv)); err != nil {
 		if !fortiAPIPatch(o["FDS-license-expiring-days"]) {
 			return fmt.Errorf("Error reading fds_license_expiring_days: %v", err)
+		}
+	}
+
+	if err = d.Set("subscribe_update_notification", flattenSystemFortiguardSubscribeUpdateNotification(o["subscribe-update-notification"], d, "subscribe_update_notification", sv)); err != nil {
+		if !fortiAPIPatch(o["subscribe-update-notification"]) {
+			return fmt.Errorf("Error reading subscribe_update_notification: %v", err)
 		}
 	}
 
@@ -1229,6 +1244,10 @@ func expandSystemFortiguardGuiPromptAutoUpgrade(d *schema.ResourceData, v interf
 }
 
 func expandSystemFortiguardFdsLicenseExpiringDays(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemFortiguardSubscribeUpdateNotification(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1695,6 +1714,19 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 				return &obj, err
 			} else if t != nil {
 				obj["FDS-license-expiring-days"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("subscribe_update_notification"); ok {
+		if setArgNil {
+			obj["subscribe-update-notification"] = nil
+		} else {
+			t, err := expandSystemFortiguardSubscribeUpdateNotification(d, v, "subscribe_update_notification", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["subscribe-update-notification"] = t
 			}
 		}
 	}

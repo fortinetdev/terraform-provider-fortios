@@ -23,7 +23,7 @@ The following arguments are supported:
 * `log_blocked_traffic` - Enable/disable logging of blocked traffic. Valid values: `enable`, `disable`.
 * `add_vhost_domain_to_dnsdb` - Enable/disable adding vhost/domain to dnsdb for ztna dox tunnel. Valid values: `enable`, `disable`.
 * `http_supported_max_version` - Maximum supported HTTP versions. default = HTTP2 Valid values: `http1`, `http2`.
-* `svr_pool_multiplex` - Enable/disable server pool multiplexing. Share connected server in HTTP, HTTPS, and web-portal api-gateway. Valid values: `enable`, `disable`.
+* `svr_pool_multiplex` - Enable/disable server pool multiplexing (default = disable). Share connected server in HTTP, HTTPS, and web-portal api-gateway. Valid values: `enable`, `disable`.
 * `svr_pool_ttl` - Time-to-live in the server pool for idle connections to servers.
 * `svr_pool_server_max_request` - Maximum number of requests that servers in server pool handle before disconnecting (default = unlimited).
 * `svr_pool_server_max_concurrent_request` - Maximum number of concurrent requests that servers in server pool could handle (default = unlimited).
@@ -98,6 +98,7 @@ The `realservers` block supports:
 * `ssh_client_cert` - Set access-proxy SSH client certificate profile.
 * `ssh_host_key_validation` - Enable/disable SSH real server host key validation. Valid values: `disable`, `enable`.
 * `ssh_host_key` - One or more server host key. The structure of `ssh_host_key` block is documented below.
+* `verify_cert` - Enable/disable certificate verification of the real server. Valid values: `enable`, `disable`.
 
 The `ssh_host_key` block supports:
 
@@ -177,6 +178,7 @@ The `realservers` block supports:
 * `ssh_client_cert` - Set access-proxy SSH client certificate profile.
 * `ssh_host_key_validation` - Enable/disable SSH real server host key validation. Valid values: `disable`, `enable`.
 * `ssh_host_key` - One or more server host key. The structure of `ssh_host_key` block is documented below.
+* `verify_cert` - Enable/disable certificate verification of the real server. Valid values: `enable`, `disable`.
 
 The `ssh_host_key` block supports:
 

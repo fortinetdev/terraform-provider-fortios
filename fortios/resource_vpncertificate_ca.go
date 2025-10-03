@@ -642,8 +642,6 @@ func getObjectVpnCertificateCa(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["last-updated"] = t
 		}
-	} else if d.HasChange("last_updated") {
-		obj["last-updated"] = nil
 	}
 
 	return &obj, nil

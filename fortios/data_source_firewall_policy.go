@@ -980,6 +980,38 @@ func dataSourceFirewallPolicy() *schema.Resource {
 					},
 				},
 			},
+			"scim": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"saml_server": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"scim_users": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
+			"scim_groups": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
 			"devices": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
@@ -1199,6 +1231,54 @@ func dataSourceFirewallPolicy() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
+							Computed: true,
+						},
+					},
+				},
+			},
+			"internet_service_fortiguard": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
+			"internet_service_src_fortiguard": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
+			"internet_service6_fortiguard": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
+			"internet_service6_src_fortiguard": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
 							Computed: true,
 						},
 					},
@@ -3235,6 +3315,86 @@ func dataSourceFlattenFirewallPolicyFssoGroupsName(v interface{}, d *schema.Reso
 	return v
 }
 
+func dataSourceFlattenFirewallPolicyScim(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallPolicySamlServer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallPolicyScimUsers(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = dataSourceFlattenFirewallPolicyScimUsersName(i["name"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenFirewallPolicyScimUsersName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallPolicyScimGroups(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = dataSourceFlattenFirewallPolicyScimGroupsName(i["name"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenFirewallPolicyScimGroupsName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallPolicyDevices(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -3559,6 +3719,150 @@ func dataSourceFlattenFirewallPolicySgt(v interface{}, d *schema.ResourceData, p
 }
 
 func dataSourceFlattenFirewallPolicySgtId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallPolicyInternetServiceFortiguard(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = dataSourceFlattenFirewallPolicyInternetServiceFortiguardName(i["name"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenFirewallPolicyInternetServiceFortiguardName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallPolicyInternetServiceSrcFortiguard(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = dataSourceFlattenFirewallPolicyInternetServiceSrcFortiguardName(i["name"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenFirewallPolicyInternetServiceSrcFortiguardName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallPolicyInternetService6Fortiguard(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = dataSourceFlattenFirewallPolicyInternetService6FortiguardName(i["name"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenFirewallPolicyInternetService6FortiguardName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallPolicyInternetService6SrcFortiguard(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = dataSourceFlattenFirewallPolicyInternetService6SrcFortiguardName(i["name"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenFirewallPolicyInternetService6SrcFortiguardName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -4477,6 +4781,30 @@ func dataSourceRefreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]
 		}
 	}
 
+	if err = d.Set("scim", dataSourceFlattenFirewallPolicyScim(o["scim"], d, "scim")); err != nil {
+		if !fortiAPIPatch(o["scim"]) {
+			return fmt.Errorf("Error reading scim: %v", err)
+		}
+	}
+
+	if err = d.Set("saml_server", dataSourceFlattenFirewallPolicySamlServer(o["saml-server"], d, "saml_server")); err != nil {
+		if !fortiAPIPatch(o["saml-server"]) {
+			return fmt.Errorf("Error reading saml_server: %v", err)
+		}
+	}
+
+	if err = d.Set("scim_users", dataSourceFlattenFirewallPolicyScimUsers(o["scim-users"], d, "scim_users")); err != nil {
+		if !fortiAPIPatch(o["scim-users"]) {
+			return fmt.Errorf("Error reading scim_users: %v", err)
+		}
+	}
+
+	if err = d.Set("scim_groups", dataSourceFlattenFirewallPolicyScimGroups(o["scim-groups"], d, "scim_groups")); err != nil {
+		if !fortiAPIPatch(o["scim-groups"]) {
+			return fmt.Errorf("Error reading scim_groups: %v", err)
+		}
+	}
+
 	if err = d.Set("devices", dataSourceFlattenFirewallPolicyDevices(o["devices"], d, "devices")); err != nil {
 		if !fortiAPIPatch(o["devices"]) {
 			return fmt.Errorf("Error reading devices: %v", err)
@@ -4762,6 +5090,30 @@ func dataSourceRefreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]
 	if err = d.Set("sgt", dataSourceFlattenFirewallPolicySgt(o["sgt"], d, "sgt")); err != nil {
 		if !fortiAPIPatch(o["sgt"]) {
 			return fmt.Errorf("Error reading sgt: %v", err)
+		}
+	}
+
+	if err = d.Set("internet_service_fortiguard", dataSourceFlattenFirewallPolicyInternetServiceFortiguard(o["internet-service-fortiguard"], d, "internet_service_fortiguard")); err != nil {
+		if !fortiAPIPatch(o["internet-service-fortiguard"]) {
+			return fmt.Errorf("Error reading internet_service_fortiguard: %v", err)
+		}
+	}
+
+	if err = d.Set("internet_service_src_fortiguard", dataSourceFlattenFirewallPolicyInternetServiceSrcFortiguard(o["internet-service-src-fortiguard"], d, "internet_service_src_fortiguard")); err != nil {
+		if !fortiAPIPatch(o["internet-service-src-fortiguard"]) {
+			return fmt.Errorf("Error reading internet_service_src_fortiguard: %v", err)
+		}
+	}
+
+	if err = d.Set("internet_service6_fortiguard", dataSourceFlattenFirewallPolicyInternetService6Fortiguard(o["internet-service6-fortiguard"], d, "internet_service6_fortiguard")); err != nil {
+		if !fortiAPIPatch(o["internet-service6-fortiguard"]) {
+			return fmt.Errorf("Error reading internet_service6_fortiguard: %v", err)
+		}
+	}
+
+	if err = d.Set("internet_service6_src_fortiguard", dataSourceFlattenFirewallPolicyInternetService6SrcFortiguard(o["internet-service6-src-fortiguard"], d, "internet_service6_src_fortiguard")); err != nil {
+		if !fortiAPIPatch(o["internet-service6-src-fortiguard"]) {
+			return fmt.Errorf("Error reading internet_service6_src_fortiguard: %v", err)
 		}
 	}
 

@@ -41,6 +41,8 @@ The following arguments are supported:
 * `acme_ca_url` - The URL for the ACME CA server (Let's Encrypt is the default provider).
 * `acme_domain` - A valid domain that resolves to this Fortigate.
 * `acme_email` - Contact email address that is required by some CAs like LetsEncrypt.
+* `acme_eab_key_id` - External Account Binding Key ID (optional setting).
+* `acme_eab_key_hmac` - External Account Binding HMAC Key (URL-encoded base64).
 * `acme_rsa_key_size` - Length of the RSA private key of the generated cert (Minimum 2048 bits).
 * `acme_renew_window` - Beginning of the renewal window (in days before certificate expiration, 30 by default).
 * `est_server` - Address and port for EST server (e.g. https://example.com:1234).

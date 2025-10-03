@@ -120,6 +120,7 @@ The following arguments are supported:
 * `vlan_auto` - Enable/disable automatic management of SSID VLAN interface. Valid values: `enable`, `disable`.
 * `dynamic_vlan` - Enable/disable dynamic VLAN assignment. Valid values: `enable`, `disable`.
 * `captive_portal` - Enable/disable captive portal. Valid values: `enable`, `disable`.
+* `captive_network_assistant_bypass` - Enable/disable Captive Network Assistant bypass. Valid values: `enable`, `disable`.
 * `captive_portal_fw_accounting` - Enable/disable RADIUS accounting for captive portal firewall authentication session. Valid values: `enable`, `disable`.
 * `captive_portal_radius_server` - Captive portal RADIUS server domain name or IP address.
 * `captive_portal_radius_secret` - Secret key to access the RADIUS server.

@@ -88,6 +88,11 @@ func resourceFirewallAddress6() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"wildcard": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"start_ip": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -483,6 +488,10 @@ func flattenFirewallAddress6Ip6(v interface{}, d *schema.ResourceData, pre strin
 	return v
 }
 
+func flattenFirewallAddress6Wildcard(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallAddress6StartIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -828,6 +837,12 @@ func refreshObjectFirewallAddress6(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
+	if err = d.Set("wildcard", flattenFirewallAddress6Wildcard(o["wildcard"], d, "wildcard", sv)); err != nil {
+		if !fortiAPIPatch(o["wildcard"]) {
+			return fmt.Errorf("Error reading wildcard: %v", err)
+		}
+	}
+
 	if err = d.Set("start_ip", flattenFirewallAddress6StartIp(o["start-ip"], d, "start_ip", sv)); err != nil {
 		if !fortiAPIPatch(o["start-ip"]) {
 			return fmt.Errorf("Error reading start_ip: %v", err)
@@ -1050,6 +1065,10 @@ func expandFirewallAddress6Sdn(d *schema.ResourceData, v interface{}, pre string
 }
 
 func expandFirewallAddress6Ip6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallAddress6Wildcard(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1377,6 +1396,15 @@ func getObjectFirewallAddress6(d *schema.ResourceData, sv string) (*map[string]i
 			return &obj, err
 		} else if t != nil {
 			obj["ip6"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("wildcard"); ok {
+		t, err := expandFirewallAddress6Wildcard(d, v, "wildcard", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["wildcard"] = t
 		}
 	}
 

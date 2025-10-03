@@ -76,6 +76,11 @@ func resourceSystemNetflow() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"session_cache_size": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"exclusion_filters": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -323,6 +328,10 @@ func flattenSystemNetflowTemplateTxTimeout(v interface{}, d *schema.ResourceData
 
 func flattenSystemNetflowTemplateTxCounter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return convintf2i(v)
+}
+
+func flattenSystemNetflowSessionCacheSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
 }
 
 func flattenSystemNetflowExclusionFilters(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -576,6 +585,12 @@ func refreshObjectSystemNetflow(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
+	if err = d.Set("session_cache_size", flattenSystemNetflowSessionCacheSize(o["session-cache-size"], d, "session_cache_size", sv)); err != nil {
+		if !fortiAPIPatch(o["session-cache-size"]) {
+			return fmt.Errorf("Error reading session_cache_size: %v", err)
+		}
+	}
+
 	if b_get_all_tables {
 		if err = d.Set("exclusion_filters", flattenSystemNetflowExclusionFilters(o["exclusion-filters"], d, "exclusion_filters", sv)); err != nil {
 			if !fortiAPIPatch(o["exclusion-filters"]) {
@@ -654,6 +669,10 @@ func expandSystemNetflowTemplateTxTimeout(d *schema.ResourceData, v interface{},
 }
 
 func expandSystemNetflowTemplateTxCounter(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemNetflowSessionCacheSize(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -947,6 +966,19 @@ func getObjectSystemNetflow(d *schema.ResourceData, setArgNil bool, sv string) (
 				return &obj, err
 			} else if t != nil {
 				obj["template-tx-counter"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("session_cache_size"); ok {
+		if setArgNil {
+			obj["session-cache-size"] = nil
+		} else {
+			t, err := expandSystemNetflowSessionCacheSize(d, v, "session_cache_size", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["session-cache-size"] = t
 			}
 		}
 	}

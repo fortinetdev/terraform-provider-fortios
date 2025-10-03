@@ -21,6 +21,7 @@ The following arguments are supported:
 * `setup_time` - Upgrade preparation start time in UTC (hh:mm yyyy/mm/dd UTC).
 * `upgrade_path` - Fortinet OS image versions to upgrade through in major-minor-patch format, such as 7-0-4.
 * `device_type` - Fortinet device type.
+* `allow_download` - Enable/disable download firmware images. Valid values: `enable`, `disable`.
 * `status` - Current status of the upgrade.
 * `failure_reason` - Upgrade failure reason.
 * `ha_reboot_controller` - Serial number of the FortiGate unit that will control the reboot process for the federated upgrade of the HA cluster.

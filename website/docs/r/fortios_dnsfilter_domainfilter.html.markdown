@@ -45,6 +45,7 @@ The `entries` block supports:
 * `type` - DNS domain filter type. Valid values: `simple`, `regex`, `wildcard`.
 * `action` - Action to take for domain filter matches. Valid values: `block`, `allow`, `monitor`.
 * `status` - Enable/disable this domain filter. Valid values: `enable`, `disable`.
+* `comment` - Comment.
 
 
 ## Attribute Reference

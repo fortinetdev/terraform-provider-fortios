@@ -72,6 +72,10 @@ func dataSourceFirewallAddress6() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"wildcard": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"start_ip": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -316,6 +320,10 @@ func dataSourceFlattenFirewallAddress6Sdn(v interface{}, d *schema.ResourceData,
 }
 
 func dataSourceFlattenFirewallAddress6Ip6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallAddress6Wildcard(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -621,6 +629,12 @@ func dataSourceRefreshObjectFirewallAddress6(d *schema.ResourceData, o map[strin
 	if err = d.Set("ip6", dataSourceFlattenFirewallAddress6Ip6(o["ip6"], d, "ip6")); err != nil {
 		if !fortiAPIPatch(o["ip6"]) {
 			return fmt.Errorf("Error reading ip6: %v", err)
+		}
+	}
+
+	if err = d.Set("wildcard", dataSourceFlattenFirewallAddress6Wildcard(o["wildcard"], d, "wildcard")); err != nil {
+		if !fortiAPIPatch(o["wildcard"]) {
+			return fmt.Errorf("Error reading wildcard: %v", err)
 		}
 	}
 

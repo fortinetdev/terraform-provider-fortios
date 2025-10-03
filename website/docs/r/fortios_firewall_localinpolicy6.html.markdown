@@ -49,6 +49,7 @@ The following arguments are supported:
 * `internet_service6_src_group` - Internet Service6 source group name. The structure of `internet_service6_src_group` block is documented below.
 * `internet_service6_src_custom` - Custom IPv6 Internet Service source name. The structure of `internet_service6_src_custom` block is documented below.
 * `internet_service6_src_custom_group` - Custom Internet Service6 source group name. The structure of `internet_service6_src_custom_group` block is documented below.
+* `internet_service6_src_fortiguard` - FortiGuard IPv6 Internet Service source name. The structure of `internet_service6_src_fortiguard` block is documented below.
 * `dstaddr_negate` - When enabled dstaddr specifies what the destination address must NOT be. Valid values: `enable`, `disable`.
 * `action` - Action performed on traffic matching the policy (default = deny). Valid values: `accept`, `deny`.
 * `service` - (Required) Service object from available options. Separate names with a space. The structure of `service` block is documented below.
@@ -90,6 +91,10 @@ The `internet_service6_src_custom` block supports:
 The `internet_service6_src_custom_group` block supports:
 
 * `name` - Custom Internet Service6 group name.
+
+The `internet_service6_src_fortiguard` block supports:
+
+* `name` - FortiGuard Internet Service name.
 
 The `service` block supports:
 

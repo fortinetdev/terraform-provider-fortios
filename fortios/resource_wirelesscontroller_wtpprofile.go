@@ -88,6 +88,26 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
 			},
+			"apcfg_mesh": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"apcfg_mesh_ap_type": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"apcfg_mesh_ssid": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 15),
+				Optional:     true,
+			},
+			"apcfg_mesh_eth_bridge": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"ble_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -368,6 +388,11 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 				Computed: true,
 			},
 			"ap_handoff": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"default_mesh_root": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -2782,6 +2807,22 @@ func flattenWirelessControllerWtpProfileApcfgProfile(v interface{}, d *schema.Re
 	return v
 }
 
+func flattenWirelessControllerWtpProfileApcfgMesh(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileApcfgMeshApType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileApcfgMeshSsid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileApcfgMeshEthBridge(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerWtpProfileBleProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -3219,6 +3260,10 @@ func flattenWirelessControllerWtpProfileFrequencyHandoff(v interface{}, d *schem
 }
 
 func flattenWirelessControllerWtpProfileApHandoff(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpProfileDefaultMeshRoot(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -7205,6 +7250,30 @@ func refreshObjectWirelessControllerWtpProfile(d *schema.ResourceData, o map[str
 		}
 	}
 
+	if err = d.Set("apcfg_mesh", flattenWirelessControllerWtpProfileApcfgMesh(o["apcfg-mesh"], d, "apcfg_mesh", sv)); err != nil {
+		if !fortiAPIPatch(o["apcfg-mesh"]) {
+			return fmt.Errorf("Error reading apcfg_mesh: %v", err)
+		}
+	}
+
+	if err = d.Set("apcfg_mesh_ap_type", flattenWirelessControllerWtpProfileApcfgMeshApType(o["apcfg-mesh-ap-type"], d, "apcfg_mesh_ap_type", sv)); err != nil {
+		if !fortiAPIPatch(o["apcfg-mesh-ap-type"]) {
+			return fmt.Errorf("Error reading apcfg_mesh_ap_type: %v", err)
+		}
+	}
+
+	if err = d.Set("apcfg_mesh_ssid", flattenWirelessControllerWtpProfileApcfgMeshSsid(o["apcfg-mesh-ssid"], d, "apcfg_mesh_ssid", sv)); err != nil {
+		if !fortiAPIPatch(o["apcfg-mesh-ssid"]) {
+			return fmt.Errorf("Error reading apcfg_mesh_ssid: %v", err)
+		}
+	}
+
+	if err = d.Set("apcfg_mesh_eth_bridge", flattenWirelessControllerWtpProfileApcfgMeshEthBridge(o["apcfg-mesh-eth-bridge"], d, "apcfg_mesh_eth_bridge", sv)); err != nil {
+		if !fortiAPIPatch(o["apcfg-mesh-eth-bridge"]) {
+			return fmt.Errorf("Error reading apcfg_mesh_eth_bridge: %v", err)
+		}
+	}
+
 	if err = d.Set("ble_profile", flattenWirelessControllerWtpProfileBleProfile(o["ble-profile"], d, "ble_profile", sv)); err != nil {
 		if !fortiAPIPatch(o["ble-profile"]) {
 			return fmt.Errorf("Error reading ble_profile: %v", err)
@@ -7410,6 +7479,12 @@ func refreshObjectWirelessControllerWtpProfile(d *schema.ResourceData, o map[str
 	if err = d.Set("ap_handoff", flattenWirelessControllerWtpProfileApHandoff(o["ap-handoff"], d, "ap_handoff", sv)); err != nil {
 		if !fortiAPIPatch(o["ap-handoff"]) {
 			return fmt.Errorf("Error reading ap_handoff: %v", err)
+		}
+	}
+
+	if err = d.Set("default_mesh_root", flattenWirelessControllerWtpProfileDefaultMeshRoot(o["default-mesh-root"], d, "default_mesh_root", sv)); err != nil {
+		if !fortiAPIPatch(o["default-mesh-root"]) {
+			return fmt.Errorf("Error reading default_mesh_root: %v", err)
 		}
 	}
 
@@ -7633,6 +7708,22 @@ func expandWirelessControllerWtpProfileBonjourProfile(d *schema.ResourceData, v 
 }
 
 func expandWirelessControllerWtpProfileApcfgProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileApcfgMesh(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileApcfgMeshApType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileApcfgMeshSsid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileApcfgMeshEthBridge(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -8015,6 +8106,10 @@ func expandWirelessControllerWtpProfileFrequencyHandoff(d *schema.ResourceData, 
 }
 
 func expandWirelessControllerWtpProfileApHandoff(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileDefaultMeshRoot(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -11545,6 +11640,44 @@ func getObjectWirelessControllerWtpProfile(d *schema.ResourceData, sv string) (*
 		obj["apcfg-profile"] = nil
 	}
 
+	if v, ok := d.GetOk("apcfg_mesh"); ok {
+		t, err := expandWirelessControllerWtpProfileApcfgMesh(d, v, "apcfg_mesh", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["apcfg-mesh"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("apcfg_mesh_ap_type"); ok {
+		t, err := expandWirelessControllerWtpProfileApcfgMeshApType(d, v, "apcfg_mesh_ap_type", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["apcfg-mesh-ap-type"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("apcfg_mesh_ssid"); ok {
+		t, err := expandWirelessControllerWtpProfileApcfgMeshSsid(d, v, "apcfg_mesh_ssid", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["apcfg-mesh-ssid"] = t
+		}
+	} else if d.HasChange("apcfg_mesh_ssid") {
+		obj["apcfg-mesh-ssid"] = nil
+	}
+
+	if v, ok := d.GetOk("apcfg_mesh_eth_bridge"); ok {
+		t, err := expandWirelessControllerWtpProfileApcfgMeshEthBridge(d, v, "apcfg_mesh_eth_bridge", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["apcfg-mesh-eth-bridge"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("ble_profile"); ok {
 		t, err := expandWirelessControllerWtpProfileBleProfile(d, v, "ble_profile", sv)
 		if err != nil {
@@ -11817,6 +11950,15 @@ func getObjectWirelessControllerWtpProfile(d *schema.ResourceData, sv string) (*
 			return &obj, err
 		} else if t != nil {
 			obj["ap-handoff"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("default_mesh_root"); ok {
+		t, err := expandWirelessControllerWtpProfileDefaultMeshRoot(d, v, "default_mesh_root", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["default-mesh-root"] = t
 		}
 	}
 

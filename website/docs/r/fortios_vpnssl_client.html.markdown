@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_vpnssl_client
-client Applies to FortiOS Version `>= 7.0.1`.
+client Applies to FortiOS Version `7.0.1,7.0.2,7.0.3,7.0.4,7.0.5,7.0.6,7.0.7,7.0.8,7.0.9,7.0.10,7.0.11,7.0.12,7.0.13,7.0.14,7.0.15,7.0.16,7.0.17,7.2.0,7.2.1,7.2.2,7.2.3,7.2.4,7.2.6,7.2.7,7.2.8,7.2.9,7.2.10,7.2.11,7.2.12,7.4.0,7.4.1,7.4.2,7.4.3,7.4.4,7.4.5,7.4.6,7.4.7,7.4.8,7.6.0,7.6.1,7.6.2`.
 
 ## Argument Reference
 
@@ -26,7 +26,7 @@ The following arguments are supported:
 * `certificate` - Certificate to offer to SSL-VPN server if it requests one.
 * `source_ip` - IPv4 or IPv6 address to use as a source for the SSL-VPN connection to the server.
 * `distance` - Distance for routes added by SSL-VPN (1 - 255).
-* `priority` - Priority for routes added by SSL-VPN. On FortiOS versions 7.0.1-7.0.3: 0 - 4294967295. On FortiOS versions >= 7.0.4: 1 - 65535.
+* `priority` - Priority for routes added by SSL-VPN. On FortiOS versions 7.0.1-7.0.3: 0 - 4294967295. On FortiOS versions 7.0.4-7.6.2: 1 - 65535.
 * `class_id` - Traffic class ID.
 * `ipv4_subnets` - IPv4 subnets that the client is protecting.
 * `ipv6_subnets` - IPv6 subnets that the client is protecting.

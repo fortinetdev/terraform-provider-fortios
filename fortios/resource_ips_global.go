@@ -130,6 +130,11 @@ func resourceIpsGlobal() *schema.Resource {
 				ValidateFunc: validation.IntBetween(10, 50),
 				Optional:     true,
 			},
+			"machine_learning_detection": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"tls_active_probe": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
@@ -364,6 +369,10 @@ func flattenIpsGlobalAvMemLimit(v interface{}, d *schema.ResourceData, pre strin
 	return convintf2i(v)
 }
 
+func flattenIpsGlobalMachineLearningDetection(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenIpsGlobalTlsActiveProbe(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -545,6 +554,12 @@ func refreshObjectIpsGlobal(d *schema.ResourceData, o map[string]interface{}, sv
 		}
 	}
 
+	if err = d.Set("machine_learning_detection", flattenIpsGlobalMachineLearningDetection(o["machine-learning-detection"], d, "machine_learning_detection", sv)); err != nil {
+		if !fortiAPIPatch(o["machine-learning-detection"]) {
+			return fmt.Errorf("Error reading machine_learning_detection: %v", err)
+		}
+	}
+
 	if b_get_all_tables {
 		if err = d.Set("tls_active_probe", flattenIpsGlobalTlsActiveProbe(o["tls-active-probe"], d, "tls_active_probe", sv)); err != nil {
 			if !fortiAPIPatch(o["tls-active-probe"]) {
@@ -643,6 +658,10 @@ func expandIpsGlobalNgfwMaxScanRange(d *schema.ResourceData, v interface{}, pre 
 }
 
 func expandIpsGlobalAvMemLimit(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandIpsGlobalMachineLearningDetection(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -980,6 +999,19 @@ func getObjectIpsGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*map
 		}
 	} else if d.HasChange("av_mem_limit") {
 		obj["av-mem-limit"] = nil
+	}
+
+	if v, ok := d.GetOk("machine_learning_detection"); ok {
+		if setArgNil {
+			obj["machine-learning-detection"] = nil
+		} else {
+			t, err := expandIpsGlobalMachineLearningDetection(d, v, "machine_learning_detection", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["machine-learning-detection"] = t
+			}
+		}
 	}
 
 	if v, ok := d.GetOk("tls_active_probe"); ok {

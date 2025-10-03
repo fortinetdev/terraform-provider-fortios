@@ -80,6 +80,11 @@ func resourceDnsfilterDomainFilter() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"comment": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 255),
+							Optional:     true,
+						},
 					},
 				},
 			},
@@ -309,6 +314,11 @@ func flattenDnsfilterDomainFilterEntries(v interface{}, d *schema.ResourceData, 
 			tmp["status"] = flattenDnsfilterDomainFilterEntriesStatus(cur_v, d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
+		if cur_v, ok := i["comment"]; ok {
+			tmp["comment"] = flattenDnsfilterDomainFilterEntriesComment(cur_v, d, pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -335,6 +345,10 @@ func flattenDnsfilterDomainFilterEntriesAction(v interface{}, d *schema.Resource
 }
 
 func flattenDnsfilterDomainFilterEntriesStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenDnsfilterDomainFilterEntriesComment(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -445,6 +459,13 @@ func expandDnsfilterDomainFilterEntries(d *schema.ResourceData, v interface{}, p
 			tmp["status"], _ = expandDnsfilterDomainFilterEntriesStatus(d, i["status"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["comment"], _ = expandDnsfilterDomainFilterEntriesComment(d, i["comment"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["comment"] = nil
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -470,6 +491,10 @@ func expandDnsfilterDomainFilterEntriesAction(d *schema.ResourceData, v interfac
 }
 
 func expandDnsfilterDomainFilterEntriesStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandDnsfilterDomainFilterEntriesComment(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

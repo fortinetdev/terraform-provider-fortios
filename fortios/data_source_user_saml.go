@@ -68,6 +68,14 @@ func dataSourceUserSaml() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"scim_user_attr_type": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"scim_group_attr_type": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"user_name": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -195,6 +203,14 @@ func dataSourceFlattenUserSamlScimClient(v interface{}, d *schema.ResourceData, 
 	return v
 }
 
+func dataSourceFlattenUserSamlScimUserAttrType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenUserSamlScimGroupAttrType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenUserSamlUserName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -295,6 +311,18 @@ func dataSourceRefreshObjectUserSaml(d *schema.ResourceData, o map[string]interf
 	if err = d.Set("scim_client", dataSourceFlattenUserSamlScimClient(o["scim-client"], d, "scim_client")); err != nil {
 		if !fortiAPIPatch(o["scim-client"]) {
 			return fmt.Errorf("Error reading scim_client: %v", err)
+		}
+	}
+
+	if err = d.Set("scim_user_attr_type", dataSourceFlattenUserSamlScimUserAttrType(o["scim-user-attr-type"], d, "scim_user_attr_type")); err != nil {
+		if !fortiAPIPatch(o["scim-user-attr-type"]) {
+			return fmt.Errorf("Error reading scim_user_attr_type: %v", err)
+		}
+	}
+
+	if err = d.Set("scim_group_attr_type", dataSourceFlattenUserSamlScimGroupAttrType(o["scim-group-attr-type"], d, "scim_group_attr_type")); err != nil {
+		if !fortiAPIPatch(o["scim-group-attr-type"]) {
+			return fmt.Errorf("Error reading scim_group_attr_type: %v", err)
 		}
 	}
 

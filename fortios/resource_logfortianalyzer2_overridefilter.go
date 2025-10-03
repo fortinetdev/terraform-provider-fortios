@@ -104,6 +104,11 @@ func resourceLogFortianalyzer2OverrideFilter() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"debug": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"free_style": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -334,6 +339,10 @@ func flattenLogFortianalyzer2OverrideFilterFortiSwitch(v interface{}, d *schema.
 	return v
 }
 
+func flattenLogFortianalyzer2OverrideFilterDebug(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenLogFortianalyzer2OverrideFilterFreeStyle(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -512,6 +521,12 @@ func refreshObjectLogFortianalyzer2OverrideFilter(d *schema.ResourceData, o map[
 		}
 	}
 
+	if err = d.Set("debug", flattenLogFortianalyzer2OverrideFilterDebug(o["debug"], d, "debug", sv)); err != nil {
+		if !fortiAPIPatch(o["debug"]) {
+			return fmt.Errorf("Error reading debug: %v", err)
+		}
+	}
+
 	if b_get_all_tables {
 		if err = d.Set("free_style", flattenLogFortianalyzer2OverrideFilterFreeStyle(o["free-style"], d, "free_style", sv)); err != nil {
 			if !fortiAPIPatch(o["free-style"]) {
@@ -614,6 +629,10 @@ func expandLogFortianalyzer2OverrideFilterGtp(d *schema.ResourceData, v interfac
 }
 
 func expandLogFortianalyzer2OverrideFilterFortiSwitch(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogFortianalyzer2OverrideFilterDebug(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -878,6 +897,19 @@ func getObjectLogFortianalyzer2OverrideFilter(d *schema.ResourceData, setArgNil 
 				return &obj, err
 			} else if t != nil {
 				obj["forti-switch"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("debug"); ok {
+		if setArgNil {
+			obj["debug"] = nil
+		} else {
+			t, err := expandLogFortianalyzer2OverrideFilterDebug(d, v, "debug", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["debug"] = t
 			}
 		}
 	}

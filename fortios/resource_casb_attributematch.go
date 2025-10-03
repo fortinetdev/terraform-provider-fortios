@@ -53,6 +53,62 @@ func resourceCasbAttributeMatch() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"match": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
+						},
+						"rule_strategy": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"rule": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"id": &schema.Schema{
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
+									},
+									"attribute": &schema.Schema{
+										Type:         schema.TypeString,
+										ValidateFunc: validation.StringLenBetween(0, 79),
+										Optional:     true,
+									},
+									"match_pattern": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
+									},
+									"match_value": &schema.Schema{
+										Type:         schema.TypeString,
+										ValidateFunc: validation.StringLenBetween(0, 1023),
+										Optional:     true,
+									},
+									"case_sensitive": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
+									},
+									"negate": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
+									},
+								},
+							},
+						},
+					},
+				},
+			},
 			"attribute": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -263,6 +319,149 @@ func flattenCasbAttributeMatchMatchStrategy(v interface{}, d *schema.ResourceDat
 	return v
 }
 
+func flattenCasbAttributeMatchMatch(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenCasbAttributeMatchMatchId(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "rule_strategy"
+		if cur_v, ok := i["rule-strategy"]; ok {
+			tmp["rule_strategy"] = flattenCasbAttributeMatchMatchRuleStrategy(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "rule"
+		if cur_v, ok := i["rule"]; ok {
+			tmp["rule"] = flattenCasbAttributeMatchMatchRule(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "id", d)
+	return result
+}
+
+func flattenCasbAttributeMatchMatchId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenCasbAttributeMatchMatchRuleStrategy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenCasbAttributeMatchMatchRule(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if cur_v, ok := i["id"]; ok {
+			tmp["id"] = flattenCasbAttributeMatchMatchRuleId(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "attribute"
+		if cur_v, ok := i["attribute"]; ok {
+			tmp["attribute"] = flattenCasbAttributeMatchMatchRuleAttribute(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_pattern"
+		if cur_v, ok := i["match-pattern"]; ok {
+			tmp["match_pattern"] = flattenCasbAttributeMatchMatchRuleMatchPattern(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_value"
+		if cur_v, ok := i["match-value"]; ok {
+			tmp["match_value"] = flattenCasbAttributeMatchMatchRuleMatchValue(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "case_sensitive"
+		if cur_v, ok := i["case-sensitive"]; ok {
+			tmp["case_sensitive"] = flattenCasbAttributeMatchMatchRuleCaseSensitive(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "negate"
+		if cur_v, ok := i["negate"]; ok {
+			tmp["negate"] = flattenCasbAttributeMatchMatchRuleNegate(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "id", d)
+	return result
+}
+
+func flattenCasbAttributeMatchMatchRuleId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenCasbAttributeMatchMatchRuleAttribute(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenCasbAttributeMatchMatchRuleMatchPattern(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenCasbAttributeMatchMatchRuleMatchValue(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenCasbAttributeMatchMatchRuleCaseSensitive(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenCasbAttributeMatchMatchRuleNegate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenCasbAttributeMatchAttribute(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -369,6 +568,22 @@ func refreshObjectCasbAttributeMatch(d *schema.ResourceData, o map[string]interf
 	}
 
 	if b_get_all_tables {
+		if err = d.Set("match", flattenCasbAttributeMatchMatch(o["match"], d, "match", sv)); err != nil {
+			if !fortiAPIPatch(o["match"]) {
+				return fmt.Errorf("Error reading match: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("match"); ok {
+			if err = d.Set("match", flattenCasbAttributeMatchMatch(o["match"], d, "match", sv)); err != nil {
+				if !fortiAPIPatch(o["match"]) {
+					return fmt.Errorf("Error reading match: %v", err)
+				}
+			}
+		}
+	}
+
+	if b_get_all_tables {
 		if err = d.Set("attribute", flattenCasbAttributeMatchAttribute(o["attribute"], d, "attribute", sv)); err != nil {
 			if !fortiAPIPatch(o["attribute"]) {
 				return fmt.Errorf("Error reading attribute: %v", err)
@@ -402,6 +617,133 @@ func expandCasbAttributeMatchApplication(d *schema.ResourceData, v interface{}, 
 }
 
 func expandCasbAttributeMatchMatchStrategy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandCasbAttributeMatchMatch(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["id"], _ = expandCasbAttributeMatchMatchId(d, i["id"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "rule_strategy"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["rule-strategy"], _ = expandCasbAttributeMatchMatchRuleStrategy(d, i["rule_strategy"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "rule"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["rule"], _ = expandCasbAttributeMatchMatchRule(d, i["rule"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["rule"] = make([]string, 0)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandCasbAttributeMatchMatchId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandCasbAttributeMatchMatchRuleStrategy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandCasbAttributeMatchMatchRule(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["id"], _ = expandCasbAttributeMatchMatchRuleId(d, i["id"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "attribute"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["attribute"], _ = expandCasbAttributeMatchMatchRuleAttribute(d, i["attribute"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["attribute"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_pattern"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["match-pattern"], _ = expandCasbAttributeMatchMatchRuleMatchPattern(d, i["match_pattern"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_value"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["match-value"], _ = expandCasbAttributeMatchMatchRuleMatchValue(d, i["match_value"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["match-value"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "case_sensitive"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["case-sensitive"], _ = expandCasbAttributeMatchMatchRuleCaseSensitive(d, i["case_sensitive"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "negate"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["negate"], _ = expandCasbAttributeMatchMatchRuleNegate(d, i["negate"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandCasbAttributeMatchMatchRuleId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandCasbAttributeMatchMatchRuleAttribute(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandCasbAttributeMatchMatchRuleMatchPattern(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandCasbAttributeMatchMatchRuleMatchValue(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandCasbAttributeMatchMatchRuleCaseSensitive(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandCasbAttributeMatchMatchRuleNegate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -505,6 +847,15 @@ func getObjectCasbAttributeMatch(d *schema.ResourceData, sv string) (*map[string
 			return &obj, err
 		} else if t != nil {
 			obj["match-strategy"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("match"); ok || d.HasChange("match") {
+		t, err := expandCasbAttributeMatchMatch(d, v, "match", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["match"] = t
 		}
 	}
 

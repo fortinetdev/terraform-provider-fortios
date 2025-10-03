@@ -53,7 +53,7 @@ The `headers` block supports:
 * `dstaddr` - Destination address and address group names. The structure of `dstaddr` block is documented below.
 * `dstaddr6` - Destination address and address group names (IPv6). The structure of `dstaddr6` block is documented below.
 * `action` - Action when the HTTP header is forwarded.
-* `content` - HTTP header content.
+* `content` - HTTP header content (max length: 3999 characters).
 * `base64_encoding` - Enable/disable use of base64 encoding of HTTP content. Valid values: `disable`, `enable`.
 * `add_option` - Configure options to append content to existing HTTP header or add new HTTP header.
 * `protocol` - Configure protocol(s) to take add-option action on (HTTP, HTTPS, or both). Valid values: `https`, `http`.

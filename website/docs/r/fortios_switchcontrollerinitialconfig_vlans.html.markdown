@@ -13,6 +13,7 @@ Configure initial template for auto-generated VLAN interfaces. Applies to FortiO
 
 The following arguments are supported:
 
+* `optional_vlans` - Auto-generate pre-configured VLANs upon switch discovery. Valid values: `enable`, `disable`.
 * `default_vlan` - Default VLAN (native) assigned to all switch ports upon discovery.
 * `quarantine` - VLAN for quarantined traffic.
 * `rspan` - VLAN for RSPAN/ERSPAN mirrored traffic.

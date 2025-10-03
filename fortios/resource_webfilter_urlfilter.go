@@ -66,6 +66,11 @@ func resourceWebfilterUrlfilter() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"include_subdomains": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"entries": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -120,6 +125,11 @@ func resourceWebfilterUrlfilter() *schema.Resource {
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
+						},
+						"comment": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 255),
+							Optional:     true,
 						},
 					},
 				},
@@ -313,6 +323,10 @@ func flattenWebfilterUrlfilterIp4MappedIp6(v interface{}, d *schema.ResourceData
 	return v
 }
 
+func flattenWebfilterUrlfilterIncludeSubdomains(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWebfilterUrlfilterEntries(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -387,6 +401,11 @@ func flattenWebfilterUrlfilterEntries(v interface{}, d *schema.ResourceData, pre
 			tmp["dns_address_family"] = flattenWebfilterUrlfilterEntriesDnsAddressFamily(cur_v, d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
+		if cur_v, ok := i["comment"]; ok {
+			tmp["comment"] = flattenWebfilterUrlfilterEntriesComment(cur_v, d, pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -436,6 +455,10 @@ func flattenWebfilterUrlfilterEntriesDnsAddressFamily(v interface{}, d *schema.R
 	return v
 }
 
+func flattenWebfilterUrlfilterEntriesComment(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectWebfilterUrlfilter(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 	var b_get_all_tables bool
@@ -478,6 +501,12 @@ func refreshObjectWebfilterUrlfilter(d *schema.ResourceData, o map[string]interf
 	if err = d.Set("ip4_mapped_ip6", flattenWebfilterUrlfilterIp4MappedIp6(o["ip4-mapped-ip6"], d, "ip4_mapped_ip6", sv)); err != nil {
 		if !fortiAPIPatch(o["ip4-mapped-ip6"]) {
 			return fmt.Errorf("Error reading ip4_mapped_ip6: %v", err)
+		}
+	}
+
+	if err = d.Set("include_subdomains", flattenWebfilterUrlfilterIncludeSubdomains(o["include-subdomains"], d, "include_subdomains", sv)); err != nil {
+		if !fortiAPIPatch(o["include-subdomains"]) {
+			return fmt.Errorf("Error reading include_subdomains: %v", err)
 		}
 	}
 
@@ -527,6 +556,10 @@ func expandWebfilterUrlfilterIpAddrBlock(d *schema.ResourceData, v interface{}, 
 }
 
 func expandWebfilterUrlfilterIp4MappedIp6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWebfilterUrlfilterIncludeSubdomains(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -600,6 +633,13 @@ func expandWebfilterUrlfilterEntries(d *schema.ResourceData, v interface{}, pre 
 			tmp["dns-address-family"], _ = expandWebfilterUrlfilterEntriesDnsAddressFamily(d, i["dns_address_family"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["comment"], _ = expandWebfilterUrlfilterEntriesComment(d, i["comment"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["comment"] = nil
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -645,6 +685,10 @@ func expandWebfilterUrlfilterEntriesReferrerHost(d *schema.ResourceData, v inter
 }
 
 func expandWebfilterUrlfilterEntriesDnsAddressFamily(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWebfilterUrlfilterEntriesComment(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -706,6 +750,15 @@ func getObjectWebfilterUrlfilter(d *schema.ResourceData, sv string) (*map[string
 			return &obj, err
 		} else if t != nil {
 			obj["ip4-mapped-ip6"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("include_subdomains"); ok {
+		t, err := expandWebfilterUrlfilterIncludeSubdomains(d, v, "include_subdomains", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["include-subdomains"] = t
 		}
 	}
 

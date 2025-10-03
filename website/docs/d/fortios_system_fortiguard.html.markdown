@@ -41,6 +41,7 @@ The following attributes are exported:
 * `auto_firmware_upgrade_end_hour` - End time in the designated time window for automatic patch-level firmware upgrade from FortiGuard in 24 hour time (0 ~ 23, default = 4). When the end time is smaller than the start time, the end time is interpreted as the next day. The actual upgrade time is selected randomly within the time window.
 * `gui_prompt_auto_upgrade` - Enable/disable prompting of automatic patch-level firmware upgrade recommendation.
 * `fds_license_expiring_days` - Threshold for number of days before FortiGuard license expiration to generate license expiring event log (1 - 100 days, default = 15).
+* `subscribe_update_notification` - Enable/disable subscription to receive update notification from FortiGuard.
 * `fortiguard_anycast` - Enable/disable use of FortiGuard's anycast network.
 * `fortiguard_anycast_source` - Configure which of Fortinet's servers to provide FortiGuard services in FortiGuard's anycast network. Default is Fortinet.
 * `antispam_force_off` - Enable/disable turning off the FortiGuard antispam service.

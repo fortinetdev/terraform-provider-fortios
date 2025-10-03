@@ -99,6 +99,11 @@ func resourceLogMemoryFilter() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"debug": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"free_style": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -397,6 +402,10 @@ func flattenLogMemoryFilterFortiSwitch(v interface{}, d *schema.ResourceData, pr
 	return v
 }
 
+func flattenLogMemoryFilterDebug(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenLogMemoryFilterFreeStyle(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -641,6 +650,12 @@ func refreshObjectLogMemoryFilter(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
+	if err = d.Set("debug", flattenLogMemoryFilterDebug(o["debug"], d, "debug", sv)); err != nil {
+		if !fortiAPIPatch(o["debug"]) {
+			return fmt.Errorf("Error reading debug: %v", err)
+		}
+	}
+
 	if b_get_all_tables {
 		if err = d.Set("free_style", flattenLogMemoryFilterFreeStyle(o["free-style"], d, "free_style", sv)); err != nil {
 			if !fortiAPIPatch(o["free-style"]) {
@@ -847,6 +862,10 @@ func expandLogMemoryFilterGtp(d *schema.ResourceData, v interface{}, pre string,
 }
 
 func expandLogMemoryFilterFortiSwitch(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogMemoryFilterDebug(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1170,6 +1189,19 @@ func getObjectLogMemoryFilter(d *schema.ResourceData, setArgNil bool, sv string)
 				return &obj, err
 			} else if t != nil {
 				obj["forti-switch"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("debug"); ok {
+		if setArgNil {
+			obj["debug"] = nil
+		} else {
+			t, err := expandLogMemoryFilterDebug(d, v, "debug", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["debug"] = t
 			}
 		}
 	}

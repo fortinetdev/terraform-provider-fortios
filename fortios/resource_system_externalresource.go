@@ -148,6 +148,11 @@ func resourceSystemExternalResource() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"source_ip_interface": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 15),
+				Optional:     true,
+			},
 			"interface_select_method": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -398,6 +403,10 @@ func flattenSystemExternalResourceSourceIp(v interface{}, d *schema.ResourceData
 	return v
 }
 
+func flattenSystemExternalResourceSourceIpInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemExternalResourceInterfaceSelectMethod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -533,6 +542,12 @@ func refreshObjectSystemExternalResource(d *schema.ResourceData, o map[string]in
 		}
 	}
 
+	if err = d.Set("source_ip_interface", flattenSystemExternalResourceSourceIpInterface(o["source-ip-interface"], d, "source_ip_interface", sv)); err != nil {
+		if !fortiAPIPatch(o["source-ip-interface"]) {
+			return fmt.Errorf("Error reading source_ip_interface: %v", err)
+		}
+	}
+
 	if err = d.Set("interface_select_method", flattenSystemExternalResourceInterfaceSelectMethod(o["interface-select-method"], d, "interface_select_method", sv)); err != nil {
 		if !fortiAPIPatch(o["interface-select-method"]) {
 			return fmt.Errorf("Error reading interface_select_method: %v", err)
@@ -641,6 +656,10 @@ func expandSystemExternalResourceRefreshRate(d *schema.ResourceData, v interface
 }
 
 func expandSystemExternalResourceSourceIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemExternalResourceSourceIpInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -860,6 +879,17 @@ func getObjectSystemExternalResource(d *schema.ResourceData, sv string) (*map[st
 		} else if t != nil {
 			obj["source-ip"] = t
 		}
+	}
+
+	if v, ok := d.GetOk("source_ip_interface"); ok {
+		t, err := expandSystemExternalResourceSourceIpInterface(d, v, "source_ip_interface", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["source-ip-interface"] = t
+		}
+	} else if d.HasChange("source_ip_interface") {
+		obj["source-ip-interface"] = nil
 	}
 
 	if v, ok := d.GetOk("interface_select_method"); ok {

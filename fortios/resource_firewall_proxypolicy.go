@@ -271,6 +271,19 @@ func resourceFirewallProxyPolicy() *schema.Resource {
 					},
 				},
 			},
+			"internet_service_fortiguard": &schema.Schema{
+				Type:     schema.TypeSet,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+						},
+					},
+				},
+			},
 			"internet_service6": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -321,6 +334,19 @@ func resourceFirewallProxyPolicy() *schema.Resource {
 				},
 			},
 			"internet_service6_custom_group": &schema.Schema{
+				Type:     schema.TypeSet,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+						},
+					},
+				},
+			},
+			"internet_service6_fortiguard": &schema.Schema{
 				Type:     schema.TypeSet,
 				Optional: true,
 				Elem: &schema.Resource{
@@ -663,6 +689,11 @@ func resourceFirewallProxyPolicy() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 1023),
 				Optional:     true,
+			},
+			"https_sub_category": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"decrypted_traffic_mirror": &schema.Schema{
 				Type:         schema.TypeString,
@@ -1501,6 +1532,48 @@ func flattenFirewallProxyPolicyInternetServiceCustomGroupName(v interface{}, d *
 	return v
 }
 
+func flattenFirewallProxyPolicyInternetServiceFortiguard(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallProxyPolicyInternetServiceFortiguardName(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenFirewallProxyPolicyInternetServiceFortiguardName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallProxyPolicyInternetService6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1674,6 +1747,48 @@ func flattenFirewallProxyPolicyInternetService6CustomGroup(v interface{}, d *sch
 }
 
 func flattenFirewallProxyPolicyInternetService6CustomGroupName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallProxyPolicyInternetService6Fortiguard(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallProxyPolicyInternetService6FortiguardName(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenFirewallProxyPolicyInternetService6FortiguardName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2099,6 +2214,10 @@ func flattenFirewallProxyPolicyRedirectUrl(v interface{}, d *schema.ResourceData
 	return v
 }
 
+func flattenFirewallProxyPolicyHttpsSubCategory(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallProxyPolicyDecryptedTrafficMirror(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -2404,6 +2523,22 @@ func refreshObjectFirewallProxyPolicy(d *schema.ResourceData, o map[string]inter
 		}
 	}
 
+	if b_get_all_tables {
+		if err = d.Set("internet_service_fortiguard", flattenFirewallProxyPolicyInternetServiceFortiguard(o["internet-service-fortiguard"], d, "internet_service_fortiguard", sv)); err != nil {
+			if !fortiAPIPatch(o["internet-service-fortiguard"]) {
+				return fmt.Errorf("Error reading internet_service_fortiguard: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("internet_service_fortiguard"); ok {
+			if err = d.Set("internet_service_fortiguard", flattenFirewallProxyPolicyInternetServiceFortiguard(o["internet-service-fortiguard"], d, "internet_service_fortiguard", sv)); err != nil {
+				if !fortiAPIPatch(o["internet-service-fortiguard"]) {
+					return fmt.Errorf("Error reading internet_service_fortiguard: %v", err)
+				}
+			}
+		}
+	}
+
 	if err = d.Set("internet_service6", flattenFirewallProxyPolicyInternetService6(o["internet-service6"], d, "internet_service6", sv)); err != nil {
 		if !fortiAPIPatch(o["internet-service6"]) {
 			return fmt.Errorf("Error reading internet_service6: %v", err)
@@ -2475,6 +2610,22 @@ func refreshObjectFirewallProxyPolicy(d *schema.ResourceData, o map[string]inter
 			if err = d.Set("internet_service6_custom_group", flattenFirewallProxyPolicyInternetService6CustomGroup(o["internet-service6-custom-group"], d, "internet_service6_custom_group", sv)); err != nil {
 				if !fortiAPIPatch(o["internet-service6-custom-group"]) {
 					return fmt.Errorf("Error reading internet_service6_custom_group: %v", err)
+				}
+			}
+		}
+	}
+
+	if b_get_all_tables {
+		if err = d.Set("internet_service6_fortiguard", flattenFirewallProxyPolicyInternetService6Fortiguard(o["internet-service6-fortiguard"], d, "internet_service6_fortiguard", sv)); err != nil {
+			if !fortiAPIPatch(o["internet-service6-fortiguard"]) {
+				return fmt.Errorf("Error reading internet_service6_fortiguard: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("internet_service6_fortiguard"); ok {
+			if err = d.Set("internet_service6_fortiguard", flattenFirewallProxyPolicyInternetService6Fortiguard(o["internet-service6-fortiguard"], d, "internet_service6_fortiguard", sv)); err != nil {
+				if !fortiAPIPatch(o["internet-service6-fortiguard"]) {
+					return fmt.Errorf("Error reading internet_service6_fortiguard: %v", err)
 				}
 			}
 		}
@@ -2875,6 +3026,12 @@ func refreshObjectFirewallProxyPolicy(d *schema.ResourceData, o map[string]inter
 	if err = d.Set("redirect_url", flattenFirewallProxyPolicyRedirectUrl(o["redirect-url"], d, "redirect_url", sv)); err != nil {
 		if !fortiAPIPatch(o["redirect-url"]) {
 			return fmt.Errorf("Error reading redirect_url: %v", err)
+		}
+	}
+
+	if err = d.Set("https_sub_category", flattenFirewallProxyPolicyHttpsSubCategory(o["https-sub-category"], d, "https_sub_category", sv)); err != nil {
+		if !fortiAPIPatch(o["https-sub-category"]) {
+			return fmt.Errorf("Error reading https_sub_category: %v", err)
 		}
 	}
 
@@ -3351,6 +3508,34 @@ func expandFirewallProxyPolicyInternetServiceCustomGroupName(d *schema.ResourceD
 	return v, nil
 }
 
+func expandFirewallProxyPolicyInternetServiceFortiguard(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.(*schema.Set).List()
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		tmp["name"], _ = expandFirewallProxyPolicyInternetServiceFortiguardName(d, i["name"], pre_append, sv)
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandFirewallProxyPolicyInternetServiceFortiguardName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallProxyPolicyInternetService6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -3468,6 +3653,34 @@ func expandFirewallProxyPolicyInternetService6CustomGroup(d *schema.ResourceData
 }
 
 func expandFirewallProxyPolicyInternetService6CustomGroupName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallProxyPolicyInternetService6Fortiguard(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.(*schema.Set).List()
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		tmp["name"], _ = expandFirewallProxyPolicyInternetService6FortiguardName(d, i["name"], pre_append, sv)
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandFirewallProxyPolicyInternetService6FortiguardName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3823,6 +4036,10 @@ func expandFirewallProxyPolicyRedirectUrl(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
+func expandFirewallProxyPolicyHttpsSubCategory(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallProxyPolicyDecryptedTrafficMirror(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -4045,6 +4262,15 @@ func getObjectFirewallProxyPolicy(d *schema.ResourceData, sv string) (*map[strin
 		}
 	}
 
+	if v, ok := d.GetOk("internet_service_fortiguard"); ok || d.HasChange("internet_service_fortiguard") {
+		t, err := expandFirewallProxyPolicyInternetServiceFortiguard(d, v, "internet_service_fortiguard", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["internet-service-fortiguard"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("internet_service6"); ok {
 		t, err := expandFirewallProxyPolicyInternetService6(d, v, "internet_service6", sv)
 		if err != nil {
@@ -4096,6 +4322,15 @@ func getObjectFirewallProxyPolicy(d *schema.ResourceData, sv string) (*map[strin
 			return &obj, err
 		} else if t != nil {
 			obj["internet-service6-custom-group"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("internet_service6_fortiguard"); ok || d.HasChange("internet_service6_fortiguard") {
+		t, err := expandFirewallProxyPolicyInternetService6Fortiguard(d, v, "internet_service6_fortiguard", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["internet-service6-fortiguard"] = t
 		}
 	}
 
@@ -4685,6 +4920,15 @@ func getObjectFirewallProxyPolicy(d *schema.ResourceData, sv string) (*map[strin
 		}
 	} else if d.HasChange("redirect_url") {
 		obj["redirect-url"] = nil
+	}
+
+	if v, ok := d.GetOk("https_sub_category"); ok {
+		t, err := expandFirewallProxyPolicyHttpsSubCategory(d, v, "https_sub_category", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["https-sub-category"] = t
+		}
 	}
 
 	if v, ok := d.GetOk("decrypted_traffic_mirror"); ok {

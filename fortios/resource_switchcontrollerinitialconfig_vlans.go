@@ -36,6 +36,11 @@ func resourceSwitchControllerInitialConfigVlans() *schema.Resource {
 				ForceNew: true,
 				Computed: true,
 			},
+			"optional_vlans": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"default_vlan": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
@@ -196,6 +201,10 @@ func resourceSwitchControllerInitialConfigVlansRead(d *schema.ResourceData, m in
 	return nil
 }
 
+func flattenSwitchControllerInitialConfigVlansOptionalVlans(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSwitchControllerInitialConfigVlansDefaultVlan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -226,6 +235,12 @@ func flattenSwitchControllerInitialConfigVlansNacSegment(v interface{}, d *schem
 
 func refreshObjectSwitchControllerInitialConfigVlans(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+
+	if err = d.Set("optional_vlans", flattenSwitchControllerInitialConfigVlansOptionalVlans(o["optional-vlans"], d, "optional_vlans", sv)); err != nil {
+		if !fortiAPIPatch(o["optional-vlans"]) {
+			return fmt.Errorf("Error reading optional_vlans: %v", err)
+		}
+	}
 
 	if err = d.Set("default_vlan", flattenSwitchControllerInitialConfigVlansDefaultVlan(o["default-vlan"], d, "default_vlan", sv)); err != nil {
 		if !fortiAPIPatch(o["default-vlan"]) {
@@ -278,6 +293,10 @@ func flattenSwitchControllerInitialConfigVlansFortiTestDebug(d *schema.ResourceD
 	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
+func expandSwitchControllerInitialConfigVlansOptionalVlans(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSwitchControllerInitialConfigVlansDefaultVlan(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -308,6 +327,19 @@ func expandSwitchControllerInitialConfigVlansNacSegment(d *schema.ResourceData, 
 
 func getObjectSwitchControllerInitialConfigVlans(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
+
+	if v, ok := d.GetOk("optional_vlans"); ok {
+		if setArgNil {
+			obj["optional-vlans"] = nil
+		} else {
+			t, err := expandSwitchControllerInitialConfigVlansOptionalVlans(d, v, "optional_vlans", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["optional-vlans"] = t
+			}
+		}
+	}
 
 	if v, ok := d.GetOk("default_vlan"); ok {
 		if setArgNil {

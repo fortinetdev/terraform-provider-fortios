@@ -588,6 +588,20 @@ func resourceExtensionControllerExtenderProfile() *schema.Resource {
 										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 4089),
 										Optional:     true,
+										Computed:     true,
+									},
+									"vids": &schema.Schema{
+										Type:     schema.TypeSet,
+										Optional: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+												"vid": &schema.Schema{
+													Type:         schema.TypeInt,
+													ValidateFunc: validation.IntBetween(1, 4089),
+													Optional:     true,
+												},
+											},
+										},
 									},
 								},
 							},
@@ -616,6 +630,7 @@ func resourceExtensionControllerExtenderProfile() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
+										Computed:     true,
 									},
 								},
 							},
@@ -1979,6 +1994,11 @@ func flattenExtensionControllerExtenderProfileLanExtensionDownlinks(v interface{
 			tmp["pvid"] = flattenExtensionControllerExtenderProfileLanExtensionDownlinksPvid(cur_v, d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vids"
+		if cur_v, ok := i["vids"]; ok {
+			tmp["vids"] = flattenExtensionControllerExtenderProfileLanExtensionDownlinksVids(cur_v, d, pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -2005,6 +2025,48 @@ func flattenExtensionControllerExtenderProfileLanExtensionDownlinksVap(v interfa
 }
 
 func flattenExtensionControllerExtenderProfileLanExtensionDownlinksPvid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenExtensionControllerExtenderProfileLanExtensionDownlinksVids(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vid"
+		if cur_v, ok := i["vid"]; ok {
+			tmp["vid"] = flattenExtensionControllerExtenderProfileLanExtensionDownlinksVidsVid(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "vid", d)
+	return result
+}
+
+func flattenExtensionControllerExtenderProfileLanExtensionDownlinksVidsVid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return convintf2i(v)
 }
 
@@ -3530,8 +3592,13 @@ func expandExtensionControllerExtenderProfileLanExtensionDownlinks(d *schema.Res
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pvid"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["pvid"], _ = expandExtensionControllerExtenderProfileLanExtensionDownlinksPvid(d, i["pvid"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vids"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["vids"], _ = expandExtensionControllerExtenderProfileLanExtensionDownlinksVids(d, i["vids"], pre_append, sv)
 		} else if d.HasChange(pre_append) {
-			tmp["pvid"] = nil
+			tmp["vids"] = make([]string, 0)
 		}
 
 		result = append(result, tmp)
@@ -3559,6 +3626,34 @@ func expandExtensionControllerExtenderProfileLanExtensionDownlinksVap(d *schema.
 }
 
 func expandExtensionControllerExtenderProfileLanExtensionDownlinksPvid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandExtensionControllerExtenderProfileLanExtensionDownlinksVids(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.(*schema.Set).List()
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		tmp["vid"], _ = expandExtensionControllerExtenderProfileLanExtensionDownlinksVidsVid(d, i["vid"], pre_append, sv)
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandExtensionControllerExtenderProfileLanExtensionDownlinksVidsVid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3598,8 +3693,6 @@ func expandExtensionControllerExtenderProfileLanExtensionTrafficSplitServices(d 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "service"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["service"], _ = expandExtensionControllerExtenderProfileLanExtensionTrafficSplitServicesService(d, i["service"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["service"] = nil
 		}
 
 		result = append(result, tmp)

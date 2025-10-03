@@ -21,7 +21,7 @@ The following arguments are supported:
 * `auth_portal` - Enable/disable authentication portal. Valid values: `disable`, `enable`.
 * `auth_virtual_host` - Virtual host for authentication portal.
 * `vip6` - Virtual IPv6 name.
-* `svr_pool_multiplex` - Enable/disable server pool multiplexing. Share connected server in HTTP and HTTPS api-gateways. Valid values: `enable`, `disable`.
+* `svr_pool_multiplex` - Enable/disable server pool multiplexing (default = disable). Share connected server in HTTP and HTTPS api-gateways. Valid values: `enable`, `disable`.
 * `svr_pool_ttl` - Time-to-live in the server pool for idle connections to servers.
 * `svr_pool_server_max_request` - Maximum number of requests that servers in the server pool handle before disconnecting (default = unlimited).
 * `svr_pool_server_max_concurrent_request` - Maximum number of concurrent requests that servers in the server pool could handle (default = unlimited).
@@ -82,6 +82,7 @@ The `realservers` block supports:
 * `health_check_proto` - Protocol of the health check monitor to use when polling to determine server's connectivity status. Valid values: `ping`, `http`, `tcp-connect`.
 * `holddown_interval` - Enable/disable holddown timer. Server will be considered active and reachable once the holddown period has expired (30 seconds). Valid values: `enable`, `disable`.
 * `translate_host` - Enable/disable translation of hostname/IP from virtual server to real server. Valid values: `enable`, `disable`.
+* `verify_cert` - Enable/disable certificate verification of the real server. Valid values: `enable`, `disable`.
 
 The `ssl_cipher_suites` block supports:
 
@@ -140,6 +141,7 @@ The `realservers` block supports:
 * `health_check_proto` - Protocol of the health check monitor to use when polling to determine server's connectivity status. Valid values: `ping`, `http`, `tcp-connect`.
 * `holddown_interval` - Enable/disable holddown timer. Server will be considered active and reachable once the holddown period has expired (30 seconds). Valid values: `enable`, `disable`.
 * `translate_host` - Enable/disable translation of hostname/IP from virtual server to real server. Valid values: `enable`, `disable`.
+* `verify_cert` - Enable/disable certificate verification of the real server. Valid values: `enable`, `disable`.
 
 The `ssl_cipher_suites` block supports:
 

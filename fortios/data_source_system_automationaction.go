@@ -243,6 +243,26 @@ func dataSourceSystemAutomationAction() *schema.Resource {
 					},
 				},
 			},
+			"form_data": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"key": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"value": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
 			"headers": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
@@ -275,6 +295,14 @@ func dataSourceSystemAutomationAction() *schema.Resource {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+			"output_interval": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"file_only": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"execute_security_fabric": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -300,6 +328,10 @@ func dataSourceSystemAutomationAction() *schema.Resource {
 				},
 			},
 			"regular_expression": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"log_debug_print": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -620,6 +652,60 @@ func dataSourceFlattenSystemAutomationActionHttpHeadersValue(v interface{}, d *s
 	return v
 }
 
+func dataSourceFlattenSystemAutomationActionFormData(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := i["id"]; ok {
+			tmp["id"] = dataSourceFlattenSystemAutomationActionFormDataId(i["id"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "key"
+		if _, ok := i["key"]; ok {
+			tmp["key"] = dataSourceFlattenSystemAutomationActionFormDataKey(i["key"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
+		if _, ok := i["value"]; ok {
+			tmp["value"] = dataSourceFlattenSystemAutomationActionFormDataValue(i["value"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenSystemAutomationActionFormDataId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemAutomationActionFormDataKey(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemAutomationActionFormDataValue(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemAutomationActionHeaders(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -676,6 +762,14 @@ func dataSourceFlattenSystemAutomationActionDuration(v interface{}, d *schema.Re
 	return v
 }
 
+func dataSourceFlattenSystemAutomationActionOutputInterval(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemAutomationActionFileOnly(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemAutomationActionExecuteSecurityFabric(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -725,6 +819,10 @@ func dataSourceFlattenSystemAutomationActionSdnConnectorName(v interface{}, d *s
 }
 
 func dataSourceFlattenSystemAutomationActionRegularExpression(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemAutomationActionLogDebugPrint(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -995,6 +1093,12 @@ func dataSourceRefreshObjectSystemAutomationAction(d *schema.ResourceData, o map
 		}
 	}
 
+	if err = d.Set("form_data", dataSourceFlattenSystemAutomationActionFormData(o["form-data"], d, "form_data")); err != nil {
+		if !fortiAPIPatch(o["form-data"]) {
+			return fmt.Errorf("Error reading form_data: %v", err)
+		}
+	}
+
 	if err = d.Set("headers", dataSourceFlattenSystemAutomationActionHeaders(o["headers"], d, "headers")); err != nil {
 		if !fortiAPIPatch(o["headers"]) {
 			return fmt.Errorf("Error reading headers: %v", err)
@@ -1031,6 +1135,18 @@ func dataSourceRefreshObjectSystemAutomationAction(d *schema.ResourceData, o map
 		}
 	}
 
+	if err = d.Set("output_interval", dataSourceFlattenSystemAutomationActionOutputInterval(o["output-interval"], d, "output_interval")); err != nil {
+		if !fortiAPIPatch(o["output-interval"]) {
+			return fmt.Errorf("Error reading output_interval: %v", err)
+		}
+	}
+
+	if err = d.Set("file_only", dataSourceFlattenSystemAutomationActionFileOnly(o["file-only"], d, "file_only")); err != nil {
+		if !fortiAPIPatch(o["file-only"]) {
+			return fmt.Errorf("Error reading file_only: %v", err)
+		}
+	}
+
 	if err = d.Set("execute_security_fabric", dataSourceFlattenSystemAutomationActionExecuteSecurityFabric(o["execute-security-fabric"], d, "execute_security_fabric")); err != nil {
 		if !fortiAPIPatch(o["execute-security-fabric"]) {
 			return fmt.Errorf("Error reading execute_security_fabric: %v", err)
@@ -1058,6 +1174,12 @@ func dataSourceRefreshObjectSystemAutomationAction(d *schema.ResourceData, o map
 	if err = d.Set("regular_expression", dataSourceFlattenSystemAutomationActionRegularExpression(o["regular-expression"], d, "regular_expression")); err != nil {
 		if !fortiAPIPatch(o["regular-expression"]) {
 			return fmt.Errorf("Error reading regular_expression: %v", err)
+		}
+	}
+
+	if err = d.Set("log_debug_print", dataSourceFlattenSystemAutomationActionLogDebugPrint(o["log-debug-print"], d, "log_debug_print")); err != nil {
+		if !fortiAPIPatch(o["log-debug-print"]) {
+			return fmt.Errorf("Error reading log_debug_print: %v", err)
 		}
 	}
 

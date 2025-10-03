@@ -228,6 +228,16 @@ func resourceVpnIpsecPhase1Interface() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"peer_egress_shaping": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"peer_egress_shaping_value": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 80000000),
+				Optional:     true,
+			},
 			"mode_cfg": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -299,6 +309,19 @@ func resourceVpnIpsecPhase1Interface() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"domain_name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+						},
+					},
+				},
+			},
+			"dns_suffix_search": &schema.Schema{
+				Type:     schema.TypeSet,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"dns_suffix": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
@@ -1078,6 +1101,11 @@ func resourceVpnIpsecPhase1Interface() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"qkd_hybrid": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"qkd_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -1456,6 +1484,14 @@ func flattenVpnIpsecPhase1InterfacePacketRedistribution(v interface{}, d *schema
 	return v
 }
 
+func flattenVpnIpsecPhase1InterfacePeerEgressShaping(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnIpsecPhase1InterfacePeerEgressShapingValue(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
 func flattenVpnIpsecPhase1InterfaceModeCfg(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1547,6 +1583,48 @@ func flattenVpnIpsecPhase1InterfaceInternalDomainList(v interface{}, d *schema.R
 }
 
 func flattenVpnIpsecPhase1InterfaceInternalDomainListDomainName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnIpsecPhase1InterfaceDnsSuffixSearch(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "dns_suffix"
+		if cur_v, ok := i["dns-suffix"]; ok {
+			tmp["dns_suffix"] = flattenVpnIpsecPhase1InterfaceDnsSuffixSearchDnsSuffix(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "dns_suffix", d)
+	return result
+}
+
+func flattenVpnIpsecPhase1InterfaceDnsSuffixSearchDnsSuffix(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2297,6 +2375,10 @@ func flattenVpnIpsecPhase1InterfaceQkd(v interface{}, d *schema.ResourceData, pr
 	return v
 }
 
+func flattenVpnIpsecPhase1InterfaceQkdHybrid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenVpnIpsecPhase1InterfaceQkdProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -2558,6 +2640,18 @@ func refreshObjectVpnIpsecPhase1Interface(d *schema.ResourceData, o map[string]i
 		}
 	}
 
+	if err = d.Set("peer_egress_shaping", flattenVpnIpsecPhase1InterfacePeerEgressShaping(o["peer-egress-shaping"], d, "peer_egress_shaping", sv)); err != nil {
+		if !fortiAPIPatch(o["peer-egress-shaping"]) {
+			return fmt.Errorf("Error reading peer_egress_shaping: %v", err)
+		}
+	}
+
+	if err = d.Set("peer_egress_shaping_value", flattenVpnIpsecPhase1InterfacePeerEgressShapingValue(o["peer-egress-shaping-value"], d, "peer_egress_shaping_value", sv)); err != nil {
+		if !fortiAPIPatch(o["peer-egress-shaping-value"]) {
+			return fmt.Errorf("Error reading peer_egress_shaping_value: %v", err)
+		}
+	}
+
 	if err = d.Set("mode_cfg", flattenVpnIpsecPhase1InterfaceModeCfg(o["mode-cfg"], d, "mode_cfg", sv)); err != nil {
 		if !fortiAPIPatch(o["mode-cfg"]) {
 			return fmt.Errorf("Error reading mode_cfg: %v", err)
@@ -2647,6 +2741,22 @@ func refreshObjectVpnIpsecPhase1Interface(d *schema.ResourceData, o map[string]i
 			if err = d.Set("internal_domain_list", flattenVpnIpsecPhase1InterfaceInternalDomainList(o["internal-domain-list"], d, "internal_domain_list", sv)); err != nil {
 				if !fortiAPIPatch(o["internal-domain-list"]) {
 					return fmt.Errorf("Error reading internal_domain_list: %v", err)
+				}
+			}
+		}
+	}
+
+	if b_get_all_tables {
+		if err = d.Set("dns_suffix_search", flattenVpnIpsecPhase1InterfaceDnsSuffixSearch(o["dns-suffix-search"], d, "dns_suffix_search", sv)); err != nil {
+			if !fortiAPIPatch(o["dns-suffix-search"]) {
+				return fmt.Errorf("Error reading dns_suffix_search: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("dns_suffix_search"); ok {
+			if err = d.Set("dns_suffix_search", flattenVpnIpsecPhase1InterfaceDnsSuffixSearch(o["dns-suffix-search"], d, "dns_suffix_search", sv)); err != nil {
+				if !fortiAPIPatch(o["dns-suffix-search"]) {
+					return fmt.Errorf("Error reading dns_suffix_search: %v", err)
 				}
 			}
 		}
@@ -3524,6 +3634,12 @@ func refreshObjectVpnIpsecPhase1Interface(d *schema.ResourceData, o map[string]i
 		}
 	}
 
+	if err = d.Set("qkd_hybrid", flattenVpnIpsecPhase1InterfaceQkdHybrid(o["qkd-hybrid"], d, "qkd_hybrid", sv)); err != nil {
+		if !fortiAPIPatch(o["qkd-hybrid"]) {
+			return fmt.Errorf("Error reading qkd_hybrid: %v", err)
+		}
+	}
+
 	if err = d.Set("qkd_profile", flattenVpnIpsecPhase1InterfaceQkdProfile(o["qkd-profile"], d, "qkd_profile", sv)); err != nil {
 		if !fortiAPIPatch(o["qkd-profile"]) {
 			return fmt.Errorf("Error reading qkd_profile: %v", err)
@@ -3753,6 +3869,14 @@ func expandVpnIpsecPhase1InterfacePacketRedistribution(d *schema.ResourceData, v
 	return v, nil
 }
 
+func expandVpnIpsecPhase1InterfacePeerEgressShaping(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnIpsecPhase1InterfacePeerEgressShapingValue(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandVpnIpsecPhase1InterfaceModeCfg(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -3830,6 +3954,34 @@ func expandVpnIpsecPhase1InterfaceInternalDomainList(d *schema.ResourceData, v i
 }
 
 func expandVpnIpsecPhase1InterfaceInternalDomainListDomainName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnIpsecPhase1InterfaceDnsSuffixSearch(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.(*schema.Set).List()
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		tmp["dns-suffix"], _ = expandVpnIpsecPhase1InterfaceDnsSuffixSearchDnsSuffix(d, i["dns_suffix"], pre_append, sv)
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandVpnIpsecPhase1InterfaceDnsSuffixSearchDnsSuffix(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -4547,6 +4699,10 @@ func expandVpnIpsecPhase1InterfaceQkd(d *schema.ResourceData, v interface{}, pre
 	return v, nil
 }
 
+func expandVpnIpsecPhase1InterfaceQkdHybrid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandVpnIpsecPhase1InterfaceQkdProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -4925,6 +5081,26 @@ func getObjectVpnIpsecPhase1Interface(d *schema.ResourceData, sv string) (*map[s
 		}
 	}
 
+	if v, ok := d.GetOk("peer_egress_shaping"); ok {
+		t, err := expandVpnIpsecPhase1InterfacePeerEgressShaping(d, v, "peer_egress_shaping", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["peer-egress-shaping"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("peer_egress_shaping_value"); ok {
+		t, err := expandVpnIpsecPhase1InterfacePeerEgressShapingValue(d, v, "peer_egress_shaping_value", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["peer-egress-shaping-value"] = t
+		}
+	} else if d.HasChange("peer_egress_shaping_value") {
+		obj["peer-egress-shaping-value"] = nil
+	}
+
 	if v, ok := d.GetOk("mode_cfg"); ok {
 		t, err := expandVpnIpsecPhase1InterfaceModeCfg(d, v, "mode_cfg", sv)
 		if err != nil {
@@ -5048,6 +5224,15 @@ func getObjectVpnIpsecPhase1Interface(d *schema.ResourceData, sv string) (*map[s
 			return &obj, err
 		} else if t != nil {
 			obj["internal-domain-list"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("dns_suffix_search"); ok || d.HasChange("dns_suffix_search") {
+		t, err := expandVpnIpsecPhase1InterfaceDnsSuffixSearch(d, v, "dns_suffix_search", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["dns-suffix-search"] = t
 		}
 	}
 
@@ -6431,6 +6616,15 @@ func getObjectVpnIpsecPhase1Interface(d *schema.ResourceData, sv string) (*map[s
 			return &obj, err
 		} else if t != nil {
 			obj["qkd"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("qkd_hybrid"); ok {
+		t, err := expandVpnIpsecPhase1InterfaceQkdHybrid(d, v, "qkd_hybrid", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["qkd-hybrid"] = t
 		}
 	}
 

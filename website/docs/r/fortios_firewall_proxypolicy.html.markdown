@@ -84,12 +84,14 @@ The following arguments are supported:
 * `internet_service_group` - Internet Service group name. The structure of `internet_service_group` block is documented below.
 * `internet_service_custom` - Custom Internet Service name. The structure of `internet_service_custom` block is documented below.
 * `internet_service_custom_group` - Custom Internet Service group name. The structure of `internet_service_custom_group` block is documented below.
+* `internet_service_fortiguard` - FortiGuard Internet Service name. The structure of `internet_service_fortiguard` block is documented below.
 * `internet_service6` - Enable/disable use of Internet Services IPv6 for this policy. If enabled, destination IPv6 address and service are not used. Valid values: `enable`, `disable`.
 * `internet_service6_negate` - When enabled, Internet Services match against any internet service IPv6 EXCEPT the selected Internet Service IPv6. Valid values: `enable`, `disable`.
 * `internet_service6_name` - Internet Service IPv6 name. The structure of `internet_service6_name` block is documented below.
 * `internet_service6_group` - Internet Service IPv6 group name. The structure of `internet_service6_group` block is documented below.
 * `internet_service6_custom` - Custom Internet Service IPv6 name. The structure of `internet_service6_custom` block is documented below.
 * `internet_service6_custom_group` - Custom Internet Service IPv6 group name. The structure of `internet_service6_custom_group` block is documented below.
+* `internet_service6_fortiguard` - FortiGuard Internet Service IPv6 name. The structure of `internet_service6_fortiguard` block is documented below.
 * `service` - Name of service objects. The structure of `service` block is documented below.
 * `srcaddr_negate` - When enabled, source addresses match against any address EXCEPT the specified source addresses. Valid values: `enable`, `disable`.
 * `dstaddr_negate` - When enabled, destination addresses match against any address EXCEPT the specified destination addresses. Valid values: `enable`, `disable`.
@@ -148,6 +150,7 @@ The following arguments are supported:
 * `comments` - Optional comments.
 * `block_notification` - Enable/disable block notification. Valid values: `enable`, `disable`.
 * `redirect_url` - Redirect URL for further explicit web proxy processing.
+* `https_sub_category` - Enable/disable HTTPS sub-category policy matching. Valid values: `enable`, `disable`.
 * `decrypted_traffic_mirror` - Decrypted traffic mirror.
 * `detect_https_in_http_request` - Enable/disable detection of HTTPS in HTTP request. Valid values: `enable`, `disable`.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
@@ -214,6 +217,10 @@ The `internet_service_custom_group` block supports:
 
 * `name` - Custom Internet Service group name.
 
+The `internet_service_fortiguard` block supports:
+
+* `name` - FortiGuard Internet Service name.
+
 The `internet_service6_name` block supports:
 
 * `name` - Internet Service IPv6 name.
@@ -229,6 +236,10 @@ The `internet_service6_custom` block supports:
 The `internet_service6_custom_group` block supports:
 
 * `name` - Custom Internet Service IPv6 group name.
+
+The `internet_service6_fortiguard` block supports:
+
+* `name` - FortiGuard Internet Service IPv6 name.
 
 The `service` block supports:
 

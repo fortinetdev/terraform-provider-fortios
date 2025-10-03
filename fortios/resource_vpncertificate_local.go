@@ -177,6 +177,17 @@ func resourceVpnCertificateLocal() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
 			},
+			"acme_eab_key_id": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 255),
+				Optional:     true,
+			},
+			"acme_eab_key_hmac": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 128),
+				Optional:     true,
+				Sensitive:    true,
+			},
 			"acme_rsa_key_size": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(2048, 4096),
@@ -485,6 +496,10 @@ func flattenVpnCertificateLocalAcmeEmail(v interface{}, d *schema.ResourceData, 
 	return v
 }
 
+func flattenVpnCertificateLocalAcmeEabKeyId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenVpnCertificateLocalAcmeRsaKeySize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return convintf2i(v)
 }
@@ -673,6 +688,12 @@ func refreshObjectVpnCertificateLocal(d *schema.ResourceData, o map[string]inter
 	if err = d.Set("acme_email", flattenVpnCertificateLocalAcmeEmail(o["acme-email"], d, "acme_email", sv)); err != nil {
 		if !fortiAPIPatch(o["acme-email"]) {
 			return fmt.Errorf("Error reading acme_email: %v", err)
+		}
+	}
+
+	if err = d.Set("acme_eab_key_id", flattenVpnCertificateLocalAcmeEabKeyId(o["acme-eab-key-id"], d, "acme_eab_key_id", sv)); err != nil {
+		if !fortiAPIPatch(o["acme-eab-key-id"]) {
+			return fmt.Errorf("Error reading acme_eab_key_id: %v", err)
 		}
 	}
 
@@ -874,6 +895,14 @@ func expandVpnCertificateLocalAcmeDomain(d *schema.ResourceData, v interface{}, 
 }
 
 func expandVpnCertificateLocalAcmeEmail(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnCertificateLocalAcmeEabKeyId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnCertificateLocalAcmeEabKeyHmac(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1206,6 +1235,28 @@ func getObjectVpnCertificateLocal(d *schema.ResourceData, sv string) (*map[strin
 		}
 	} else if d.HasChange("acme_email") {
 		obj["acme-email"] = nil
+	}
+
+	if v, ok := d.GetOk("acme_eab_key_id"); ok {
+		t, err := expandVpnCertificateLocalAcmeEabKeyId(d, v, "acme_eab_key_id", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["acme-eab-key-id"] = t
+		}
+	} else if d.HasChange("acme_eab_key_id") {
+		obj["acme-eab-key-id"] = nil
+	}
+
+	if v, ok := d.GetOk("acme_eab_key_hmac"); ok {
+		t, err := expandVpnCertificateLocalAcmeEabKeyHmac(d, v, "acme_eab_key_hmac", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["acme-eab-key-hmac"] = t
+		}
+	} else if d.HasChange("acme_eab_key_hmac") {
+		obj["acme-eab-key-hmac"] = nil
 	}
 
 	if v, ok := d.GetOk("acme_rsa_key_size"); ok {

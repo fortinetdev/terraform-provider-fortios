@@ -32,6 +32,10 @@ func dataSourceSystemFtmPush() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"interface": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"server_port": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
@@ -94,6 +98,10 @@ func dataSourceFlattenSystemFtmPushProxy(v interface{}, d *schema.ResourceData, 
 	return v
 }
 
+func dataSourceFlattenSystemFtmPushInterface(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemFtmPushServerPort(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -120,6 +128,12 @@ func dataSourceRefreshObjectSystemFtmPush(d *schema.ResourceData, o map[string]i
 	if err = d.Set("proxy", dataSourceFlattenSystemFtmPushProxy(o["proxy"], d, "proxy")); err != nil {
 		if !fortiAPIPatch(o["proxy"]) {
 			return fmt.Errorf("Error reading proxy: %v", err)
+		}
+	}
+
+	if err = d.Set("interface", dataSourceFlattenSystemFtmPushInterface(o["interface"], d, "interface")); err != nil {
+		if !fortiAPIPatch(o["interface"]) {
+			return fmt.Errorf("Error reading interface: %v", err)
 		}
 	}
 

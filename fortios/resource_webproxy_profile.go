@@ -141,7 +141,7 @@ func resourceWebProxyProfile() *schema.Resource {
 						},
 						"content": &schema.Schema{
 							Type:         schema.TypeString,
-							ValidateFunc: validation.StringLenBetween(0, 1023),
+							ValidateFunc: validation.StringLenBetween(0, 3999),
 							Optional:     true,
 						},
 						"base64_encoding": &schema.Schema{

@@ -67,12 +67,14 @@ The following arguments are supported:
 * `internet_service_group` - Internet Service group name. The structure of `internet_service_group` block is documented below.
 * `internet_service_custom` - Custom Internet Service name. The structure of `internet_service_custom` block is documented below.
 * `internet_service_custom_group` - Custom Internet Service group name. The structure of `internet_service_custom_group` block is documented below.
+* `internet_service_fortiguard` - FortiGuard Internet Service name. The structure of `internet_service_fortiguard` block is documented below.
 * `internet_service_src` - Enable/disable use of Internet Services in source for this policy. If enabled, source address is not used.  Valid values: `enable`, `disable`.
 * `internet_service_src_name` - Internet Service source name. The structure of `internet_service_src_name` block is documented below.
 * `internet_service_src_id` - Internet Service source ID. The structure of `internet_service_src_id` block is documented below.
 * `internet_service_src_group` - Internet Service source group name. The structure of `internet_service_src_group` block is documented below.
 * `internet_service_src_custom` - Custom Internet Service source name. The structure of `internet_service_src_custom` block is documented below.
 * `internet_service_src_custom_group` - Custom Internet Service source group name. The structure of `internet_service_src_custom_group` block is documented below.
+* `internet_service_src_fortiguard` - FortiGuard Internet Service source name. The structure of `internet_service_src_fortiguard` block is documented below.
 * `service` - Service and service group names. The structure of `service` block is documented below.
 * `schedule` - Schedule name.
 * `users` - Apply this traffic shaping policy to individual users that have authenticated with the FortiGate. The structure of `users` block is documented below.
@@ -136,6 +138,10 @@ The `internet_service_custom_group` block supports:
 
 * `name` - Custom Internet Service group name.
 
+The `internet_service_fortiguard` block supports:
+
+* `name` - FortiGuard Internet Service name.
+
 The `internet_service_src_name` block supports:
 
 * `name` - Internet Service name.
@@ -155,6 +161,10 @@ The `internet_service_src_custom` block supports:
 The `internet_service_src_custom_group` block supports:
 
 * `name` - Custom Internet Service group name.
+
+The `internet_service_src_fortiguard` block supports:
+
+* `name` - FortiGuard Internet Service name.
 
 The `service` block supports:
 

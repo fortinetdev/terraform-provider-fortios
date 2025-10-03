@@ -227,6 +227,7 @@ The `realservers` block supports:
 * `max_connections` - Max number of active connections that can be directed to the real server. When reached, sessions are sent to other real servers.
 * `monitor` - Name of the health check monitor to use when polling to determine a virtual server's connectivity status.
 * `client_ip` - Only clients in this IP range can connect to this real server.
+* `verify_cert` - Enable/disable certificate verification of the real server. Valid values: `enable`, `disable`.
 
 The `ssl_cipher_suites` block supports:
 

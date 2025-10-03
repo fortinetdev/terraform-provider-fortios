@@ -61,6 +61,7 @@ The following arguments are supported:
 * `wad_restart_mode` - WAD worker restart mode (default = none). Valid values: `none`, `time`, `memory`.
 * `wad_restart_start_time` - WAD workers daily restart time (hh:mm).
 * `wad_restart_end_time` - WAD workers daily restart end time (hh:mm).
+* `wad_p2s_max_body_size` - Maximum size of the body of the local out HTTP request (1 - 32 Mbytes, default = 4).
 * `radius_port` - RADIUS service port number.
 * `speedtestd_server_port` - Speedtest server port number.
 * `speedtestd_ctrl_port` - Speedtest server controller port number.
@@ -112,6 +113,7 @@ The following arguments are supported:
 * `ssh_hostkey_password` - Password for ssh-hostkey.
 * `ssh_hostkey` - Config SSH host key.
 * `snat_route_change` - Enable/disable the ability to change the static NAT route. Valid values: `enable`, `disable`.
+* `ipv6_snat_route_change` - Enable/disable the ability to change the IPv6 source NAT route. Valid values: `enable`, `disable`.
 * `speedtest_server` - Enable/disable speed test server. Valid values: `enable`, `disable`.
 * `cli_audit_log` - Enable/disable CLI audit log. Valid values: `enable`, `disable`.
 * `dh_params` - Number of bits to use in the Diffie-Hellman exchange for HTTPS/SSH protocols. Valid values: `1024`, `1536`, `2048`, `3072`, `4096`, `6144`, `8192`.
@@ -123,7 +125,7 @@ The following arguments are supported:
 * `tcp_option` - Enable SACK, timestamp and MSS TCP options. Valid values: `enable`, `disable`.
 * `lldp_transmission` - Enable/disable Link Layer Discovery Protocol (LLDP) transmission. Valid values: `enable`, `disable`.
 * `lldp_reception` - Enable/disable Link Layer Discovery Protocol (LLDP) reception. Valid values: `enable`, `disable`.
-* `proxy_auth_timeout` - Authentication timeout in minutes for authenticated users (1 - 300 min, default = 10).
+* `proxy_auth_timeout` - Authentication timeout in minutes for authenticated users (default = 10). On FortiOS versions 6.2.0-7.6.2: (1 - 300 min). On FortiOS versions >= 7.6.3: (1 - 10000 min).
 * `proxy_keep_alive_mode` - Control if users must re-authenticate after a session is closed, traffic has been idle, or from the point at which the user was authenticated. Valid values: `session`, `traffic`, `re-authentication`.
 * `proxy_re_authentication_time` - The time limit that users must re-authenticate if proxy-keep-alive-mode is set to re-authenticate (1  - 86400 sec, default=30s.
 * `proxy_re_authentication_mode` - Control if users must re-authenticate after a session is closed, traffic has been idle, or from the point at which the user was first created. Valid values: `session`, `traffic`, `absolute`.
@@ -233,6 +235,7 @@ The following arguments are supported:
 * `wimax_4g_usb` - Enable/disable comparability with WiMAX 4G USB devices. Valid values: `enable`, `disable`.
 * `cert_chain_max` - Maximum number of certificates that can be traversed in a certificate chain.
 * `sslvpn_max_worker_count` - Maximum number of SSL VPN processes. Upper limit for this value is the number of CPUs and depends on the model.
+* `sslvpn_affinity` - Agentless VPN CPU affinity.
 * `vpn_ems_sn_check` - Enable/disable verification of EMS serial number in SSL-VPN and IPsec VPN connection. Valid values: `enable`, `disable`.
 * `sslvpn_web_mode` - Enable/disable SSL-VPN web mode. Valid values: `enable`, `disable`.
 * `sslvpn_ems_sn_check` - Enable/disable verification of EMS serial number in SSL-VPN connection. Valid values: `enable`, `disable`.
@@ -274,6 +277,7 @@ The following arguments are supported:
 * `miglog_affinity` - Affinity setting for logging. On FortiOS versions 6.2.0-7.2.3: 64-bit hexadecimal value in the format of xxxxxxxxxxxxxxxx. On FortiOS versions >= 7.2.4: hexadecimal value up to 256 bits in the format of xxxxxxxxxxxxxxxx.
 * `syslog_affinity` - Affinity setting for syslog (hexadecimal value up to 256 bits in the format of xxxxxxxxxxxxxxxx).
 * `url_filter_affinity` - URL filter CPU affinity.
+* `router_affinity` - Affinity setting for BFD/VRRP/BGP/OSPF daemons (hexadecimal value up to 256 bits in the format of xxxxxxxxxxxxxxxx).
 * `ndp_max_entry` - Maximum number of NDP table entries (set to 65,536 or higher; if set to 0, kernel holds 65,536 entries).
 * `br_fdb_max_entry` - Maximum number of bridge forwarding database (FDB) entries.
 * `max_route_cache_size` - Maximum number of IP route cache entries (0 - 2147483647).
@@ -284,6 +288,7 @@ The following arguments are supported:
 * `ike_embryonic_limit` - Maximum number of IPsec tunnels to negotiate simultaneously.
 * `device_idle_timeout` - Time in seconds that a device must be idle to automatically log the device user out. (30 - 31536000 sec (30 sec to 1 year), default = 300).
 * `user_device_store_max_devices` - Maximum number of devices allowed in user device store.
+* `user_device_store_max_device_mem` - Maximum percentage of total system memory allowed to be used for devices in the user device store.
 * `user_device_store_max_users` - Maximum number of users allowed in user device store.
 * `user_device_store_max_unified_mem` - Maximum unified memory allowed in user device store.
 * `device_identification_active_scan_delay` - Number of seconds to passively scan a device before performing an active scan. (20 - 3600 sec, (20 sec to 1 hour), default = 90).
@@ -302,6 +307,7 @@ The following arguments are supported:
 * `ipsec_ha_seqjump_rate` - ESP jump ahead rate (1G - 10G pps equivalent).
 * `fortitoken_cloud` - Enable/disable FortiToken Cloud service. Valid values: `enable`, `disable`.
 * `fortitoken_cloud_push_status` - Enable/disable FTM push service of FortiToken Cloud. Valid values: `enable`, `disable`.
+* `fortitoken_cloud_region` - Region domain of FortiToken Cloud(unset to non-region).
 * `fortitoken_cloud_sync_interval` - Interval in which to clean up remote users in FortiToken Cloud (0 - 336 hours (14 days), default = 24, disable = 0).
 * `faz_disk_buffer_size` - Maximum disk buffer size to temporarily store logs destined for FortiAnalyzer. To be used in the event that FortiAnalyzer is unavailalble.
 * `irq_time_accounting` - Configure CPU IRQ time accounting mode. Valid values: `auto`, `force`.
@@ -326,6 +332,7 @@ The following arguments are supported:
 * `scim_http_port` - SCIM http port (0 - 65535, default = 44558).
 * `scim_server_cert` - Server certificate that the FortiGate uses for SCIM connections.
 * `application_bandwidth_tracking` - Enable/disable application bandwidth tracking. Valid values: `disable`, `enable`.
+* `tls_session_cache` - Enable/disable TLS session cache. Valid values: `enable`, `disable`.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
 * `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.

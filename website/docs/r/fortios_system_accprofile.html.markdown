@@ -155,6 +155,7 @@ The `utmgrp_permission` block supports:
 * `videofilter` - Video filter profiles and settings. Valid values: `none`, `read`, `read-write`.
 * `virtual_patch` - Virtual patch profiles and settings. Valid values: `none`, `read`, `read-write`.
 * `casb` - Inline CASB filter profile and settings Valid values: `none`, `read`, `read-write`.
+* `telemetry` - Telemetry profile and settings. Valid values: `none`, `read`, `read-write`.
 
 
 ## Attribute Reference

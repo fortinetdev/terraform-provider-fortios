@@ -35,6 +35,8 @@ The following arguments are supported:
 * `ssl_dh_bits` - (Required) Bit-size of Diffie-Hellman (DH) prime used in DHE-RSA negotiation (default = 2048). Valid values: `768`, `1024`, `1536`, `2048`.
 * `ssl_send_empty_frags` - (Required) Enable/disable sending empty fragments to avoid attack on CBC IV (for SSL 3.0 and TLS 1.0 only). Valid values: `enable`, `disable`.
 * `no_matching_cipher_action` - (Required) Bypass or drop the connection when no matching cipher is found. Valid values: `bypass`, `drop`.
+* `cert_manager_cache_timeout` - Time limit for certificate manager to keep FortiGate re-signed server certificate (24 - 720 hours, default = 72).
+* `resigned_short_lived_certificate` - Enable/disable short-lived certificate. Valid values: `enable`, `disable`.
 * `cert_cache_capacity` - (Required) Maximum capacity of the host certificate cache (0 - 500, default = 200).
 * `cert_cache_timeout` - (Required) Time limit to keep certificate cache (1 - 120 min, default = 10).
 * `session_cache_capacity` - (Required) Capacity of the SSL session cache (--Obsolete--) (1 - 1000, default = 500).

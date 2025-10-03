@@ -113,6 +113,10 @@ func dataSourceSystemExternalResource() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"source_ip_interface": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"interface_select_method": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -256,6 +260,10 @@ func dataSourceFlattenSystemExternalResourceSourceIp(v interface{}, d *schema.Re
 	return v
 }
 
+func dataSourceFlattenSystemExternalResourceSourceIpInterface(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemExternalResourceInterfaceSelectMethod(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -388,6 +396,12 @@ func dataSourceRefreshObjectSystemExternalResource(d *schema.ResourceData, o map
 	if err = d.Set("source_ip", dataSourceFlattenSystemExternalResourceSourceIp(o["source-ip"], d, "source_ip")); err != nil {
 		if !fortiAPIPatch(o["source-ip"]) {
 			return fmt.Errorf("Error reading source_ip: %v", err)
+		}
+	}
+
+	if err = d.Set("source_ip_interface", dataSourceFlattenSystemExternalResourceSourceIpInterface(o["source-ip-interface"], d, "source_ip_interface")); err != nil {
+		if !fortiAPIPatch(o["source-ip-interface"]) {
+			return fmt.Errorf("Error reading source_ip_interface: %v", err)
 		}
 	}
 

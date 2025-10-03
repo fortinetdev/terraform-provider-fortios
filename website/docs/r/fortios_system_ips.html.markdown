@@ -13,8 +13,7 @@ Configure IPS system settings. Applies to FortiOS Version `>= 6.4.2`.
 
 The following arguments are supported:
 
-* `signature_hold_time` - Time to hold and monitor IPS signatures. Format <#d##h> (day range: 0 - 7, hour range: 0 - 23, max hold time: 7d0h, default hold time: 0d0h).
-
+* `signature_hold_time` - Time to hold and monitor IPS signatures. Format <#d##h> (hour range: 0 - 23, default hold time: 0d0h). On FortiOS versions 6.4.2-7.6.2: (day range: 0 - 7, max hold time: 7d0h). On FortiOS versions >= 7.6.3: (day range: 0 - 21, max hold time: 21d0h).
 * `override_signature_hold_by_id` - Enable/disable override of hold of triggering signatures that are specified by IDs regardless of hold. Valid values: `enable`, `disable`.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 

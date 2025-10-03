@@ -24,6 +24,7 @@ The following arguments are supported:
 * `client_secret_token` - Client secret token for authentication.
 * `certificate` - Certificate name.
 * `client_identity_check` - Enable/disable client identity check. Valid values: `enable`, `disable`.
+* `cascade` - Enable/disable to follow SCIM users/groups changes in IDP. Valid values: `disable`, `enable`.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 

@@ -77,6 +77,11 @@ func resourceUserLocal() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
 			},
+			"saml_server": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+			},
 			"two_factor": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -356,6 +361,10 @@ func flattenUserLocalTacacsServer(v interface{}, d *schema.ResourceData, pre str
 	return v
 }
 
+func flattenUserLocalSamlServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenUserLocalTwoFactor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -474,6 +483,12 @@ func refreshObjectUserLocal(d *schema.ResourceData, o map[string]interface{}, sv
 	if err = d.Set("tacacs_server", flattenUserLocalTacacsServer(o["tacacs+-server"], d, "tacacs_server", sv)); err != nil {
 		if !fortiAPIPatch(o["tacacs+-server"]) {
 			return fmt.Errorf("Error reading tacacs_server: %v", err)
+		}
+	}
+
+	if err = d.Set("saml_server", flattenUserLocalSamlServer(o["saml-server"], d, "saml_server", sv)); err != nil {
+		if !fortiAPIPatch(o["saml-server"]) {
+			return fmt.Errorf("Error reading saml_server: %v", err)
 		}
 	}
 
@@ -629,6 +644,10 @@ func expandUserLocalRadiusServer(d *schema.ResourceData, v interface{}, pre stri
 }
 
 func expandUserLocalTacacsServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserLocalSamlServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -795,6 +814,17 @@ func getObjectUserLocal(d *schema.ResourceData, sv string) (*map[string]interfac
 		obj["tacacs+-server"] = nil
 	}
 
+	if v, ok := d.GetOk("saml_server"); ok {
+		t, err := expandUserLocalSamlServer(d, v, "saml_server", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["saml-server"] = t
+		}
+	} else if d.HasChange("saml_server") {
+		obj["saml-server"] = nil
+	}
+
 	if v, ok := d.GetOk("two_factor"); ok {
 		t, err := expandUserLocalTwoFactor(d, v, "two_factor", sv)
 		if err != nil {
@@ -897,8 +927,6 @@ func getObjectUserLocal(d *schema.ResourceData, sv string) (*map[string]interfac
 		} else if t != nil {
 			obj["passwd-time"] = t
 		}
-	} else if d.HasChange("passwd_time") {
-		obj["passwd-time"] = nil
 	}
 
 	if v, ok := d.GetOkExists("authtimeout"); ok {

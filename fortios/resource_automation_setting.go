@@ -47,6 +47,11 @@ func resourceAutomationSetting() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"secure_mode": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -173,6 +178,10 @@ func flattenAutomationSettingFabricSync(v interface{}, d *schema.ResourceData, p
 	return v
 }
 
+func flattenAutomationSettingSecureMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectAutomationSetting(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -185,6 +194,12 @@ func refreshObjectAutomationSetting(d *schema.ResourceData, o map[string]interfa
 	if err = d.Set("fabric_sync", flattenAutomationSettingFabricSync(o["fabric-sync"], d, "fabric_sync", sv)); err != nil {
 		if !fortiAPIPatch(o["fabric-sync"]) {
 			return fmt.Errorf("Error reading fabric_sync: %v", err)
+		}
+	}
+
+	if err = d.Set("secure_mode", flattenAutomationSettingSecureMode(o["secure-mode"], d, "secure_mode", sv)); err != nil {
+		if !fortiAPIPatch(o["secure-mode"]) {
+			return fmt.Errorf("Error reading secure_mode: %v", err)
 		}
 	}
 
@@ -202,6 +217,10 @@ func expandAutomationSettingMaxConcurrentStitches(d *schema.ResourceData, v inte
 }
 
 func expandAutomationSettingFabricSync(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAutomationSettingSecureMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -230,6 +249,19 @@ func getObjectAutomationSetting(d *schema.ResourceData, setArgNil bool, sv strin
 				return &obj, err
 			} else if t != nil {
 				obj["fabric-sync"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("secure_mode"); ok {
+		if setArgNil {
+			obj["secure-mode"] = nil
+		} else {
+			t, err := expandAutomationSettingSecureMode(d, v, "secure_mode", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["secure-mode"] = t
 			}
 		}
 	}

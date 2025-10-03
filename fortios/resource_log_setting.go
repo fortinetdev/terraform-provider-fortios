@@ -165,6 +165,11 @@ func resourceLogSetting() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"zone_name": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"custom_log_fields": &schema.Schema{
 				Type:     schema.TypeSet,
 				Optional: true,
@@ -415,6 +420,10 @@ func flattenLogSettingExtendedUtmLog(v interface{}, d *schema.ResourceData, pre 
 	return v
 }
 
+func flattenLogSettingZoneName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenLogSettingCustomLogFields(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -626,6 +635,12 @@ func refreshObjectLogSetting(d *schema.ResourceData, o map[string]interface{}, s
 		}
 	}
 
+	if err = d.Set("zone_name", flattenLogSettingZoneName(o["zone-name"], d, "zone_name", sv)); err != nil {
+		if !fortiAPIPatch(o["zone-name"]) {
+			return fmt.Errorf("Error reading zone_name: %v", err)
+		}
+	}
+
 	if b_get_all_tables {
 		if err = d.Set("custom_log_fields", flattenLogSettingCustomLogFields(o["custom-log-fields"], d, "custom_log_fields", sv)); err != nil {
 			if !fortiAPIPatch(o["custom-log-fields"]) {
@@ -758,6 +773,10 @@ func expandLogSettingLongLiveSessionStat(d *schema.ResourceData, v interface{}, 
 }
 
 func expandLogSettingExtendedUtmLog(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogSettingZoneName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1132,6 +1151,19 @@ func getObjectLogSetting(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 				return &obj, err
 			} else if t != nil {
 				obj["extended-utm-log"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("zone_name"); ok {
+		if setArgNil {
+			obj["zone-name"] = nil
+		} else {
+			t, err := expandLogSettingZoneName(d, v, "zone_name", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["zone-name"] = t
 			}
 		}
 	}

@@ -47,6 +47,7 @@ func resourceCasbUserActivity() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 36),
 				Optional:     true,
+				Computed:     true,
 			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
@@ -302,6 +303,11 @@ func resourceCasbUserActivity() *schema.Resource {
 										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
+									},
+									"value_name_from_input": &schema.Schema{
+										Type:         schema.TypeString,
+										ValidateFunc: validation.StringLenBetween(0, 79),
+										Optional:     true,
 									},
 									"values": &schema.Schema{
 										Type:     schema.TypeSet,
@@ -1040,6 +1046,11 @@ func flattenCasbUserActivityControlOptionsOperations(v interface{}, d *schema.Re
 			tmp["value_from_input"] = flattenCasbUserActivityControlOptionsOperationsValueFromInput(cur_v, d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "value_name_from_input"
+		if cur_v, ok := i["value-name-from-input"]; ok {
+			tmp["value_name_from_input"] = flattenCasbUserActivityControlOptionsOperationsValueNameFromInput(cur_v, d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "values"
 		if cur_v, ok := i["values"]; ok {
 			tmp["values"] = flattenCasbUserActivityControlOptionsOperationsValues(cur_v, d, pre_append, sv)
@@ -1087,6 +1098,10 @@ func flattenCasbUserActivityControlOptionsOperationsCaseSensitive(v interface{},
 }
 
 func flattenCasbUserActivityControlOptionsOperationsValueFromInput(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenCasbUserActivityControlOptionsOperationsValueNameFromInput(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1732,6 +1747,13 @@ func expandCasbUserActivityControlOptionsOperations(d *schema.ResourceData, v in
 			tmp["value-from-input"], _ = expandCasbUserActivityControlOptionsOperationsValueFromInput(d, i["value_from_input"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "value_name_from_input"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["value-name-from-input"], _ = expandCasbUserActivityControlOptionsOperationsValueNameFromInput(d, i["value_name_from_input"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["value-name-from-input"] = nil
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "values"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["values"], _ = expandCasbUserActivityControlOptionsOperationsValues(d, i["values"], pre_append, sv)
@@ -1783,6 +1805,10 @@ func expandCasbUserActivityControlOptionsOperationsValueFromInput(d *schema.Reso
 	return v, nil
 }
 
+func expandCasbUserActivityControlOptionsOperationsValueNameFromInput(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandCasbUserActivityControlOptionsOperationsValues(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
@@ -1830,8 +1856,6 @@ func getObjectCasbUserActivity(d *schema.ResourceData, sv string) (*map[string]i
 		} else if t != nil {
 			obj["uuid"] = t
 		}
-	} else if d.HasChange("uuid") {
-		obj["uuid"] = nil
 	}
 
 	if v, ok := d.GetOk("status"); ok {

@@ -323,6 +323,11 @@ func resourceSystemAccprofile() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"telemetry": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 					},
 				},
 			},
@@ -888,6 +893,11 @@ func flattenSystemAccprofileUtmgrpPermission(v interface{}, d *schema.ResourceDa
 		result["casb"] = flattenSystemAccprofileUtmgrpPermissionCasb(i["casb"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "telemetry"
+	if _, ok := i["telemetry"]; ok {
+		result["telemetry"] = flattenSystemAccprofileUtmgrpPermissionTelemetry(i["telemetry"], d, pre_append, sv)
+	}
+
 	lastresult := []map[string]interface{}{result}
 	return lastresult
 }
@@ -961,6 +971,10 @@ func flattenSystemAccprofileUtmgrpPermissionVirtualPatch(v interface{}, d *schem
 }
 
 func flattenSystemAccprofileUtmgrpPermissionCasb(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemAccprofileUtmgrpPermissionTelemetry(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1568,6 +1582,10 @@ func expandSystemAccprofileUtmgrpPermission(d *schema.ResourceData, v interface{
 	if _, ok := d.GetOk(pre_append); ok {
 		result["casb"], _ = expandSystemAccprofileUtmgrpPermissionCasb(d, i["casb"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "telemetry"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["telemetry"], _ = expandSystemAccprofileUtmgrpPermissionTelemetry(d, i["telemetry"], pre_append, sv)
+	}
 
 	return result, nil
 }
@@ -1641,6 +1659,10 @@ func expandSystemAccprofileUtmgrpPermissionVirtualPatch(d *schema.ResourceData, 
 }
 
 func expandSystemAccprofileUtmgrpPermissionCasb(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAccprofileUtmgrpPermissionTelemetry(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

@@ -223,6 +223,12 @@ func resourceSystemGlobal() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"wad_p2s_max_body_size": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1, 32),
+				Optional:     true,
+				Computed:     true,
+			},
 			"radius_port": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 65535),
@@ -489,6 +495,11 @@ func resourceSystemGlobal() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"ipv6_snat_route_change": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"speedtest_server": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -544,7 +555,7 @@ func resourceSystemGlobal() *schema.Resource {
 			},
 			"proxy_auth_timeout": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(1, 300),
+				ValidateFunc: validation.IntBetween(1, 10000),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -1123,6 +1134,12 @@ func resourceSystemGlobal() *schema.Resource {
 				ValidateFunc: validation.IntBetween(0, 128),
 				Optional:     true,
 			},
+			"sslvpn_affinity": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 79),
+				Optional:     true,
+				Computed:     true,
+			},
 			"vpn_ems_sn_check": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -1342,6 +1359,12 @@ func resourceSystemGlobal() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"router_affinity": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 79),
+				Optional:     true,
+				Computed:     true,
+			},
 			"ndp_max_entry": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
@@ -1389,6 +1412,12 @@ func resourceSystemGlobal() *schema.Resource {
 			"user_device_store_max_devices": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(10444, 240381),
+				Optional:     true,
+				Computed:     true,
+			},
+			"user_device_store_max_device_mem": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1, 5),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -1486,6 +1515,11 @@ func resourceSystemGlobal() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
+			},
+			"fortitoken_cloud_region": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 63),
+				Optional:     true,
 			},
 			"fortitoken_cloud_sync_interval": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -1617,6 +1651,11 @@ func resourceSystemGlobal() *schema.Resource {
 				Computed:     true,
 			},
 			"application_bandwidth_tracking": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"tls_session_cache": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -1897,6 +1936,10 @@ func flattenSystemGlobalWadRestartEndTime(v interface{}, d *schema.ResourceData,
 	return v
 }
 
+func flattenSystemGlobalWadP2SMaxBodySize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
 func flattenSystemGlobalRadiusPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return convintf2i(v)
 }
@@ -2094,6 +2137,10 @@ func flattenSystemGlobalSshHostkey(v interface{}, d *schema.ResourceData, pre st
 }
 
 func flattenSystemGlobalSnatRouteChange(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemGlobalIpv6SnatRouteChange(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2595,6 +2642,10 @@ func flattenSystemGlobalSslvpnMaxWorkerCount(v interface{}, d *schema.ResourceDa
 	return convintf2i(v)
 }
 
+func flattenSystemGlobalSslvpnAffinity(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemGlobalVpnEmsSnCheck(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -2759,6 +2810,10 @@ func flattenSystemGlobalUrlFilterAffinity(v interface{}, d *schema.ResourceData,
 	return v
 }
 
+func flattenSystemGlobalRouterAffinity(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemGlobalNdpMaxEntry(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return convintf2i(v)
 }
@@ -2796,6 +2851,10 @@ func flattenSystemGlobalDeviceIdleTimeout(v interface{}, d *schema.ResourceData,
 }
 
 func flattenSystemGlobalUserDeviceStoreMaxDevices(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenSystemGlobalUserDeviceStoreMaxDeviceMem(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return convintf2i(v)
 }
 
@@ -2868,6 +2927,10 @@ func flattenSystemGlobalFortitokenCloud(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenSystemGlobalFortitokenCloudPushStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemGlobalFortitokenCloudRegion(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -3002,6 +3065,10 @@ func flattenSystemGlobalScimServerCert(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenSystemGlobalApplicationBandwidthTracking(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemGlobalTlsSessionCache(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -3233,6 +3300,12 @@ func refreshObjectSystemGlobal(d *schema.ResourceData, o map[string]interface{},
 	if err = d.Set("wad_restart_end_time", flattenSystemGlobalWadRestartEndTime(o["wad-restart-end-time"], d, "wad_restart_end_time", sv)); err != nil {
 		if !fortiAPIPatch(o["wad-restart-end-time"]) {
 			return fmt.Errorf("Error reading wad_restart_end_time: %v", err)
+		}
+	}
+
+	if err = d.Set("wad_p2s_max_body_size", flattenSystemGlobalWadP2SMaxBodySize(o["wad-p2s-max-body-size"], d, "wad_p2s_max_body_size", sv)); err != nil {
+		if !fortiAPIPatch(o["wad-p2s-max-body-size"]) {
+			return fmt.Errorf("Error reading wad_p2s_max_body_size: %v", err)
 		}
 	}
 
@@ -3533,6 +3606,12 @@ func refreshObjectSystemGlobal(d *schema.ResourceData, o map[string]interface{},
 	if err = d.Set("snat_route_change", flattenSystemGlobalSnatRouteChange(o["snat-route-change"], d, "snat_route_change", sv)); err != nil {
 		if !fortiAPIPatch(o["snat-route-change"]) {
 			return fmt.Errorf("Error reading snat_route_change: %v", err)
+		}
+	}
+
+	if err = d.Set("ipv6_snat_route_change", flattenSystemGlobalIpv6SnatRouteChange(o["ipv6-snat-route-change"], d, "ipv6_snat_route_change", sv)); err != nil {
+		if !fortiAPIPatch(o["ipv6-snat-route-change"]) {
+			return fmt.Errorf("Error reading ipv6_snat_route_change: %v", err)
 		}
 	}
 
@@ -4262,6 +4341,12 @@ func refreshObjectSystemGlobal(d *schema.ResourceData, o map[string]interface{},
 		}
 	}
 
+	if err = d.Set("sslvpn_affinity", flattenSystemGlobalSslvpnAffinity(o["sslvpn-affinity"], d, "sslvpn_affinity", sv)); err != nil {
+		if !fortiAPIPatch(o["sslvpn-affinity"]) {
+			return fmt.Errorf("Error reading sslvpn_affinity: %v", err)
+		}
+	}
+
 	if err = d.Set("vpn_ems_sn_check", flattenSystemGlobalVpnEmsSnCheck(o["vpn-ems-sn-check"], d, "vpn_ems_sn_check", sv)); err != nil {
 		if !fortiAPIPatch(o["vpn-ems-sn-check"]) {
 			return fmt.Errorf("Error reading vpn_ems_sn_check: %v", err)
@@ -4508,6 +4593,12 @@ func refreshObjectSystemGlobal(d *schema.ResourceData, o map[string]interface{},
 		}
 	}
 
+	if err = d.Set("router_affinity", flattenSystemGlobalRouterAffinity(o["router-affinity"], d, "router_affinity", sv)); err != nil {
+		if !fortiAPIPatch(o["router-affinity"]) {
+			return fmt.Errorf("Error reading router_affinity: %v", err)
+		}
+	}
+
 	if err = d.Set("ndp_max_entry", flattenSystemGlobalNdpMaxEntry(o["ndp-max-entry"], d, "ndp_max_entry", sv)); err != nil {
 		if !fortiAPIPatch(o["ndp-max-entry"]) {
 			return fmt.Errorf("Error reading ndp_max_entry: %v", err)
@@ -4565,6 +4656,12 @@ func refreshObjectSystemGlobal(d *schema.ResourceData, o map[string]interface{},
 	if err = d.Set("user_device_store_max_devices", flattenSystemGlobalUserDeviceStoreMaxDevices(o["user-device-store-max-devices"], d, "user_device_store_max_devices", sv)); err != nil {
 		if !fortiAPIPatch(o["user-device-store-max-devices"]) {
 			return fmt.Errorf("Error reading user_device_store_max_devices: %v", err)
+		}
+	}
+
+	if err = d.Set("user_device_store_max_device_mem", flattenSystemGlobalUserDeviceStoreMaxDeviceMem(o["user-device-store-max-device-mem"], d, "user_device_store_max_device_mem", sv)); err != nil {
+		if !fortiAPIPatch(o["user-device-store-max-device-mem"]) {
+			return fmt.Errorf("Error reading user_device_store_max_device_mem: %v", err)
 		}
 	}
 
@@ -4673,6 +4770,12 @@ func refreshObjectSystemGlobal(d *schema.ResourceData, o map[string]interface{},
 	if err = d.Set("fortitoken_cloud_push_status", flattenSystemGlobalFortitokenCloudPushStatus(o["fortitoken-cloud-push-status"], d, "fortitoken_cloud_push_status", sv)); err != nil {
 		if !fortiAPIPatch(o["fortitoken-cloud-push-status"]) {
 			return fmt.Errorf("Error reading fortitoken_cloud_push_status: %v", err)
+		}
+	}
+
+	if err = d.Set("fortitoken_cloud_region", flattenSystemGlobalFortitokenCloudRegion(o["fortitoken-cloud-region"], d, "fortitoken_cloud_region", sv)); err != nil {
+		if !fortiAPIPatch(o["fortitoken-cloud-region"]) {
+			return fmt.Errorf("Error reading fortitoken_cloud_region: %v", err)
 		}
 	}
 
@@ -4830,6 +4933,12 @@ func refreshObjectSystemGlobal(d *schema.ResourceData, o map[string]interface{},
 		}
 	}
 
+	if err = d.Set("tls_session_cache", flattenSystemGlobalTlsSessionCache(o["tls-session-cache"], d, "tls_session_cache", sv)); err != nil {
+		if !fortiAPIPatch(o["tls-session-cache"]) {
+			return fmt.Errorf("Error reading tls_session_cache: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -4984,6 +5093,10 @@ func expandSystemGlobalWadRestartStartTime(d *schema.ResourceData, v interface{}
 }
 
 func expandSystemGlobalWadRestartEndTime(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemGlobalWadP2SMaxBodySize(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -5188,6 +5301,10 @@ func expandSystemGlobalSshHostkey(d *schema.ResourceData, v interface{}, pre str
 }
 
 func expandSystemGlobalSnatRouteChange(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemGlobalIpv6SnatRouteChange(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -5675,6 +5792,10 @@ func expandSystemGlobalSslvpnMaxWorkerCount(d *schema.ResourceData, v interface{
 	return v, nil
 }
 
+func expandSystemGlobalSslvpnAffinity(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemGlobalVpnEmsSnCheck(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -5839,6 +5960,10 @@ func expandSystemGlobalUrlFilterAffinity(d *schema.ResourceData, v interface{}, 
 	return v, nil
 }
 
+func expandSystemGlobalRouterAffinity(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemGlobalNdpMaxEntry(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -5876,6 +6001,10 @@ func expandSystemGlobalDeviceIdleTimeout(d *schema.ResourceData, v interface{}, 
 }
 
 func expandSystemGlobalUserDeviceStoreMaxDevices(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemGlobalUserDeviceStoreMaxDeviceMem(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -5948,6 +6077,10 @@ func expandSystemGlobalFortitokenCloud(d *schema.ResourceData, v interface{}, pr
 }
 
 func expandSystemGlobalFortitokenCloudPushStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemGlobalFortitokenCloudRegion(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -6068,6 +6201,10 @@ func expandSystemGlobalScimServerCert(d *schema.ResourceData, v interface{}, pre
 }
 
 func expandSystemGlobalApplicationBandwidthTracking(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemGlobalTlsSessionCache(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -6561,6 +6698,19 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 				return &obj, err
 			} else if t != nil {
 				obj["wad-restart-end-time"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("wad_p2s_max_body_size"); ok {
+		if setArgNil {
+			obj["wad-p2s-max-body-size"] = nil
+		} else {
+			t, err := expandSystemGlobalWadP2SMaxBodySize(d, v, "wad_p2s_max_body_size", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["wad-p2s-max-body-size"] = t
 			}
 		}
 	}
@@ -7228,6 +7378,19 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 				return &obj, err
 			} else if t != nil {
 				obj["snat-route-change"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("ipv6_snat_route_change"); ok {
+		if setArgNil {
+			obj["ipv6-snat-route-change"] = nil
+		} else {
+			t, err := expandSystemGlobalIpv6SnatRouteChange(d, v, "ipv6_snat_route_change", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ipv6-snat-route-change"] = t
 			}
 		}
 	}
@@ -8835,6 +8998,19 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		obj["sslvpn-max-worker-count"] = nil
 	}
 
+	if v, ok := d.GetOk("sslvpn_affinity"); ok {
+		if setArgNil {
+			obj["sslvpn-affinity"] = nil
+		} else {
+			t, err := expandSystemGlobalSslvpnAffinity(d, v, "sslvpn_affinity", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["sslvpn-affinity"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("vpn_ems_sn_check"); ok {
 		if setArgNil {
 			obj["vpn-ems-sn-check"] = nil
@@ -9382,6 +9558,19 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		}
 	}
 
+	if v, ok := d.GetOk("router_affinity"); ok {
+		if setArgNil {
+			obj["router-affinity"] = nil
+		} else {
+			t, err := expandSystemGlobalRouterAffinity(d, v, "router_affinity", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["router-affinity"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("ndp_max_entry"); ok {
 		if setArgNil {
 			obj["ndp-max-entry"] = nil
@@ -9514,6 +9703,19 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 				return &obj, err
 			} else if t != nil {
 				obj["user-device-store-max-devices"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("user_device_store_max_device_mem"); ok {
+		if setArgNil {
+			obj["user-device-store-max-device-mem"] = nil
+		} else {
+			t, err := expandSystemGlobalUserDeviceStoreMaxDeviceMem(d, v, "user_device_store_max_device_mem", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["user-device-store-max-device-mem"] = t
 			}
 		}
 	}
@@ -9756,6 +9958,21 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 				obj["fortitoken-cloud-push-status"] = t
 			}
 		}
+	}
+
+	if v, ok := d.GetOk("fortitoken_cloud_region"); ok {
+		if setArgNil {
+			obj["fortitoken-cloud-region"] = nil
+		} else {
+			t, err := expandSystemGlobalFortitokenCloudRegion(d, v, "fortitoken_cloud_region", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fortitoken-cloud-region"] = t
+			}
+		}
+	} else if d.HasChange("fortitoken_cloud_region") {
+		obj["fortitoken-cloud-region"] = nil
 	}
 
 	if v, ok := d.GetOkExists("fortitoken_cloud_sync_interval"); ok {
@@ -10070,6 +10287,19 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 				return &obj, err
 			} else if t != nil {
 				obj["application-bandwidth-tracking"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("tls_session_cache"); ok {
+		if setArgNil {
+			obj["tls-session-cache"] = nil
+		} else {
+			t, err := expandSystemGlobalTlsSessionCache(d, v, "tls_session_cache", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["tls-session-cache"] = t
 			}
 		}
 	}

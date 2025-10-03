@@ -56,6 +56,10 @@ func dataSourceSystemNetflow() *schema.Resource {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+			"session_cache_size": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"exclusion_filters": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
@@ -199,6 +203,10 @@ func dataSourceFlattenSystemNetflowTemplateTxTimeout(v interface{}, d *schema.Re
 }
 
 func dataSourceFlattenSystemNetflowTemplateTxCounter(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemNetflowSessionCacheSize(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -432,6 +440,12 @@ func dataSourceRefreshObjectSystemNetflow(d *schema.ResourceData, o map[string]i
 	if err = d.Set("template_tx_counter", dataSourceFlattenSystemNetflowTemplateTxCounter(o["template-tx-counter"], d, "template_tx_counter")); err != nil {
 		if !fortiAPIPatch(o["template-tx-counter"]) {
 			return fmt.Errorf("Error reading template_tx_counter: %v", err)
+		}
+	}
+
+	if err = d.Set("session_cache_size", dataSourceFlattenSystemNetflowSessionCacheSize(o["session-cache-size"], d, "session_cache_size")); err != nil {
+		if !fortiAPIPatch(o["session-cache-size"]) {
+			return fmt.Errorf("Error reading session_cache_size: %v", err)
 		}
 	}
 

@@ -40,9 +40,11 @@ The following arguments are supported:
 * `idp_single_logout_url` - IDP single logout url.
 * `idp_cert` - (Required) IDP Certificate name.
 * `scim_client` - SCIM client name.
+* `scim_user_attr_type` - User attribute type used to match SCIM users (default = user-name). Valid values: `user-name`, `display-name`, `external-id`.
+* `scim_group_attr_type` - Group attribute type used to match SCIM groups (default = display-name).. Valid values: `display-name`, `external-id`.
 * `user_name` - User name in assertion statement.
 * `group_name` - Group name in assertion statement.
-* `digest_method` - Digest Method Algorithm. (default = sha1). Valid values: `sha1`, `sha256`.
+* `digest_method` - Digest method algorithm. On FortiOS versions 7.0.1-7.6.3: (default = sha1). Valid values: `sha1`, `sha256`.
 * `limit_relaystate` - Enable/disable limiting of relay-state parameter when it exceeds SAML 2.0 specification limits (80 bytes). Valid values: `enable`, `disable`.
 * `clock_tolerance` - Clock skew tolerance in seconds (0 - 300, default = 15, 0 = no tolerance).
 * `auth_url` - URL to verify authentication.

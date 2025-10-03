@@ -208,6 +208,19 @@ func resourceVpnIpsecPhase1() *schema.Resource {
 					},
 				},
 			},
+			"dns_suffix_search": &schema.Schema{
+				Type:     schema.TypeSet,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"dns_suffix": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+						},
+					},
+				},
+			},
 			"ipv4_wins_server1": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -826,6 +839,11 @@ func resourceVpnIpsecPhase1() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"qkd_hybrid": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"qkd_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -1288,6 +1306,48 @@ func flattenVpnIpsecPhase1InternalDomainList(v interface{}, d *schema.ResourceDa
 }
 
 func flattenVpnIpsecPhase1InternalDomainListDomainName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnIpsecPhase1DnsSuffixSearch(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "dns_suffix"
+		if cur_v, ok := i["dns-suffix"]; ok {
+			tmp["dns_suffix"] = flattenVpnIpsecPhase1DnsSuffixSearchDnsSuffix(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "dns_suffix", d)
+	return result
+}
+
+func flattenVpnIpsecPhase1DnsSuffixSearchDnsSuffix(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1877,6 +1937,10 @@ func flattenVpnIpsecPhase1Qkd(v interface{}, d *schema.ResourceData, pre string,
 	return v
 }
 
+func flattenVpnIpsecPhase1QkdHybrid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenVpnIpsecPhase1QkdProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -2204,6 +2268,22 @@ func refreshObjectVpnIpsecPhase1(d *schema.ResourceData, o map[string]interface{
 			if err = d.Set("internal_domain_list", flattenVpnIpsecPhase1InternalDomainList(o["internal-domain-list"], d, "internal_domain_list", sv)); err != nil {
 				if !fortiAPIPatch(o["internal-domain-list"]) {
 					return fmt.Errorf("Error reading internal_domain_list: %v", err)
+				}
+			}
+		}
+	}
+
+	if b_get_all_tables {
+		if err = d.Set("dns_suffix_search", flattenVpnIpsecPhase1DnsSuffixSearch(o["dns-suffix-search"], d, "dns_suffix_search", sv)); err != nil {
+			if !fortiAPIPatch(o["dns-suffix-search"]) {
+				return fmt.Errorf("Error reading dns_suffix_search: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("dns_suffix_search"); ok {
+			if err = d.Set("dns_suffix_search", flattenVpnIpsecPhase1DnsSuffixSearch(o["dns-suffix-search"], d, "dns_suffix_search", sv)); err != nil {
+				if !fortiAPIPatch(o["dns-suffix-search"]) {
+					return fmt.Errorf("Error reading dns_suffix_search: %v", err)
 				}
 			}
 		}
@@ -2897,6 +2977,12 @@ func refreshObjectVpnIpsecPhase1(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("qkd_hybrid", flattenVpnIpsecPhase1QkdHybrid(o["qkd-hybrid"], d, "qkd_hybrid", sv)); err != nil {
+		if !fortiAPIPatch(o["qkd-hybrid"]) {
+			return fmt.Errorf("Error reading qkd_hybrid: %v", err)
+		}
+	}
+
 	if err = d.Set("qkd_profile", flattenVpnIpsecPhase1QkdProfile(o["qkd-profile"], d, "qkd_profile", sv)); err != nil {
 		if !fortiAPIPatch(o["qkd-profile"]) {
 			return fmt.Errorf("Error reading qkd_profile: %v", err)
@@ -3193,6 +3279,34 @@ func expandVpnIpsecPhase1InternalDomainList(d *schema.ResourceData, v interface{
 }
 
 func expandVpnIpsecPhase1InternalDomainListDomainName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnIpsecPhase1DnsSuffixSearch(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.(*schema.Set).List()
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		tmp["dns-suffix"], _ = expandVpnIpsecPhase1DnsSuffixSearchDnsSuffix(d, i["dns_suffix"], pre_append, sv)
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandVpnIpsecPhase1DnsSuffixSearchDnsSuffix(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3770,6 +3884,10 @@ func expandVpnIpsecPhase1Qkd(d *schema.ResourceData, v interface{}, pre string, 
 	return v, nil
 }
 
+func expandVpnIpsecPhase1QkdHybrid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandVpnIpsecPhase1QkdProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -4159,6 +4277,15 @@ func getObjectVpnIpsecPhase1(d *schema.ResourceData, sv string) (*map[string]int
 			return &obj, err
 		} else if t != nil {
 			obj["internal-domain-list"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("dns_suffix_search"); ok || d.HasChange("dns_suffix_search") {
+		t, err := expandVpnIpsecPhase1DnsSuffixSearch(d, v, "dns_suffix_search", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["dns-suffix-search"] = t
 		}
 	}
 
@@ -5275,6 +5402,15 @@ func getObjectVpnIpsecPhase1(d *schema.ResourceData, sv string) (*map[string]int
 			return &obj, err
 		} else if t != nil {
 			obj["qkd"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("qkd_hybrid"); ok {
+		t, err := expandVpnIpsecPhase1QkdHybrid(d, v, "qkd_hybrid", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["qkd-hybrid"] = t
 		}
 	}
 

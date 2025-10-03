@@ -42,12 +42,14 @@ The following attributes are exported:
 * `internet_service_group` - Internet Service group name. The structure of `internet_service_group` block is documented below.
 * `internet_service_custom` - Custom Internet Service name. The structure of `internet_service_custom` block is documented below.
 * `internet_service_custom_group` - Custom Internet Service group name. The structure of `internet_service_custom_group` block is documented below.
+* `internet_service_fortiguard` - FortiGuard Internet Service name. The structure of `internet_service_fortiguard` block is documented below.
 * `internet_service6` - Enable/disable use of Internet Services IPv6 for this policy. If enabled, destination IPv6 address and service are not used.
 * `internet_service6_negate` - When enabled, Internet Services match against any internet service IPv6 EXCEPT the selected Internet Service IPv6.
 * `internet_service6_name` - Internet Service IPv6 name. The structure of `internet_service6_name` block is documented below.
 * `internet_service6_group` - Internet Service IPv6 group name. The structure of `internet_service6_group` block is documented below.
 * `internet_service6_custom` - Custom Internet Service IPv6 name. The structure of `internet_service6_custom` block is documented below.
 * `internet_service6_custom_group` - Custom Internet Service IPv6 group name. The structure of `internet_service6_custom_group` block is documented below.
+* `internet_service6_fortiguard` - FortiGuard Internet Service IPv6 name. The structure of `internet_service6_fortiguard` block is documented below.
 * `service` - Name of service objects. The structure of `service` block is documented below.
 * `srcaddr_negate` - When enabled, source addresses match against any address EXCEPT the specified source addresses.
 * `dstaddr_negate` - When enabled, destination addresses match against any address EXCEPT the specified destination addresses.
@@ -106,6 +108,7 @@ The following attributes are exported:
 * `comments` - Optional comments.
 * `block_notification` - Enable/disable block notification.
 * `redirect_url` - Redirect URL for further explicit web proxy processing.
+* `https_sub_category` - Enable/disable HTTPS sub-category policy matching.
 * `decrypted_traffic_mirror` - Decrypted traffic mirror.
 * `detect_https_in_http_request` - Enable/disable detection of HTTPS in HTTP request.
 
@@ -169,6 +172,10 @@ The `internet_service_custom_group` block contains:
 
 * `name` - Custom Internet Service group name.
 
+The `internet_service_fortiguard` block contains:
+
+* `name` - FortiGuard Internet Service name.
+
 The `internet_service6_name` block contains:
 
 * `name` - Internet Service IPv6 name.
@@ -184,6 +191,10 @@ The `internet_service6_custom` block contains:
 The `internet_service6_custom_group` block contains:
 
 * `name` - Custom Internet Service IPv6 group name.
+
+The `internet_service6_fortiguard` block contains:
+
+* `name` - FortiGuard Internet Service IPv6 name.
 
 The `service` block contains:
 

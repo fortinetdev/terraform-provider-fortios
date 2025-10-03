@@ -32,4 +32,5 @@ The following attributes are exported:
 * `email` - Notifier email address.
 * `ca` - The CA that signs remote FortiSandbox certificate, empty for no check.
 * `cn` - The CN of remote server certificate, case sensitive, empty for no check.
+* `certificate_verification` - Enable/disable identity verification of FortiSandbox by use of certificate.
 

@@ -136,10 +136,20 @@ func resourceSystemFederatedUpgrade() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"allow_download": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"coordinating_fortigate": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
+						},
+						"failure_reason": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
 						},
 					},
 				},
@@ -413,9 +423,19 @@ func flattenSystemFederatedUpgradeNodeList(v interface{}, d *schema.ResourceData
 			tmp["device_type"] = flattenSystemFederatedUpgradeNodeListDeviceType(cur_v, d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "allow_download"
+		if cur_v, ok := i["allow-download"]; ok {
+			tmp["allow_download"] = flattenSystemFederatedUpgradeNodeListAllowDownload(cur_v, d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "coordinating_fortigate"
 		if cur_v, ok := i["coordinating-fortigate"]; ok {
 			tmp["coordinating_fortigate"] = flattenSystemFederatedUpgradeNodeListCoordinatingFortigate(cur_v, d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "failure_reason"
+		if cur_v, ok := i["failure-reason"]; ok {
+			tmp["failure_reason"] = flattenSystemFederatedUpgradeNodeListFailureReason(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -455,7 +475,15 @@ func flattenSystemFederatedUpgradeNodeListDeviceType(v interface{}, d *schema.Re
 	return v
 }
 
+func flattenSystemFederatedUpgradeNodeListAllowDownload(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemFederatedUpgradeNodeListCoordinatingFortigate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemFederatedUpgradeNodeListFailureReason(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -699,11 +727,21 @@ func expandSystemFederatedUpgradeNodeList(d *schema.ResourceData, v interface{},
 			tmp["device-type"], _ = expandSystemFederatedUpgradeNodeListDeviceType(d, i["device_type"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "allow_download"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["allow-download"], _ = expandSystemFederatedUpgradeNodeListAllowDownload(d, i["allow_download"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "coordinating_fortigate"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["coordinating-fortigate"], _ = expandSystemFederatedUpgradeNodeListCoordinatingFortigate(d, i["coordinating_fortigate"], pre_append, sv)
 		} else if d.HasChange(pre_append) {
 			tmp["coordinating-fortigate"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "failure_reason"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["failure-reason"], _ = expandSystemFederatedUpgradeNodeListFailureReason(d, i["failure_reason"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -742,7 +780,15 @@ func expandSystemFederatedUpgradeNodeListDeviceType(d *schema.ResourceData, v in
 	return v, nil
 }
 
+func expandSystemFederatedUpgradeNodeListAllowDownload(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemFederatedUpgradeNodeListCoordinatingFortigate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemFederatedUpgradeNodeListFailureReason(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

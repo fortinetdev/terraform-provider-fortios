@@ -161,7 +161,7 @@ The following arguments are supported:
 * `app_monitor` - Enable/disable application TCP metrics in session logs.When enabled, auto-asic-offload is disabled. Valid values: `enable`, `disable`.
 * `utm_status` - Enable to add one or more security profiles (AV, IPS, etc.) to the firewall policy. Valid values: `enable`, `disable`.
 * `inspection_mode` - Policy inspection mode (Flow/proxy). Default is Flow mode. Valid values: `proxy`, `flow`.
-* `http_policy_redirect` - Redirect HTTP(S) traffic to matching transparent web proxy policy. Valid values: `enable`, `disable`.
+* `http_policy_redirect` - Redirect HTTP(S) traffic to matching transparent web proxy policy.
 * `ssh_policy_redirect` - Redirect SSH traffic to matching transparent proxy policy. Valid values: `enable`, `disable`.
 * `ztna_policy_redirect` - Redirect ZTNA traffic to matching Access-Proxy proxy-policy. Valid values: `enable`, `disable`.
 * `webproxy_profile` - Webproxy profile name.
@@ -242,6 +242,10 @@ The following arguments are supported:
 * `groups` - Names of user groups that can authenticate with this policy. The structure of `groups` block is documented below.
 * `users` - Names of individual users that can authenticate with this policy. The structure of `users` block is documented below.
 * `fsso_groups` - Names of FSSO groups. The structure of `fsso_groups` block is documented below.
+* `scim` - Enable/disable SCIM (default = disable). Valid values: `enable`, `disable`.
+* `saml_server` - SAML server name.
+* `scim_users` - Names of SCIM users. The structure of `scim_users` block is documented below.
+* `scim_groups` - Names of SCIM groups. The structure of `scim_groups` block is documented below.
 * `devices` - Names of devices or device groups that can be matched by the policy. The structure of `devices` block is documented below.
 * `auth_path` - Enable/disable authentication-based routing. Valid values: `enable`, `disable`.
 * `disclaimer` - Enable/disable user authentication disclaimer. Valid values: `enable`, `disable`.
@@ -290,6 +294,10 @@ The following arguments are supported:
 * `vlan_filter` - Set VLAN filters.
 * `sgt_check` - Enable/disable security group tags (SGT) check. Valid values: `enable`, `disable`.
 * `sgt` - Security group tags. The structure of `sgt` block is documented below.
+* `internet_service_fortiguard` - FortiGuard Internet Service name. The structure of `internet_service_fortiguard` block is documented below.
+* `internet_service_src_fortiguard` - FortiGuard Internet Service source name. The structure of `internet_service_src_fortiguard` block is documented below.
+* `internet_service6_fortiguard` - FortiGuard IPv6 Internet Service name. The structure of `internet_service6_fortiguard` block is documented below.
+* `internet_service6_src_fortiguard` - FortiGuard IPv6 Internet Service source name. The structure of `internet_service6_src_fortiguard` block is documented below.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
 * `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
@@ -466,6 +474,14 @@ The `fsso_groups` block supports:
 
 * `name` - Names of FSSO groups.
 
+The `scim_users` block supports:
+
+* `name` - Names of SCIM users.
+
+The `scim_groups` block supports:
+
+* `name` - Names of SCIM groups.
+
 The `devices` block supports:
 
 * `name` - Device or group name.
@@ -481,6 +497,22 @@ The `ssl_mirror_intf` block supports:
 The `sgt` block supports:
 
 * `id` - Security group tag.
+
+The `internet_service_fortiguard` block supports:
+
+* `name` - FortiGuard Internet Service name.
+
+The `internet_service_src_fortiguard` block supports:
+
+* `name` - FortiGuard Internet Service name.
+
+The `internet_service6_fortiguard` block supports:
+
+* `name` - FortiGuard Internet Service name.
+
+The `internet_service6_src_fortiguard` block supports:
+
+* `name` - FortiGuard Internet Service name.
 
 
 ## Attribute Reference

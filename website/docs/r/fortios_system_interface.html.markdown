@@ -309,7 +309,7 @@ The `vrrp` block supports:
 * `vrgrp` - VRRP group ID (1 - 65535).
 * `vrip` - IP address of the virtual router.
 * `priority` - Priority of the virtual router (1 - 255).
-* `adv_interval` - Advertisement interval. On FortiOS versions 6.2.0-7.4.7: 1 - 255 seconds. On FortiOS versions >= 7.6.0: 250 - 255000 milliseconds.
+* `adv_interval` - Advertisement interval. On FortiOS versions 6.2.0-7.4.8: 1 - 255 seconds. On FortiOS versions >= 7.6.0: 250 - 255000 milliseconds.
 * `start_time` - Startup time (1 - 255 seconds).
 * `preempt` - Enable/disable preempt mode. Valid values: `enable`, `disable`.
 * `accept_mode` - Enable/disable accept mode. Valid values: `enable`, `disable`.
@@ -479,7 +479,7 @@ The `vrrp6` block supports:
 * `vrgrp` - VRRP group ID (1 - 65535).
 * `vrip6` - IPv6 address of the virtual router.
 * `priority` - Priority of the virtual router (1 - 255).
-* `adv_interval` - Advertisement interval. On FortiOS versions 6.2.0-7.4.7: 1 - 255 seconds. On FortiOS versions >= 7.6.0: 250 - 255000 milliseconds.
+* `adv_interval` - Advertisement interval. On FortiOS versions 6.2.0-7.4.8: 1 - 255 seconds. On FortiOS versions >= 7.6.0: 250 - 255000 milliseconds.
 * `start_time` - Startup time (1 - 255 seconds).
 * `preempt` - Enable/disable preempt mode. Valid values: `enable`, `disable`.
 * `accept_mode` - Enable/disable accept mode. Valid values: `enable`, `disable`.

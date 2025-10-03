@@ -20,7 +20,7 @@ The following arguments are supported:
 * `type` - CASB user activity type. Valid values: `built-in`, `customized`.
 * `casb_name` - CASB user activity signature name.
 * `application` - CASB SaaS application name.
-* `category` - CASB user activity category. Valid values: `activity-control`, `tenant-control`, `domain-control`, `safe-search-control`, `other`.
+* `category` - CASB user activity category.
 * `match_strategy` - CASB user activity match strategy. Valid values: `and`, `or`.
 * `match` - CASB user activity match rules. The structure of `match` block is documented below.
 * `control_options` - CASB control options. The structure of `control_options` block is documented below.
@@ -89,6 +89,7 @@ The `operations` block supports:
 * `search_key` - CASB operation key to search.
 * `case_sensitive` - CASB operation search case sensitive. Valid values: `enable`, `disable`.
 * `value_from_input` - Enable/disable value from user input. Valid values: `enable`, `disable`.
+* `value_name_from_input` - CASB operation value name from user input.
 * `values` - CASB operation new values. The structure of `values` block is documented below.
 
 The `values` block supports:

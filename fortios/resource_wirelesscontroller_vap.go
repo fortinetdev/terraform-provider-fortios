@@ -666,6 +666,11 @@ func resourceWirelessControllerVap() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"captive_network_assistant_bypass": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"captive_portal_fw_accounting": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -1998,6 +2003,10 @@ func flattenWirelessControllerVapCaptivePortal(v interface{}, d *schema.Resource
 	return v
 }
 
+func flattenWirelessControllerVapCaptiveNetworkAssistantBypass(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerVapCaptivePortalFwAccounting(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -3156,6 +3165,12 @@ func refreshObjectWirelessControllerVap(d *schema.ResourceData, o map[string]int
 	if err = d.Set("captive_portal", flattenWirelessControllerVapCaptivePortal(o["captive-portal"], d, "captive_portal", sv)); err != nil {
 		if !fortiAPIPatch(o["captive-portal"]) {
 			return fmt.Errorf("Error reading captive_portal: %v", err)
+		}
+	}
+
+	if err = d.Set("captive_network_assistant_bypass", flattenWirelessControllerVapCaptiveNetworkAssistantBypass(o["captive-network-assistant-bypass"], d, "captive_network_assistant_bypass", sv)); err != nil {
+		if !fortiAPIPatch(o["captive-network-assistant-bypass"]) {
+			return fmt.Errorf("Error reading captive_network_assistant_bypass: %v", err)
 		}
 	}
 
@@ -4344,6 +4359,10 @@ func expandWirelessControllerVapDynamicVlan(d *schema.ResourceData, v interface{
 }
 
 func expandWirelessControllerVapCaptivePortal(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerVapCaptiveNetworkAssistantBypass(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -5825,6 +5844,15 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 			return &obj, err
 		} else if t != nil {
 			obj["captive-portal"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("captive_network_assistant_bypass"); ok {
+		t, err := expandWirelessControllerVapCaptiveNetworkAssistantBypass(d, v, "captive_network_assistant_bypass", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["captive-network-assistant-bypass"] = t
 		}
 	}
 

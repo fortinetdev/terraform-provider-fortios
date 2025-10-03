@@ -1134,6 +1134,42 @@ func resourceFirewallPolicy() *schema.Resource {
 					},
 				},
 			},
+			"scim": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"saml_server": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+			},
+			"scim_users": &schema.Schema{
+				Type:     schema.TypeSet,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+						},
+					},
+				},
+			},
+			"scim_groups": &schema.Schema{
+				Type:     schema.TypeSet,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+						},
+					},
+				},
+			},
 			"devices": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -1398,6 +1434,58 @@ func resourceFirewallPolicy() *schema.Resource {
 						"id": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
+						},
+					},
+				},
+			},
+			"internet_service_fortiguard": &schema.Schema{
+				Type:     schema.TypeSet,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+						},
+					},
+				},
+			},
+			"internet_service_src_fortiguard": &schema.Schema{
+				Type:     schema.TypeSet,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+						},
+					},
+				},
+			},
+			"internet_service6_fortiguard": &schema.Schema{
+				Type:     schema.TypeSet,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+						},
+					},
+				},
+			},
+			"internet_service6_src_fortiguard": &schema.Schema{
+				Type:     schema.TypeSet,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
 						},
 					},
 				},
@@ -3809,6 +3897,98 @@ func flattenFirewallPolicyFssoGroupsName(v interface{}, d *schema.ResourceData, 
 	return v
 }
 
+func flattenFirewallPolicyScim(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallPolicySamlServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallPolicyScimUsers(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallPolicyScimUsersName(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenFirewallPolicyScimUsersName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallPolicyScimGroups(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallPolicyScimGroupsName(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenFirewallPolicyScimGroupsName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallPolicyDevices(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -4158,6 +4338,174 @@ func flattenFirewallPolicySgt(v interface{}, d *schema.ResourceData, pre string,
 
 func flattenFirewallPolicySgtId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return convintf2i(v)
+}
+
+func flattenFirewallPolicyInternetServiceFortiguard(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallPolicyInternetServiceFortiguardName(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenFirewallPolicyInternetServiceFortiguardName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallPolicyInternetServiceSrcFortiguard(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallPolicyInternetServiceSrcFortiguardName(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenFirewallPolicyInternetServiceSrcFortiguardName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallPolicyInternetService6Fortiguard(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallPolicyInternetService6FortiguardName(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenFirewallPolicyInternetService6FortiguardName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallPolicyInternetService6SrcFortiguard(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if cur_v, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallPolicyInternetService6SrcFortiguardName(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenFirewallPolicyInternetService6SrcFortiguardName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
 }
 
 func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -5511,6 +5859,50 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("scim", flattenFirewallPolicyScim(o["scim"], d, "scim", sv)); err != nil {
+		if !fortiAPIPatch(o["scim"]) {
+			return fmt.Errorf("Error reading scim: %v", err)
+		}
+	}
+
+	if err = d.Set("saml_server", flattenFirewallPolicySamlServer(o["saml-server"], d, "saml_server", sv)); err != nil {
+		if !fortiAPIPatch(o["saml-server"]) {
+			return fmt.Errorf("Error reading saml_server: %v", err)
+		}
+	}
+
+	if b_get_all_tables {
+		if err = d.Set("scim_users", flattenFirewallPolicyScimUsers(o["scim-users"], d, "scim_users", sv)); err != nil {
+			if !fortiAPIPatch(o["scim-users"]) {
+				return fmt.Errorf("Error reading scim_users: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("scim_users"); ok {
+			if err = d.Set("scim_users", flattenFirewallPolicyScimUsers(o["scim-users"], d, "scim_users", sv)); err != nil {
+				if !fortiAPIPatch(o["scim-users"]) {
+					return fmt.Errorf("Error reading scim_users: %v", err)
+				}
+			}
+		}
+	}
+
+	if b_get_all_tables {
+		if err = d.Set("scim_groups", flattenFirewallPolicyScimGroups(o["scim-groups"], d, "scim_groups", sv)); err != nil {
+			if !fortiAPIPatch(o["scim-groups"]) {
+				return fmt.Errorf("Error reading scim_groups: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("scim_groups"); ok {
+			if err = d.Set("scim_groups", flattenFirewallPolicyScimGroups(o["scim-groups"], d, "scim_groups", sv)); err != nil {
+				if !fortiAPIPatch(o["scim-groups"]) {
+					return fmt.Errorf("Error reading scim_groups: %v", err)
+				}
+			}
+		}
+	}
+
 	if b_get_all_tables {
 		if err = d.Set("devices", flattenFirewallPolicyDevices(o["devices"], d, "devices", sv)); err != nil {
 			if !fortiAPIPatch(o["devices"]) {
@@ -5834,6 +6226,70 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 			if err = d.Set("sgt", flattenFirewallPolicySgt(o["sgt"], d, "sgt", sv)); err != nil {
 				if !fortiAPIPatch(o["sgt"]) {
 					return fmt.Errorf("Error reading sgt: %v", err)
+				}
+			}
+		}
+	}
+
+	if b_get_all_tables {
+		if err = d.Set("internet_service_fortiguard", flattenFirewallPolicyInternetServiceFortiguard(o["internet-service-fortiguard"], d, "internet_service_fortiguard", sv)); err != nil {
+			if !fortiAPIPatch(o["internet-service-fortiguard"]) {
+				return fmt.Errorf("Error reading internet_service_fortiguard: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("internet_service_fortiguard"); ok {
+			if err = d.Set("internet_service_fortiguard", flattenFirewallPolicyInternetServiceFortiguard(o["internet-service-fortiguard"], d, "internet_service_fortiguard", sv)); err != nil {
+				if !fortiAPIPatch(o["internet-service-fortiguard"]) {
+					return fmt.Errorf("Error reading internet_service_fortiguard: %v", err)
+				}
+			}
+		}
+	}
+
+	if b_get_all_tables {
+		if err = d.Set("internet_service_src_fortiguard", flattenFirewallPolicyInternetServiceSrcFortiguard(o["internet-service-src-fortiguard"], d, "internet_service_src_fortiguard", sv)); err != nil {
+			if !fortiAPIPatch(o["internet-service-src-fortiguard"]) {
+				return fmt.Errorf("Error reading internet_service_src_fortiguard: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("internet_service_src_fortiguard"); ok {
+			if err = d.Set("internet_service_src_fortiguard", flattenFirewallPolicyInternetServiceSrcFortiguard(o["internet-service-src-fortiguard"], d, "internet_service_src_fortiguard", sv)); err != nil {
+				if !fortiAPIPatch(o["internet-service-src-fortiguard"]) {
+					return fmt.Errorf("Error reading internet_service_src_fortiguard: %v", err)
+				}
+			}
+		}
+	}
+
+	if b_get_all_tables {
+		if err = d.Set("internet_service6_fortiguard", flattenFirewallPolicyInternetService6Fortiguard(o["internet-service6-fortiguard"], d, "internet_service6_fortiguard", sv)); err != nil {
+			if !fortiAPIPatch(o["internet-service6-fortiguard"]) {
+				return fmt.Errorf("Error reading internet_service6_fortiguard: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("internet_service6_fortiguard"); ok {
+			if err = d.Set("internet_service6_fortiguard", flattenFirewallPolicyInternetService6Fortiguard(o["internet-service6-fortiguard"], d, "internet_service6_fortiguard", sv)); err != nil {
+				if !fortiAPIPatch(o["internet-service6-fortiguard"]) {
+					return fmt.Errorf("Error reading internet_service6_fortiguard: %v", err)
+				}
+			}
+		}
+	}
+
+	if b_get_all_tables {
+		if err = d.Set("internet_service6_src_fortiguard", flattenFirewallPolicyInternetService6SrcFortiguard(o["internet-service6-src-fortiguard"], d, "internet_service6_src_fortiguard", sv)); err != nil {
+			if !fortiAPIPatch(o["internet-service6-src-fortiguard"]) {
+				return fmt.Errorf("Error reading internet_service6_src_fortiguard: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("internet_service6_src_fortiguard"); ok {
+			if err = d.Set("internet_service6_src_fortiguard", flattenFirewallPolicyInternetService6SrcFortiguard(o["internet-service6-src-fortiguard"], d, "internet_service6_src_fortiguard", sv)); err != nil {
+				if !fortiAPIPatch(o["internet-service6-src-fortiguard"]) {
+					return fmt.Errorf("Error reading internet_service6_src_fortiguard: %v", err)
 				}
 			}
 		}
@@ -7488,6 +7944,70 @@ func expandFirewallPolicyFssoGroupsName(d *schema.ResourceData, v interface{}, p
 	return v, nil
 }
 
+func expandFirewallPolicyScim(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallPolicySamlServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallPolicyScimUsers(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.(*schema.Set).List()
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		tmp["name"], _ = expandFirewallPolicyScimUsersName(d, i["name"], pre_append, sv)
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandFirewallPolicyScimUsersName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallPolicyScimGroups(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.(*schema.Set).List()
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		tmp["name"], _ = expandFirewallPolicyScimGroupsName(d, i["name"], pre_append, sv)
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandFirewallPolicyScimGroupsName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallPolicyDevices(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	result := make([]map[string]interface{}, 0, len(l))
@@ -7778,6 +8298,118 @@ func expandFirewallPolicySgt(d *schema.ResourceData, v interface{}, pre string, 
 }
 
 func expandFirewallPolicySgtId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallPolicyInternetServiceFortiguard(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.(*schema.Set).List()
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		tmp["name"], _ = expandFirewallPolicyInternetServiceFortiguardName(d, i["name"], pre_append, sv)
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandFirewallPolicyInternetServiceFortiguardName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallPolicyInternetServiceSrcFortiguard(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.(*schema.Set).List()
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		tmp["name"], _ = expandFirewallPolicyInternetServiceSrcFortiguardName(d, i["name"], pre_append, sv)
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandFirewallPolicyInternetServiceSrcFortiguardName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallPolicyInternetService6Fortiguard(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.(*schema.Set).List()
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		tmp["name"], _ = expandFirewallPolicyInternetService6FortiguardName(d, i["name"], pre_append, sv)
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandFirewallPolicyInternetService6FortiguardName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallPolicyInternetService6SrcFortiguard(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.(*schema.Set).List()
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		tmp["name"], _ = expandFirewallPolicyInternetService6SrcFortiguardName(d, i["name"], pre_append, sv)
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandFirewallPolicyInternetService6SrcFortiguardName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -9232,6 +9864,44 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		}
 	}
 
+	if v, ok := d.GetOk("scim"); ok {
+		t, err := expandFirewallPolicyScim(d, v, "scim", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["scim"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("saml_server"); ok {
+		t, err := expandFirewallPolicySamlServer(d, v, "saml_server", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["saml-server"] = t
+		}
+	} else if d.HasChange("saml_server") {
+		obj["saml-server"] = nil
+	}
+
+	if v, ok := d.GetOk("scim_users"); ok || d.HasChange("scim_users") {
+		t, err := expandFirewallPolicyScimUsers(d, v, "scim_users", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["scim-users"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("scim_groups"); ok || d.HasChange("scim_groups") {
+		t, err := expandFirewallPolicyScimGroups(d, v, "scim_groups", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["scim-groups"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("devices"); ok || d.HasChange("devices") {
 		t, err := expandFirewallPolicyDevices(d, v, "devices", sv)
 		if err != nil {
@@ -9691,6 +10361,42 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 			return &obj, err
 		} else if t != nil {
 			obj["sgt"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("internet_service_fortiguard"); ok || d.HasChange("internet_service_fortiguard") {
+		t, err := expandFirewallPolicyInternetServiceFortiguard(d, v, "internet_service_fortiguard", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["internet-service-fortiguard"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("internet_service_src_fortiguard"); ok || d.HasChange("internet_service_src_fortiguard") {
+		t, err := expandFirewallPolicyInternetServiceSrcFortiguard(d, v, "internet_service_src_fortiguard", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["internet-service-src-fortiguard"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("internet_service6_fortiguard"); ok || d.HasChange("internet_service6_fortiguard") {
+		t, err := expandFirewallPolicyInternetService6Fortiguard(d, v, "internet_service6_fortiguard", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["internet-service6-fortiguard"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("internet_service6_src_fortiguard"); ok || d.HasChange("internet_service6_src_fortiguard") {
+		t, err := expandFirewallPolicyInternetService6SrcFortiguard(d, v, "internet_service6_src_fortiguard", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["internet-service6-src-fortiguard"] = t
 		}
 	}
 

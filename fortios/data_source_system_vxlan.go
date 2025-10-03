@@ -56,6 +56,10 @@ func dataSourceSystemVxlan() *schema.Resource {
 					},
 				},
 			},
+			"local_ip": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"remote_ip6": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
@@ -67,6 +71,10 @@ func dataSourceSystemVxlan() *schema.Resource {
 						},
 					},
 				},
+			},
+			"local_ip6": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
 			},
 			"dstport": &schema.Schema{
 				Type:     schema.TypeInt,
@@ -183,6 +191,10 @@ func dataSourceFlattenSystemVxlanRemoteIpIp(v interface{}, d *schema.ResourceDat
 	return v
 }
 
+func dataSourceFlattenSystemVxlanLocalIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemVxlanRemoteIp6(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -216,6 +228,10 @@ func dataSourceFlattenSystemVxlanRemoteIp6(v interface{}, d *schema.ResourceData
 }
 
 func dataSourceFlattenSystemVxlanRemoteIp6Ip6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemVxlanLocalIp6(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -268,9 +284,21 @@ func dataSourceRefreshObjectSystemVxlan(d *schema.ResourceData, o map[string]int
 		}
 	}
 
+	if err = d.Set("local_ip", dataSourceFlattenSystemVxlanLocalIp(o["local-ip"], d, "local_ip")); err != nil {
+		if !fortiAPIPatch(o["local-ip"]) {
+			return fmt.Errorf("Error reading local_ip: %v", err)
+		}
+	}
+
 	if err = d.Set("remote_ip6", dataSourceFlattenSystemVxlanRemoteIp6(o["remote-ip6"], d, "remote_ip6")); err != nil {
 		if !fortiAPIPatch(o["remote-ip6"]) {
 			return fmt.Errorf("Error reading remote_ip6: %v", err)
+		}
+	}
+
+	if err = d.Set("local_ip6", dataSourceFlattenSystemVxlanLocalIp6(o["local-ip6"], d, "local_ip6")); err != nil {
+		if !fortiAPIPatch(o["local-ip6"]) {
+			return fmt.Errorf("Error reading local_ip6: %v", err)
 		}
 	}
 

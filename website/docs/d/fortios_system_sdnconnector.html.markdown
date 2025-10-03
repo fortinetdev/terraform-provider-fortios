@@ -25,6 +25,7 @@ The following attributes are exported:
 * `proxy` - SDN proxy.
 * `ha_status` - Enable/disable use for FortiGate HA service.
 * `verify_certificate` - Enable/disable server certificate verification.
+* `vdom` - Virtual domain name of the remote SDN connector.
 * `server` - Server address of the remote SDN connector.
 * `server_list` - Server address list of the remote SDN connector. The structure of `server_list` block is documented below.
 * `server_port` - Port number of the remote SDN connector.
@@ -63,6 +64,7 @@ The following attributes are exported:
 * `forwarding_rule` - Configure GCP forwarding rule. The structure of `forwarding_rule` block is documented below.
 * `gcp_project_list` - Configure GCP project list. The structure of `gcp_project_list` block is documented below.
 * `use_metadata_iam` - Enable/disable using IAM role from metadata to call API.
+* `microsoft_365` - Enable to use as Microsoft 365 connector.
 * `gcp_project` - GCP project name.
 * `service_account` - GCP service account email.
 * `key_passwd` - Private key password.

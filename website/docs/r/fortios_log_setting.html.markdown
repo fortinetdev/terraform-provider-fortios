@@ -65,6 +65,7 @@ The following arguments are supported:
 * `rest_api_get` - Enable/disable REST API GET request logging. Valid values: `enable`, `disable`.
 * `long_live_session_stat` - Enable/disable long-live-session statistics logging. Valid values: `enable`, `disable`.
 * `extended_utm_log` - Enable/disable extended UTM logging. Valid values: `enable`, `disable`.
+* `zone_name` - Enable/disable zone name logging. Valid values: `enable`, `disable`.
 * `custom_log_fields` - Custom fields to append to all log messages. The structure of `custom_log_fields` block is documented below.
 * `anonymization_hash` - User name anonymization hash salt.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].

@@ -101,6 +101,11 @@ func resourceSystemFortisandbox() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
 			},
+			"certificate_verification": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -271,6 +276,10 @@ func flattenSystemFortisandboxCn(v interface{}, d *schema.ResourceData, pre stri
 	return v
 }
 
+func flattenSystemFortisandboxCertificateVerification(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectSystemFortisandbox(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -352,6 +361,12 @@ func refreshObjectSystemFortisandbox(d *schema.ResourceData, o map[string]interf
 		}
 	}
 
+	if err = d.Set("certificate_verification", flattenSystemFortisandboxCertificateVerification(o["certificate-verification"], d, "certificate_verification", sv)); err != nil {
+		if !fortiAPIPatch(o["certificate-verification"]) {
+			return fmt.Errorf("Error reading certificate_verification: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -410,6 +425,10 @@ func expandSystemFortisandboxCa(d *schema.ResourceData, v interface{}, pre strin
 }
 
 func expandSystemFortisandboxCn(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemFortisandboxCertificateVerification(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -597,6 +616,19 @@ func getObjectSystemFortisandbox(d *schema.ResourceData, setArgNil bool, sv stri
 		}
 	} else if d.HasChange("cn") {
 		obj["cn"] = nil
+	}
+
+	if v, ok := d.GetOk("certificate_verification"); ok {
+		if setArgNil {
+			obj["certificate-verification"] = nil
+		} else {
+			t, err := expandSystemFortisandboxCertificateVerification(d, v, "certificate_verification", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["certificate-verification"] = t
+			}
+		}
 	}
 
 	return &obj, nil

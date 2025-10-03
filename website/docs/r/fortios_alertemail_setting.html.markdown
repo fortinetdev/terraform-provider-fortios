@@ -57,7 +57,7 @@ The following arguments are supported:
 * `fips_cc_errors` - Enable/disable FIPS and Common Criteria error logs in alert email. Valid values: `enable`, `disable`.
 * `fsso_disconnect_logs` - Enable/disable logging of FSSO collector agent disconnect. Valid values: `enable`, `disable`.
 * `ssh_logs` - Enable/disable SSH logs in alert email. Valid values: `enable`, `disable`.
-* `fds_license_expiring_days` - Number of days to send alert email prior to FortiGuard license expiration (1 - 100 days). On FortiOS versions 6.2.0-7.2.0: default = 100. On FortiOS versions 7.2.1-7.2.10: default = 15.
+* `fds_license_expiring_days` - Number of days to send alert email prior to FortiGuard license expiration (1 - 100 days). On FortiOS versions 6.2.0-7.2.0: default = 100. On FortiOS versions 7.2.1-7.2.12: default = 15.
 * `local_disk_usage` - Disk usage percentage at which to send alert email (1 - 99 percent, default = 75).
 * `emergency_interval` - Emergency alert interval in minutes.
 * `alert_interval` - Alert alert interval in minutes.

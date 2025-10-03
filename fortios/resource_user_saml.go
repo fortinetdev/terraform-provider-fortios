@@ -88,6 +88,16 @@ func resourceUserSaml() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
 			},
+			"scim_user_attr_type": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"scim_group_attr_type": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"user_name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
@@ -334,6 +344,14 @@ func flattenUserSamlScimClient(v interface{}, d *schema.ResourceData, pre string
 	return v
 }
 
+func flattenUserSamlScimUserAttrType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserSamlScimGroupAttrType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenUserSamlUserName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -434,6 +452,18 @@ func refreshObjectUserSaml(d *schema.ResourceData, o map[string]interface{}, sv 
 	if err = d.Set("scim_client", flattenUserSamlScimClient(o["scim-client"], d, "scim_client", sv)); err != nil {
 		if !fortiAPIPatch(o["scim-client"]) {
 			return fmt.Errorf("Error reading scim_client: %v", err)
+		}
+	}
+
+	if err = d.Set("scim_user_attr_type", flattenUserSamlScimUserAttrType(o["scim-user-attr-type"], d, "scim_user_attr_type", sv)); err != nil {
+		if !fortiAPIPatch(o["scim-user-attr-type"]) {
+			return fmt.Errorf("Error reading scim_user_attr_type: %v", err)
+		}
+	}
+
+	if err = d.Set("scim_group_attr_type", flattenUserSamlScimGroupAttrType(o["scim-group-attr-type"], d, "scim_group_attr_type", sv)); err != nil {
+		if !fortiAPIPatch(o["scim-group-attr-type"]) {
+			return fmt.Errorf("Error reading scim_group_attr_type: %v", err)
 		}
 	}
 
@@ -543,6 +573,14 @@ func expandUserSamlIdpCert(d *schema.ResourceData, v interface{}, pre string, sv
 }
 
 func expandUserSamlScimClient(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserSamlScimUserAttrType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserSamlScimGroupAttrType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -695,6 +733,24 @@ func getObjectUserSaml(d *schema.ResourceData, sv string) (*map[string]interface
 		}
 	} else if d.HasChange("scim_client") {
 		obj["scim-client"] = nil
+	}
+
+	if v, ok := d.GetOk("scim_user_attr_type"); ok {
+		t, err := expandUserSamlScimUserAttrType(d, v, "scim_user_attr_type", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["scim-user-attr-type"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("scim_group_attr_type"); ok {
+		t, err := expandUserSamlScimGroupAttrType(d, v, "scim_group_attr_type", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["scim-group-attr-type"] = t
+		}
 	}
 
 	if v, ok := d.GetOk("user_name"); ok {

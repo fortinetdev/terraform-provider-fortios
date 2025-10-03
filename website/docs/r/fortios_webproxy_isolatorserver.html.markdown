@@ -23,6 +23,7 @@ The following arguments are supported:
 * `interface` - Specify outgoing interface to reach server.
 * `vrf_select` - VRF ID used for connection to server. Set to -1 means unset this variable. CLI output may have different value on different FortiOS version.
 * `comment` - Comment.
+* `masquerade` - Enable/disable use of the of the IP address of the outgoing interface as the client IP address (default = enable) Valid values: `enable`, `disable`.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 

@@ -71,6 +71,11 @@ func resourceSystemFabricVpn() *schema.Resource {
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
 						},
+						"ipsec_network_id": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(0, 255),
+							Optional:     true,
+						},
 						"overlay_tunnel_block": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -374,6 +379,11 @@ func flattenSystemFabricVpnOverlays(v interface{}, d *schema.ResourceData, pre s
 			tmp["name"] = flattenSystemFabricVpnOverlaysName(cur_v, d, pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "ipsec_network_id"
+		if cur_v, ok := i["ipsec-network-id"]; ok {
+			tmp["ipsec_network_id"] = flattenSystemFabricVpnOverlaysIpsecNetworkId(cur_v, d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "overlay_tunnel_block"
 		if cur_v, ok := i["overlay-tunnel-block"]; ok {
 			tmp["overlay_tunnel_block"] = flattenSystemFabricVpnOverlaysOverlayTunnelBlock(cur_v, d, pre_append, sv)
@@ -440,6 +450,10 @@ func flattenSystemFabricVpnOverlays(v interface{}, d *schema.ResourceData, pre s
 
 func flattenSystemFabricVpnOverlaysName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
+}
+
+func flattenSystemFabricVpnOverlaysIpsecNetworkId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
 }
 
 func flattenSystemFabricVpnOverlaysOverlayTunnelBlock(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -789,6 +803,13 @@ func expandSystemFabricVpnOverlays(d *schema.ResourceData, v interface{}, pre st
 			tmp["name"] = nil
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "ipsec_network_id"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["ipsec-network-id"], _ = expandSystemFabricVpnOverlaysIpsecNetworkId(d, i["ipsec_network_id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["ipsec-network-id"] = nil
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "overlay_tunnel_block"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["overlay-tunnel-block"], _ = expandSystemFabricVpnOverlaysOverlayTunnelBlock(d, i["overlay_tunnel_block"], pre_append, sv)
@@ -871,6 +892,10 @@ func expandSystemFabricVpnOverlays(d *schema.ResourceData, v interface{}, pre st
 }
 
 func expandSystemFabricVpnOverlaysName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemFabricVpnOverlaysIpsecNetworkId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1214,7 +1239,7 @@ func getObjectSystemFabricVpn(d *schema.ResourceData, setArgNil bool, sv string)
 			obj["bgp-as"] = nil
 		} else {
 			new_version_map := map[string][]string{
-				"=": []string{"7.2.4", "7.2.6", "7.2.7", "7.2.8", "7.2.9", "7.2.10", "7.4.0", "7.4.1", "7.4.2", "7.4.3", "7.4.4", "7.4.5", "7.4.6", "7.4.7", "7.6.0"},
+				"=": []string{"7.2.4", "7.2.6", "7.2.7", "7.2.8", "7.2.9", "7.2.10", "7.2.11", "7.2.12", "7.4.0", "7.4.1", "7.4.2", "7.4.3", "7.4.4", "7.4.5", "7.4.6", "7.4.7", "7.4.8", "7.6.0"},
 			}
 			if versionMatch, err := checkVersionMatch(sv, new_version_map); !versionMatch {
 				if _, ok := d.GetOk("bgp_as_string"); !ok && !d.HasChange("bgp_as_string") {

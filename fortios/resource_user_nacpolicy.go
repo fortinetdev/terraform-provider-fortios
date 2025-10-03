@@ -68,6 +68,11 @@ func resourceUserNacPolicy() *schema.Resource {
 				ValidateFunc: validation.IntBetween(0, 120),
 				Optional:     true,
 			},
+			"match_remove": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"mac": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -391,6 +396,10 @@ func flattenUserNacPolicyMatchPeriod(v interface{}, d *schema.ResourceData, pre 
 	return convintf2i(v)
 }
 
+func flattenUserNacPolicyMatchRemove(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenUserNacPolicyMac(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -638,6 +647,12 @@ func refreshObjectUserNacPolicy(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
+	if err = d.Set("match_remove", flattenUserNacPolicyMatchRemove(o["match-remove"], d, "match_remove", sv)); err != nil {
+		if !fortiAPIPatch(o["match-remove"]) {
+			return fmt.Errorf("Error reading match_remove: %v", err)
+		}
+	}
+
 	if err = d.Set("mac", flattenUserNacPolicyMac(o["mac"], d, "mac", sv)); err != nil {
 		if !fortiAPIPatch(o["mac"]) {
 			return fmt.Errorf("Error reading mac: %v", err)
@@ -830,6 +845,10 @@ func expandUserNacPolicyMatchType(d *schema.ResourceData, v interface{}, pre str
 }
 
 func expandUserNacPolicyMatchPeriod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserNacPolicyMatchRemove(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1052,6 +1071,15 @@ func getObjectUserNacPolicy(d *schema.ResourceData, sv string) (*map[string]inte
 		}
 	} else if d.HasChange("match_period") {
 		obj["match-period"] = nil
+	}
+
+	if v, ok := d.GetOk("match_remove"); ok {
+		t, err := expandUserNacPolicyMatchRemove(d, v, "match_remove", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["match-remove"] = t
+		}
 	}
 
 	if v, ok := d.GetOk("mac"); ok {

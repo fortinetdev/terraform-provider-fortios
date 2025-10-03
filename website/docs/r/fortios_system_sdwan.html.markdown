@@ -97,6 +97,8 @@ The `health_check` block supports:
 * `dns_match_ip` - Response IP expected from DNS server if the protocol is DNS.
 * `interval` - Status check interval in milliseconds, or the time between attempting to connect to the server (default = 500). On FortiOS versions 6.4.1-7.0.10, 7.2.0-7.2.4: 500 - 3600*1000 msec. On FortiOS versions 7.0.11-7.0.17, >= 7.2.6: 20 - 3600*1000 msec.
 * `probe_timeout` - Time to wait before a probe packet is considered lost (default = 500). On FortiOS versions 6.4.2-7.0.10, 7.2.0-7.2.4: 500 - 3600*1000 msec. On FortiOS versions 6.4.1: 500 - 5000 msec. On FortiOS versions 7.0.11-7.0.17, >= 7.2.6: 20 - 3600*1000 msec.
+* `agent_probe_timeout` - Time to wait before a probe packet is considered lost when detect-mode is agent (5000 - 3600*1000 msec, default = 60000).
+* `remote_probe_timeout` - Time to wait before a probe packet is considered lost when detect-mode is remote (20 - 3600*1000 msec, default = 5000).
 * `failtime` - Number of failures before server is considered lost (1 - 3600, default = 5).
 * `recoverytime` - Number of successful responses received before server is considered recovered (1 - 3600, default = 5).
 * `probe_count` - Number of most recent probes that should be used to calculate latency and jitter (5 - 30, default = 30).
@@ -119,6 +121,10 @@ The `health_check` block supports:
 * `members` - Member sequence number list. The structure of `members` block is documented below.
 * `mos_codec` - Codec to use for MOS calculation (default = g711). Valid values: `g711`, `g722`, `g729`.
 * `class_id` - Traffic class ID.
+* `packet_loss_weight` - Coefficient of packet-loss in the formula of custom-profile-1.
+* `latency_weight` - Coefficient of latency in the formula of custom-profile-1.
+* `jitter_weight` - Coefficient of jitter in the formula of custom-profile-1.
+* `bandwidth_weight` - Coefficient of reciprocal of available bidirectional bandwidth in the formula of custom-profile-1.
 * `sla` - Service level agreement (SLA). The structure of `sla` block is documented below.
 
 The `members` block supports:
@@ -133,6 +139,7 @@ The `sla` block supports:
 * `jitter_threshold` - Jitter for SLA to make decision in milliseconds. (0 - 10000000, default = 5).
 * `packetloss_threshold` - Packet loss for SLA to make decision in percentage. (0 - 100, default = 0).
 * `mos_threshold` - Minimum Mean Opinion Score for SLA to be marked as pass. (1.0 - 5.0, default = 3.6).
+* `custom_profile_threshold` - Custom profile threshold for SLA to be marked as pass(0 - 10000000, default = 0).
 * `priority_in_sla` - Value to be distributed into routing table when in-sla (0 - 65535, default = 0).
 * `priority_out_sla` - Value to be distributed into routing table when out-sla (0 - 65535, default = 0).
 
@@ -254,6 +261,7 @@ The `service` block supports:
 * `internet_service` - Enable/disable use of Internet service for application-based load balancing. Valid values: `enable`, `disable`.
 * `internet_service_custom` - Custom Internet service name list. The structure of `internet_service_custom` block is documented below.
 * `internet_service_custom_group` - Custom Internet Service group list. The structure of `internet_service_custom_group` block is documented below.
+* `internet_service_fortiguard` - FortiGuard Internet service name list. The structure of `internet_service_fortiguard` block is documented below.
 * `internet_service_name` - Internet service name list. The structure of `internet_service_name` block is documented below.
 * `internet_service_group` - Internet Service group list. The structure of `internet_service_group` block is documented below.
 * `internet_service_app_ctrl` - Application control based Internet Service ID list. The structure of `internet_service_app_ctrl` block is documented below.
@@ -279,6 +287,7 @@ The `service` block supports:
 * `gateway` - Enable/disable SD-WAN service gateway. Valid values: `enable`, `disable`.
 * `default` - Enable/disable use of SD-WAN as default service. Valid values: `enable`, `disable`.
 * `sla_compare_method` - Method to compare SLA value for SLA mode. Valid values: `order`, `number`.
+* `fib_best_match_force` - Enable/disable force using fib-best-match oif as outgoing interface. Valid values: `disable`, `enable`.
 * `tie_break` - Method of selecting member if more than one meets the SLA.
 * `use_shortcut_sla` - Enable/disable use of ADVPN shortcut for quality comparison. Valid values: `enable`, `disable`.
 * `passive_measurement` - Enable/disable passive measurement based on the service criteria. Valid values: `enable`, `disable`.
@@ -325,6 +334,10 @@ The `internet_service_custom` block supports:
 The `internet_service_custom_group` block supports:
 
 * `name` - Custom Internet Service group name.
+
+The `internet_service_fortiguard` block supports:
+
+* `name` - FortiGuard Internet service name.
 
 The `internet_service_name` block supports:
 
