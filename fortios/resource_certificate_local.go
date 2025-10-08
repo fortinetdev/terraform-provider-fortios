@@ -56,7 +56,7 @@ func resourceCertificateLocal() *schema.Resource {
 			},
 			"private_key": &schema.Schema{
 				Type:      schema.TypeString,
-				Required:  true,
+				Optional:  true,
 				Sensitive: true,
 			},
 			"certificate": &schema.Schema{
