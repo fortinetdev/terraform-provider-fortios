@@ -688,9 +688,16 @@ func refreshObjectSystemDnsDatabase(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
-	if err = d.Set("interface_select_method", flattenSystemDnsDatabaseInterfaceSelectMethod(o["interface-select-method"], d, "interface_select_method", sv)); err != nil {
-		if !fortiAPIPatch(o["interface-select-method"]) {
+	if v, ok := o["interface-select-method"]; ok && v != nil {
+		if err = d.Set("interface_select_method", flattenSystemDnsDatabaseInterfaceSelectMethod(v, d, "interface_select_method", sv)); err != nil {
 			return fmt.Errorf("Error reading interface_select_method: %v", err)
+		}
+	} else {
+		// API didn't return interface-select-method, preserve config value if set
+		if configValue, configOk := d.GetOk("interface_select_method"); configOk {
+			if err = d.Set("interface_select_method", configValue); err != nil {
+				return fmt.Errorf("Error setting interface_select_method from config: %v", err)
+			}
 		}
 	}
 
