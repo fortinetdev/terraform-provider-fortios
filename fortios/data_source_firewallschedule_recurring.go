@@ -48,6 +48,10 @@ func dataSourceFirewallScheduleRecurring() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"label_day": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"color": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
@@ -123,6 +127,10 @@ func dataSourceFlattenFirewallScheduleRecurringDay(v interface{}, d *schema.Reso
 	return v
 }
 
+func dataSourceFlattenFirewallScheduleRecurringLabelDay(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallScheduleRecurringColor(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -161,6 +169,12 @@ func dataSourceRefreshObjectFirewallScheduleRecurring(d *schema.ResourceData, o 
 	if err = d.Set("day", dataSourceFlattenFirewallScheduleRecurringDay(o["day"], d, "day")); err != nil {
 		if !fortiAPIPatch(o["day"]) {
 			return fmt.Errorf("Error reading day: %v", err)
+		}
+	}
+
+	if err = d.Set("label_day", dataSourceFlattenFirewallScheduleRecurringLabelDay(o["label-day"], d, "label_day")); err != nil {
+		if !fortiAPIPatch(o["label-day"]) {
+			return fmt.Errorf("Error reading label_day: %v", err)
 		}
 	}
 

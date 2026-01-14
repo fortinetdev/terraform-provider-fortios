@@ -47,9 +47,10 @@ func resourceFirewallAddress() *schema.Resource {
 				Computed: true,
 			},
 			"subnet": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Type:             schema.TypeString,
+				Optional:         true,
+				Computed:         true,
+				ValidateDiagFunc: validation.ToDiagFunc(isValidSubnet),
 			},
 			"type": &schema.Schema{
 				Type:     schema.TypeString,
@@ -323,6 +324,11 @@ func resourceFirewallAddress() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"passive_fqdn_learning": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"fabric_object": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -545,15 +551,26 @@ func flattenFirewallAddressMacaddr(v interface{}, d *schema.ResourceData, pre st
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "macaddr", "macaddr")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "macaddr"
 		if cur_v, ok := i["macaddr"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "macaddr"
+			}
 			tmp["macaddr"] = flattenFirewallAddressMacaddrMacaddr(cur_v, d, pre_append, sv)
 		}
 
@@ -634,15 +651,26 @@ func flattenFirewallAddressFssoGroup(v interface{}, d *schema.ResourceData, pre 
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenFirewallAddressFssoGroupName(cur_v, d, pre_append, sv)
 		}
 
@@ -676,15 +704,26 @@ func flattenFirewallAddressSsoAttributeValue(v interface{}, d *schema.ResourceDa
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenFirewallAddressSsoAttributeValueName(cur_v, d, pre_append, sv)
 		}
 
@@ -810,15 +849,26 @@ func flattenFirewallAddressList(v interface{}, d *schema.ResourceData, pre strin
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "ip", "ip")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if cur_v, ok := i["ip"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
+			}
 			tmp["ip"] = flattenFirewallAddressListIp(cur_v, d, pre_append, sv)
 		}
 
@@ -852,25 +902,42 @@ func flattenFirewallAddressTagging(v interface{}, d *schema.ResourceData, pre st
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenFirewallAddressTaggingName(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if cur_v, ok := i["category"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
+			}
 			tmp["category"] = flattenFirewallAddressTaggingCategory(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "tags"
 		if cur_v, ok := i["tags"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "tags"
+			}
 			tmp["tags"] = flattenFirewallAddressTaggingTags(cur_v, d, pre_append, sv)
 		}
 
@@ -908,15 +975,26 @@ func flattenFirewallAddressTaggingTags(v interface{}, d *schema.ResourceData, pr
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenFirewallAddressTaggingTagsName(cur_v, d, pre_append, sv)
 		}
 
@@ -934,6 +1012,10 @@ func flattenFirewallAddressTaggingTagsName(v interface{}, d *schema.ResourceData
 }
 
 func flattenFirewallAddressAllowRouting(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallAddressPassiveFqdnLearning(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1273,6 +1355,12 @@ func refreshObjectFirewallAddress(d *schema.ResourceData, o map[string]interface
 	if err = d.Set("allow_routing", flattenFirewallAddressAllowRouting(o["allow-routing"], d, "allow_routing", sv)); err != nil {
 		if !fortiAPIPatch(o["allow-routing"]) {
 			return fmt.Errorf("Error reading allow_routing: %v", err)
+		}
+	}
+
+	if err = d.Set("passive_fqdn_learning", flattenFirewallAddressPassiveFqdnLearning(o["passive-fqdn-learning"], d, "passive_fqdn_learning", sv)); err != nil {
+		if !fortiAPIPatch(o["passive-fqdn-learning"]) {
+			return fmt.Errorf("Error reading passive_fqdn_learning: %v", err)
 		}
 	}
 
@@ -1648,6 +1736,10 @@ func expandFirewallAddressTaggingTagsName(d *schema.ResourceData, v interface{},
 }
 
 func expandFirewallAddressAllowRouting(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallAddressPassiveFqdnLearning(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2114,6 +2206,15 @@ func getObjectFirewallAddress(d *schema.ResourceData, sv string) (*map[string]in
 			return &obj, err
 		} else if t != nil {
 			obj["allow-routing"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("passive_fqdn_learning"); ok {
+		t, err := expandFirewallAddressPassiveFqdnLearning(d, v, "passive_fqdn_learning", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["passive-fqdn-learning"] = t
 		}
 	}
 

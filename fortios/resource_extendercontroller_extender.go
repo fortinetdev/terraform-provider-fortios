@@ -1786,10 +1786,14 @@ func expandExtenderControllerExtenderWanExtension(d *schema.ResourceData, v inte
 	pre_append = pre + ".0." + "modem1_extension"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["modem1-extension"], _ = expandExtenderControllerExtenderWanExtensionModem1Extension(d, i["modem1_extension"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["modem1-extension"] = nil
 	}
 	pre_append = pre + ".0." + "modem2_extension"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["modem2-extension"], _ = expandExtenderControllerExtenderWanExtensionModem2Extension(d, i["modem2_extension"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["modem2-extension"] = nil
 	}
 
 	return result, nil
@@ -1858,6 +1862,8 @@ func expandExtenderControllerExtenderModem1(d *schema.ResourceData, v interface{
 	pre_append = pre + ".0." + "ifname"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ifname"], _ = expandExtenderControllerExtenderModem1Ifname(d, i["ifname"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["ifname"] = nil
 	}
 	pre_append = pre + ".0." + "redundant_mode"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -1866,10 +1872,14 @@ func expandExtenderControllerExtenderModem1(d *schema.ResourceData, v interface{
 	pre_append = pre + ".0." + "redundant_intf"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["redundant-intf"], _ = expandExtenderControllerExtenderModem1RedundantIntf(d, i["redundant_intf"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["redundant-intf"] = nil
 	}
 	pre_append = pre + ".0." + "conn_status"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["conn-status"], _ = expandExtenderControllerExtenderModem1ConnStatus(d, i["conn_status"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["conn-status"] = nil
 	}
 	pre_append = pre + ".0." + "default_sim"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -1890,14 +1900,20 @@ func expandExtenderControllerExtenderModem1(d *schema.ResourceData, v interface{
 	pre_append = pre + ".0." + "sim1_pin_code"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["sim1-pin-code"], _ = expandExtenderControllerExtenderModem1Sim1PinCode(d, i["sim1_pin_code"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["sim1-pin-code"] = nil
 	}
 	pre_append = pre + ".0." + "sim2_pin_code"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["sim2-pin-code"], _ = expandExtenderControllerExtenderModem1Sim2PinCode(d, i["sim2_pin_code"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["sim2-pin-code"] = nil
 	}
 	pre_append = pre + ".0." + "preferred_carrier"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["preferred-carrier"], _ = expandExtenderControllerExtenderModem1PreferredCarrier(d, i["preferred_carrier"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["preferred-carrier"] = nil
 	}
 	pre_append = pre + ".0." + "auto_switch"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -1986,6 +2002,8 @@ func expandExtenderControllerExtenderModem1AutoSwitch(d *schema.ResourceData, v 
 	pre_append = pre + ".0." + "switch_back"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["switch-back"], _ = expandExtenderControllerExtenderModem1AutoSwitchSwitchBack(d, i["switch_back"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["switch-back"] = nil
 	}
 	pre_append = pre + ".0." + "switch_back_time"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -2044,6 +2062,8 @@ func expandExtenderControllerExtenderModem2(d *schema.ResourceData, v interface{
 	pre_append = pre + ".0." + "ifname"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ifname"], _ = expandExtenderControllerExtenderModem2Ifname(d, i["ifname"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["ifname"] = nil
 	}
 	pre_append = pre + ".0." + "redundant_mode"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -2052,10 +2072,14 @@ func expandExtenderControllerExtenderModem2(d *schema.ResourceData, v interface{
 	pre_append = pre + ".0." + "redundant_intf"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["redundant-intf"], _ = expandExtenderControllerExtenderModem2RedundantIntf(d, i["redundant_intf"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["redundant-intf"] = nil
 	}
 	pre_append = pre + ".0." + "conn_status"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["conn-status"], _ = expandExtenderControllerExtenderModem2ConnStatus(d, i["conn_status"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["conn-status"] = nil
 	}
 	pre_append = pre + ".0." + "default_sim"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -2076,14 +2100,20 @@ func expandExtenderControllerExtenderModem2(d *schema.ResourceData, v interface{
 	pre_append = pre + ".0." + "sim1_pin_code"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["sim1-pin-code"], _ = expandExtenderControllerExtenderModem2Sim1PinCode(d, i["sim1_pin_code"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["sim1-pin-code"] = nil
 	}
 	pre_append = pre + ".0." + "sim2_pin_code"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["sim2-pin-code"], _ = expandExtenderControllerExtenderModem2Sim2PinCode(d, i["sim2_pin_code"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["sim2-pin-code"] = nil
 	}
 	pre_append = pre + ".0." + "preferred_carrier"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["preferred-carrier"], _ = expandExtenderControllerExtenderModem2PreferredCarrier(d, i["preferred_carrier"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["preferred-carrier"] = nil
 	}
 	pre_append = pre + ".0." + "auto_switch"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -2172,6 +2202,8 @@ func expandExtenderControllerExtenderModem2AutoSwitch(d *schema.ResourceData, v 
 	pre_append = pre + ".0." + "switch_back"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["switch-back"], _ = expandExtenderControllerExtenderModem2AutoSwitchSwitchBack(d, i["switch_back"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["switch-back"] = nil
 	}
 	pre_append = pre + ".0." + "switch_back_time"
 	if _, ok := d.GetOk(pre_append); ok {

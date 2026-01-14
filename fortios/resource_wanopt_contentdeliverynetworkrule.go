@@ -423,15 +423,26 @@ func flattenWanoptContentDeliveryNetworkRuleHostDomainNameSuffix(v interface{}, 
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenWanoptContentDeliveryNetworkRuleHostDomainNameSuffixName(cur_v, d, pre_append, sv)
 		}
 
@@ -489,40 +500,66 @@ func flattenWanoptContentDeliveryNetworkRuleRules(v interface{}, d *schema.Resou
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenWanoptContentDeliveryNetworkRuleRulesName(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_mode"
 		if cur_v, ok := i["match-mode"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "match_mode"
+			}
 			tmp["match_mode"] = flattenWanoptContentDeliveryNetworkRuleRulesMatchMode(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "skip_rule_mode"
 		if cur_v, ok := i["skip-rule-mode"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "skip_rule_mode"
+			}
 			tmp["skip_rule_mode"] = flattenWanoptContentDeliveryNetworkRuleRulesSkipRuleMode(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_entries"
 		if cur_v, ok := i["match-entries"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "match_entries"
+			}
 			tmp["match_entries"] = flattenWanoptContentDeliveryNetworkRuleRulesMatchEntries(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "skip_entries"
 		if cur_v, ok := i["skip-entries"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "skip_entries"
+			}
 			tmp["skip_entries"] = flattenWanoptContentDeliveryNetworkRuleRulesSkipEntries(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "content_id"
 		if cur_v, ok := i["content-id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "content_id"
+			}
 			tmp["content_id"] = flattenWanoptContentDeliveryNetworkRuleRulesContentId(cur_v, d, pre_append, sv)
 		}
 
@@ -564,25 +601,42 @@ func flattenWanoptContentDeliveryNetworkRuleRulesMatchEntries(v interface{}, d *
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenWanoptContentDeliveryNetworkRuleRulesMatchEntriesId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "target"
 		if cur_v, ok := i["target"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "target"
+			}
 			tmp["target"] = flattenWanoptContentDeliveryNetworkRuleRulesMatchEntriesTarget(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern"
 		if cur_v, ok := i["pattern"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern"
+			}
 			tmp["pattern"] = flattenWanoptContentDeliveryNetworkRuleRulesMatchEntriesPattern(cur_v, d, pre_append, sv)
 		}
 
@@ -620,15 +674,26 @@ func flattenWanoptContentDeliveryNetworkRuleRulesMatchEntriesPattern(v interface
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "string", "string")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "string"
 		if cur_v, ok := i["string"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "string"
+			}
 			tmp["string"] = flattenWanoptContentDeliveryNetworkRuleRulesMatchEntriesPatternString(cur_v, d, pre_append, sv)
 		}
 
@@ -662,25 +727,42 @@ func flattenWanoptContentDeliveryNetworkRuleRulesSkipEntries(v interface{}, d *s
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenWanoptContentDeliveryNetworkRuleRulesSkipEntriesId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "target"
 		if cur_v, ok := i["target"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "target"
+			}
 			tmp["target"] = flattenWanoptContentDeliveryNetworkRuleRulesSkipEntriesTarget(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern"
 		if cur_v, ok := i["pattern"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern"
+			}
 			tmp["pattern"] = flattenWanoptContentDeliveryNetworkRuleRulesSkipEntriesPattern(cur_v, d, pre_append, sv)
 		}
 
@@ -718,15 +800,26 @@ func flattenWanoptContentDeliveryNetworkRuleRulesSkipEntriesPattern(v interface{
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "string", "string")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "string"
 		if cur_v, ok := i["string"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "string"
+			}
 			tmp["string"] = flattenWanoptContentDeliveryNetworkRuleRulesSkipEntriesPatternString(cur_v, d, pre_append, sv)
 		}
 
@@ -1239,6 +1332,8 @@ func expandWanoptContentDeliveryNetworkRuleRulesContentId(d *schema.ResourceData
 	pre_append = pre + ".0." + "start_skip"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["start-skip"], _ = expandWanoptContentDeliveryNetworkRuleRulesContentIdStartSkip(d, i["start_skip"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["start-skip"] = nil
 	}
 	pre_append = pre + ".0." + "start_direction"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -1247,10 +1342,14 @@ func expandWanoptContentDeliveryNetworkRuleRulesContentId(d *schema.ResourceData
 	pre_append = pre + ".0." + "end_str"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["end-str"], _ = expandWanoptContentDeliveryNetworkRuleRulesContentIdEndStr(d, i["end_str"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["end-str"] = nil
 	}
 	pre_append = pre + ".0." + "end_skip"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["end-skip"], _ = expandWanoptContentDeliveryNetworkRuleRulesContentIdEndSkip(d, i["end_skip"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["end-skip"] = nil
 	}
 	pre_append = pre + ".0." + "end_direction"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -1259,6 +1358,8 @@ func expandWanoptContentDeliveryNetworkRuleRulesContentId(d *schema.ResourceData
 	pre_append = pre + ".0." + "range_str"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["range-str"], _ = expandWanoptContentDeliveryNetworkRuleRulesContentIdRangeStr(d, i["range_str"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["range-str"] = nil
 	}
 
 	return result, nil

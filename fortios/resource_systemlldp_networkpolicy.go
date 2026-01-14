@@ -1162,6 +1162,8 @@ func expandSystemLldpNetworkPolicyVoice(d *schema.ResourceData, v interface{}, p
 	pre_append = pre + ".0." + "vlan"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["vlan"], _ = expandSystemLldpNetworkPolicyVoiceVlan(d, i["vlan"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["vlan"] = nil
 	}
 	pre_append = pre + ".0." + "priority"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -1216,6 +1218,8 @@ func expandSystemLldpNetworkPolicyVoiceSignaling(d *schema.ResourceData, v inter
 	pre_append = pre + ".0." + "vlan"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["vlan"], _ = expandSystemLldpNetworkPolicyVoiceSignalingVlan(d, i["vlan"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["vlan"] = nil
 	}
 	pre_append = pre + ".0." + "priority"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -1270,6 +1274,8 @@ func expandSystemLldpNetworkPolicyGuest(d *schema.ResourceData, v interface{}, p
 	pre_append = pre + ".0." + "vlan"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["vlan"], _ = expandSystemLldpNetworkPolicyGuestVlan(d, i["vlan"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["vlan"] = nil
 	}
 	pre_append = pre + ".0." + "priority"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -1324,6 +1330,8 @@ func expandSystemLldpNetworkPolicyGuestVoiceSignaling(d *schema.ResourceData, v 
 	pre_append = pre + ".0." + "vlan"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["vlan"], _ = expandSystemLldpNetworkPolicyGuestVoiceSignalingVlan(d, i["vlan"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["vlan"] = nil
 	}
 	pre_append = pre + ".0." + "priority"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -1378,6 +1386,8 @@ func expandSystemLldpNetworkPolicySoftphone(d *schema.ResourceData, v interface{
 	pre_append = pre + ".0." + "vlan"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["vlan"], _ = expandSystemLldpNetworkPolicySoftphoneVlan(d, i["vlan"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["vlan"] = nil
 	}
 	pre_append = pre + ".0." + "priority"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -1432,6 +1442,8 @@ func expandSystemLldpNetworkPolicyVideoConferencing(d *schema.ResourceData, v in
 	pre_append = pre + ".0." + "vlan"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["vlan"], _ = expandSystemLldpNetworkPolicyVideoConferencingVlan(d, i["vlan"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["vlan"] = nil
 	}
 	pre_append = pre + ".0." + "priority"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -1486,6 +1498,8 @@ func expandSystemLldpNetworkPolicyStreamingVideo(d *schema.ResourceData, v inter
 	pre_append = pre + ".0." + "vlan"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["vlan"], _ = expandSystemLldpNetworkPolicyStreamingVideoVlan(d, i["vlan"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["vlan"] = nil
 	}
 	pre_append = pre + ".0." + "priority"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -1540,6 +1554,8 @@ func expandSystemLldpNetworkPolicyVideoSignaling(d *schema.ResourceData, v inter
 	pre_append = pre + ".0." + "vlan"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["vlan"], _ = expandSystemLldpNetworkPolicyVideoSignalingVlan(d, i["vlan"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["vlan"] = nil
 	}
 	pre_append = pre + ".0." + "priority"
 	if _, ok := d.GetOk(pre_append); ok {

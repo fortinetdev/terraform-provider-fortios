@@ -517,6 +517,11 @@ func resourceSystemSdnConnector() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"par_id": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 63),
+				Optional:     true,
+			},
 			"update_interval": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 3600),
@@ -737,15 +742,26 @@ func flattenSystemSdnConnectorServerList(v interface{}, d *schema.ResourceData, 
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "ip", "ip")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if cur_v, ok := i["ip"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
+			}
 			tmp["ip"] = flattenSystemSdnConnectorServerListIp(cur_v, d, pre_append, sv)
 		}
 
@@ -811,25 +827,42 @@ func flattenSystemSdnConnectorExternalAccountList(v interface{}, d *schema.Resou
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "role-arn", "role_arn")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "role_arn"
 		if cur_v, ok := i["role-arn"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "role_arn"
+			}
 			tmp["role_arn"] = flattenSystemSdnConnectorExternalAccountListRoleArn(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "external_id"
 		if cur_v, ok := i["external-id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "external_id"
+			}
 			tmp["external_id"] = flattenSystemSdnConnectorExternalAccountListExternalId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "region_list"
 		if cur_v, ok := i["region-list"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "region_list"
+			}
 			tmp["region_list"] = flattenSystemSdnConnectorExternalAccountListRegionList(cur_v, d, pre_append, sv)
 		}
 
@@ -867,15 +900,26 @@ func flattenSystemSdnConnectorExternalAccountListRegionList(v interface{}, d *sc
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "region", "region")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "region"
 		if cur_v, ok := i["region"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "region"
+			}
 			tmp["region"] = flattenSystemSdnConnectorExternalAccountListRegionListRegion(cur_v, d, pre_append, sv)
 		}
 
@@ -937,25 +981,42 @@ func flattenSystemSdnConnectorNic(v interface{}, d *schema.ResourceData, pre str
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenSystemSdnConnectorNicName(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "peer_nic"
 		if cur_v, ok := i["peer-nic"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "peer_nic"
+			}
 			tmp["peer_nic"] = flattenSystemSdnConnectorNicPeerNic(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if cur_v, ok := i["ip"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
+			}
 			tmp["ip"] = flattenSystemSdnConnectorNicIp(cur_v, d, pre_append, sv)
 		}
 
@@ -993,30 +1054,50 @@ func flattenSystemSdnConnectorNicIp(v interface{}, d *schema.ResourceData, pre s
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenSystemSdnConnectorNicIpName(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "private_ip"
 		if cur_v, ok := i["private-ip"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "private_ip"
+			}
 			tmp["private_ip"] = flattenSystemSdnConnectorNicIpPrivateIp(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "public_ip"
 		if cur_v, ok := i["public-ip"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "public_ip"
+			}
 			tmp["public_ip"] = flattenSystemSdnConnectorNicIpPublicIp(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "resource_group"
 		if cur_v, ok := i["resource-group"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "resource_group"
+			}
 			tmp["resource_group"] = flattenSystemSdnConnectorNicIpResourceGroup(cur_v, d, pre_append, sv)
 		}
 
@@ -1062,30 +1143,50 @@ func flattenSystemSdnConnectorRouteTable(v interface{}, d *schema.ResourceData, 
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenSystemSdnConnectorRouteTableName(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "subscription_id"
 		if cur_v, ok := i["subscription-id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "subscription_id"
+			}
 			tmp["subscription_id"] = flattenSystemSdnConnectorRouteTableSubscriptionId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "resource_group"
 		if cur_v, ok := i["resource-group"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "resource_group"
+			}
 			tmp["resource_group"] = flattenSystemSdnConnectorRouteTableResourceGroup(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route"
 		if cur_v, ok := i["route"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route"
+			}
 			tmp["route"] = flattenSystemSdnConnectorRouteTableRoute(cur_v, d, pre_append, sv)
 		}
 
@@ -1127,20 +1228,34 @@ func flattenSystemSdnConnectorRouteTableRoute(v interface{}, d *schema.ResourceD
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenSystemSdnConnectorRouteTableRouteName(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "next_hop"
 		if cur_v, ok := i["next-hop"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "next_hop"
+			}
 			tmp["next_hop"] = flattenSystemSdnConnectorRouteTableRouteNextHop(cur_v, d, pre_append, sv)
 		}
 
@@ -1182,15 +1297,26 @@ func flattenSystemSdnConnectorCompartmentList(v interface{}, d *schema.ResourceD
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "compartment-id", "compartment_id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "compartment_id"
 		if cur_v, ok := i["compartment-id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "compartment_id"
+			}
 			tmp["compartment_id"] = flattenSystemSdnConnectorCompartmentListCompartmentId(cur_v, d, pre_append, sv)
 		}
 
@@ -1224,15 +1350,26 @@ func flattenSystemSdnConnectorOciRegionList(v interface{}, d *schema.ResourceDat
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "region", "region")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "region"
 		if cur_v, ok := i["region"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "region"
+			}
 			tmp["region"] = flattenSystemSdnConnectorOciRegionListRegion(cur_v, d, pre_append, sv)
 		}
 
@@ -1286,15 +1423,26 @@ func flattenSystemSdnConnectorExternalIp(v interface{}, d *schema.ResourceData, 
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenSystemSdnConnectorExternalIpName(cur_v, d, pre_append, sv)
 		}
 
@@ -1328,15 +1476,26 @@ func flattenSystemSdnConnectorRoute(v interface{}, d *schema.ResourceData, pre s
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenSystemSdnConnectorRouteName(cur_v, d, pre_append, sv)
 		}
 
@@ -1370,20 +1529,34 @@ func flattenSystemSdnConnectorForwardingRule(v interface{}, d *schema.ResourceDa
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "rule-name", "rule_name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "rule_name"
 		if cur_v, ok := i["rule-name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "rule_name"
+			}
 			tmp["rule_name"] = flattenSystemSdnConnectorForwardingRuleRuleName(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "target"
 		if cur_v, ok := i["target"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "target"
+			}
 			tmp["target"] = flattenSystemSdnConnectorForwardingRuleTarget(cur_v, d, pre_append, sv)
 		}
 
@@ -1421,20 +1594,34 @@ func flattenSystemSdnConnectorGcpProjectList(v interface{}, d *schema.ResourceDa
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenSystemSdnConnectorGcpProjectListId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "gcp_zone_list"
 		if cur_v, ok := i["gcp-zone-list"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "gcp_zone_list"
+			}
 			tmp["gcp_zone_list"] = flattenSystemSdnConnectorGcpProjectListGcpZoneList(cur_v, d, pre_append, sv)
 		}
 
@@ -1468,15 +1655,26 @@ func flattenSystemSdnConnectorGcpProjectListGcpZoneList(v interface{}, d *schema
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenSystemSdnConnectorGcpProjectListGcpZoneListName(cur_v, d, pre_append, sv)
 		}
 
@@ -1538,6 +1736,10 @@ func flattenSystemSdnConnectorIbmRegionGen2(v interface{}, d *schema.ResourceDat
 }
 
 func flattenSystemSdnConnectorIbmRegion(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdnConnectorParId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1957,6 +2159,12 @@ func refreshObjectSystemSdnConnector(d *schema.ResourceData, o map[string]interf
 	if err = d.Set("ibm_region", flattenSystemSdnConnectorIbmRegion(o["ibm-region"], d, "ibm_region", sv)); err != nil {
 		if !fortiAPIPatch(o["ibm-region"]) {
 			return fmt.Errorf("Error reading ibm_region: %v", err)
+		}
+	}
+
+	if err = d.Set("par_id", flattenSystemSdnConnectorParId(o["par-id"], d, "par_id", sv)); err != nil {
+		if !fortiAPIPatch(o["par-id"]) {
+			return fmt.Errorf("Error reading par_id: %v", err)
 		}
 	}
 
@@ -2749,6 +2957,10 @@ func expandSystemSdnConnectorIbmRegion(d *schema.ResourceData, v interface{}, pr
 	return v, nil
 }
 
+func expandSystemSdnConnectorParId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemSdnConnectorUpdateInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -3368,6 +3580,17 @@ func getObjectSystemSdnConnector(d *schema.ResourceData, sv string) (*map[string
 		} else if t != nil {
 			obj["ibm-region"] = t
 		}
+	}
+
+	if v, ok := d.GetOk("par_id"); ok {
+		t, err := expandSystemSdnConnectorParId(d, v, "par_id", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["par-id"] = t
+		}
+	} else if d.HasChange("par_id") {
+		obj["par-id"] = nil
 	}
 
 	if v, ok := d.GetOkExists("update_interval"); ok {

@@ -81,6 +81,8 @@ The following arguments are supported:
 * `pppoe_unnumbered_negotiate` - Enable/disable PPPoE unnumbered negotiation. Valid values: `enable`, `disable`.
 * `password` - PPPoE account's password.
 * `idle_timeout` - PPPoE auto disconnect after idle timeout seconds, 0 means no timeout.
+* `multilink` - Enable/disable PPP multilink support. Valid values: `enable`, `disable`.
+* `mrru` - PPP MRRU (296 - 65535, default = 1500).
 * `detected_peer_mtu` - MTU of detected peer (0 - 4294967295).
 * `disc_retry_timeout` - Time in seconds to wait before retrying to start a PPPoE discovery, 0 means no timeout.
 * `padt_retry_timeout` - PPPoE Active Discovery Terminate (PADT) used to terminate sessions after an idle time.
@@ -326,6 +328,7 @@ The `proxy_arp` block supports:
 
 The `phy_setting` block supports:
 
+* `signal_ok_threshold` - Configure the signal strength value at which the FortiGate unit detects that the receiving signal is idle or that data is not being received. Zero means idle detection is disabled. Higher values mean the signal strength must be higher in order for the FortiGate unit to consider the interface is not idle (0 - 12, default = 0).
 * `signal_ok_threshold_value` - Signal-ok-threshold value(0 - 12).
 
 The `secondaryip` block supports:
@@ -465,6 +468,7 @@ The `ip6_delegated_prefix_list` block supports:
 * `subnet` -  Add subnet ID to routing prefix.
 * `rdnss_service` - Recursive DNS service option. Valid values: `delegated`, `default`, `specify`.
 * `rdnss` - Recursive DNS server option.
+* `dnssl_service` - Enable/disable use of domain from delegated prefix for DNSSL. Valid values: `enable`, `disable`.
 
 The `dhcp6_iapd_list` block supports:
 

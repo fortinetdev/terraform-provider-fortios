@@ -82,9 +82,10 @@ func resourceEmailfilterBwl() *schema.Resource {
 							Computed: true,
 						},
 						"ip4_subnet": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Type:             schema.TypeString,
+							Optional:         true,
+							Computed:         true,
+							ValidateDiagFunc: validation.ToDiagFunc(isValidSubnet),
 						},
 						"ip6_subnet": &schema.Schema{
 							Type:     schema.TypeString,
@@ -298,55 +299,90 @@ func flattenEmailfilterBwlEntries(v interface{}, d *schema.ResourceData, pre str
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if cur_v, ok := i["status"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
+			}
 			tmp["status"] = flattenEmailfilterBwlEntriesStatus(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenEmailfilterBwlEntriesId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if cur_v, ok := i["type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
+			}
 			tmp["type"] = flattenEmailfilterBwlEntriesType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if cur_v, ok := i["action"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
+			}
 			tmp["action"] = flattenEmailfilterBwlEntriesAction(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr_type"
 		if cur_v, ok := i["addr-type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "addr_type"
+			}
 			tmp["addr_type"] = flattenEmailfilterBwlEntriesAddrType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip4_subnet"
 		if cur_v, ok := i["ip4-subnet"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "ip4_subnet"
+			}
 			tmp["ip4_subnet"] = flattenEmailfilterBwlEntriesIp4Subnet(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip6_subnet"
 		if cur_v, ok := i["ip6-subnet"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "ip6_subnet"
+			}
 			tmp["ip6_subnet"] = flattenEmailfilterBwlEntriesIp6Subnet(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern_type"
 		if cur_v, ok := i["pattern-type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern_type"
+			}
 			tmp["pattern_type"] = flattenEmailfilterBwlEntriesPatternType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "email_pattern"
 		if cur_v, ok := i["email-pattern"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "email_pattern"
+			}
 			tmp["email_pattern"] = flattenEmailfilterBwlEntriesEmailPattern(cur_v, d, pre_append, sv)
 		}
 

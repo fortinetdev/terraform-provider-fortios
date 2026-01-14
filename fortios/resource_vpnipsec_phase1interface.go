@@ -1024,9 +1024,10 @@ func resourceVpnIpsecPhase1Interface() *schema.Resource {
 				Computed: true,
 			},
 			"remote_gw_subnet": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Type:             schema.TypeString,
+				Optional:         true,
+				Computed:         true,
+				ValidateDiagFunc: validation.ToDiagFunc(isValidSubnet),
 			},
 			"remote_gw_start_ip": &schema.Schema{
 				Type:     schema.TypeString,
@@ -1359,15 +1360,26 @@ func flattenVpnIpsecPhase1InterfaceCertificate(v interface{}, d *schema.Resource
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenVpnIpsecPhase1InterfaceCertificateName(cur_v, d, pre_append, sv)
 		}
 
@@ -1561,15 +1573,26 @@ func flattenVpnIpsecPhase1InterfaceInternalDomainList(v interface{}, d *schema.R
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "domain-name", "domain_name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "domain_name"
 		if cur_v, ok := i["domain-name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "domain_name"
+			}
 			tmp["domain_name"] = flattenVpnIpsecPhase1InterfaceInternalDomainListDomainName(cur_v, d, pre_append, sv)
 		}
 
@@ -1603,15 +1626,26 @@ func flattenVpnIpsecPhase1InterfaceDnsSuffixSearch(v interface{}, d *schema.Reso
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "dns-suffix", "dns_suffix")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "dns_suffix"
 		if cur_v, ok := i["dns-suffix"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "dns_suffix"
+			}
 			tmp["dns_suffix"] = flattenVpnIpsecPhase1InterfaceDnsSuffixSearchDnsSuffix(cur_v, d, pre_append, sv)
 		}
 
@@ -1653,25 +1687,42 @@ func flattenVpnIpsecPhase1InterfaceIpv4ExcludeRange(v interface{}, d *schema.Res
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenVpnIpsecPhase1InterfaceIpv4ExcludeRangeId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "start_ip"
 		if cur_v, ok := i["start-ip"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "start_ip"
+			}
 			tmp["start_ip"] = flattenVpnIpsecPhase1InterfaceIpv4ExcludeRangeStartIp(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "end_ip"
 		if cur_v, ok := i["end-ip"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "end_ip"
+			}
 			tmp["end_ip"] = flattenVpnIpsecPhase1InterfaceIpv4ExcludeRangeEndIp(cur_v, d, pre_append, sv)
 		}
 
@@ -1749,25 +1800,42 @@ func flattenVpnIpsecPhase1InterfaceIpv6ExcludeRange(v interface{}, d *schema.Res
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenVpnIpsecPhase1InterfaceIpv6ExcludeRangeId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "start_ip"
 		if cur_v, ok := i["start-ip"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "start_ip"
+			}
 			tmp["start_ip"] = flattenVpnIpsecPhase1InterfaceIpv6ExcludeRangeStartIp(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "end_ip"
 		if cur_v, ok := i["end-ip"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "end_ip"
+			}
 			tmp["end_ip"] = flattenVpnIpsecPhase1InterfaceIpv6ExcludeRangeEndIp(cur_v, d, pre_append, sv)
 		}
 
@@ -1857,15 +1925,26 @@ func flattenVpnIpsecPhase1InterfaceBackupGateway(v interface{}, d *schema.Resour
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "address", "address")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "address"
 		if cur_v, ok := i["address"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "address"
+			}
 			tmp["address"] = flattenVpnIpsecPhase1InterfaceBackupGatewayAddress(cur_v, d, pre_append, sv)
 		}
 
@@ -2314,15 +2393,26 @@ func flattenVpnIpsecPhase1InterfaceRemoteGwZtnaTags(v interface{}, d *schema.Res
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenVpnIpsecPhase1InterfaceRemoteGwZtnaTagsName(cur_v, d, pre_append, sv)
 		}
 

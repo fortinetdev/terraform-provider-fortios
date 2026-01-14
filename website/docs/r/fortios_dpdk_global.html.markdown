@@ -21,6 +21,7 @@ The following arguments are supported:
 * `protects` - Special arguments for device
 * `per_session_accounting` - Enable/disable per-session accounting. Valid values: `disable`, `traffic-log-only`, `enable`.
 * `ipsec_offload` - Enable/disable DPDK IPsec phase 2 offloading. Valid values: `disable`, `enable`.
+* `frag_offload` - Enable/disable DPDK fragmentation/defragmentation offloading (default = enable). Valid values: `disable`, `enable`.
 * `hugepage_percentage` - Percentage of main memory allocated to hugepages, which are available for DPDK operation.
 * `mbufpool_percentage` - Percentage of main memory allocated to DPDK packet buffer.
 * `session_table_percentage` - Percentage of main memory allocated to DPDK session table.

@@ -58,8 +58,10 @@ func (c *FortiSDKClient) CreateSystemAPIUserSetting(params *JSONSystemAPIUserSet
 	}
 
 	bytes := bytes.NewBuffer(locJSON)
+	headers := make(map[string]string)
+	headers["X-Admin-Passwd"] = c.Config.Auth.Password
 	req := c.NewRequest(HTTPMethod, path, nil, bytes)
-	err = req.Send()
+	err = req.Send(&headers)
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("cannot send request %s", err)
 		return
@@ -106,9 +108,11 @@ func (c *FortiSDKClient) UpdateSystemAPIUserSetting(params *JSONSystemAPIUserSet
 		return
 	}
 
+	headers := make(map[string]string)
+	headers["X-Admin-Passwd"] = c.Config.Auth.Password
 	bytes := bytes.NewBuffer(locJSON)
 	req := c.NewRequest(HTTPMethod, path, nil, bytes)
-	err = req.Send()
+	err = req.Send(&headers)
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("cannot send request %s", err)
 		return
@@ -148,9 +152,11 @@ func (c *FortiSDKClient) DeleteSystemAPIUserSetting(mkey string) (err error) {
 	HTTPMethod := "DELETE"
 	path := "/api/v2/cmdb/system/api-user"
 	path += "/" + EscapeURLString(mkey)
+	headers := make(map[string]string)
+	headers["X-Admin-Passwd"] = c.Config.Auth.Password
 
 	req := c.NewRequest(HTTPMethod, path, nil, nil)
-	err = req.Send()
+	err = req.Send(&headers)
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("cannot send request %s", err)
 		return
@@ -186,7 +192,7 @@ func (c *FortiSDKClient) ReadSystemAPIUserSetting(mkey string) (output *JSONSyst
 	output = &JSONSystemAPIUserSetting{}
 
 	req := c.NewRequest(HTTPMethod, path, nil, nil)
-	err = req.Send()
+	err = req.Send(nil)
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("cannot send request %s", err)
 		return

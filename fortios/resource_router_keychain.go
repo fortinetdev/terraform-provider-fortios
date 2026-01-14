@@ -259,38 +259,60 @@ func flattenRouterKeyChainKey(v interface{}, d *schema.ResourceData, pre string,
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenRouterKeyChainKeyId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "accept_lifetime"
 		if cur_v, ok := i["accept-lifetime"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "accept_lifetime"
+			}
 			tmp["accept_lifetime"] = flattenRouterKeyChainKeyAcceptLifetime(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "send_lifetime"
 		if cur_v, ok := i["send-lifetime"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "send_lifetime"
+			}
 			tmp["send_lifetime"] = flattenRouterKeyChainKeySendLifetime(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "key_string"
 		if _, ok := i["key-string"]; ok {
-			c := d.Get(pre_append).(string)
-			if c != "" {
-				tmp["key_string"] = c
+			if tf_exist {
+				pre_append := pre + "." + strconv.Itoa(con) + "." + "key_string"
+				c := d.Get(pre_append).(string)
+				if c != "" {
+					tmp["key_string"] = c
+				}
 			}
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "algorithm"
 		if cur_v, ok := i["algorithm"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "algorithm"
+			}
 			tmp["algorithm"] = flattenRouterKeyChainKeyAlgorithm(cur_v, d, pre_append, sv)
 		}
 

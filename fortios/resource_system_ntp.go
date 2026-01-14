@@ -83,7 +83,7 @@ func resourceSystemNtp() *schema.Resource {
 						},
 						"key": &schema.Schema{
 							Type:         schema.TypeString,
-							ValidateFunc: validation.StringLenBetween(0, 59),
+							ValidateFunc: validation.StringLenBetween(0, 64),
 							Optional:     true,
 							Sensitive:    true,
 						},
@@ -141,7 +141,7 @@ func resourceSystemNtp() *schema.Resource {
 			},
 			"key": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 59),
+				ValidateFunc: validation.StringLenBetween(0, 64),
 				Optional:     true,
 				Sensitive:    true,
 			},
@@ -319,68 +319,108 @@ func flattenSystemNtpNtpserver(v interface{}, d *schema.ResourceData, pre string
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenSystemNtpNtpserverId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "server"
 		if cur_v, ok := i["server"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "server"
+			}
 			tmp["server"] = flattenSystemNtpNtpserverServer(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ntpv3"
 		if cur_v, ok := i["ntpv3"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "ntpv3"
+			}
 			tmp["ntpv3"] = flattenSystemNtpNtpserverNtpv3(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "authentication"
 		if cur_v, ok := i["authentication"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "authentication"
+			}
 			tmp["authentication"] = flattenSystemNtpNtpserverAuthentication(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "key_type"
 		if cur_v, ok := i["key-type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "key_type"
+			}
 			tmp["key_type"] = flattenSystemNtpNtpserverKeyType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "key"
 		if _, ok := i["key"]; ok {
-			c := d.Get(pre_append).(string)
-			if c != "" {
-				tmp["key"] = c
+			if tf_exist {
+				pre_append := pre + "." + strconv.Itoa(con) + "." + "key"
+				c := d.Get(pre_append).(string)
+				if c != "" {
+					tmp["key"] = c
+				}
 			}
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "key_id"
 		if cur_v, ok := i["key-id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "key_id"
+			}
 			tmp["key_id"] = flattenSystemNtpNtpserverKeyId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip_type"
 		if cur_v, ok := i["ip-type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "ip_type"
+			}
 			tmp["ip_type"] = flattenSystemNtpNtpserverIpType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_select_method"
 		if cur_v, ok := i["interface-select-method"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_select_method"
+			}
 			tmp["interface_select_method"] = flattenSystemNtpNtpserverInterfaceSelectMethod(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
 		if cur_v, ok := i["interface"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
+			}
 			tmp["interface"] = flattenSystemNtpNtpserverInterface(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrf_select"
 		if cur_v, ok := i["vrf-select"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "vrf_select"
+			}
 			tmp["vrf_select"] = flattenSystemNtpNtpserverVrfSelect(cur_v, d, pre_append, sv)
 		}
 
@@ -474,15 +514,26 @@ func flattenSystemNtpInterface(v interface{}, d *schema.ResourceData, pre string
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "interface-name", "interface_name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
 		if cur_v, ok := i["interface-name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
+			}
 			tmp["interface_name"] = flattenSystemNtpInterfaceInterfaceName(cur_v, d, pre_append, sv)
 		}
 

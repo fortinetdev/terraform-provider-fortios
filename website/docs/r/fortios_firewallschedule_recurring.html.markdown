@@ -30,6 +30,7 @@ The following arguments are supported:
 * `start` - (Required) Time of day to start the schedule, format hh:mm.
 * `end` - (Required) Time of day to end the schedule, format hh:mm.
 * `day` - One or more days of the week on which the schedule is valid. Separate the names of the days with a space. Valid values: `sunday`, `monday`, `tuesday`, `wednesday`, `thursday`, `friday`, `saturday`, `none`.
+* `label_day` - Configure a window during the time of day in which the schedule job is executed. Valid values: `none`, `over-night`, `early-morning`, `morning`, `midday`, `afternoon`, `evening`, `night`, `late-night`.
 * `color` - Color of icon on the GUI.
 * `fabric_object` - Security Fabric global object setting. Valid values: `enable`, `disable`.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.

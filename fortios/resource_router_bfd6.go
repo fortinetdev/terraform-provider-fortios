@@ -250,20 +250,34 @@ func flattenRouterBfd6Neighbor(v interface{}, d *schema.ResourceData, pre string
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "ip6-address", "ip6_address")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip6_address"
 		if cur_v, ok := i["ip6-address"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "ip6_address"
+			}
 			tmp["ip6_address"] = flattenRouterBfd6NeighborIp6Address(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
 		if cur_v, ok := i["interface"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
+			}
 			tmp["interface"] = flattenRouterBfd6NeighborInterface(cur_v, d, pre_append, sv)
 		}
 
@@ -301,53 +315,84 @@ func flattenRouterBfd6MultihopTemplate(v interface{}, d *schema.ResourceData, pr
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenRouterBfd6MultihopTemplateId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "src"
 		if cur_v, ok := i["src"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "src"
+			}
 			tmp["src"] = flattenRouterBfd6MultihopTemplateSrc(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst"
 		if cur_v, ok := i["dst"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "dst"
+			}
 			tmp["dst"] = flattenRouterBfd6MultihopTemplateDst(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "bfd_desired_min_tx"
 		if cur_v, ok := i["bfd-desired-min-tx"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "bfd_desired_min_tx"
+			}
 			tmp["bfd_desired_min_tx"] = flattenRouterBfd6MultihopTemplateBfdDesiredMinTx(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "bfd_required_min_rx"
 		if cur_v, ok := i["bfd-required-min-rx"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "bfd_required_min_rx"
+			}
 			tmp["bfd_required_min_rx"] = flattenRouterBfd6MultihopTemplateBfdRequiredMinRx(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "bfd_detect_mult"
 		if cur_v, ok := i["bfd-detect-mult"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "bfd_detect_mult"
+			}
 			tmp["bfd_detect_mult"] = flattenRouterBfd6MultihopTemplateBfdDetectMult(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_mode"
 		if cur_v, ok := i["auth-mode"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_mode"
+			}
 			tmp["auth_mode"] = flattenRouterBfd6MultihopTemplateAuthMode(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "md5_key"
 		if _, ok := i["md5-key"]; ok {
-			c := d.Get(pre_append).(string)
-			if c != "" {
-				tmp["md5_key"] = c
+			if tf_exist {
+				pre_append := pre + "." + strconv.Itoa(con) + "." + "md5_key"
+				c := d.Get(pre_append).(string)
+				if c != "" {
+					tmp["md5_key"] = c
+				}
 			}
 		}
 

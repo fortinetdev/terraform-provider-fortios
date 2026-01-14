@@ -829,15 +829,26 @@ func flattenFirewallVip6SrcFilter(v interface{}, d *schema.ResourceData, pre str
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "range", "range")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "range"
 		if cur_v, ok := i["range"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "range"
+			}
 			tmp["range"] = flattenFirewallVip6SrcFilterRange(cur_v, d, pre_append, sv)
 		}
 
@@ -1048,75 +1059,122 @@ func flattenFirewallVip6Realservers(v interface{}, d *schema.ResourceData, pre s
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenFirewallVip6RealserversId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if cur_v, ok := i["ip"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
+			}
 			tmp["ip"] = flattenFirewallVip6RealserversIp(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
 		if cur_v, ok := i["port"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
+			}
 			tmp["port"] = flattenFirewallVip6RealserversPort(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if cur_v, ok := i["status"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
+			}
 			tmp["status"] = flattenFirewallVip6RealserversStatus(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "weight"
 		if cur_v, ok := i["weight"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "weight"
+			}
 			tmp["weight"] = flattenFirewallVip6RealserversWeight(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "holddown_interval"
 		if cur_v, ok := i["holddown-interval"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "holddown_interval"
+			}
 			tmp["holddown_interval"] = flattenFirewallVip6RealserversHolddownInterval(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "healthcheck"
 		if cur_v, ok := i["healthcheck"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "healthcheck"
+			}
 			tmp["healthcheck"] = flattenFirewallVip6RealserversHealthcheck(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_host"
 		if cur_v, ok := i["http-host"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "http_host"
+			}
 			tmp["http_host"] = flattenFirewallVip6RealserversHttpHost(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "translate_host"
 		if cur_v, ok := i["translate-host"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "translate_host"
+			}
 			tmp["translate_host"] = flattenFirewallVip6RealserversTranslateHost(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "max_connections"
 		if cur_v, ok := i["max-connections"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "max_connections"
+			}
 			tmp["max_connections"] = flattenFirewallVip6RealserversMaxConnections(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "monitor"
 		if cur_v, ok := i["monitor"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "monitor"
+			}
 			tmp["monitor"] = flattenFirewallVip6RealserversMonitor(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "client_ip"
 		if cur_v, ok := i["client-ip"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "client_ip"
+			}
 			tmp["client_ip"] = flattenFirewallVip6RealserversClientIp(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "verify_cert"
 		if cur_v, ok := i["verify-cert"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "verify_cert"
+			}
 			tmp["verify_cert"] = flattenFirewallVip6RealserversVerifyCert(cur_v, d, pre_append, sv)
 		}
 
@@ -1266,25 +1324,42 @@ func flattenFirewallVip6SslCipherSuites(v interface{}, d *schema.ResourceData, p
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "priority", "priority")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
 		if cur_v, ok := i["priority"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
+			}
 			tmp["priority"] = flattenFirewallVip6SslCipherSuitesPriority(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "cipher"
 		if cur_v, ok := i["cipher"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "cipher"
+			}
 			tmp["cipher"] = flattenFirewallVip6SslCipherSuitesCipher(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "versions"
 		if cur_v, ok := i["versions"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "versions"
+			}
 			tmp["versions"] = flattenFirewallVip6SslCipherSuitesVersions(cur_v, d, pre_append, sv)
 		}
 
@@ -1334,25 +1409,42 @@ func flattenFirewallVip6SslServerCipherSuites(v interface{}, d *schema.ResourceD
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "priority", "priority")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
 		if cur_v, ok := i["priority"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
+			}
 			tmp["priority"] = flattenFirewallVip6SslServerCipherSuitesPriority(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "cipher"
 		if cur_v, ok := i["cipher"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "cipher"
+			}
 			tmp["cipher"] = flattenFirewallVip6SslServerCipherSuitesCipher(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "versions"
 		if cur_v, ok := i["versions"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "versions"
+			}
 			tmp["versions"] = flattenFirewallVip6SslServerCipherSuitesVersions(cur_v, d, pre_append, sv)
 		}
 
@@ -1502,15 +1594,26 @@ func flattenFirewallVip6Monitor(v interface{}, d *schema.ResourceData, pre strin
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenFirewallVip6MonitorName(cur_v, d, pre_append, sv)
 		}
 

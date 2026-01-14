@@ -113,6 +113,23 @@ func resourceWirelessControllerSnmp() *schema.Resource {
 								},
 							},
 						},
+						"hosts6": &schema.Schema{
+							Type:     schema.TypeList,
+							Optional: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"id": &schema.Schema{
+										Type:     schema.TypeInt,
+										Optional: true,
+									},
+									"ipv6": &schema.Schema{
+										Type:     schema.TypeString,
+										Optional: true,
+										Computed: true,
+									},
+								},
+							},
+						},
 					},
 				},
 			},
@@ -170,6 +187,10 @@ func resourceWirelessControllerSnmp() *schema.Resource {
 							Sensitive:    true,
 						},
 						"notify_hosts": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"notify_hosts6": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 						},
@@ -337,51 +358,91 @@ func flattenWirelessControllerSnmpCommunity(v interface{}, d *schema.ResourceDat
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenWirelessControllerSnmpCommunityId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenWirelessControllerSnmpCommunityName(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if cur_v, ok := i["status"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
+			}
 			tmp["status"] = flattenWirelessControllerSnmpCommunityStatus(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "query_v1_status"
 		if cur_v, ok := i["query-v1-status"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "query_v1_status"
+			}
 			tmp["query_v1_status"] = flattenWirelessControllerSnmpCommunityQueryV1Status(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "query_v2c_status"
 		if cur_v, ok := i["query-v2c-status"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "query_v2c_status"
+			}
 			tmp["query_v2c_status"] = flattenWirelessControllerSnmpCommunityQueryV2CStatus(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "trap_v1_status"
 		if cur_v, ok := i["trap-v1-status"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "trap_v1_status"
+			}
 			tmp["trap_v1_status"] = flattenWirelessControllerSnmpCommunityTrapV1Status(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "trap_v2c_status"
 		if cur_v, ok := i["trap-v2c-status"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "trap_v2c_status"
+			}
 			tmp["trap_v2c_status"] = flattenWirelessControllerSnmpCommunityTrapV2CStatus(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "hosts"
 		if cur_v, ok := i["hosts"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "hosts"
+			}
 			tmp["hosts"] = flattenWirelessControllerSnmpCommunityHosts(cur_v, d, pre_append, sv)
+		}
+
+		if cur_v, ok := i["hosts6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "hosts6"
+			}
+			tmp["hosts6"] = flattenWirelessControllerSnmpCommunityHosts6(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -438,20 +499,34 @@ func flattenWirelessControllerSnmpCommunityHosts(v interface{}, d *schema.Resour
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenWirelessControllerSnmpCommunityHostsId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if cur_v, ok := i["ip"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
+			}
 			tmp["ip"] = flattenWirelessControllerSnmpCommunityHostsIp(cur_v, d, pre_append, sv)
 		}
 
@@ -472,6 +547,71 @@ func flattenWirelessControllerSnmpCommunityHostsIp(v interface{}, d *schema.Reso
 	return v
 }
 
+func flattenWirelessControllerSnmpCommunityHosts6(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
+	con := 0
+	for _, r := range parsed_list {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
+
+		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
+			tmp["id"] = flattenWirelessControllerSnmpCommunityHosts6Id(cur_v, d, pre_append, sv)
+		}
+
+		if cur_v, ok := i["ipv6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "ipv6"
+			}
+			tmp["ipv6"] = flattenWirelessControllerSnmpCommunityHosts6Ipv6(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "id", d)
+	return result
+}
+
+func flattenWirelessControllerSnmpCommunityHosts6Id(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenWirelessControllerSnmpCommunityHosts6Ipv6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerSnmpUser(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -489,67 +629,111 @@ func flattenWirelessControllerSnmpUser(v interface{}, d *schema.ResourceData, pr
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenWirelessControllerSnmpUserName(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if cur_v, ok := i["status"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
+			}
 			tmp["status"] = flattenWirelessControllerSnmpUserStatus(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "queries"
 		if cur_v, ok := i["queries"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "queries"
+			}
 			tmp["queries"] = flattenWirelessControllerSnmpUserQueries(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "trap_status"
 		if cur_v, ok := i["trap-status"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "trap_status"
+			}
 			tmp["trap_status"] = flattenWirelessControllerSnmpUserTrapStatus(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "security_level"
 		if cur_v, ok := i["security-level"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "security_level"
+			}
 			tmp["security_level"] = flattenWirelessControllerSnmpUserSecurityLevel(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_proto"
 		if cur_v, ok := i["auth-proto"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_proto"
+			}
 			tmp["auth_proto"] = flattenWirelessControllerSnmpUserAuthProto(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_pwd"
 		if _, ok := i["auth-pwd"]; ok {
-			c := d.Get(pre_append).(string)
-			if c != "" {
-				tmp["auth_pwd"] = c
+			if tf_exist {
+				pre_append := pre + "." + strconv.Itoa(con) + "." + "auth_pwd"
+				c := d.Get(pre_append).(string)
+				if c != "" {
+					tmp["auth_pwd"] = c
+				}
 			}
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "priv_proto"
 		if cur_v, ok := i["priv-proto"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "priv_proto"
+			}
 			tmp["priv_proto"] = flattenWirelessControllerSnmpUserPrivProto(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "priv_pwd"
 		if _, ok := i["priv-pwd"]; ok {
-			c := d.Get(pre_append).(string)
-			if c != "" {
-				tmp["priv_pwd"] = c
+			if tf_exist {
+				pre_append := pre + "." + strconv.Itoa(con) + "." + "priv_pwd"
+				c := d.Get(pre_append).(string)
+				if c != "" {
+					tmp["priv_pwd"] = c
+				}
 			}
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "notify_hosts"
 		if cur_v, ok := i["notify-hosts"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "notify_hosts"
+			}
 			tmp["notify_hosts"] = flattenWirelessControllerSnmpUserNotifyHosts(cur_v, d, pre_append, sv)
+		}
+
+		if cur_v, ok := i["notify-hosts6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "notify_hosts6"
+			}
+			tmp["notify_hosts6"] = flattenWirelessControllerSnmpUserNotifyHosts6(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -590,6 +774,10 @@ func flattenWirelessControllerSnmpUserPrivProto(v interface{}, d *schema.Resourc
 }
 
 func flattenWirelessControllerSnmpUserNotifyHosts(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerSnmpUserNotifyHosts6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -743,6 +931,13 @@ func expandWirelessControllerSnmpCommunity(d *schema.ResourceData, v interface{}
 			tmp["hosts"] = make([]string, 0)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "hosts6"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["hosts6"], _ = expandWirelessControllerSnmpCommunityHosts6(d, i["hosts6"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["hosts6"] = make([]string, 0)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -823,6 +1018,48 @@ func expandWirelessControllerSnmpCommunityHostsIp(d *schema.ResourceData, v inte
 	return v, nil
 }
 
+func expandWirelessControllerSnmpCommunityHosts6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["id"], _ = expandWirelessControllerSnmpCommunityHosts6Id(d, i["id"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["id"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "ipv6"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["ipv6"], _ = expandWirelessControllerSnmpCommunityHosts6Ipv6(d, i["ipv6"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandWirelessControllerSnmpCommunityHosts6Id(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerSnmpCommunityHosts6Ipv6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWirelessControllerSnmpUser(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	result := make([]map[string]interface{}, 0, len(l))
@@ -893,6 +1130,13 @@ func expandWirelessControllerSnmpUser(d *schema.ResourceData, v interface{}, pre
 			tmp["notify-hosts"] = nil
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "notify_hosts6"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["notify-hosts6"], _ = expandWirelessControllerSnmpUserNotifyHosts6(d, i["notify_hosts6"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["notify-hosts6"] = nil
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -938,6 +1182,10 @@ func expandWirelessControllerSnmpUserPrivPwd(d *schema.ResourceData, v interface
 }
 
 func expandWirelessControllerSnmpUserNotifyHosts(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerSnmpUserNotifyHosts6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

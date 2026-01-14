@@ -378,3 +378,81 @@ func remove_quote(v interface{}) interface{} {
 func bZero(v interface{}) bool {
 	return reflect.ValueOf(v).IsZero()
 }
+
+func mergeBlock(tf_list, rsp_list []interface{}, tf_mkey, api_mkey string) []interface{} {
+	result := []interface{}{}
+	mkey_index_map := make(map[string]int)
+
+	// create mkey to index map
+	for i, raw := range rsp_list {
+		if raw == nil {
+			continue
+		}
+		item := raw.(map[string]interface{})
+
+		keyStr := fmt.Sprintf("%v", item[api_mkey])
+		mkey_index_map[keyStr] = i
+	}
+
+	// parse item in terraform configuration
+	zeroCount := 0
+	for _, raw := range tf_list {
+		if raw == nil {
+			continue
+		}
+		item := raw.(map[string]interface{})
+
+		keyStr := fmt.Sprintf("%v", item[tf_mkey])
+
+		if rspIndex, ok := mkey_index_map[keyStr]; ok {
+			rspItem := rsp_list[rspIndex].(map[string]interface{})
+			rspItem["tf_exist"] = true
+			result = append(result, rspItem)
+
+			delete(mkey_index_map, keyStr)
+		} else {
+			if keyStr == "0" {
+				zeroCount += 1
+				continue
+			}
+			emptyMap := map[string]interface{}{
+				"tf_exist": true,
+			}
+			result = append(result, emptyMap)
+		}
+	}
+
+	// add items only in response
+	for _, idx := range mkey_index_map {
+		v := rsp_list[idx].(map[string]interface{})
+		if zeroCount > 0 {
+			v["tf_exist"] = true
+			zeroCount -= 1
+		} else {
+			v["tf_exist"] = false
+		}
+		result = append(result, v)
+	}
+
+	return result
+}
+
+func isValidSubnet(i interface{}, k string) (warnings []string, errors []error) {
+	value := i.(string)
+	cidrValue := convertIP(value)
+	ip, ipNet, err := net.ParseCIDR(cidrValue)
+	if err != nil {
+		errors = append(errors, fmt.Errorf(
+			"Variable %q is not a valid subnet: %v", k, value,
+		))
+		return
+	}
+	// Check if IP equals the network base address
+	if !ip.Equal(ipNet.IP) {
+		warnings = append(warnings, fmt.Sprintf(
+			"Variable %q is not a valid subnet: %v, do you mean %v?", k, value, ipNet,
+		))
+		return
+	}
+	return
+}

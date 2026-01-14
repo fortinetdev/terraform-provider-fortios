@@ -42,6 +42,7 @@ The following arguments are supported:
 * `max_message_length` - Maximum length of HTTP message, not including body (16 - 256 Kbytes, default = 32).
 * `http2_client_window_size` - HTTP/2 client initial window size in bytes (65535 - 2147483647, default = 1048576 (1MB)).
 * `http2_server_window_size` - HTTP/2 server initial window size in bytes (65535 - 2147483647, default = 1048576 (1MB)).
+* `auth_sign_timeout` - Proxy auth query sign timeout in seconds (30 - 3600, default = 120).
 * `strict_web_check` - Enable/disable strict web checking to block web sites that send incorrect headers that don't conform to HTTP 1.1. Valid values: `enable`, `disable`.
 * `forward_proxy_auth` - Enable/disable forwarding proxy authentication headers. Valid values: `enable`, `disable`.
 * `tunnel_non_http` - Enable/disable allowing non-HTTP traffic. Allowed non-HTTP traffic is tunneled. Valid values: `enable`, `disable`.
@@ -56,12 +57,13 @@ The following arguments are supported:
 * `learn_client_ip_srcaddr6` - IPv6 Source address name (srcaddr or srcaddr6 must be set). The structure of `learn_client_ip_srcaddr6` block is documented below.
 * `src_affinity_exempt_addr` - IPv4 source addresses to exempt proxy affinity.
 * `src_affinity_exempt_addr6` - IPv6 source addresses to exempt proxy affinity.
+* `policy_partial_match` - Enable/disable policy partial matching. Valid values: `enable`, `disable`.
 * `policy_category_deep_inspect` - Enable/disable deep inspection for application level category policy matching. Valid values: `enable`, `disable`.
 * `log_policy_pending` - Enable/disable logging sessions that are pending on policy matching. Valid values: `enable`, `disable`.
 * `log_forward_server` - Enable/disable forward server name logging in forward traffic log. Valid values: `enable`, `disable`.
 * `log_app_id` - Enable/disable always log application type in traffic log. Valid values: `enable`, `disable`.
 * `proxy_transparent_cert_inspection` - Enable/disable transparent proxy certificate inspection. Valid values: `enable`, `disable`.
-* `request_obs_fold` - Action when HTTP/1.x request header contains obs-fold. Valid values: `replace-with-sp`, `block`, `keep`.
+* `request_obs_fold` - Action when HTTP/1.x request header contains obs-fold. On FortiOS versions >= 7.6.5: default = keep. Valid values: `replace-with-sp`, `block`, `keep`.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
 * `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.

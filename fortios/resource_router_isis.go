@@ -799,20 +799,34 @@ func flattenRouterIsisIsisNet(v interface{}, d *schema.ResourceData, pre string,
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenRouterIsisIsisNetId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "net"
 		if cur_v, ok := i["net"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "net"
+			}
 			tmp["net"] = flattenRouterIsisIsisNetNet(cur_v, d, pre_append, sv)
 		}
 
@@ -850,166 +864,262 @@ func flattenRouterIsisIsisInterface(v interface{}, d *schema.ResourceData, pre s
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenRouterIsisIsisInterfaceName(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if cur_v, ok := i["status"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
+			}
 			tmp["status"] = flattenRouterIsisIsisInterfaceStatus(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "status6"
 		if cur_v, ok := i["status6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "status6"
+			}
 			tmp["status6"] = flattenRouterIsisIsisInterfaceStatus6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "network_type"
 		if cur_v, ok := i["network-type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "network_type"
+			}
 			tmp["network_type"] = flattenRouterIsisIsisInterfaceNetworkType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "circuit_type"
 		if cur_v, ok := i["circuit-type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "circuit_type"
+			}
 			tmp["circuit_type"] = flattenRouterIsisIsisInterfaceCircuitType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "csnp_interval_l1"
 		if cur_v, ok := i["csnp-interval-l1"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "csnp_interval_l1"
+			}
 			tmp["csnp_interval_l1"] = flattenRouterIsisIsisInterfaceCsnpIntervalL1(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "csnp_interval_l2"
 		if cur_v, ok := i["csnp-interval-l2"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "csnp_interval_l2"
+			}
 			tmp["csnp_interval_l2"] = flattenRouterIsisIsisInterfaceCsnpIntervalL2(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "hello_interval_l1"
 		if cur_v, ok := i["hello-interval-l1"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "hello_interval_l1"
+			}
 			tmp["hello_interval_l1"] = flattenRouterIsisIsisInterfaceHelloIntervalL1(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "hello_interval_l2"
 		if cur_v, ok := i["hello-interval-l2"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "hello_interval_l2"
+			}
 			tmp["hello_interval_l2"] = flattenRouterIsisIsisInterfaceHelloIntervalL2(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "hello_multiplier_l1"
 		if cur_v, ok := i["hello-multiplier-l1"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "hello_multiplier_l1"
+			}
 			tmp["hello_multiplier_l1"] = flattenRouterIsisIsisInterfaceHelloMultiplierL1(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "hello_multiplier_l2"
 		if cur_v, ok := i["hello-multiplier-l2"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "hello_multiplier_l2"
+			}
 			tmp["hello_multiplier_l2"] = flattenRouterIsisIsisInterfaceHelloMultiplierL2(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "hello_padding"
 		if cur_v, ok := i["hello-padding"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "hello_padding"
+			}
 			tmp["hello_padding"] = flattenRouterIsisIsisInterfaceHelloPadding(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "lsp_interval"
 		if cur_v, ok := i["lsp-interval"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "lsp_interval"
+			}
 			tmp["lsp_interval"] = flattenRouterIsisIsisInterfaceLspInterval(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "lsp_retransmit_interval"
 		if cur_v, ok := i["lsp-retransmit-interval"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "lsp_retransmit_interval"
+			}
 			tmp["lsp_retransmit_interval"] = flattenRouterIsisIsisInterfaceLspRetransmitInterval(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "metric_l1"
 		if cur_v, ok := i["metric-l1"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "metric_l1"
+			}
 			tmp["metric_l1"] = flattenRouterIsisIsisInterfaceMetricL1(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "metric_l2"
 		if cur_v, ok := i["metric-l2"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "metric_l2"
+			}
 			tmp["metric_l2"] = flattenRouterIsisIsisInterfaceMetricL2(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "wide_metric_l1"
 		if cur_v, ok := i["wide-metric-l1"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "wide_metric_l1"
+			}
 			tmp["wide_metric_l1"] = flattenRouterIsisIsisInterfaceWideMetricL1(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "wide_metric_l2"
 		if cur_v, ok := i["wide-metric-l2"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "wide_metric_l2"
+			}
 			tmp["wide_metric_l2"] = flattenRouterIsisIsisInterfaceWideMetricL2(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_password_l1"
 		if _, ok := i["auth-password-l1"]; ok {
-			c := d.Get(pre_append).(string)
-			if c != "" {
-				tmp["auth_password_l1"] = c
+			if tf_exist {
+				pre_append := pre + "." + strconv.Itoa(con) + "." + "auth_password_l1"
+				c := d.Get(pre_append).(string)
+				if c != "" {
+					tmp["auth_password_l1"] = c
+				}
 			}
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_password_l2"
 		if _, ok := i["auth-password-l2"]; ok {
-			c := d.Get(pre_append).(string)
-			if c != "" {
-				tmp["auth_password_l2"] = c
+			if tf_exist {
+				pre_append := pre + "." + strconv.Itoa(con) + "." + "auth_password_l2"
+				c := d.Get(pre_append).(string)
+				if c != "" {
+					tmp["auth_password_l2"] = c
+				}
 			}
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_keychain_l1"
 		if cur_v, ok := i["auth-keychain-l1"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_keychain_l1"
+			}
 			tmp["auth_keychain_l1"] = flattenRouterIsisIsisInterfaceAuthKeychainL1(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_keychain_l2"
 		if cur_v, ok := i["auth-keychain-l2"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_keychain_l2"
+			}
 			tmp["auth_keychain_l2"] = flattenRouterIsisIsisInterfaceAuthKeychainL2(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_send_only_l1"
 		if cur_v, ok := i["auth-send-only-l1"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_send_only_l1"
+			}
 			tmp["auth_send_only_l1"] = flattenRouterIsisIsisInterfaceAuthSendOnlyL1(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_send_only_l2"
 		if cur_v, ok := i["auth-send-only-l2"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_send_only_l2"
+			}
 			tmp["auth_send_only_l2"] = flattenRouterIsisIsisInterfaceAuthSendOnlyL2(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_mode_l1"
 		if cur_v, ok := i["auth-mode-l1"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_mode_l1"
+			}
 			tmp["auth_mode_l1"] = flattenRouterIsisIsisInterfaceAuthModeL1(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_mode_l2"
 		if cur_v, ok := i["auth-mode-l2"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_mode_l2"
+			}
 			tmp["auth_mode_l2"] = flattenRouterIsisIsisInterfaceAuthModeL2(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority_l1"
 		if cur_v, ok := i["priority-l1"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "priority_l1"
+			}
 			tmp["priority_l1"] = flattenRouterIsisIsisInterfacePriorityL1(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority_l2"
 		if cur_v, ok := i["priority-l2"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "priority_l2"
+			}
 			tmp["priority_l2"] = flattenRouterIsisIsisInterfacePriorityL2(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "mesh_group"
 		if cur_v, ok := i["mesh-group"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "mesh_group"
+			}
 			tmp["mesh_group"] = flattenRouterIsisIsisInterfaceMeshGroup(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "mesh_group_id"
 		if cur_v, ok := i["mesh-group-id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "mesh_group_id"
+			}
 			tmp["mesh_group_id"] = flattenRouterIsisIsisInterfaceMeshGroupId(cur_v, d, pre_append, sv)
 		}
 
@@ -1151,25 +1261,42 @@ func flattenRouterIsisSummaryAddress(v interface{}, d *schema.ResourceData, pre 
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenRouterIsisSummaryAddressId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"
 		if cur_v, ok := i["prefix"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"
+			}
 			tmp["prefix"] = flattenRouterIsisSummaryAddressPrefix(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "level"
 		if cur_v, ok := i["level"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "level"
+			}
 			tmp["level"] = flattenRouterIsisSummaryAddressLevel(cur_v, d, pre_append, sv)
 		}
 
@@ -1218,25 +1345,42 @@ func flattenRouterIsisSummaryAddress6(v interface{}, d *schema.ResourceData, pre
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenRouterIsisSummaryAddress6Id(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix6"
 		if cur_v, ok := i["prefix6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix6"
+			}
 			tmp["prefix6"] = flattenRouterIsisSummaryAddress6Prefix6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "level"
 		if cur_v, ok := i["level"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "level"
+			}
 			tmp["level"] = flattenRouterIsisSummaryAddress6Level(cur_v, d, pre_append, sv)
 		}
 
@@ -1278,40 +1422,66 @@ func flattenRouterIsisRedistribute(v interface{}, d *schema.ResourceData, pre st
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "protocol", "protocol")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
 		if cur_v, ok := i["protocol"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
+			}
 			tmp["protocol"] = flattenRouterIsisRedistributeProtocol(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if cur_v, ok := i["status"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
+			}
 			tmp["status"] = flattenRouterIsisRedistributeStatus(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "metric"
 		if cur_v, ok := i["metric"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "metric"
+			}
 			tmp["metric"] = flattenRouterIsisRedistributeMetric(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "metric_type"
 		if cur_v, ok := i["metric-type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "metric_type"
+			}
 			tmp["metric_type"] = flattenRouterIsisRedistributeMetricType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "level"
 		if cur_v, ok := i["level"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "level"
+			}
 			tmp["level"] = flattenRouterIsisRedistributeLevel(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "routemap"
 		if cur_v, ok := i["routemap"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "routemap"
+			}
 			tmp["routemap"] = flattenRouterIsisRedistributeRoutemap(cur_v, d, pre_append, sv)
 		}
 
@@ -1365,40 +1535,66 @@ func flattenRouterIsisRedistribute6(v interface{}, d *schema.ResourceData, pre s
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "protocol", "protocol")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
 		if cur_v, ok := i["protocol"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
+			}
 			tmp["protocol"] = flattenRouterIsisRedistribute6Protocol(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if cur_v, ok := i["status"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
+			}
 			tmp["status"] = flattenRouterIsisRedistribute6Status(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "metric"
 		if cur_v, ok := i["metric"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "metric"
+			}
 			tmp["metric"] = flattenRouterIsisRedistribute6Metric(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "metric_type"
 		if cur_v, ok := i["metric-type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "metric_type"
+			}
 			tmp["metric_type"] = flattenRouterIsisRedistribute6MetricType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "level"
 		if cur_v, ok := i["level"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "level"
+			}
 			tmp["level"] = flattenRouterIsisRedistribute6Level(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "routemap"
 		if cur_v, ok := i["routemap"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "routemap"
+			}
 			tmp["routemap"] = flattenRouterIsisRedistribute6Routemap(cur_v, d, pre_append, sv)
 		}
 

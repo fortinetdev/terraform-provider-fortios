@@ -165,9 +165,10 @@ func resourceVpnOcvpn() *schema.Resource {
 										Computed: true,
 									},
 									"subnet": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-										Computed: true,
+										Type:             schema.TypeString,
+										Optional:         true,
+										Computed:         true,
+										ValidateDiagFunc: validation.ToDiagFunc(isValidSubnet),
 									},
 									"interface": &schema.Schema{
 										Type:         schema.TypeString,
@@ -396,15 +397,26 @@ func flattenVpnOcvpnWanInterface(v interface{}, d *schema.ResourceData, pre stri
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenVpnOcvpnWanInterfaceName(cur_v, d, pre_append, sv)
 		}
 
@@ -473,50 +485,82 @@ func flattenVpnOcvpnOverlays(v interface{}, d *schema.ResourceData, pre string, 
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "overlay_name"
 		if cur_v, ok := i["overlay-name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "overlay_name"
+			}
 			tmp["overlay_name"] = flattenVpnOcvpnOverlaysOverlayName(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "inter_overlay"
 		if cur_v, ok := i["inter-overlay"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "inter_overlay"
+			}
 			tmp["inter_overlay"] = flattenVpnOcvpnOverlaysInterOverlay(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenVpnOcvpnOverlaysId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenVpnOcvpnOverlaysName(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "assign_ip"
 		if cur_v, ok := i["assign-ip"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "assign_ip"
+			}
 			tmp["assign_ip"] = flattenVpnOcvpnOverlaysAssignIp(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ipv4_start_ip"
 		if cur_v, ok := i["ipv4-start-ip"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "ipv4_start_ip"
+			}
 			tmp["ipv4_start_ip"] = flattenVpnOcvpnOverlaysIpv4StartIp(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ipv4_end_ip"
 		if cur_v, ok := i["ipv4-end-ip"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "ipv4_end_ip"
+			}
 			tmp["ipv4_end_ip"] = flattenVpnOcvpnOverlaysIpv4EndIp(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "subnets"
 		if cur_v, ok := i["subnets"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "subnets"
+			}
 			tmp["subnets"] = flattenVpnOcvpnOverlaysSubnets(cur_v, d, pre_append, sv)
 		}
 
@@ -574,30 +618,50 @@ func flattenVpnOcvpnOverlaysSubnets(v interface{}, d *schema.ResourceData, pre s
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenVpnOcvpnOverlaysSubnetsId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if cur_v, ok := i["type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
+			}
 			tmp["type"] = flattenVpnOcvpnOverlaysSubnetsType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "subnet"
 		if cur_v, ok := i["subnet"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "subnet"
+			}
 			tmp["subnet"] = flattenVpnOcvpnOverlaysSubnetsSubnet(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
 		if cur_v, ok := i["interface"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
+			}
 			tmp["interface"] = flattenVpnOcvpnOverlaysSubnetsInterface(cur_v, d, pre_append, sv)
 		}
 
@@ -685,25 +749,42 @@ func flattenVpnOcvpnForticlientAccessAuthGroups(v interface{}, d *schema.Resourc
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenVpnOcvpnForticlientAccessAuthGroupsName(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_group"
 		if cur_v, ok := i["auth-group"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_group"
+			}
 			tmp["auth_group"] = flattenVpnOcvpnForticlientAccessAuthGroupsAuthGroup(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "overlays"
 		if cur_v, ok := i["overlays"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "overlays"
+			}
 			tmp["overlays"] = flattenVpnOcvpnForticlientAccessAuthGroupsOverlays(cur_v, d, pre_append, sv)
 		}
 
@@ -741,15 +822,26 @@ func flattenVpnOcvpnForticlientAccessAuthGroupsOverlays(v interface{}, d *schema
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "overlay-name", "overlay_name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "overlay_name"
 		if cur_v, ok := i["overlay-name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "overlay_name"
+			}
 			tmp["overlay_name"] = flattenVpnOcvpnForticlientAccessAuthGroupsOverlaysOverlayName(cur_v, d, pre_append, sv)
 		}
 
@@ -1165,6 +1257,8 @@ func expandVpnOcvpnForticlientAccess(d *schema.ResourceData, v interface{}, pre 
 		} else {
 			result["psksecret"], _ = expandVpnOcvpnForticlientAccessPsksecret(d, i["psksecret"], pre_append, sv)
 		}
+	} else if d.HasChange(pre_append) {
+		result["psksecret"] = nil
 	}
 	pre_append = pre + ".0." + "auth_groups"
 	if _, ok := d.GetOk(pre_append); ok {

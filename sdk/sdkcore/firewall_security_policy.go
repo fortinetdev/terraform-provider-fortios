@@ -95,7 +95,7 @@ func (c *FortiSDKClient) CreateFirewallSecurityPolicy1(params *JSONFirewallSecur
 
 	bytes := bytes.NewBuffer(locJSON)
 	req := c.NewRequest(HTTPMethod, path, nil, bytes)
-	err = req.Send()
+	err = req.Send(nil)
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("cannot send request %s", err)
 		return
@@ -143,7 +143,7 @@ func (c *FortiSDKClient) UpdateFirewallSecurityPolicy1(params *JSONFirewallSecur
 
 	bytes := bytes.NewBuffer(locJSON)
 	req := c.NewRequest(HTTPMethod, path, nil, bytes)
-	err = req.Send()
+	err = req.Send(nil)
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("cannot send request %s", err)
 		return
@@ -185,7 +185,7 @@ func (c *FortiSDKClient) DeleteFirewallSecurityPolicy1(mkey string) (err error) 
 	path += "/" + mkey
 
 	req := c.NewRequest(HTTPMethod, path, nil, nil)
-	err = req.Send()
+	err = req.Send(nil)
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("cannot send request %s", err)
 		return
@@ -221,7 +221,7 @@ func (c *FortiSDKClient) ReadFirewallSecurityPolicy1(mkey string) (output *JSONF
 	output = &JSONFirewallSecurityPolicy{}
 
 	req := c.NewRequest(HTTPMethod, path, nil, nil)
-	err = req.Send()
+	err = req.Send(nil)
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("cannot send request %s", err)
 		return

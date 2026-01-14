@@ -282,25 +282,42 @@ func flattenWirelessControllerHotspot20QosMapDscpExcept(v interface{}, d *schema
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "index", "index")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "index"
 		if cur_v, ok := i["index"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "index"
+			}
 			tmp["index"] = flattenWirelessControllerHotspot20QosMapDscpExceptIndex(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "dscp"
 		if cur_v, ok := i["dscp"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "dscp"
+			}
 			tmp["dscp"] = flattenWirelessControllerHotspot20QosMapDscpExceptDscp(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "up"
 		if cur_v, ok := i["up"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "up"
+			}
 			tmp["up"] = flattenWirelessControllerHotspot20QosMapDscpExceptUp(cur_v, d, pre_append, sv)
 		}
 
@@ -342,30 +359,50 @@ func flattenWirelessControllerHotspot20QosMapDscpRange(v interface{}, d *schema.
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "index", "index")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "index"
 		if cur_v, ok := i["index"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "index"
+			}
 			tmp["index"] = flattenWirelessControllerHotspot20QosMapDscpRangeIndex(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "up"
 		if cur_v, ok := i["up"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "up"
+			}
 			tmp["up"] = flattenWirelessControllerHotspot20QosMapDscpRangeUp(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "low"
 		if cur_v, ok := i["low"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "low"
+			}
 			tmp["low"] = flattenWirelessControllerHotspot20QosMapDscpRangeLow(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "high"
 		if cur_v, ok := i["high"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "high"
+			}
 			tmp["high"] = flattenWirelessControllerHotspot20QosMapDscpRangeHigh(cur_v, d, pre_append, sv)
 		}
 

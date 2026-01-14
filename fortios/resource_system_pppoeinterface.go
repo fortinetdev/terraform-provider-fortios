@@ -93,6 +93,17 @@ func resourceSystemPppoeInterface() *schema.Resource {
 				Type:     schema.TypeInt,
 				Optional: true,
 			},
+			"multilink": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"mrru": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(296, 65535),
+				Optional:     true,
+				Computed:     true,
+			},
 			"disc_retry_timeout": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
@@ -318,6 +329,14 @@ func flattenSystemPppoeInterfaceIdleTimeout(v interface{}, d *schema.ResourceDat
 	return convintf2i(v)
 }
 
+func flattenSystemPppoeInterfaceMultilink(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemPppoeInterfaceMrru(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
 func flattenSystemPppoeInterfaceDiscRetryTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return convintf2i(v)
 }
@@ -402,6 +421,18 @@ func refreshObjectSystemPppoeInterface(d *schema.ResourceData, o map[string]inte
 	if err = d.Set("idle_timeout", flattenSystemPppoeInterfaceIdleTimeout(o["idle-timeout"], d, "idle_timeout", sv)); err != nil {
 		if !fortiAPIPatch(o["idle-timeout"]) {
 			return fmt.Errorf("Error reading idle_timeout: %v", err)
+		}
+	}
+
+	if err = d.Set("multilink", flattenSystemPppoeInterfaceMultilink(o["multilink"], d, "multilink", sv)); err != nil {
+		if !fortiAPIPatch(o["multilink"]) {
+			return fmt.Errorf("Error reading multilink: %v", err)
+		}
+	}
+
+	if err = d.Set("mrru", flattenSystemPppoeInterfaceMrru(o["mrru"], d, "mrru", sv)); err != nil {
+		if !fortiAPIPatch(o["mrru"]) {
+			return fmt.Errorf("Error reading mrru: %v", err)
 		}
 	}
 
@@ -491,6 +522,14 @@ func expandSystemPppoeInterfacePppoeUnnumberedNegotiate(d *schema.ResourceData, 
 }
 
 func expandSystemPppoeInterfaceIdleTimeout(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemPppoeInterfaceMultilink(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemPppoeInterfaceMrru(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -626,6 +665,24 @@ func getObjectSystemPppoeInterface(d *schema.ResourceData, sv string) (*map[stri
 		}
 	} else if d.HasChange("idle_timeout") {
 		obj["idle-timeout"] = nil
+	}
+
+	if v, ok := d.GetOk("multilink"); ok {
+		t, err := expandSystemPppoeInterfaceMultilink(d, v, "multilink", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["multilink"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("mrru"); ok {
+		t, err := expandSystemPppoeInterfaceMrru(d, v, "mrru", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["mrru"] = t
+		}
 	}
 
 	if v, ok := d.GetOkExists("disc_retry_timeout"); ok {

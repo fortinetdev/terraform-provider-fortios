@@ -56,21 +56,25 @@ func resourceSystemPasswordPolicy() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 128),
 				Optional:     true,
+				Computed:     true,
 			},
 			"min_upper_case_letter": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 128),
 				Optional:     true,
+				Computed:     true,
 			},
 			"min_non_alphanumeric": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 128),
 				Optional:     true,
+				Computed:     true,
 			},
 			"min_number": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 128),
 				Optional:     true,
+				Computed:     true,
 			},
 			"min_change_characters": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -506,8 +510,6 @@ func getObjectSystemPasswordPolicy(d *schema.ResourceData, setArgNil bool, sv st
 				obj["min-lower-case-letter"] = t
 			}
 		}
-	} else if d.HasChange("min_lower_case_letter") {
-		obj["min-lower-case-letter"] = nil
 	}
 
 	if v, ok := d.GetOkExists("min_upper_case_letter"); ok {
@@ -521,8 +523,6 @@ func getObjectSystemPasswordPolicy(d *schema.ResourceData, setArgNil bool, sv st
 				obj["min-upper-case-letter"] = t
 			}
 		}
-	} else if d.HasChange("min_upper_case_letter") {
-		obj["min-upper-case-letter"] = nil
 	}
 
 	if v, ok := d.GetOkExists("min_non_alphanumeric"); ok {
@@ -536,8 +536,6 @@ func getObjectSystemPasswordPolicy(d *schema.ResourceData, setArgNil bool, sv st
 				obj["min-non-alphanumeric"] = t
 			}
 		}
-	} else if d.HasChange("min_non_alphanumeric") {
-		obj["min-non-alphanumeric"] = nil
 	}
 
 	if v, ok := d.GetOkExists("min_number"); ok {
@@ -551,8 +549,6 @@ func getObjectSystemPasswordPolicy(d *schema.ResourceData, setArgNil bool, sv st
 				obj["min-number"] = t
 			}
 		}
-	} else if d.HasChange("min_number") {
-		obj["min-number"] = nil
 	}
 
 	if v, ok := d.GetOkExists("min_change_characters"); ok {

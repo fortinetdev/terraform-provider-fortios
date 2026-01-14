@@ -1224,6 +1224,12 @@ func resourceSystemGlobal() *schema.Resource {
 				ValidateFunc: validation.IntBetween(0, 255),
 				Optional:     true,
 			},
+			"wad_worker_dev_cache": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 10240),
+				Optional:     true,
+				Computed:     true,
+			},
 			"wad_csvc_cs_count": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 1),
@@ -1259,6 +1265,11 @@ func resourceSystemGlobal() *schema.Resource {
 			"miglogd_children": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 15),
+				Optional:     true,
+			},
+			"log_daemon_cpu_threshold": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 99),
 				Optional:     true,
 			},
 			"special_file_23_support": &schema.Schema{
@@ -1584,6 +1595,11 @@ func resourceSystemGlobal() *schema.Resource {
 						},
 					},
 				},
+			},
+			"geoip_full_db": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"early_tcp_npu_session": &schema.Schema{
 				Type:     schema.TypeString,
@@ -2710,6 +2726,10 @@ func flattenSystemGlobalWadWorkerCount(v interface{}, d *schema.ResourceData, pr
 	return convintf2i(v)
 }
 
+func flattenSystemGlobalWadWorkerDevCache(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
 func flattenSystemGlobalWadCsvcCsCount(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return convintf2i(v)
 }
@@ -2735,6 +2755,10 @@ func flattenSystemGlobalIpConflictDetection(v interface{}, d *schema.ResourceDat
 }
 
 func flattenSystemGlobalMiglogdChildren(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenSystemGlobalLogDaemonCpuThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return convintf2i(v)
 }
 
@@ -2991,15 +3015,26 @@ func flattenSystemGlobalInternetServiceDownloadList(v interface{}, d *schema.Res
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenSystemGlobalInternetServiceDownloadListId(cur_v, d, pre_append, sv)
 		}
 
@@ -3014,6 +3049,10 @@ func flattenSystemGlobalInternetServiceDownloadList(v interface{}, d *schema.Res
 
 func flattenSystemGlobalInternetServiceDownloadListId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return convintf2i(v)
+}
+
+func flattenSystemGlobalGeoipFullDb(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
 }
 
 func flattenSystemGlobalEarlyTcpNpuSession(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -4443,6 +4482,12 @@ func refreshObjectSystemGlobal(d *schema.ResourceData, o map[string]interface{},
 		}
 	}
 
+	if err = d.Set("wad_worker_dev_cache", flattenSystemGlobalWadWorkerDevCache(o["wad-worker-dev-cache"], d, "wad_worker_dev_cache", sv)); err != nil {
+		if !fortiAPIPatch(o["wad-worker-dev-cache"]) {
+			return fmt.Errorf("Error reading wad_worker_dev_cache: %v", err)
+		}
+	}
+
 	if err = d.Set("wad_csvc_cs_count", flattenSystemGlobalWadCsvcCsCount(o["wad-csvc-cs-count"], d, "wad_csvc_cs_count", sv)); err != nil {
 		if !fortiAPIPatch(o["wad-csvc-cs-count"]) {
 			return fmt.Errorf("Error reading wad_csvc_cs_count: %v", err)
@@ -4482,6 +4527,12 @@ func refreshObjectSystemGlobal(d *schema.ResourceData, o map[string]interface{},
 	if err = d.Set("miglogd_children", flattenSystemGlobalMiglogdChildren(o["miglogd-children"], d, "miglogd_children", sv)); err != nil {
 		if !fortiAPIPatch(o["miglogd-children"]) {
 			return fmt.Errorf("Error reading miglogd_children: %v", err)
+		}
+	}
+
+	if err = d.Set("log_daemon_cpu_threshold", flattenSystemGlobalLogDaemonCpuThreshold(o["log-daemon-cpu-threshold"], d, "log_daemon_cpu_threshold", sv)); err != nil {
+		if !fortiAPIPatch(o["log-daemon-cpu-threshold"]) {
+			return fmt.Errorf("Error reading log_daemon_cpu_threshold: %v", err)
 		}
 	}
 
@@ -4852,6 +4903,12 @@ func refreshObjectSystemGlobal(d *schema.ResourceData, o map[string]interface{},
 					return fmt.Errorf("Error reading internet_service_download_list: %v", err)
 				}
 			}
+		}
+	}
+
+	if err = d.Set("geoip_full_db", flattenSystemGlobalGeoipFullDb(o["geoip-full-db"], d, "geoip_full_db", sv)); err != nil {
+		if !fortiAPIPatch(o["geoip-full-db"]) {
+			return fmt.Errorf("Error reading geoip_full_db: %v", err)
 		}
 	}
 
@@ -5860,6 +5917,10 @@ func expandSystemGlobalWadWorkerCount(d *schema.ResourceData, v interface{}, pre
 	return v, nil
 }
 
+func expandSystemGlobalWadWorkerDevCache(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemGlobalWadCsvcCsCount(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -5885,6 +5946,10 @@ func expandSystemGlobalIpConflictDetection(d *schema.ResourceData, v interface{}
 }
 
 func expandSystemGlobalMiglogdChildren(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemGlobalLogDaemonCpuThreshold(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -6149,6 +6214,10 @@ func expandSystemGlobalInternetServiceDownloadList(d *schema.ResourceData, v int
 }
 
 func expandSystemGlobalInternetServiceDownloadListId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemGlobalGeoipFullDb(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -9225,6 +9294,19 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		obj["wad-worker-count"] = nil
 	}
 
+	if v, ok := d.GetOkExists("wad_worker_dev_cache"); ok {
+		if setArgNil {
+			obj["wad-worker-dev-cache"] = nil
+		} else {
+			t, err := expandSystemGlobalWadWorkerDevCache(d, v, "wad_worker_dev_cache", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["wad-worker-dev-cache"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("wad_csvc_cs_count"); ok {
 		if setArgNil {
 			obj["wad-csvc-cs-count"] = nil
@@ -9318,6 +9400,21 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 		}
 	} else if d.HasChange("miglogd_children") {
 		obj["miglogd-children"] = nil
+	}
+
+	if v, ok := d.GetOkExists("log_daemon_cpu_threshold"); ok {
+		if setArgNil {
+			obj["log-daemon-cpu-threshold"] = nil
+		} else {
+			t, err := expandSystemGlobalLogDaemonCpuThreshold(d, v, "log_daemon_cpu_threshold", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["log-daemon-cpu-threshold"] = t
+			}
+		}
+	} else if d.HasChange("log_daemon_cpu_threshold") {
+		obj["log-daemon-cpu-threshold"] = nil
 	}
 
 	if v, ok := d.GetOk("special_file_23_support"); ok {
@@ -10118,6 +10215,19 @@ func getObjectSystemGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*
 				return &obj, err
 			} else if t != nil {
 				obj["internet-service-download-list"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("geoip_full_db"); ok {
+		if setArgNil {
+			obj["geoip-full-db"] = nil
+		} else {
+			t, err := expandSystemGlobalGeoipFullDb(d, v, "geoip_full_db", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["geoip-full-db"] = t
 			}
 		}
 	}

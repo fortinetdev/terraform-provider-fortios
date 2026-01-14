@@ -84,6 +84,11 @@ func resourceDpdkGlobal() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"frag_offload": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"hugepage_percentage": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(10, 50),
@@ -251,15 +256,26 @@ func flattenDpdkGlobalInterface(v interface{}, d *schema.ResourceData, pre strin
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "interface-name", "interface_name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
 		if cur_v, ok := i["interface-name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
+			}
 			tmp["interface_name"] = flattenDpdkGlobalInterfaceInterfaceName(cur_v, d, pre_append, sv)
 		}
 
@@ -297,6 +313,10 @@ func flattenDpdkGlobalPerSessionAccounting(v interface{}, d *schema.ResourceData
 }
 
 func flattenDpdkGlobalIpsecOffload(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenDpdkGlobalFragOffload(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -376,6 +396,12 @@ func refreshObjectDpdkGlobal(d *schema.ResourceData, o map[string]interface{}, s
 	if err = d.Set("ipsec_offload", flattenDpdkGlobalIpsecOffload(o["ipsec-offload"], d, "ipsec_offload", sv)); err != nil {
 		if !fortiAPIPatch(o["ipsec-offload"]) {
 			return fmt.Errorf("Error reading ipsec_offload: %v", err)
+		}
+	}
+
+	if err = d.Set("frag_offload", flattenDpdkGlobalFragOffload(o["frag-offload"], d, "frag_offload", sv)); err != nil {
+		if !fortiAPIPatch(o["frag-offload"]) {
+			return fmt.Errorf("Error reading frag_offload: %v", err)
 		}
 	}
 
@@ -459,6 +485,10 @@ func expandDpdkGlobalPerSessionAccounting(d *schema.ResourceData, v interface{},
 }
 
 func expandDpdkGlobalIpsecOffload(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandDpdkGlobalFragOffload(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -579,6 +609,19 @@ func getObjectDpdkGlobal(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 				return &obj, err
 			} else if t != nil {
 				obj["ipsec-offload"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("frag_offload"); ok {
+		if setArgNil {
+			obj["frag-offload"] = nil
+		} else {
+			t, err := expandDpdkGlobalFragOffload(d, v, "frag_offload", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["frag-offload"] = t
 			}
 		}
 	}

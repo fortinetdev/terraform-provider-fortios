@@ -368,14 +368,20 @@ func expandExtensionControllerFortigateProfileLanExtension(d *schema.ResourceDat
 	pre_append = pre + ".0." + "ipsec_tunnel"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ipsec-tunnel"], _ = expandExtensionControllerFortigateProfileLanExtensionIpsecTunnel(d, i["ipsec_tunnel"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["ipsec-tunnel"] = nil
 	}
 	pre_append = pre + ".0." + "backhaul_interface"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["backhaul-interface"], _ = expandExtensionControllerFortigateProfileLanExtensionBackhaulInterface(d, i["backhaul_interface"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["backhaul-interface"] = nil
 	}
 	pre_append = pre + ".0." + "backhaul_ip"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["backhaul-ip"], _ = expandExtensionControllerFortigateProfileLanExtensionBackhaulIp(d, i["backhaul_ip"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["backhaul-ip"] = nil
 	}
 
 	return result, nil

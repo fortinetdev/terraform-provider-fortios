@@ -105,6 +105,7 @@ The `health_check` block supports:
 * `diffservcode` - Differentiated services code point (DSCP) in the IP header of the probe packet.
 * `update_cascade_interface` - Enable/disable update cascade interface. Valid values: `enable`, `disable`.
 * `update_static_route` - Enable/disable updating the static route. Valid values: `enable`, `disable`.
+* `update_bgp_route` - Enable/disable updating the BGP route. Valid values: `enable`, `disable`.
 * `embed_measured_health` - Enable/disable embedding measured health information. Valid values: `enable`, `disable`.
 * `sla_id_redistribute` - Select the ID from the SLA sub-table. The selected SLA's priority value will be distributed into the routing table (0 - 32, default = 0).
 * `sla_fail_log_period` - Time interval in seconds that SLA fail log messages will be generated (0 - 3600, default = 0).

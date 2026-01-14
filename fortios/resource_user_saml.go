@@ -113,6 +113,11 @@ func resourceUserSaml() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"require_signed_resp_and_asrt": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"limit_relaystate": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -364,6 +369,10 @@ func flattenUserSamlDigestMethod(v interface{}, d *schema.ResourceData, pre stri
 	return v
 }
 
+func flattenUserSamlRequireSignedRespAndAsrt(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenUserSamlLimitRelaystate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -485,6 +494,12 @@ func refreshObjectUserSaml(d *schema.ResourceData, o map[string]interface{}, sv 
 		}
 	}
 
+	if err = d.Set("require_signed_resp_and_asrt", flattenUserSamlRequireSignedRespAndAsrt(o["require-signed-resp-and-asrt"], d, "require_signed_resp_and_asrt", sv)); err != nil {
+		if !fortiAPIPatch(o["require-signed-resp-and-asrt"]) {
+			return fmt.Errorf("Error reading require_signed_resp_and_asrt: %v", err)
+		}
+	}
+
 	if err = d.Set("limit_relaystate", flattenUserSamlLimitRelaystate(o["limit-relaystate"], d, "limit_relaystate", sv)); err != nil {
 		if !fortiAPIPatch(o["limit-relaystate"]) {
 			return fmt.Errorf("Error reading limit_relaystate: %v", err)
@@ -593,6 +608,10 @@ func expandUserSamlGroupName(d *schema.ResourceData, v interface{}, pre string, 
 }
 
 func expandUserSamlDigestMethod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserSamlRequireSignedRespAndAsrt(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -781,6 +800,15 @@ func getObjectUserSaml(d *schema.ResourceData, sv string) (*map[string]interface
 			return &obj, err
 		} else if t != nil {
 			obj["digest-method"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("require_signed_resp_and_asrt"); ok {
+		t, err := expandUserSamlRequireSignedRespAndAsrt(d, v, "require_signed_resp_and_asrt", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["require-signed-resp-and-asrt"] = t
 		}
 	}
 

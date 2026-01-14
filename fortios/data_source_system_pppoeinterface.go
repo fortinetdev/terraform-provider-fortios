@@ -73,6 +73,14 @@ func dataSourceSystemPppoeInterface() *schema.Resource {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+			"multilink": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"mrru": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
 			"disc_retry_timeout": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
@@ -188,6 +196,14 @@ func dataSourceFlattenSystemPppoeInterfaceIdleTimeout(v interface{}, d *schema.R
 	return v
 }
 
+func dataSourceFlattenSystemPppoeInterfaceMultilink(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemPppoeInterfaceMrru(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemPppoeInterfaceDiscRetryTimeout(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -272,6 +288,18 @@ func dataSourceRefreshObjectSystemPppoeInterface(d *schema.ResourceData, o map[s
 	if err = d.Set("idle_timeout", dataSourceFlattenSystemPppoeInterfaceIdleTimeout(o["idle-timeout"], d, "idle_timeout")); err != nil {
 		if !fortiAPIPatch(o["idle-timeout"]) {
 			return fmt.Errorf("Error reading idle_timeout: %v", err)
+		}
+	}
+
+	if err = d.Set("multilink", dataSourceFlattenSystemPppoeInterfaceMultilink(o["multilink"], d, "multilink")); err != nil {
+		if !fortiAPIPatch(o["multilink"]) {
+			return fmt.Errorf("Error reading multilink: %v", err)
+		}
+	}
+
+	if err = d.Set("mrru", dataSourceFlattenSystemPppoeInterfaceMrru(o["mrru"], d, "mrru")); err != nil {
+		if !fortiAPIPatch(o["mrru"]) {
+			return fmt.Errorf("Error reading mrru: %v", err)
 		}
 	}
 

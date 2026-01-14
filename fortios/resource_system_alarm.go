@@ -308,80 +308,130 @@ func flattenSystemAlarmGroups(v interface{}, d *schema.ResourceData, pre string,
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenSystemAlarmGroupsId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "period"
 		if cur_v, ok := i["period"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "period"
+			}
 			tmp["period"] = flattenSystemAlarmGroupsPeriod(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "admin_auth_failure_threshold"
 		if cur_v, ok := i["admin-auth-failure-threshold"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "admin_auth_failure_threshold"
+			}
 			tmp["admin_auth_failure_threshold"] = flattenSystemAlarmGroupsAdminAuthFailureThreshold(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "admin_auth_lockout_threshold"
 		if cur_v, ok := i["admin-auth-lockout-threshold"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "admin_auth_lockout_threshold"
+			}
 			tmp["admin_auth_lockout_threshold"] = flattenSystemAlarmGroupsAdminAuthLockoutThreshold(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "user_auth_failure_threshold"
 		if cur_v, ok := i["user-auth-failure-threshold"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "user_auth_failure_threshold"
+			}
 			tmp["user_auth_failure_threshold"] = flattenSystemAlarmGroupsUserAuthFailureThreshold(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "user_auth_lockout_threshold"
 		if cur_v, ok := i["user-auth-lockout-threshold"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "user_auth_lockout_threshold"
+			}
 			tmp["user_auth_lockout_threshold"] = flattenSystemAlarmGroupsUserAuthLockoutThreshold(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "replay_attempt_threshold"
 		if cur_v, ok := i["replay-attempt-threshold"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "replay_attempt_threshold"
+			}
 			tmp["replay_attempt_threshold"] = flattenSystemAlarmGroupsReplayAttemptThreshold(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "self_test_failure_threshold"
 		if cur_v, ok := i["self-test-failure-threshold"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "self_test_failure_threshold"
+			}
 			tmp["self_test_failure_threshold"] = flattenSystemAlarmGroupsSelfTestFailureThreshold(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "log_full_warning_threshold"
 		if cur_v, ok := i["log-full-warning-threshold"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "log_full_warning_threshold"
+			}
 			tmp["log_full_warning_threshold"] = flattenSystemAlarmGroupsLogFullWarningThreshold(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "encryption_failure_threshold"
 		if cur_v, ok := i["encryption-failure-threshold"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "encryption_failure_threshold"
+			}
 			tmp["encryption_failure_threshold"] = flattenSystemAlarmGroupsEncryptionFailureThreshold(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "decryption_failure_threshold"
 		if cur_v, ok := i["decryption-failure-threshold"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "decryption_failure_threshold"
+			}
 			tmp["decryption_failure_threshold"] = flattenSystemAlarmGroupsDecryptionFailureThreshold(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "fw_policy_violations"
 		if cur_v, ok := i["fw-policy-violations"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "fw_policy_violations"
+			}
 			tmp["fw_policy_violations"] = flattenSystemAlarmGroupsFwPolicyViolations(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "fw_policy_id"
 		if cur_v, ok := i["fw-policy-id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "fw_policy_id"
+			}
 			tmp["fw_policy_id"] = flattenSystemAlarmGroupsFwPolicyId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "fw_policy_id_threshold"
 		if cur_v, ok := i["fw-policy-id-threshold"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "fw_policy_id_threshold"
+			}
 			tmp["fw_policy_id_threshold"] = flattenSystemAlarmGroupsFwPolicyIdThreshold(cur_v, d, pre_append, sv)
 		}
 
@@ -455,40 +505,66 @@ func flattenSystemAlarmGroupsFwPolicyViolations(v interface{}, d *schema.Resourc
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenSystemAlarmGroupsFwPolicyViolationsId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "threshold"
 		if cur_v, ok := i["threshold"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "threshold"
+			}
 			tmp["threshold"] = flattenSystemAlarmGroupsFwPolicyViolationsThreshold(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "src_ip"
 		if cur_v, ok := i["src-ip"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "src_ip"
+			}
 			tmp["src_ip"] = flattenSystemAlarmGroupsFwPolicyViolationsSrcIp(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst_ip"
 		if cur_v, ok := i["dst-ip"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "dst_ip"
+			}
 			tmp["dst_ip"] = flattenSystemAlarmGroupsFwPolicyViolationsDstIp(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "src_port"
 		if cur_v, ok := i["src-port"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "src_port"
+			}
 			tmp["src_port"] = flattenSystemAlarmGroupsFwPolicyViolationsSrcPort(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst_port"
 		if cur_v, ok := i["dst-port"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "dst_port"
+			}
 			tmp["dst_port"] = flattenSystemAlarmGroupsFwPolicyViolationsDstPort(cur_v, d, pre_append, sv)
 		}
 

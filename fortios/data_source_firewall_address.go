@@ -268,6 +268,10 @@ func dataSourceFirewallAddress() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"passive_fqdn_learning": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"fabric_object": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -727,6 +731,10 @@ func dataSourceFlattenFirewallAddressAllowRouting(v interface{}, d *schema.Resou
 	return v
 }
 
+func dataSourceFlattenFirewallAddressPassiveFqdnLearning(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallAddressFabricObject(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -1007,6 +1015,12 @@ func dataSourceRefreshObjectFirewallAddress(d *schema.ResourceData, o map[string
 	if err = d.Set("allow_routing", dataSourceFlattenFirewallAddressAllowRouting(o["allow-routing"], d, "allow_routing")); err != nil {
 		if !fortiAPIPatch(o["allow-routing"]) {
 			return fmt.Errorf("Error reading allow_routing: %v", err)
+		}
+	}
+
+	if err = d.Set("passive_fqdn_learning", dataSourceFlattenFirewallAddressPassiveFqdnLearning(o["passive-fqdn-learning"], d, "passive_fqdn_learning")); err != nil {
+		if !fortiAPIPatch(o["passive-fqdn-learning"]) {
+			return fmt.Errorf("Error reading passive_fqdn_learning: %v", err)
 		}
 	}
 

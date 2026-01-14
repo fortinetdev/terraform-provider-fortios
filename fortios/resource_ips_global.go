@@ -690,6 +690,8 @@ func expandIpsGlobalTlsActiveProbe(d *schema.ResourceData, v interface{}, pre st
 		} else {
 			result["interface"], _ = expandIpsGlobalTlsActiveProbeInterface(d, i["interface"], pre_append, sv)
 		}
+	} else if d.HasChange(pre_append) {
+		result["interface"] = nil
 	}
 	pre_append = pre + ".0." + "vdom"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -698,6 +700,8 @@ func expandIpsGlobalTlsActiveProbe(d *schema.ResourceData, v interface{}, pre st
 		} else {
 			result["vdom"], _ = expandIpsGlobalTlsActiveProbeVdom(d, i["vdom"], pre_append, sv)
 		}
+	} else if d.HasChange(pre_append) {
+		result["vdom"] = nil
 	}
 	pre_append = pre + ".0." + "source_ip"
 	if _, ok := d.GetOk(pre_append); ok {

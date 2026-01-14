@@ -204,6 +204,10 @@ func dataSourceFirewallAddress6() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"passive_fqdn_learning": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"fabric_object": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -571,6 +575,10 @@ func dataSourceFlattenFirewallAddress6SdnAddrType(v interface{}, d *schema.Resou
 	return v
 }
 
+func dataSourceFlattenFirewallAddress6PassiveFqdnLearning(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallAddress6FabricObject(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -755,6 +763,12 @@ func dataSourceRefreshObjectFirewallAddress6(d *schema.ResourceData, o map[strin
 	if err = d.Set("sdn_addr_type", dataSourceFlattenFirewallAddress6SdnAddrType(o["sdn-addr-type"], d, "sdn_addr_type")); err != nil {
 		if !fortiAPIPatch(o["sdn-addr-type"]) {
 			return fmt.Errorf("Error reading sdn_addr_type: %v", err)
+		}
+	}
+
+	if err = d.Set("passive_fqdn_learning", dataSourceFlattenFirewallAddress6PassiveFqdnLearning(o["passive-fqdn-learning"], d, "passive_fqdn_learning")); err != nil {
+		if !fortiAPIPatch(o["passive-fqdn-learning"]) {
+			return fmt.Errorf("Error reading passive_fqdn_learning: %v", err)
 		}
 	}
 

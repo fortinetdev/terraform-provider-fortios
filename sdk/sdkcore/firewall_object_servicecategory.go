@@ -52,7 +52,7 @@ func (c *FortiSDKClient) CreateFirewallObjectServiceCategory(params *JSONFirewal
 
 	bytes := bytes.NewBuffer(locJSON)
 	req := c.NewRequest(HTTPMethod, path, nil, bytes)
-	err = req.Send()
+	err = req.Send(nil)
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("cannot send request %s", err)
 		return
@@ -110,7 +110,7 @@ func (c *FortiSDKClient) UpdateFirewallObjectServiceCategory(params *JSONFirewal
 
 	bytes := bytes.NewBuffer(locJSON)
 	req := c.NewRequest(HTTPMethod, path, nil, bytes)
-	err = req.Send()
+	err = req.Send(nil)
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("cannot send request %s", err)
 		return
@@ -152,7 +152,7 @@ func (c *FortiSDKClient) DeleteFirewallObjectServiceCategory(mkey string) (err e
 	path += "/" + EscapeURLString(mkey)
 
 	req := c.NewRequest(HTTPMethod, path, nil, nil)
-	err = req.Send()
+	err = req.Send(nil)
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("cannot send request %s", err)
 		return
@@ -192,7 +192,7 @@ func (c *FortiSDKClient) ReadFirewallObjectServiceCategory(mkey string) (output 
 	}
 
 	req := c.NewRequest(HTTPMethod, path, nil, nil)
-	err = req.Send()
+	err = req.Send(nil)
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("cannot send request %s", err)
 		return

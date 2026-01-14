@@ -2161,6 +2161,8 @@ func expandVoipProfileSip(d *schema.ResourceData, v interface{}, pre string, sv 
 	pre_append = pre + ".0." + "register_rate"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["register-rate"], _ = expandVoipProfileSipRegisterRate(d, i["register_rate"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["register-rate"] = nil
 	}
 	pre_append = pre + ".0." + "register_rate_track"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -2169,6 +2171,8 @@ func expandVoipProfileSip(d *schema.ResourceData, v interface{}, pre string, sv 
 	pre_append = pre + ".0." + "invite_rate"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["invite-rate"], _ = expandVoipProfileSipInviteRate(d, i["invite_rate"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["invite-rate"] = nil
 	}
 	pre_append = pre + ".0." + "invite_rate_track"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -2177,6 +2181,8 @@ func expandVoipProfileSip(d *schema.ResourceData, v interface{}, pre string, sv 
 	pre_append = pre + ".0." + "max_dialogs"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["max-dialogs"], _ = expandVoipProfileSipMaxDialogs(d, i["max_dialogs"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["max-dialogs"] = nil
 	}
 	pre_append = pre + ".0." + "max_line_length"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -2193,6 +2199,8 @@ func expandVoipProfileSip(d *schema.ResourceData, v interface{}, pre string, sv 
 	pre_append = pre + ".0." + "call_keepalive"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["call-keepalive"], _ = expandVoipProfileSipCallKeepalive(d, i["call_keepalive"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["call-keepalive"] = nil
 	}
 	pre_append = pre + ".0." + "block_ack"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -2281,6 +2289,8 @@ func expandVoipProfileSip(d *schema.ResourceData, v interface{}, pre string, sv 
 	pre_append = pre + ".0." + "subscribe_rate"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["subscribe-rate"], _ = expandVoipProfileSipSubscribeRate(d, i["subscribe_rate"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["subscribe-rate"] = nil
 	}
 	pre_append = pre + ".0." + "subscribe_rate_track"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -2289,6 +2299,8 @@ func expandVoipProfileSip(d *schema.ResourceData, v interface{}, pre string, sv 
 	pre_append = pre + ".0." + "message_rate"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["message-rate"], _ = expandVoipProfileSipMessageRate(d, i["message_rate"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["message-rate"] = nil
 	}
 	pre_append = pre + ".0." + "message_rate_track"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -2297,6 +2309,8 @@ func expandVoipProfileSip(d *schema.ResourceData, v interface{}, pre string, sv 
 	pre_append = pre + ".0." + "notify_rate"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["notify-rate"], _ = expandVoipProfileSipNotifyRate(d, i["notify_rate"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["notify-rate"] = nil
 	}
 	pre_append = pre + ".0." + "notify_rate_track"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -2305,6 +2319,8 @@ func expandVoipProfileSip(d *schema.ResourceData, v interface{}, pre string, sv 
 	pre_append = pre + ".0." + "refer_rate"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["refer-rate"], _ = expandVoipProfileSipReferRate(d, i["refer_rate"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["refer-rate"] = nil
 	}
 	pre_append = pre + ".0." + "refer_rate_track"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -2313,6 +2329,8 @@ func expandVoipProfileSip(d *schema.ResourceData, v interface{}, pre string, sv 
 	pre_append = pre + ".0." + "update_rate"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["update-rate"], _ = expandVoipProfileSipUpdateRate(d, i["update_rate"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["update-rate"] = nil
 	}
 	pre_append = pre + ".0." + "update_rate_track"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -2321,6 +2339,8 @@ func expandVoipProfileSip(d *schema.ResourceData, v interface{}, pre string, sv 
 	pre_append = pre + ".0." + "options_rate"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["options-rate"], _ = expandVoipProfileSipOptionsRate(d, i["options_rate"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["options-rate"] = nil
 	}
 	pre_append = pre + ".0." + "options_rate_track"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -2329,6 +2349,8 @@ func expandVoipProfileSip(d *schema.ResourceData, v interface{}, pre string, sv 
 	pre_append = pre + ".0." + "ack_rate"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ack-rate"], _ = expandVoipProfileSipAckRate(d, i["ack_rate"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["ack-rate"] = nil
 	}
 	pre_append = pre + ".0." + "ack_rate_track"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -2337,6 +2359,8 @@ func expandVoipProfileSip(d *schema.ResourceData, v interface{}, pre string, sv 
 	pre_append = pre + ".0." + "prack_rate"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["prack-rate"], _ = expandVoipProfileSipPrackRate(d, i["prack_rate"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["prack-rate"] = nil
 	}
 	pre_append = pre + ".0." + "prack_rate_track"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -2345,6 +2369,8 @@ func expandVoipProfileSip(d *schema.ResourceData, v interface{}, pre string, sv 
 	pre_append = pre + ".0." + "info_rate"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["info-rate"], _ = expandVoipProfileSipInfoRate(d, i["info_rate"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["info-rate"] = nil
 	}
 	pre_append = pre + ".0." + "info_rate_track"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -2353,6 +2379,8 @@ func expandVoipProfileSip(d *schema.ResourceData, v interface{}, pre string, sv 
 	pre_append = pre + ".0." + "publish_rate"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["publish-rate"], _ = expandVoipProfileSipPublishRate(d, i["publish_rate"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["publish-rate"] = nil
 	}
 	pre_append = pre + ".0." + "publish_rate_track"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -2361,6 +2389,8 @@ func expandVoipProfileSip(d *schema.ResourceData, v interface{}, pre string, sv 
 	pre_append = pre + ".0." + "bye_rate"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["bye-rate"], _ = expandVoipProfileSipByeRate(d, i["bye_rate"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["bye-rate"] = nil
 	}
 	pre_append = pre + ".0." + "bye_rate_track"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -2369,6 +2399,8 @@ func expandVoipProfileSip(d *schema.ResourceData, v interface{}, pre string, sv 
 	pre_append = pre + ".0." + "cancel_rate"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["cancel-rate"], _ = expandVoipProfileSipCancelRate(d, i["cancel_rate"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["cancel-rate"] = nil
 	}
 	pre_append = pre + ".0." + "cancel_rate_track"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -2389,6 +2421,8 @@ func expandVoipProfileSip(d *schema.ResourceData, v interface{}, pre string, sv 
 	pre_append = pre + ".0." + "max_idle_dialogs"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["max-idle-dialogs"], _ = expandVoipProfileSipMaxIdleDialogs(d, i["max_idle_dialogs"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["max-idle-dialogs"] = nil
 	}
 	pre_append = pre + ".0." + "block_geo_red_options"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -2405,14 +2439,20 @@ func expandVoipProfileSip(d *schema.ResourceData, v interface{}, pre string, sv 
 	pre_append = pre + ".0." + "call_id_regex"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["call-id-regex"], _ = expandVoipProfileSipCallIdRegex(d, i["call_id_regex"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["call-id-regex"] = nil
 	}
 	pre_append = pre + ".0." + "content_type_regex"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["content-type-regex"], _ = expandVoipProfileSipContentTypeRegex(d, i["content_type_regex"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["content-type-regex"] = nil
 	}
 	pre_append = pre + ".0." + "max_body_length"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["max-body-length"], _ = expandVoipProfileSipMaxBodyLength(d, i["max_body_length"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["max-body-length"] = nil
 	}
 	pre_append = pre + ".0." + "unknown_header"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -2581,18 +2621,26 @@ func expandVoipProfileSip(d *schema.ResourceData, v interface{}, pre string, sv 
 	pre_append = pre + ".0." + "ssl_client_certificate"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ssl-client-certificate"], _ = expandVoipProfileSipSslClientCertificate(d, i["ssl_client_certificate"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["ssl-client-certificate"] = nil
 	}
 	pre_append = pre + ".0." + "ssl_server_certificate"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ssl-server-certificate"], _ = expandVoipProfileSipSslServerCertificate(d, i["ssl_server_certificate"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["ssl-server-certificate"] = nil
 	}
 	pre_append = pre + ".0." + "ssl_auth_client"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ssl-auth-client"], _ = expandVoipProfileSipSslAuthClient(d, i["ssl_auth_client"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["ssl-auth-client"] = nil
 	}
 	pre_append = pre + ".0." + "ssl_auth_server"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ssl-auth-server"], _ = expandVoipProfileSipSslAuthServer(d, i["ssl_auth_server"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["ssl-auth-server"] = nil
 	}
 
 	return result, nil
@@ -3091,6 +3139,8 @@ func expandVoipProfileSccp(d *schema.ResourceData, v interface{}, pre string, sv
 	pre_append = pre + ".0." + "max_calls"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["max-calls"], _ = expandVoipProfileSccpMaxCalls(d, i["max_calls"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["max-calls"] = nil
 	}
 
 	return result, nil
@@ -3141,6 +3191,8 @@ func expandVoipProfileMsrp(d *schema.ResourceData, v interface{}, pre string, sv
 	pre_append = pre + ".0." + "max_msg_size"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["max-msg-size"], _ = expandVoipProfileMsrpMaxMsgSize(d, i["max_msg_size"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["max-msg-size"] = nil
 	}
 	pre_append = pre + ".0." + "max_msg_size_action"
 	if _, ok := d.GetOk(pre_append); ok {

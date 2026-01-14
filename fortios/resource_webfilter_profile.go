@@ -334,7 +334,7 @@ func resourceWebfilterProfile() *schema.Resource {
 						"options": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
-							Computed: true,
+							Default:  "ftgd-disable",
 						},
 						"exempt_quota": &schema.Schema{
 							Type:     schema.TypeString,
@@ -976,45 +976,74 @@ func flattenWebfilterProfileFileFilterEntries(v interface{}, d *schema.ResourceD
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "filter", "filter")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter"
 		if cur_v, ok := i["filter"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "filter"
+			}
 			tmp["filter"] = flattenWebfilterProfileFileFilterEntriesFilter(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
 		if cur_v, ok := i["comment"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
+			}
 			tmp["comment"] = flattenWebfilterProfileFileFilterEntriesComment(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
 		if cur_v, ok := i["protocol"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
+			}
 			tmp["protocol"] = flattenWebfilterProfileFileFilterEntriesProtocol(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if cur_v, ok := i["action"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
+			}
 			tmp["action"] = flattenWebfilterProfileFileFilterEntriesAction(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "direction"
 		if cur_v, ok := i["direction"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "direction"
+			}
 			tmp["direction"] = flattenWebfilterProfileFileFilterEntriesDirection(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "password_protected"
 		if cur_v, ok := i["password-protected"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "password_protected"
+			}
 			tmp["password_protected"] = flattenWebfilterProfileFileFilterEntriesPasswordProtected(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "file_type"
 		if cur_v, ok := i["file-type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "file_type"
+			}
 			tmp["file_type"] = flattenWebfilterProfileFileFilterEntriesFileType(cur_v, d, pre_append, sv)
 		}
 
@@ -1068,15 +1097,26 @@ func flattenWebfilterProfileFileFilterEntriesFileType(v interface{}, d *schema.R
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenWebfilterProfileFileFilterEntriesFileTypeName(cur_v, d, pre_append, sv)
 		}
 
@@ -1203,15 +1243,26 @@ func flattenWebfilterProfileOverrideOvrdUserGroup(v interface{}, d *schema.Resou
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenWebfilterProfileOverrideOvrdUserGroupName(cur_v, d, pre_append, sv)
 		}
 
@@ -1245,15 +1296,26 @@ func flattenWebfilterProfileOverrideProfile(v interface{}, d *schema.ResourceDat
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenWebfilterProfileOverrideProfileName(cur_v, d, pre_append, sv)
 		}
 
@@ -1413,15 +1475,26 @@ func flattenWebfilterProfileWebKeywordMatch(v interface{}, d *schema.ResourceDat
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "pattern", "pattern")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern"
 		if cur_v, ok := i["pattern"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern"
+			}
 			tmp["pattern"] = flattenWebfilterProfileWebKeywordMatchPattern(cur_v, d, pre_append, sv)
 		}
 
@@ -1459,25 +1532,42 @@ func flattenWebfilterProfileYoutubeChannelFilter(v interface{}, d *schema.Resour
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenWebfilterProfileYoutubeChannelFilterId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "channel_id"
 		if cur_v, ok := i["channel-id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "channel_id"
+			}
 			tmp["channel_id"] = flattenWebfilterProfileYoutubeChannelFilterChannelId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
 		if cur_v, ok := i["comment"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
+			}
 			tmp["comment"] = flattenWebfilterProfileYoutubeChannelFilterComment(cur_v, d, pre_append, sv)
 		}
 
@@ -1599,55 +1689,90 @@ func flattenWebfilterProfileFtgdWfFilters(v interface{}, d *schema.ResourceData,
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenWebfilterProfileFtgdWfFiltersId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if cur_v, ok := i["category"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
+			}
 			tmp["category"] = flattenWebfilterProfileFtgdWfFiltersCategory(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if cur_v, ok := i["action"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
+			}
 			tmp["action"] = flattenWebfilterProfileFtgdWfFiltersAction(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "warn_duration"
 		if cur_v, ok := i["warn-duration"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "warn_duration"
+			}
 			tmp["warn_duration"] = flattenWebfilterProfileFtgdWfFiltersWarnDuration(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_usr_grp"
 		if cur_v, ok := i["auth-usr-grp"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_usr_grp"
+			}
 			tmp["auth_usr_grp"] = flattenWebfilterProfileFtgdWfFiltersAuthUsrGrp(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "log"
 		if cur_v, ok := i["log"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "log"
+			}
 			tmp["log"] = flattenWebfilterProfileFtgdWfFiltersLog(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "override_replacemsg"
 		if cur_v, ok := i["override-replacemsg"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "override_replacemsg"
+			}
 			tmp["override_replacemsg"] = flattenWebfilterProfileFtgdWfFiltersOverrideReplacemsg(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "warning_prompt"
 		if cur_v, ok := i["warning-prompt"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "warning_prompt"
+			}
 			tmp["warning_prompt"] = flattenWebfilterProfileFtgdWfFiltersWarningPrompt(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "warning_duration_type"
 		if cur_v, ok := i["warning-duration-type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "warning_duration_type"
+			}
 			tmp["warning_duration_type"] = flattenWebfilterProfileFtgdWfFiltersWarningDurationType(cur_v, d, pre_append, sv)
 		}
 
@@ -1693,15 +1818,26 @@ func flattenWebfilterProfileFtgdWfFiltersAuthUsrGrp(v interface{}, d *schema.Res
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenWebfilterProfileFtgdWfFiltersAuthUsrGrpName(cur_v, d, pre_append, sv)
 		}
 
@@ -1751,30 +1887,50 @@ func flattenWebfilterProfileFtgdWfRisk(v interface{}, d *schema.ResourceData, pr
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenWebfilterProfileFtgdWfRiskId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "risk_level"
 		if cur_v, ok := i["risk-level"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "risk_level"
+			}
 			tmp["risk_level"] = flattenWebfilterProfileFtgdWfRiskRiskLevel(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if cur_v, ok := i["action"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
+			}
 			tmp["action"] = flattenWebfilterProfileFtgdWfRiskAction(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "log"
 		if cur_v, ok := i["log"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "log"
+			}
 			tmp["log"] = flattenWebfilterProfileFtgdWfRiskLog(cur_v, d, pre_append, sv)
 		}
 
@@ -1820,45 +1976,74 @@ func flattenWebfilterProfileFtgdWfQuota(v interface{}, d *schema.ResourceData, p
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenWebfilterProfileFtgdWfQuotaId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if cur_v, ok := i["category"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
+			}
 			tmp["category"] = flattenWebfilterProfileFtgdWfQuotaCategory(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if cur_v, ok := i["type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
+			}
 			tmp["type"] = flattenWebfilterProfileFtgdWfQuotaType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "unit"
 		if cur_v, ok := i["unit"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "unit"
+			}
 			tmp["unit"] = flattenWebfilterProfileFtgdWfQuotaUnit(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
 		if cur_v, ok := i["value"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
+			}
 			tmp["value"] = flattenWebfilterProfileFtgdWfQuotaValue(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "duration"
 		if cur_v, ok := i["duration"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "duration"
+			}
 			tmp["duration"] = flattenWebfilterProfileFtgdWfQuotaDuration(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "override_replacemsg"
 		if cur_v, ok := i["override-replacemsg"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "override_replacemsg"
+			}
 			tmp["override_replacemsg"] = flattenWebfilterProfileFtgdWfQuotaOverrideReplacemsg(cur_v, d, pre_append, sv)
 		}
 
@@ -2036,25 +2221,42 @@ func flattenWebfilterProfileAntiphishInspectionEntries(v interface{}, d *schema.
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenWebfilterProfileAntiphishInspectionEntriesName(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "fortiguard_category"
 		if cur_v, ok := i["fortiguard-category"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "fortiguard_category"
+			}
 			tmp["fortiguard_category"] = flattenWebfilterProfileAntiphishInspectionEntriesFortiguardCategory(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if cur_v, ok := i["action"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
+			}
 			tmp["action"] = flattenWebfilterProfileAntiphishInspectionEntriesAction(cur_v, d, pre_append, sv)
 		}
 
@@ -2096,25 +2298,42 @@ func flattenWebfilterProfileAntiphishCustomPatterns(v interface{}, d *schema.Res
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "pattern", "pattern")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern"
 		if cur_v, ok := i["pattern"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern"
+			}
 			tmp["pattern"] = flattenWebfilterProfileAntiphishCustomPatternsPattern(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if cur_v, ok := i["category"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
+			}
 			tmp["category"] = flattenWebfilterProfileAntiphishCustomPatternsCategory(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if cur_v, ok := i["type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
+			}
 			tmp["type"] = flattenWebfilterProfileAntiphishCustomPatternsType(cur_v, d, pre_append, sv)
 		}
 
@@ -2164,15 +2383,26 @@ func flattenWebfilterProfileWispServers(v interface{}, d *schema.ResourceData, p
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenWebfilterProfileWispServersName(cur_v, d, pre_append, sv)
 		}
 
@@ -2628,14 +2858,20 @@ func expandWebfilterProfileFileFilter(d *schema.ResourceData, v interface{}, pre
 	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["status"], _ = expandWebfilterProfileFileFilterStatus(d, i["status"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["status"] = nil
 	}
 	pre_append = pre + ".0." + "log"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["log"], _ = expandWebfilterProfileFileFilterLog(d, i["log"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["log"] = nil
 	}
 	pre_append = pre + ".0." + "scan_archive_contents"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["scan-archive-contents"], _ = expandWebfilterProfileFileFilterScanArchiveContents(d, i["scan_archive_contents"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["scan-archive-contents"] = nil
 	}
 	pre_append = pre + ".0." + "entries"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -2945,14 +3181,20 @@ func expandWebfilterProfileWeb(d *schema.ResourceData, v interface{}, pre string
 	pre_append = pre + ".0." + "bword_table"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["bword-table"], _ = expandWebfilterProfileWebBwordTable(d, i["bword_table"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["bword-table"] = nil
 	}
 	pre_append = pre + ".0." + "urlfilter_table"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["urlfilter-table"], _ = expandWebfilterProfileWebUrlfilterTable(d, i["urlfilter_table"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["urlfilter-table"] = nil
 	}
 	pre_append = pre + ".0." + "content_header_list"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["content-header-list"], _ = expandWebfilterProfileWebContentHeaderList(d, i["content_header_list"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["content-header-list"] = nil
 	}
 	pre_append = pre + ".0." + "blocklist"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -2961,6 +3203,8 @@ func expandWebfilterProfileWeb(d *schema.ResourceData, v interface{}, pre string
 	pre_append = pre + ".0." + "allowlist"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["allowlist"], _ = expandWebfilterProfileWebAllowlist(d, i["allowlist"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["allowlist"] = nil
 	}
 	pre_append = pre + ".0." + "blacklist"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -2969,10 +3213,14 @@ func expandWebfilterProfileWeb(d *schema.ResourceData, v interface{}, pre string
 	pre_append = pre + ".0." + "whitelist"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["whitelist"], _ = expandWebfilterProfileWebWhitelist(d, i["whitelist"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["whitelist"] = nil
 	}
 	pre_append = pre + ".0." + "safe_search"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["safe-search"], _ = expandWebfilterProfileWebSafeSearch(d, i["safe_search"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["safe-search"] = nil
 	}
 	pre_append = pre + ".0." + "youtube_restrict"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -2981,6 +3229,8 @@ func expandWebfilterProfileWeb(d *schema.ResourceData, v interface{}, pre string
 	pre_append = pre + ".0." + "vimeo_restrict"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["vimeo-restrict"], _ = expandWebfilterProfileWebVimeoRestrict(d, i["vimeo_restrict"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["vimeo-restrict"] = nil
 	}
 	pre_append = pre + ".0." + "log_search"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3142,6 +3392,8 @@ func expandWebfilterProfileFtgdWf(d *schema.ResourceData, v interface{}, pre str
 	pre_append = pre + ".0." + "options"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["options"], _ = expandWebfilterProfileFtgdWfOptions(d, i["options"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["options"] = nil
 	}
 	pre_append = pre + ".0." + "exempt_quota"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3150,6 +3402,8 @@ func expandWebfilterProfileFtgdWf(d *schema.ResourceData, v interface{}, pre str
 	pre_append = pre + ".0." + "ovrd"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ovrd"], _ = expandWebfilterProfileFtgdWfOvrd(d, i["ovrd"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["ovrd"] = nil
 	}
 	pre_append = pre + ".0." + "filters"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3176,6 +3430,8 @@ func expandWebfilterProfileFtgdWf(d *schema.ResourceData, v interface{}, pre str
 	pre_append = pre + ".0." + "rate_image_urls"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["rate-image-urls"], _ = expandWebfilterProfileFtgdWfRateImageUrls(d, i["rate_image_urls"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["rate-image-urls"] = nil
 	}
 	pre_append = pre + ".0." + "rate_javascript_urls"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3524,10 +3780,14 @@ func expandWebfilterProfileAntiphish(d *schema.ResourceData, v interface{}, pre 
 	pre_append = pre + ".0." + "domain_controller"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["domain-controller"], _ = expandWebfilterProfileAntiphishDomainController(d, i["domain_controller"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["domain-controller"] = nil
 	}
 	pre_append = pre + ".0." + "ldap"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ldap"], _ = expandWebfilterProfileAntiphishLdap(d, i["ldap"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["ldap"] = nil
 	}
 	pre_append = pre + ".0." + "default_action"
 	if _, ok := d.GetOk(pre_append); ok {

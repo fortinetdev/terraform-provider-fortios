@@ -53,6 +53,11 @@ func resourceWirelessControllerSyslogProfile() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"server": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 63),
+				Optional:     true,
+			},
 			"server_addr_type": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -251,6 +256,10 @@ func flattenWirelessControllerSyslogProfileServerStatus(v interface{}, d *schema
 	return v
 }
 
+func flattenWirelessControllerSyslogProfileServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerSyslogProfileServerAddrType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -293,6 +302,12 @@ func refreshObjectWirelessControllerSyslogProfile(d *schema.ResourceData, o map[
 	if err = d.Set("server_status", flattenWirelessControllerSyslogProfileServerStatus(o["server-status"], d, "server_status", sv)); err != nil {
 		if !fortiAPIPatch(o["server-status"]) {
 			return fmt.Errorf("Error reading server_status: %v", err)
+		}
+	}
+
+	if err = d.Set("server", flattenWirelessControllerSyslogProfileServer(o["server"], d, "server", sv)); err != nil {
+		if !fortiAPIPatch(o["server"]) {
+			return fmt.Errorf("Error reading server: %v", err)
 		}
 	}
 
@@ -353,6 +368,10 @@ func expandWirelessControllerSyslogProfileServerStatus(d *schema.ResourceData, v
 	return v, nil
 }
 
+func expandWirelessControllerSyslogProfileServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWirelessControllerSyslogProfileServerAddrType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -407,6 +426,17 @@ func getObjectWirelessControllerSyslogProfile(d *schema.ResourceData, sv string)
 		} else if t != nil {
 			obj["server-status"] = t
 		}
+	}
+
+	if v, ok := d.GetOk("server"); ok {
+		t, err := expandWirelessControllerSyslogProfileServer(d, v, "server", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["server"] = t
+		}
+	} else if d.HasChange("server") {
+		obj["server"] = nil
 	}
 
 	if v, ok := d.GetOk("server_addr_type"); ok {

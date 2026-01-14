@@ -436,60 +436,98 @@ func flattenSystemStandaloneClusterClusterPeer(v interface{}, d *schema.Resource
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "sync-id", "sync_id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "sync_id"
 		if cur_v, ok := i["sync-id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "sync_id"
+			}
 			tmp["sync_id"] = flattenSystemStandaloneClusterClusterPeerSyncId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "peervd"
 		if cur_v, ok := i["peervd"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "peervd"
+			}
 			tmp["peervd"] = flattenSystemStandaloneClusterClusterPeerPeervd(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "peerip"
 		if cur_v, ok := i["peerip"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "peerip"
+			}
 			tmp["peerip"] = flattenSystemStandaloneClusterClusterPeerPeerip(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "syncvd"
 		if cur_v, ok := i["syncvd"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "syncvd"
+			}
 			tmp["syncvd"] = flattenSystemStandaloneClusterClusterPeerSyncvd(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "down_intfs_before_sess_sync"
 		if cur_v, ok := i["down-intfs-before-sess-sync"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "down_intfs_before_sess_sync"
+			}
 			tmp["down_intfs_before_sess_sync"] = flattenSystemStandaloneClusterClusterPeerDownIntfsBeforeSessSync(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "hb_interval"
 		if cur_v, ok := i["hb-interval"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "hb_interval"
+			}
 			tmp["hb_interval"] = flattenSystemStandaloneClusterClusterPeerHbInterval(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "hb_lost_threshold"
 		if cur_v, ok := i["hb-lost-threshold"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "hb_lost_threshold"
+			}
 			tmp["hb_lost_threshold"] = flattenSystemStandaloneClusterClusterPeerHbLostThreshold(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ipsec_tunnel_sync"
 		if cur_v, ok := i["ipsec-tunnel-sync"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "ipsec_tunnel_sync"
+			}
 			tmp["ipsec_tunnel_sync"] = flattenSystemStandaloneClusterClusterPeerIpsecTunnelSync(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "secondary_add_ipsec_routes"
 		if cur_v, ok := i["secondary-add-ipsec-routes"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "secondary_add_ipsec_routes"
+			}
 			tmp["secondary_add_ipsec_routes"] = flattenSystemStandaloneClusterClusterPeerSecondaryAddIpsecRoutes(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "session_sync_filter"
 		if cur_v, ok := i["session-sync-filter"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "session_sync_filter"
+			}
 			tmp["session_sync_filter"] = flattenSystemStandaloneClusterClusterPeerSessionSyncFilter(cur_v, d, pre_append, sv)
 		}
 
@@ -531,15 +569,26 @@ func flattenSystemStandaloneClusterClusterPeerSyncvd(v interface{}, d *schema.Re
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenSystemStandaloneClusterClusterPeerSyncvdName(cur_v, d, pre_append, sv)
 		}
 
@@ -573,15 +622,26 @@ func flattenSystemStandaloneClusterClusterPeerDownIntfsBeforeSessSync(v interfac
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenSystemStandaloneClusterClusterPeerDownIntfsBeforeSessSyncName(cur_v, d, pre_append, sv)
 		}
 
@@ -717,25 +777,42 @@ func flattenSystemStandaloneClusterClusterPeerSessionSyncFilterCustomService(v i
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenSystemStandaloneClusterClusterPeerSessionSyncFilterCustomServiceId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "src_port_range"
 		if cur_v, ok := i["src-port-range"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "src_port_range"
+			}
 			tmp["src_port_range"] = flattenSystemStandaloneClusterClusterPeerSessionSyncFilterCustomServiceSrcPortRange(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst_port_range"
 		if cur_v, ok := i["dst-port-range"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "dst_port_range"
+			}
 			tmp["dst_port_range"] = flattenSystemStandaloneClusterClusterPeerSessionSyncFilterCustomServiceDstPortRange(cur_v, d, pre_append, sv)
 		}
 
@@ -777,15 +854,26 @@ func flattenSystemStandaloneClusterMonitorInterface(v interface{}, d *schema.Res
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenSystemStandaloneClusterMonitorInterfaceName(cur_v, d, pre_append, sv)
 		}
 
@@ -819,15 +907,26 @@ func flattenSystemStandaloneClusterPingsvrMonitorInterface(v interface{}, d *sch
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenSystemStandaloneClusterPingsvrMonitorInterfaceName(cur_v, d, pre_append, sv)
 		}
 
@@ -861,30 +960,50 @@ func flattenSystemStandaloneClusterMonitorPrefix(v interface{}, d *schema.Resour
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenSystemStandaloneClusterMonitorPrefixId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "vdom"
 		if cur_v, ok := i["vdom"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "vdom"
+			}
 			tmp["vdom"] = flattenSystemStandaloneClusterMonitorPrefixVdom(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrf"
 		if cur_v, ok := i["vrf"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "vrf"
+			}
 			tmp["vrf"] = flattenSystemStandaloneClusterMonitorPrefixVrf(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"
 		if cur_v, ok := i["prefix"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"
+			}
 			tmp["prefix"] = flattenSystemStandaloneClusterMonitorPrefixPrefix(cur_v, d, pre_append, sv)
 		}
 
@@ -1263,10 +1382,14 @@ func expandSystemStandaloneClusterClusterPeerSessionSyncFilter(d *schema.Resourc
 	pre_append = pre + ".0." + "srcintf"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["srcintf"], _ = expandSystemStandaloneClusterClusterPeerSessionSyncFilterSrcintf(d, i["srcintf"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["srcintf"] = nil
 	}
 	pre_append = pre + ".0." + "dstintf"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["dstintf"], _ = expandSystemStandaloneClusterClusterPeerSessionSyncFilterDstintf(d, i["dstintf"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["dstintf"] = nil
 	}
 	pre_append = pre + ".0." + "srcaddr"
 	if _, ok := d.GetOk(pre_append); ok {

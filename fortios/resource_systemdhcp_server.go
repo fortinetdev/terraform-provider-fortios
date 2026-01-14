@@ -832,50 +832,82 @@ func flattenSystemDhcpServerIpRange(v interface{}, d *schema.ResourceData, pre s
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenSystemDhcpServerIpRangeId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "start_ip"
 		if cur_v, ok := i["start-ip"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "start_ip"
+			}
 			tmp["start_ip"] = flattenSystemDhcpServerIpRangeStartIp(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "end_ip"
 		if cur_v, ok := i["end-ip"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "end_ip"
+			}
 			tmp["end_ip"] = flattenSystemDhcpServerIpRangeEndIp(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_match"
 		if cur_v, ok := i["vci-match"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_match"
+			}
 			tmp["vci_match"] = flattenSystemDhcpServerIpRangeVciMatch(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_string"
 		if cur_v, ok := i["vci-string"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_string"
+			}
 			tmp["vci_string"] = flattenSystemDhcpServerIpRangeVciString(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "uci_match"
 		if cur_v, ok := i["uci-match"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "uci_match"
+			}
 			tmp["uci_match"] = flattenSystemDhcpServerIpRangeUciMatch(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "uci_string"
 		if cur_v, ok := i["uci-string"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "uci_string"
+			}
 			tmp["uci_string"] = flattenSystemDhcpServerIpRangeUciString(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "lease_time"
 		if cur_v, ok := i["lease-time"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "lease_time"
+			}
 			tmp["lease_time"] = flattenSystemDhcpServerIpRangeLeaseTime(cur_v, d, pre_append, sv)
 		}
 
@@ -921,15 +953,26 @@ func flattenSystemDhcpServerIpRangeVciString(v interface{}, d *schema.ResourceDa
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "vci-string", "vci_string")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_string"
 		if cur_v, ok := i["vci-string"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_string"
+			}
 			tmp["vci_string"] = flattenSystemDhcpServerIpRangeVciStringVciString(cur_v, d, pre_append, sv)
 		}
 
@@ -967,15 +1010,26 @@ func flattenSystemDhcpServerIpRangeUciString(v interface{}, d *schema.ResourceDa
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "uci-string", "uci_string")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "uci_string"
 		if cur_v, ok := i["uci-string"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "uci_string"
+			}
 			tmp["uci_string"] = flattenSystemDhcpServerIpRangeUciStringUciString(cur_v, d, pre_append, sv)
 		}
 
@@ -1021,15 +1075,26 @@ func flattenSystemDhcpServerTftpServer(v interface{}, d *schema.ResourceData, pr
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "tftp-server", "tftp_server")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "tftp_server"
 		if cur_v, ok := i["tftp-server"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "tftp_server"
+			}
 			tmp["tftp_server"] = flattenSystemDhcpServerTftpServerTftpServer(cur_v, d, pre_append, sv)
 		}
 
@@ -1067,55 +1132,90 @@ func flattenSystemDhcpServerOptions(v interface{}, d *schema.ResourceData, pre s
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenSystemDhcpServerOptionsId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "code"
 		if cur_v, ok := i["code"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "code"
+			}
 			tmp["code"] = flattenSystemDhcpServerOptionsCode(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if cur_v, ok := i["type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
+			}
 			tmp["type"] = flattenSystemDhcpServerOptionsType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
 		if cur_v, ok := i["value"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
+			}
 			tmp["value"] = flattenSystemDhcpServerOptionsValue(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if cur_v, ok := i["ip"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
+			}
 			tmp["ip"] = flattenSystemDhcpServerOptionsIp(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_match"
 		if cur_v, ok := i["vci-match"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_match"
+			}
 			tmp["vci_match"] = flattenSystemDhcpServerOptionsVciMatch(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_string"
 		if cur_v, ok := i["vci-string"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_string"
+			}
 			tmp["vci_string"] = flattenSystemDhcpServerOptionsVciString(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "uci_match"
 		if cur_v, ok := i["uci-match"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "uci_match"
+			}
 			tmp["uci_match"] = flattenSystemDhcpServerOptionsUciMatch(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "uci_string"
 		if cur_v, ok := i["uci-string"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "uci_string"
+			}
 			tmp["uci_string"] = flattenSystemDhcpServerOptionsUciString(cur_v, d, pre_append, sv)
 		}
 
@@ -1169,15 +1269,26 @@ func flattenSystemDhcpServerOptionsVciString(v interface{}, d *schema.ResourceDa
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "vci-string", "vci_string")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_string"
 		if cur_v, ok := i["vci-string"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_string"
+			}
 			tmp["vci_string"] = flattenSystemDhcpServerOptionsVciStringVciString(cur_v, d, pre_append, sv)
 		}
 
@@ -1215,15 +1326,26 @@ func flattenSystemDhcpServerOptionsUciString(v interface{}, d *schema.ResourceDa
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "uci-string", "uci_string")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "uci_string"
 		if cur_v, ok := i["uci-string"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "uci_string"
+			}
 			tmp["uci_string"] = flattenSystemDhcpServerOptionsUciStringUciString(cur_v, d, pre_append, sv)
 		}
 
@@ -1317,15 +1439,26 @@ func flattenSystemDhcpServerVciString(v interface{}, d *schema.ResourceData, pre
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "vci-string", "vci_string")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_string"
 		if cur_v, ok := i["vci-string"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_string"
+			}
 			tmp["vci_string"] = flattenSystemDhcpServerVciStringVciString(cur_v, d, pre_append, sv)
 		}
 
@@ -1359,50 +1492,82 @@ func flattenSystemDhcpServerExcludeRange(v interface{}, d *schema.ResourceData, 
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenSystemDhcpServerExcludeRangeId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "start_ip"
 		if cur_v, ok := i["start-ip"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "start_ip"
+			}
 			tmp["start_ip"] = flattenSystemDhcpServerExcludeRangeStartIp(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "end_ip"
 		if cur_v, ok := i["end-ip"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "end_ip"
+			}
 			tmp["end_ip"] = flattenSystemDhcpServerExcludeRangeEndIp(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_match"
 		if cur_v, ok := i["vci-match"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_match"
+			}
 			tmp["vci_match"] = flattenSystemDhcpServerExcludeRangeVciMatch(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_string"
 		if cur_v, ok := i["vci-string"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_string"
+			}
 			tmp["vci_string"] = flattenSystemDhcpServerExcludeRangeVciString(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "uci_match"
 		if cur_v, ok := i["uci-match"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "uci_match"
+			}
 			tmp["uci_match"] = flattenSystemDhcpServerExcludeRangeUciMatch(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "uci_string"
 		if cur_v, ok := i["uci-string"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "uci_string"
+			}
 			tmp["uci_string"] = flattenSystemDhcpServerExcludeRangeUciString(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "lease_time"
 		if cur_v, ok := i["lease-time"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "lease_time"
+			}
 			tmp["lease_time"] = flattenSystemDhcpServerExcludeRangeLeaseTime(cur_v, d, pre_append, sv)
 		}
 
@@ -1448,15 +1613,26 @@ func flattenSystemDhcpServerExcludeRangeVciString(v interface{}, d *schema.Resou
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "vci-string", "vci_string")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_string"
 		if cur_v, ok := i["vci-string"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "vci_string"
+			}
 			tmp["vci_string"] = flattenSystemDhcpServerExcludeRangeVciStringVciString(cur_v, d, pre_append, sv)
 		}
 
@@ -1494,15 +1670,26 @@ func flattenSystemDhcpServerExcludeRangeUciString(v interface{}, d *schema.Resou
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "uci-string", "uci_string")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "uci_string"
 		if cur_v, ok := i["uci-string"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "uci_string"
+			}
 			tmp["uci_string"] = flattenSystemDhcpServerExcludeRangeUciStringUciString(cur_v, d, pre_append, sv)
 		}
 
@@ -1548,60 +1735,98 @@ func flattenSystemDhcpServerReservedAddress(v interface{}, d *schema.ResourceDat
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenSystemDhcpServerReservedAddressId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if cur_v, ok := i["type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
+			}
 			tmp["type"] = flattenSystemDhcpServerReservedAddressType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if cur_v, ok := i["ip"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
+			}
 			tmp["ip"] = flattenSystemDhcpServerReservedAddressIp(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "mac"
 		if cur_v, ok := i["mac"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "mac"
+			}
 			tmp["mac"] = flattenSystemDhcpServerReservedAddressMac(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if cur_v, ok := i["action"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
+			}
 			tmp["action"] = flattenSystemDhcpServerReservedAddressAction(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "circuit_id_type"
 		if cur_v, ok := i["circuit-id-type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "circuit_id_type"
+			}
 			tmp["circuit_id_type"] = flattenSystemDhcpServerReservedAddressCircuitIdType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "circuit_id"
 		if cur_v, ok := i["circuit-id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "circuit_id"
+			}
 			tmp["circuit_id"] = flattenSystemDhcpServerReservedAddressCircuitId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "remote_id_type"
 		if cur_v, ok := i["remote-id-type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "remote_id_type"
+			}
 			tmp["remote_id_type"] = flattenSystemDhcpServerReservedAddressRemoteIdType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "remote_id"
 		if cur_v, ok := i["remote-id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "remote_id"
+			}
 			tmp["remote_id"] = flattenSystemDhcpServerReservedAddressRemoteId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if cur_v, ok := i["description"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
+			}
 			tmp["description"] = flattenSystemDhcpServerReservedAddressDescription(cur_v, d, pre_append, sv)
 		}
 
@@ -1627,6 +1852,9 @@ func flattenSystemDhcpServerReservedAddressIp(v interface{}, d *schema.ResourceD
 }
 
 func flattenSystemDhcpServerReservedAddressMac(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if strings.ToLower(v.(string)) == strings.ToLower(d.Get(pre).(string)) {
+		return d.Get(pre)
+	}
 	return v
 }
 
@@ -2826,7 +3054,7 @@ func expandSystemDhcpServerReservedAddressIp(d *schema.ResourceData, v interface
 }
 
 func expandSystemDhcpServerReservedAddressMac(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
+	return strings.ToLower(v.(string)), nil
 }
 
 func expandSystemDhcpServerReservedAddressAction(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
@@ -3331,8 +3559,9 @@ func getObjectSystemDhcpServer(d *schema.ResourceData, sv string) (*map[string]i
 		t, err := expandSystemDhcpServerReservedAddress(d, v, "reserved_address", sv)
 		if err != nil {
 			return &obj, err
+		} else if t != nil {
+			obj["reserved-address"] = t
 		}
-		obj["reserved-address"] = t
 	}
 
 	return &obj, nil

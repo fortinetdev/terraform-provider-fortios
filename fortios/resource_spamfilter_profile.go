@@ -1000,18 +1000,26 @@ func expandSpamfilterProfileImap(d *schema.ResourceData, v interface{}, pre stri
 	pre_append = pre + ".0." + "log"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["log"], _ = expandSpamfilterProfileImapLog(d, i["log"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["log"] = nil
 	}
 	pre_append = pre + ".0." + "action"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["action"], _ = expandSpamfilterProfileImapAction(d, i["action"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["action"] = nil
 	}
 	pre_append = pre + ".0." + "tag_type"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["tag-type"], _ = expandSpamfilterProfileImapTagType(d, i["tag_type"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["tag-type"] = nil
 	}
 	pre_append = pre + ".0." + "tag_msg"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["tag-msg"], _ = expandSpamfilterProfileImapTagMsg(d, i["tag_msg"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["tag-msg"] = nil
 	}
 
 	return result, nil
@@ -1046,18 +1054,26 @@ func expandSpamfilterProfilePop3(d *schema.ResourceData, v interface{}, pre stri
 	pre_append = pre + ".0." + "log"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["log"], _ = expandSpamfilterProfilePop3Log(d, i["log"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["log"] = nil
 	}
 	pre_append = pre + ".0." + "action"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["action"], _ = expandSpamfilterProfilePop3Action(d, i["action"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["action"] = nil
 	}
 	pre_append = pre + ".0." + "tag_type"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["tag-type"], _ = expandSpamfilterProfilePop3TagType(d, i["tag_type"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["tag-type"] = nil
 	}
 	pre_append = pre + ".0." + "tag_msg"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["tag-msg"], _ = expandSpamfilterProfilePop3TagMsg(d, i["tag_msg"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["tag-msg"] = nil
 	}
 
 	return result, nil
@@ -1092,26 +1108,38 @@ func expandSpamfilterProfileSmtp(d *schema.ResourceData, v interface{}, pre stri
 	pre_append = pre + ".0." + "log"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["log"], _ = expandSpamfilterProfileSmtpLog(d, i["log"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["log"] = nil
 	}
 	pre_append = pre + ".0." + "action"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["action"], _ = expandSpamfilterProfileSmtpAction(d, i["action"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["action"] = nil
 	}
 	pre_append = pre + ".0." + "tag_type"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["tag-type"], _ = expandSpamfilterProfileSmtpTagType(d, i["tag_type"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["tag-type"] = nil
 	}
 	pre_append = pre + ".0." + "tag_msg"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["tag-msg"], _ = expandSpamfilterProfileSmtpTagMsg(d, i["tag_msg"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["tag-msg"] = nil
 	}
 	pre_append = pre + ".0." + "hdrip"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["hdrip"], _ = expandSpamfilterProfileSmtpHdrip(d, i["hdrip"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["hdrip"] = nil
 	}
 	pre_append = pre + ".0." + "local_override"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["local-override"], _ = expandSpamfilterProfileSmtpLocalOverride(d, i["local_override"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["local-override"] = nil
 	}
 
 	return result, nil
@@ -1154,10 +1182,14 @@ func expandSpamfilterProfileMapi(d *schema.ResourceData, v interface{}, pre stri
 	pre_append = pre + ".0." + "log"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["log"], _ = expandSpamfilterProfileMapiLog(d, i["log"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["log"] = nil
 	}
 	pre_append = pre + ".0." + "action"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["action"], _ = expandSpamfilterProfileMapiAction(d, i["action"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["action"] = nil
 	}
 
 	return result, nil
@@ -1184,6 +1216,8 @@ func expandSpamfilterProfileMsnHotmail(d *schema.ResourceData, v interface{}, pr
 	pre_append = pre + ".0." + "log"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["log"], _ = expandSpamfilterProfileMsnHotmailLog(d, i["log"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["log"] = nil
 	}
 
 	return result, nil
@@ -1206,6 +1240,8 @@ func expandSpamfilterProfileYahooMail(d *schema.ResourceData, v interface{}, pre
 	pre_append = pre + ".0." + "log"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["log"], _ = expandSpamfilterProfileYahooMailLog(d, i["log"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["log"] = nil
 	}
 
 	return result, nil
@@ -1228,6 +1264,8 @@ func expandSpamfilterProfileGmail(d *schema.ResourceData, v interface{}, pre str
 	pre_append = pre + ".0." + "log"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["log"], _ = expandSpamfilterProfileGmailLog(d, i["log"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["log"] = nil
 	}
 
 	return result, nil

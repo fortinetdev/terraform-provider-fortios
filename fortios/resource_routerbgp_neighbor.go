@@ -1729,25 +1729,42 @@ func flattenRouterbgpNeighborConditionalAdvertise(v interface{}, d *schema.Resou
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "advertise-routemap", "advertise_routemap")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "advertise_routemap"
 		if cur_v, ok := i["advertise-routemap"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "advertise_routemap"
+			}
 			tmp["advertise_routemap"] = flattenRouterbgpNeighborConditionalAdvertiseAdvertiseRoutemap(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "condition_routemap"
 		if cur_v, ok := i["condition-routemap"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "condition_routemap"
+			}
 			tmp["condition_routemap"] = flattenRouterbgpNeighborConditionalAdvertiseConditionRoutemap(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "condition_type"
 		if cur_v, ok := i["condition-type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "condition_type"
+			}
 			tmp["condition_type"] = flattenRouterbgpNeighborConditionalAdvertiseConditionType(cur_v, d, pre_append, sv)
 		}
 
@@ -1789,25 +1806,42 @@ func flattenRouterbgpNeighborConditionalAdvertise6(v interface{}, d *schema.Reso
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "advertise-routemap", "advertise_routemap")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "advertise_routemap"
 		if cur_v, ok := i["advertise-routemap"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "advertise_routemap"
+			}
 			tmp["advertise_routemap"] = flattenRouterbgpNeighborConditionalAdvertise6AdvertiseRoutemap(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "condition_routemap"
 		if cur_v, ok := i["condition-routemap"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "condition_routemap"
+			}
 			tmp["condition_routemap"] = flattenRouterbgpNeighborConditionalAdvertise6ConditionRoutemap(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "condition_type"
 		if cur_v, ok := i["condition-type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "condition_type"
+			}
 			tmp["condition_type"] = flattenRouterbgpNeighborConditionalAdvertise6ConditionType(cur_v, d, pre_append, sv)
 		}
 

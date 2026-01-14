@@ -51,6 +51,12 @@ func resourceSystemSettings() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
 			},
+			"lan_extension_controller_port": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1024, 65535),
+				Optional:     true,
+				Computed:     true,
+			},
 			"opmode": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -988,6 +994,10 @@ func flattenSystemSettingsLanExtensionControllerAddr(v interface{}, d *schema.Re
 	return v
 }
 
+func flattenSystemSettingsLanExtensionControllerPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
 func flattenSystemSettingsOpmode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1156,15 +1166,26 @@ func flattenSystemSettingsGuiDefaultPolicyColumns(v interface{}, d *schema.Resou
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenSystemSettingsGuiDefaultPolicyColumnsName(cur_v, d, pre_append, sv)
 		}
 
@@ -1689,6 +1710,12 @@ func refreshObjectSystemSettings(d *schema.ResourceData, o map[string]interface{
 	if err = d.Set("lan_extension_controller_addr", flattenSystemSettingsLanExtensionControllerAddr(o["lan-extension-controller-addr"], d, "lan_extension_controller_addr", sv)); err != nil {
 		if !fortiAPIPatch(o["lan-extension-controller-addr"]) {
 			return fmt.Errorf("Error reading lan_extension_controller_addr: %v", err)
+		}
+	}
+
+	if err = d.Set("lan_extension_controller_port", flattenSystemSettingsLanExtensionControllerPort(o["lan-extension-controller-port"], d, "lan_extension_controller_port", sv)); err != nil {
+		if !fortiAPIPatch(o["lan-extension-controller-port"]) {
+			return fmt.Errorf("Error reading lan_extension_controller_port: %v", err)
 		}
 	}
 
@@ -2671,6 +2698,10 @@ func expandSystemSettingsLanExtensionControllerAddr(d *schema.ResourceData, v in
 	return v, nil
 }
 
+func expandSystemSettingsLanExtensionControllerPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemSettingsOpmode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -3371,6 +3402,19 @@ func getObjectSystemSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		}
 	} else if d.HasChange("lan_extension_controller_addr") {
 		obj["lan-extension-controller-addr"] = nil
+	}
+
+	if v, ok := d.GetOk("lan_extension_controller_port"); ok {
+		if setArgNil {
+			obj["lan-extension-controller-port"] = nil
+		} else {
+			t, err := expandSystemSettingsLanExtensionControllerPort(d, v, "lan_extension_controller_port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["lan-extension-controller-port"] = t
+			}
+		}
 	}
 
 	if v, ok := d.GetOk("opmode"); ok {

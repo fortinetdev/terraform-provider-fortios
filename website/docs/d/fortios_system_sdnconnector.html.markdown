@@ -79,6 +79,7 @@ The following attributes are exported:
 * `ibm_region_gen1` - IBM cloud compute generation 1 region name.
 * `ibm_region_gen2` - IBM cloud compute generation 2 region name.
 * `ibm_region` - IBM cloud region name.
+* `par_id` - Public address range ID.
 * `update_interval` - Dynamic object update interval (0 - 3600 sec, 0 means disabled, default = 60).
 
 The `server_list` block contains:

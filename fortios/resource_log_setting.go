@@ -155,6 +155,11 @@ func resourceLogSetting() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"rest_api_performance": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"long_live_session_stat": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -166,6 +171,11 @@ func resourceLogSetting() *schema.Resource {
 				Computed: true,
 			},
 			"zone_name": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"web_svc_perf": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -412,6 +422,10 @@ func flattenLogSettingRestApiGet(v interface{}, d *schema.ResourceData, pre stri
 	return v
 }
 
+func flattenLogSettingRestApiPerformance(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenLogSettingLongLiveSessionStat(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -421,6 +435,10 @@ func flattenLogSettingExtendedUtmLog(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenLogSettingZoneName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenLogSettingWebSvcPerf(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -441,15 +459,26 @@ func flattenLogSettingCustomLogFields(v interface{}, d *schema.ResourceData, pre
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "field-id", "field_id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "field_id"
 		if cur_v, ok := i["field-id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "field_id"
+			}
 			tmp["field_id"] = flattenLogSettingCustomLogFieldsFieldId(cur_v, d, pre_append, sv)
 		}
 
@@ -623,6 +652,12 @@ func refreshObjectLogSetting(d *schema.ResourceData, o map[string]interface{}, s
 		}
 	}
 
+	if err = d.Set("rest_api_performance", flattenLogSettingRestApiPerformance(o["rest-api-performance"], d, "rest_api_performance", sv)); err != nil {
+		if !fortiAPIPatch(o["rest-api-performance"]) {
+			return fmt.Errorf("Error reading rest_api_performance: %v", err)
+		}
+	}
+
 	if err = d.Set("long_live_session_stat", flattenLogSettingLongLiveSessionStat(o["long-live-session-stat"], d, "long_live_session_stat", sv)); err != nil {
 		if !fortiAPIPatch(o["long-live-session-stat"]) {
 			return fmt.Errorf("Error reading long_live_session_stat: %v", err)
@@ -638,6 +673,12 @@ func refreshObjectLogSetting(d *schema.ResourceData, o map[string]interface{}, s
 	if err = d.Set("zone_name", flattenLogSettingZoneName(o["zone-name"], d, "zone_name", sv)); err != nil {
 		if !fortiAPIPatch(o["zone-name"]) {
 			return fmt.Errorf("Error reading zone_name: %v", err)
+		}
+	}
+
+	if err = d.Set("web_svc_perf", flattenLogSettingWebSvcPerf(o["web-svc-perf"], d, "web_svc_perf", sv)); err != nil {
+		if !fortiAPIPatch(o["web-svc-perf"]) {
+			return fmt.Errorf("Error reading web_svc_perf: %v", err)
 		}
 	}
 
@@ -768,6 +809,10 @@ func expandLogSettingRestApiGet(d *schema.ResourceData, v interface{}, pre strin
 	return v, nil
 }
 
+func expandLogSettingRestApiPerformance(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandLogSettingLongLiveSessionStat(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -777,6 +822,10 @@ func expandLogSettingExtendedUtmLog(d *schema.ResourceData, v interface{}, pre s
 }
 
 func expandLogSettingZoneName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogSettingWebSvcPerf(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1129,6 +1178,19 @@ func getObjectLogSetting(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		}
 	}
 
+	if v, ok := d.GetOk("rest_api_performance"); ok {
+		if setArgNil {
+			obj["rest-api-performance"] = nil
+		} else {
+			t, err := expandLogSettingRestApiPerformance(d, v, "rest_api_performance", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["rest-api-performance"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("long_live_session_stat"); ok {
 		if setArgNil {
 			obj["long-live-session-stat"] = nil
@@ -1164,6 +1226,19 @@ func getObjectLogSetting(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 				return &obj, err
 			} else if t != nil {
 				obj["zone-name"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("web_svc_perf"); ok {
+		if setArgNil {
+			obj["web-svc-perf"] = nil
+		} else {
+			t, err := expandLogSettingWebSvcPerf(d, v, "web_svc_perf", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["web-svc-perf"] = t
 			}
 		}
 	}

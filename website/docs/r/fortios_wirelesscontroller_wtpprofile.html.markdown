@@ -24,6 +24,7 @@ The following arguments are supported:
 * `apcfg_mesh_ssid` -  Mesh SSID (default = none).
 * `apcfg_mesh_eth_bridge` - Enable/disable mesh ethernet bridge (default = disable). Valid values: `enable`, `disable`.
 * `ble_profile` - Bluetooth Low Energy profile name.
+* `lw_profile` - LoRaWAN profile name.
 * `syslog_profile` - System log server configuration profile name.
 * `wan_port_mode` - Enable/disable using a WAN port as a LAN port. Valid values: `wan-lan`, `wan-only`.
 * `lan` - WTP LAN port mapping. The structure of `lan` block is documented below.
@@ -35,7 +36,7 @@ The following arguments are supported:
 * `max_clients` - Maximum number of stations (STAs) supported by the WTP (default = 0, meaning no client limitation).
 * `handoff_rssi` - Minimum received signal strength indicator (RSSI) value for handoff (20 - 30, default = 25).
 * `handoff_sta_thresh` - Threshold value for AP handoff.
-* `handoff_roaming` - Enable/disable client load balancing during roaming to avoid roaming delay (default = disable). Valid values: `enable`, `disable`.
+* `handoff_roaming` - Enable/disable client load balancing during roaming to avoid roaming delay. On FortiOS versions 6.2.0-7.6.4: default = disable. On FortiOS versions >= 7.6.5: default = enable. Valid values: `enable`, `disable`.
 * `deny_mac_list` - List of MAC addresses that are denied access to this WTP, FortiAP, or AP. The structure of `deny_mac_list` block is documented below.
 * `ap_country` - Country in which this WTP, FortiAP or AP will operate (default = NA, automatically use the country configured for the current VDOM).
 * `ip_fragment_preventing` - Method(s) by which IP fragmentation is prevented for control and data packets through CAPWAP tunnel (default = tcp-mss-adjust). Valid values: `tcp-mss-adjust`, `icmp-unreachable`.
@@ -67,6 +68,26 @@ The following arguments are supported:
 * `wan_port_auth_password` - Set WAN port 802.1x supplicant password.
 * `wan_port_auth_methods` - WAN port 802.1x supplicant EAP methods (default = all). Valid values: `all`, `EAP-FAST`, `EAP-TLS`, `EAP-PEAP`.
 * `wan_port_auth_macsec` - Enable/disable WAN port 802.1x supplicant MACsec policy (default = disable). Valid values: `enable`, `disable`.
+* `apcfg_auto_cert` - Enable/disable AP local auto cert configuration (default = disable). Valid values: `enable`, `disable`.
+* `apcfg_auto_cert_enroll_protocol` - Certificate enrollment protocol (default = none) Valid values: `none`, `est`, `scep`.
+* `apcfg_auto_cert_crypto_algo` - Cryptography algorithm: rsa-1024, rsa-1536, rsa-2048, rsa-4096, ec-secp256r1, ec-secp384r1, ec-secp521r1 (default = ec-secp256r1) Valid values: `rsa-1024`, `rsa-1536`, `rsa-2048`, `rsa-4096`, `ec-secp256r1`, `ec-secp384r1`, `ec-secp521r1`.
+* `apcfg_auto_cert_est_server` - Address and port for EST server (e.g. https://example.com:1234).
+* `apcfg_auto_cert_est_ca_id` - CA identifier of the CA server for signing via EST.
+* `apcfg_auto_cert_est_http_username` - HTTP Authentication username for signing via EST.
+* `apcfg_auto_cert_est_http_password` - HTTP Authentication password for signing via EST.
+* `apcfg_auto_cert_est_subject` - Subject e.g. "CN=User,DC=example,DC=COM" (default = CN=FortiAP,DC=local,DC=COM)
+* `apcfg_auto_cert_est_subject_alt_name` - Subject alternative name (optional, e.g. "DNS:dns1.com,IP:192.168.1.99")
+* `apcfg_auto_cert_auto_regen_days` - Number of days to wait before expiry of an updated local certificate is requested (0 = disabled) (default = 30).
+* `apcfg_auto_cert_est_https_ca` - PEM format https CA Certificate.
+* `apcfg_auto_cert_scep_keytype` - Key type (default = rsa) Valid values: `rsa`, `ec`.
+* `apcfg_auto_cert_scep_keysize` - Key size: 1024, 1536, 2048, 4096 (default 2048). Valid values: `1024`, `1536`, `2048`, `4096`.
+* `apcfg_auto_cert_scep_ec_name` - Elliptic curve name: secp256r1, secp384r1 and secp521r1. (default secp256r1). Valid values: `secp256r1`, `secp384r1`, `secp521r1`.
+* `apcfg_auto_cert_scep_sub_fully_dn` - Full DN of the subject (e.g C=US,ST=CA,L=Sunnyvale,O=Fortinet,OU=Dep1,emailAddress=test@example.com). There should be no space in between the attributes. Supported DN attributes (case-sensitive) are:C,ST,L,O,OU,emailAddress. The CN defaults to the deviceâ€™s SN and cannot be changed.
+* `apcfg_auto_cert_scep_url` - SCEP server URL.
+* `apcfg_auto_cert_scep_password` - SCEP server challenge password for auto-regeneration.
+* `apcfg_auto_cert_scep_ca_id` - CA identifier of the CA server for signing via SCEP.
+* `apcfg_auto_cert_scep_subject_alt_name` - Subject alternative name (optional, e.g. "DNS:dns1.com,IP:192.168.1.99")
+* `apcfg_auto_cert_scep_https_ca` - PEM format https CA Certificate.
 * `unii_4_5ghz_band` - Enable/disable UNII-4 5Ghz band channels (default = disable). Valid values: `enable`, `disable`.
 * `admin_auth_tacacs` - Remote authentication server for admin user.
 * `admin_restrict_local` - Enable/disable local admin authentication restriction when remote authenticator is up and running (default = disable). Valid values: `enable`, `disable`.
@@ -189,6 +210,7 @@ The `radio_1` block supports:
 * `channel_utilization` - Enable/disable measuring channel utilization. Valid values: `enable`, `disable`.
 * `spectrum_analysis` - Enable/disable spectrum analysis to find interference that would negatively impact wireless performance.
 * `wids_profile` - Wireless Intrusion Detection System (WIDS) profile name to assign to the radio.
+* `ai_darrp_support` - Enable/disable support for FortiAIOps to retrieve Distributed Automatic Radio Resource Provisioning (DARRP) data through REST API calls (default = disable). Valid values: `enable`, `disable`.
 * `darrp` - Enable/disable Distributed Automatic Radio Resource Provisioning (DARRP) to make sure the radio is always using the most optimal channel (default = disable). Valid values: `enable`, `disable`.
 * `arrp_profile` - Distributed Automatic Radio Resource Provisioning (DARRP) profile name to assign to the radio.
 * `max_clients` - Maximum number of stations (STAs) or WiFi clients supported by the radio. Range depends on the hardware.
@@ -283,6 +305,7 @@ The `radio_2` block supports:
 * `channel_utilization` - Enable/disable measuring channel utilization. Valid values: `enable`, `disable`.
 * `spectrum_analysis` - Enable/disable spectrum analysis to find interference that would negatively impact wireless performance.
 * `wids_profile` - Wireless Intrusion Detection System (WIDS) profile name to assign to the radio.
+* `ai_darrp_support` - Enable/disable support for FortiAIOps to retrieve Distributed Automatic Radio Resource Provisioning (DARRP) data through REST API calls (default = disable). Valid values: `enable`, `disable`.
 * `darrp` - Enable/disable Distributed Automatic Radio Resource Provisioning (DARRP) to make sure the radio is always using the most optimal channel (default = disable). Valid values: `enable`, `disable`.
 * `arrp_profile` - Distributed Automatic Radio Resource Provisioning (DARRP) profile name to assign to the radio.
 * `max_clients` - Maximum number of stations (STAs) or WiFi clients supported by the radio. Range depends on the hardware.
@@ -376,6 +399,7 @@ The `radio_3` block supports:
 * `channel_utilization` - Enable/disable measuring channel utilization. Valid values: `enable`, `disable`.
 * `spectrum_analysis` - Enable/disable spectrum analysis to find interference that would negatively impact wireless performance.
 * `wids_profile` - Wireless Intrusion Detection System (WIDS) profile name to assign to the radio.
+* `ai_darrp_support` - Enable/disable support for FortiAIOps to retrieve Distributed Automatic Radio Resource Provisioning (DARRP) data through REST API calls (default = disable). Valid values: `enable`, `disable`.
 * `darrp` - Enable/disable Distributed Automatic Radio Resource Provisioning (DARRP) to make sure the radio is always using the most optimal channel (default = disable). Valid values: `enable`, `disable`.
 * `arrp_profile` - Distributed Automatic Radio Resource Provisioning (DARRP) profile name to assign to the radio.
 * `max_clients` - Maximum number of stations (STAs) or WiFi clients supported by the radio. Range depends on the hardware.
@@ -469,6 +493,7 @@ The `radio_4` block supports:
 * `channel_utilization` - Enable/disable measuring channel utilization. Valid values: `enable`, `disable`.
 * `spectrum_analysis` - Enable/disable spectrum analysis to find interference that would negatively impact wireless performance.
 * `wids_profile` - Wireless Intrusion Detection System (WIDS) profile name to assign to the radio.
+* `ai_darrp_support` - Enable/disable support for FortiAIOps to retrieve Distributed Automatic Radio Resource Provisioning (DARRP) data through REST API calls (default = disable). Valid values: `enable`, `disable`.
 * `darrp` - Enable/disable Distributed Automatic Radio Resource Provisioning (DARRP) to make sure the radio is always using the most optimal channel (default = disable). Valid values: `enable`, `disable`.
 * `arrp_profile` - Distributed Automatic Radio Resource Provisioning (DARRP) profile name to assign to the radio.
 * `max_clients` - Maximum number of stations (STAs) or WiFi clients supported by the radio. Range depends on the hardware.

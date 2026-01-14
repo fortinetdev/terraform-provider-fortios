@@ -1141,6 +1141,8 @@ func expandWanoptProfileHttp(d *schema.ResourceData, v interface{}, pre string, 
 	pre_append = pre + ".0." + "port"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["port"], _ = expandWanoptProfileHttpPort(d, i["port"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["port"] = nil
 	}
 	pre_append = pre + ".0." + "ssl"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -1149,14 +1151,20 @@ func expandWanoptProfileHttp(d *schema.ResourceData, v interface{}, pre string, 
 	pre_append = pre + ".0." + "ssl_port"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ssl-port"], _ = expandWanoptProfileHttpSslPort(d, i["ssl_port"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["ssl-port"] = nil
 	}
 	pre_append = pre + ".0." + "unknown_http_version"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["unknown-http-version"], _ = expandWanoptProfileHttpUnknownHttpVersion(d, i["unknown_http_version"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["unknown-http-version"] = nil
 	}
 	pre_append = pre + ".0." + "tunnel_non_http"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["tunnel-non-http"], _ = expandWanoptProfileHttpTunnelNonHttp(d, i["tunnel_non_http"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["tunnel-non-http"] = nil
 	}
 
 	return result, nil
@@ -1251,6 +1259,8 @@ func expandWanoptProfileCifs(d *schema.ResourceData, v interface{}, pre string, 
 	pre_append = pre + ".0." + "port"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["port"], _ = expandWanoptProfileCifsPort(d, i["port"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["port"] = nil
 	}
 
 	return result, nil
@@ -1321,6 +1331,8 @@ func expandWanoptProfileMapi(d *schema.ResourceData, v interface{}, pre string, 
 	pre_append = pre + ".0." + "port"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["port"], _ = expandWanoptProfileMapiPort(d, i["port"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["port"] = nil
 	}
 
 	return result, nil
@@ -1395,6 +1407,8 @@ func expandWanoptProfileFtp(d *schema.ResourceData, v interface{}, pre string, s
 	pre_append = pre + ".0." + "port"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["port"], _ = expandWanoptProfileFtpPort(d, i["port"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["port"] = nil
 	}
 
 	return result, nil
@@ -1473,6 +1487,8 @@ func expandWanoptProfileTcp(d *schema.ResourceData, v interface{}, pre string, s
 	pre_append = pre + ".0." + "port"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["port"], _ = expandWanoptProfileTcpPort(d, i["port"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["port"] = nil
 	}
 	pre_append = pre + ".0." + "ssl"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -1481,6 +1497,8 @@ func expandWanoptProfileTcp(d *schema.ResourceData, v interface{}, pre string, s
 	pre_append = pre + ".0." + "ssl_port"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ssl-port"], _ = expandWanoptProfileTcpSslPort(d, i["ssl_port"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["ssl-port"] = nil
 	}
 
 	return result, nil

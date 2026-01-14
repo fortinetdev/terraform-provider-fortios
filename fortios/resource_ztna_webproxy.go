@@ -848,125 +848,202 @@ func flattenZtnaWebProxyApiGateway(v interface{}, d *schema.ResourceData, pre st
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenZtnaWebProxyApiGatewayId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "url_map"
 		if cur_v, ok := i["url-map"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "url_map"
+			}
 			tmp["url_map"] = flattenZtnaWebProxyApiGatewayUrlMap(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "service"
 		if cur_v, ok := i["service"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "service"
+			}
 			tmp["service"] = flattenZtnaWebProxyApiGatewayService(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ldb_method"
 		if cur_v, ok := i["ldb-method"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "ldb_method"
+			}
 			tmp["ldb_method"] = flattenZtnaWebProxyApiGatewayLdbMethod(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "url_map_type"
 		if cur_v, ok := i["url-map-type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "url_map_type"
+			}
 			tmp["url_map_type"] = flattenZtnaWebProxyApiGatewayUrlMapType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "h2_support"
 		if cur_v, ok := i["h2-support"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "h2_support"
+			}
 			tmp["h2_support"] = flattenZtnaWebProxyApiGatewayH2Support(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "h3_support"
 		if cur_v, ok := i["h3-support"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "h3_support"
+			}
 			tmp["h3_support"] = flattenZtnaWebProxyApiGatewayH3Support(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "quic"
 		if cur_v, ok := i["quic"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "quic"
+			}
 			tmp["quic"] = flattenZtnaWebProxyApiGatewayQuic(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "realservers"
 		if cur_v, ok := i["realservers"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "realservers"
+			}
 			tmp["realservers"] = flattenZtnaWebProxyApiGatewayRealservers(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "persistence"
 		if cur_v, ok := i["persistence"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "persistence"
+			}
 			tmp["persistence"] = flattenZtnaWebProxyApiGatewayPersistence(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_cookie_domain_from_host"
 		if cur_v, ok := i["http-cookie-domain-from-host"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "http_cookie_domain_from_host"
+			}
 			tmp["http_cookie_domain_from_host"] = flattenZtnaWebProxyApiGatewayHttpCookieDomainFromHost(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_cookie_domain"
 		if cur_v, ok := i["http-cookie-domain"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "http_cookie_domain"
+			}
 			tmp["http_cookie_domain"] = flattenZtnaWebProxyApiGatewayHttpCookieDomain(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_cookie_path"
 		if cur_v, ok := i["http-cookie-path"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "http_cookie_path"
+			}
 			tmp["http_cookie_path"] = flattenZtnaWebProxyApiGatewayHttpCookiePath(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_cookie_generation"
 		if cur_v, ok := i["http-cookie-generation"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "http_cookie_generation"
+			}
 			tmp["http_cookie_generation"] = flattenZtnaWebProxyApiGatewayHttpCookieGeneration(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_cookie_age"
 		if cur_v, ok := i["http-cookie-age"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "http_cookie_age"
+			}
 			tmp["http_cookie_age"] = flattenZtnaWebProxyApiGatewayHttpCookieAge(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_cookie_share"
 		if cur_v, ok := i["http-cookie-share"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "http_cookie_share"
+			}
 			tmp["http_cookie_share"] = flattenZtnaWebProxyApiGatewayHttpCookieShare(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "https_cookie_secure"
 		if cur_v, ok := i["https-cookie-secure"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "https_cookie_secure"
+			}
 			tmp["https_cookie_secure"] = flattenZtnaWebProxyApiGatewayHttpsCookieSecure(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ssl_dh_bits"
 		if cur_v, ok := i["ssl-dh-bits"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "ssl_dh_bits"
+			}
 			tmp["ssl_dh_bits"] = flattenZtnaWebProxyApiGatewaySslDhBits(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ssl_algorithm"
 		if cur_v, ok := i["ssl-algorithm"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "ssl_algorithm"
+			}
 			tmp["ssl_algorithm"] = flattenZtnaWebProxyApiGatewaySslAlgorithm(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ssl_cipher_suites"
 		if cur_v, ok := i["ssl-cipher-suites"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "ssl_cipher_suites"
+			}
 			tmp["ssl_cipher_suites"] = flattenZtnaWebProxyApiGatewaySslCipherSuites(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ssl_min_version"
 		if cur_v, ok := i["ssl-min-version"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "ssl_min_version"
+			}
 			tmp["ssl_min_version"] = flattenZtnaWebProxyApiGatewaySslMinVersion(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ssl_max_version"
 		if cur_v, ok := i["ssl-max-version"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "ssl_max_version"
+			}
 			tmp["ssl_max_version"] = flattenZtnaWebProxyApiGatewaySslMaxVersion(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ssl_renegotiation"
 		if cur_v, ok := i["ssl-renegotiation"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "ssl_renegotiation"
+			}
 			tmp["ssl_renegotiation"] = flattenZtnaWebProxyApiGatewaySslRenegotiation(cur_v, d, pre_append, sv)
 		}
 
@@ -1109,75 +1186,122 @@ func flattenZtnaWebProxyApiGatewayRealservers(v interface{}, d *schema.ResourceD
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenZtnaWebProxyApiGatewayRealserversId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr_type"
 		if cur_v, ok := i["addr-type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "addr_type"
+			}
 			tmp["addr_type"] = flattenZtnaWebProxyApiGatewayRealserversAddrType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "address"
 		if cur_v, ok := i["address"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "address"
+			}
 			tmp["address"] = flattenZtnaWebProxyApiGatewayRealserversAddress(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if cur_v, ok := i["ip"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
+			}
 			tmp["ip"] = flattenZtnaWebProxyApiGatewayRealserversIp(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
 		if cur_v, ok := i["port"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
+			}
 			tmp["port"] = flattenZtnaWebProxyApiGatewayRealserversPort(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if cur_v, ok := i["status"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
+			}
 			tmp["status"] = flattenZtnaWebProxyApiGatewayRealserversStatus(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "weight"
 		if cur_v, ok := i["weight"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "weight"
+			}
 			tmp["weight"] = flattenZtnaWebProxyApiGatewayRealserversWeight(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_host"
 		if cur_v, ok := i["http-host"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "http_host"
+			}
 			tmp["http_host"] = flattenZtnaWebProxyApiGatewayRealserversHttpHost(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "health_check"
 		if cur_v, ok := i["health-check"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "health_check"
+			}
 			tmp["health_check"] = flattenZtnaWebProxyApiGatewayRealserversHealthCheck(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "health_check_proto"
 		if cur_v, ok := i["health-check-proto"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "health_check_proto"
+			}
 			tmp["health_check_proto"] = flattenZtnaWebProxyApiGatewayRealserversHealthCheckProto(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "holddown_interval"
 		if cur_v, ok := i["holddown-interval"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "holddown_interval"
+			}
 			tmp["holddown_interval"] = flattenZtnaWebProxyApiGatewayRealserversHolddownInterval(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "translate_host"
 		if cur_v, ok := i["translate-host"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "translate_host"
+			}
 			tmp["translate_host"] = flattenZtnaWebProxyApiGatewayRealserversTranslateHost(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "verify_cert"
 		if cur_v, ok := i["verify-cert"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "verify_cert"
+			}
 			tmp["verify_cert"] = flattenZtnaWebProxyApiGatewayRealserversVerifyCert(cur_v, d, pre_append, sv)
 		}
 
@@ -1299,25 +1423,42 @@ func flattenZtnaWebProxyApiGatewaySslCipherSuites(v interface{}, d *schema.Resou
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "priority", "priority")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
 		if cur_v, ok := i["priority"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
+			}
 			tmp["priority"] = flattenZtnaWebProxyApiGatewaySslCipherSuitesPriority(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "cipher"
 		if cur_v, ok := i["cipher"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "cipher"
+			}
 			tmp["cipher"] = flattenZtnaWebProxyApiGatewaySslCipherSuitesCipher(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "versions"
 		if cur_v, ok := i["versions"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "versions"
+			}
 			tmp["versions"] = flattenZtnaWebProxyApiGatewaySslCipherSuitesVersions(cur_v, d, pre_append, sv)
 		}
 
@@ -1371,125 +1512,202 @@ func flattenZtnaWebProxyApiGateway6(v interface{}, d *schema.ResourceData, pre s
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenZtnaWebProxyApiGateway6Id(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "url_map"
 		if cur_v, ok := i["url-map"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "url_map"
+			}
 			tmp["url_map"] = flattenZtnaWebProxyApiGateway6UrlMap(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "service"
 		if cur_v, ok := i["service"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "service"
+			}
 			tmp["service"] = flattenZtnaWebProxyApiGateway6Service(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ldb_method"
 		if cur_v, ok := i["ldb-method"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "ldb_method"
+			}
 			tmp["ldb_method"] = flattenZtnaWebProxyApiGateway6LdbMethod(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "url_map_type"
 		if cur_v, ok := i["url-map-type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "url_map_type"
+			}
 			tmp["url_map_type"] = flattenZtnaWebProxyApiGateway6UrlMapType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "h2_support"
 		if cur_v, ok := i["h2-support"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "h2_support"
+			}
 			tmp["h2_support"] = flattenZtnaWebProxyApiGateway6H2Support(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "h3_support"
 		if cur_v, ok := i["h3-support"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "h3_support"
+			}
 			tmp["h3_support"] = flattenZtnaWebProxyApiGateway6H3Support(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "quic"
 		if cur_v, ok := i["quic"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "quic"
+			}
 			tmp["quic"] = flattenZtnaWebProxyApiGateway6Quic(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "realservers"
 		if cur_v, ok := i["realservers"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "realservers"
+			}
 			tmp["realservers"] = flattenZtnaWebProxyApiGateway6Realservers(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "persistence"
 		if cur_v, ok := i["persistence"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "persistence"
+			}
 			tmp["persistence"] = flattenZtnaWebProxyApiGateway6Persistence(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_cookie_domain_from_host"
 		if cur_v, ok := i["http-cookie-domain-from-host"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "http_cookie_domain_from_host"
+			}
 			tmp["http_cookie_domain_from_host"] = flattenZtnaWebProxyApiGateway6HttpCookieDomainFromHost(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_cookie_domain"
 		if cur_v, ok := i["http-cookie-domain"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "http_cookie_domain"
+			}
 			tmp["http_cookie_domain"] = flattenZtnaWebProxyApiGateway6HttpCookieDomain(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_cookie_path"
 		if cur_v, ok := i["http-cookie-path"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "http_cookie_path"
+			}
 			tmp["http_cookie_path"] = flattenZtnaWebProxyApiGateway6HttpCookiePath(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_cookie_generation"
 		if cur_v, ok := i["http-cookie-generation"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "http_cookie_generation"
+			}
 			tmp["http_cookie_generation"] = flattenZtnaWebProxyApiGateway6HttpCookieGeneration(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_cookie_age"
 		if cur_v, ok := i["http-cookie-age"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "http_cookie_age"
+			}
 			tmp["http_cookie_age"] = flattenZtnaWebProxyApiGateway6HttpCookieAge(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_cookie_share"
 		if cur_v, ok := i["http-cookie-share"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "http_cookie_share"
+			}
 			tmp["http_cookie_share"] = flattenZtnaWebProxyApiGateway6HttpCookieShare(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "https_cookie_secure"
 		if cur_v, ok := i["https-cookie-secure"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "https_cookie_secure"
+			}
 			tmp["https_cookie_secure"] = flattenZtnaWebProxyApiGateway6HttpsCookieSecure(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ssl_dh_bits"
 		if cur_v, ok := i["ssl-dh-bits"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "ssl_dh_bits"
+			}
 			tmp["ssl_dh_bits"] = flattenZtnaWebProxyApiGateway6SslDhBits(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ssl_algorithm"
 		if cur_v, ok := i["ssl-algorithm"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "ssl_algorithm"
+			}
 			tmp["ssl_algorithm"] = flattenZtnaWebProxyApiGateway6SslAlgorithm(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ssl_cipher_suites"
 		if cur_v, ok := i["ssl-cipher-suites"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "ssl_cipher_suites"
+			}
 			tmp["ssl_cipher_suites"] = flattenZtnaWebProxyApiGateway6SslCipherSuites(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ssl_min_version"
 		if cur_v, ok := i["ssl-min-version"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "ssl_min_version"
+			}
 			tmp["ssl_min_version"] = flattenZtnaWebProxyApiGateway6SslMinVersion(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ssl_max_version"
 		if cur_v, ok := i["ssl-max-version"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "ssl_max_version"
+			}
 			tmp["ssl_max_version"] = flattenZtnaWebProxyApiGateway6SslMaxVersion(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ssl_renegotiation"
 		if cur_v, ok := i["ssl-renegotiation"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "ssl_renegotiation"
+			}
 			tmp["ssl_renegotiation"] = flattenZtnaWebProxyApiGateway6SslRenegotiation(cur_v, d, pre_append, sv)
 		}
 
@@ -1632,75 +1850,122 @@ func flattenZtnaWebProxyApiGateway6Realservers(v interface{}, d *schema.Resource
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenZtnaWebProxyApiGateway6RealserversId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr_type"
 		if cur_v, ok := i["addr-type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "addr_type"
+			}
 			tmp["addr_type"] = flattenZtnaWebProxyApiGateway6RealserversAddrType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "address"
 		if cur_v, ok := i["address"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "address"
+			}
 			tmp["address"] = flattenZtnaWebProxyApiGateway6RealserversAddress(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if cur_v, ok := i["ip"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
+			}
 			tmp["ip"] = flattenZtnaWebProxyApiGateway6RealserversIp(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
 		if cur_v, ok := i["port"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
+			}
 			tmp["port"] = flattenZtnaWebProxyApiGateway6RealserversPort(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if cur_v, ok := i["status"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
+			}
 			tmp["status"] = flattenZtnaWebProxyApiGateway6RealserversStatus(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "weight"
 		if cur_v, ok := i["weight"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "weight"
+			}
 			tmp["weight"] = flattenZtnaWebProxyApiGateway6RealserversWeight(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "http_host"
 		if cur_v, ok := i["http-host"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "http_host"
+			}
 			tmp["http_host"] = flattenZtnaWebProxyApiGateway6RealserversHttpHost(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "health_check"
 		if cur_v, ok := i["health-check"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "health_check"
+			}
 			tmp["health_check"] = flattenZtnaWebProxyApiGateway6RealserversHealthCheck(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "health_check_proto"
 		if cur_v, ok := i["health-check-proto"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "health_check_proto"
+			}
 			tmp["health_check_proto"] = flattenZtnaWebProxyApiGateway6RealserversHealthCheckProto(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "holddown_interval"
 		if cur_v, ok := i["holddown-interval"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "holddown_interval"
+			}
 			tmp["holddown_interval"] = flattenZtnaWebProxyApiGateway6RealserversHolddownInterval(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "translate_host"
 		if cur_v, ok := i["translate-host"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "translate_host"
+			}
 			tmp["translate_host"] = flattenZtnaWebProxyApiGateway6RealserversTranslateHost(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "verify_cert"
 		if cur_v, ok := i["verify-cert"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "verify_cert"
+			}
 			tmp["verify_cert"] = flattenZtnaWebProxyApiGateway6RealserversVerifyCert(cur_v, d, pre_append, sv)
 		}
 
@@ -1822,25 +2087,42 @@ func flattenZtnaWebProxyApiGateway6SslCipherSuites(v interface{}, d *schema.Reso
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "priority", "priority")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
 		if cur_v, ok := i["priority"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
+			}
 			tmp["priority"] = flattenZtnaWebProxyApiGateway6SslCipherSuitesPriority(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "cipher"
 		if cur_v, ok := i["cipher"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "cipher"
+			}
 			tmp["cipher"] = flattenZtnaWebProxyApiGateway6SslCipherSuitesCipher(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "versions"
 		if cur_v, ok := i["versions"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "versions"
+			}
 			tmp["versions"] = flattenZtnaWebProxyApiGateway6SslCipherSuitesVersions(cur_v, d, pre_append, sv)
 		}
 

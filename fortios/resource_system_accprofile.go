@@ -331,6 +331,26 @@ func resourceSystemAccprofile() *schema.Resource {
 					},
 				},
 			},
+			"secfabgrp_permission": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Optional: true,
+				MaxItems: 1,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"csfsys": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"csffoo": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+					},
+				},
+			},
 			"admintimeout_override": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -978,6 +998,37 @@ func flattenSystemAccprofileUtmgrpPermissionTelemetry(v interface{}, d *schema.R
 	return v
 }
 
+func flattenSystemAccprofileSecfabgrpPermission(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	i := v.(map[string]interface{})
+	result := make(map[string]interface{})
+
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "csfsys"
+	if _, ok := i["csfsys"]; ok {
+		result["csfsys"] = flattenSystemAccprofileSecfabgrpPermissionCsfsys(i["csfsys"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "csffoo"
+	if _, ok := i["csffoo"]; ok {
+		result["csffoo"] = flattenSystemAccprofileSecfabgrpPermissionCsffoo(i["csffoo"], d, pre_append, sv)
+	}
+
+	lastresult := []map[string]interface{}{result}
+	return lastresult
+}
+
+func flattenSystemAccprofileSecfabgrpPermissionCsfsys(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemAccprofileSecfabgrpPermissionCsffoo(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemAccprofileAdmintimeoutOverride(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1186,6 +1237,22 @@ func refreshObjectSystemAccprofile(d *schema.ResourceData, o map[string]interfac
 			if err = d.Set("utmgrp_permission", flattenSystemAccprofileUtmgrpPermission(o["utmgrp-permission"], d, "utmgrp_permission", sv)); err != nil {
 				if !fortiAPIPatch(o["utmgrp-permission"]) {
 					return fmt.Errorf("Error reading utmgrp_permission: %v", err)
+				}
+			}
+		}
+	}
+
+	if b_get_all_tables {
+		if err = d.Set("secfabgrp_permission", flattenSystemAccprofileSecfabgrpPermission(o["secfabgrp-permission"], d, "secfabgrp_permission", sv)); err != nil {
+			if !fortiAPIPatch(o["secfabgrp-permission"]) {
+				return fmt.Errorf("Error reading secfabgrp_permission: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("secfabgrp_permission"); ok {
+			if err = d.Set("secfabgrp_permission", flattenSystemAccprofileSecfabgrpPermission(o["secfabgrp-permission"], d, "secfabgrp_permission", sv)); err != nil {
+				if !fortiAPIPatch(o["secfabgrp-permission"]) {
+					return fmt.Errorf("Error reading secfabgrp_permission: %v", err)
 				}
 			}
 		}
@@ -1537,6 +1604,8 @@ func expandSystemAccprofileUtmgrpPermission(d *schema.ResourceData, v interface{
 	pre_append = pre + ".0." + "spamfilter"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["spamfilter"], _ = expandSystemAccprofileUtmgrpPermissionSpamfilter(d, i["spamfilter"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["spamfilter"] = nil
 	}
 	pre_append = pre + ".0." + "data_loss_prevention"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -1663,6 +1732,36 @@ func expandSystemAccprofileUtmgrpPermissionCasb(d *schema.ResourceData, v interf
 }
 
 func expandSystemAccprofileUtmgrpPermissionTelemetry(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAccprofileSecfabgrpPermission(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	i := l[0].(map[string]interface{})
+	result := make(map[string]interface{})
+
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "csfsys"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["csfsys"], _ = expandSystemAccprofileSecfabgrpPermissionCsfsys(d, i["csfsys"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "csffoo"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["csffoo"], _ = expandSystemAccprofileSecfabgrpPermissionCsffoo(d, i["csffoo"], pre_append, sv)
+	}
+
+	return result, nil
+}
+
+func expandSystemAccprofileSecfabgrpPermissionCsfsys(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAccprofileSecfabgrpPermissionCsffoo(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1879,6 +1978,15 @@ func getObjectSystemAccprofile(d *schema.ResourceData, sv string) (*map[string]i
 			return &obj, err
 		} else if t != nil {
 			obj["utmgrp-permission"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("secfabgrp_permission"); ok {
+		t, err := expandSystemAccprofileSecfabgrpPermission(d, v, "secfabgrp_permission", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["secfabgrp-permission"] = t
 		}
 	}
 

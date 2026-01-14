@@ -43,6 +43,8 @@ The following arguments are supported:
 * `ipunnumbered` - PPPoE unnumbered IP.
 * `pppoe_unnumbered_negotiate` - Enable/disable PPPoE unnumbered negotiation. Valid values: `enable`, `disable`.
 * `idle_timeout` - PPPoE auto disconnect after idle timeout (0-4294967295 sec).
+* `multilink` - Enable/disable PPP multilink support. Valid values: `enable`, `disable`.
+* `mrru` - PPP MRRU (296 - 65535, default = 1500).
 * `disc_retry_timeout` - PPPoE discovery init timeout value in (0-4294967295 sec).
 * `padt_retry_timeout` - PPPoE terminate timeout value in (0-4294967295 sec).
 * `service_name` - PPPoE service name.

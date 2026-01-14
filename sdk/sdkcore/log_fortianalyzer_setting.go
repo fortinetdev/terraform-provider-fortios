@@ -52,7 +52,7 @@ func (c *FortiSDKClient) CreateLogFortiAnalyzerSetting(params *JSONLogFortiAnaly
 
 	bytes := bytes.NewBuffer(locJSON)
 	req := c.NewRequest(HTTPMethod, path, nil, bytes)
-	err = req.Send()
+	err = req.Send(nil)
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("cannot send request %s", err)
 		return
@@ -101,7 +101,7 @@ func (c *FortiSDKClient) UpdateLogFortiAnalyzerSetting(params *JSONLogFortiAnaly
 
 	bytes := bytes.NewBuffer(locJSON)
 	req := c.NewRequest(HTTPMethod, path, nil, bytes)
-	err = req.Send()
+	err = req.Send(nil)
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("cannot send request %s", err)
 		return
@@ -143,7 +143,7 @@ func (c *FortiSDKClient) DeleteLogFortiAnalyzerSetting(mkey string) (err error) 
 	// path += "/" + mkey
 
 	req := c.NewRequest(HTTPMethod, path, nil, nil)
-	err = req.Send()
+	err = req.Send(nil)
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("cannot send request %s", err)
 		return
@@ -179,7 +179,7 @@ func (c *FortiSDKClient) ReadLogFortiAnalyzerSetting(mkey string) (output *JSONL
 	output = &JSONLogFortiAnalyzerSetting{}
 
 	req := c.NewRequest(HTTPMethod, path, nil, nil)
-	err = req.Send()
+	err = req.Send(nil)
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("cannot send request %s", err)
 		return

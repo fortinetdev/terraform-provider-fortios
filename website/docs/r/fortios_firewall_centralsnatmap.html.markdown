@@ -46,10 +46,10 @@ The following arguments are supported:
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `status` - Enable/disable the active status of this policy. Valid values: `enable`, `disable`.
 * `type` - IPv4/IPv6 source NAT. Valid values: `ipv4`, `ipv6`.
-* `orig_addr` - (Required) Original address. The structure of `orig_addr` block is documented below.
+* `orig_addr` - Original address. The structure of `orig_addr` block is documented below.
 * `orig_addr6` - IPv6 Original address. The structure of `orig_addr6` block is documented below.
 * `srcintf` - (Required) Source interface name from available interfaces. The structure of `srcintf` block is documented below.
-* `dst_addr` - (Required) Destination address name from available addresses. The structure of `dst_addr` block is documented below.
+* `dst_addr` - Destination address name from available addresses. The structure of `dst_addr` block is documented below.
 * `dst_addr6` - IPv6 Destination address. The structure of `dst_addr6` block is documented below.
 * `dstintf` - (Required) Destination interface name from available interfaces. The structure of `dstintf` block is documented below.
 * `nat_ippool` - Name of the IP pools to be used to translate addresses from available IP Pools. The structure of `nat_ippool` block is documented below.

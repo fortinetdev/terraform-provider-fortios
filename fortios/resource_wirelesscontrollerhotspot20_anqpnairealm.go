@@ -293,30 +293,50 @@ func flattenWirelessControllerHotspot20AnqpNaiRealmNaiList(v interface{}, d *sch
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenWirelessControllerHotspot20AnqpNaiRealmNaiListName(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "encoding"
 		if cur_v, ok := i["encoding"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "encoding"
+			}
 			tmp["encoding"] = flattenWirelessControllerHotspot20AnqpNaiRealmNaiListEncoding(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "nai_realm"
 		if cur_v, ok := i["nai-realm"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "nai_realm"
+			}
 			tmp["nai_realm"] = flattenWirelessControllerHotspot20AnqpNaiRealmNaiListNaiRealm(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "eap_method"
 		if cur_v, ok := i["eap-method"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "eap_method"
+			}
 			tmp["eap_method"] = flattenWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethod(cur_v, d, pre_append, sv)
 		}
 
@@ -358,25 +378,42 @@ func flattenWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethod(v interface{
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "index", "index")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "index"
 		if cur_v, ok := i["index"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "index"
+			}
 			tmp["index"] = flattenWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethodIndex(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "method"
 		if cur_v, ok := i["method"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "method"
+			}
 			tmp["method"] = flattenWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethodMethod(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_param"
 		if cur_v, ok := i["auth-param"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_param"
+			}
 			tmp["auth_param"] = flattenWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethodAuthParam(cur_v, d, pre_append, sv)
 		}
 
@@ -414,25 +451,42 @@ func flattenWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethodAuthParam(v i
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "index", "index")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "index"
 		if cur_v, ok := i["index"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "index"
+			}
 			tmp["index"] = flattenWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethodAuthParamIndex(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethodAuthParamId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "val"
 		if cur_v, ok := i["val"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "val"
+			}
 			tmp["val"] = flattenWirelessControllerHotspot20AnqpNaiRealmNaiListEapMethodAuthParamVal(cur_v, d, pre_append, sv)
 		}
 

@@ -273,50 +273,82 @@ func flattenVpnIpsecFecMappings(v interface{}, d *schema.ResourceData, pre strin
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "seqno", "seqno")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "seqno"
 		if cur_v, ok := i["seqno"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "seqno"
+			}
 			tmp["seqno"] = flattenVpnIpsecFecMappingsSeqno(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "base"
 		if cur_v, ok := i["base"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "base"
+			}
 			tmp["base"] = flattenVpnIpsecFecMappingsBase(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "redundant"
 		if cur_v, ok := i["redundant"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "redundant"
+			}
 			tmp["redundant"] = flattenVpnIpsecFecMappingsRedundant(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "packet_loss_threshold"
 		if cur_v, ok := i["packet-loss-threshold"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "packet_loss_threshold"
+			}
 			tmp["packet_loss_threshold"] = flattenVpnIpsecFecMappingsPacketLossThreshold(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "latency_threshold"
 		if cur_v, ok := i["latency-threshold"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "latency_threshold"
+			}
 			tmp["latency_threshold"] = flattenVpnIpsecFecMappingsLatencyThreshold(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "bandwidth_up_threshold"
 		if cur_v, ok := i["bandwidth-up-threshold"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "bandwidth_up_threshold"
+			}
 			tmp["bandwidth_up_threshold"] = flattenVpnIpsecFecMappingsBandwidthUpThreshold(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "bandwidth_down_threshold"
 		if cur_v, ok := i["bandwidth-down-threshold"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "bandwidth_down_threshold"
+			}
 			tmp["bandwidth_down_threshold"] = flattenVpnIpsecFecMappingsBandwidthDownThreshold(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "bandwidth_bi_threshold"
 		if cur_v, ok := i["bandwidth-bi-threshold"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "bandwidth_bi_threshold"
+			}
 			tmp["bandwidth_bi_threshold"] = flattenVpnIpsecFecMappingsBandwidthBiThreshold(cur_v, d, pre_append, sv)
 		}
 

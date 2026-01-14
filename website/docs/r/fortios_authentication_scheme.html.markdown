@@ -49,6 +49,7 @@ The following arguments are supported:
 * `require_tfa` - Enable/disable two-factor authentication (default = disable). Valid values: `enable`, `disable`.
 * `fsso_guest` - Enable/disable user fsso-guest authentication (default = disable). Valid values: `enable`, `disable`.
 * `user_cert` - Enable/disable authentication with user certificate (default = disable). Valid values: `enable`, `disable`.
+* `cert_http_header` - Enable/disable authentication with user certificate in Client-Cert HTTP header (default = disable). Valid values: `enable`, `disable`.
 * `user_database` - Authentication server to contain user information; "local" (default) or "123" (for LDAP). The structure of `user_database` block is documented below.
 * `ssh_ca` - SSH CA name.
 * `external_idp` - External identity provider configuration.

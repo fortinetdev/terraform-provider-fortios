@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
 	forticlient "github.com/terraform-providers/terraform-provider-fortios/sdk/sdkcore"
 )
 
@@ -29,9 +30,10 @@ func resourceFirewallObjectAddress() *schema.Resource {
 				Required: true,
 			},
 			"subnet": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Type:             schema.TypeString,
+				Optional:         true,
+				Computed:         true,
+				ValidateDiagFunc: validation.ToDiagFunc(isValidSubnet),
 			},
 			"start_ip": &schema.Schema{
 				Type:     schema.TypeString,

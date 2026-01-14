@@ -38,6 +38,7 @@ The following attributes are exported:
 * `unsafe_legacy_renegotiation` - Enable/disable unsafe legacy re-negotiation.
 * `servercert` - Name of the server certificate to be used for SSL-VPNs.
 * `algorithm` - Force the SSL-VPN security level. High allows only high. Medium allows medium and high. Low allows any.
+* `tls_groups` - Configure the supported groups for TLS negotiation.
 * `idle_timeout` - SSL VPN disconnects if idle for specified time in seconds.
 * `auth_timeout` - SSL-VPN authentication timeout (1 - 259200 sec (3 days), 0 for no timeout).
 * `login_attempt_limit` - SSL VPN maximum login attempt times before block (0 - 10, default = 2, 0 = no limit).
@@ -96,6 +97,7 @@ The following attributes are exported:
 * `web_mode_snat` - Enable/disable use of IP pools defined in firewall policy while using web-mode.
 * `ztna_trusted_client` - Enable/disable verification of device certificate for SSLVPN ZTNA session.
 * `server_hostname` - Server hostname for HTTPS. When set, will be used for SSL VPN web proxy host header for any redirection.
+* `remote_https_cert_check` - Configure how the FortiGate unit checks and responds to the remote HTTPS server's certificate (default = warn-on-error).
 
 The `tunnel_ip_pools` block contains:
 

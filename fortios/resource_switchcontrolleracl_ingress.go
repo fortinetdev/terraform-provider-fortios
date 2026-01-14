@@ -502,6 +502,8 @@ func expandSwitchControllerAclIngressClassifier(d *schema.ResourceData, v interf
 	pre_append = pre + ".0." + "vlan"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["vlan"], _ = expandSwitchControllerAclIngressClassifierVlan(d, i["vlan"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["vlan"] = nil
 	}
 
 	return result, nil

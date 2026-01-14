@@ -319,105 +319,170 @@ func flattenSystemPcpServerPools(v interface{}, d *schema.ResourceData, pre stri
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenSystemPcpServerPoolsName(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if cur_v, ok := i["description"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
+			}
 			tmp["description"] = flattenSystemPcpServerPoolsDescription(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenSystemPcpServerPoolsId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "client_subnet"
 		if cur_v, ok := i["client-subnet"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "client_subnet"
+			}
 			tmp["client_subnet"] = flattenSystemPcpServerPoolsClientSubnet(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ext_intf"
 		if cur_v, ok := i["ext-intf"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "ext_intf"
+			}
 			tmp["ext_intf"] = flattenSystemPcpServerPoolsExtIntf(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "arp_reply"
 		if cur_v, ok := i["arp-reply"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "arp_reply"
+			}
 			tmp["arp_reply"] = flattenSystemPcpServerPoolsArpReply(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "extip"
 		if cur_v, ok := i["extip"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "extip"
+			}
 			tmp["extip"] = flattenSystemPcpServerPoolsExtip(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "extport"
 		if cur_v, ok := i["extport"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "extport"
+			}
 			tmp["extport"] = flattenSystemPcpServerPoolsExtport(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "minimal_lifetime"
 		if cur_v, ok := i["minimal-lifetime"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "minimal_lifetime"
+			}
 			tmp["minimal_lifetime"] = flattenSystemPcpServerPoolsMinimalLifetime(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "maximal_lifetime"
 		if cur_v, ok := i["maximal-lifetime"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "maximal_lifetime"
+			}
 			tmp["maximal_lifetime"] = flattenSystemPcpServerPoolsMaximalLifetime(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "client_mapping_limit"
 		if cur_v, ok := i["client-mapping-limit"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "client_mapping_limit"
+			}
 			tmp["client_mapping_limit"] = flattenSystemPcpServerPoolsClientMappingLimit(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "mapping_filter_limit"
 		if cur_v, ok := i["mapping-filter-limit"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "mapping_filter_limit"
+			}
 			tmp["mapping_filter_limit"] = flattenSystemPcpServerPoolsMappingFilterLimit(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "allow_opcode"
 		if cur_v, ok := i["allow-opcode"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "allow_opcode"
+			}
 			tmp["allow_opcode"] = flattenSystemPcpServerPoolsAllowOpcode(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "third_party"
 		if cur_v, ok := i["third-party"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "third_party"
+			}
 			tmp["third_party"] = flattenSystemPcpServerPoolsThirdParty(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "third_party_subnet"
 		if cur_v, ok := i["third-party-subnet"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "third_party_subnet"
+			}
 			tmp["third_party_subnet"] = flattenSystemPcpServerPoolsThirdPartySubnet(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "multicast_announcement"
 		if cur_v, ok := i["multicast-announcement"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "multicast_announcement"
+			}
 			tmp["multicast_announcement"] = flattenSystemPcpServerPoolsMulticastAnnouncement(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "announcement_count"
 		if cur_v, ok := i["announcement-count"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "announcement_count"
+			}
 			tmp["announcement_count"] = flattenSystemPcpServerPoolsAnnouncementCount(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "intl_intf"
 		if cur_v, ok := i["intl-intf"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "intl_intf"
+			}
 			tmp["intl_intf"] = flattenSystemPcpServerPoolsIntlIntf(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "recycle_delay"
 		if cur_v, ok := i["recycle-delay"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "recycle_delay"
+			}
 			tmp["recycle_delay"] = flattenSystemPcpServerPoolsRecycleDelay(cur_v, d, pre_append, sv)
 		}
 
@@ -459,15 +524,26 @@ func flattenSystemPcpServerPoolsClientSubnet(v interface{}, d *schema.ResourceDa
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "subnet", "subnet")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "subnet"
 		if cur_v, ok := i["subnet"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "subnet"
+			}
 			tmp["subnet"] = flattenSystemPcpServerPoolsClientSubnetSubnet(cur_v, d, pre_append, sv)
 		}
 
@@ -541,15 +617,26 @@ func flattenSystemPcpServerPoolsThirdPartySubnet(v interface{}, d *schema.Resour
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "subnet", "subnet")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "subnet"
 		if cur_v, ok := i["subnet"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "subnet"
+			}
 			tmp["subnet"] = flattenSystemPcpServerPoolsThirdPartySubnetSubnet(cur_v, d, pre_append, sv)
 		}
 
@@ -591,15 +678,26 @@ func flattenSystemPcpServerPoolsIntlIntf(v interface{}, d *schema.ResourceData, 
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "interface-name", "interface_name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
 		if cur_v, ok := i["interface-name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
+			}
 			tmp["interface_name"] = flattenSystemPcpServerPoolsIntlIntfInterfaceName(cur_v, d, pre_append, sv)
 		}
 

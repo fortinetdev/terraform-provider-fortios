@@ -362,30 +362,50 @@ func flattenWirelessControllerMpskProfileMpskGroup(v interface{}, d *schema.Reso
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenWirelessControllerMpskProfileMpskGroupName(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan_type"
 		if cur_v, ok := i["vlan-type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan_type"
+			}
 			tmp["vlan_type"] = flattenWirelessControllerMpskProfileMpskGroupVlanType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan_id"
 		if cur_v, ok := i["vlan-id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan_id"
+			}
 			tmp["vlan_id"] = flattenWirelessControllerMpskProfileMpskGroupVlanId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "mpsk_key"
 		if cur_v, ok := i["mpsk-key"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "mpsk_key"
+			}
 			tmp["mpsk_key"] = flattenWirelessControllerMpskProfileMpskGroupMpskKey(cur_v, d, pre_append, sv)
 		}
 
@@ -427,71 +447,110 @@ func flattenWirelessControllerMpskProfileMpskGroupMpskKey(v interface{}, d *sche
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenWirelessControllerMpskProfileMpskGroupMpskKeyName(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "key_type"
 		if cur_v, ok := i["key-type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "key_type"
+			}
 			tmp["key_type"] = flattenWirelessControllerMpskProfileMpskGroupMpskKeyKeyType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "mac"
 		if cur_v, ok := i["mac"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "mac"
+			}
 			tmp["mac"] = flattenWirelessControllerMpskProfileMpskGroupMpskKeyMac(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "passphrase"
 		if _, ok := i["passphrase"]; ok {
-			c := d.Get(pre_append).(string)
-			if c != "" {
-				tmp["passphrase"] = c
+			if tf_exist {
+				pre_append := pre + "." + strconv.Itoa(con) + "." + "passphrase"
+				c := d.Get(pre_append).(string)
+				if c != "" {
+					tmp["passphrase"] = c
+				}
 			}
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "sae_password"
 		if _, ok := i["sae-password"]; ok {
-			c := d.Get(pre_append).(string)
-			if c != "" {
-				tmp["sae_password"] = c
+			if tf_exist {
+				pre_append := pre + "." + strconv.Itoa(con) + "." + "sae_password"
+				c := d.Get(pre_append).(string)
+				if c != "" {
+					tmp["sae_password"] = c
+				}
 			}
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "sae_pk"
 		if cur_v, ok := i["sae-pk"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "sae_pk"
+			}
 			tmp["sae_pk"] = flattenWirelessControllerMpskProfileMpskGroupMpskKeySaePk(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "sae_private_key"
 		if cur_v, ok := i["sae-private-key"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "sae_private_key"
+			}
 			tmp["sae_private_key"] = flattenWirelessControllerMpskProfileMpskGroupMpskKeySaePrivateKey(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "concurrent_client_limit_type"
 		if cur_v, ok := i["concurrent-client-limit-type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "concurrent_client_limit_type"
+			}
 			tmp["concurrent_client_limit_type"] = flattenWirelessControllerMpskProfileMpskGroupMpskKeyConcurrentClientLimitType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "concurrent_clients"
 		if cur_v, ok := i["concurrent-clients"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "concurrent_clients"
+			}
 			tmp["concurrent_clients"] = flattenWirelessControllerMpskProfileMpskGroupMpskKeyConcurrentClients(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
 		if cur_v, ok := i["comment"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
+			}
 			tmp["comment"] = flattenWirelessControllerMpskProfileMpskGroupMpskKeyComment(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "mpsk_schedules"
 		if cur_v, ok := i["mpsk-schedules"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "mpsk_schedules"
+			}
 			tmp["mpsk_schedules"] = flattenWirelessControllerMpskProfileMpskGroupMpskKeyMpskSchedules(cur_v, d, pre_append, sv)
 		}
 
@@ -553,15 +612,26 @@ func flattenWirelessControllerMpskProfileMpskGroupMpskKeyMpskSchedules(v interfa
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenWirelessControllerMpskProfileMpskGroupMpskKeyMpskSchedulesName(cur_v, d, pre_append, sv)
 		}
 

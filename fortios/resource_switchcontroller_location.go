@@ -954,134 +954,200 @@ func expandSwitchControllerLocationAddressCivic(d *schema.ResourceData, v interf
 	pre_append = pre + ".0." + "additional"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["additional"], _ = expandSwitchControllerLocationAddressCivicAdditional(d, i["additional"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["additional"] = nil
 	}
 	pre_append = pre + ".0." + "additional_code"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["additional-code"], _ = expandSwitchControllerLocationAddressCivicAdditionalCode(d, i["additional_code"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["additional-code"] = nil
 	}
 	pre_append = pre + ".0." + "block"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["block"], _ = expandSwitchControllerLocationAddressCivicBlock(d, i["block"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["block"] = nil
 	}
 	pre_append = pre + ".0." + "branch_road"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["branch-road"], _ = expandSwitchControllerLocationAddressCivicBranchRoad(d, i["branch_road"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["branch-road"] = nil
 	}
 	pre_append = pre + ".0." + "building"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["building"], _ = expandSwitchControllerLocationAddressCivicBuilding(d, i["building"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["building"] = nil
 	}
 	pre_append = pre + ".0." + "city"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["city"], _ = expandSwitchControllerLocationAddressCivicCity(d, i["city"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["city"] = nil
 	}
 	pre_append = pre + ".0." + "city_division"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["city-division"], _ = expandSwitchControllerLocationAddressCivicCityDivision(d, i["city_division"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["city-division"] = nil
 	}
 	pre_append = pre + ".0." + "country"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["country"], _ = expandSwitchControllerLocationAddressCivicCountry(d, i["country"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["country"] = nil
 	}
 	pre_append = pre + ".0." + "country_subdivision"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["country-subdivision"], _ = expandSwitchControllerLocationAddressCivicCountrySubdivision(d, i["country_subdivision"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["country-subdivision"] = nil
 	}
 	pre_append = pre + ".0." + "county"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["county"], _ = expandSwitchControllerLocationAddressCivicCounty(d, i["county"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["county"] = nil
 	}
 	pre_append = pre + ".0." + "direction"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["direction"], _ = expandSwitchControllerLocationAddressCivicDirection(d, i["direction"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["direction"] = nil
 	}
 	pre_append = pre + ".0." + "floor"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["floor"], _ = expandSwitchControllerLocationAddressCivicFloor(d, i["floor"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["floor"] = nil
 	}
 	pre_append = pre + ".0." + "landmark"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["landmark"], _ = expandSwitchControllerLocationAddressCivicLandmark(d, i["landmark"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["landmark"] = nil
 	}
 	pre_append = pre + ".0." + "language"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["language"], _ = expandSwitchControllerLocationAddressCivicLanguage(d, i["language"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["language"] = nil
 	}
 	pre_append = pre + ".0." + "name"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["name"], _ = expandSwitchControllerLocationAddressCivicName(d, i["name"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["name"] = nil
 	}
 	pre_append = pre + ".0." + "number"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["number"], _ = expandSwitchControllerLocationAddressCivicNumber(d, i["number"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["number"] = nil
 	}
 	pre_append = pre + ".0." + "number_suffix"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["number-suffix"], _ = expandSwitchControllerLocationAddressCivicNumberSuffix(d, i["number_suffix"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["number-suffix"] = nil
 	}
 	pre_append = pre + ".0." + "place_type"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["place-type"], _ = expandSwitchControllerLocationAddressCivicPlaceType(d, i["place_type"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["place-type"] = nil
 	}
 	pre_append = pre + ".0." + "post_office_box"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["post-office-box"], _ = expandSwitchControllerLocationAddressCivicPostOfficeBox(d, i["post_office_box"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["post-office-box"] = nil
 	}
 	pre_append = pre + ".0." + "postal_community"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["postal-community"], _ = expandSwitchControllerLocationAddressCivicPostalCommunity(d, i["postal_community"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["postal-community"] = nil
 	}
 	pre_append = pre + ".0." + "primary_road"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["primary-road"], _ = expandSwitchControllerLocationAddressCivicPrimaryRoad(d, i["primary_road"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["primary-road"] = nil
 	}
 	pre_append = pre + ".0." + "road_section"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["road-section"], _ = expandSwitchControllerLocationAddressCivicRoadSection(d, i["road_section"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["road-section"] = nil
 	}
 	pre_append = pre + ".0." + "room"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["room"], _ = expandSwitchControllerLocationAddressCivicRoom(d, i["room"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["room"] = nil
 	}
 	pre_append = pre + ".0." + "script"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["script"], _ = expandSwitchControllerLocationAddressCivicScript(d, i["script"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["script"] = nil
 	}
 	pre_append = pre + ".0." + "seat"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["seat"], _ = expandSwitchControllerLocationAddressCivicSeat(d, i["seat"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["seat"] = nil
 	}
 	pre_append = pre + ".0." + "street"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["street"], _ = expandSwitchControllerLocationAddressCivicStreet(d, i["street"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["street"] = nil
 	}
 	pre_append = pre + ".0." + "street_name_post_mod"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["street-name-post-mod"], _ = expandSwitchControllerLocationAddressCivicStreetNamePostMod(d, i["street_name_post_mod"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["street-name-post-mod"] = nil
 	}
 	pre_append = pre + ".0." + "street_name_pre_mod"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["street-name-pre-mod"], _ = expandSwitchControllerLocationAddressCivicStreetNamePreMod(d, i["street_name_pre_mod"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["street-name-pre-mod"] = nil
 	}
 	pre_append = pre + ".0." + "street_suffix"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["street-suffix"], _ = expandSwitchControllerLocationAddressCivicStreetSuffix(d, i["street_suffix"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["street-suffix"] = nil
 	}
 	pre_append = pre + ".0." + "sub_branch_road"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["sub-branch-road"], _ = expandSwitchControllerLocationAddressCivicSubBranchRoad(d, i["sub_branch_road"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["sub-branch-road"] = nil
 	}
 	pre_append = pre + ".0." + "trailing_str_suffix"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["trailing-str-suffix"], _ = expandSwitchControllerLocationAddressCivicTrailingStrSuffix(d, i["trailing_str_suffix"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["trailing-str-suffix"] = nil
 	}
 	pre_append = pre + ".0." + "unit"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["unit"], _ = expandSwitchControllerLocationAddressCivicUnit(d, i["unit"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["unit"] = nil
 	}
 	pre_append = pre + ".0." + "zip"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["zip"], _ = expandSwitchControllerLocationAddressCivicZip(d, i["zip"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["zip"] = nil
 	}
 	pre_append = pre + ".0." + "parent_key"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -1240,6 +1306,8 @@ func expandSwitchControllerLocationCoordinates(d *schema.ResourceData, v interfa
 	pre_append = pre + ".0." + "altitude"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["altitude"], _ = expandSwitchControllerLocationCoordinatesAltitude(d, i["altitude"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["altitude"] = nil
 	}
 	pre_append = pre + ".0." + "altitude_unit"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -1252,14 +1320,20 @@ func expandSwitchControllerLocationCoordinates(d *schema.ResourceData, v interfa
 	pre_append = pre + ".0." + "latitude"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["latitude"], _ = expandSwitchControllerLocationCoordinatesLatitude(d, i["latitude"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["latitude"] = nil
 	}
 	pre_append = pre + ".0." + "longitude"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["longitude"], _ = expandSwitchControllerLocationCoordinatesLongitude(d, i["longitude"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["longitude"] = nil
 	}
 	pre_append = pre + ".0." + "parent_key"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["parent-key"], _ = expandSwitchControllerLocationCoordinatesParentKey(d, i["parent_key"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["parent-key"] = nil
 	}
 
 	return result, nil
@@ -1302,10 +1376,14 @@ func expandSwitchControllerLocationElinNumber(d *schema.ResourceData, v interfac
 	pre_append = pre + ".0." + "elin_num"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["elin-num"], _ = expandSwitchControllerLocationElinNumberElinNum(d, i["elin_num"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["elin-num"] = nil
 	}
 	pre_append = pre + ".0." + "parent_key"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["parent-key"], _ = expandSwitchControllerLocationElinNumberParentKey(d, i["parent_key"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["parent-key"] = nil
 	}
 
 	return result, nil

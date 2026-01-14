@@ -367,75 +367,122 @@ func flattenSystemFabricVpnOverlays(v interface{}, d *schema.ResourceData, pre s
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenSystemFabricVpnOverlaysName(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ipsec_network_id"
 		if cur_v, ok := i["ipsec-network-id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "ipsec_network_id"
+			}
 			tmp["ipsec_network_id"] = flattenSystemFabricVpnOverlaysIpsecNetworkId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "overlay_tunnel_block"
 		if cur_v, ok := i["overlay-tunnel-block"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "overlay_tunnel_block"
+			}
 			tmp["overlay_tunnel_block"] = flattenSystemFabricVpnOverlaysOverlayTunnelBlock(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "remote_gw"
 		if cur_v, ok := i["remote-gw"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "remote_gw"
+			}
 			tmp["remote_gw"] = flattenSystemFabricVpnOverlaysRemoteGw(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
 		if cur_v, ok := i["interface"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
+			}
 			tmp["interface"] = flattenSystemFabricVpnOverlaysInterface(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "bgp_neighbor"
 		if cur_v, ok := i["bgp-neighbor"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "bgp_neighbor"
+			}
 			tmp["bgp_neighbor"] = flattenSystemFabricVpnOverlaysBgpNeighbor(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "overlay_policy"
 		if cur_v, ok := i["overlay-policy"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "overlay_policy"
+			}
 			tmp["overlay_policy"] = flattenSystemFabricVpnOverlaysOverlayPolicy(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "bgp_network"
 		if cur_v, ok := i["bgp-network"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "bgp_network"
+			}
 			tmp["bgp_network"] = flattenSystemFabricVpnOverlaysBgpNetwork(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_policy"
 		if cur_v, ok := i["route-policy"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_policy"
+			}
 			tmp["route_policy"] = flattenSystemFabricVpnOverlaysRoutePolicy(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "bgp_neighbor_group"
 		if cur_v, ok := i["bgp-neighbor-group"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "bgp_neighbor_group"
+			}
 			tmp["bgp_neighbor_group"] = flattenSystemFabricVpnOverlaysBgpNeighborGroup(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "bgp_neighbor_range"
 		if cur_v, ok := i["bgp-neighbor-range"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "bgp_neighbor_range"
+			}
 			tmp["bgp_neighbor_range"] = flattenSystemFabricVpnOverlaysBgpNeighborRange(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ipsec_phase1"
 		if cur_v, ok := i["ipsec-phase1"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "ipsec_phase1"
+			}
 			tmp["ipsec_phase1"] = flattenSystemFabricVpnOverlaysIpsecPhase1(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "sdwan_member"
 		if cur_v, ok := i["sdwan-member"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "sdwan_member"
+			}
 			tmp["sdwan_member"] = flattenSystemFabricVpnOverlaysSdwanMember(cur_v, d, pre_append, sv)
 		}
 
@@ -524,40 +571,66 @@ func flattenSystemFabricVpnAdvertisedSubnets(v interface{}, d *schema.ResourceDa
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenSystemFabricVpnAdvertisedSubnetsId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"
 		if cur_v, ok := i["prefix"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"
+			}
 			tmp["prefix"] = flattenSystemFabricVpnAdvertisedSubnetsPrefix(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "access"
 		if cur_v, ok := i["access"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "access"
+			}
 			tmp["access"] = flattenSystemFabricVpnAdvertisedSubnetsAccess(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "bgp_network"
 		if cur_v, ok := i["bgp-network"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "bgp_network"
+			}
 			tmp["bgp_network"] = flattenSystemFabricVpnAdvertisedSubnetsBgpNetwork(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "firewall_address"
 		if cur_v, ok := i["firewall-address"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "firewall_address"
+			}
 			tmp["firewall_address"] = flattenSystemFabricVpnAdvertisedSubnetsFirewallAddress(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "policies"
 		if cur_v, ok := i["policies"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "policies"
+			}
 			tmp["policies"] = flattenSystemFabricVpnAdvertisedSubnetsPolicies(cur_v, d, pre_append, sv)
 		}
 

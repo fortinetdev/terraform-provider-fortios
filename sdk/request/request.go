@@ -60,17 +60,24 @@ func New(c config.Config, method string, path string, params interface{}, data *
 
 // Send request data to FortiOS.
 // If errors are encountered, it returns the error.
-func (r *Request) Send() error {
-	return r.Send2(15, false)
+func (r *Request) Send(headers *map[string]string) error {
+	return r.Send2(15, false, headers)
 }
 
 // Send2 request data to FortiOS with bIgnoreVdom.
 // If errors are encountered, it returns the error.
-func (r *Request) Send2(retries int, ignvdom bool) error {
+func (r *Request) Send2(retries int, ignvdom bool, headers *map[string]string) error {
 	var err error
 	var cookies *Cookies
 	var login_method string
 	token := r.Config.Auth.Token
+	if headers != nil && len(*headers) != 0 {
+		for hName, hValue := range *headers {
+			if hValue != "" {
+				r.HTTPRequest.Header.Set(hName, hValue)
+			}
+		}
+	}
 	if r.Config.Auth.Token == "" {
 		token, cookies, err = r.LoginToken()
 		if cookies != nil {
@@ -149,13 +156,21 @@ func (r *Request) Send2(retries int, ignvdom bool) error {
 
 // Send3 request data to FortiOS with custom vdom.
 // If errors are encountered, it returns the error.
-func (r *Request) Send3(vdomparam string) error {
+func (r *Request) Send3(vdomparam string, headers *map[string]string) error {
 	retries := 15
 
 	var err error
 	var cookies *Cookies
 	var login_method string
 	token := r.Config.Auth.Token
+
+	if headers != nil && len(*headers) != 0 {
+		for hName, hValue := range *headers {
+			if hValue != "" {
+				r.HTTPRequest.Header.Set(hName, hValue)
+			}
+		}
+	}
 
 	if r.Config.Auth.Token == "" {
 		token, cookies, err = r.LoginToken()

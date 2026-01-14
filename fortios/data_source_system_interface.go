@@ -245,6 +245,14 @@ func dataSourceSystemInterface() *schema.Resource {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+			"multilink": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"mrru": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
 			"detected_peer_mtu": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
@@ -915,6 +923,10 @@ func dataSourceSystemInterface() *schema.Resource {
 				Computed: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"signal_ok_threshold": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
 						"signal_ok_threshold_value": &schema.Schema{
 							Type:     schema.TypeInt,
 							Computed: true,
@@ -1489,6 +1501,10 @@ func dataSourceSystemInterface() *schema.Resource {
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+									"dnssl_service": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
 								},
 							},
 						},
@@ -1983,6 +1999,14 @@ func dataSourceFlattenSystemInterfacePassword(v interface{}, d *schema.ResourceD
 }
 
 func dataSourceFlattenSystemInterfaceIdleTimeout(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceMultilink(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceMrru(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -2877,6 +2901,11 @@ func dataSourceFlattenSystemInterfacePhySetting(v interface{}, d *schema.Resourc
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
+	pre_append = pre + ".0." + "signal_ok_threshold"
+	if _, ok := i["signal-ok-threshold"]; ok {
+		result["signal_ok_threshold"] = dataSourceFlattenSystemInterfacePhySettingSignalOkThreshold(i["signal-ok-threshold"], d, pre_append)
+	}
+
 	pre_append = pre + ".0." + "signal_ok_threshold_value"
 	if _, ok := i["signal-ok-threshold-value"]; ok {
 		result["signal_ok_threshold_value"] = dataSourceFlattenSystemInterfacePhySettingSignalOkThresholdValue(i["signal-ok-threshold-value"], d, pre_append)
@@ -2884,6 +2913,10 @@ func dataSourceFlattenSystemInterfacePhySetting(v interface{}, d *schema.Resourc
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
+}
+
+func dataSourceFlattenSystemInterfacePhySettingSignalOkThreshold(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
 }
 
 func dataSourceFlattenSystemInterfacePhySettingSignalOkThresholdValue(v interface{}, d *schema.ResourceData, pre string) interface{} {
@@ -4157,6 +4190,11 @@ func dataSourceFlattenSystemInterfaceIpv6Ip6DelegatedPrefixList(v interface{}, d
 			tmp["rdnss"] = dataSourceFlattenSystemInterfaceIpv6Ip6DelegatedPrefixListRdnss(i["rdnss"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "dnssl_service"
+		if _, ok := i["dnssl-service"]; ok {
+			tmp["dnssl_service"] = dataSourceFlattenSystemInterfaceIpv6Ip6DelegatedPrefixListDnsslService(i["dnssl-service"], d, pre_append)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -4194,6 +4232,10 @@ func dataSourceFlattenSystemInterfaceIpv6Ip6DelegatedPrefixListRdnssService(v in
 }
 
 func dataSourceFlattenSystemInterfaceIpv6Ip6DelegatedPrefixListRdnss(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceIpv6Ip6DelegatedPrefixListDnsslService(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -4725,6 +4767,18 @@ func dataSourceRefreshObjectSystemInterface(d *schema.ResourceData, o map[string
 	if err = d.Set("idle_timeout", dataSourceFlattenSystemInterfaceIdleTimeout(o["idle-timeout"], d, "idle_timeout")); err != nil {
 		if !fortiAPIPatch(o["idle-timeout"]) {
 			return fmt.Errorf("Error reading idle_timeout: %v", err)
+		}
+	}
+
+	if err = d.Set("multilink", dataSourceFlattenSystemInterfaceMultilink(o["multilink"], d, "multilink")); err != nil {
+		if !fortiAPIPatch(o["multilink"]) {
+			return fmt.Errorf("Error reading multilink: %v", err)
+		}
+	}
+
+	if err = d.Set("mrru", dataSourceFlattenSystemInterfaceMrru(o["mrru"], d, "mrru")); err != nil {
+		if !fortiAPIPatch(o["mrru"]) {
+			return fmt.Errorf("Error reading mrru: %v", err)
 		}
 	}
 

@@ -78,7 +78,7 @@ The following arguments are supported:
 * `name` - (Required) Profile name.
 * `scope` - Scope of admin access: global or specific VDOM(s). Valid values: `vdom`, `global`.
 * `comments` - Comment.
-* `secfabgrp` - Security Fabric. Valid values: `none`, `read`, `read-write`.
+* `secfabgrp` - Security Fabric.
 * `ftviewgrp` - FortiView. Valid values: `none`, `read`, `read-write`.
 * `authgrp` - Administrator access to Users and Devices. Valid values: `none`, `read`, `read-write`.
 * `sysgrp` - System Configuration. Valid values: `none`, `read`, `read-write`, `custom`.
@@ -94,6 +94,7 @@ The following arguments are supported:
 * `fwgrp_permission` - Custom firewall permission. The structure of `fwgrp_permission` block is documented below.
 * `loggrp_permission` - Custom Log & Report permission. The structure of `loggrp_permission` block is documented below.
 * `utmgrp_permission` - Custom Security Profile permissions. The structure of `utmgrp_permission` block is documented below.
+* `secfabgrp_permission` - Custom Security Fabric permissions. The structure of `secfabgrp_permission` block is documented below.
 * `admintimeout_override` - Enable/disable overriding the global administrator idle timeout. Valid values: `enable`, `disable`.
 * `admintimeout` - Administrator timeout for this access profile (0 - 480 min, default = 10, 0 means never timeout).
 * `cli_diagnose` - Enable/disable permission to run diagnostic commands. Valid values: `enable`, `disable`.
@@ -156,6 +157,11 @@ The `utmgrp_permission` block supports:
 * `virtual_patch` - Virtual patch profiles and settings. Valid values: `none`, `read`, `read-write`.
 * `casb` - Inline CASB filter profile and settings Valid values: `none`, `read`, `read-write`.
 * `telemetry` - Telemetry profile and settings. Valid values: `none`, `read`, `read-write`.
+
+The `secfabgrp_permission` block supports:
+
+* `csfsys` - Security Fabric system profiles and settings. Valid values: `none`, `read`, `read-write`.
+* `csffoo` - Fabric Overlay Orchestrator profiles and settings. Valid values: `none`, `read`, `read-write`.
 
 
 ## Attribute Reference

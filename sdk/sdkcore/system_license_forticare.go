@@ -54,7 +54,7 @@ func (c *FortiSDKClient) CreateSystemLicenseFortiCare(params *JSONSystemLicenseF
 
 	bytes := bytes.NewBuffer(locJSON)
 	req := c.NewRequest(HTTPMethod, path, nil, bytes)
-	err = req.Send()
+	err = req.Send(nil)
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("cannot send request %s", err)
 		return
@@ -117,7 +117,7 @@ func (c *FortiSDKClient) UpdateSystemLicenseFortiCare(params *JSONSystemLicenseF
 
 	// bytes := bytes.NewBuffer(locJSON)
 	// req := c.NewRequest(HTTPMethod, path, nil, bytes)
-	// err = req.Send()
+	// err = req.Send(nil)
 
 	// body, err := ioutil.ReadAll(req.HTTPResponse.Body)
 	// req.HTTPResponse.Body.Close() //#
@@ -163,7 +163,7 @@ func (c *FortiSDKClient) DeleteSystemLicenseFortiCare(mkey string) (err error) {
 	// path += "/" + mkey
 
 	// req := c.NewRequest(HTTPMethod, path, nil, nil)
-	// err = req.Send()
+	// err = req.Send(nil)
 
 	// body, err := ioutil.ReadAll(req.HTTPResponse.Body)
 	// req.HTTPResponse.Body.Close() //#
@@ -200,7 +200,7 @@ func (c *FortiSDKClient) ReadSystemLicenseFortiCare(mkey string) (output *JSONSy
 	output = &JSONSystemLicenseFortiCare{}
 
 	req := c.NewRequest(HTTPMethod, path, nil, nil)
-	err = req.Send()
+	err = req.Send(nil)
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("cannot send request %s", err)
 		return

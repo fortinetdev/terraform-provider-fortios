@@ -8,7 +8,14 @@ import (
 	"log"
 )
 
-func createUpdate(c *FortiSDKClient, method string, path string, params *map[string]interface{}, output map[string]interface{}, vdomparam string) (err error) {
+func createUpdate(requestInput *requestInput) (output map[string]interface{}, err error) {
+	c := requestInput.fortiSDKClient
+	method := requestInput.method
+	path := requestInput.path
+	params := requestInput.params
+	vdomparam := requestInput.vdomparam
+	headers := requestInput.headers
+
 	locJSON, err := json.Marshal(params)
 	if err != nil {
 		log.Fatal(err)
@@ -18,7 +25,7 @@ func createUpdate(c *FortiSDKClient, method string, path string, params *map[str
 	bytes := bytes.NewBuffer(locJSON)
 
 	req := c.NewRequest(method, path, nil, bytes)
-	err = req.Send3(vdomparam)
+	err = req.Send3(vdomparam, headers)
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("Cannot send request: %v", err)
 		return
@@ -37,6 +44,7 @@ func createUpdate(c *FortiSDKClient, method string, path string, params *map[str
 	err = fortiAPIErrorFormat(result, string(body))
 
 	if err == nil {
+		output = make(map[string]interface{})
 		if result["vdom"] != nil {
 			output["vdom"] = result["vdom"]
 		}
@@ -49,10 +57,15 @@ func createUpdate(c *FortiSDKClient, method string, path string, params *map[str
 	return
 }
 
-func delete(c *FortiSDKClient, method string, path string, vdomparam string) (err error) {
+func delete(requestInput *requestInput) (err error) {
+	c := requestInput.fortiSDKClient
+	method := requestInput.method
+	path := requestInput.path
+	vdomparam := requestInput.vdomparam
+	headers := requestInput.headers
 
 	req := c.NewRequest(method, path, nil, nil)
-	err = req.Send3(vdomparam)
+	err = req.Send3(vdomparam, headers)
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("Cannot send request: %v", err)
 		return
@@ -75,9 +88,16 @@ func delete(c *FortiSDKClient, method string, path string, vdomparam string) (er
 	return
 }
 
-func read(c *FortiSDKClient, method string, path string, bcomplex bool, vdomparam string) (mapTmp map[string]interface{}, err error) {
+func read(requestInput *requestInput) (mapTmp map[string]interface{}, err error) {
+	c := requestInput.fortiSDKClient
+	method := requestInput.method
+	path := requestInput.path
+	bcomplex := requestInput.bcomplex
+	vdomparam := requestInput.vdomparam
+	headers := requestInput.headers
+
 	req := c.NewRequest(method, path, nil, nil)
-	err = req.Send3(vdomparam)
+	err = req.Send3(vdomparam, headers)
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("Cannot send request: %v", err)
 		return

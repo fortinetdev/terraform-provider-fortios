@@ -16,6 +16,7 @@ The following arguments are supported:
 * `name` - WTP system log server profile name.
 * `comment` - Comment.
 * `server_status` - Enable/disable FortiAP units to send log messages to a syslog server (default = enable). Valid values: `enable`, `disable`.
+* `server` - Syslog server CN domain name or IP address.
 * `server_addr_type` - Syslog server address type (default = IP) Valid values: `fqdn`, `ip`.
 * `server_fqdn` - FQDN of syslog server that FortiAP units send log messages to.
 * `server_ip` - IP address of syslog server that FortiAP units send log messages to.

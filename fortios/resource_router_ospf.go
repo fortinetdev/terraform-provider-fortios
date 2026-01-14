@@ -947,85 +947,138 @@ func flattenRouterOspfArea(v interface{}, d *schema.ResourceData, pre string, sv
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenRouterOspfAreaId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "shortcut"
 		if cur_v, ok := i["shortcut"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "shortcut"
+			}
 			tmp["shortcut"] = flattenRouterOspfAreaShortcut(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "authentication"
 		if cur_v, ok := i["authentication"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "authentication"
+			}
 			tmp["authentication"] = flattenRouterOspfAreaAuthentication(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "default_cost"
 		if cur_v, ok := i["default-cost"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "default_cost"
+			}
 			tmp["default_cost"] = flattenRouterOspfAreaDefaultCost(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "nssa_translator_role"
 		if cur_v, ok := i["nssa-translator-role"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "nssa_translator_role"
+			}
 			tmp["nssa_translator_role"] = flattenRouterOspfAreaNssaTranslatorRole(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "stub_type"
 		if cur_v, ok := i["stub-type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "stub_type"
+			}
 			tmp["stub_type"] = flattenRouterOspfAreaStubType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if cur_v, ok := i["type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
+			}
 			tmp["type"] = flattenRouterOspfAreaType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "nssa_default_information_originate"
 		if cur_v, ok := i["nssa-default-information-originate"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "nssa_default_information_originate"
+			}
 			tmp["nssa_default_information_originate"] = flattenRouterOspfAreaNssaDefaultInformationOriginate(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "nssa_default_information_originate_metric"
 		if cur_v, ok := i["nssa-default-information-originate-metric"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "nssa_default_information_originate_metric"
+			}
 			tmp["nssa_default_information_originate_metric"] = flattenRouterOspfAreaNssaDefaultInformationOriginateMetric(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "nssa_default_information_originate_metric_type"
 		if cur_v, ok := i["nssa-default-information-originate-metric-type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "nssa_default_information_originate_metric_type"
+			}
 			tmp["nssa_default_information_originate_metric_type"] = flattenRouterOspfAreaNssaDefaultInformationOriginateMetricType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "nssa_redistribution"
 		if cur_v, ok := i["nssa-redistribution"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "nssa_redistribution"
+			}
 			tmp["nssa_redistribution"] = flattenRouterOspfAreaNssaRedistribution(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "comments"
 		if cur_v, ok := i["comments"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "comments"
+			}
 			tmp["comments"] = flattenRouterOspfAreaComments(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "range"
 		if cur_v, ok := i["range"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "range"
+			}
 			tmp["range"] = flattenRouterOspfAreaRange(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "virtual_link"
 		if cur_v, ok := i["virtual-link"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "virtual_link"
+			}
 			tmp["virtual_link"] = flattenRouterOspfAreaVirtualLink(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_list"
 		if cur_v, ok := i["filter-list"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_list"
+			}
 			tmp["filter_list"] = flattenRouterOspfAreaFilterList(cur_v, d, pre_append, sv)
 		}
 
@@ -1103,35 +1156,58 @@ func flattenRouterOspfAreaRange(v interface{}, d *schema.ResourceData, pre strin
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenRouterOspfAreaRangeId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"
 		if cur_v, ok := i["prefix"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"
+			}
 			tmp["prefix"] = flattenRouterOspfAreaRangePrefix(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "advertise"
 		if cur_v, ok := i["advertise"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "advertise"
+			}
 			tmp["advertise"] = flattenRouterOspfAreaRangeAdvertise(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "substitute"
 		if cur_v, ok := i["substitute"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "substitute"
+			}
 			tmp["substitute"] = flattenRouterOspfAreaRangeSubstitute(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "substitute_status"
 		if cur_v, ok := i["substitute-status"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "substitute_status"
+			}
 			tmp["substitute_status"] = flattenRouterOspfAreaRangeSubstituteStatus(cur_v, d, pre_append, sv)
 		}
 
@@ -1195,76 +1271,118 @@ func flattenRouterOspfAreaVirtualLink(v interface{}, d *schema.ResourceData, pre
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenRouterOspfAreaVirtualLinkName(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "authentication"
 		if cur_v, ok := i["authentication"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "authentication"
+			}
 			tmp["authentication"] = flattenRouterOspfAreaVirtualLinkAuthentication(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "authentication_key"
 		if _, ok := i["authentication-key"]; ok {
-			c := d.Get(pre_append).(string)
-			if c != "" {
-				tmp["authentication_key"] = c
+			if tf_exist {
+				pre_append := pre + "." + strconv.Itoa(con) + "." + "authentication_key"
+				c := d.Get(pre_append).(string)
+				if c != "" {
+					tmp["authentication_key"] = c
+				}
 			}
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "keychain"
 		if cur_v, ok := i["keychain"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "keychain"
+			}
 			tmp["keychain"] = flattenRouterOspfAreaVirtualLinkKeychain(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "md5_key"
 		if _, ok := i["md5-key"]; ok {
-			c := d.Get(pre_append).(string)
-			if c != "" {
-				tmp["md5_key"] = c
+			if tf_exist {
+				pre_append := pre + "." + strconv.Itoa(con) + "." + "md5_key"
+				c := d.Get(pre_append).(string)
+				if c != "" {
+					tmp["md5_key"] = c
+				}
 			}
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "md5_keychain"
 		if cur_v, ok := i["md5-keychain"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "md5_keychain"
+			}
 			tmp["md5_keychain"] = flattenRouterOspfAreaVirtualLinkMd5Keychain(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "dead_interval"
 		if cur_v, ok := i["dead-interval"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "dead_interval"
+			}
 			tmp["dead_interval"] = flattenRouterOspfAreaVirtualLinkDeadInterval(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "hello_interval"
 		if cur_v, ok := i["hello-interval"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "hello_interval"
+			}
 			tmp["hello_interval"] = flattenRouterOspfAreaVirtualLinkHelloInterval(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "retransmit_interval"
 		if cur_v, ok := i["retransmit-interval"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "retransmit_interval"
+			}
 			tmp["retransmit_interval"] = flattenRouterOspfAreaVirtualLinkRetransmitInterval(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "transmit_delay"
 		if cur_v, ok := i["transmit-delay"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "transmit_delay"
+			}
 			tmp["transmit_delay"] = flattenRouterOspfAreaVirtualLinkTransmitDelay(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "peer"
 		if cur_v, ok := i["peer"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "peer"
+			}
 			tmp["peer"] = flattenRouterOspfAreaVirtualLinkPeer(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "md5_keys"
 		if cur_v, ok := i["md5-keys"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "md5_keys"
+			}
 			tmp["md5_keys"] = flattenRouterOspfAreaVirtualLinkMd5Keys(cur_v, d, pre_append, sv)
 		}
 
@@ -1330,23 +1448,36 @@ func flattenRouterOspfAreaVirtualLinkMd5Keys(v interface{}, d *schema.ResourceDa
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenRouterOspfAreaVirtualLinkMd5KeysId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "key_string"
 		if _, ok := i["key-string"]; ok {
-			c := d.Get(pre_append).(string)
-			if c != "" {
-				tmp["key_string"] = c
+			if tf_exist {
+				pre_append := pre + "." + strconv.Itoa(con) + "." + "key_string"
+				c := d.Get(pre_append).(string)
+				if c != "" {
+					tmp["key_string"] = c
+				}
 			}
 		}
 
@@ -1380,25 +1511,42 @@ func flattenRouterOspfAreaFilterList(v interface{}, d *schema.ResourceData, pre 
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenRouterOspfAreaFilterListId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "list"
 		if cur_v, ok := i["list"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "list"
+			}
 			tmp["list"] = flattenRouterOspfAreaFilterListList(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "direction"
 		if cur_v, ok := i["direction"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "direction"
+			}
 			tmp["direction"] = flattenRouterOspfAreaFilterListDirection(cur_v, d, pre_append, sv)
 		}
 
@@ -1440,146 +1588,230 @@ func flattenRouterOspfOspfInterface(v interface{}, d *schema.ResourceData, pre s
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenRouterOspfOspfInterfaceName(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "comments"
 		if cur_v, ok := i["comments"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "comments"
+			}
 			tmp["comments"] = flattenRouterOspfOspfInterfaceComments(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
 		if cur_v, ok := i["interface"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
+			}
 			tmp["interface"] = flattenRouterOspfOspfInterfaceInterface(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if cur_v, ok := i["ip"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
+			}
 			tmp["ip"] = flattenRouterOspfOspfInterfaceIp(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "linkdown_fast_failover"
 		if cur_v, ok := i["linkdown-fast-failover"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "linkdown_fast_failover"
+			}
 			tmp["linkdown_fast_failover"] = flattenRouterOspfOspfInterfaceLinkdownFastFailover(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "authentication"
 		if cur_v, ok := i["authentication"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "authentication"
+			}
 			tmp["authentication"] = flattenRouterOspfOspfInterfaceAuthentication(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "authentication_key"
 		if _, ok := i["authentication-key"]; ok {
-			c := d.Get(pre_append).(string)
-			if c != "" {
-				tmp["authentication_key"] = c
+			if tf_exist {
+				pre_append := pre + "." + strconv.Itoa(con) + "." + "authentication_key"
+				c := d.Get(pre_append).(string)
+				if c != "" {
+					tmp["authentication_key"] = c
+				}
 			}
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "keychain"
 		if cur_v, ok := i["keychain"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "keychain"
+			}
 			tmp["keychain"] = flattenRouterOspfOspfInterfaceKeychain(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "md5_key"
 		if _, ok := i["md5-key"]; ok {
-			c := d.Get(pre_append).(string)
-			if c != "" {
-				tmp["md5_key"] = c
+			if tf_exist {
+				pre_append := pre + "." + strconv.Itoa(con) + "." + "md5_key"
+				c := d.Get(pre_append).(string)
+				if c != "" {
+					tmp["md5_key"] = c
+				}
 			}
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "md5_keychain"
 		if cur_v, ok := i["md5-keychain"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "md5_keychain"
+			}
 			tmp["md5_keychain"] = flattenRouterOspfOspfInterfaceMd5Keychain(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_length"
 		if cur_v, ok := i["prefix-length"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_length"
+			}
 			tmp["prefix_length"] = flattenRouterOspfOspfInterfacePrefixLength(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "retransmit_interval"
 		if cur_v, ok := i["retransmit-interval"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "retransmit_interval"
+			}
 			tmp["retransmit_interval"] = flattenRouterOspfOspfInterfaceRetransmitInterval(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "transmit_delay"
 		if cur_v, ok := i["transmit-delay"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "transmit_delay"
+			}
 			tmp["transmit_delay"] = flattenRouterOspfOspfInterfaceTransmitDelay(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "cost"
 		if cur_v, ok := i["cost"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "cost"
+			}
 			tmp["cost"] = flattenRouterOspfOspfInterfaceCost(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
 		if cur_v, ok := i["priority"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
+			}
 			tmp["priority"] = flattenRouterOspfOspfInterfacePriority(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "dead_interval"
 		if cur_v, ok := i["dead-interval"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "dead_interval"
+			}
 			tmp["dead_interval"] = flattenRouterOspfOspfInterfaceDeadInterval(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "hello_interval"
 		if cur_v, ok := i["hello-interval"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "hello_interval"
+			}
 			tmp["hello_interval"] = flattenRouterOspfOspfInterfaceHelloInterval(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "hello_multiplier"
 		if cur_v, ok := i["hello-multiplier"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "hello_multiplier"
+			}
 			tmp["hello_multiplier"] = flattenRouterOspfOspfInterfaceHelloMultiplier(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "database_filter_out"
 		if cur_v, ok := i["database-filter-out"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "database_filter_out"
+			}
 			tmp["database_filter_out"] = flattenRouterOspfOspfInterfaceDatabaseFilterOut(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "mtu"
 		if cur_v, ok := i["mtu"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "mtu"
+			}
 			tmp["mtu"] = flattenRouterOspfOspfInterfaceMtu(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "mtu_ignore"
 		if cur_v, ok := i["mtu-ignore"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "mtu_ignore"
+			}
 			tmp["mtu_ignore"] = flattenRouterOspfOspfInterfaceMtuIgnore(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "network_type"
 		if cur_v, ok := i["network-type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "network_type"
+			}
 			tmp["network_type"] = flattenRouterOspfOspfInterfaceNetworkType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "bfd"
 		if cur_v, ok := i["bfd"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "bfd"
+			}
 			tmp["bfd"] = flattenRouterOspfOspfInterfaceBfd(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if cur_v, ok := i["status"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
+			}
 			tmp["status"] = flattenRouterOspfOspfInterfaceStatus(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "resync_timeout"
 		if cur_v, ok := i["resync-timeout"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "resync_timeout"
+			}
 			tmp["resync_timeout"] = flattenRouterOspfOspfInterfaceResyncTimeout(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "md5_keys"
 		if cur_v, ok := i["md5-keys"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "md5_keys"
+			}
 			tmp["md5_keys"] = flattenRouterOspfOspfInterfaceMd5Keys(cur_v, d, pre_append, sv)
 		}
 
@@ -1701,23 +1933,36 @@ func flattenRouterOspfOspfInterfaceMd5Keys(v interface{}, d *schema.ResourceData
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenRouterOspfOspfInterfaceMd5KeysId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "key_string"
 		if _, ok := i["key-string"]; ok {
-			c := d.Get(pre_append).(string)
-			if c != "" {
-				tmp["key_string"] = c
+			if tf_exist {
+				pre_append := pre + "." + strconv.Itoa(con) + "." + "key_string"
+				c := d.Get(pre_append).(string)
+				if c != "" {
+					tmp["key_string"] = c
+				}
 			}
 		}
 
@@ -1751,30 +1996,50 @@ func flattenRouterOspfNetwork(v interface{}, d *schema.ResourceData, pre string,
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenRouterOspfNetworkId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"
 		if cur_v, ok := i["prefix"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"
+			}
 			tmp["prefix"] = flattenRouterOspfNetworkPrefix(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "area"
 		if cur_v, ok := i["area"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "area"
+			}
 			tmp["area"] = flattenRouterOspfNetworkArea(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "comments"
 		if cur_v, ok := i["comments"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "comments"
+			}
 			tmp["comments"] = flattenRouterOspfNetworkComments(cur_v, d, pre_append, sv)
 		}
 
@@ -1827,35 +2092,58 @@ func flattenRouterOspfNeighbor(v interface{}, d *schema.ResourceData, pre string
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenRouterOspfNeighborId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if cur_v, ok := i["ip"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
+			}
 			tmp["ip"] = flattenRouterOspfNeighborIp(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "poll_interval"
 		if cur_v, ok := i["poll-interval"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "poll_interval"
+			}
 			tmp["poll_interval"] = flattenRouterOspfNeighborPollInterval(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "cost"
 		if cur_v, ok := i["cost"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "cost"
+			}
 			tmp["cost"] = flattenRouterOspfNeighborCost(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
 		if cur_v, ok := i["priority"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
+			}
 			tmp["priority"] = flattenRouterOspfNeighborPriority(cur_v, d, pre_append, sv)
 		}
 
@@ -1905,15 +2193,26 @@ func flattenRouterOspfPassiveInterface(v interface{}, d *schema.ResourceData, pr
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenRouterOspfPassiveInterfaceName(cur_v, d, pre_append, sv)
 		}
 
@@ -1947,30 +2246,50 @@ func flattenRouterOspfSummaryAddress(v interface{}, d *schema.ResourceData, pre 
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenRouterOspfSummaryAddressId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"
 		if cur_v, ok := i["prefix"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"
+			}
 			tmp["prefix"] = flattenRouterOspfSummaryAddressPrefix(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "tag"
 		if cur_v, ok := i["tag"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "tag"
+			}
 			tmp["tag"] = flattenRouterOspfSummaryAddressTag(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "advertise"
 		if cur_v, ok := i["advertise"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "advertise"
+			}
 			tmp["advertise"] = flattenRouterOspfSummaryAddressAdvertise(cur_v, d, pre_append, sv)
 		}
 
@@ -2023,25 +2342,42 @@ func flattenRouterOspfDistributeList(v interface{}, d *schema.ResourceData, pre 
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenRouterOspfDistributeListId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "access_list"
 		if cur_v, ok := i["access-list"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "access_list"
+			}
 			tmp["access_list"] = flattenRouterOspfDistributeListAccessList(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
 		if cur_v, ok := i["protocol"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
+			}
 			tmp["protocol"] = flattenRouterOspfDistributeListProtocol(cur_v, d, pre_append, sv)
 		}
 
@@ -2083,40 +2419,66 @@ func flattenRouterOspfRedistribute(v interface{}, d *schema.ResourceData, pre st
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenRouterOspfRedistributeName(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if cur_v, ok := i["status"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
+			}
 			tmp["status"] = flattenRouterOspfRedistributeStatus(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "metric"
 		if cur_v, ok := i["metric"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "metric"
+			}
 			tmp["metric"] = flattenRouterOspfRedistributeMetric(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "routemap"
 		if cur_v, ok := i["routemap"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "routemap"
+			}
 			tmp["routemap"] = flattenRouterOspfRedistributeRoutemap(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "metric_type"
 		if cur_v, ok := i["metric-type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "metric_type"
+			}
 			tmp["metric_type"] = flattenRouterOspfRedistributeMetricType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "tag"
 		if cur_v, ok := i["tag"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "tag"
+			}
 			tmp["tag"] = flattenRouterOspfRedistributeTag(cur_v, d, pre_append, sv)
 		}
 

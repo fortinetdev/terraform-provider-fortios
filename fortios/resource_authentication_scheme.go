@@ -93,6 +93,11 @@ func resourceAuthenticationScheme() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"cert_http_header": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"user_database": &schema.Schema{
 				Type:     schema.TypeSet,
 				Optional: true,
@@ -340,6 +345,10 @@ func flattenAuthenticationSchemeUserCert(v interface{}, d *schema.ResourceData, 
 	return v
 }
 
+func flattenAuthenticationSchemeCertHttpHeader(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenAuthenticationSchemeUserDatabase(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -357,15 +366,26 @@ func flattenAuthenticationSchemeUserDatabase(v interface{}, d *schema.ResourceDa
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenAuthenticationSchemeUserDatabaseName(cur_v, d, pre_append, sv)
 		}
 
@@ -477,6 +497,12 @@ func refreshObjectAuthenticationScheme(d *schema.ResourceData, o map[string]inte
 		}
 	}
 
+	if err = d.Set("cert_http_header", flattenAuthenticationSchemeCertHttpHeader(o["cert-http-header"], d, "cert_http_header", sv)); err != nil {
+		if !fortiAPIPatch(o["cert-http-header"]) {
+			return fmt.Errorf("Error reading cert_http_header: %v", err)
+		}
+	}
+
 	if b_get_all_tables {
 		if err = d.Set("user_database", flattenAuthenticationSchemeUserDatabase(o["user-database"], d, "user_database", sv)); err != nil {
 			if !fortiAPIPatch(o["user-database"]) {
@@ -573,6 +599,10 @@ func expandAuthenticationSchemeFssoGuest(d *schema.ResourceData, v interface{}, 
 }
 
 func expandAuthenticationSchemeUserCert(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAuthenticationSchemeCertHttpHeader(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -733,6 +763,15 @@ func getObjectAuthenticationScheme(d *schema.ResourceData, sv string) (*map[stri
 			return &obj, err
 		} else if t != nil {
 			obj["user-cert"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("cert_http_header"); ok {
+		t, err := expandAuthenticationSchemeCertHttpHeader(d, v, "cert_http_header", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["cert-http-header"] = t
 		}
 	}
 

@@ -85,6 +85,12 @@ func resourceWebProxyGlobal() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"auth_sign_timeout": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(30, 3600),
+				Optional:     true,
+				Computed:     true,
+			},
 			"strict_web_check": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -167,6 +173,11 @@ func resourceWebProxyGlobal() *schema.Resource {
 			"src_affinity_exempt_addr6": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+			},
+			"policy_partial_match": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"policy_category_deep_inspect": &schema.Schema{
 				Type:     schema.TypeString,
@@ -362,6 +373,10 @@ func flattenWebProxyGlobalHttp2ServerWindowSize(v interface{}, d *schema.Resourc
 	return convintf2i(v)
 }
 
+func flattenWebProxyGlobalAuthSignTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
 func flattenWebProxyGlobalStrictWebCheck(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -419,15 +434,26 @@ func flattenWebProxyGlobalLearnClientIpSrcaddr(v interface{}, d *schema.Resource
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenWebProxyGlobalLearnClientIpSrcaddrName(cur_v, d, pre_append, sv)
 		}
 
@@ -461,15 +487,26 @@ func flattenWebProxyGlobalLearnClientIpSrcaddr6(v interface{}, d *schema.Resourc
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenWebProxyGlobalLearnClientIpSrcaddr6Name(cur_v, d, pre_append, sv)
 		}
 
@@ -491,6 +528,10 @@ func flattenWebProxyGlobalSrcAffinityExemptAddr(v interface{}, d *schema.Resourc
 }
 
 func flattenWebProxyGlobalSrcAffinityExemptAddr6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWebProxyGlobalPolicyPartialMatch(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -578,6 +619,12 @@ func refreshObjectWebProxyGlobal(d *schema.ResourceData, o map[string]interface{
 	if err = d.Set("http2_server_window_size", flattenWebProxyGlobalHttp2ServerWindowSize(o["http2-server-window-size"], d, "http2_server_window_size", sv)); err != nil {
 		if !fortiAPIPatch(o["http2-server-window-size"]) {
 			return fmt.Errorf("Error reading http2_server_window_size: %v", err)
+		}
+	}
+
+	if err = d.Set("auth_sign_timeout", flattenWebProxyGlobalAuthSignTimeout(o["auth-sign-timeout"], d, "auth_sign_timeout", sv)); err != nil {
+		if !fortiAPIPatch(o["auth-sign-timeout"]) {
+			return fmt.Errorf("Error reading auth_sign_timeout: %v", err)
 		}
 	}
 
@@ -685,6 +732,12 @@ func refreshObjectWebProxyGlobal(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("policy_partial_match", flattenWebProxyGlobalPolicyPartialMatch(o["policy-partial-match"], d, "policy_partial_match", sv)); err != nil {
+		if !fortiAPIPatch(o["policy-partial-match"]) {
+			return fmt.Errorf("Error reading policy_partial_match: %v", err)
+		}
+	}
+
 	if err = d.Set("policy_category_deep_inspect", flattenWebProxyGlobalPolicyCategoryDeepInspect(o["policy-category-deep-inspect"], d, "policy_category_deep_inspect", sv)); err != nil {
 		if !fortiAPIPatch(o["policy-category-deep-inspect"]) {
 			return fmt.Errorf("Error reading policy_category_deep_inspect: %v", err)
@@ -763,6 +816,10 @@ func expandWebProxyGlobalHttp2ClientWindowSize(d *schema.ResourceData, v interfa
 }
 
 func expandWebProxyGlobalHttp2ServerWindowSize(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWebProxyGlobalAuthSignTimeout(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -867,6 +924,10 @@ func expandWebProxyGlobalSrcAffinityExemptAddr(d *schema.ResourceData, v interfa
 }
 
 func expandWebProxyGlobalSrcAffinityExemptAddr6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWebProxyGlobalPolicyPartialMatch(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1010,6 +1071,19 @@ func getObjectWebProxyGlobal(d *schema.ResourceData, setArgNil bool, sv string) 
 				return &obj, err
 			} else if t != nil {
 				obj["http2-server-window-size"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("auth_sign_timeout"); ok {
+		if setArgNil {
+			obj["auth-sign-timeout"] = nil
+		} else {
+			t, err := expandWebProxyGlobalAuthSignTimeout(d, v, "auth_sign_timeout", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auth-sign-timeout"] = t
 			}
 		}
 	}
@@ -1206,6 +1280,19 @@ func getObjectWebProxyGlobal(d *schema.ResourceData, setArgNil bool, sv string) 
 		}
 	} else if d.HasChange("src_affinity_exempt_addr6") {
 		obj["src-affinity-exempt-addr6"] = nil
+	}
+
+	if v, ok := d.GetOk("policy_partial_match"); ok {
+		if setArgNil {
+			obj["policy-partial-match"] = nil
+		} else {
+			t, err := expandWebProxyGlobalPolicyPartialMatch(d, v, "policy_partial_match", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["policy-partial-match"] = t
+			}
+		}
 	}
 
 	if v, ok := d.GetOk("policy_category_deep_inspect"); ok {

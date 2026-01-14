@@ -79,6 +79,7 @@ The `rule` block supports:
 * `match_route_type` - Match route type.
 * `match_tag` - Match tag.
 * `match_vrf` - Match VRF ID.
+* `match_suppress` - Enable/disable matching of suppressed original neighbor. Valid values: `enable`, `disable`.
 * `set_aggregator_as` - BGP aggregator AS.
 * `set_aggregator_ip` - BGP aggregator IP.
 * `set_aspath_action` - Specify preferred action of set-aspath. Valid values: `prepend`, `replace`.

@@ -285,35 +285,58 @@ func flattenWirelessControllerHotspot20H2QpAdviceOfChargeAocList(v interface{}, 
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenWirelessControllerHotspot20H2QpAdviceOfChargeAocListName(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if cur_v, ok := i["type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
+			}
 			tmp["type"] = flattenWirelessControllerHotspot20H2QpAdviceOfChargeAocListType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "nai_realm_encoding"
 		if cur_v, ok := i["nai-realm-encoding"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "nai_realm_encoding"
+			}
 			tmp["nai_realm_encoding"] = flattenWirelessControllerHotspot20H2QpAdviceOfChargeAocListNaiRealmEncoding(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "nai_realm"
 		if cur_v, ok := i["nai-realm"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "nai_realm"
+			}
 			tmp["nai_realm"] = flattenWirelessControllerHotspot20H2QpAdviceOfChargeAocListNaiRealm(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "plan_info"
 		if cur_v, ok := i["plan-info"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "plan_info"
+			}
 			tmp["plan_info"] = flattenWirelessControllerHotspot20H2QpAdviceOfChargeAocListPlanInfo(cur_v, d, pre_append, sv)
 		}
 
@@ -359,30 +382,50 @@ func flattenWirelessControllerHotspot20H2QpAdviceOfChargeAocListPlanInfo(v inter
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenWirelessControllerHotspot20H2QpAdviceOfChargeAocListPlanInfoName(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "lang"
 		if cur_v, ok := i["lang"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "lang"
+			}
 			tmp["lang"] = flattenWirelessControllerHotspot20H2QpAdviceOfChargeAocListPlanInfoLang(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "currency"
 		if cur_v, ok := i["currency"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "currency"
+			}
 			tmp["currency"] = flattenWirelessControllerHotspot20H2QpAdviceOfChargeAocListPlanInfoCurrency(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "info_file"
 		if cur_v, ok := i["info-file"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "info_file"
+			}
 			tmp["info_file"] = flattenWirelessControllerHotspot20H2QpAdviceOfChargeAocListPlanInfoInfoFile(cur_v, d, pre_append, sv)
 		}
 

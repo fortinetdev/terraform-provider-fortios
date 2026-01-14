@@ -28,6 +28,7 @@ The following arguments are supported:
 * `comments` - VDOM comments.
 * `vdom_type` - VDOM type. On FortiOS versions 7.2.0: traffic or admin. On FortiOS versions >= 7.2.1: traffic, lan-extension or admin.
 * `lan_extension_controller_addr` - Controller IP address or FQDN to connect.
+* `lan_extension_controller_port` - Controller port to connect.
 * `opmode` - Firewall operation mode (NAT or Transparent). Valid values: `nat`, `transparent`.
 * `inspection_mode` - Inspection mode (proxy-based or flow-based). Valid values: `proxy`, `flow`.
 * `ngfw_mode` - Next Generation Firewall (NGFW) mode. Valid values: `profile-based`, `policy-based`.

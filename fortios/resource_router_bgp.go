@@ -2775,15 +2775,26 @@ func flattenRouterBgpConfederationPeers(v interface{}, d *schema.ResourceData, p
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "peer", "peer")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "peer"
 		if cur_v, ok := i["peer"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "peer"
+			}
 			tmp["peer"] = flattenRouterBgpConfederationPeersPeer(cur_v, d, pre_append, sv)
 		}
 
@@ -2905,30 +2916,50 @@ func flattenRouterBgpAggregateAddress(v interface{}, d *schema.ResourceData, pre
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenRouterBgpAggregateAddressId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"
 		if cur_v, ok := i["prefix"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"
+			}
 			tmp["prefix"] = flattenRouterBgpAggregateAddressPrefix(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "as_set"
 		if cur_v, ok := i["as-set"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "as_set"
+			}
 			tmp["as_set"] = flattenRouterBgpAggregateAddressAsSet(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "summary_only"
 		if cur_v, ok := i["summary-only"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "summary_only"
+			}
 			tmp["summary_only"] = flattenRouterBgpAggregateAddressSummaryOnly(cur_v, d, pre_append, sv)
 		}
 
@@ -2981,30 +3012,50 @@ func flattenRouterBgpAggregateAddress6(v interface{}, d *schema.ResourceData, pr
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenRouterBgpAggregateAddress6Id(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix6"
 		if cur_v, ok := i["prefix6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix6"
+			}
 			tmp["prefix6"] = flattenRouterBgpAggregateAddress6Prefix6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "as_set"
 		if cur_v, ok := i["as-set"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "as_set"
+			}
 			tmp["as_set"] = flattenRouterBgpAggregateAddress6AsSet(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "summary_only"
 		if cur_v, ok := i["summary-only"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "summary_only"
+			}
 			tmp["summary_only"] = flattenRouterBgpAggregateAddress6SummaryOnly(cur_v, d, pre_append, sv)
 		}
 
@@ -3050,823 +3101,1316 @@ func flattenRouterBgpNeighbor(v interface{}, d *schema.ResourceData, pre string,
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "ip", "ip")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if cur_v, ok := i["ip"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
+			}
 			tmp["ip"] = flattenRouterBgpNeighborIp(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "advertisement_interval"
 		if cur_v, ok := i["advertisement-interval"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "advertisement_interval"
+			}
 			tmp["advertisement_interval"] = flattenRouterBgpNeighborAdvertisementInterval(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "allowas_in_enable"
 		if cur_v, ok := i["allowas-in-enable"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "allowas_in_enable"
+			}
 			tmp["allowas_in_enable"] = flattenRouterBgpNeighborAllowasInEnable(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "allowas_in_enable6"
 		if cur_v, ok := i["allowas-in-enable6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "allowas_in_enable6"
+			}
 			tmp["allowas_in_enable6"] = flattenRouterBgpNeighborAllowasInEnable6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "allowas_in_enable_vpnv4"
 		if cur_v, ok := i["allowas-in-enable-vpnv4"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "allowas_in_enable_vpnv4"
+			}
 			tmp["allowas_in_enable_vpnv4"] = flattenRouterBgpNeighborAllowasInEnableVpnv4(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "allowas_in_enable_vpnv6"
 		if cur_v, ok := i["allowas-in-enable-vpnv6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "allowas_in_enable_vpnv6"
+			}
 			tmp["allowas_in_enable_vpnv6"] = flattenRouterBgpNeighborAllowasInEnableVpnv6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "allowas_in_enable_evpn"
 		if cur_v, ok := i["allowas-in-enable-evpn"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "allowas_in_enable_evpn"
+			}
 			tmp["allowas_in_enable_evpn"] = flattenRouterBgpNeighborAllowasInEnableEvpn(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "allowas_in"
 		if cur_v, ok := i["allowas-in"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "allowas_in"
+			}
 			tmp["allowas_in"] = flattenRouterBgpNeighborAllowasIn(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "allowas_in6"
 		if cur_v, ok := i["allowas-in6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "allowas_in6"
+			}
 			tmp["allowas_in6"] = flattenRouterBgpNeighborAllowasIn6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "allowas_in_vpnv4"
 		if cur_v, ok := i["allowas-in-vpnv4"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "allowas_in_vpnv4"
+			}
 			tmp["allowas_in_vpnv4"] = flattenRouterBgpNeighborAllowasInVpnv4(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "allowas_in_vpnv6"
 		if cur_v, ok := i["allowas-in-vpnv6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "allowas_in_vpnv6"
+			}
 			tmp["allowas_in_vpnv6"] = flattenRouterBgpNeighborAllowasInVpnv6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "allowas_in_evpn"
 		if cur_v, ok := i["allowas-in-evpn"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "allowas_in_evpn"
+			}
 			tmp["allowas_in_evpn"] = flattenRouterBgpNeighborAllowasInEvpn(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "attribute_unchanged"
 		if cur_v, ok := i["attribute-unchanged"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "attribute_unchanged"
+			}
 			tmp["attribute_unchanged"] = flattenRouterBgpNeighborAttributeUnchanged(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "attribute_unchanged6"
 		if cur_v, ok := i["attribute-unchanged6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "attribute_unchanged6"
+			}
 			tmp["attribute_unchanged6"] = flattenRouterBgpNeighborAttributeUnchanged6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "attribute_unchanged_vpnv4"
 		if cur_v, ok := i["attribute-unchanged-vpnv4"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "attribute_unchanged_vpnv4"
+			}
 			tmp["attribute_unchanged_vpnv4"] = flattenRouterBgpNeighborAttributeUnchangedVpnv4(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "attribute_unchanged_vpnv6"
 		if cur_v, ok := i["attribute-unchanged-vpnv6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "attribute_unchanged_vpnv6"
+			}
 			tmp["attribute_unchanged_vpnv6"] = flattenRouterBgpNeighborAttributeUnchangedVpnv6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "activate"
 		if cur_v, ok := i["activate"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "activate"
+			}
 			tmp["activate"] = flattenRouterBgpNeighborActivate(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "activate6"
 		if cur_v, ok := i["activate6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "activate6"
+			}
 			tmp["activate6"] = flattenRouterBgpNeighborActivate6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "activate_vpnv4"
 		if cur_v, ok := i["activate-vpnv4"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "activate_vpnv4"
+			}
 			tmp["activate_vpnv4"] = flattenRouterBgpNeighborActivateVpnv4(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "activate_vpnv6"
 		if cur_v, ok := i["activate-vpnv6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "activate_vpnv6"
+			}
 			tmp["activate_vpnv6"] = flattenRouterBgpNeighborActivateVpnv6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "activate_evpn"
 		if cur_v, ok := i["activate-evpn"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "activate_evpn"
+			}
 			tmp["activate_evpn"] = flattenRouterBgpNeighborActivateEvpn(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "bfd"
 		if cur_v, ok := i["bfd"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "bfd"
+			}
 			tmp["bfd"] = flattenRouterBgpNeighborBfd(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "capability_dynamic"
 		if cur_v, ok := i["capability-dynamic"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "capability_dynamic"
+			}
 			tmp["capability_dynamic"] = flattenRouterBgpNeighborCapabilityDynamic(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "capability_orf"
 		if cur_v, ok := i["capability-orf"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "capability_orf"
+			}
 			tmp["capability_orf"] = flattenRouterBgpNeighborCapabilityOrf(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "capability_orf6"
 		if cur_v, ok := i["capability-orf6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "capability_orf6"
+			}
 			tmp["capability_orf6"] = flattenRouterBgpNeighborCapabilityOrf6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "capability_graceful_restart"
 		if cur_v, ok := i["capability-graceful-restart"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "capability_graceful_restart"
+			}
 			tmp["capability_graceful_restart"] = flattenRouterBgpNeighborCapabilityGracefulRestart(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "capability_graceful_restart6"
 		if cur_v, ok := i["capability-graceful-restart6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "capability_graceful_restart6"
+			}
 			tmp["capability_graceful_restart6"] = flattenRouterBgpNeighborCapabilityGracefulRestart6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "capability_graceful_restart_vpnv4"
 		if cur_v, ok := i["capability-graceful-restart-vpnv4"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "capability_graceful_restart_vpnv4"
+			}
 			tmp["capability_graceful_restart_vpnv4"] = flattenRouterBgpNeighborCapabilityGracefulRestartVpnv4(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "capability_graceful_restart_vpnv6"
 		if cur_v, ok := i["capability-graceful-restart-vpnv6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "capability_graceful_restart_vpnv6"
+			}
 			tmp["capability_graceful_restart_vpnv6"] = flattenRouterBgpNeighborCapabilityGracefulRestartVpnv6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "capability_graceful_restart_evpn"
 		if cur_v, ok := i["capability-graceful-restart-evpn"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "capability_graceful_restart_evpn"
+			}
 			tmp["capability_graceful_restart_evpn"] = flattenRouterBgpNeighborCapabilityGracefulRestartEvpn(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "capability_route_refresh"
 		if cur_v, ok := i["capability-route-refresh"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "capability_route_refresh"
+			}
 			tmp["capability_route_refresh"] = flattenRouterBgpNeighborCapabilityRouteRefresh(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "capability_default_originate"
 		if cur_v, ok := i["capability-default-originate"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "capability_default_originate"
+			}
 			tmp["capability_default_originate"] = flattenRouterBgpNeighborCapabilityDefaultOriginate(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "capability_default_originate6"
 		if cur_v, ok := i["capability-default-originate6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "capability_default_originate6"
+			}
 			tmp["capability_default_originate6"] = flattenRouterBgpNeighborCapabilityDefaultOriginate6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "dont_capability_negotiate"
 		if cur_v, ok := i["dont-capability-negotiate"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "dont_capability_negotiate"
+			}
 			tmp["dont_capability_negotiate"] = flattenRouterBgpNeighborDontCapabilityNegotiate(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ebgp_enforce_multihop"
 		if cur_v, ok := i["ebgp-enforce-multihop"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "ebgp_enforce_multihop"
+			}
 			tmp["ebgp_enforce_multihop"] = flattenRouterBgpNeighborEbgpEnforceMultihop(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "link_down_failover"
 		if cur_v, ok := i["link-down-failover"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "link_down_failover"
+			}
 			tmp["link_down_failover"] = flattenRouterBgpNeighborLinkDownFailover(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "stale_route"
 		if cur_v, ok := i["stale-route"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "stale_route"
+			}
 			tmp["stale_route"] = flattenRouterBgpNeighborStaleRoute(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "next_hop_self"
 		if cur_v, ok := i["next-hop-self"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "next_hop_self"
+			}
 			tmp["next_hop_self"] = flattenRouterBgpNeighborNextHopSelf(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "next_hop_self6"
 		if cur_v, ok := i["next-hop-self6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "next_hop_self6"
+			}
 			tmp["next_hop_self6"] = flattenRouterBgpNeighborNextHopSelf6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "next_hop_self_rr"
 		if cur_v, ok := i["next-hop-self-rr"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "next_hop_self_rr"
+			}
 			tmp["next_hop_self_rr"] = flattenRouterBgpNeighborNextHopSelfRr(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "next_hop_self_rr6"
 		if cur_v, ok := i["next-hop-self-rr6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "next_hop_self_rr6"
+			}
 			tmp["next_hop_self_rr6"] = flattenRouterBgpNeighborNextHopSelfRr6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "next_hop_self_vpnv4"
 		if cur_v, ok := i["next-hop-self-vpnv4"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "next_hop_self_vpnv4"
+			}
 			tmp["next_hop_self_vpnv4"] = flattenRouterBgpNeighborNextHopSelfVpnv4(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "next_hop_self_vpnv6"
 		if cur_v, ok := i["next-hop-self-vpnv6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "next_hop_self_vpnv6"
+			}
 			tmp["next_hop_self_vpnv6"] = flattenRouterBgpNeighborNextHopSelfVpnv6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "override_capability"
 		if cur_v, ok := i["override-capability"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "override_capability"
+			}
 			tmp["override_capability"] = flattenRouterBgpNeighborOverrideCapability(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "passive"
 		if cur_v, ok := i["passive"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "passive"
+			}
 			tmp["passive"] = flattenRouterBgpNeighborPassive(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "remove_private_as"
 		if cur_v, ok := i["remove-private-as"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "remove_private_as"
+			}
 			tmp["remove_private_as"] = flattenRouterBgpNeighborRemovePrivateAs(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "remove_private_as6"
 		if cur_v, ok := i["remove-private-as6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "remove_private_as6"
+			}
 			tmp["remove_private_as6"] = flattenRouterBgpNeighborRemovePrivateAs6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "remove_private_as_vpnv4"
 		if cur_v, ok := i["remove-private-as-vpnv4"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "remove_private_as_vpnv4"
+			}
 			tmp["remove_private_as_vpnv4"] = flattenRouterBgpNeighborRemovePrivateAsVpnv4(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "remove_private_as_vpnv6"
 		if cur_v, ok := i["remove-private-as-vpnv6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "remove_private_as_vpnv6"
+			}
 			tmp["remove_private_as_vpnv6"] = flattenRouterBgpNeighborRemovePrivateAsVpnv6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "remove_private_as_evpn"
 		if cur_v, ok := i["remove-private-as-evpn"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "remove_private_as_evpn"
+			}
 			tmp["remove_private_as_evpn"] = flattenRouterBgpNeighborRemovePrivateAsEvpn(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_reflector_client"
 		if cur_v, ok := i["route-reflector-client"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_reflector_client"
+			}
 			tmp["route_reflector_client"] = flattenRouterBgpNeighborRouteReflectorClient(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_reflector_client6"
 		if cur_v, ok := i["route-reflector-client6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_reflector_client6"
+			}
 			tmp["route_reflector_client6"] = flattenRouterBgpNeighborRouteReflectorClient6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_reflector_client_vpnv4"
 		if cur_v, ok := i["route-reflector-client-vpnv4"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_reflector_client_vpnv4"
+			}
 			tmp["route_reflector_client_vpnv4"] = flattenRouterBgpNeighborRouteReflectorClientVpnv4(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_reflector_client_vpnv6"
 		if cur_v, ok := i["route-reflector-client-vpnv6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_reflector_client_vpnv6"
+			}
 			tmp["route_reflector_client_vpnv6"] = flattenRouterBgpNeighborRouteReflectorClientVpnv6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_reflector_client_evpn"
 		if cur_v, ok := i["route-reflector-client-evpn"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_reflector_client_evpn"
+			}
 			tmp["route_reflector_client_evpn"] = flattenRouterBgpNeighborRouteReflectorClientEvpn(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_server_client"
 		if cur_v, ok := i["route-server-client"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_server_client"
+			}
 			tmp["route_server_client"] = flattenRouterBgpNeighborRouteServerClient(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_server_client6"
 		if cur_v, ok := i["route-server-client6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_server_client6"
+			}
 			tmp["route_server_client6"] = flattenRouterBgpNeighborRouteServerClient6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_server_client_vpnv4"
 		if cur_v, ok := i["route-server-client-vpnv4"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_server_client_vpnv4"
+			}
 			tmp["route_server_client_vpnv4"] = flattenRouterBgpNeighborRouteServerClientVpnv4(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_server_client_vpnv6"
 		if cur_v, ok := i["route-server-client-vpnv6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_server_client_vpnv6"
+			}
 			tmp["route_server_client_vpnv6"] = flattenRouterBgpNeighborRouteServerClientVpnv6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_server_client_evpn"
 		if cur_v, ok := i["route-server-client-evpn"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_server_client_evpn"
+			}
 			tmp["route_server_client_evpn"] = flattenRouterBgpNeighborRouteServerClientEvpn(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "rr_attr_allow_change"
 		if cur_v, ok := i["rr-attr-allow-change"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "rr_attr_allow_change"
+			}
 			tmp["rr_attr_allow_change"] = flattenRouterBgpNeighborRrAttrAllowChange(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "rr_attr_allow_change6"
 		if cur_v, ok := i["rr-attr-allow-change6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "rr_attr_allow_change6"
+			}
 			tmp["rr_attr_allow_change6"] = flattenRouterBgpNeighborRrAttrAllowChange6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "rr_attr_allow_change_vpnv4"
 		if cur_v, ok := i["rr-attr-allow-change-vpnv4"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "rr_attr_allow_change_vpnv4"
+			}
 			tmp["rr_attr_allow_change_vpnv4"] = flattenRouterBgpNeighborRrAttrAllowChangeVpnv4(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "rr_attr_allow_change_vpnv6"
 		if cur_v, ok := i["rr-attr-allow-change-vpnv6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "rr_attr_allow_change_vpnv6"
+			}
 			tmp["rr_attr_allow_change_vpnv6"] = flattenRouterBgpNeighborRrAttrAllowChangeVpnv6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "rr_attr_allow_change_evpn"
 		if cur_v, ok := i["rr-attr-allow-change-evpn"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "rr_attr_allow_change_evpn"
+			}
 			tmp["rr_attr_allow_change_evpn"] = flattenRouterBgpNeighborRrAttrAllowChangeEvpn(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "shutdown"
 		if cur_v, ok := i["shutdown"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "shutdown"
+			}
 			tmp["shutdown"] = flattenRouterBgpNeighborShutdown(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "soft_reconfiguration"
 		if cur_v, ok := i["soft-reconfiguration"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "soft_reconfiguration"
+			}
 			tmp["soft_reconfiguration"] = flattenRouterBgpNeighborSoftReconfiguration(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "soft_reconfiguration6"
 		if cur_v, ok := i["soft-reconfiguration6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "soft_reconfiguration6"
+			}
 			tmp["soft_reconfiguration6"] = flattenRouterBgpNeighborSoftReconfiguration6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "soft_reconfiguration_vpnv4"
 		if cur_v, ok := i["soft-reconfiguration-vpnv4"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "soft_reconfiguration_vpnv4"
+			}
 			tmp["soft_reconfiguration_vpnv4"] = flattenRouterBgpNeighborSoftReconfigurationVpnv4(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "soft_reconfiguration_vpnv6"
 		if cur_v, ok := i["soft-reconfiguration-vpnv6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "soft_reconfiguration_vpnv6"
+			}
 			tmp["soft_reconfiguration_vpnv6"] = flattenRouterBgpNeighborSoftReconfigurationVpnv6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "soft_reconfiguration_evpn"
 		if cur_v, ok := i["soft-reconfiguration-evpn"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "soft_reconfiguration_evpn"
+			}
 			tmp["soft_reconfiguration_evpn"] = flattenRouterBgpNeighborSoftReconfigurationEvpn(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "as_override"
 		if cur_v, ok := i["as-override"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "as_override"
+			}
 			tmp["as_override"] = flattenRouterBgpNeighborAsOverride(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "as_override6"
 		if cur_v, ok := i["as-override6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "as_override6"
+			}
 			tmp["as_override6"] = flattenRouterBgpNeighborAsOverride6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "strict_capability_match"
 		if cur_v, ok := i["strict-capability-match"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "strict_capability_match"
+			}
 			tmp["strict_capability_match"] = flattenRouterBgpNeighborStrictCapabilityMatch(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "default_originate_routemap"
 		if cur_v, ok := i["default-originate-routemap"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "default_originate_routemap"
+			}
 			tmp["default_originate_routemap"] = flattenRouterBgpNeighborDefaultOriginateRoutemap(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "default_originate_routemap6"
 		if cur_v, ok := i["default-originate-routemap6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "default_originate_routemap6"
+			}
 			tmp["default_originate_routemap6"] = flattenRouterBgpNeighborDefaultOriginateRoutemap6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if cur_v, ok := i["description"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
+			}
 			tmp["description"] = flattenRouterBgpNeighborDescription(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "distribute_list_in"
 		if cur_v, ok := i["distribute-list-in"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "distribute_list_in"
+			}
 			tmp["distribute_list_in"] = flattenRouterBgpNeighborDistributeListIn(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "distribute_list_in6"
 		if cur_v, ok := i["distribute-list-in6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "distribute_list_in6"
+			}
 			tmp["distribute_list_in6"] = flattenRouterBgpNeighborDistributeListIn6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "distribute_list_in_vpnv4"
 		if cur_v, ok := i["distribute-list-in-vpnv4"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "distribute_list_in_vpnv4"
+			}
 			tmp["distribute_list_in_vpnv4"] = flattenRouterBgpNeighborDistributeListInVpnv4(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "distribute_list_in_vpnv6"
 		if cur_v, ok := i["distribute-list-in-vpnv6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "distribute_list_in_vpnv6"
+			}
 			tmp["distribute_list_in_vpnv6"] = flattenRouterBgpNeighborDistributeListInVpnv6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "distribute_list_out"
 		if cur_v, ok := i["distribute-list-out"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "distribute_list_out"
+			}
 			tmp["distribute_list_out"] = flattenRouterBgpNeighborDistributeListOut(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "distribute_list_out6"
 		if cur_v, ok := i["distribute-list-out6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "distribute_list_out6"
+			}
 			tmp["distribute_list_out6"] = flattenRouterBgpNeighborDistributeListOut6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "distribute_list_out_vpnv4"
 		if cur_v, ok := i["distribute-list-out-vpnv4"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "distribute_list_out_vpnv4"
+			}
 			tmp["distribute_list_out_vpnv4"] = flattenRouterBgpNeighborDistributeListOutVpnv4(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "distribute_list_out_vpnv6"
 		if cur_v, ok := i["distribute-list-out-vpnv6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "distribute_list_out_vpnv6"
+			}
 			tmp["distribute_list_out_vpnv6"] = flattenRouterBgpNeighborDistributeListOutVpnv6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ebgp_multihop_ttl"
 		if cur_v, ok := i["ebgp-multihop-ttl"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "ebgp_multihop_ttl"
+			}
 			tmp["ebgp_multihop_ttl"] = flattenRouterBgpNeighborEbgpMultihopTtl(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_list_in"
 		if cur_v, ok := i["filter-list-in"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_list_in"
+			}
 			tmp["filter_list_in"] = flattenRouterBgpNeighborFilterListIn(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_list_in6"
 		if cur_v, ok := i["filter-list-in6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_list_in6"
+			}
 			tmp["filter_list_in6"] = flattenRouterBgpNeighborFilterListIn6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_list_in_vpnv4"
 		if cur_v, ok := i["filter-list-in-vpnv4"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_list_in_vpnv4"
+			}
 			tmp["filter_list_in_vpnv4"] = flattenRouterBgpNeighborFilterListInVpnv4(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_list_in_vpnv6"
 		if cur_v, ok := i["filter-list-in-vpnv6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_list_in_vpnv6"
+			}
 			tmp["filter_list_in_vpnv6"] = flattenRouterBgpNeighborFilterListInVpnv6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_list_out"
 		if cur_v, ok := i["filter-list-out"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_list_out"
+			}
 			tmp["filter_list_out"] = flattenRouterBgpNeighborFilterListOut(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_list_out6"
 		if cur_v, ok := i["filter-list-out6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_list_out6"
+			}
 			tmp["filter_list_out6"] = flattenRouterBgpNeighborFilterListOut6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_list_out_vpnv4"
 		if cur_v, ok := i["filter-list-out-vpnv4"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_list_out_vpnv4"
+			}
 			tmp["filter_list_out_vpnv4"] = flattenRouterBgpNeighborFilterListOutVpnv4(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_list_out_vpnv6"
 		if cur_v, ok := i["filter-list-out-vpnv6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_list_out_vpnv6"
+			}
 			tmp["filter_list_out_vpnv6"] = flattenRouterBgpNeighborFilterListOutVpnv6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
 		if cur_v, ok := i["interface"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
+			}
 			tmp["interface"] = flattenRouterBgpNeighborInterface(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix"
 		if cur_v, ok := i["maximum-prefix"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix"
+			}
 			tmp["maximum_prefix"] = flattenRouterBgpNeighborMaximumPrefix(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix6"
 		if cur_v, ok := i["maximum-prefix6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix6"
+			}
 			tmp["maximum_prefix6"] = flattenRouterBgpNeighborMaximumPrefix6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_vpnv4"
 		if cur_v, ok := i["maximum-prefix-vpnv4"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_vpnv4"
+			}
 			tmp["maximum_prefix_vpnv4"] = flattenRouterBgpNeighborMaximumPrefixVpnv4(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_vpnv6"
 		if cur_v, ok := i["maximum-prefix-vpnv6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_vpnv6"
+			}
 			tmp["maximum_prefix_vpnv6"] = flattenRouterBgpNeighborMaximumPrefixVpnv6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_evpn"
 		if cur_v, ok := i["maximum-prefix-evpn"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_evpn"
+			}
 			tmp["maximum_prefix_evpn"] = flattenRouterBgpNeighborMaximumPrefixEvpn(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_threshold"
 		if cur_v, ok := i["maximum-prefix-threshold"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_threshold"
+			}
 			tmp["maximum_prefix_threshold"] = flattenRouterBgpNeighborMaximumPrefixThreshold(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_threshold6"
 		if cur_v, ok := i["maximum-prefix-threshold6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_threshold6"
+			}
 			tmp["maximum_prefix_threshold6"] = flattenRouterBgpNeighborMaximumPrefixThreshold6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_threshold_vpnv4"
 		if cur_v, ok := i["maximum-prefix-threshold-vpnv4"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_threshold_vpnv4"
+			}
 			tmp["maximum_prefix_threshold_vpnv4"] = flattenRouterBgpNeighborMaximumPrefixThresholdVpnv4(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_threshold_vpnv6"
 		if cur_v, ok := i["maximum-prefix-threshold-vpnv6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_threshold_vpnv6"
+			}
 			tmp["maximum_prefix_threshold_vpnv6"] = flattenRouterBgpNeighborMaximumPrefixThresholdVpnv6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_threshold_evpn"
 		if cur_v, ok := i["maximum-prefix-threshold-evpn"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_threshold_evpn"
+			}
 			tmp["maximum_prefix_threshold_evpn"] = flattenRouterBgpNeighborMaximumPrefixThresholdEvpn(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_warning_only"
 		if cur_v, ok := i["maximum-prefix-warning-only"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_warning_only"
+			}
 			tmp["maximum_prefix_warning_only"] = flattenRouterBgpNeighborMaximumPrefixWarningOnly(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_warning_only6"
 		if cur_v, ok := i["maximum-prefix-warning-only6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_warning_only6"
+			}
 			tmp["maximum_prefix_warning_only6"] = flattenRouterBgpNeighborMaximumPrefixWarningOnly6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_warning_only_vpnv4"
 		if cur_v, ok := i["maximum-prefix-warning-only-vpnv4"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_warning_only_vpnv4"
+			}
 			tmp["maximum_prefix_warning_only_vpnv4"] = flattenRouterBgpNeighborMaximumPrefixWarningOnlyVpnv4(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_warning_only_vpnv6"
 		if cur_v, ok := i["maximum-prefix-warning-only-vpnv6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_warning_only_vpnv6"
+			}
 			tmp["maximum_prefix_warning_only_vpnv6"] = flattenRouterBgpNeighborMaximumPrefixWarningOnlyVpnv6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_warning_only_evpn"
 		if cur_v, ok := i["maximum-prefix-warning-only-evpn"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_warning_only_evpn"
+			}
 			tmp["maximum_prefix_warning_only_evpn"] = flattenRouterBgpNeighborMaximumPrefixWarningOnlyEvpn(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_list_in"
 		if cur_v, ok := i["prefix-list-in"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_list_in"
+			}
 			tmp["prefix_list_in"] = flattenRouterBgpNeighborPrefixListIn(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_list_in6"
 		if cur_v, ok := i["prefix-list-in6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_list_in6"
+			}
 			tmp["prefix_list_in6"] = flattenRouterBgpNeighborPrefixListIn6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_list_in_vpnv4"
 		if cur_v, ok := i["prefix-list-in-vpnv4"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_list_in_vpnv4"
+			}
 			tmp["prefix_list_in_vpnv4"] = flattenRouterBgpNeighborPrefixListInVpnv4(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_list_in_vpnv6"
 		if cur_v, ok := i["prefix-list-in-vpnv6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_list_in_vpnv6"
+			}
 			tmp["prefix_list_in_vpnv6"] = flattenRouterBgpNeighborPrefixListInVpnv6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_list_out"
 		if cur_v, ok := i["prefix-list-out"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_list_out"
+			}
 			tmp["prefix_list_out"] = flattenRouterBgpNeighborPrefixListOut(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_list_out6"
 		if cur_v, ok := i["prefix-list-out6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_list_out6"
+			}
 			tmp["prefix_list_out6"] = flattenRouterBgpNeighborPrefixListOut6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_list_out_vpnv4"
 		if cur_v, ok := i["prefix-list-out-vpnv4"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_list_out_vpnv4"
+			}
 			tmp["prefix_list_out_vpnv4"] = flattenRouterBgpNeighborPrefixListOutVpnv4(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_list_out_vpnv6"
 		if cur_v, ok := i["prefix-list-out-vpnv6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_list_out_vpnv6"
+			}
 			tmp["prefix_list_out_vpnv6"] = flattenRouterBgpNeighborPrefixListOutVpnv6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "remote_as"
 		if cur_v, ok := i["remote-as"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "remote_as"
+			}
 			tmp["remote_as"] = flattenRouterBgpNeighborRemoteAs(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "local_as"
 		if cur_v, ok := i["local-as"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "local_as"
+			}
 			tmp["local_as"] = flattenRouterBgpNeighborLocalAs(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "local_as_no_prepend"
 		if cur_v, ok := i["local-as-no-prepend"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "local_as_no_prepend"
+			}
 			tmp["local_as_no_prepend"] = flattenRouterBgpNeighborLocalAsNoPrepend(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "local_as_replace_as"
 		if cur_v, ok := i["local-as-replace-as"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "local_as_replace_as"
+			}
 			tmp["local_as_replace_as"] = flattenRouterBgpNeighborLocalAsReplaceAs(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "retain_stale_time"
 		if cur_v, ok := i["retain-stale-time"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "retain_stale_time"
+			}
 			tmp["retain_stale_time"] = flattenRouterBgpNeighborRetainStaleTime(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_in"
 		if cur_v, ok := i["route-map-in"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_in"
+			}
 			tmp["route_map_in"] = flattenRouterBgpNeighborRouteMapIn(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_in6"
 		if cur_v, ok := i["route-map-in6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_in6"
+			}
 			tmp["route_map_in6"] = flattenRouterBgpNeighborRouteMapIn6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_in_vpnv4"
 		if cur_v, ok := i["route-map-in-vpnv4"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_in_vpnv4"
+			}
 			tmp["route_map_in_vpnv4"] = flattenRouterBgpNeighborRouteMapInVpnv4(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_in_vpnv6"
 		if cur_v, ok := i["route-map-in-vpnv6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_in_vpnv6"
+			}
 			tmp["route_map_in_vpnv6"] = flattenRouterBgpNeighborRouteMapInVpnv6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_in_evpn"
 		if cur_v, ok := i["route-map-in-evpn"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_in_evpn"
+			}
 			tmp["route_map_in_evpn"] = flattenRouterBgpNeighborRouteMapInEvpn(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_out"
 		if cur_v, ok := i["route-map-out"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_out"
+			}
 			tmp["route_map_out"] = flattenRouterBgpNeighborRouteMapOut(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_out_preferable"
 		if cur_v, ok := i["route-map-out-preferable"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_out_preferable"
+			}
 			tmp["route_map_out_preferable"] = flattenRouterBgpNeighborRouteMapOutPreferable(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_out6"
 		if cur_v, ok := i["route-map-out6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_out6"
+			}
 			tmp["route_map_out6"] = flattenRouterBgpNeighborRouteMapOut6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_out6_preferable"
 		if cur_v, ok := i["route-map-out6-preferable"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_out6_preferable"
+			}
 			tmp["route_map_out6_preferable"] = flattenRouterBgpNeighborRouteMapOut6Preferable(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_out_vpnv4"
 		if cur_v, ok := i["route-map-out-vpnv4"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_out_vpnv4"
+			}
 			tmp["route_map_out_vpnv4"] = flattenRouterBgpNeighborRouteMapOutVpnv4(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_out_vpnv6"
 		if cur_v, ok := i["route-map-out-vpnv6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_out_vpnv6"
+			}
 			tmp["route_map_out_vpnv6"] = flattenRouterBgpNeighborRouteMapOutVpnv6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_out_vpnv4_preferable"
 		if cur_v, ok := i["route-map-out-vpnv4-preferable"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_out_vpnv4_preferable"
+			}
 			tmp["route_map_out_vpnv4_preferable"] = flattenRouterBgpNeighborRouteMapOutVpnv4Preferable(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_out_vpnv6_preferable"
 		if cur_v, ok := i["route-map-out-vpnv6-preferable"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_out_vpnv6_preferable"
+			}
 			tmp["route_map_out_vpnv6_preferable"] = flattenRouterBgpNeighborRouteMapOutVpnv6Preferable(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_out_evpn"
 		if cur_v, ok := i["route-map-out-evpn"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_out_evpn"
+			}
 			tmp["route_map_out_evpn"] = flattenRouterBgpNeighborRouteMapOutEvpn(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "send_community"
 		if cur_v, ok := i["send-community"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "send_community"
+			}
 			tmp["send_community"] = flattenRouterBgpNeighborSendCommunity(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "send_community6"
 		if cur_v, ok := i["send-community6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "send_community6"
+			}
 			tmp["send_community6"] = flattenRouterBgpNeighborSendCommunity6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "send_community_vpnv4"
 		if cur_v, ok := i["send-community-vpnv4"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "send_community_vpnv4"
+			}
 			tmp["send_community_vpnv4"] = flattenRouterBgpNeighborSendCommunityVpnv4(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "send_community_vpnv6"
 		if cur_v, ok := i["send-community-vpnv6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "send_community_vpnv6"
+			}
 			tmp["send_community_vpnv6"] = flattenRouterBgpNeighborSendCommunityVpnv6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "send_community_evpn"
 		if cur_v, ok := i["send-community-evpn"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "send_community_evpn"
+			}
 			tmp["send_community_evpn"] = flattenRouterBgpNeighborSendCommunityEvpn(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "keep_alive_timer"
 		if cur_v, ok := i["keep-alive-timer"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "keep_alive_timer"
+			}
 			tmp["keep_alive_timer"] = flattenRouterBgpNeighborKeepAliveTimer(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "holdtime_timer"
 		if cur_v, ok := i["holdtime-timer"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "holdtime_timer"
+			}
 			tmp["holdtime_timer"] = flattenRouterBgpNeighborHoldtimeTimer(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "connect_timer"
 		if cur_v, ok := i["connect-timer"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "connect_timer"
+			}
 			tmp["connect_timer"] = flattenRouterBgpNeighborConnectTimer(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "unsuppress_map"
 		if cur_v, ok := i["unsuppress-map"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "unsuppress_map"
+			}
 			tmp["unsuppress_map"] = flattenRouterBgpNeighborUnsuppressMap(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "unsuppress_map6"
 		if cur_v, ok := i["unsuppress-map6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "unsuppress_map6"
+			}
 			tmp["unsuppress_map6"] = flattenRouterBgpNeighborUnsuppressMap6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "update_source"
 		if cur_v, ok := i["update-source"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "update_source"
+			}
 			tmp["update_source"] = flattenRouterBgpNeighborUpdateSource(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "weight"
 		if cur_v, ok := i["weight"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "weight"
+			}
 			tmp["weight"] = flattenRouterBgpNeighborWeight(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "restart_time"
 		if cur_v, ok := i["restart-time"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "restart_time"
+			}
 			tmp["restart_time"] = flattenRouterBgpNeighborRestartTime(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "additional_path"
 		if cur_v, ok := i["additional-path"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "additional_path"
+			}
 			tmp["additional_path"] = flattenRouterBgpNeighborAdditionalPath(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "additional_path6"
 		if cur_v, ok := i["additional-path6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "additional_path6"
+			}
 			tmp["additional_path6"] = flattenRouterBgpNeighborAdditionalPath6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "additional_path_vpnv4"
 		if cur_v, ok := i["additional-path-vpnv4"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "additional_path_vpnv4"
+			}
 			tmp["additional_path_vpnv4"] = flattenRouterBgpNeighborAdditionalPathVpnv4(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "additional_path_vpnv6"
 		if cur_v, ok := i["additional-path-vpnv6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "additional_path_vpnv6"
+			}
 			tmp["additional_path_vpnv6"] = flattenRouterBgpNeighborAdditionalPathVpnv6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "adv_additional_path"
 		if cur_v, ok := i["adv-additional-path"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "adv_additional_path"
+			}
 			tmp["adv_additional_path"] = flattenRouterBgpNeighborAdvAdditionalPath(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "adv_additional_path6"
 		if cur_v, ok := i["adv-additional-path6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "adv_additional_path6"
+			}
 			tmp["adv_additional_path6"] = flattenRouterBgpNeighborAdvAdditionalPath6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "adv_additional_path_vpnv4"
 		if cur_v, ok := i["adv-additional-path-vpnv4"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "adv_additional_path_vpnv4"
+			}
 			tmp["adv_additional_path_vpnv4"] = flattenRouterBgpNeighborAdvAdditionalPathVpnv4(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "adv_additional_path_vpnv6"
 		if cur_v, ok := i["adv-additional-path-vpnv6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "adv_additional_path_vpnv6"
+			}
 			tmp["adv_additional_path_vpnv6"] = flattenRouterBgpNeighborAdvAdditionalPathVpnv6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "password"
 		if _, ok := i["password"]; ok {
-			c := d.Get(pre_append).(string)
-			if c != "" {
-				tmp["password"] = c
+			if tf_exist {
+				pre_append := pre + "." + strconv.Itoa(con) + "." + "password"
+				c := d.Get(pre_append).(string)
+				if c != "" {
+					tmp["password"] = c
+				}
 			}
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_options"
 		if cur_v, ok := i["auth-options"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_options"
+			}
 			tmp["auth_options"] = flattenRouterBgpNeighborAuthOptions(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "conditional_advertise"
 		if cur_v, ok := i["conditional-advertise"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "conditional_advertise"
+			}
 			tmp["conditional_advertise"] = flattenRouterBgpNeighborConditionalAdvertise(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "conditional_advertise6"
 		if cur_v, ok := i["conditional-advertise6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "conditional_advertise6"
+			}
 			tmp["conditional_advertise6"] = flattenRouterBgpNeighborConditionalAdvertise6(cur_v, d, pre_append, sv)
 		}
 
@@ -4552,25 +5096,42 @@ func flattenRouterBgpNeighborConditionalAdvertise(v interface{}, d *schema.Resou
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "advertise-routemap", "advertise_routemap")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "advertise_routemap"
 		if cur_v, ok := i["advertise-routemap"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "advertise_routemap"
+			}
 			tmp["advertise_routemap"] = flattenRouterBgpNeighborConditionalAdvertiseAdvertiseRoutemap(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "condition_routemap"
 		if cur_v, ok := i["condition-routemap"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "condition_routemap"
+			}
 			tmp["condition_routemap"] = flattenRouterBgpNeighborConditionalAdvertiseConditionRoutemap(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "condition_type"
 		if cur_v, ok := i["condition-type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "condition_type"
+			}
 			tmp["condition_type"] = flattenRouterBgpNeighborConditionalAdvertiseConditionType(cur_v, d, pre_append, sv)
 		}
 
@@ -4612,25 +5173,42 @@ func flattenRouterBgpNeighborConditionalAdvertise6(v interface{}, d *schema.Reso
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "advertise-routemap", "advertise_routemap")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "advertise_routemap"
 		if cur_v, ok := i["advertise-routemap"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "advertise_routemap"
+			}
 			tmp["advertise_routemap"] = flattenRouterBgpNeighborConditionalAdvertise6AdvertiseRoutemap(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "condition_routemap"
 		if cur_v, ok := i["condition-routemap"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "condition_routemap"
+			}
 			tmp["condition_routemap"] = flattenRouterBgpNeighborConditionalAdvertise6ConditionRoutemap(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "condition_type"
 		if cur_v, ok := i["condition-type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "condition_type"
+			}
 			tmp["condition_type"] = flattenRouterBgpNeighborConditionalAdvertise6ConditionType(cur_v, d, pre_append, sv)
 		}
 
@@ -4672,818 +5250,1308 @@ func flattenRouterBgpNeighborGroup(v interface{}, d *schema.ResourceData, pre st
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenRouterBgpNeighborGroupName(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "advertisement_interval"
 		if cur_v, ok := i["advertisement-interval"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "advertisement_interval"
+			}
 			tmp["advertisement_interval"] = flattenRouterBgpNeighborGroupAdvertisementInterval(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "allowas_in_enable"
 		if cur_v, ok := i["allowas-in-enable"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "allowas_in_enable"
+			}
 			tmp["allowas_in_enable"] = flattenRouterBgpNeighborGroupAllowasInEnable(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "allowas_in_enable6"
 		if cur_v, ok := i["allowas-in-enable6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "allowas_in_enable6"
+			}
 			tmp["allowas_in_enable6"] = flattenRouterBgpNeighborGroupAllowasInEnable6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "allowas_in_enable_vpnv4"
 		if cur_v, ok := i["allowas-in-enable-vpnv4"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "allowas_in_enable_vpnv4"
+			}
 			tmp["allowas_in_enable_vpnv4"] = flattenRouterBgpNeighborGroupAllowasInEnableVpnv4(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "allowas_in_enable_vpnv6"
 		if cur_v, ok := i["allowas-in-enable-vpnv6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "allowas_in_enable_vpnv6"
+			}
 			tmp["allowas_in_enable_vpnv6"] = flattenRouterBgpNeighborGroupAllowasInEnableVpnv6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "allowas_in_enable_evpn"
 		if cur_v, ok := i["allowas-in-enable-evpn"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "allowas_in_enable_evpn"
+			}
 			tmp["allowas_in_enable_evpn"] = flattenRouterBgpNeighborGroupAllowasInEnableEvpn(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "allowas_in"
 		if cur_v, ok := i["allowas-in"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "allowas_in"
+			}
 			tmp["allowas_in"] = flattenRouterBgpNeighborGroupAllowasIn(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "allowas_in6"
 		if cur_v, ok := i["allowas-in6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "allowas_in6"
+			}
 			tmp["allowas_in6"] = flattenRouterBgpNeighborGroupAllowasIn6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "allowas_in_vpnv4"
 		if cur_v, ok := i["allowas-in-vpnv4"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "allowas_in_vpnv4"
+			}
 			tmp["allowas_in_vpnv4"] = flattenRouterBgpNeighborGroupAllowasInVpnv4(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "allowas_in_vpnv6"
 		if cur_v, ok := i["allowas-in-vpnv6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "allowas_in_vpnv6"
+			}
 			tmp["allowas_in_vpnv6"] = flattenRouterBgpNeighborGroupAllowasInVpnv6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "allowas_in_evpn"
 		if cur_v, ok := i["allowas-in-evpn"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "allowas_in_evpn"
+			}
 			tmp["allowas_in_evpn"] = flattenRouterBgpNeighborGroupAllowasInEvpn(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "attribute_unchanged"
 		if cur_v, ok := i["attribute-unchanged"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "attribute_unchanged"
+			}
 			tmp["attribute_unchanged"] = flattenRouterBgpNeighborGroupAttributeUnchanged(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "attribute_unchanged6"
 		if cur_v, ok := i["attribute-unchanged6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "attribute_unchanged6"
+			}
 			tmp["attribute_unchanged6"] = flattenRouterBgpNeighborGroupAttributeUnchanged6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "attribute_unchanged_vpnv4"
 		if cur_v, ok := i["attribute-unchanged-vpnv4"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "attribute_unchanged_vpnv4"
+			}
 			tmp["attribute_unchanged_vpnv4"] = flattenRouterBgpNeighborGroupAttributeUnchangedVpnv4(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "attribute_unchanged_vpnv6"
 		if cur_v, ok := i["attribute-unchanged-vpnv6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "attribute_unchanged_vpnv6"
+			}
 			tmp["attribute_unchanged_vpnv6"] = flattenRouterBgpNeighborGroupAttributeUnchangedVpnv6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "activate"
 		if cur_v, ok := i["activate"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "activate"
+			}
 			tmp["activate"] = flattenRouterBgpNeighborGroupActivate(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "activate6"
 		if cur_v, ok := i["activate6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "activate6"
+			}
 			tmp["activate6"] = flattenRouterBgpNeighborGroupActivate6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "activate_vpnv4"
 		if cur_v, ok := i["activate-vpnv4"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "activate_vpnv4"
+			}
 			tmp["activate_vpnv4"] = flattenRouterBgpNeighborGroupActivateVpnv4(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "activate_vpnv6"
 		if cur_v, ok := i["activate-vpnv6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "activate_vpnv6"
+			}
 			tmp["activate_vpnv6"] = flattenRouterBgpNeighborGroupActivateVpnv6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "activate_evpn"
 		if cur_v, ok := i["activate-evpn"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "activate_evpn"
+			}
 			tmp["activate_evpn"] = flattenRouterBgpNeighborGroupActivateEvpn(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "bfd"
 		if cur_v, ok := i["bfd"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "bfd"
+			}
 			tmp["bfd"] = flattenRouterBgpNeighborGroupBfd(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "capability_dynamic"
 		if cur_v, ok := i["capability-dynamic"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "capability_dynamic"
+			}
 			tmp["capability_dynamic"] = flattenRouterBgpNeighborGroupCapabilityDynamic(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "capability_orf"
 		if cur_v, ok := i["capability-orf"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "capability_orf"
+			}
 			tmp["capability_orf"] = flattenRouterBgpNeighborGroupCapabilityOrf(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "capability_orf6"
 		if cur_v, ok := i["capability-orf6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "capability_orf6"
+			}
 			tmp["capability_orf6"] = flattenRouterBgpNeighborGroupCapabilityOrf6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "capability_graceful_restart"
 		if cur_v, ok := i["capability-graceful-restart"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "capability_graceful_restart"
+			}
 			tmp["capability_graceful_restart"] = flattenRouterBgpNeighborGroupCapabilityGracefulRestart(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "capability_graceful_restart6"
 		if cur_v, ok := i["capability-graceful-restart6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "capability_graceful_restart6"
+			}
 			tmp["capability_graceful_restart6"] = flattenRouterBgpNeighborGroupCapabilityGracefulRestart6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "capability_graceful_restart_vpnv4"
 		if cur_v, ok := i["capability-graceful-restart-vpnv4"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "capability_graceful_restart_vpnv4"
+			}
 			tmp["capability_graceful_restart_vpnv4"] = flattenRouterBgpNeighborGroupCapabilityGracefulRestartVpnv4(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "capability_graceful_restart_vpnv6"
 		if cur_v, ok := i["capability-graceful-restart-vpnv6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "capability_graceful_restart_vpnv6"
+			}
 			tmp["capability_graceful_restart_vpnv6"] = flattenRouterBgpNeighborGroupCapabilityGracefulRestartVpnv6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "capability_graceful_restart_evpn"
 		if cur_v, ok := i["capability-graceful-restart-evpn"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "capability_graceful_restart_evpn"
+			}
 			tmp["capability_graceful_restart_evpn"] = flattenRouterBgpNeighborGroupCapabilityGracefulRestartEvpn(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "capability_route_refresh"
 		if cur_v, ok := i["capability-route-refresh"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "capability_route_refresh"
+			}
 			tmp["capability_route_refresh"] = flattenRouterBgpNeighborGroupCapabilityRouteRefresh(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "capability_default_originate"
 		if cur_v, ok := i["capability-default-originate"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "capability_default_originate"
+			}
 			tmp["capability_default_originate"] = flattenRouterBgpNeighborGroupCapabilityDefaultOriginate(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "capability_default_originate6"
 		if cur_v, ok := i["capability-default-originate6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "capability_default_originate6"
+			}
 			tmp["capability_default_originate6"] = flattenRouterBgpNeighborGroupCapabilityDefaultOriginate6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "dont_capability_negotiate"
 		if cur_v, ok := i["dont-capability-negotiate"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "dont_capability_negotiate"
+			}
 			tmp["dont_capability_negotiate"] = flattenRouterBgpNeighborGroupDontCapabilityNegotiate(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ebgp_enforce_multihop"
 		if cur_v, ok := i["ebgp-enforce-multihop"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "ebgp_enforce_multihop"
+			}
 			tmp["ebgp_enforce_multihop"] = flattenRouterBgpNeighborGroupEbgpEnforceMultihop(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "link_down_failover"
 		if cur_v, ok := i["link-down-failover"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "link_down_failover"
+			}
 			tmp["link_down_failover"] = flattenRouterBgpNeighborGroupLinkDownFailover(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "stale_route"
 		if cur_v, ok := i["stale-route"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "stale_route"
+			}
 			tmp["stale_route"] = flattenRouterBgpNeighborGroupStaleRoute(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "next_hop_self"
 		if cur_v, ok := i["next-hop-self"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "next_hop_self"
+			}
 			tmp["next_hop_self"] = flattenRouterBgpNeighborGroupNextHopSelf(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "next_hop_self6"
 		if cur_v, ok := i["next-hop-self6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "next_hop_self6"
+			}
 			tmp["next_hop_self6"] = flattenRouterBgpNeighborGroupNextHopSelf6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "next_hop_self_rr"
 		if cur_v, ok := i["next-hop-self-rr"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "next_hop_self_rr"
+			}
 			tmp["next_hop_self_rr"] = flattenRouterBgpNeighborGroupNextHopSelfRr(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "next_hop_self_rr6"
 		if cur_v, ok := i["next-hop-self-rr6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "next_hop_self_rr6"
+			}
 			tmp["next_hop_self_rr6"] = flattenRouterBgpNeighborGroupNextHopSelfRr6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "next_hop_self_vpnv4"
 		if cur_v, ok := i["next-hop-self-vpnv4"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "next_hop_self_vpnv4"
+			}
 			tmp["next_hop_self_vpnv4"] = flattenRouterBgpNeighborGroupNextHopSelfVpnv4(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "next_hop_self_vpnv6"
 		if cur_v, ok := i["next-hop-self-vpnv6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "next_hop_self_vpnv6"
+			}
 			tmp["next_hop_self_vpnv6"] = flattenRouterBgpNeighborGroupNextHopSelfVpnv6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "override_capability"
 		if cur_v, ok := i["override-capability"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "override_capability"
+			}
 			tmp["override_capability"] = flattenRouterBgpNeighborGroupOverrideCapability(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "passive"
 		if cur_v, ok := i["passive"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "passive"
+			}
 			tmp["passive"] = flattenRouterBgpNeighborGroupPassive(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "remove_private_as"
 		if cur_v, ok := i["remove-private-as"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "remove_private_as"
+			}
 			tmp["remove_private_as"] = flattenRouterBgpNeighborGroupRemovePrivateAs(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "remove_private_as6"
 		if cur_v, ok := i["remove-private-as6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "remove_private_as6"
+			}
 			tmp["remove_private_as6"] = flattenRouterBgpNeighborGroupRemovePrivateAs6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "remove_private_as_vpnv4"
 		if cur_v, ok := i["remove-private-as-vpnv4"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "remove_private_as_vpnv4"
+			}
 			tmp["remove_private_as_vpnv4"] = flattenRouterBgpNeighborGroupRemovePrivateAsVpnv4(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "remove_private_as_vpnv6"
 		if cur_v, ok := i["remove-private-as-vpnv6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "remove_private_as_vpnv6"
+			}
 			tmp["remove_private_as_vpnv6"] = flattenRouterBgpNeighborGroupRemovePrivateAsVpnv6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "remove_private_as_evpn"
 		if cur_v, ok := i["remove-private-as-evpn"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "remove_private_as_evpn"
+			}
 			tmp["remove_private_as_evpn"] = flattenRouterBgpNeighborGroupRemovePrivateAsEvpn(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_reflector_client"
 		if cur_v, ok := i["route-reflector-client"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_reflector_client"
+			}
 			tmp["route_reflector_client"] = flattenRouterBgpNeighborGroupRouteReflectorClient(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_reflector_client6"
 		if cur_v, ok := i["route-reflector-client6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_reflector_client6"
+			}
 			tmp["route_reflector_client6"] = flattenRouterBgpNeighborGroupRouteReflectorClient6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_reflector_client_vpnv4"
 		if cur_v, ok := i["route-reflector-client-vpnv4"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_reflector_client_vpnv4"
+			}
 			tmp["route_reflector_client_vpnv4"] = flattenRouterBgpNeighborGroupRouteReflectorClientVpnv4(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_reflector_client_vpnv6"
 		if cur_v, ok := i["route-reflector-client-vpnv6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_reflector_client_vpnv6"
+			}
 			tmp["route_reflector_client_vpnv6"] = flattenRouterBgpNeighborGroupRouteReflectorClientVpnv6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_reflector_client_evpn"
 		if cur_v, ok := i["route-reflector-client-evpn"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_reflector_client_evpn"
+			}
 			tmp["route_reflector_client_evpn"] = flattenRouterBgpNeighborGroupRouteReflectorClientEvpn(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_server_client"
 		if cur_v, ok := i["route-server-client"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_server_client"
+			}
 			tmp["route_server_client"] = flattenRouterBgpNeighborGroupRouteServerClient(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_server_client6"
 		if cur_v, ok := i["route-server-client6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_server_client6"
+			}
 			tmp["route_server_client6"] = flattenRouterBgpNeighborGroupRouteServerClient6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_server_client_vpnv4"
 		if cur_v, ok := i["route-server-client-vpnv4"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_server_client_vpnv4"
+			}
 			tmp["route_server_client_vpnv4"] = flattenRouterBgpNeighborGroupRouteServerClientVpnv4(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_server_client_vpnv6"
 		if cur_v, ok := i["route-server-client-vpnv6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_server_client_vpnv6"
+			}
 			tmp["route_server_client_vpnv6"] = flattenRouterBgpNeighborGroupRouteServerClientVpnv6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_server_client_evpn"
 		if cur_v, ok := i["route-server-client-evpn"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_server_client_evpn"
+			}
 			tmp["route_server_client_evpn"] = flattenRouterBgpNeighborGroupRouteServerClientEvpn(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "rr_attr_allow_change"
 		if cur_v, ok := i["rr-attr-allow-change"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "rr_attr_allow_change"
+			}
 			tmp["rr_attr_allow_change"] = flattenRouterBgpNeighborGroupRrAttrAllowChange(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "rr_attr_allow_change6"
 		if cur_v, ok := i["rr-attr-allow-change6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "rr_attr_allow_change6"
+			}
 			tmp["rr_attr_allow_change6"] = flattenRouterBgpNeighborGroupRrAttrAllowChange6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "rr_attr_allow_change_vpnv4"
 		if cur_v, ok := i["rr-attr-allow-change-vpnv4"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "rr_attr_allow_change_vpnv4"
+			}
 			tmp["rr_attr_allow_change_vpnv4"] = flattenRouterBgpNeighborGroupRrAttrAllowChangeVpnv4(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "rr_attr_allow_change_vpnv6"
 		if cur_v, ok := i["rr-attr-allow-change-vpnv6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "rr_attr_allow_change_vpnv6"
+			}
 			tmp["rr_attr_allow_change_vpnv6"] = flattenRouterBgpNeighborGroupRrAttrAllowChangeVpnv6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "rr_attr_allow_change_evpn"
 		if cur_v, ok := i["rr-attr-allow-change-evpn"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "rr_attr_allow_change_evpn"
+			}
 			tmp["rr_attr_allow_change_evpn"] = flattenRouterBgpNeighborGroupRrAttrAllowChangeEvpn(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "shutdown"
 		if cur_v, ok := i["shutdown"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "shutdown"
+			}
 			tmp["shutdown"] = flattenRouterBgpNeighborGroupShutdown(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "soft_reconfiguration"
 		if cur_v, ok := i["soft-reconfiguration"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "soft_reconfiguration"
+			}
 			tmp["soft_reconfiguration"] = flattenRouterBgpNeighborGroupSoftReconfiguration(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "soft_reconfiguration6"
 		if cur_v, ok := i["soft-reconfiguration6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "soft_reconfiguration6"
+			}
 			tmp["soft_reconfiguration6"] = flattenRouterBgpNeighborGroupSoftReconfiguration6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "soft_reconfiguration_vpnv4"
 		if cur_v, ok := i["soft-reconfiguration-vpnv4"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "soft_reconfiguration_vpnv4"
+			}
 			tmp["soft_reconfiguration_vpnv4"] = flattenRouterBgpNeighborGroupSoftReconfigurationVpnv4(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "soft_reconfiguration_vpnv6"
 		if cur_v, ok := i["soft-reconfiguration-vpnv6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "soft_reconfiguration_vpnv6"
+			}
 			tmp["soft_reconfiguration_vpnv6"] = flattenRouterBgpNeighborGroupSoftReconfigurationVpnv6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "soft_reconfiguration_evpn"
 		if cur_v, ok := i["soft-reconfiguration-evpn"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "soft_reconfiguration_evpn"
+			}
 			tmp["soft_reconfiguration_evpn"] = flattenRouterBgpNeighborGroupSoftReconfigurationEvpn(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "as_override"
 		if cur_v, ok := i["as-override"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "as_override"
+			}
 			tmp["as_override"] = flattenRouterBgpNeighborGroupAsOverride(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "as_override6"
 		if cur_v, ok := i["as-override6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "as_override6"
+			}
 			tmp["as_override6"] = flattenRouterBgpNeighborGroupAsOverride6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "strict_capability_match"
 		if cur_v, ok := i["strict-capability-match"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "strict_capability_match"
+			}
 			tmp["strict_capability_match"] = flattenRouterBgpNeighborGroupStrictCapabilityMatch(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "default_originate_routemap"
 		if cur_v, ok := i["default-originate-routemap"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "default_originate_routemap"
+			}
 			tmp["default_originate_routemap"] = flattenRouterBgpNeighborGroupDefaultOriginateRoutemap(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "default_originate_routemap6"
 		if cur_v, ok := i["default-originate-routemap6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "default_originate_routemap6"
+			}
 			tmp["default_originate_routemap6"] = flattenRouterBgpNeighborGroupDefaultOriginateRoutemap6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if cur_v, ok := i["description"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
+			}
 			tmp["description"] = flattenRouterBgpNeighborGroupDescription(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "distribute_list_in"
 		if cur_v, ok := i["distribute-list-in"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "distribute_list_in"
+			}
 			tmp["distribute_list_in"] = flattenRouterBgpNeighborGroupDistributeListIn(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "distribute_list_in6"
 		if cur_v, ok := i["distribute-list-in6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "distribute_list_in6"
+			}
 			tmp["distribute_list_in6"] = flattenRouterBgpNeighborGroupDistributeListIn6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "distribute_list_in_vpnv4"
 		if cur_v, ok := i["distribute-list-in-vpnv4"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "distribute_list_in_vpnv4"
+			}
 			tmp["distribute_list_in_vpnv4"] = flattenRouterBgpNeighborGroupDistributeListInVpnv4(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "distribute_list_in_vpnv6"
 		if cur_v, ok := i["distribute-list-in-vpnv6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "distribute_list_in_vpnv6"
+			}
 			tmp["distribute_list_in_vpnv6"] = flattenRouterBgpNeighborGroupDistributeListInVpnv6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "distribute_list_out"
 		if cur_v, ok := i["distribute-list-out"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "distribute_list_out"
+			}
 			tmp["distribute_list_out"] = flattenRouterBgpNeighborGroupDistributeListOut(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "distribute_list_out6"
 		if cur_v, ok := i["distribute-list-out6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "distribute_list_out6"
+			}
 			tmp["distribute_list_out6"] = flattenRouterBgpNeighborGroupDistributeListOut6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "distribute_list_out_vpnv4"
 		if cur_v, ok := i["distribute-list-out-vpnv4"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "distribute_list_out_vpnv4"
+			}
 			tmp["distribute_list_out_vpnv4"] = flattenRouterBgpNeighborGroupDistributeListOutVpnv4(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "distribute_list_out_vpnv6"
 		if cur_v, ok := i["distribute-list-out-vpnv6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "distribute_list_out_vpnv6"
+			}
 			tmp["distribute_list_out_vpnv6"] = flattenRouterBgpNeighborGroupDistributeListOutVpnv6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ebgp_multihop_ttl"
 		if cur_v, ok := i["ebgp-multihop-ttl"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "ebgp_multihop_ttl"
+			}
 			tmp["ebgp_multihop_ttl"] = flattenRouterBgpNeighborGroupEbgpMultihopTtl(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_list_in"
 		if cur_v, ok := i["filter-list-in"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_list_in"
+			}
 			tmp["filter_list_in"] = flattenRouterBgpNeighborGroupFilterListIn(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_list_in6"
 		if cur_v, ok := i["filter-list-in6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_list_in6"
+			}
 			tmp["filter_list_in6"] = flattenRouterBgpNeighborGroupFilterListIn6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_list_in_vpnv4"
 		if cur_v, ok := i["filter-list-in-vpnv4"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_list_in_vpnv4"
+			}
 			tmp["filter_list_in_vpnv4"] = flattenRouterBgpNeighborGroupFilterListInVpnv4(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_list_in_vpnv6"
 		if cur_v, ok := i["filter-list-in-vpnv6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_list_in_vpnv6"
+			}
 			tmp["filter_list_in_vpnv6"] = flattenRouterBgpNeighborGroupFilterListInVpnv6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_list_out"
 		if cur_v, ok := i["filter-list-out"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_list_out"
+			}
 			tmp["filter_list_out"] = flattenRouterBgpNeighborGroupFilterListOut(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_list_out6"
 		if cur_v, ok := i["filter-list-out6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_list_out6"
+			}
 			tmp["filter_list_out6"] = flattenRouterBgpNeighborGroupFilterListOut6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_list_out_vpnv4"
 		if cur_v, ok := i["filter-list-out-vpnv4"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_list_out_vpnv4"
+			}
 			tmp["filter_list_out_vpnv4"] = flattenRouterBgpNeighborGroupFilterListOutVpnv4(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_list_out_vpnv6"
 		if cur_v, ok := i["filter-list-out-vpnv6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_list_out_vpnv6"
+			}
 			tmp["filter_list_out_vpnv6"] = flattenRouterBgpNeighborGroupFilterListOutVpnv6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
 		if cur_v, ok := i["interface"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
+			}
 			tmp["interface"] = flattenRouterBgpNeighborGroupInterface(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix"
 		if cur_v, ok := i["maximum-prefix"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix"
+			}
 			tmp["maximum_prefix"] = flattenRouterBgpNeighborGroupMaximumPrefix(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix6"
 		if cur_v, ok := i["maximum-prefix6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix6"
+			}
 			tmp["maximum_prefix6"] = flattenRouterBgpNeighborGroupMaximumPrefix6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_vpnv4"
 		if cur_v, ok := i["maximum-prefix-vpnv4"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_vpnv4"
+			}
 			tmp["maximum_prefix_vpnv4"] = flattenRouterBgpNeighborGroupMaximumPrefixVpnv4(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_vpnv6"
 		if cur_v, ok := i["maximum-prefix-vpnv6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_vpnv6"
+			}
 			tmp["maximum_prefix_vpnv6"] = flattenRouterBgpNeighborGroupMaximumPrefixVpnv6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_evpn"
 		if cur_v, ok := i["maximum-prefix-evpn"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_evpn"
+			}
 			tmp["maximum_prefix_evpn"] = flattenRouterBgpNeighborGroupMaximumPrefixEvpn(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_threshold"
 		if cur_v, ok := i["maximum-prefix-threshold"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_threshold"
+			}
 			tmp["maximum_prefix_threshold"] = flattenRouterBgpNeighborGroupMaximumPrefixThreshold(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_threshold6"
 		if cur_v, ok := i["maximum-prefix-threshold6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_threshold6"
+			}
 			tmp["maximum_prefix_threshold6"] = flattenRouterBgpNeighborGroupMaximumPrefixThreshold6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_threshold_vpnv4"
 		if cur_v, ok := i["maximum-prefix-threshold-vpnv4"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_threshold_vpnv4"
+			}
 			tmp["maximum_prefix_threshold_vpnv4"] = flattenRouterBgpNeighborGroupMaximumPrefixThresholdVpnv4(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_threshold_vpnv6"
 		if cur_v, ok := i["maximum-prefix-threshold-vpnv6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_threshold_vpnv6"
+			}
 			tmp["maximum_prefix_threshold_vpnv6"] = flattenRouterBgpNeighborGroupMaximumPrefixThresholdVpnv6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_threshold_evpn"
 		if cur_v, ok := i["maximum-prefix-threshold-evpn"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_threshold_evpn"
+			}
 			tmp["maximum_prefix_threshold_evpn"] = flattenRouterBgpNeighborGroupMaximumPrefixThresholdEvpn(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_warning_only"
 		if cur_v, ok := i["maximum-prefix-warning-only"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_warning_only"
+			}
 			tmp["maximum_prefix_warning_only"] = flattenRouterBgpNeighborGroupMaximumPrefixWarningOnly(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_warning_only6"
 		if cur_v, ok := i["maximum-prefix-warning-only6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_warning_only6"
+			}
 			tmp["maximum_prefix_warning_only6"] = flattenRouterBgpNeighborGroupMaximumPrefixWarningOnly6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_warning_only_vpnv4"
 		if cur_v, ok := i["maximum-prefix-warning-only-vpnv4"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_warning_only_vpnv4"
+			}
 			tmp["maximum_prefix_warning_only_vpnv4"] = flattenRouterBgpNeighborGroupMaximumPrefixWarningOnlyVpnv4(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_warning_only_vpnv6"
 		if cur_v, ok := i["maximum-prefix-warning-only-vpnv6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_warning_only_vpnv6"
+			}
 			tmp["maximum_prefix_warning_only_vpnv6"] = flattenRouterBgpNeighborGroupMaximumPrefixWarningOnlyVpnv6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_warning_only_evpn"
 		if cur_v, ok := i["maximum-prefix-warning-only-evpn"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_prefix_warning_only_evpn"
+			}
 			tmp["maximum_prefix_warning_only_evpn"] = flattenRouterBgpNeighborGroupMaximumPrefixWarningOnlyEvpn(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_list_in"
 		if cur_v, ok := i["prefix-list-in"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_list_in"
+			}
 			tmp["prefix_list_in"] = flattenRouterBgpNeighborGroupPrefixListIn(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_list_in6"
 		if cur_v, ok := i["prefix-list-in6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_list_in6"
+			}
 			tmp["prefix_list_in6"] = flattenRouterBgpNeighborGroupPrefixListIn6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_list_in_vpnv4"
 		if cur_v, ok := i["prefix-list-in-vpnv4"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_list_in_vpnv4"
+			}
 			tmp["prefix_list_in_vpnv4"] = flattenRouterBgpNeighborGroupPrefixListInVpnv4(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_list_in_vpnv6"
 		if cur_v, ok := i["prefix-list-in-vpnv6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_list_in_vpnv6"
+			}
 			tmp["prefix_list_in_vpnv6"] = flattenRouterBgpNeighborGroupPrefixListInVpnv6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_list_out"
 		if cur_v, ok := i["prefix-list-out"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_list_out"
+			}
 			tmp["prefix_list_out"] = flattenRouterBgpNeighborGroupPrefixListOut(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_list_out6"
 		if cur_v, ok := i["prefix-list-out6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_list_out6"
+			}
 			tmp["prefix_list_out6"] = flattenRouterBgpNeighborGroupPrefixListOut6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_list_out_vpnv4"
 		if cur_v, ok := i["prefix-list-out-vpnv4"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_list_out_vpnv4"
+			}
 			tmp["prefix_list_out_vpnv4"] = flattenRouterBgpNeighborGroupPrefixListOutVpnv4(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_list_out_vpnv6"
 		if cur_v, ok := i["prefix-list-out-vpnv6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_list_out_vpnv6"
+			}
 			tmp["prefix_list_out_vpnv6"] = flattenRouterBgpNeighborGroupPrefixListOutVpnv6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "remote_as"
 		if cur_v, ok := i["remote-as"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "remote_as"
+			}
 			tmp["remote_as"] = flattenRouterBgpNeighborGroupRemoteAs(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "remote_as_filter"
 		if cur_v, ok := i["remote-as-filter"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "remote_as_filter"
+			}
 			tmp["remote_as_filter"] = flattenRouterBgpNeighborGroupRemoteAsFilter(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "local_as"
 		if cur_v, ok := i["local-as"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "local_as"
+			}
 			tmp["local_as"] = flattenRouterBgpNeighborGroupLocalAs(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "local_as_no_prepend"
 		if cur_v, ok := i["local-as-no-prepend"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "local_as_no_prepend"
+			}
 			tmp["local_as_no_prepend"] = flattenRouterBgpNeighborGroupLocalAsNoPrepend(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "local_as_replace_as"
 		if cur_v, ok := i["local-as-replace-as"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "local_as_replace_as"
+			}
 			tmp["local_as_replace_as"] = flattenRouterBgpNeighborGroupLocalAsReplaceAs(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "retain_stale_time"
 		if cur_v, ok := i["retain-stale-time"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "retain_stale_time"
+			}
 			tmp["retain_stale_time"] = flattenRouterBgpNeighborGroupRetainStaleTime(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_in"
 		if cur_v, ok := i["route-map-in"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_in"
+			}
 			tmp["route_map_in"] = flattenRouterBgpNeighborGroupRouteMapIn(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_in6"
 		if cur_v, ok := i["route-map-in6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_in6"
+			}
 			tmp["route_map_in6"] = flattenRouterBgpNeighborGroupRouteMapIn6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_in_vpnv4"
 		if cur_v, ok := i["route-map-in-vpnv4"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_in_vpnv4"
+			}
 			tmp["route_map_in_vpnv4"] = flattenRouterBgpNeighborGroupRouteMapInVpnv4(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_in_vpnv6"
 		if cur_v, ok := i["route-map-in-vpnv6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_in_vpnv6"
+			}
 			tmp["route_map_in_vpnv6"] = flattenRouterBgpNeighborGroupRouteMapInVpnv6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_in_evpn"
 		if cur_v, ok := i["route-map-in-evpn"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_in_evpn"
+			}
 			tmp["route_map_in_evpn"] = flattenRouterBgpNeighborGroupRouteMapInEvpn(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_out"
 		if cur_v, ok := i["route-map-out"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_out"
+			}
 			tmp["route_map_out"] = flattenRouterBgpNeighborGroupRouteMapOut(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_out_preferable"
 		if cur_v, ok := i["route-map-out-preferable"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_out_preferable"
+			}
 			tmp["route_map_out_preferable"] = flattenRouterBgpNeighborGroupRouteMapOutPreferable(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_out6"
 		if cur_v, ok := i["route-map-out6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_out6"
+			}
 			tmp["route_map_out6"] = flattenRouterBgpNeighborGroupRouteMapOut6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_out6_preferable"
 		if cur_v, ok := i["route-map-out6-preferable"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_out6_preferable"
+			}
 			tmp["route_map_out6_preferable"] = flattenRouterBgpNeighborGroupRouteMapOut6Preferable(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_out_vpnv4"
 		if cur_v, ok := i["route-map-out-vpnv4"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_out_vpnv4"
+			}
 			tmp["route_map_out_vpnv4"] = flattenRouterBgpNeighborGroupRouteMapOutVpnv4(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_out_vpnv6"
 		if cur_v, ok := i["route-map-out-vpnv6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_out_vpnv6"
+			}
 			tmp["route_map_out_vpnv6"] = flattenRouterBgpNeighborGroupRouteMapOutVpnv6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_out_vpnv4_preferable"
 		if cur_v, ok := i["route-map-out-vpnv4-preferable"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_out_vpnv4_preferable"
+			}
 			tmp["route_map_out_vpnv4_preferable"] = flattenRouterBgpNeighborGroupRouteMapOutVpnv4Preferable(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_out_vpnv6_preferable"
 		if cur_v, ok := i["route-map-out-vpnv6-preferable"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_out_vpnv6_preferable"
+			}
 			tmp["route_map_out_vpnv6_preferable"] = flattenRouterBgpNeighborGroupRouteMapOutVpnv6Preferable(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_out_evpn"
 		if cur_v, ok := i["route-map-out-evpn"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_out_evpn"
+			}
 			tmp["route_map_out_evpn"] = flattenRouterBgpNeighborGroupRouteMapOutEvpn(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "send_community"
 		if cur_v, ok := i["send-community"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "send_community"
+			}
 			tmp["send_community"] = flattenRouterBgpNeighborGroupSendCommunity(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "send_community6"
 		if cur_v, ok := i["send-community6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "send_community6"
+			}
 			tmp["send_community6"] = flattenRouterBgpNeighborGroupSendCommunity6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "send_community_vpnv4"
 		if cur_v, ok := i["send-community-vpnv4"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "send_community_vpnv4"
+			}
 			tmp["send_community_vpnv4"] = flattenRouterBgpNeighborGroupSendCommunityVpnv4(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "send_community_vpnv6"
 		if cur_v, ok := i["send-community-vpnv6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "send_community_vpnv6"
+			}
 			tmp["send_community_vpnv6"] = flattenRouterBgpNeighborGroupSendCommunityVpnv6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "send_community_evpn"
 		if cur_v, ok := i["send-community-evpn"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "send_community_evpn"
+			}
 			tmp["send_community_evpn"] = flattenRouterBgpNeighborGroupSendCommunityEvpn(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "keep_alive_timer"
 		if cur_v, ok := i["keep-alive-timer"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "keep_alive_timer"
+			}
 			tmp["keep_alive_timer"] = flattenRouterBgpNeighborGroupKeepAliveTimer(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "holdtime_timer"
 		if cur_v, ok := i["holdtime-timer"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "holdtime_timer"
+			}
 			tmp["holdtime_timer"] = flattenRouterBgpNeighborGroupHoldtimeTimer(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "connect_timer"
 		if cur_v, ok := i["connect-timer"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "connect_timer"
+			}
 			tmp["connect_timer"] = flattenRouterBgpNeighborGroupConnectTimer(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "unsuppress_map"
 		if cur_v, ok := i["unsuppress-map"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "unsuppress_map"
+			}
 			tmp["unsuppress_map"] = flattenRouterBgpNeighborGroupUnsuppressMap(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "unsuppress_map6"
 		if cur_v, ok := i["unsuppress-map6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "unsuppress_map6"
+			}
 			tmp["unsuppress_map6"] = flattenRouterBgpNeighborGroupUnsuppressMap6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "update_source"
 		if cur_v, ok := i["update-source"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "update_source"
+			}
 			tmp["update_source"] = flattenRouterBgpNeighborGroupUpdateSource(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "weight"
 		if cur_v, ok := i["weight"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "weight"
+			}
 			tmp["weight"] = flattenRouterBgpNeighborGroupWeight(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "restart_time"
 		if cur_v, ok := i["restart-time"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "restart_time"
+			}
 			tmp["restart_time"] = flattenRouterBgpNeighborGroupRestartTime(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "additional_path"
 		if cur_v, ok := i["additional-path"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "additional_path"
+			}
 			tmp["additional_path"] = flattenRouterBgpNeighborGroupAdditionalPath(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "additional_path6"
 		if cur_v, ok := i["additional-path6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "additional_path6"
+			}
 			tmp["additional_path6"] = flattenRouterBgpNeighborGroupAdditionalPath6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "additional_path_vpnv4"
 		if cur_v, ok := i["additional-path-vpnv4"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "additional_path_vpnv4"
+			}
 			tmp["additional_path_vpnv4"] = flattenRouterBgpNeighborGroupAdditionalPathVpnv4(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "additional_path_vpnv6"
 		if cur_v, ok := i["additional-path-vpnv6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "additional_path_vpnv6"
+			}
 			tmp["additional_path_vpnv6"] = flattenRouterBgpNeighborGroupAdditionalPathVpnv6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "adv_additional_path"
 		if cur_v, ok := i["adv-additional-path"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "adv_additional_path"
+			}
 			tmp["adv_additional_path"] = flattenRouterBgpNeighborGroupAdvAdditionalPath(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "adv_additional_path6"
 		if cur_v, ok := i["adv-additional-path6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "adv_additional_path6"
+			}
 			tmp["adv_additional_path6"] = flattenRouterBgpNeighborGroupAdvAdditionalPath6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "adv_additional_path_vpnv4"
 		if cur_v, ok := i["adv-additional-path-vpnv4"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "adv_additional_path_vpnv4"
+			}
 			tmp["adv_additional_path_vpnv4"] = flattenRouterBgpNeighborGroupAdvAdditionalPathVpnv4(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "adv_additional_path_vpnv6"
 		if cur_v, ok := i["adv-additional-path-vpnv6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "adv_additional_path_vpnv6"
+			}
 			tmp["adv_additional_path_vpnv6"] = flattenRouterBgpNeighborGroupAdvAdditionalPathVpnv6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "password"
 		if _, ok := i["password"]; ok {
-			c := d.Get(pre_append).(string)
-			if c != "" {
-				tmp["password"] = c
+			if tf_exist {
+				pre_append := pre + "." + strconv.Itoa(con) + "." + "password"
+				c := d.Get(pre_append).(string)
+				if c != "" {
+					tmp["password"] = c
+				}
 			}
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_options"
 		if cur_v, ok := i["auth-options"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_options"
+			}
 			tmp["auth_options"] = flattenRouterBgpNeighborGroupAuthOptions(cur_v, d, pre_append, sv)
 		}
 
@@ -6173,30 +7241,50 @@ func flattenRouterBgpNeighborRange(v interface{}, d *schema.ResourceData, pre st
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenRouterBgpNeighborRangeId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"
 		if cur_v, ok := i["prefix"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"
+			}
 			tmp["prefix"] = flattenRouterBgpNeighborRangePrefix(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "max_neighbor_num"
 		if cur_v, ok := i["max-neighbor-num"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "max_neighbor_num"
+			}
 			tmp["max_neighbor_num"] = flattenRouterBgpNeighborRangeMaxNeighborNum(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "neighbor_group"
 		if cur_v, ok := i["neighbor-group"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "neighbor_group"
+			}
 			tmp["neighbor_group"] = flattenRouterBgpNeighborRangeNeighborGroup(cur_v, d, pre_append, sv)
 		}
 
@@ -6249,30 +7337,50 @@ func flattenRouterBgpNeighborRange6(v interface{}, d *schema.ResourceData, pre s
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenRouterBgpNeighborRange6Id(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix6"
 		if cur_v, ok := i["prefix6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix6"
+			}
 			tmp["prefix6"] = flattenRouterBgpNeighborRange6Prefix6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "max_neighbor_num"
 		if cur_v, ok := i["max-neighbor-num"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "max_neighbor_num"
+			}
 			tmp["max_neighbor_num"] = flattenRouterBgpNeighborRange6MaxNeighborNum(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "neighbor_group"
 		if cur_v, ok := i["neighbor-group"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "neighbor_group"
+			}
 			tmp["neighbor_group"] = flattenRouterBgpNeighborRange6NeighborGroup(cur_v, d, pre_append, sv)
 		}
 
@@ -6318,40 +7426,66 @@ func flattenRouterBgpNetwork(v interface{}, d *schema.ResourceData, pre string, 
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenRouterBgpNetworkId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"
 		if cur_v, ok := i["prefix"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"
+			}
 			tmp["prefix"] = flattenRouterBgpNetworkPrefix(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "network_import_check"
 		if cur_v, ok := i["network-import-check"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "network_import_check"
+			}
 			tmp["network_import_check"] = flattenRouterBgpNetworkNetworkImportCheck(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "backdoor"
 		if cur_v, ok := i["backdoor"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "backdoor"
+			}
 			tmp["backdoor"] = flattenRouterBgpNetworkBackdoor(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map"
 		if cur_v, ok := i["route-map"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map"
+			}
 			tmp["route_map"] = flattenRouterBgpNetworkRouteMap(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_name"
 		if cur_v, ok := i["prefix-name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_name"
+			}
 			tmp["prefix_name"] = flattenRouterBgpNetworkPrefixName(cur_v, d, pre_append, sv)
 		}
 
@@ -6412,35 +7546,58 @@ func flattenRouterBgpNetwork6(v interface{}, d *schema.ResourceData, pre string,
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenRouterBgpNetwork6Id(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix6"
 		if cur_v, ok := i["prefix6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix6"
+			}
 			tmp["prefix6"] = flattenRouterBgpNetwork6Prefix6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "network_import_check"
 		if cur_v, ok := i["network-import-check"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "network_import_check"
+			}
 			tmp["network_import_check"] = flattenRouterBgpNetwork6NetworkImportCheck(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "backdoor"
 		if cur_v, ok := i["backdoor"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "backdoor"
+			}
 			tmp["backdoor"] = flattenRouterBgpNetwork6Backdoor(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map"
 		if cur_v, ok := i["route-map"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map"
+			}
 			tmp["route_map"] = flattenRouterBgpNetwork6RouteMap(cur_v, d, pre_append, sv)
 		}
 
@@ -6497,28 +7654,45 @@ func flattenRouterBgpRedistribute(v interface{}, d *schema.ResourceData, pre str
 		}
 	}
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			if !conf_map[cur_v.(string)] {
 				continue
 			}
 			tmp["name"] = flattenRouterBgpRedistributeName(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if cur_v, ok := i["status"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
+			}
 			tmp["status"] = flattenRouterBgpRedistributeStatus(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map"
 		if cur_v, ok := i["route-map"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map"
+			}
 			tmp["route_map"] = flattenRouterBgpRedistributeRouteMap(cur_v, d, pre_append, sv)
 		}
 
@@ -6567,28 +7741,45 @@ func flattenRouterBgpRedistribute6(v interface{}, d *schema.ResourceData, pre st
 		}
 	}
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			if !conf_map[cur_v.(string)] {
 				continue
 			}
 			tmp["name"] = flattenRouterBgpRedistribute6Name(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if cur_v, ok := i["status"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
+			}
 			tmp["status"] = flattenRouterBgpRedistribute6Status(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map"
 		if cur_v, ok := i["route-map"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map"
+			}
 			tmp["route_map"] = flattenRouterBgpRedistribute6RouteMap(cur_v, d, pre_append, sv)
 		}
 
@@ -6630,30 +7821,50 @@ func flattenRouterBgpAdminDistance(v interface{}, d *schema.ResourceData, pre st
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenRouterBgpAdminDistanceId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "neighbour_prefix"
 		if cur_v, ok := i["neighbour-prefix"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "neighbour_prefix"
+			}
 			tmp["neighbour_prefix"] = flattenRouterBgpAdminDistanceNeighbourPrefix(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_list"
 		if cur_v, ok := i["route-list"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_list"
+			}
 			tmp["route_list"] = flattenRouterBgpAdminDistanceRouteList(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "distance"
 		if cur_v, ok := i["distance"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "distance"
+			}
 			tmp["distance"] = flattenRouterBgpAdminDistanceDistance(cur_v, d, pre_append, sv)
 		}
 
@@ -6706,45 +7917,74 @@ func flattenRouterBgpVrf(v interface{}, d *schema.ResourceData, pre string, sv s
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "vrf", "vrf")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrf"
 		if cur_v, ok := i["vrf"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "vrf"
+			}
 			tmp["vrf"] = flattenRouterBgpVrfVrf(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "role"
 		if cur_v, ok := i["role"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "role"
+			}
 			tmp["role"] = flattenRouterBgpVrfRole(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "rd"
 		if cur_v, ok := i["rd"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "rd"
+			}
 			tmp["rd"] = flattenRouterBgpVrfRd(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "export_rt"
 		if cur_v, ok := i["export-rt"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "export_rt"
+			}
 			tmp["export_rt"] = flattenRouterBgpVrfExportRt(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "import_rt"
 		if cur_v, ok := i["import-rt"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "import_rt"
+			}
 			tmp["import_rt"] = flattenRouterBgpVrfImportRt(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "import_route_map"
 		if cur_v, ok := i["import-route-map"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "import_route_map"
+			}
 			tmp["import_route_map"] = flattenRouterBgpVrfImportRouteMap(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "leak_target"
 		if cur_v, ok := i["leak-target"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "leak_target"
+			}
 			tmp["leak_target"] = flattenRouterBgpVrfLeakTargetU(cur_v, d, pre_append, sv)
 		}
 
@@ -6786,15 +8026,26 @@ func flattenRouterBgpVrfExportRt(v interface{}, d *schema.ResourceData, pre stri
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "route-target", "route_target")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_target"
 		if cur_v, ok := i["route-target"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_target"
+			}
 			tmp["route_target"] = flattenRouterBgpVrfExportRtRouteTarget(cur_v, d, pre_append, sv)
 		}
 
@@ -6828,15 +8079,26 @@ func flattenRouterBgpVrfImportRt(v interface{}, d *schema.ResourceData, pre stri
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "route-target", "route_target")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_target"
 		if cur_v, ok := i["route-target"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_target"
+			}
 			tmp["route_target"] = flattenRouterBgpVrfImportRtRouteTarget(cur_v, d, pre_append, sv)
 		}
 
@@ -6874,25 +8136,42 @@ func flattenRouterBgpVrfLeakTargetU(v interface{}, d *schema.ResourceData, pre s
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "vrf", "vrf")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrf"
 		if cur_v, ok := i["vrf"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "vrf"
+			}
 			tmp["vrf"] = flattenRouterBgpVrfLeakTargetVrf(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map"
 		if cur_v, ok := i["route-map"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map"
+			}
 			tmp["route_map"] = flattenRouterBgpVrfLeakTargetRouteMap(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
 		if cur_v, ok := i["interface"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
+			}
 			tmp["interface"] = flattenRouterBgpVrfLeakTargetInterface(cur_v, d, pre_append, sv)
 		}
 
@@ -6934,45 +8213,74 @@ func flattenRouterBgpVrf6(v interface{}, d *schema.ResourceData, pre string, sv 
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "vrf", "vrf")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrf"
 		if cur_v, ok := i["vrf"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "vrf"
+			}
 			tmp["vrf"] = flattenRouterBgpVrf6Vrf(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "role"
 		if cur_v, ok := i["role"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "role"
+			}
 			tmp["role"] = flattenRouterBgpVrf6Role(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "rd"
 		if cur_v, ok := i["rd"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "rd"
+			}
 			tmp["rd"] = flattenRouterBgpVrf6Rd(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "export_rt"
 		if cur_v, ok := i["export-rt"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "export_rt"
+			}
 			tmp["export_rt"] = flattenRouterBgpVrf6ExportRt(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "import_rt"
 		if cur_v, ok := i["import-rt"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "import_rt"
+			}
 			tmp["import_rt"] = flattenRouterBgpVrf6ImportRt(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "import_route_map"
 		if cur_v, ok := i["import-route-map"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "import_route_map"
+			}
 			tmp["import_route_map"] = flattenRouterBgpVrf6ImportRouteMap(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "leak_target"
 		if cur_v, ok := i["leak-target"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "leak_target"
+			}
 			tmp["leak_target"] = flattenRouterBgpVrf6LeakTarget(cur_v, d, pre_append, sv)
 		}
 
@@ -7014,15 +8322,26 @@ func flattenRouterBgpVrf6ExportRt(v interface{}, d *schema.ResourceData, pre str
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "route-target", "route_target")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_target"
 		if cur_v, ok := i["route-target"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_target"
+			}
 			tmp["route_target"] = flattenRouterBgpVrf6ExportRtRouteTarget(cur_v, d, pre_append, sv)
 		}
 
@@ -7056,15 +8375,26 @@ func flattenRouterBgpVrf6ImportRt(v interface{}, d *schema.ResourceData, pre str
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "route-target", "route_target")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_target"
 		if cur_v, ok := i["route-target"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_target"
+			}
 			tmp["route_target"] = flattenRouterBgpVrf6ImportRtRouteTarget(cur_v, d, pre_append, sv)
 		}
 
@@ -7102,25 +8432,42 @@ func flattenRouterBgpVrf6LeakTarget(v interface{}, d *schema.ResourceData, pre s
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "vrf", "vrf")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrf"
 		if cur_v, ok := i["vrf"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "vrf"
+			}
 			tmp["vrf"] = flattenRouterBgpVrf6LeakTargetVrf(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map"
 		if cur_v, ok := i["route-map"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map"
+			}
 			tmp["route_map"] = flattenRouterBgpVrf6LeakTargetRouteMap(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
 		if cur_v, ok := i["interface"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
+			}
 			tmp["interface"] = flattenRouterBgpVrf6LeakTargetInterface(cur_v, d, pre_append, sv)
 		}
 
@@ -7162,20 +8509,34 @@ func flattenRouterBgpVrfLeak(v interface{}, d *schema.ResourceData, pre string, 
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "vrf", "vrf")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrf"
 		if cur_v, ok := i["vrf"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "vrf"
+			}
 			tmp["vrf"] = flattenRouterBgpVrfLeakVrf(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "target"
 		if cur_v, ok := i["target"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "target"
+			}
 			tmp["target"] = flattenRouterBgpVrfLeakTarget(cur_v, d, pre_append, sv)
 		}
 
@@ -7209,25 +8570,42 @@ func flattenRouterBgpVrfLeakTarget(v interface{}, d *schema.ResourceData, pre st
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "vrf", "vrf")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrf"
 		if cur_v, ok := i["vrf"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "vrf"
+			}
 			tmp["vrf"] = flattenRouterBgpVrfLeakTargetVrf(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map"
 		if cur_v, ok := i["route-map"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map"
+			}
 			tmp["route_map"] = flattenRouterBgpVrfLeakTargetRouteMap(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
 		if cur_v, ok := i["interface"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
+			}
 			tmp["interface"] = flattenRouterBgpVrfLeakTargetInterface(cur_v, d, pre_append, sv)
 		}
 
@@ -7269,20 +8647,34 @@ func flattenRouterBgpVrfLeak6(v interface{}, d *schema.ResourceData, pre string,
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "vrf", "vrf")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrf"
 		if cur_v, ok := i["vrf"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "vrf"
+			}
 			tmp["vrf"] = flattenRouterBgpVrfLeak6Vrf(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "target"
 		if cur_v, ok := i["target"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "target"
+			}
 			tmp["target"] = flattenRouterBgpVrfLeak6Target(cur_v, d, pre_append, sv)
 		}
 
@@ -7316,25 +8708,42 @@ func flattenRouterBgpVrfLeak6Target(v interface{}, d *schema.ResourceData, pre s
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "vrf", "vrf")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrf"
 		if cur_v, ok := i["vrf"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "vrf"
+			}
 			tmp["vrf"] = flattenRouterBgpVrfLeak6TargetVrf(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map"
 		if cur_v, ok := i["route-map"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map"
+			}
 			tmp["route_map"] = flattenRouterBgpVrfLeak6TargetRouteMap(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
 		if cur_v, ok := i["interface"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
+			}
 			tmp["interface"] = flattenRouterBgpVrfLeak6TargetInterface(cur_v, d, pre_append, sv)
 		}
 
@@ -9148,16 +10557,22 @@ func expandRouterBgpNeighbor(d *schema.ResourceData, v interface{}, pre string, 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "keep_alive_timer"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["keep-alive-timer"], _ = expandRouterBgpNeighborKeepAliveTimer(d, i["keep_alive_timer"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["keep-alive-timer"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "holdtime_timer"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["holdtime-timer"], _ = expandRouterBgpNeighborHoldtimeTimer(d, i["holdtime_timer"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["holdtime-timer"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "connect_timer"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["connect-timer"], _ = expandRouterBgpNeighborConnectTimer(d, i["connect_timer"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["connect-timer"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "unsuppress_map"
@@ -9184,6 +10599,8 @@ func expandRouterBgpNeighbor(d *schema.ResourceData, v interface{}, pre string, 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "weight"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["weight"], _ = expandRouterBgpNeighborWeight(d, i["weight"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["weight"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "restart_time"
@@ -10889,16 +12306,22 @@ func expandRouterBgpNeighborGroup(d *schema.ResourceData, v interface{}, pre str
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "keep_alive_timer"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["keep-alive-timer"], _ = expandRouterBgpNeighborGroupKeepAliveTimer(d, i["keep_alive_timer"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["keep-alive-timer"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "holdtime_timer"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["holdtime-timer"], _ = expandRouterBgpNeighborGroupHoldtimeTimer(d, i["holdtime_timer"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["holdtime-timer"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "connect_timer"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["connect-timer"], _ = expandRouterBgpNeighborGroupConnectTimer(d, i["connect_timer"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["connect-timer"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "unsuppress_map"
@@ -10925,6 +12348,8 @@ func expandRouterBgpNeighborGroup(d *schema.ResourceData, v interface{}, pre str
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "weight"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["weight"], _ = expandRouterBgpNeighborGroupWeight(d, i["weight"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["weight"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "restart_time"

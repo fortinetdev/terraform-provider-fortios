@@ -42,7 +42,7 @@ The following arguments are supported:
 * `username` - HTTP authentication user name.
 * `password` - HTTP authentication password.
 * `comment` - Comment.
-* `masquerade` - Enable/disable use of the of the IP address of the outgoing interface as the client IP address (default = enable) Valid values: `enable`, `disable`.
+* `masquerade` - Enable/disable use of the IP address of the outgoing interface as the client IP address (default = enable) Valid values: `enable`, `disable`.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 

@@ -1021,15 +1021,26 @@ func flattenVpnSslWebPortalIpPools(v interface{}, d *schema.ResourceData, pre st
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenVpnSslWebPortalIpPoolsName(cur_v, d, pre_append, sv)
 		}
 
@@ -1079,15 +1090,26 @@ func flattenVpnSslWebPortalSplitTunnelingRoutingAddress(v interface{}, d *schema
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenVpnSslWebPortalSplitTunnelingRoutingAddressName(cur_v, d, pre_append, sv)
 		}
 
@@ -1149,15 +1171,26 @@ func flattenVpnSslWebPortalIpv6Pools(v interface{}, d *schema.ResourceData, pre 
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenVpnSslWebPortalIpv6PoolsName(cur_v, d, pre_append, sv)
 		}
 
@@ -1207,15 +1240,26 @@ func flattenVpnSslWebPortalIpv6SplitTunnelingRoutingAddress(v interface{}, d *sc
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenVpnSslWebPortalIpv6SplitTunnelingRoutingAddressName(cur_v, d, pre_append, sv)
 		}
 
@@ -1301,20 +1345,34 @@ func flattenVpnSslWebPortalBookmarkGroup(v interface{}, d *schema.ResourceData, 
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenVpnSslWebPortalBookmarkGroupName(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "bookmarks"
 		if cur_v, ok := i["bookmarks"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "bookmarks"
+			}
 			tmp["bookmarks"] = flattenVpnSslWebPortalBookmarkGroupBookmarks(cur_v, d, pre_append, sv)
 		}
 
@@ -1348,176 +1406,278 @@ func flattenVpnSslWebPortalBookmarkGroupBookmarks(v interface{}, d *schema.Resou
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenVpnSslWebPortalBookmarkGroupBookmarksName(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "apptype"
 		if cur_v, ok := i["apptype"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "apptype"
+			}
 			tmp["apptype"] = flattenVpnSslWebPortalBookmarkGroupBookmarksApptype(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "url"
 		if cur_v, ok := i["url"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "url"
+			}
 			tmp["url"] = flattenVpnSslWebPortalBookmarkGroupBookmarksUrl(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "host"
 		if cur_v, ok := i["host"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "host"
+			}
 			tmp["host"] = flattenVpnSslWebPortalBookmarkGroupBookmarksHost(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "folder"
 		if cur_v, ok := i["folder"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "folder"
+			}
 			tmp["folder"] = flattenVpnSslWebPortalBookmarkGroupBookmarksFolder(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "domain"
 		if cur_v, ok := i["domain"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "domain"
+			}
 			tmp["domain"] = flattenVpnSslWebPortalBookmarkGroupBookmarksDomain(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "additional_params"
 		if cur_v, ok := i["additional-params"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "additional_params"
+			}
 			tmp["additional_params"] = flattenVpnSslWebPortalBookmarkGroupBookmarksAdditionalParams(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "listening_port"
 		if cur_v, ok := i["listening-port"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "listening_port"
+			}
 			tmp["listening_port"] = flattenVpnSslWebPortalBookmarkGroupBookmarksListeningPort(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "remote_port"
 		if cur_v, ok := i["remote-port"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "remote_port"
+			}
 			tmp["remote_port"] = flattenVpnSslWebPortalBookmarkGroupBookmarksRemotePort(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "show_status_window"
 		if cur_v, ok := i["show-status-window"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "show_status_window"
+			}
 			tmp["show_status_window"] = flattenVpnSslWebPortalBookmarkGroupBookmarksShowStatusWindow(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if cur_v, ok := i["description"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
+			}
 			tmp["description"] = flattenVpnSslWebPortalBookmarkGroupBookmarksDescription(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "keyboard_layout"
 		if cur_v, ok := i["keyboard-layout"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "keyboard_layout"
+			}
 			tmp["keyboard_layout"] = flattenVpnSslWebPortalBookmarkGroupBookmarksKeyboardLayout(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "server_layout"
 		if cur_v, ok := i["server-layout"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "server_layout"
+			}
 			tmp["server_layout"] = flattenVpnSslWebPortalBookmarkGroupBookmarksServerLayout(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "security"
 		if cur_v, ok := i["security"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "security"
+			}
 			tmp["security"] = flattenVpnSslWebPortalBookmarkGroupBookmarksSecurity(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "send_preconnection_id"
 		if cur_v, ok := i["send-preconnection-id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "send_preconnection_id"
+			}
 			tmp["send_preconnection_id"] = flattenVpnSslWebPortalBookmarkGroupBookmarksSendPreconnectionId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "preconnection_id"
 		if cur_v, ok := i["preconnection-id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "preconnection_id"
+			}
 			tmp["preconnection_id"] = flattenVpnSslWebPortalBookmarkGroupBookmarksPreconnectionId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "preconnection_blob"
 		if cur_v, ok := i["preconnection-blob"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "preconnection_blob"
+			}
 			tmp["preconnection_blob"] = flattenVpnSslWebPortalBookmarkGroupBookmarksPreconnectionBlob(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "load_balancing_info"
 		if cur_v, ok := i["load-balancing-info"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "load_balancing_info"
+			}
 			tmp["load_balancing_info"] = flattenVpnSslWebPortalBookmarkGroupBookmarksLoadBalancingInfo(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "restricted_admin"
 		if cur_v, ok := i["restricted-admin"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "restricted_admin"
+			}
 			tmp["restricted_admin"] = flattenVpnSslWebPortalBookmarkGroupBookmarksRestrictedAdmin(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
 		if cur_v, ok := i["port"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
+			}
 			tmp["port"] = flattenVpnSslWebPortalBookmarkGroupBookmarksPort(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "logon_user"
 		if cur_v, ok := i["logon-user"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "logon_user"
+			}
 			tmp["logon_user"] = flattenVpnSslWebPortalBookmarkGroupBookmarksLogonUser(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "logon_password"
 		if _, ok := i["logon-password"]; ok {
-			c := d.Get(pre_append).(string)
-			if c != "" {
-				tmp["logon_password"] = c
+			if tf_exist {
+				pre_append := pre + "." + strconv.Itoa(con) + "." + "logon_password"
+				c := d.Get(pre_append).(string)
+				if c != "" {
+					tmp["logon_password"] = c
+				}
 			}
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "color_depth"
 		if cur_v, ok := i["color-depth"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "color_depth"
+			}
 			tmp["color_depth"] = flattenVpnSslWebPortalBookmarkGroupBookmarksColorDepth(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "sso"
 		if cur_v, ok := i["sso"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "sso"
+			}
 			tmp["sso"] = flattenVpnSslWebPortalBookmarkGroupBookmarksSso(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "form_data"
 		if cur_v, ok := i["form-data"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "form_data"
+			}
 			tmp["form_data"] = flattenVpnSslWebPortalBookmarkGroupBookmarksFormData(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "sso_credential"
 		if cur_v, ok := i["sso-credential"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "sso_credential"
+			}
 			tmp["sso_credential"] = flattenVpnSslWebPortalBookmarkGroupBookmarksSsoCredential(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "sso_username"
 		if cur_v, ok := i["sso-username"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "sso_username"
+			}
 			tmp["sso_username"] = flattenVpnSslWebPortalBookmarkGroupBookmarksSsoUsername(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "sso_password"
 		if _, ok := i["sso-password"]; ok {
-			c := d.Get(pre_append).(string)
-			if c != "" {
-				tmp["sso_password"] = c
+			if tf_exist {
+				pre_append := pre + "." + strconv.Itoa(con) + "." + "sso_password"
+				c := d.Get(pre_append).(string)
+				if c != "" {
+					tmp["sso_password"] = c
+				}
 			}
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "sso_credential_sent_once"
 		if cur_v, ok := i["sso-credential-sent-once"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "sso_credential_sent_once"
+			}
 			tmp["sso_credential_sent_once"] = flattenVpnSslWebPortalBookmarkGroupBookmarksSsoCredentialSentOnce(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "width"
 		if cur_v, ok := i["width"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "width"
+			}
 			tmp["width"] = flattenVpnSslWebPortalBookmarkGroupBookmarksWidth(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "height"
 		if cur_v, ok := i["height"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "height"
+			}
 			tmp["height"] = flattenVpnSslWebPortalBookmarkGroupBookmarksHeight(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "vnc_keyboard_layout"
 		if cur_v, ok := i["vnc-keyboard-layout"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "vnc_keyboard_layout"
+			}
 			tmp["vnc_keyboard_layout"] = flattenVpnSslWebPortalBookmarkGroupBookmarksVncKeyboardLayout(cur_v, d, pre_append, sv)
 		}
 
@@ -1639,20 +1799,34 @@ func flattenVpnSslWebPortalBookmarkGroupBookmarksFormData(v interface{}, d *sche
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenVpnSslWebPortalBookmarkGroupBookmarksFormDataName(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
 		if cur_v, ok := i["value"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
+			}
 			tmp["value"] = flattenVpnSslWebPortalBookmarkGroupBookmarksFormDataValue(cur_v, d, pre_append, sv)
 		}
 
@@ -1798,15 +1972,26 @@ func flattenVpnSslWebPortalHostCheckPolicy(v interface{}, d *schema.ResourceData
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenVpnSslWebPortalHostCheckPolicyName(cur_v, d, pre_append, sv)
 		}
 
@@ -1852,25 +2037,42 @@ func flattenVpnSslWebPortalMacAddrCheckRule(v interface{}, d *schema.ResourceDat
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenVpnSslWebPortalMacAddrCheckRuleName(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "mac_addr_mask"
 		if cur_v, ok := i["mac-addr-mask"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "mac_addr_mask"
+			}
 			tmp["mac_addr_mask"] = flattenVpnSslWebPortalMacAddrCheckRuleMacAddrMask(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "mac_addr_list"
 		if cur_v, ok := i["mac-addr-list"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "mac_addr_list"
+			}
 			tmp["mac_addr_list"] = flattenVpnSslWebPortalMacAddrCheckRuleMacAddrList(cur_v, d, pre_append, sv)
 		}
 
@@ -1908,15 +2110,26 @@ func flattenVpnSslWebPortalMacAddrCheckRuleMacAddrList(v interface{}, d *schema.
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "addr", "addr")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr"
 		if cur_v, ok := i["addr"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "addr"
+			}
 			tmp["addr"] = flattenVpnSslWebPortalMacAddrCheckRuleMacAddrListAddr(cur_v, d, pre_append, sv)
 		}
 
@@ -1954,35 +2167,58 @@ func flattenVpnSslWebPortalOsCheckList(v interface{}, d *schema.ResourceData, pr
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenVpnSslWebPortalOsCheckListName(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "minor_version"
 		if cur_v, ok := i["minor-version"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "minor_version"
+			}
 			tmp["minor_version"] = flattenVpnSslWebPortalOsCheckListMinorVersion(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if cur_v, ok := i["action"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
+			}
 			tmp["action"] = flattenVpnSslWebPortalOsCheckListAction(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "tolerance"
 		if cur_v, ok := i["tolerance"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "tolerance"
+			}
 			tmp["tolerance"] = flattenVpnSslWebPortalOsCheckListTolerance(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "latest_patch_level"
 		if cur_v, ok := i["latest-patch-level"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "latest_patch_level"
+			}
 			tmp["latest_patch_level"] = flattenVpnSslWebPortalOsCheckListLatestPatchLevel(cur_v, d, pre_append, sv)
 		}
 
@@ -2064,40 +2300,66 @@ func flattenVpnSslWebPortalSplitDns(v interface{}, d *schema.ResourceData, pre s
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenVpnSslWebPortalSplitDnsId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "domains"
 		if cur_v, ok := i["domains"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "domains"
+			}
 			tmp["domains"] = flattenVpnSslWebPortalSplitDnsDomains(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "dns_server1"
 		if cur_v, ok := i["dns-server1"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "dns_server1"
+			}
 			tmp["dns_server1"] = flattenVpnSslWebPortalSplitDnsDnsServer1(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "dns_server2"
 		if cur_v, ok := i["dns-server2"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "dns_server2"
+			}
 			tmp["dns_server2"] = flattenVpnSslWebPortalSplitDnsDnsServer2(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ipv6_dns_server1"
 		if cur_v, ok := i["ipv6-dns-server1"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "ipv6_dns_server1"
+			}
 			tmp["ipv6_dns_server1"] = flattenVpnSslWebPortalSplitDnsIpv6DnsServer1(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ipv6_dns_server2"
 		if cur_v, ok := i["ipv6-dns-server2"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "ipv6_dns_server2"
+			}
 			tmp["ipv6_dns_server2"] = flattenVpnSslWebPortalSplitDnsIpv6DnsServer2(cur_v, d, pre_append, sv)
 		}
 
@@ -2214,20 +2476,34 @@ func flattenVpnSslWebPortalLandingPageFormData(v interface{}, d *schema.Resource
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenVpnSslWebPortalLandingPageFormDataName(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
 		if cur_v, ok := i["value"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
+			}
 			tmp["value"] = flattenVpnSslWebPortalLandingPageFormDataValue(cur_v, d, pre_append, sv)
 		}
 
@@ -3935,10 +4211,14 @@ func expandVpnSslWebPortalLandingPage(d *schema.ResourceData, v interface{}, pre
 	pre_append = pre + ".0." + "url"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["url"], _ = expandVpnSslWebPortalLandingPageUrl(d, i["url"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["url"] = nil
 	}
 	pre_append = pre + ".0." + "logout_url"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["logout-url"], _ = expandVpnSslWebPortalLandingPageLogoutUrl(d, i["logout_url"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["logout-url"] = nil
 	}
 	pre_append = pre + ".0." + "sso"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3957,10 +4237,14 @@ func expandVpnSslWebPortalLandingPage(d *schema.ResourceData, v interface{}, pre
 	pre_append = pre + ".0." + "sso_username"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["sso-username"], _ = expandVpnSslWebPortalLandingPageSsoUsername(d, i["sso_username"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["sso-username"] = nil
 	}
 	pre_append = pre + ".0." + "sso_password"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["sso-password"], _ = expandVpnSslWebPortalLandingPageSsoPassword(d, i["sso_password"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["sso-password"] = nil
 	}
 
 	return result, nil

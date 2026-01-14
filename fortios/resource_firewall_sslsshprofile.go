@@ -2383,45 +2383,74 @@ func flattenFirewallSslSshProfileSslExempt(v interface{}, d *schema.ResourceData
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenFirewallSslSshProfileSslExemptId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if cur_v, ok := i["type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
+			}
 			tmp["type"] = flattenFirewallSslSshProfileSslExemptType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "fortiguard_category"
 		if cur_v, ok := i["fortiguard-category"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "fortiguard_category"
+			}
 			tmp["fortiguard_category"] = flattenFirewallSslSshProfileSslExemptFortiguardCategory(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "address"
 		if cur_v, ok := i["address"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "address"
+			}
 			tmp["address"] = flattenFirewallSslSshProfileSslExemptAddress(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "address6"
 		if cur_v, ok := i["address6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "address6"
+			}
 			tmp["address6"] = flattenFirewallSslSshProfileSslExemptAddress6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "wildcard_fqdn"
 		if cur_v, ok := i["wildcard-fqdn"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "wildcard_fqdn"
+			}
 			tmp["wildcard_fqdn"] = flattenFirewallSslSshProfileSslExemptWildcardFqdn(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "regex"
 		if cur_v, ok := i["regex"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "regex"
+			}
 			tmp["regex"] = flattenFirewallSslSshProfileSslExemptRegex(cur_v, d, pre_append, sv)
 		}
 
@@ -2479,20 +2508,34 @@ func flattenFirewallSslSshProfileEchOuterSni(v interface{}, d *schema.ResourceDa
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenFirewallSslSshProfileEchOuterSniName(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "sni"
 		if cur_v, ok := i["sni"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "sni"
+			}
 			tmp["sni"] = flattenFirewallSslSshProfileEchOuterSniSni(cur_v, d, pre_append, sv)
 		}
 
@@ -2550,80 +2593,130 @@ func flattenFirewallSslSshProfileSslServer(v interface{}, d *schema.ResourceData
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenFirewallSslSshProfileSslServerId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if cur_v, ok := i["ip"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
+			}
 			tmp["ip"] = flattenFirewallSslSshProfileSslServerIp(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "https_client_certificate"
 		if cur_v, ok := i["https-client-certificate"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "https_client_certificate"
+			}
 			tmp["https_client_certificate"] = flattenFirewallSslSshProfileSslServerHttpsClientCertificate(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "smtps_client_certificate"
 		if cur_v, ok := i["smtps-client-certificate"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "smtps_client_certificate"
+			}
 			tmp["smtps_client_certificate"] = flattenFirewallSslSshProfileSslServerSmtpsClientCertificate(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "pop3s_client_certificate"
 		if cur_v, ok := i["pop3s-client-certificate"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "pop3s_client_certificate"
+			}
 			tmp["pop3s_client_certificate"] = flattenFirewallSslSshProfileSslServerPop3SClientCertificate(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "imaps_client_certificate"
 		if cur_v, ok := i["imaps-client-certificate"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "imaps_client_certificate"
+			}
 			tmp["imaps_client_certificate"] = flattenFirewallSslSshProfileSslServerImapsClientCertificate(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ftps_client_certificate"
 		if cur_v, ok := i["ftps-client-certificate"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "ftps_client_certificate"
+			}
 			tmp["ftps_client_certificate"] = flattenFirewallSslSshProfileSslServerFtpsClientCertificate(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ssl_other_client_certificate"
 		if cur_v, ok := i["ssl-other-client-certificate"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "ssl_other_client_certificate"
+			}
 			tmp["ssl_other_client_certificate"] = flattenFirewallSslSshProfileSslServerSslOtherClientCertificate(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "https_client_cert_request"
 		if cur_v, ok := i["https-client-cert-request"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "https_client_cert_request"
+			}
 			tmp["https_client_cert_request"] = flattenFirewallSslSshProfileSslServerHttpsClientCertRequest(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "smtps_client_cert_request"
 		if cur_v, ok := i["smtps-client-cert-request"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "smtps_client_cert_request"
+			}
 			tmp["smtps_client_cert_request"] = flattenFirewallSslSshProfileSslServerSmtpsClientCertRequest(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "pop3s_client_cert_request"
 		if cur_v, ok := i["pop3s-client-cert-request"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "pop3s_client_cert_request"
+			}
 			tmp["pop3s_client_cert_request"] = flattenFirewallSslSshProfileSslServerPop3SClientCertRequest(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "imaps_client_cert_request"
 		if cur_v, ok := i["imaps-client-cert-request"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "imaps_client_cert_request"
+			}
 			tmp["imaps_client_cert_request"] = flattenFirewallSslSshProfileSslServerImapsClientCertRequest(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ftps_client_cert_request"
 		if cur_v, ok := i["ftps-client-cert-request"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "ftps_client_cert_request"
+			}
 			tmp["ftps_client_cert_request"] = flattenFirewallSslSshProfileSslServerFtpsClientCertRequest(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ssl_other_client_cert_request"
 		if cur_v, ok := i["ssl-other-client-cert-request"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "ssl_other_client_cert_request"
+			}
 			tmp["ssl_other_client_cert_request"] = flattenFirewallSslSshProfileSslServerSslOtherClientCertRequest(cur_v, d, pre_append, sv)
 		}
 
@@ -3111,14 +3204,20 @@ func expandFirewallSslSshProfileSsl(d *schema.ResourceData, v interface{}, pre s
 	pre_append = pre + ".0." + "client_cert_request"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["client-cert-request"], _ = expandFirewallSslSshProfileSslClientCertRequest(d, i["client_cert_request"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["client-cert-request"] = nil
 	}
 	pre_append = pre + ".0." + "unsupported_ssl"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["unsupported-ssl"], _ = expandFirewallSslSshProfileSslUnsupportedSsl(d, i["unsupported_ssl"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["unsupported-ssl"] = nil
 	}
 	pre_append = pre + ".0." + "invalid_server_cert"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["invalid-server-cert"], _ = expandFirewallSslSshProfileSslInvalidServerCert(d, i["invalid_server_cert"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["invalid-server-cert"] = nil
 	}
 	pre_append = pre + ".0." + "untrusted_server_cert"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3233,6 +3332,8 @@ func expandFirewallSslSshProfileHttps(d *schema.ResourceData, v interface{}, pre
 	pre_append = pre + ".0." + "ports"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ports"], _ = expandFirewallSslSshProfileHttpsPorts(d, i["ports"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["ports"] = nil
 	}
 	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3277,14 +3378,20 @@ func expandFirewallSslSshProfileHttps(d *schema.ResourceData, v interface{}, pre
 	pre_append = pre + ".0." + "client_cert_request"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["client-cert-request"], _ = expandFirewallSslSshProfileHttpsClientCertRequest(d, i["client_cert_request"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["client-cert-request"] = nil
 	}
 	pre_append = pre + ".0." + "unsupported_ssl"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["unsupported-ssl"], _ = expandFirewallSslSshProfileHttpsUnsupportedSsl(d, i["unsupported_ssl"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["unsupported-ssl"] = nil
 	}
 	pre_append = pre + ".0." + "invalid_server_cert"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["invalid-server-cert"], _ = expandFirewallSslSshProfileHttpsInvalidServerCert(d, i["invalid_server_cert"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["invalid-server-cert"] = nil
 	}
 	pre_append = pre + ".0." + "untrusted_server_cert"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3415,6 +3522,8 @@ func expandFirewallSslSshProfileFtps(d *schema.ResourceData, v interface{}, pre 
 	pre_append = pre + ".0." + "ports"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ports"], _ = expandFirewallSslSshProfileFtpsPorts(d, i["ports"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["ports"] = nil
 	}
 	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3447,14 +3556,20 @@ func expandFirewallSslSshProfileFtps(d *schema.ResourceData, v interface{}, pre 
 	pre_append = pre + ".0." + "client_cert_request"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["client-cert-request"], _ = expandFirewallSslSshProfileFtpsClientCertRequest(d, i["client_cert_request"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["client-cert-request"] = nil
 	}
 	pre_append = pre + ".0." + "unsupported_ssl"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["unsupported-ssl"], _ = expandFirewallSslSshProfileFtpsUnsupportedSsl(d, i["unsupported_ssl"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["unsupported-ssl"] = nil
 	}
 	pre_append = pre + ".0." + "invalid_server_cert"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["invalid-server-cert"], _ = expandFirewallSslSshProfileFtpsInvalidServerCert(d, i["invalid_server_cert"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["invalid-server-cert"] = nil
 	}
 	pre_append = pre + ".0." + "untrusted_server_cert"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3557,6 +3672,8 @@ func expandFirewallSslSshProfileImaps(d *schema.ResourceData, v interface{}, pre
 	pre_append = pre + ".0." + "ports"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ports"], _ = expandFirewallSslSshProfileImapsPorts(d, i["ports"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["ports"] = nil
 	}
 	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3593,14 +3710,20 @@ func expandFirewallSslSshProfileImaps(d *schema.ResourceData, v interface{}, pre
 	pre_append = pre + ".0." + "client_cert_request"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["client-cert-request"], _ = expandFirewallSslSshProfileImapsClientCertRequest(d, i["client_cert_request"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["client-cert-request"] = nil
 	}
 	pre_append = pre + ".0." + "unsupported_ssl"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["unsupported-ssl"], _ = expandFirewallSslSshProfileImapsUnsupportedSsl(d, i["unsupported_ssl"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["unsupported-ssl"] = nil
 	}
 	pre_append = pre + ".0." + "invalid_server_cert"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["invalid-server-cert"], _ = expandFirewallSslSshProfileImapsInvalidServerCert(d, i["invalid_server_cert"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["invalid-server-cert"] = nil
 	}
 	pre_append = pre + ".0." + "untrusted_server_cert"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3699,6 +3822,8 @@ func expandFirewallSslSshProfilePop3S(d *schema.ResourceData, v interface{}, pre
 	pre_append = pre + ".0." + "ports"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ports"], _ = expandFirewallSslSshProfilePop3SPorts(d, i["ports"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["ports"] = nil
 	}
 	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3735,14 +3860,20 @@ func expandFirewallSslSshProfilePop3S(d *schema.ResourceData, v interface{}, pre
 	pre_append = pre + ".0." + "client_cert_request"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["client-cert-request"], _ = expandFirewallSslSshProfilePop3SClientCertRequest(d, i["client_cert_request"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["client-cert-request"] = nil
 	}
 	pre_append = pre + ".0." + "unsupported_ssl"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["unsupported-ssl"], _ = expandFirewallSslSshProfilePop3SUnsupportedSsl(d, i["unsupported_ssl"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["unsupported-ssl"] = nil
 	}
 	pre_append = pre + ".0." + "invalid_server_cert"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["invalid-server-cert"], _ = expandFirewallSslSshProfilePop3SInvalidServerCert(d, i["invalid_server_cert"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["invalid-server-cert"] = nil
 	}
 	pre_append = pre + ".0." + "untrusted_server_cert"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3841,6 +3972,8 @@ func expandFirewallSslSshProfileSmtps(d *schema.ResourceData, v interface{}, pre
 	pre_append = pre + ".0." + "ports"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ports"], _ = expandFirewallSslSshProfileSmtpsPorts(d, i["ports"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["ports"] = nil
 	}
 	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3877,14 +4010,20 @@ func expandFirewallSslSshProfileSmtps(d *schema.ResourceData, v interface{}, pre
 	pre_append = pre + ".0." + "client_cert_request"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["client-cert-request"], _ = expandFirewallSslSshProfileSmtpsClientCertRequest(d, i["client_cert_request"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["client-cert-request"] = nil
 	}
 	pre_append = pre + ".0." + "unsupported_ssl"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["unsupported-ssl"], _ = expandFirewallSslSshProfileSmtpsUnsupportedSsl(d, i["unsupported_ssl"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["unsupported-ssl"] = nil
 	}
 	pre_append = pre + ".0." + "invalid_server_cert"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["invalid-server-cert"], _ = expandFirewallSslSshProfileSmtpsInvalidServerCert(d, i["invalid_server_cert"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["invalid-server-cert"] = nil
 	}
 	pre_append = pre + ".0." + "untrusted_server_cert"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3983,6 +4122,8 @@ func expandFirewallSslSshProfileSsh(d *schema.ResourceData, v interface{}, pre s
 	pre_append = pre + ".0." + "ports"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ports"], _ = expandFirewallSslSshProfileSshPorts(d, i["ports"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["ports"] = nil
 	}
 	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -4003,6 +4144,8 @@ func expandFirewallSslSshProfileSsh(d *schema.ResourceData, v interface{}, pre s
 	pre_append = pre + ".0." + "ssh_policy_check"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ssh-policy-check"], _ = expandFirewallSslSshProfileSshSshPolicyCheck(d, i["ssh_policy_check"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["ssh-policy-check"] = nil
 	}
 	pre_append = pre + ".0." + "ssh_tun_policy_check"
 	if _, ok := d.GetOk(pre_append); ok {

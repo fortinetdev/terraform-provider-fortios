@@ -88,6 +88,10 @@ func dataSourceUserSaml() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"require_signed_resp_and_asrt": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"limit_relaystate": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -223,6 +227,10 @@ func dataSourceFlattenUserSamlDigestMethod(v interface{}, d *schema.ResourceData
 	return v
 }
 
+func dataSourceFlattenUserSamlRequireSignedRespAndAsrt(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenUserSamlLimitRelaystate(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -341,6 +349,12 @@ func dataSourceRefreshObjectUserSaml(d *schema.ResourceData, o map[string]interf
 	if err = d.Set("digest_method", dataSourceFlattenUserSamlDigestMethod(o["digest-method"], d, "digest_method")); err != nil {
 		if !fortiAPIPatch(o["digest-method"]) {
 			return fmt.Errorf("Error reading digest_method: %v", err)
+		}
+	}
+
+	if err = d.Set("require_signed_resp_and_asrt", dataSourceFlattenUserSamlRequireSignedRespAndAsrt(o["require-signed-resp-and-asrt"], d, "require_signed_resp_and_asrt")); err != nil {
+		if !fortiAPIPatch(o["require-signed-resp-and-asrt"]) {
+			return fmt.Errorf("Error reading require_signed_resp_and_asrt: %v", err)
 		}
 	}
 

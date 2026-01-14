@@ -27,6 +27,7 @@ The following arguments are supported:
 * `poe_pre_standard_detection` - Enable/disable PoE pre-standard detection. Valid values: `enable`, `disable`.
 * `dhcp_server_access_list` - DHCP snooping server access list. Valid values: `global`, `enable`, `disable`.
 * `poe_detection_type` - PoE detection type for FortiSwitch.
+* `max_poe_budget` - Max PoE budget for FortiSwitch.
 * `poe_lldp_detection` - Enable/disable PoE LLDP detection. Valid values: `enable`, `disable`.
 * `directly_connected` - Directly connected FortiSwitch.
 * `version` - FortiSwitch version.

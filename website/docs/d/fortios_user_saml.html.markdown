@@ -34,6 +34,7 @@ The following attributes are exported:
 * `user_name` - User name in assertion statement.
 * `group_name` - Group name in assertion statement.
 * `digest_method` - Digest Method Algorithm. (default = sha1).
+* `require_signed_resp_and_asrt` - Require both response and assertion from IDP to be signed when FGT acts as SP (default = disable).
 * `limit_relaystate` - Enable/disable limiting of relay-state parameter when it exceeds SAML 2.0 specification limits (80 bytes).
 * `clock_tolerance` - Clock skew tolerance in seconds (0 - 300, default = 15, 0 = no tolerance).
 * `auth_url` - URL to verify authentication.

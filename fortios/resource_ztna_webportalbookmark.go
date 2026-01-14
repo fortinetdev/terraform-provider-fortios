@@ -373,15 +373,26 @@ func flattenZtnaWebPortalBookmarkUsers(v interface{}, d *schema.ResourceData, pr
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenZtnaWebPortalBookmarkUsersName(cur_v, d, pre_append, sv)
 		}
 
@@ -415,15 +426,26 @@ func flattenZtnaWebPortalBookmarkGroups(v interface{}, d *schema.ResourceData, p
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenZtnaWebPortalBookmarkGroupsName(cur_v, d, pre_append, sv)
 		}
 
@@ -457,123 +479,196 @@ func flattenZtnaWebPortalBookmarkBookmarks(v interface{}, d *schema.ResourceData
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenZtnaWebPortalBookmarkBookmarksName(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "apptype"
 		if cur_v, ok := i["apptype"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "apptype"
+			}
 			tmp["apptype"] = flattenZtnaWebPortalBookmarkBookmarksApptype(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "url"
 		if cur_v, ok := i["url"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "url"
+			}
 			tmp["url"] = flattenZtnaWebPortalBookmarkBookmarksUrl(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "host"
 		if cur_v, ok := i["host"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "host"
+			}
 			tmp["host"] = flattenZtnaWebPortalBookmarkBookmarksHost(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "folder"
 		if cur_v, ok := i["folder"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "folder"
+			}
 			tmp["folder"] = flattenZtnaWebPortalBookmarkBookmarksFolder(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "domain"
 		if cur_v, ok := i["domain"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "domain"
+			}
 			tmp["domain"] = flattenZtnaWebPortalBookmarkBookmarksDomain(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if cur_v, ok := i["description"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
+			}
 			tmp["description"] = flattenZtnaWebPortalBookmarkBookmarksDescription(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "keyboard_layout"
 		if cur_v, ok := i["keyboard-layout"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "keyboard_layout"
+			}
 			tmp["keyboard_layout"] = flattenZtnaWebPortalBookmarkBookmarksKeyboardLayout(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "security"
 		if cur_v, ok := i["security"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "security"
+			}
 			tmp["security"] = flattenZtnaWebPortalBookmarkBookmarksSecurity(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "send_preconnection_id"
 		if cur_v, ok := i["send-preconnection-id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "send_preconnection_id"
+			}
 			tmp["send_preconnection_id"] = flattenZtnaWebPortalBookmarkBookmarksSendPreconnectionId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "preconnection_id"
 		if cur_v, ok := i["preconnection-id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "preconnection_id"
+			}
 			tmp["preconnection_id"] = flattenZtnaWebPortalBookmarkBookmarksPreconnectionId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "preconnection_blob"
 		if cur_v, ok := i["preconnection-blob"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "preconnection_blob"
+			}
 			tmp["preconnection_blob"] = flattenZtnaWebPortalBookmarkBookmarksPreconnectionBlob(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "load_balancing_info"
 		if cur_v, ok := i["load-balancing-info"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "load_balancing_info"
+			}
 			tmp["load_balancing_info"] = flattenZtnaWebPortalBookmarkBookmarksLoadBalancingInfo(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "restricted_admin"
 		if cur_v, ok := i["restricted-admin"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "restricted_admin"
+			}
 			tmp["restricted_admin"] = flattenZtnaWebPortalBookmarkBookmarksRestrictedAdmin(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
 		if cur_v, ok := i["port"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
+			}
 			tmp["port"] = flattenZtnaWebPortalBookmarkBookmarksPort(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "logon_user"
 		if cur_v, ok := i["logon-user"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "logon_user"
+			}
 			tmp["logon_user"] = flattenZtnaWebPortalBookmarkBookmarksLogonUser(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "logon_password"
 		if _, ok := i["logon-password"]; ok {
-			c := d.Get(pre_append).(string)
-			if c != "" {
-				tmp["logon_password"] = c
+			if tf_exist {
+				pre_append := pre + "." + strconv.Itoa(con) + "." + "logon_password"
+				c := d.Get(pre_append).(string)
+				if c != "" {
+					tmp["logon_password"] = c
+				}
 			}
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "color_depth"
 		if cur_v, ok := i["color-depth"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "color_depth"
+			}
 			tmp["color_depth"] = flattenZtnaWebPortalBookmarkBookmarksColorDepth(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "sso"
 		if cur_v, ok := i["sso"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "sso"
+			}
 			tmp["sso"] = flattenZtnaWebPortalBookmarkBookmarksSso(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "width"
 		if cur_v, ok := i["width"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "width"
+			}
 			tmp["width"] = flattenZtnaWebPortalBookmarkBookmarksWidth(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "height"
 		if cur_v, ok := i["height"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "height"
+			}
 			tmp["height"] = flattenZtnaWebPortalBookmarkBookmarksHeight(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "vnc_keyboard_layout"
 		if cur_v, ok := i["vnc-keyboard-layout"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "vnc_keyboard_layout"
+			}
 			tmp["vnc_keyboard_layout"] = flattenZtnaWebPortalBookmarkBookmarksVncKeyboardLayout(cur_v, d, pre_append, sv)
 		}
 

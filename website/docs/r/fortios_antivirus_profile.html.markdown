@@ -66,6 +66,7 @@ The following arguments are supported:
 * `ems_threat_feed` - Enable/disable use of EMS threat feed when performing AntiVirus scan. Analyzes files including the content of archives. Valid values: `disable`, `enable`.
 * `fortindr_error_action` - Action to take if FortiNDR encounters an error. Valid values: `log-only`, `block`, `ignore`.
 * `fortindr_timeout_action` - Action to take if FortiNDR encounters a scan timeout. Valid values: `log-only`, `block`, `ignore`.
+* `fortisandbox_scan_timeout` - FortiSandbox inline scan timeout in seconds (30 - 180, default = 60).
 * `fortisandbox_error_action` - Action to take if FortiSandbox inline scan encounters an error. Valid values: `log-only`, `block`, `ignore`.
 * `fortisandbox_timeout_action` - Action to take if FortiSandbox inline scan encounters a scan timeout. Valid values: `log-only`, `block`, `ignore`.
 * `fortiai_error_action` - Action to take if FortiAI encounters an error. Valid values: `log-only`, `block`, `ignore`.

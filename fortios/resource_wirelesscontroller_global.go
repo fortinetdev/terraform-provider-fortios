@@ -110,6 +110,11 @@ func resourceWirelessControllerGlobal() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"discovery_mc_addr6": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"max_clients": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
@@ -375,6 +380,10 @@ func flattenWirelessControllerGlobalDiscoveryMcAddr(v interface{}, d *schema.Res
 	return v
 }
 
+func flattenWirelessControllerGlobalDiscoveryMcAddr6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerGlobalMaxClients(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return convintf2i(v)
 }
@@ -535,6 +544,12 @@ func refreshObjectWirelessControllerGlobal(d *schema.ResourceData, o map[string]
 	if err = d.Set("discovery_mc_addr", flattenWirelessControllerGlobalDiscoveryMcAddr(o["discovery-mc-addr"], d, "discovery_mc_addr", sv)); err != nil {
 		if !fortiAPIPatch(o["discovery-mc-addr"]) {
 			return fmt.Errorf("Error reading discovery_mc_addr: %v", err)
+		}
+	}
+
+	if err = d.Set("discovery_mc_addr6", flattenWirelessControllerGlobalDiscoveryMcAddr6(o["discovery-mc-addr6"], d, "discovery_mc_addr6", sv)); err != nil {
+		if !fortiAPIPatch(o["discovery-mc-addr6"]) {
+			return fmt.Errorf("Error reading discovery_mc_addr6: %v", err)
 		}
 	}
 
@@ -714,6 +729,10 @@ func expandWirelessControllerGlobalFiappEthType(d *schema.ResourceData, v interf
 }
 
 func expandWirelessControllerGlobalDiscoveryMcAddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerGlobalDiscoveryMcAddr6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -982,6 +1001,19 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData, setArgNil bool, s
 				return &obj, err
 			} else if t != nil {
 				obj["discovery-mc-addr"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("discovery_mc_addr6"); ok {
+		if setArgNil {
+			obj["discovery-mc-addr6"] = nil
+		} else {
+			t, err := expandWirelessControllerGlobalDiscoveryMcAddr6(d, v, "discovery_mc_addr6", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["discovery-mc-addr6"] = t
 			}
 		}
 	}

@@ -80,6 +80,7 @@ The following arguments are supported:
 * `radius_server` - RADIUS server to be used to authenticate WiFi users.
 * `nas_filter_rule` - Enable/disable NAS filter rule support (default = disable). Valid values: `enable`, `disable`.
 * `domain_name_stripping` - Enable/disable stripping domain name from identity (default = disable). Valid values: `disable`, `enable`.
+* `mlo` - Enable/disable WiFi7 Multi-Link-Operation (default = disable). Valid values: `disable`, `enable`.
 * `acct_interim_interval` - WiFi RADIUS accounting interim interval (60 - 86400 sec, default = 0).
 * `local_standalone` - Enable/disable AP local standalone (default = disable). Valid values: `enable`, `disable`.
 * `local_standalone_nat` - Enable/disable AP local standalone NAT mode. Valid values: `enable`, `disable`.
@@ -141,7 +142,7 @@ The following arguments are supported:
 * `probe_resp_suppression` - Enable/disable probe response suppression (to ignore weak signals) (default = disable). Valid values: `enable`, `disable`.
 * `probe_resp_threshold` - Minimum signal level/threshold in dBm required for the AP response to probe requests (-95 to -20, default = -80).
 * `radio_sensitivity` - Enable/disable software radio sensitivity (to ignore weak signals) (default = disable). Valid values: `enable`, `disable`.
-* `quarantine` - Enable/disable station quarantine (default = enable). Valid values: `enable`, `disable`.
+* `quarantine` - Enable/disable station quarantine. On FortiOS versions 6.2.0-7.6.4: default = enable. On FortiOS versions >= 7.6.5: default = disable. Valid values: `enable`, `disable`.
 * `radio_5g_threshold` - Minimum signal level/threshold in dBm required for the AP response to receive a packet in 5G band(-95 to -20, default = -76).
 * `radio_2g_threshold` - Minimum signal level/threshold in dBm required for the AP response to receive a packet in 2.4G band (-95 to -20, default = -79).
 * `vlan_name` - Table for mapping VLAN name to VLAN ID. The structure of `vlan_name` block is documented below.

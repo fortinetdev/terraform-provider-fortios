@@ -834,15 +834,26 @@ func flattenSystemHaAutoVirtualMacInterface(v interface{}, d *schema.ResourceDat
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "interface-name", "interface_name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
 		if cur_v, ok := i["interface-name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
+			}
 			tmp["interface_name"] = flattenSystemHaAutoVirtualMacInterfaceInterfaceName(cur_v, d, pre_append, sv)
 		}
 
@@ -876,15 +887,26 @@ func flattenSystemHaBackupHbdev(v interface{}, d *schema.ResourceData, pre strin
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenSystemHaBackupHbdevName(cur_v, d, pre_append, sv)
 		}
 
@@ -1042,40 +1064,66 @@ func flattenSystemHaHaMgmtInterfaces(v interface{}, d *schema.ResourceData, pre 
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenSystemHaHaMgmtInterfacesId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
 		if cur_v, ok := i["interface"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
+			}
 			tmp["interface"] = flattenSystemHaHaMgmtInterfacesInterface(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst"
 		if cur_v, ok := i["dst"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "dst"
+			}
 			tmp["dst"] = flattenSystemHaHaMgmtInterfacesDst(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "gateway"
 		if cur_v, ok := i["gateway"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "gateway"
+			}
 			tmp["gateway"] = flattenSystemHaHaMgmtInterfacesGateway(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst6"
 		if cur_v, ok := i["dst6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "dst6"
+			}
 			tmp["dst6"] = flattenSystemHaHaMgmtInterfacesDst6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "gateway6"
 		if cur_v, ok := i["gateway6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "gateway6"
+			}
 			tmp["gateway6"] = flattenSystemHaHaMgmtInterfacesGateway6(cur_v, d, pre_append, sv)
 		}
 
@@ -1164,20 +1212,34 @@ func flattenSystemHaUnicastPeers(v interface{}, d *schema.ResourceData, pre stri
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenSystemHaUnicastPeersId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "peer_ip"
 		if cur_v, ok := i["peer-ip"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "peer_ip"
+			}
 			tmp["peer_ip"] = flattenSystemHaUnicastPeersPeerIp(cur_v, d, pre_append, sv)
 		}
 
@@ -1307,65 +1369,106 @@ func flattenSystemHaVcluster(v interface{}, d *schema.ResourceData, pre string, 
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "vcluster-id", "vcluster_id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "vcluster_id"
 		if cur_v, ok := i["vcluster-id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "vcluster_id"
+			}
 			tmp["vcluster_id"] = flattenSystemHaVclusterVclusterId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "override"
 		if cur_v, ok := i["override"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "override"
+			}
 			tmp["override"] = flattenSystemHaVclusterOverride(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
 		if cur_v, ok := i["priority"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
+			}
 			tmp["priority"] = flattenSystemHaVclusterPriority(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "override_wait_time"
 		if cur_v, ok := i["override-wait-time"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "override_wait_time"
+			}
 			tmp["override_wait_time"] = flattenSystemHaVclusterOverrideWaitTime(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "monitor"
 		if cur_v, ok := i["monitor"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "monitor"
+			}
 			tmp["monitor"] = flattenSystemHaVclusterMonitor(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "pingserver_monitor_interface"
 		if cur_v, ok := i["pingserver-monitor-interface"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "pingserver_monitor_interface"
+			}
 			tmp["pingserver_monitor_interface"] = flattenSystemHaVclusterPingserverMonitorInterface(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "pingserver_failover_threshold"
 		if cur_v, ok := i["pingserver-failover-threshold"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "pingserver_failover_threshold"
+			}
 			tmp["pingserver_failover_threshold"] = flattenSystemHaVclusterPingserverFailoverThreshold(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "pingserver_secondary_force_reset"
 		if cur_v, ok := i["pingserver-secondary-force-reset"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "pingserver_secondary_force_reset"
+			}
 			tmp["pingserver_secondary_force_reset"] = flattenSystemHaVclusterPingserverSecondaryForceReset(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "pingserver_flip_timeout"
 		if cur_v, ok := i["pingserver-flip-timeout"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "pingserver_flip_timeout"
+			}
 			tmp["pingserver_flip_timeout"] = flattenSystemHaVclusterPingserverFlipTimeout(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "pingserver_slave_force_reset"
 		if cur_v, ok := i["pingserver-slave-force-reset"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "pingserver_slave_force_reset"
+			}
 			tmp["pingserver_slave_force_reset"] = flattenSystemHaVclusterPingserverSlaveForceReset(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "vdom"
 		if cur_v, ok := i["vdom"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "vdom"
+			}
 			tmp["vdom"] = flattenSystemHaVclusterVdom(cur_v, d, pre_append, sv)
 		}
 
@@ -1435,15 +1538,26 @@ func flattenSystemHaVclusterVdom(v interface{}, d *schema.ResourceData, pre stri
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenSystemHaVclusterVdomName(cur_v, d, pre_append, sv)
 		}
 
@@ -2859,6 +2973,8 @@ func expandSystemHaSecondaryVcluster(d *schema.ResourceData, v interface{}, pre 
 		} else {
 			result["override-wait-time"], _ = expandSystemHaSecondaryVclusterOverrideWaitTime(d, i["override_wait_time"], pre_append, sv)
 		}
+	} else if d.HasChange(pre_append) {
+		result["override-wait-time"] = nil
 	}
 	pre_append = pre + ".0." + "monitor"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -2867,6 +2983,8 @@ func expandSystemHaSecondaryVcluster(d *schema.ResourceData, v interface{}, pre 
 		} else {
 			result["monitor"], _ = expandSystemHaSecondaryVclusterMonitor(d, i["monitor"], pre_append, sv)
 		}
+	} else if d.HasChange(pre_append) {
+		result["monitor"] = nil
 	}
 	pre_append = pre + ".0." + "pingserver_monitor_interface"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -2875,6 +2993,8 @@ func expandSystemHaSecondaryVcluster(d *schema.ResourceData, v interface{}, pre 
 		} else {
 			result["pingserver-monitor-interface"], _ = expandSystemHaSecondaryVclusterPingserverMonitorInterface(d, i["pingserver_monitor_interface"], pre_append, sv)
 		}
+	} else if d.HasChange(pre_append) {
+		result["pingserver-monitor-interface"] = nil
 	}
 	pre_append = pre + ".0." + "pingserver_failover_threshold"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -2883,6 +3003,8 @@ func expandSystemHaSecondaryVcluster(d *schema.ResourceData, v interface{}, pre 
 		} else {
 			result["pingserver-failover-threshold"], _ = expandSystemHaSecondaryVclusterPingserverFailoverThreshold(d, i["pingserver_failover_threshold"], pre_append, sv)
 		}
+	} else if d.HasChange(pre_append) {
+		result["pingserver-failover-threshold"] = nil
 	}
 	pre_append = pre + ".0." + "pingserver_secondary_force_reset"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -2899,6 +3021,8 @@ func expandSystemHaSecondaryVcluster(d *schema.ResourceData, v interface{}, pre 
 		} else {
 			result["pingserver-slave-force-reset"], _ = expandSystemHaSecondaryVclusterPingserverSlaveForceReset(d, i["pingserver_slave_force_reset"], pre_append, sv)
 		}
+	} else if d.HasChange(pre_append) {
+		result["pingserver-slave-force-reset"] = nil
 	}
 	pre_append = pre + ".0." + "vdom"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -2907,6 +3031,8 @@ func expandSystemHaSecondaryVcluster(d *schema.ResourceData, v interface{}, pre 
 		} else {
 			result["vdom"], _ = expandSystemHaSecondaryVclusterVdom(d, i["vdom"], pre_append, sv)
 		}
+	} else if d.HasChange(pre_append) {
+		result["vdom"] = nil
 	}
 
 	return result, nil

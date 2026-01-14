@@ -135,6 +135,11 @@ func resourceRouterRouteMap() *schema.Resource {
 							ValidateFunc: validation.IntBetween(0, 511),
 							Optional:     true,
 						},
+						"match_suppress": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"set_aggregator_as": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
@@ -513,260 +518,426 @@ func flattenRouterRouteMapRule(v interface{}, d *schema.ResourceData, pre string
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenRouterRouteMapRuleId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if cur_v, ok := i["action"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
+			}
 			tmp["action"] = flattenRouterRouteMapRuleAction(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_as_path"
 		if cur_v, ok := i["match-as-path"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "match_as_path"
+			}
 			tmp["match_as_path"] = flattenRouterRouteMapRuleMatchAsPath(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_community"
 		if cur_v, ok := i["match-community"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "match_community"
+			}
 			tmp["match_community"] = flattenRouterRouteMapRuleMatchCommunity(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_extcommunity"
 		if cur_v, ok := i["match-extcommunity"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "match_extcommunity"
+			}
 			tmp["match_extcommunity"] = flattenRouterRouteMapRuleMatchExtcommunity(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_community_exact"
 		if cur_v, ok := i["match-community-exact"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "match_community_exact"
+			}
 			tmp["match_community_exact"] = flattenRouterRouteMapRuleMatchCommunityExact(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_extcommunity_exact"
 		if cur_v, ok := i["match-extcommunity-exact"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "match_extcommunity_exact"
+			}
 			tmp["match_extcommunity_exact"] = flattenRouterRouteMapRuleMatchExtcommunityExact(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_origin"
 		if cur_v, ok := i["match-origin"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "match_origin"
+			}
 			tmp["match_origin"] = flattenRouterRouteMapRuleMatchOrigin(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_interface"
 		if cur_v, ok := i["match-interface"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "match_interface"
+			}
 			tmp["match_interface"] = flattenRouterRouteMapRuleMatchInterface(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_ip_address"
 		if cur_v, ok := i["match-ip-address"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "match_ip_address"
+			}
 			tmp["match_ip_address"] = flattenRouterRouteMapRuleMatchIpAddress(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_ip6_address"
 		if cur_v, ok := i["match-ip6-address"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "match_ip6_address"
+			}
 			tmp["match_ip6_address"] = flattenRouterRouteMapRuleMatchIp6Address(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_ip_nexthop"
 		if cur_v, ok := i["match-ip-nexthop"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "match_ip_nexthop"
+			}
 			tmp["match_ip_nexthop"] = flattenRouterRouteMapRuleMatchIpNexthop(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_ip6_nexthop"
 		if cur_v, ok := i["match-ip6-nexthop"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "match_ip6_nexthop"
+			}
 			tmp["match_ip6_nexthop"] = flattenRouterRouteMapRuleMatchIp6Nexthop(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_metric"
 		if cur_v, ok := i["match-metric"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "match_metric"
+			}
 			tmp["match_metric"] = flattenRouterRouteMapRuleMatchMetric(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_route_type"
 		if cur_v, ok := i["match-route-type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "match_route_type"
+			}
 			tmp["match_route_type"] = flattenRouterRouteMapRuleMatchRouteType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_tag"
 		if cur_v, ok := i["match-tag"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "match_tag"
+			}
 			tmp["match_tag"] = flattenRouterRouteMapRuleMatchTag(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_vrf"
 		if cur_v, ok := i["match-vrf"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "match_vrf"
+			}
 			tmp["match_vrf"] = flattenRouterRouteMapRuleMatchVrf(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_aggregator_as"
+		if cur_v, ok := i["match-suppress"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "match_suppress"
+			}
+			tmp["match_suppress"] = flattenRouterRouteMapRuleMatchSuppress(cur_v, d, pre_append, sv)
+		}
+
 		if cur_v, ok := i["set-aggregator-as"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "set_aggregator_as"
+			}
 			tmp["set_aggregator_as"] = flattenRouterRouteMapRuleSetAggregatorAs(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_aggregator_ip"
 		if cur_v, ok := i["set-aggregator-ip"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "set_aggregator_ip"
+			}
 			tmp["set_aggregator_ip"] = flattenRouterRouteMapRuleSetAggregatorIp(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_aspath_action"
 		if cur_v, ok := i["set-aspath-action"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "set_aspath_action"
+			}
 			tmp["set_aspath_action"] = flattenRouterRouteMapRuleSetAspathAction(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_aspath"
 		if cur_v, ok := i["set-aspath"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "set_aspath"
+			}
 			tmp["set_aspath"] = flattenRouterRouteMapRuleSetAspath(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_atomic_aggregate"
 		if cur_v, ok := i["set-atomic-aggregate"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "set_atomic_aggregate"
+			}
 			tmp["set_atomic_aggregate"] = flattenRouterRouteMapRuleSetAtomicAggregate(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_community_delete"
 		if cur_v, ok := i["set-community-delete"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "set_community_delete"
+			}
 			tmp["set_community_delete"] = flattenRouterRouteMapRuleSetCommunityDelete(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_community"
 		if cur_v, ok := i["set-community"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "set_community"
+			}
 			tmp["set_community"] = flattenRouterRouteMapRuleSetCommunity(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_community_additive"
 		if cur_v, ok := i["set-community-additive"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "set_community_additive"
+			}
 			tmp["set_community_additive"] = flattenRouterRouteMapRuleSetCommunityAdditive(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_dampening_reachability_half_life"
 		if cur_v, ok := i["set-dampening-reachability-half-life"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "set_dampening_reachability_half_life"
+			}
 			tmp["set_dampening_reachability_half_life"] = flattenRouterRouteMapRuleSetDampeningReachabilityHalfLife(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_dampening_reuse"
 		if cur_v, ok := i["set-dampening-reuse"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "set_dampening_reuse"
+			}
 			tmp["set_dampening_reuse"] = flattenRouterRouteMapRuleSetDampeningReuse(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_dampening_suppress"
 		if cur_v, ok := i["set-dampening-suppress"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "set_dampening_suppress"
+			}
 			tmp["set_dampening_suppress"] = flattenRouterRouteMapRuleSetDampeningSuppress(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_dampening_max_suppress"
 		if cur_v, ok := i["set-dampening-max-suppress"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "set_dampening_max_suppress"
+			}
 			tmp["set_dampening_max_suppress"] = flattenRouterRouteMapRuleSetDampeningMaxSuppress(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_dampening_unreachability_half_life"
 		if cur_v, ok := i["set-dampening-unreachability-half-life"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "set_dampening_unreachability_half_life"
+			}
 			tmp["set_dampening_unreachability_half_life"] = flattenRouterRouteMapRuleSetDampeningUnreachabilityHalfLife(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_extcommunity_rt"
 		if cur_v, ok := i["set-extcommunity-rt"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "set_extcommunity_rt"
+			}
 			tmp["set_extcommunity_rt"] = flattenRouterRouteMapRuleSetExtcommunityRt(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_extcommunity_soo"
 		if cur_v, ok := i["set-extcommunity-soo"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "set_extcommunity_soo"
+			}
 			tmp["set_extcommunity_soo"] = flattenRouterRouteMapRuleSetExtcommunitySoo(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_ip_nexthop"
 		if cur_v, ok := i["set-ip-nexthop"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "set_ip_nexthop"
+			}
 			tmp["set_ip_nexthop"] = flattenRouterRouteMapRuleSetIpNexthop(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_ip_prefsrc"
 		if cur_v, ok := i["set-ip-prefsrc"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "set_ip_prefsrc"
+			}
 			tmp["set_ip_prefsrc"] = flattenRouterRouteMapRuleSetIpPrefsrc(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_vpnv4_nexthop"
 		if cur_v, ok := i["set-vpnv4-nexthop"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "set_vpnv4_nexthop"
+			}
 			tmp["set_vpnv4_nexthop"] = flattenRouterRouteMapRuleSetVpnv4Nexthop(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_ip6_nexthop"
 		if cur_v, ok := i["set-ip6-nexthop"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "set_ip6_nexthop"
+			}
 			tmp["set_ip6_nexthop"] = flattenRouterRouteMapRuleSetIp6Nexthop(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_ip6_nexthop_local"
 		if cur_v, ok := i["set-ip6-nexthop-local"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "set_ip6_nexthop_local"
+			}
 			tmp["set_ip6_nexthop_local"] = flattenRouterRouteMapRuleSetIp6NexthopLocal(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_vpnv6_nexthop"
 		if cur_v, ok := i["set-vpnv6-nexthop"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "set_vpnv6_nexthop"
+			}
 			tmp["set_vpnv6_nexthop"] = flattenRouterRouteMapRuleSetVpnv6Nexthop(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_vpnv6_nexthop_local"
 		if cur_v, ok := i["set-vpnv6-nexthop-local"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "set_vpnv6_nexthop_local"
+			}
 			tmp["set_vpnv6_nexthop_local"] = flattenRouterRouteMapRuleSetVpnv6NexthopLocal(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_local_preference"
 		if cur_v, ok := i["set-local-preference"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "set_local_preference"
+			}
 			tmp["set_local_preference"] = flattenRouterRouteMapRuleSetLocalPreference(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_metric"
 		if cur_v, ok := i["set-metric"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "set_metric"
+			}
 			tmp["set_metric"] = flattenRouterRouteMapRuleSetMetric(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_metric_type"
 		if cur_v, ok := i["set-metric-type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "set_metric_type"
+			}
 			tmp["set_metric_type"] = flattenRouterRouteMapRuleSetMetricType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_originator_id"
 		if cur_v, ok := i["set-originator-id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "set_originator_id"
+			}
 			tmp["set_originator_id"] = flattenRouterRouteMapRuleSetOriginatorId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_origin"
 		if cur_v, ok := i["set-origin"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "set_origin"
+			}
 			tmp["set_origin"] = flattenRouterRouteMapRuleSetOrigin(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_tag"
 		if cur_v, ok := i["set-tag"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "set_tag"
+			}
 			tmp["set_tag"] = flattenRouterRouteMapRuleSetTag(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_weight"
 		if cur_v, ok := i["set-weight"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "set_weight"
+			}
 			tmp["set_weight"] = flattenRouterRouteMapRuleSetWeight(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_flags"
 		if cur_v, ok := i["set-flags"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "set_flags"
+			}
 			tmp["set_flags"] = flattenRouterRouteMapRuleSetFlags(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_flags"
 		if cur_v, ok := i["match-flags"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "match_flags"
+			}
 			tmp["match_flags"] = flattenRouterRouteMapRuleMatchFlags(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_route_tag"
 		if cur_v, ok := i["set-route-tag"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "set_route_tag"
+			}
 			tmp["set_route_tag"] = flattenRouterRouteMapRuleSetRouteTag(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_priority"
 		if cur_v, ok := i["set-priority"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "set_priority"
+			}
 			tmp["set_priority"] = flattenRouterRouteMapRuleSetPriority(cur_v, d, pre_append, sv)
 		}
 
@@ -847,6 +1018,10 @@ func flattenRouterRouteMapRuleMatchVrf(v interface{}, d *schema.ResourceData, pr
 	return convintf2i(v)
 }
 
+func flattenRouterRouteMapRuleMatchSuppress(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenRouterRouteMapRuleSetAggregatorAs(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return convintf2i(v)
 }
@@ -876,15 +1051,26 @@ func flattenRouterRouteMapRuleSetAspath(v interface{}, d *schema.ResourceData, p
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "as", "as")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "as"
 		if cur_v, ok := i["as"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "as"
+			}
 			tmp["as"] = flattenRouterRouteMapRuleSetAspathAs(cur_v, d, pre_append, sv)
 		}
 
@@ -926,15 +1112,26 @@ func flattenRouterRouteMapRuleSetCommunity(v interface{}, d *schema.ResourceData
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "community", "community")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "community"
 		if cur_v, ok := i["community"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "community"
+			}
 			tmp["community"] = flattenRouterRouteMapRuleSetCommunityCommunity(cur_v, d, pre_append, sv)
 		}
 
@@ -992,15 +1189,26 @@ func flattenRouterRouteMapRuleSetExtcommunityRt(v interface{}, d *schema.Resourc
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "community", "community")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "community"
 		if cur_v, ok := i["community"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "community"
+			}
 			tmp["community"] = flattenRouterRouteMapRuleSetExtcommunityRtCommunity(cur_v, d, pre_append, sv)
 		}
 
@@ -1034,15 +1242,26 @@ func flattenRouterRouteMapRuleSetExtcommunitySoo(v interface{}, d *schema.Resour
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "community", "community")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "community"
 		if cur_v, ok := i["community"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "community"
+			}
 			tmp["community"] = flattenRouterRouteMapRuleSetExtcommunitySooCommunity(cur_v, d, pre_append, sv)
 		}
 
@@ -1304,6 +1523,11 @@ func expandRouterRouteMapRule(d *schema.ResourceData, v interface{}, pre string,
 			tmp["match-vrf"], _ = expandRouterRouteMapRuleMatchVrf(d, i["match_vrf"], pre_append, sv)
 		} else if d.HasChange(pre_append) {
 			tmp["match-vrf"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_suppress"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["match-suppress"], _ = expandRouterRouteMapRuleMatchSuppress(d, i["match_suppress"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_aggregator_as"
@@ -1594,6 +1818,10 @@ func expandRouterRouteMapRuleMatchTag(d *schema.ResourceData, v interface{}, pre
 }
 
 func expandRouterRouteMapRuleMatchVrf(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterRouteMapRuleMatchSuppress(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

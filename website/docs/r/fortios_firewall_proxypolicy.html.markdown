@@ -72,6 +72,7 @@ The following arguments are supported:
 * `dstintf` - (Required) Destination interface names. The structure of `dstintf` block is documented below.
 * `srcaddr` - Source address objects. The structure of `srcaddr` block is documented below.
 * `poolname` - Name of IP pool object. The structure of `poolname` block is documented below.
+* `poolname6` - Name of IPv6 pool object. The structure of `poolname6` block is documented below.
 * `dstaddr` - Destination address objects. The structure of `dstaddr` block is documented below.
 * `ztna_ems_tag` - ZTNA EMS Tag names. The structure of `ztna_ems_tag` block is documented below.
 * `ztna_tags_match_logic` - ZTNA tag matching logic. Valid values: `or`, `and`.
@@ -184,6 +185,10 @@ The `srcaddr` block supports:
 The `poolname` block supports:
 
 * `name` - IP pool name.
+
+The `poolname6` block supports:
+
+* `name` - IPv6 pool name.
 
 The `dstaddr` block supports:
 

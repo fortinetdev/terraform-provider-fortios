@@ -109,6 +109,10 @@ func dataSourceRouterRouteMap() *schema.Resource {
 							Type:     schema.TypeInt,
 							Computed: true,
 						},
+						"match_suppress": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"set_aggregator_as": &schema.Schema{
 							Type:     schema.TypeInt,
 							Computed: true,
@@ -435,6 +439,11 @@ func dataSourceFlattenRouterRouteMapRule(v interface{}, d *schema.ResourceData, 
 			tmp["match_vrf"] = dataSourceFlattenRouterRouteMapRuleMatchVrf(i["match-vrf"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_suppress"
+		if _, ok := i["match-suppress"]; ok {
+			tmp["match_suppress"] = dataSourceFlattenRouterRouteMapRuleMatchSuppress(i["match-suppress"], d, pre_append)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "set_aggregator_as"
 		if _, ok := i["set-aggregator-as"]; ok {
 			tmp["set_aggregator_as"] = dataSourceFlattenRouterRouteMapRuleSetAggregatorAs(i["set-aggregator-as"], d, pre_append)
@@ -673,6 +682,10 @@ func dataSourceFlattenRouterRouteMapRuleMatchTag(v interface{}, d *schema.Resour
 }
 
 func dataSourceFlattenRouterRouteMapRuleMatchVrf(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterRouteMapRuleMatchSuppress(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 

@@ -2353,20 +2353,34 @@ func flattenFirewallProfileProtocolOptionsCifsServerKeytab(v interface{}, d *sch
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "principal", "principal")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "principal"
 		if cur_v, ok := i["principal"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "principal"
+			}
 			tmp["principal"] = flattenFirewallProfileProtocolOptionsCifsServerKeytabPrincipal(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "keytab"
 		if cur_v, ok := i["keytab"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "keytab"
+			}
 			tmp["keytab"] = flattenFirewallProfileProtocolOptionsCifsServerKeytabKeytab(cur_v, d, pre_append, sv)
 		}
 
@@ -2695,6 +2709,8 @@ func expandFirewallProfileProtocolOptionsHttp(d *schema.ResourceData, v interfac
 	pre_append = pre + ".0." + "ports"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ports"], _ = expandFirewallProfileProtocolOptionsHttpPorts(d, i["ports"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["ports"] = nil
 	}
 	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -2711,6 +2727,8 @@ func expandFirewallProfileProtocolOptionsHttp(d *schema.ResourceData, v interfac
 	pre_append = pre + ".0." + "options"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["options"], _ = expandFirewallProfileProtocolOptionsHttpOptions(d, i["options"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["options"] = nil
 	}
 	pre_append = pre + ".0." + "comfort_interval"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -2727,6 +2745,8 @@ func expandFirewallProfileProtocolOptionsHttp(d *schema.ResourceData, v interfac
 	pre_append = pre + ".0." + "http_policy"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["http-policy"], _ = expandFirewallProfileProtocolOptionsHttpHttpPolicy(d, i["http_policy"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["http-policy"] = nil
 	}
 	pre_append = pre + ".0." + "strip_x_forwarded_for"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -2735,14 +2755,20 @@ func expandFirewallProfileProtocolOptionsHttp(d *schema.ResourceData, v interfac
 	pre_append = pre + ".0." + "post_lang"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["post-lang"], _ = expandFirewallProfileProtocolOptionsHttpPostLang(d, i["post_lang"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["post-lang"] = nil
 	}
 	pre_append = pre + ".0." + "fortinet_bar"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["fortinet-bar"], _ = expandFirewallProfileProtocolOptionsHttpFortinetBar(d, i["fortinet_bar"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["fortinet-bar"] = nil
 	}
 	pre_append = pre + ".0." + "fortinet_bar_port"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["fortinet-bar-port"], _ = expandFirewallProfileProtocolOptionsHttpFortinetBarPort(d, i["fortinet_bar_port"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["fortinet-bar-port"] = nil
 	}
 	pre_append = pre + ".0." + "streaming_content_bypass"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -2787,6 +2813,8 @@ func expandFirewallProfileProtocolOptionsHttp(d *schema.ResourceData, v interfac
 	pre_append = pre + ".0." + "stream_based_uncompressed_limit"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["stream-based-uncompressed-limit"], _ = expandFirewallProfileProtocolOptionsHttpStreamBasedUncompressedLimit(d, i["stream_based_uncompressed_limit"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["stream-based-uncompressed-limit"] = nil
 	}
 	pre_append = pre + ".0." + "scan_bzip2"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -2803,6 +2831,8 @@ func expandFirewallProfileProtocolOptionsHttp(d *schema.ResourceData, v interfac
 	pre_append = pre + ".0." + "retry_count"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["retry-count"], _ = expandFirewallProfileProtocolOptionsHttpRetryCount(d, i["retry_count"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["retry-count"] = nil
 	}
 	pre_append = pre + ".0." + "domain_fronting"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -2989,6 +3019,8 @@ func expandFirewallProfileProtocolOptionsFtp(d *schema.ResourceData, v interface
 	pre_append = pre + ".0." + "ports"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ports"], _ = expandFirewallProfileProtocolOptionsFtpPorts(d, i["ports"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["ports"] = nil
 	}
 	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3001,6 +3033,8 @@ func expandFirewallProfileProtocolOptionsFtp(d *schema.ResourceData, v interface
 	pre_append = pre + ".0." + "options"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["options"], _ = expandFirewallProfileProtocolOptionsFtpOptions(d, i["options"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["options"] = nil
 	}
 	pre_append = pre + ".0." + "comfort_interval"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3025,6 +3059,8 @@ func expandFirewallProfileProtocolOptionsFtp(d *schema.ResourceData, v interface
 	pre_append = pre + ".0." + "stream_based_uncompressed_limit"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["stream-based-uncompressed-limit"], _ = expandFirewallProfileProtocolOptionsFtpStreamBasedUncompressedLimit(d, i["stream_based_uncompressed_limit"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["stream-based-uncompressed-limit"] = nil
 	}
 	pre_append = pre + ".0." + "scan_bzip2"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3139,6 +3175,8 @@ func expandFirewallProfileProtocolOptionsImap(d *schema.ResourceData, v interfac
 	pre_append = pre + ".0." + "ports"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ports"], _ = expandFirewallProfileProtocolOptionsImapPorts(d, i["ports"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["ports"] = nil
 	}
 	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3155,6 +3193,8 @@ func expandFirewallProfileProtocolOptionsImap(d *schema.ResourceData, v interfac
 	pre_append = pre + ".0." + "options"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["options"], _ = expandFirewallProfileProtocolOptionsImapOptions(d, i["options"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["options"] = nil
 	}
 	pre_append = pre + ".0." + "oversize_limit"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3233,6 +3273,8 @@ func expandFirewallProfileProtocolOptionsMapi(d *schema.ResourceData, v interfac
 	pre_append = pre + ".0." + "ports"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ports"], _ = expandFirewallProfileProtocolOptionsMapiPorts(d, i["ports"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["ports"] = nil
 	}
 	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3241,6 +3283,8 @@ func expandFirewallProfileProtocolOptionsMapi(d *schema.ResourceData, v interfac
 	pre_append = pre + ".0." + "options"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["options"], _ = expandFirewallProfileProtocolOptionsMapiOptions(d, i["options"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["options"] = nil
 	}
 	pre_append = pre + ".0." + "oversize_limit"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3303,6 +3347,8 @@ func expandFirewallProfileProtocolOptionsPop3(d *schema.ResourceData, v interfac
 	pre_append = pre + ".0." + "ports"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ports"], _ = expandFirewallProfileProtocolOptionsPop3Ports(d, i["ports"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["ports"] = nil
 	}
 	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3319,6 +3365,8 @@ func expandFirewallProfileProtocolOptionsPop3(d *schema.ResourceData, v interfac
 	pre_append = pre + ".0." + "options"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["options"], _ = expandFirewallProfileProtocolOptionsPop3Options(d, i["options"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["options"] = nil
 	}
 	pre_append = pre + ".0." + "oversize_limit"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3397,6 +3445,8 @@ func expandFirewallProfileProtocolOptionsSmtp(d *schema.ResourceData, v interfac
 	pre_append = pre + ".0." + "ports"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ports"], _ = expandFirewallProfileProtocolOptionsSmtpPorts(d, i["ports"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["ports"] = nil
 	}
 	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3413,6 +3463,8 @@ func expandFirewallProfileProtocolOptionsSmtp(d *schema.ResourceData, v interfac
 	pre_append = pre + ".0." + "options"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["options"], _ = expandFirewallProfileProtocolOptionsSmtpOptions(d, i["options"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["options"] = nil
 	}
 	pre_append = pre + ".0." + "oversize_limit"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3499,6 +3551,8 @@ func expandFirewallProfileProtocolOptionsNntp(d *schema.ResourceData, v interfac
 	pre_append = pre + ".0." + "ports"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ports"], _ = expandFirewallProfileProtocolOptionsNntpPorts(d, i["ports"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["ports"] = nil
 	}
 	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3515,6 +3569,8 @@ func expandFirewallProfileProtocolOptionsNntp(d *schema.ResourceData, v interfac
 	pre_append = pre + ".0." + "options"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["options"], _ = expandFirewallProfileProtocolOptionsNntpOptions(d, i["options"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["options"] = nil
 	}
 	pre_append = pre + ".0." + "oversize_limit"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3585,6 +3641,8 @@ func expandFirewallProfileProtocolOptionsSsh(d *schema.ResourceData, v interface
 	pre_append = pre + ".0." + "options"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["options"], _ = expandFirewallProfileProtocolOptionsSshOptions(d, i["options"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["options"] = nil
 	}
 	pre_append = pre + ".0." + "comfort_interval"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3609,6 +3667,8 @@ func expandFirewallProfileProtocolOptionsSsh(d *schema.ResourceData, v interface
 	pre_append = pre + ".0." + "stream_based_uncompressed_limit"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["stream-based-uncompressed-limit"], _ = expandFirewallProfileProtocolOptionsSshStreamBasedUncompressedLimit(d, i["stream_based_uncompressed_limit"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["stream-based-uncompressed-limit"] = nil
 	}
 	pre_append = pre + ".0." + "scan_bzip2"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3703,6 +3763,8 @@ func expandFirewallProfileProtocolOptionsDns(d *schema.ResourceData, v interface
 	pre_append = pre + ".0." + "ports"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ports"], _ = expandFirewallProfileProtocolOptionsDnsPorts(d, i["ports"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["ports"] = nil
 	}
 	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3733,6 +3795,8 @@ func expandFirewallProfileProtocolOptionsCifs(d *schema.ResourceData, v interfac
 	pre_append = pre + ".0." + "ports"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ports"], _ = expandFirewallProfileProtocolOptionsCifsPorts(d, i["ports"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["ports"] = nil
 	}
 	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3741,6 +3805,8 @@ func expandFirewallProfileProtocolOptionsCifs(d *schema.ResourceData, v interfac
 	pre_append = pre + ".0." + "options"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["options"], _ = expandFirewallProfileProtocolOptionsCifsOptions(d, i["options"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["options"] = nil
 	}
 	pre_append = pre + ".0." + "oversize_limit"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3781,6 +3847,8 @@ func expandFirewallProfileProtocolOptionsCifs(d *schema.ResourceData, v interfac
 	pre_append = pre + ".0." + "domain_controller"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["domain-controller"], _ = expandFirewallProfileProtocolOptionsCifsDomainController(d, i["domain_controller"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["domain-controller"] = nil
 	}
 	pre_append = pre + ".0." + "server_keytab"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3905,6 +3973,8 @@ func expandFirewallProfileProtocolOptionsMailSignature(d *schema.ResourceData, v
 	pre_append = pre + ".0." + "signature"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["signature"], _ = expandFirewallProfileProtocolOptionsMailSignatureSignature(d, i["signature"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["signature"] = nil
 	}
 
 	return result, nil

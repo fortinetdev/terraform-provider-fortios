@@ -380,15 +380,26 @@ func flattenSystemClusterSyncSyncvd(v interface{}, d *schema.ResourceData, pre s
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenSystemClusterSyncSyncvdName(cur_v, d, pre_append, sv)
 		}
 
@@ -422,15 +433,26 @@ func flattenSystemClusterSyncDownIntfsBeforeSessSync(v interface{}, d *schema.Re
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenSystemClusterSyncDownIntfsBeforeSessSyncName(cur_v, d, pre_append, sv)
 		}
 
@@ -582,25 +604,42 @@ func flattenSystemClusterSyncSessionSyncFilterCustomService(v interface{}, d *sc
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenSystemClusterSyncSessionSyncFilterCustomServiceId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "src_port_range"
 		if cur_v, ok := i["src-port-range"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "src_port_range"
+			}
 			tmp["src_port_range"] = flattenSystemClusterSyncSessionSyncFilterCustomServiceSrcPortRange(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst_port_range"
 		if cur_v, ok := i["dst-port-range"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "dst_port_range"
+			}
 			tmp["dst_port_range"] = flattenSystemClusterSyncSessionSyncFilterCustomServiceDstPortRange(cur_v, d, pre_append, sv)
 		}
 
@@ -870,10 +909,14 @@ func expandSystemClusterSyncSessionSyncFilter(d *schema.ResourceData, v interfac
 	pre_append = pre + ".0." + "srcintf"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["srcintf"], _ = expandSystemClusterSyncSessionSyncFilterSrcintf(d, i["srcintf"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["srcintf"] = nil
 	}
 	pre_append = pre + ".0." + "dstintf"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["dstintf"], _ = expandSystemClusterSyncSessionSyncFilterDstintf(d, i["dstintf"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["dstintf"] = nil
 	}
 	pre_append = pre + ".0." + "srcaddr"
 	if _, ok := d.GetOk(pre_append); ok {

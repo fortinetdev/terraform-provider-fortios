@@ -331,15 +331,26 @@ func flattenSystemFederatedUpgradeKnownHaMembers(v interface{}, d *schema.Resour
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "serial", "serial")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "serial"
 		if cur_v, ok := i["serial"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "serial"
+			}
 			tmp["serial"] = flattenSystemFederatedUpgradeKnownHaMembersSerial(cur_v, d, pre_append, sv)
 		}
 
@@ -381,60 +392,98 @@ func flattenSystemFederatedUpgradeNodeList(v interface{}, d *schema.ResourceData
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "serial", "serial")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "serial"
 		if cur_v, ok := i["serial"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "serial"
+			}
 			tmp["serial"] = flattenSystemFederatedUpgradeNodeListSerial(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "timing"
 		if cur_v, ok := i["timing"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "timing"
+			}
 			tmp["timing"] = flattenSystemFederatedUpgradeNodeListTiming(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_minutes"
 		if cur_v, ok := i["maximum-minutes"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "maximum_minutes"
+			}
 			tmp["maximum_minutes"] = flattenSystemFederatedUpgradeNodeListMaximumMinutes(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "time"
 		if cur_v, ok := i["time"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "time"
+			}
 			tmp["time"] = flattenSystemFederatedUpgradeNodeListTime(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "setup_time"
 		if cur_v, ok := i["setup-time"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "setup_time"
+			}
 			tmp["setup_time"] = flattenSystemFederatedUpgradeNodeListSetupTime(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "upgrade_path"
 		if cur_v, ok := i["upgrade-path"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "upgrade_path"
+			}
 			tmp["upgrade_path"] = flattenSystemFederatedUpgradeNodeListUpgradePath(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "device_type"
 		if cur_v, ok := i["device-type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "device_type"
+			}
 			tmp["device_type"] = flattenSystemFederatedUpgradeNodeListDeviceType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "allow_download"
 		if cur_v, ok := i["allow-download"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "allow_download"
+			}
 			tmp["allow_download"] = flattenSystemFederatedUpgradeNodeListAllowDownload(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "coordinating_fortigate"
 		if cur_v, ok := i["coordinating-fortigate"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "coordinating_fortigate"
+			}
 			tmp["coordinating_fortigate"] = flattenSystemFederatedUpgradeNodeListCoordinatingFortigate(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "failure_reason"
 		if cur_v, ok := i["failure-reason"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "failure_reason"
+			}
 			tmp["failure_reason"] = flattenSystemFederatedUpgradeNodeListFailureReason(cur_v, d, pre_append, sv)
 		}
 

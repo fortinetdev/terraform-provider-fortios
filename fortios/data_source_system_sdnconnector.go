@@ -441,6 +441,10 @@ func dataSourceSystemSdnConnector() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"par_id": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"update_interval": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
@@ -1297,6 +1301,10 @@ func dataSourceFlattenSystemSdnConnectorIbmRegion(v interface{}, d *schema.Resou
 	return v
 }
 
+func dataSourceFlattenSystemSdnConnectorParId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemSdnConnectorUpdateInterval(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -1607,6 +1615,12 @@ func dataSourceRefreshObjectSystemSdnConnector(d *schema.ResourceData, o map[str
 	if err = d.Set("ibm_region", dataSourceFlattenSystemSdnConnectorIbmRegion(o["ibm-region"], d, "ibm_region")); err != nil {
 		if !fortiAPIPatch(o["ibm-region"]) {
 			return fmt.Errorf("Error reading ibm_region: %v", err)
+		}
+	}
+
+	if err = d.Set("par_id", dataSourceFlattenSystemSdnConnectorParId(o["par-id"], d, "par_id")); err != nil {
+		if !fortiAPIPatch(o["par-id"]) {
+			return fmt.Errorf("Error reading par_id: %v", err)
 		}
 	}
 

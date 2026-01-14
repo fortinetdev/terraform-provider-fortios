@@ -1722,6 +1722,8 @@ func expandSystemIkeDhGroup1(d *schema.ResourceData, v interface{}, pre string, 
 		} else {
 			result["keypair-count"], _ = expandSystemIkeDhGroup1KeypairCount(d, i["keypair_count"], pre_append, sv)
 		}
+	} else if d.HasChange(pre_append) {
+		result["keypair-count"] = nil
 	}
 
 	return result, nil
@@ -1772,6 +1774,8 @@ func expandSystemIkeDhGroup2(d *schema.ResourceData, v interface{}, pre string, 
 		} else {
 			result["keypair-count"], _ = expandSystemIkeDhGroup2KeypairCount(d, i["keypair_count"], pre_append, sv)
 		}
+	} else if d.HasChange(pre_append) {
+		result["keypair-count"] = nil
 	}
 
 	return result, nil
@@ -1822,6 +1826,8 @@ func expandSystemIkeDhGroup5(d *schema.ResourceData, v interface{}, pre string, 
 		} else {
 			result["keypair-count"], _ = expandSystemIkeDhGroup5KeypairCount(d, i["keypair_count"], pre_append, sv)
 		}
+	} else if d.HasChange(pre_append) {
+		result["keypair-count"] = nil
 	}
 
 	return result, nil
@@ -1872,6 +1878,8 @@ func expandSystemIkeDhGroup14(d *schema.ResourceData, v interface{}, pre string,
 		} else {
 			result["keypair-count"], _ = expandSystemIkeDhGroup14KeypairCount(d, i["keypair_count"], pre_append, sv)
 		}
+	} else if d.HasChange(pre_append) {
+		result["keypair-count"] = nil
 	}
 
 	return result, nil
@@ -1922,6 +1930,8 @@ func expandSystemIkeDhGroup15(d *schema.ResourceData, v interface{}, pre string,
 		} else {
 			result["keypair-count"], _ = expandSystemIkeDhGroup15KeypairCount(d, i["keypair_count"], pre_append, sv)
 		}
+	} else if d.HasChange(pre_append) {
+		result["keypair-count"] = nil
 	}
 
 	return result, nil
@@ -1972,6 +1982,8 @@ func expandSystemIkeDhGroup16(d *schema.ResourceData, v interface{}, pre string,
 		} else {
 			result["keypair-count"], _ = expandSystemIkeDhGroup16KeypairCount(d, i["keypair_count"], pre_append, sv)
 		}
+	} else if d.HasChange(pre_append) {
+		result["keypair-count"] = nil
 	}
 
 	return result, nil
@@ -2022,6 +2034,8 @@ func expandSystemIkeDhGroup17(d *schema.ResourceData, v interface{}, pre string,
 		} else {
 			result["keypair-count"], _ = expandSystemIkeDhGroup17KeypairCount(d, i["keypair_count"], pre_append, sv)
 		}
+	} else if d.HasChange(pre_append) {
+		result["keypair-count"] = nil
 	}
 
 	return result, nil
@@ -2072,6 +2086,8 @@ func expandSystemIkeDhGroup18(d *schema.ResourceData, v interface{}, pre string,
 		} else {
 			result["keypair-count"], _ = expandSystemIkeDhGroup18KeypairCount(d, i["keypair_count"], pre_append, sv)
 		}
+	} else if d.HasChange(pre_append) {
+		result["keypair-count"] = nil
 	}
 
 	return result, nil
@@ -2122,6 +2138,8 @@ func expandSystemIkeDhGroup19(d *schema.ResourceData, v interface{}, pre string,
 		} else {
 			result["keypair-count"], _ = expandSystemIkeDhGroup19KeypairCount(d, i["keypair_count"], pre_append, sv)
 		}
+	} else if d.HasChange(pre_append) {
+		result["keypair-count"] = nil
 	}
 
 	return result, nil
@@ -2172,6 +2190,8 @@ func expandSystemIkeDhGroup20(d *schema.ResourceData, v interface{}, pre string,
 		} else {
 			result["keypair-count"], _ = expandSystemIkeDhGroup20KeypairCount(d, i["keypair_count"], pre_append, sv)
 		}
+	} else if d.HasChange(pre_append) {
+		result["keypair-count"] = nil
 	}
 
 	return result, nil
@@ -2222,6 +2242,8 @@ func expandSystemIkeDhGroup21(d *schema.ResourceData, v interface{}, pre string,
 		} else {
 			result["keypair-count"], _ = expandSystemIkeDhGroup21KeypairCount(d, i["keypair_count"], pre_append, sv)
 		}
+	} else if d.HasChange(pre_append) {
+		result["keypair-count"] = nil
 	}
 
 	return result, nil
@@ -2272,6 +2294,8 @@ func expandSystemIkeDhGroup27(d *schema.ResourceData, v interface{}, pre string,
 		} else {
 			result["keypair-count"], _ = expandSystemIkeDhGroup27KeypairCount(d, i["keypair_count"], pre_append, sv)
 		}
+	} else if d.HasChange(pre_append) {
+		result["keypair-count"] = nil
 	}
 
 	return result, nil
@@ -2322,6 +2346,8 @@ func expandSystemIkeDhGroup28(d *schema.ResourceData, v interface{}, pre string,
 		} else {
 			result["keypair-count"], _ = expandSystemIkeDhGroup28KeypairCount(d, i["keypair_count"], pre_append, sv)
 		}
+	} else if d.HasChange(pre_append) {
+		result["keypair-count"] = nil
 	}
 
 	return result, nil
@@ -2372,6 +2398,8 @@ func expandSystemIkeDhGroup29(d *schema.ResourceData, v interface{}, pre string,
 		} else {
 			result["keypair-count"], _ = expandSystemIkeDhGroup29KeypairCount(d, i["keypair_count"], pre_append, sv)
 		}
+	} else if d.HasChange(pre_append) {
+		result["keypair-count"] = nil
 	}
 
 	return result, nil
@@ -2422,6 +2450,8 @@ func expandSystemIkeDhGroup30(d *schema.ResourceData, v interface{}, pre string,
 		} else {
 			result["keypair-count"], _ = expandSystemIkeDhGroup30KeypairCount(d, i["keypair_count"], pre_append, sv)
 		}
+	} else if d.HasChange(pre_append) {
+		result["keypair-count"] = nil
 	}
 
 	return result, nil
@@ -2472,6 +2502,8 @@ func expandSystemIkeDhGroup31(d *schema.ResourceData, v interface{}, pre string,
 		} else {
 			result["keypair-count"], _ = expandSystemIkeDhGroup31KeypairCount(d, i["keypair_count"], pre_append, sv)
 		}
+	} else if d.HasChange(pre_append) {
+		result["keypair-count"] = nil
 	}
 
 	return result, nil
@@ -2522,6 +2554,8 @@ func expandSystemIkeDhGroup32(d *schema.ResourceData, v interface{}, pre string,
 		} else {
 			result["keypair-count"], _ = expandSystemIkeDhGroup32KeypairCount(d, i["keypair_count"], pre_append, sv)
 		}
+	} else if d.HasChange(pre_append) {
+		result["keypair-count"] = nil
 	}
 
 	return result, nil

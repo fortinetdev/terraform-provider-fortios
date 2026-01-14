@@ -77,6 +77,7 @@ The following attributes are exported:
 * `list` - IP address list. The structure of `list` block is documented below.
 * `tagging` - Config object tagging. The structure of `tagging` block is documented below.
 * `allow_routing` - Enable/disable use of this address in the static route configuration.
+* `passive_fqdn_learning` - Enable/disable passive learning of FQDNs.  When enabled, the FortiGate learns, trusts, and saves FQDNs from endpoint DNS queries (default = enable).
 * `fabric_object` - Security Fabric global object setting.
 
 The `macaddr` block contains:

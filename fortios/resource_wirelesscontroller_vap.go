@@ -388,6 +388,11 @@ func resourceWirelessControllerVap() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"mlo": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"acct_interim_interval": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(60, 86400),
@@ -1535,15 +1540,26 @@ func flattenWirelessControllerVapRadiusMacAuthUsergroups(v interface{}, d *schem
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenWirelessControllerVapRadiusMacAuthUsergroupsName(cur_v, d, pre_append, sv)
 		}
 
@@ -1601,6 +1617,10 @@ func flattenWirelessControllerVapNasFilterRule(v interface{}, d *schema.Resource
 }
 
 func flattenWirelessControllerVapDomainNameStripping(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerVapMlo(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1672,15 +1692,26 @@ func flattenWirelessControllerVapUsergroup(v interface{}, d *schema.ResourceData
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenWirelessControllerVapUsergroupName(cur_v, d, pre_append, sv)
 		}
 
@@ -1771,15 +1802,26 @@ func flattenWirelessControllerVapSelectedUsergroups(v interface{}, d *schema.Res
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenWirelessControllerVapSelectedUsergroupsName(cur_v, d, pre_append, sv)
 		}
 
@@ -1877,38 +1919,60 @@ func flattenWirelessControllerVapMpskKey(v interface{}, d *schema.ResourceData, 
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "key-name", "key_name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "key_name"
 		if cur_v, ok := i["key-name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "key_name"
+			}
 			tmp["key_name"] = flattenWirelessControllerVapMpskKeyKeyName(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "passphrase"
 		if _, ok := i["passphrase"]; ok {
-			c := d.Get(pre_append).(string)
-			if c != "" {
-				tmp["passphrase"] = c
+			if tf_exist {
+				pre_append := pre + "." + strconv.Itoa(con) + "." + "passphrase"
+				c := d.Get(pre_append).(string)
+				if c != "" {
+					tmp["passphrase"] = c
+				}
 			}
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "concurrent_clients"
 		if cur_v, ok := i["concurrent-clients"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "concurrent_clients"
+			}
 			tmp["concurrent_clients"] = flattenWirelessControllerVapMpskKeyConcurrentClients(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
 		if cur_v, ok := i["comment"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
+			}
 			tmp["comment"] = flattenWirelessControllerVapMpskKeyComment(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "mpsk_schedules"
 		if cur_v, ok := i["mpsk-schedules"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "mpsk_schedules"
+			}
 			tmp["mpsk_schedules"] = flattenWirelessControllerVapMpskKeyMpskSchedules(cur_v, d, pre_append, sv)
 		}
 
@@ -1950,15 +2014,26 @@ func flattenWirelessControllerVapMpskKeyMpskSchedules(v interface{}, d *schema.R
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenWirelessControllerVapMpskKeyMpskSchedulesName(cur_v, d, pre_append, sv)
 		}
 
@@ -2108,20 +2183,34 @@ func flattenWirelessControllerVapVlanName(v interface{}, d *schema.ResourceData,
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenWirelessControllerVapVlanNameName(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan_id"
 		if cur_v, ok := i["vlan-id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan_id"
+			}
 			tmp["vlan_id"] = flattenWirelessControllerVapVlanNameVlanId(cur_v, d, pre_append, sv)
 		}
 
@@ -2163,20 +2252,34 @@ func flattenWirelessControllerVapVlanPool(v interface{}, d *schema.ResourceData,
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenWirelessControllerVapVlanPoolId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "wtp_group"
 		if cur_v, ok := i["wtp-group"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "wtp_group"
+			}
 			tmp["wtp_group"] = flattenWirelessControllerVapVlanPoolWtpGroup(cur_v, d, pre_append, sv)
 		}
 
@@ -2386,25 +2489,42 @@ func flattenWirelessControllerVapMacFilterList(v interface{}, d *schema.Resource
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenWirelessControllerVapMacFilterListId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "mac"
 		if cur_v, ok := i["mac"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "mac"
+			}
 			tmp["mac"] = flattenWirelessControllerVapMacFilterListMac(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "mac_filter_policy"
 		if cur_v, ok := i["mac-filter-policy"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "mac_filter_policy"
+			}
 			tmp["mac_filter_policy"] = flattenWirelessControllerVapMacFilterListMacFilterPolicy(cur_v, d, pre_append, sv)
 		}
 
@@ -2885,6 +3005,12 @@ func refreshObjectWirelessControllerVap(d *schema.ResourceData, o map[string]int
 	if err = d.Set("domain_name_stripping", flattenWirelessControllerVapDomainNameStripping(o["domain-name-stripping"], d, "domain_name_stripping", sv)); err != nil {
 		if !fortiAPIPatch(o["domain-name-stripping"]) {
 			return fmt.Errorf("Error reading domain_name_stripping: %v", err)
+		}
+	}
+
+	if err = d.Set("mlo", flattenWirelessControllerVapMlo(o["mlo"], d, "mlo", sv)); err != nil {
+		if !fortiAPIPatch(o["mlo"]) {
+			return fmt.Errorf("Error reading mlo: %v", err)
 		}
 	}
 
@@ -3997,6 +4123,10 @@ func expandWirelessControllerVapDomainNameStripping(d *schema.ResourceData, v in
 	return v, nil
 }
 
+func expandWirelessControllerVapMlo(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWirelessControllerVapAcctInterimInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -4086,18 +4216,26 @@ func expandWirelessControllerVapPortalMessageOverrides(d *schema.ResourceData, v
 	pre_append = pre + ".0." + "auth_disclaimer_page"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["auth-disclaimer-page"], _ = expandWirelessControllerVapPortalMessageOverridesAuthDisclaimerPage(d, i["auth_disclaimer_page"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["auth-disclaimer-page"] = nil
 	}
 	pre_append = pre + ".0." + "auth_reject_page"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["auth-reject-page"], _ = expandWirelessControllerVapPortalMessageOverridesAuthRejectPage(d, i["auth_reject_page"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["auth-reject-page"] = nil
 	}
 	pre_append = pre + ".0." + "auth_login_page"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["auth-login-page"], _ = expandWirelessControllerVapPortalMessageOverridesAuthLoginPage(d, i["auth_login_page"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["auth-login-page"] = nil
 	}
 	pre_append = pre + ".0." + "auth_login_failed_page"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["auth-login-failed-page"], _ = expandWirelessControllerVapPortalMessageOverridesAuthLoginFailedPage(d, i["auth_login_failed_page"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["auth-login-failed-page"] = nil
 	}
 
 	return result, nil
@@ -5458,6 +5596,15 @@ func getObjectWirelessControllerVap(d *schema.ResourceData, sv string) (*map[str
 			return &obj, err
 		} else if t != nil {
 			obj["domain-name-stripping"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("mlo"); ok {
+		t, err := expandWirelessControllerVapMlo(d, v, "mlo", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["mlo"] = t
 		}
 	}
 

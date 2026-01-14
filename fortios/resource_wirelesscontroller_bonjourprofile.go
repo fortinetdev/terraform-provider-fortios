@@ -282,35 +282,58 @@ func flattenWirelessControllerBonjourProfilePolicyList(v interface{}, d *schema.
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "policy-id", "policy_id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "policy_id"
 		if cur_v, ok := i["policy-id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "policy_id"
+			}
 			tmp["policy_id"] = flattenWirelessControllerBonjourProfilePolicyListPolicyId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if cur_v, ok := i["description"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
+			}
 			tmp["description"] = flattenWirelessControllerBonjourProfilePolicyListDescription(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "from_vlan"
 		if cur_v, ok := i["from-vlan"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "from_vlan"
+			}
 			tmp["from_vlan"] = flattenWirelessControllerBonjourProfilePolicyListFromVlan(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "to_vlan"
 		if cur_v, ok := i["to-vlan"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "to_vlan"
+			}
 			tmp["to_vlan"] = flattenWirelessControllerBonjourProfilePolicyListToVlan(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "services"
 		if cur_v, ok := i["services"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "services"
+			}
 			tmp["services"] = flattenWirelessControllerBonjourProfilePolicyListServices(cur_v, d, pre_append, sv)
 		}
 

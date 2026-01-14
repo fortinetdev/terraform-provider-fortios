@@ -44,6 +44,7 @@ The following arguments are supported:
 * `unsafe_legacy_renegotiation` - Enable/disable unsafe legacy re-negotiation. Valid values: `enable`, `disable`.
 * `servercert` - Name of the server certificate to be used for SSL-VPNs.
 * `algorithm` - Force the SSL-VPN security level. High allows only high. Medium allows medium and high. Low allows any. Valid values: `high`, `medium`, `default`, `low`.
+* `tls_groups` - Configure the supported groups for TLS negotiation. Valid values: `P-521`, `P-384`, `P-256`, `ML-KEM512`, `ML-KEM768`, `ML-KEM1024`, `P-384-MLKEM1024`, `P-256-MLKEM768`, `X25519-MLKEM768`, `X448`, `X25519`, `FFDHE2048`, `FFDHE3072`, `FFDHE4096`, `FFDHE6144`, `FFDHE8192`.
 * `idle_timeout` - SSL VPN disconnects if idle for specified time in seconds.
 * `auth_timeout` - Agentless VPN authentication timeout (1 - 259200 sec (3 days), 0 for no timeout).
 * `login_attempt_limit` - Agentless VPN maximum login attempt times before block (0 - 10, default = 2, 0 = no limit).
@@ -102,6 +103,7 @@ The following arguments are supported:
 * `web_mode_snat` - Enable/disable use of IP pools defined in firewall policy while using web-mode. Valid values: `enable`, `disable`.
 * `ztna_trusted_client` - Enable/disable verification of device certificate for SSLVPN ZTNA session. Valid values: `enable`, `disable`.
 * `server_hostname` - Server hostname for HTTPS. When set, will be used for SSL VPN web proxy host header for any redirection.
+* `remote_https_cert_check` - Configure how the FortiGate unit checks and responds to the remote HTTPS server's certificate (default = warn-on-error). Valid values: `no-check`, `warn-on-error`, `reject-on-error`.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
 * `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.

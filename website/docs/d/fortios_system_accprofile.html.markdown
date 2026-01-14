@@ -38,6 +38,7 @@ The following attributes are exported:
 * `fwgrp_permission` - Custom firewall permission. The structure of `fwgrp_permission` block is documented below.
 * `loggrp_permission` - Custom Log & Report permission. The structure of `loggrp_permission` block is documented below.
 * `utmgrp_permission` - Custom Security Profile permissions. The structure of `utmgrp_permission` block is documented below.
+* `secfabgrp_permission` - Custom Security Fabric permissions. The structure of `secfabgrp_permission` block is documented below.
 * `admintimeout_override` - Enable/disable overriding the global administrator idle timeout.
 * `admintimeout` - Administrator timeout for this access profile (0 - 480 min, default = 10, 0 means never timeout).
 * `cli_diagnose` - Enable/disable permission to run diagnostic commands.
@@ -98,4 +99,9 @@ The `utmgrp_permission` block contains:
 * `virtual_patch` - Virtual patch profiles and settings.
 * `casb` - Inline CASB filter profile and settings
 * `telemetry` - Telemetry profile and settings.
+
+The `secfabgrp_permission` block contains:
+
+* `csfsys` - Security Fabric system profiles and settings.
+* `csffoo` - Fabric Overlay Orchestrator profiles and settings.
 

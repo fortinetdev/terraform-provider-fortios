@@ -24,6 +24,7 @@ The following attributes are exported:
 * `start` - Time of day to start the schedule, format hh:mm.
 * `end` - Time of day to end the schedule, format hh:mm.
 * `day` - One or more days of the week on which the schedule is valid. Separate the names of the days with a space.
+* `label_day` - Configure a window during the time of day in which the schedule job is executed.
 * `color` - Color of icon on the GUI.
 * `fabric_object` - Security Fabric global object setting.
 

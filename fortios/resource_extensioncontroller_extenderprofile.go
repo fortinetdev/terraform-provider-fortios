@@ -557,6 +557,36 @@ func resourceExtensionControllerExtenderProfile() *schema.Resource {
 										Optional:     true,
 										Computed:     true,
 									},
+									"health_check_interval": &schema.Schema{
+										Type:         schema.TypeInt,
+										ValidateFunc: validation.IntBetween(1, 3600),
+										Optional:     true,
+										Computed:     true,
+									},
+									"health_check_probe_cnt": &schema.Schema{
+										Type:         schema.TypeInt,
+										ValidateFunc: validation.IntBetween(1, 10),
+										Optional:     true,
+										Computed:     true,
+									},
+									"health_check_probe_tm": &schema.Schema{
+										Type:         schema.TypeInt,
+										ValidateFunc: validation.IntBetween(1, 10),
+										Optional:     true,
+										Computed:     true,
+									},
+									"health_check_fail_cnt": &schema.Schema{
+										Type:         schema.TypeInt,
+										ValidateFunc: validation.IntBetween(1, 10),
+										Optional:     true,
+										Computed:     true,
+									},
+									"health_check_recovery_cnt": &schema.Schema{
+										Type:         schema.TypeInt,
+										ValidateFunc: validation.IntBetween(1, 10),
+										Optional:     true,
+										Computed:     true,
+									},
 								},
 							},
 						},
@@ -1098,15 +1128,26 @@ func flattenExtensionControllerExtenderProfileCellularDataplan(v interface{}, d 
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenExtensionControllerExtenderProfileCellularDataplanName(cur_v, d, pre_append, sv)
 		}
 
@@ -1288,30 +1329,50 @@ func flattenExtensionControllerExtenderProfileCellularSmsNotificationReceiver(v 
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenExtensionControllerExtenderProfileCellularSmsNotificationReceiverName(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if cur_v, ok := i["status"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
+			}
 			tmp["status"] = flattenExtensionControllerExtenderProfileCellularSmsNotificationReceiverStatus(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "phone_number"
 		if cur_v, ok := i["phone-number"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "phone_number"
+			}
 			tmp["phone_number"] = flattenExtensionControllerExtenderProfileCellularSmsNotificationReceiverPhoneNumber(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "alert"
 		if cur_v, ok := i["alert"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "alert"
+			}
 			tmp["alert"] = flattenExtensionControllerExtenderProfileCellularSmsNotificationReceiverAlert(cur_v, d, pre_append, sv)
 		}
 
@@ -1893,31 +1954,91 @@ func flattenExtensionControllerExtenderProfileLanExtensionBackhaul(v interface{}
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenExtensionControllerExtenderProfileLanExtensionBackhaulName(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
 		if cur_v, ok := i["port"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
+			}
 			tmp["port"] = flattenExtensionControllerExtenderProfileLanExtensionBackhaulPort(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "role"
 		if cur_v, ok := i["role"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "role"
+			}
 			tmp["role"] = flattenExtensionControllerExtenderProfileLanExtensionBackhaulRole(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "weight"
 		if cur_v, ok := i["weight"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "weight"
+			}
 			tmp["weight"] = flattenExtensionControllerExtenderProfileLanExtensionBackhaulWeight(cur_v, d, pre_append, sv)
+		}
+
+		if cur_v, ok := i["health-check-interval"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "health_check_interval"
+			}
+			tmp["health_check_interval"] = flattenExtensionControllerExtenderProfileLanExtensionBackhaulHealthCheckInterval(cur_v, d, pre_append, sv)
+		}
+
+		if cur_v, ok := i["health-check-probe-cnt"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "health_check_probe_cnt"
+			}
+			tmp["health_check_probe_cnt"] = flattenExtensionControllerExtenderProfileLanExtensionBackhaulHealthCheckProbeCnt(cur_v, d, pre_append, sv)
+		}
+
+		if cur_v, ok := i["health-check-probe-tm"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "health_check_probe_tm"
+			}
+			tmp["health_check_probe_tm"] = flattenExtensionControllerExtenderProfileLanExtensionBackhaulHealthCheckProbeTm(cur_v, d, pre_append, sv)
+		}
+
+		if cur_v, ok := i["health-check-fail-cnt"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "health_check_fail_cnt"
+			}
+			tmp["health_check_fail_cnt"] = flattenExtensionControllerExtenderProfileLanExtensionBackhaulHealthCheckFailCnt(cur_v, d, pre_append, sv)
+		}
+
+		if cur_v, ok := i["health-check-recovery-cnt"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "health_check_recovery_cnt"
+			}
+			tmp["health_check_recovery_cnt"] = flattenExtensionControllerExtenderProfileLanExtensionBackhaulHealthCheckRecoveryCnt(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1945,6 +2066,26 @@ func flattenExtensionControllerExtenderProfileLanExtensionBackhaulWeight(v inter
 	return convintf2i(v)
 }
 
+func flattenExtensionControllerExtenderProfileLanExtensionBackhaulHealthCheckInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenExtensionControllerExtenderProfileLanExtensionBackhaulHealthCheckProbeCnt(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenExtensionControllerExtenderProfileLanExtensionBackhaulHealthCheckProbeTm(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenExtensionControllerExtenderProfileLanExtensionBackhaulHealthCheckFailCnt(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenExtensionControllerExtenderProfileLanExtensionBackhaulHealthCheckRecoveryCnt(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
 func flattenExtensionControllerExtenderProfileLanExtensionDownlinks(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -1962,40 +2103,66 @@ func flattenExtensionControllerExtenderProfileLanExtensionDownlinks(v interface{
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenExtensionControllerExtenderProfileLanExtensionDownlinksName(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if cur_v, ok := i["type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
+			}
 			tmp["type"] = flattenExtensionControllerExtenderProfileLanExtensionDownlinksType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
 		if cur_v, ok := i["port"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
+			}
 			tmp["port"] = flattenExtensionControllerExtenderProfileLanExtensionDownlinksPort(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "vap"
 		if cur_v, ok := i["vap"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "vap"
+			}
 			tmp["vap"] = flattenExtensionControllerExtenderProfileLanExtensionDownlinksVap(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "pvid"
 		if cur_v, ok := i["pvid"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "pvid"
+			}
 			tmp["pvid"] = flattenExtensionControllerExtenderProfileLanExtensionDownlinksPvid(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "vids"
 		if cur_v, ok := i["vids"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "vids"
+			}
 			tmp["vids"] = flattenExtensionControllerExtenderProfileLanExtensionDownlinksVids(cur_v, d, pre_append, sv)
 		}
 
@@ -2045,15 +2212,26 @@ func flattenExtensionControllerExtenderProfileLanExtensionDownlinksVids(v interf
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "vid", "vid")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "vid"
 		if cur_v, ok := i["vid"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "vid"
+			}
 			tmp["vid"] = flattenExtensionControllerExtenderProfileLanExtensionDownlinksVidsVid(cur_v, d, pre_append, sv)
 		}
 
@@ -2087,30 +2265,50 @@ func flattenExtensionControllerExtenderProfileLanExtensionTrafficSplitServices(v
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenExtensionControllerExtenderProfileLanExtensionTrafficSplitServicesName(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "vsdb"
 		if cur_v, ok := i["vsdb"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "vsdb"
+			}
 			tmp["vsdb"] = flattenExtensionControllerExtenderProfileLanExtensionTrafficSplitServicesVsdb(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "address"
 		if cur_v, ok := i["address"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "address"
+			}
 			tmp["address"] = flattenExtensionControllerExtenderProfileLanExtensionTrafficSplitServicesAddress(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "service"
 		if cur_v, ok := i["service"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "service"
+			}
 			tmp["service"] = flattenExtensionControllerExtenderProfileLanExtensionTrafficSplitServicesService(cur_v, d, pre_append, sv)
 		}
 
@@ -2341,15 +2539,26 @@ func flattenExtensionControllerExtenderProfileWifiRadio1LocalVaps(v interface{},
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenExtensionControllerExtenderProfileWifiRadio1LocalVapsName(cur_v, d, pre_append, sv)
 		}
 
@@ -2536,15 +2745,26 @@ func flattenExtensionControllerExtenderProfileWifiRadio2LocalVaps(v interface{},
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenExtensionControllerExtenderProfileWifiRadio2LocalVapsName(cur_v, d, pre_append, sv)
 		}
 
@@ -3006,10 +3226,14 @@ func expandExtensionControllerExtenderProfileCellularModem1(d *schema.ResourceDa
 	pre_append = pre + ".0." + "redundant_intf"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["redundant-intf"], _ = expandExtensionControllerExtenderProfileCellularModem1RedundantIntf(d, i["redundant_intf"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["redundant-intf"] = nil
 	}
 	pre_append = pre + ".0." + "conn_status"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["conn-status"], _ = expandExtensionControllerExtenderProfileCellularModem1ConnStatus(d, i["conn_status"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["conn-status"] = nil
 	}
 	pre_append = pre + ".0." + "default_sim"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3030,14 +3254,20 @@ func expandExtensionControllerExtenderProfileCellularModem1(d *schema.ResourceDa
 	pre_append = pre + ".0." + "sim1_pin_code"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["sim1-pin-code"], _ = expandExtensionControllerExtenderProfileCellularModem1Sim1PinCode(d, i["sim1_pin_code"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["sim1-pin-code"] = nil
 	}
 	pre_append = pre + ".0." + "sim2_pin_code"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["sim2-pin-code"], _ = expandExtensionControllerExtenderProfileCellularModem1Sim2PinCode(d, i["sim2_pin_code"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["sim2-pin-code"] = nil
 	}
 	pre_append = pre + ".0." + "preferred_carrier"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["preferred-carrier"], _ = expandExtensionControllerExtenderProfileCellularModem1PreferredCarrier(d, i["preferred_carrier"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["preferred-carrier"] = nil
 	}
 	pre_append = pre + ".0." + "auto_switch"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3052,18 +3282,26 @@ func expandExtensionControllerExtenderProfileCellularModem1(d *schema.ResourceDa
 	pre_append = pre + ".0." + "pdn1_dataplan"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["pdn1-dataplan"], _ = expandExtensionControllerExtenderProfileCellularModem1Pdn1Dataplan(d, i["pdn1_dataplan"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["pdn1-dataplan"] = nil
 	}
 	pre_append = pre + ".0." + "pdn2_dataplan"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["pdn2-dataplan"], _ = expandExtensionControllerExtenderProfileCellularModem1Pdn2Dataplan(d, i["pdn2_dataplan"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["pdn2-dataplan"] = nil
 	}
 	pre_append = pre + ".0." + "pdn3_dataplan"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["pdn3-dataplan"], _ = expandExtensionControllerExtenderProfileCellularModem1Pdn3Dataplan(d, i["pdn3_dataplan"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["pdn3-dataplan"] = nil
 	}
 	pre_append = pre + ".0." + "pdn4_dataplan"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["pdn4-dataplan"], _ = expandExtensionControllerExtenderProfileCellularModem1Pdn4Dataplan(d, i["pdn4_dataplan"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["pdn4-dataplan"] = nil
 	}
 
 	return result, nil
@@ -3142,6 +3380,8 @@ func expandExtensionControllerExtenderProfileCellularModem1AutoSwitch(d *schema.
 	pre_append = pre + ".0." + "switch_back"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["switch-back"], _ = expandExtensionControllerExtenderProfileCellularModem1AutoSwitchSwitchBack(d, i["switch_back"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["switch-back"] = nil
 	}
 	pre_append = pre + ".0." + "switch_back_time"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3224,10 +3464,14 @@ func expandExtensionControllerExtenderProfileCellularModem2(d *schema.ResourceDa
 	pre_append = pre + ".0." + "redundant_intf"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["redundant-intf"], _ = expandExtensionControllerExtenderProfileCellularModem2RedundantIntf(d, i["redundant_intf"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["redundant-intf"] = nil
 	}
 	pre_append = pre + ".0." + "conn_status"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["conn-status"], _ = expandExtensionControllerExtenderProfileCellularModem2ConnStatus(d, i["conn_status"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["conn-status"] = nil
 	}
 	pre_append = pre + ".0." + "default_sim"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3248,14 +3492,20 @@ func expandExtensionControllerExtenderProfileCellularModem2(d *schema.ResourceDa
 	pre_append = pre + ".0." + "sim1_pin_code"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["sim1-pin-code"], _ = expandExtensionControllerExtenderProfileCellularModem2Sim1PinCode(d, i["sim1_pin_code"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["sim1-pin-code"] = nil
 	}
 	pre_append = pre + ".0." + "sim2_pin_code"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["sim2-pin-code"], _ = expandExtensionControllerExtenderProfileCellularModem2Sim2PinCode(d, i["sim2_pin_code"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["sim2-pin-code"] = nil
 	}
 	pre_append = pre + ".0." + "preferred_carrier"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["preferred-carrier"], _ = expandExtensionControllerExtenderProfileCellularModem2PreferredCarrier(d, i["preferred_carrier"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["preferred-carrier"] = nil
 	}
 	pre_append = pre + ".0." + "auto_switch"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3270,18 +3520,26 @@ func expandExtensionControllerExtenderProfileCellularModem2(d *schema.ResourceDa
 	pre_append = pre + ".0." + "pdn1_dataplan"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["pdn1-dataplan"], _ = expandExtensionControllerExtenderProfileCellularModem2Pdn1Dataplan(d, i["pdn1_dataplan"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["pdn1-dataplan"] = nil
 	}
 	pre_append = pre + ".0." + "pdn2_dataplan"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["pdn2-dataplan"], _ = expandExtensionControllerExtenderProfileCellularModem2Pdn2Dataplan(d, i["pdn2_dataplan"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["pdn2-dataplan"] = nil
 	}
 	pre_append = pre + ".0." + "pdn3_dataplan"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["pdn3-dataplan"], _ = expandExtensionControllerExtenderProfileCellularModem2Pdn3Dataplan(d, i["pdn3_dataplan"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["pdn3-dataplan"] = nil
 	}
 	pre_append = pre + ".0." + "pdn4_dataplan"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["pdn4-dataplan"], _ = expandExtensionControllerExtenderProfileCellularModem2Pdn4Dataplan(d, i["pdn4_dataplan"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["pdn4-dataplan"] = nil
 	}
 
 	return result, nil
@@ -3360,6 +3618,8 @@ func expandExtensionControllerExtenderProfileCellularModem2AutoSwitch(d *schema.
 	pre_append = pre + ".0." + "switch_back"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["switch-back"], _ = expandExtensionControllerExtenderProfileCellularModem2AutoSwitchSwitchBack(d, i["switch_back"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["switch-back"] = nil
 	}
 	pre_append = pre + ".0." + "switch_back_time"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3442,14 +3702,20 @@ func expandExtensionControllerExtenderProfileLanExtension(d *schema.ResourceData
 	pre_append = pre + ".0." + "ipsec_tunnel"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ipsec-tunnel"], _ = expandExtensionControllerExtenderProfileLanExtensionIpsecTunnel(d, i["ipsec_tunnel"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["ipsec-tunnel"] = nil
 	}
 	pre_append = pre + ".0." + "backhaul_interface"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["backhaul-interface"], _ = expandExtensionControllerExtenderProfileLanExtensionBackhaulInterface(d, i["backhaul_interface"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["backhaul-interface"] = nil
 	}
 	pre_append = pre + ".0." + "backhaul_ip"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["backhaul-ip"], _ = expandExtensionControllerExtenderProfileLanExtensionBackhaulIp(d, i["backhaul_ip"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["backhaul-ip"] = nil
 	}
 	pre_append = pre + ".0." + "backhaul"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3525,6 +3791,31 @@ func expandExtensionControllerExtenderProfileLanExtensionBackhaul(d *schema.Reso
 			tmp["weight"], _ = expandExtensionControllerExtenderProfileLanExtensionBackhaulWeight(d, i["weight"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "health_check_interval"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["health-check-interval"], _ = expandExtensionControllerExtenderProfileLanExtensionBackhaulHealthCheckInterval(d, i["health_check_interval"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "health_check_probe_cnt"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["health-check-probe-cnt"], _ = expandExtensionControllerExtenderProfileLanExtensionBackhaulHealthCheckProbeCnt(d, i["health_check_probe_cnt"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "health_check_probe_tm"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["health-check-probe-tm"], _ = expandExtensionControllerExtenderProfileLanExtensionBackhaulHealthCheckProbeTm(d, i["health_check_probe_tm"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "health_check_fail_cnt"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["health-check-fail-cnt"], _ = expandExtensionControllerExtenderProfileLanExtensionBackhaulHealthCheckFailCnt(d, i["health_check_fail_cnt"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "health_check_recovery_cnt"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["health-check-recovery-cnt"], _ = expandExtensionControllerExtenderProfileLanExtensionBackhaulHealthCheckRecoveryCnt(d, i["health_check_recovery_cnt"], pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -3546,6 +3837,26 @@ func expandExtensionControllerExtenderProfileLanExtensionBackhaulRole(d *schema.
 }
 
 func expandExtensionControllerExtenderProfileLanExtensionBackhaulWeight(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandExtensionControllerExtenderProfileLanExtensionBackhaulHealthCheckInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandExtensionControllerExtenderProfileLanExtensionBackhaulHealthCheckProbeCnt(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandExtensionControllerExtenderProfileLanExtensionBackhaulHealthCheckProbeTm(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandExtensionControllerExtenderProfileLanExtensionBackhaulHealthCheckFailCnt(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandExtensionControllerExtenderProfileLanExtensionBackhaulHealthCheckRecoveryCnt(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3786,6 +4097,8 @@ func expandExtensionControllerExtenderProfileWifiRadio1(d *schema.ResourceData, 
 	pre_append = pre + ".0." + "channel"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["channel"], _ = expandExtensionControllerExtenderProfileWifiRadio1Channel(d, i["channel"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["channel"] = nil
 	}
 	pre_append = pre + ".0." + "bandwidth"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3806,6 +4119,8 @@ func expandExtensionControllerExtenderProfileWifiRadio1(d *schema.ResourceData, 
 	pre_append = pre + ".0." + "max_clients"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["max-clients"], _ = expandExtensionControllerExtenderProfileWifiRadio1MaxClients(d, i["max_clients"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["max-clients"] = nil
 	}
 	pre_append = pre + ".0." + "extension_channel"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3818,10 +4133,14 @@ func expandExtensionControllerExtenderProfileWifiRadio1(d *schema.ResourceData, 
 	pre_append = pre + ".0." + "bss_color"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["bss-color"], _ = expandExtensionControllerExtenderProfileWifiRadio1BssColor(d, i["bss_color"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["bss-color"] = nil
 	}
 	pre_append = pre + ".0." + "lan_ext_vap"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["lan-ext-vap"], _ = expandExtensionControllerExtenderProfileWifiRadio1LanExtVap(d, i["lan_ext_vap"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["lan-ext-vap"] = nil
 	}
 	pre_append = pre + ".0." + "local_vaps"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3954,6 +4273,8 @@ func expandExtensionControllerExtenderProfileWifiRadio2(d *schema.ResourceData, 
 	pre_append = pre + ".0." + "channel"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["channel"], _ = expandExtensionControllerExtenderProfileWifiRadio2Channel(d, i["channel"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["channel"] = nil
 	}
 	pre_append = pre + ".0." + "bandwidth"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3974,6 +4295,8 @@ func expandExtensionControllerExtenderProfileWifiRadio2(d *schema.ResourceData, 
 	pre_append = pre + ".0." + "max_clients"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["max-clients"], _ = expandExtensionControllerExtenderProfileWifiRadio2MaxClients(d, i["max_clients"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["max-clients"] = nil
 	}
 	pre_append = pre + ".0." + "extension_channel"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3986,10 +4309,14 @@ func expandExtensionControllerExtenderProfileWifiRadio2(d *schema.ResourceData, 
 	pre_append = pre + ".0." + "bss_color"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["bss-color"], _ = expandExtensionControllerExtenderProfileWifiRadio2BssColor(d, i["bss_color"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["bss-color"] = nil
 	}
 	pre_append = pre + ".0." + "lan_ext_vap"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["lan-ext-vap"], _ = expandExtensionControllerExtenderProfileWifiRadio2LanExtVap(d, i["lan_ext_vap"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["lan-ext-vap"] = nil
 	}
 	pre_append = pre + ".0." + "local_vaps"
 	if _, ok := d.GetOk(pre_append); ok {

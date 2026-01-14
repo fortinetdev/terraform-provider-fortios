@@ -258,6 +258,7 @@ The following attributes are exported:
 * `virtual_server_count` - Maximum number of virtual server processes to create. The maximum is the number of CPU cores. This is not available on single-core CPUs.
 * `virtual_server_hardware_acceleration` - Enable/disable virtual server hardware acceleration.
 * `wad_worker_count` - Number of explicit proxy WAN optimization daemon (WAD) processes. By default WAN optimization, explicit proxy, and web caching is handled by all of the CPU cores in a FortiGate unit.
+* `wad_worker_dev_cache` - Number of cached devices for each ZTNA proxy worker. The default value is tuned by memory consumption. Set the option to 0 to disable the cache.
 * `wad_csvc_cs_count` - Number of concurrent WAD-cache-service object-cache processes.
 * `wad_csvc_db_count` - Number of concurrent WAD-cache-service byte-cache processes.
 * `wad_source_affinity` - Enable/disable dispatching traffic to WAD workers based on source affinity.
@@ -265,6 +266,7 @@ The following attributes are exported:
 * `login_timestamp` - Enable/disable login time recording.
 * `ip_conflict_detection` - Enable/disable logging of IPv4 address conflict detection.
 * `miglogd_children` - Number of logging (miglogd) processes to be allowed to run. Higher number can reduce performance; lower number can slow log processing time. No logs will be dropped or lost if the number is changed.
+* `log_daemon_cpu_threshold` - Configure syslog daemon process spawning threshold. Use a percentage threshold of syslogd CPU usage (1 - 99) or set to zero to use dynamic scheduling based on the number of packets in the syslogd queue (default = 0).
 * `special_file_23_support` - Enable/disable IPS detection of HIBUN format files when using Data Leak Protection.
 * `log_uuid_policy` - Enable/disable insertion of policy UUIDs to traffic logs.
 * `log_uuid_address` - Enable/disable insertion of address UUIDs to traffic logs.
@@ -325,6 +327,7 @@ The following attributes are exported:
 * `forticonverter_config_upload` - Enable/disable config upload to FortiConverter.
 * `internet_service_database` - Configure which Internet Service database size to download from FortiGuard and use.
 * `internet_service_download_list` - Configure which on-demand Internet Service IDs are to be downloaded. The structure of `internet_service_download_list` block is documented below.
+* `geoip_full_db` - When enabled, the full geographic database will be loaded into the kernel which enables geographic information in traffic logs - required for FortiView countries. Disabling this option will conserve memory.
 * `early_tcp_npu_session` - Enable/disable early TCP NPU session.
 * `npu_neighbor_update` - Enable/disable sending of probing packets to update neighbors for offloaded sessions.
 * `delay_tcp_npu_session` - Enable TCP NPU session delay to guarantee packet order of 3-way handshake.

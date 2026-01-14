@@ -128,6 +128,11 @@ func resourceVpnSslSettings() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"tls_groups": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"idle_timeout": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 259200),
@@ -582,6 +587,11 @@ func resourceVpnSslSettings() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
 			},
+			"remote_https_cert_check": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -786,6 +796,10 @@ func flattenVpnSslSettingsAlgorithm(v interface{}, d *schema.ResourceData, pre s
 	return v
 }
 
+func flattenVpnSslSettingsTlsGroups(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenVpnSslSettingsIdleTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return convintf2i(v)
 }
@@ -839,15 +853,26 @@ func flattenVpnSslSettingsTunnelIpPools(v interface{}, d *schema.ResourceData, p
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenVpnSslSettingsTunnelIpPoolsName(cur_v, d, pre_append, sv)
 		}
 
@@ -881,15 +906,26 @@ func flattenVpnSslSettingsTunnelIpv6Pools(v interface{}, d *schema.ResourceData,
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenVpnSslSettingsTunnelIpv6PoolsName(cur_v, d, pre_append, sv)
 		}
 
@@ -999,15 +1035,26 @@ func flattenVpnSslSettingsSourceInterface(v interface{}, d *schema.ResourceData,
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenVpnSslSettingsSourceInterfaceName(cur_v, d, pre_append, sv)
 		}
 
@@ -1041,15 +1088,26 @@ func flattenVpnSslSettingsSourceAddress(v interface{}, d *schema.ResourceData, p
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenVpnSslSettingsSourceAddressName(cur_v, d, pre_append, sv)
 		}
 
@@ -1087,15 +1145,26 @@ func flattenVpnSslSettingsSourceAddress6(v interface{}, d *schema.ResourceData, 
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenVpnSslSettingsSourceAddress6Name(cur_v, d, pre_append, sv)
 		}
 
@@ -1137,80 +1206,130 @@ func flattenVpnSslSettingsAuthenticationRule(v interface{}, d *schema.ResourceDa
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenVpnSslSettingsAuthenticationRuleId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_interface"
 		if cur_v, ok := i["source-interface"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "source_interface"
+			}
 			tmp["source_interface"] = flattenVpnSslSettingsAuthenticationRuleSourceInterface(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_address"
 		if cur_v, ok := i["source-address"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "source_address"
+			}
 			tmp["source_address"] = flattenVpnSslSettingsAuthenticationRuleSourceAddress(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_address_negate"
 		if cur_v, ok := i["source-address-negate"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "source_address_negate"
+			}
 			tmp["source_address_negate"] = flattenVpnSslSettingsAuthenticationRuleSourceAddressNegate(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_address6"
 		if cur_v, ok := i["source-address6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "source_address6"
+			}
 			tmp["source_address6"] = flattenVpnSslSettingsAuthenticationRuleSourceAddress6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_address6_negate"
 		if cur_v, ok := i["source-address6-negate"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "source_address6_negate"
+			}
 			tmp["source_address6_negate"] = flattenVpnSslSettingsAuthenticationRuleSourceAddress6Negate(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "users"
 		if cur_v, ok := i["users"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "users"
+			}
 			tmp["users"] = flattenVpnSslSettingsAuthenticationRuleUsers(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "groups"
 		if cur_v, ok := i["groups"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "groups"
+			}
 			tmp["groups"] = flattenVpnSslSettingsAuthenticationRuleGroups(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "portal"
 		if cur_v, ok := i["portal"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "portal"
+			}
 			tmp["portal"] = flattenVpnSslSettingsAuthenticationRulePortal(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "realm"
 		if cur_v, ok := i["realm"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "realm"
+			}
 			tmp["realm"] = flattenVpnSslSettingsAuthenticationRuleRealm(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "client_cert"
 		if cur_v, ok := i["client-cert"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "client_cert"
+			}
 			tmp["client_cert"] = flattenVpnSslSettingsAuthenticationRuleClientCert(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "user_peer"
 		if cur_v, ok := i["user-peer"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "user_peer"
+			}
 			tmp["user_peer"] = flattenVpnSslSettingsAuthenticationRuleUserPeer(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "cipher"
 		if cur_v, ok := i["cipher"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "cipher"
+			}
 			tmp["cipher"] = flattenVpnSslSettingsAuthenticationRuleCipher(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth"
 		if cur_v, ok := i["auth"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "auth"
+			}
 			tmp["auth"] = flattenVpnSslSettingsAuthenticationRuleAuth(cur_v, d, pre_append, sv)
 		}
 
@@ -1244,15 +1363,26 @@ func flattenVpnSslSettingsAuthenticationRuleSourceInterface(v interface{}, d *sc
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenVpnSslSettingsAuthenticationRuleSourceInterfaceName(cur_v, d, pre_append, sv)
 		}
 
@@ -1286,15 +1416,26 @@ func flattenVpnSslSettingsAuthenticationRuleSourceAddress(v interface{}, d *sche
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenVpnSslSettingsAuthenticationRuleSourceAddressName(cur_v, d, pre_append, sv)
 		}
 
@@ -1332,15 +1473,26 @@ func flattenVpnSslSettingsAuthenticationRuleSourceAddress6(v interface{}, d *sch
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenVpnSslSettingsAuthenticationRuleSourceAddress6Name(cur_v, d, pre_append, sv)
 		}
 
@@ -1378,15 +1530,26 @@ func flattenVpnSslSettingsAuthenticationRuleUsers(v interface{}, d *schema.Resou
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenVpnSslSettingsAuthenticationRuleUsersName(cur_v, d, pre_append, sv)
 		}
 
@@ -1420,15 +1583,26 @@ func flattenVpnSslSettingsAuthenticationRuleGroups(v interface{}, d *schema.Reso
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenVpnSslSettingsAuthenticationRuleGroupsName(cur_v, d, pre_append, sv)
 		}
 
@@ -1553,6 +1727,10 @@ func flattenVpnSslSettingsServerHostname(v interface{}, d *schema.ResourceData, 
 	return v
 }
 
+func flattenVpnSslSettingsRemoteHttpsCertCheck(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectVpnSslSettings(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 	var b_get_all_tables bool
@@ -1673,6 +1851,12 @@ func refreshObjectVpnSslSettings(d *schema.ResourceData, o map[string]interface{
 	if err = d.Set("algorithm", flattenVpnSslSettingsAlgorithm(o["algorithm"], d, "algorithm", sv)); err != nil {
 		if !fortiAPIPatch(o["algorithm"]) {
 			return fmt.Errorf("Error reading algorithm: %v", err)
+		}
+	}
+
+	if err = d.Set("tls_groups", flattenVpnSslSettingsTlsGroups(o["tls-groups"], d, "tls_groups", sv)); err != nil {
+		if !fortiAPIPatch(o["tls-groups"]) {
+			return fmt.Errorf("Error reading tls_groups: %v", err)
 		}
 	}
 
@@ -2084,6 +2268,12 @@ func refreshObjectVpnSslSettings(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("remote_https_cert_check", flattenVpnSslSettingsRemoteHttpsCertCheck(o["remote-https-cert-check"], d, "remote_https_cert_check", sv)); err != nil {
+		if !fortiAPIPatch(o["remote-https-cert-check"]) {
+			return fmt.Errorf("Error reading remote_https_cert_check: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -2166,6 +2356,10 @@ func expandVpnSslSettingsServercert(d *schema.ResourceData, v interface{}, pre s
 }
 
 func expandVpnSslSettingsAlgorithm(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnSslSettingsTlsGroups(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2801,6 +2995,10 @@ func expandVpnSslSettingsServerHostname(d *schema.ResourceData, v interface{}, p
 	return v, nil
 }
 
+func expandVpnSslSettingsRemoteHttpsCertCheck(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectVpnSslSettings(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
@@ -3057,6 +3255,19 @@ func getObjectVpnSslSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 				return &obj, err
 			} else if t != nil {
 				obj["algorithm"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("tls_groups"); ok {
+		if setArgNil {
+			obj["tls-groups"] = nil
+		} else {
+			t, err := expandVpnSslSettingsTlsGroups(d, v, "tls_groups", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["tls-groups"] = t
 			}
 		}
 	}
@@ -3821,6 +4032,19 @@ func getObjectVpnSslSettings(d *schema.ResourceData, setArgNil bool, sv string) 
 		}
 	} else if d.HasChange("server_hostname") {
 		obj["server-hostname"] = nil
+	}
+
+	if v, ok := d.GetOk("remote_https_cert_check"); ok {
+		if setArgNil {
+			obj["remote-https-cert-check"] = nil
+		} else {
+			t, err := expandVpnSslSettingsRemoteHttpsCertCheck(d, v, "remote_https_cert_check", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["remote-https-cert-check"] = t
+			}
+		}
 	}
 
 	return &obj, nil

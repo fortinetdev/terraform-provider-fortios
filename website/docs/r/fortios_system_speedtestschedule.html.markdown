@@ -25,10 +25,17 @@ The following arguments are supported:
 * `update_shaper` - Set egress shaper based on the test result. Valid values: `disable`, `local`, `remote`, `both`.
 * `update_inbandwidth` - Enable/disable bypassing interface's inbound bandwidth setting. Valid values: `disable`, `enable`.
 * `update_outbandwidth` - Enable/disable bypassing interface's outbound bandwidth setting. Valid values: `disable`, `enable`.
+* `update_interface_shaping` - Enable/disable using the speedtest results as reference for interface shaping (overriding configured in/outbandwidth). Valid values: `disable`, `enable`.
 * `update_inbandwidth_maximum` - Maximum downloading bandwidth (kbps) to be used in a speed test.
 * `update_inbandwidth_minimum` - Minimum downloading bandwidth (kbps) to be considered effective.
 * `update_outbandwidth_maximum` - Maximum uploading bandwidth (kbps) to be used in a speed test.
 * `update_outbandwidth_minimum` - Minimum uploading bandwidth (kbps) to be considered effective.
+* `expected_inbandwidth_minimum` - Set the minimum inbandwidth threshold for applying speedtest results on shaping-profile.
+* `expected_inbandwidth_maximum` - Set the maximum inbandwidth threshold for applying speedtest results on shaping-profile.
+* `expected_outbandwidth_minimum` - Set the minimum outbandwidth threshold for applying speedtest results on shaping-profile.
+* `expected_outbandwidth_maximum` - Set the maximum outbandwidth threshold for applying speedtest results on shaping-profile.
+* `retries` - Maximum number of times the FortiGate unit will attempt to contact the same server before considering the speed test has failed (1 - 10, default = 5).
+* `retry_pause` - Number of seconds the FortiGate pauses between successive speed tests before trying a different server (60 - 3600, default = 300).
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
 * `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.

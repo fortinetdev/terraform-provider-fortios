@@ -48,6 +48,7 @@ The following arguments are supported:
 * `cifs` - Enable/disable CIFS logging. Valid values: `enable`, `disable`.
 * `switch_controller` - Enable/disable Switch-Controller logging. Valid values: `enable`, `disable`.
 * `rest_api` - Enable/disable REST API logging. Valid values: `enable`, `disable`.
+* `web_svc` - Enable/disable web-svc performance logging. Valid values: `enable`, `disable`.
 * `webproxy` - Enable/disable web proxy event logging. Valid values: `enable`, `disable`.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 

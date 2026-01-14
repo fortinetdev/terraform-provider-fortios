@@ -53,7 +53,7 @@ func (c *FortiSDKClient) CreateSystemSettingNTP(params *JSONSystemSettingNTP) (o
 
 	// bytes := bytes.NewBuffer(locJSON)
 	// req := c.NewRequest(HTTPMethod, path, nil, bytes)
-	// err = req.Send()
+	// err = req.Send(nil)
 
 	// body, err := ioutil.ReadAll(req.HTTPResponse.Body)
 	// req.HTTPResponse.Body.Close() //#
@@ -111,7 +111,7 @@ func (c *FortiSDKClient) UpdateSystemSettingNTP(params *JSONSystemSettingNTP, mk
 
 	bytes := bytes.NewBuffer(locJSON)
 	req := c.NewRequest(HTTPMethod, path, nil, bytes)
-	err = req.Send()
+	err = req.Send(nil)
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("cannot send request %s", err)
 		return
@@ -151,7 +151,7 @@ func (c *FortiSDKClient) DeleteSystemSettingNTP(mkey string) (err error) {
 	// // path += "/" + mkey
 
 	// req := c.NewRequest(HTTPMethod, path, nil, nil)
-	// err = req.Send()
+	// err = req.Send(nil)
 
 	// body, err := ioutil.ReadAll(req.HTTPResponse.Body)
 	// req.HTTPResponse.Body.Close() //#
@@ -192,7 +192,7 @@ func (c *FortiSDKClient) ReadSystemSettingNTP(mkey string) (output *JSONSystemSe
 	output = &JSONSystemSettingNTP{}
 
 	req := c.NewRequest(HTTPMethod, path, nil, nil)
-	err = req.Send()
+	err = req.Send(nil)
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("cannot send request %s", err)
 		return

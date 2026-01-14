@@ -736,42 +736,62 @@ func expandExtensionControllerExtenderWanExtension(d *schema.ResourceData, v int
 	pre_append = pre + ".0." + "modem1_extension"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["modem1-extension"], _ = expandExtensionControllerExtenderWanExtensionModem1Extension(d, i["modem1_extension"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["modem1-extension"] = nil
 	}
 	pre_append = pre + ".0." + "modem2_extension"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["modem2-extension"], _ = expandExtensionControllerExtenderWanExtensionModem2Extension(d, i["modem2_extension"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["modem2-extension"] = nil
 	}
 	pre_append = pre + ".0." + "modem1_pdn1_interface"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["modem1-pdn1-interface"], _ = expandExtensionControllerExtenderWanExtensionModem1Pdn1Interface(d, i["modem1_pdn1_interface"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["modem1-pdn1-interface"] = nil
 	}
 	pre_append = pre + ".0." + "modem1_pdn2_interface"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["modem1-pdn2-interface"], _ = expandExtensionControllerExtenderWanExtensionModem1Pdn2Interface(d, i["modem1_pdn2_interface"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["modem1-pdn2-interface"] = nil
 	}
 	pre_append = pre + ".0." + "modem1_pdn3_interface"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["modem1-pdn3-interface"], _ = expandExtensionControllerExtenderWanExtensionModem1Pdn3Interface(d, i["modem1_pdn3_interface"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["modem1-pdn3-interface"] = nil
 	}
 	pre_append = pre + ".0." + "modem1_pdn4_interface"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["modem1-pdn4-interface"], _ = expandExtensionControllerExtenderWanExtensionModem1Pdn4Interface(d, i["modem1_pdn4_interface"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["modem1-pdn4-interface"] = nil
 	}
 	pre_append = pre + ".0." + "modem2_pdn1_interface"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["modem2-pdn1-interface"], _ = expandExtensionControllerExtenderWanExtensionModem2Pdn1Interface(d, i["modem2_pdn1_interface"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["modem2-pdn1-interface"] = nil
 	}
 	pre_append = pre + ".0." + "modem2_pdn2_interface"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["modem2-pdn2-interface"], _ = expandExtensionControllerExtenderWanExtensionModem2Pdn2Interface(d, i["modem2_pdn2_interface"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["modem2-pdn2-interface"] = nil
 	}
 	pre_append = pre + ".0." + "modem2_pdn3_interface"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["modem2-pdn3-interface"], _ = expandExtensionControllerExtenderWanExtensionModem2Pdn3Interface(d, i["modem2_pdn3_interface"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["modem2-pdn3-interface"] = nil
 	}
 	pre_append = pre + ".0." + "modem2_pdn4_interface"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["modem2-pdn4-interface"], _ = expandExtensionControllerExtenderWanExtensionModem2Pdn4Interface(d, i["modem2_pdn4_interface"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["modem2-pdn4-interface"] = nil
 	}
 
 	return result, nil

@@ -41,6 +41,7 @@ The following arguments are supported:
 * `idp_single_logout_url` - IDP single logout URL.
 * `idp_cert` - IDP certificate name.
 * `server_address` - Server address.
+* `require_signed_resp_and_asrt` - Require both response and assertion from IDP to be signed when FGT acts as SP (default = disable). Valid values: `enable`, `disable`.
 * `tolerance` - Tolerance to the range of time when the assertion is valid (in minutes).
 * `life` - Length of the range of time when the assertion is valid (in minutes).
 * `service_providers` - Authorized service providers. The structure of `service_providers` block is documented below.

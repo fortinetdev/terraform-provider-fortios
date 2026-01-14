@@ -440,31 +440,46 @@ func flattenRouterospf6Ospf6InterfaceIpsecKeys(v interface{}, d *schema.Resource
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "spi", "spi")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "spi"
 		if cur_v, ok := i["spi"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "spi"
+			}
 			tmp["spi"] = flattenRouterospf6Ospf6InterfaceIpsecKeysSpi(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_key"
 		if _, ok := i["auth-key"]; ok {
-			c := d.Get(pre_append).(string)
-			if c != "" {
-				tmp["auth_key"] = c
+			if tf_exist {
+				pre_append := pre + "." + strconv.Itoa(con) + "." + "auth_key"
+				c := d.Get(pre_append).(string)
+				if c != "" {
+					tmp["auth_key"] = c
+				}
 			}
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "enc_key"
 		if _, ok := i["enc-key"]; ok {
-			c := d.Get(pre_append).(string)
-			if c != "" {
-				tmp["enc_key"] = c
+			if tf_exist {
+				pre_append := pre + "." + strconv.Itoa(con) + "." + "enc_key"
+				c := d.Get(pre_append).(string)
+				if c != "" {
+					tmp["enc_key"] = c
+				}
 			}
 		}
 
@@ -498,30 +513,50 @@ func flattenRouterospf6Ospf6InterfaceNeighbor(v interface{}, d *schema.ResourceD
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "ip6", "ip6")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip6"
 		if cur_v, ok := i["ip6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "ip6"
+			}
 			tmp["ip6"] = flattenRouterospf6Ospf6InterfaceNeighborIp6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "poll_interval"
 		if cur_v, ok := i["poll-interval"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "poll_interval"
+			}
 			tmp["poll_interval"] = flattenRouterospf6Ospf6InterfaceNeighborPollInterval(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "cost"
 		if cur_v, ok := i["cost"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "cost"
+			}
 			tmp["cost"] = flattenRouterospf6Ospf6InterfaceNeighborCost(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
 		if cur_v, ok := i["priority"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
+			}
 			tmp["priority"] = flattenRouterospf6Ospf6InterfaceNeighborPriority(cur_v, d, pre_append, sv)
 		}
 

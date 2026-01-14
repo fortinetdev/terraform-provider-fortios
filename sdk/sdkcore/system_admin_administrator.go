@@ -77,8 +77,10 @@ func (c *FortiSDKClient) CreateSystemAdminAdministrator(params *JSONSystemAdminA
 	}
 
 	bytes := bytes.NewBuffer(locJSON)
+	headers := make(map[string]string)
+	headers["X-Admin-Passwd"] = c.Config.Auth.Password
 	req := c.NewRequest(HTTPMethod, path, nil, bytes)
-	err = req.Send()
+	err = req.Send(&headers)
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("cannot send request %s", err)
 		return
@@ -126,8 +128,10 @@ func (c *FortiSDKClient) UpdateSystemAdminAdministrator(params *JSONSystemAdminA
 	}
 
 	bytes := bytes.NewBuffer(locJSON)
+	headers := make(map[string]string)
+	headers["X-Admin-Passwd"] = c.Config.Auth.Password
 	req := c.NewRequest(HTTPMethod, path, nil, bytes)
-	err = req.Send()
+	err = req.Send(&headers)
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("cannot send request %s", err)
 		return
@@ -167,9 +171,11 @@ func (c *FortiSDKClient) DeleteSystemAdminAdministrator(mkey string) (err error)
 	HTTPMethod := "DELETE"
 	path := "/api/v2/cmdb/system/admin"
 	path += "/" + EscapeURLString(mkey)
+	headers := make(map[string]string)
+	headers["X-Admin-Passwd"] = c.Config.Auth.Password
 
 	req := c.NewRequest(HTTPMethod, path, nil, nil)
-	err = req.Send()
+	err = req.Send(&headers)
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("cannot send request %s", err)
 		return
@@ -205,7 +211,7 @@ func (c *FortiSDKClient) ReadSystemAdminAdministrator(mkey string) (output *JSON
 	output = &JSONSystemAdminAdministrator2{}
 
 	req := c.NewRequest(HTTPMethod, path, nil, nil)
-	err = req.Send()
+	err = req.Send(nil)
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("cannot send request %s", err)
 		return

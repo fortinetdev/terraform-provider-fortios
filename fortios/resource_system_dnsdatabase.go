@@ -406,7 +406,7 @@ func flattenSystemDnsDatabaseAuthoritative(v interface{}, d *schema.ResourceData
 }
 
 func flattenSystemDnsDatabaseForwarder(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
+	return remove_quote(v)
 }
 
 func flattenSystemDnsDatabaseForwarder6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -446,55 +446,90 @@ func flattenSystemDnsDatabaseDnsEntry(v interface{}, d *schema.ResourceData, pre
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenSystemDnsDatabaseDnsEntryId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if cur_v, ok := i["status"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
+			}
 			tmp["status"] = flattenSystemDnsDatabaseDnsEntryStatus(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if cur_v, ok := i["type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
+			}
 			tmp["type"] = flattenSystemDnsDatabaseDnsEntryType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ttl"
 		if cur_v, ok := i["ttl"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "ttl"
+			}
 			tmp["ttl"] = flattenSystemDnsDatabaseDnsEntryTtl(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "preference"
 		if cur_v, ok := i["preference"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "preference"
+			}
 			tmp["preference"] = flattenSystemDnsDatabaseDnsEntryPreference(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if cur_v, ok := i["ip"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
+			}
 			tmp["ip"] = flattenSystemDnsDatabaseDnsEntryIp(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "ipv6"
 		if cur_v, ok := i["ipv6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "ipv6"
+			}
 			tmp["ipv6"] = flattenSystemDnsDatabaseDnsEntryIpv6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "hostname"
 		if cur_v, ok := i["hostname"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "hostname"
+			}
 			tmp["hostname"] = flattenSystemDnsDatabaseDnsEntryHostname(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "canonical_name"
 		if cur_v, ok := i["canonical-name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "canonical_name"
+			}
 			tmp["canonical_name"] = flattenSystemDnsDatabaseDnsEntryCanonicalName(cur_v, d, pre_append, sv)
 		}
 

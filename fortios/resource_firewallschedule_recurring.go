@@ -59,6 +59,11 @@ func resourceFirewallScheduleRecurring() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"label_day": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"color": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 32),
@@ -244,6 +249,10 @@ func flattenFirewallScheduleRecurringDay(v interface{}, d *schema.ResourceData, 
 	return v
 }
 
+func flattenFirewallScheduleRecurringLabelDay(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallScheduleRecurringColor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return convintf2i(v)
 }
@@ -285,6 +294,12 @@ func refreshObjectFirewallScheduleRecurring(d *schema.ResourceData, o map[string
 		}
 	}
 
+	if err = d.Set("label_day", flattenFirewallScheduleRecurringLabelDay(o["label-day"], d, "label_day", sv)); err != nil {
+		if !fortiAPIPatch(o["label-day"]) {
+			return fmt.Errorf("Error reading label_day: %v", err)
+		}
+	}
+
 	if err = d.Set("color", flattenFirewallScheduleRecurringColor(o["color"], d, "color", sv)); err != nil {
 		if !fortiAPIPatch(o["color"]) {
 			return fmt.Errorf("Error reading color: %v", err)
@@ -323,6 +338,10 @@ func expandFirewallScheduleRecurringEnd(d *schema.ResourceData, v interface{}, p
 }
 
 func expandFirewallScheduleRecurringDay(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallScheduleRecurringLabelDay(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -385,6 +404,15 @@ func getObjectFirewallScheduleRecurring(d *schema.ResourceData, sv string) (*map
 			return &obj, err
 		} else if t != nil {
 			obj["day"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("label_day"); ok {
+		t, err := expandFirewallScheduleRecurringLabelDay(d, v, "label_day", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["label-day"] = t
 		}
 	}
 

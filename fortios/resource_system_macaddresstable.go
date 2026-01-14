@@ -207,8 +207,8 @@ func resourceSystemMacAddressTableRead(d *schema.ResourceData, m interface{}) er
 }
 
 func flattenSystemMacAddressTableMac(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	if strings.ToLower(v.(string)) == strings.ToLower(d.Get("mac").(string)) {
-		return d.Get("mac")
+	if strings.ToLower(v.(string)) == strings.ToLower(d.Get(pre).(string)) {
+		return d.Get(pre)
 	}
 	return v
 }

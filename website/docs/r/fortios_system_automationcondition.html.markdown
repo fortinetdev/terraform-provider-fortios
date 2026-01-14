@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_system_automationcondition
-Condition for automation stitches. Applies to FortiOS Version `7.4.6,7.4.7,7.4.8,7.6.1,7.6.2,7.6.3,7.6.4`.
+Condition for automation stitches. Applies to FortiOS Version `7.4.6,7.4.7,7.4.8,7.6.1,7.6.2,7.6.3,7.6.4,7.6.5`.
 
 ## Argument Reference
 

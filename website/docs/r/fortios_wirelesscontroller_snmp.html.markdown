@@ -33,11 +33,17 @@ The `community` block supports:
 * `trap_v1_status` - Enable/disable SNMP v1 traps. Valid values: `enable`, `disable`.
 * `trap_v2c_status` - Enable/disable SNMP v2c traps. Valid values: `enable`, `disable`.
 * `hosts` - Configure IPv4 SNMP managers (hosts). The structure of `hosts` block is documented below.
+* `hosts6` - Configure IPv6 SNMP managers (hosts). The structure of `hosts6` block is documented below.
 
 The `hosts` block supports:
 
 * `id` - Host entry ID.
 * `ip` - IPv4 address of the SNMP manager (host).
+
+The `hosts6` block supports:
+
+* `id` - Host6 entry ID.
+* `ipv6` - IPv6 address of the SNMP manager (host).
 
 The `user` block supports:
 
@@ -51,6 +57,7 @@ The `user` block supports:
 * `priv_proto` - Privacy (encryption) protocol. Valid values: `aes`, `des`, `aes256`, `aes256cisco`.
 * `priv_pwd` - Password for privacy (encryption) protocol.
 * `notify_hosts` - Configure SNMP User Notify Hosts.
+* `notify_hosts6` - Configure IPv6 SNMP User Notify Hosts.
 
 
 ## Attribute Reference

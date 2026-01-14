@@ -264,6 +264,22 @@ func dataSourceSystemAccprofile() *schema.Resource {
 					},
 				},
 			},
+			"secfabgrp_permission": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"csfsys": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"csffoo": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
 			"admintimeout_override": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -787,6 +803,37 @@ func dataSourceFlattenSystemAccprofileUtmgrpPermissionTelemetry(v interface{}, d
 	return v
 }
 
+func dataSourceFlattenSystemAccprofileSecfabgrpPermission(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	i := v.(map[string]interface{})
+	result := make(map[string]interface{})
+
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "csfsys"
+	if _, ok := i["csfsys"]; ok {
+		result["csfsys"] = dataSourceFlattenSystemAccprofileSecfabgrpPermissionCsfsys(i["csfsys"], d, pre_append)
+	}
+
+	pre_append = pre + ".0." + "csffoo"
+	if _, ok := i["csffoo"]; ok {
+		result["csffoo"] = dataSourceFlattenSystemAccprofileSecfabgrpPermissionCsffoo(i["csffoo"], d, pre_append)
+	}
+
+	lastresult := []map[string]interface{}{result}
+	return lastresult
+}
+
+func dataSourceFlattenSystemAccprofileSecfabgrpPermissionCsfsys(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemAccprofileSecfabgrpPermissionCsffoo(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemAccprofileAdmintimeoutOverride(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -941,6 +988,12 @@ func dataSourceRefreshObjectSystemAccprofile(d *schema.ResourceData, o map[strin
 	if err = d.Set("utmgrp_permission", dataSourceFlattenSystemAccprofileUtmgrpPermission(o["utmgrp-permission"], d, "utmgrp_permission")); err != nil {
 		if !fortiAPIPatch(o["utmgrp-permission"]) {
 			return fmt.Errorf("Error reading utmgrp_permission: %v", err)
+		}
+	}
+
+	if err = d.Set("secfabgrp_permission", dataSourceFlattenSystemAccprofileSecfabgrpPermission(o["secfabgrp-permission"], d, "secfabgrp_permission")); err != nil {
+		if !fortiAPIPatch(o["secfabgrp-permission"]) {
+			return fmt.Errorf("Error reading secfabgrp_permission: %v", err)
 		}
 	}
 

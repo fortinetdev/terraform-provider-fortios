@@ -941,6 +941,10 @@ func dataSourceSystemGlobal() *schema.Resource {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+			"wad_worker_dev_cache": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
 			"wad_csvc_cs_count": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
@@ -966,6 +970,10 @@ func dataSourceSystemGlobal() *schema.Resource {
 				Computed: true,
 			},
 			"miglogd_children": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"log_daemon_cpu_threshold": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
@@ -1216,6 +1224,10 @@ func dataSourceSystemGlobal() *schema.Resource {
 						},
 					},
 				},
+			},
+			"geoip_full_db": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
 			},
 			"early_tcp_npu_session": &schema.Schema{
 				Type:     schema.TypeString,
@@ -2237,6 +2249,10 @@ func dataSourceFlattenSystemGlobalWadWorkerCount(v interface{}, d *schema.Resour
 	return v
 }
 
+func dataSourceFlattenSystemGlobalWadWorkerDevCache(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemGlobalWadCsvcCsCount(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -2262,6 +2278,10 @@ func dataSourceFlattenSystemGlobalIpConflictDetection(v interface{}, d *schema.R
 }
 
 func dataSourceFlattenSystemGlobalMiglogdChildren(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalLogDaemonCpuThreshold(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -2534,6 +2554,10 @@ func dataSourceFlattenSystemGlobalInternetServiceDownloadList(v interface{}, d *
 }
 
 func dataSourceFlattenSystemGlobalInternetServiceDownloadListId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalGeoipFullDb(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -3958,6 +3982,12 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 		}
 	}
 
+	if err = d.Set("wad_worker_dev_cache", dataSourceFlattenSystemGlobalWadWorkerDevCache(o["wad-worker-dev-cache"], d, "wad_worker_dev_cache")); err != nil {
+		if !fortiAPIPatch(o["wad-worker-dev-cache"]) {
+			return fmt.Errorf("Error reading wad_worker_dev_cache: %v", err)
+		}
+	}
+
 	if err = d.Set("wad_csvc_cs_count", dataSourceFlattenSystemGlobalWadCsvcCsCount(o["wad-csvc-cs-count"], d, "wad_csvc_cs_count")); err != nil {
 		if !fortiAPIPatch(o["wad-csvc-cs-count"]) {
 			return fmt.Errorf("Error reading wad_csvc_cs_count: %v", err)
@@ -3997,6 +4027,12 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 	if err = d.Set("miglogd_children", dataSourceFlattenSystemGlobalMiglogdChildren(o["miglogd-children"], d, "miglogd_children")); err != nil {
 		if !fortiAPIPatch(o["miglogd-children"]) {
 			return fmt.Errorf("Error reading miglogd_children: %v", err)
+		}
+	}
+
+	if err = d.Set("log_daemon_cpu_threshold", dataSourceFlattenSystemGlobalLogDaemonCpuThreshold(o["log-daemon-cpu-threshold"], d, "log_daemon_cpu_threshold")); err != nil {
+		if !fortiAPIPatch(o["log-daemon-cpu-threshold"]) {
+			return fmt.Errorf("Error reading log_daemon_cpu_threshold: %v", err)
 		}
 	}
 
@@ -4357,6 +4393,12 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 	if err = d.Set("internet_service_download_list", dataSourceFlattenSystemGlobalInternetServiceDownloadList(o["internet-service-download-list"], d, "internet_service_download_list")); err != nil {
 		if !fortiAPIPatch(o["internet-service-download-list"]) {
 			return fmt.Errorf("Error reading internet_service_download_list: %v", err)
+		}
+	}
+
+	if err = d.Set("geoip_full_db", dataSourceFlattenSystemGlobalGeoipFullDb(o["geoip-full-db"], d, "geoip_full_db")); err != nil {
+		if !fortiAPIPatch(o["geoip-full-db"]) {
+			return fmt.Errorf("Error reading geoip_full_db: %v", err)
 		}
 	}
 

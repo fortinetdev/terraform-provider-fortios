@@ -49,6 +49,7 @@ The following attributes are exported:
 * `sdn_tag` - SDN Tag.
 * `filter` - Match criteria filter.
 * `sdn_addr_type` - Type of addresses to collect.
+* `passive_fqdn_learning` - Enable/disable passive learning of FQDNs.  When enabled, the FortiGate learns, trusts, and saves FQDNs from endpoint DNS queries (default = enable).
 * `fabric_object` - Security Fabric global object setting.
 
 The `macaddr` block contains:

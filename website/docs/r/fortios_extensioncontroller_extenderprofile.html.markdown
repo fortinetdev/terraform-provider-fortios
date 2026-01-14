@@ -145,6 +145,11 @@ The `backhaul` block supports:
 * `port` - FortiExtender uplink port. Valid values: `wan`, `lte1`, `lte2`, `port1`, `port2`, `port3`, `port4`, `port5`, `sfp`.
 * `role` - FortiExtender uplink port. Valid values: `primary`, `secondary`.
 * `weight` - WRR weight parameter.
+* `health_check_interval` - Health monitoring interval in seconds (1 - 3600, default = 5).
+* `health_check_probe_cnt` - Number of health monitoring probes to send within an interval (1 - 10, default = 1).
+* `health_check_probe_tm` - Health monitoring probe timeout in seconds (1 - 10, default = 2).
+* `health_check_fail_cnt` - Number of failures before the link is considered dead (1 - 10, default = 5).
+* `health_check_recovery_cnt` - Number of successful checks before the link is considered alive (1 - 10, default = 5).
 
 The `downlinks` block supports:
 

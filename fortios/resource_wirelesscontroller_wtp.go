@@ -1148,20 +1148,34 @@ func flattenWirelessControllerWtpSplitTunnelingAcl(v interface{}, d *schema.Reso
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenWirelessControllerWtpSplitTunnelingAclId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "dest_ip"
 		if cur_v, ok := i["dest-ip"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "dest_ip"
+			}
 			tmp["dest_ip"] = flattenWirelessControllerWtpSplitTunnelingAclDestIp(cur_v, d, pre_append, sv)
 		}
 
@@ -1595,15 +1609,26 @@ func flattenWirelessControllerWtpRadio1Vaps(v interface{}, d *schema.ResourceDat
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenWirelessControllerWtpRadio1VapsName(cur_v, d, pre_append, sv)
 		}
 
@@ -1641,15 +1666,26 @@ func flattenWirelessControllerWtpRadio1Channel(v interface{}, d *schema.Resource
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "chan", "chan")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "chan"
 		if cur_v, ok := i["chan"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "chan"
+			}
 			tmp["chan"] = flattenWirelessControllerWtpRadio1ChannelChan(cur_v, d, pre_append, sv)
 		}
 
@@ -1855,15 +1891,26 @@ func flattenWirelessControllerWtpRadio2Vaps(v interface{}, d *schema.ResourceDat
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenWirelessControllerWtpRadio2VapsName(cur_v, d, pre_append, sv)
 		}
 
@@ -1901,15 +1948,26 @@ func flattenWirelessControllerWtpRadio2Channel(v interface{}, d *schema.Resource
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "chan", "chan")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "chan"
 		if cur_v, ok := i["chan"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "chan"
+			}
 			tmp["chan"] = flattenWirelessControllerWtpRadio2ChannelChan(cur_v, d, pre_append, sv)
 		}
 
@@ -2106,15 +2164,26 @@ func flattenWirelessControllerWtpRadio3Vaps(v interface{}, d *schema.ResourceDat
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenWirelessControllerWtpRadio3VapsName(cur_v, d, pre_append, sv)
 		}
 
@@ -2152,15 +2221,26 @@ func flattenWirelessControllerWtpRadio3Channel(v interface{}, d *schema.Resource
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "chan", "chan")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "chan"
 		if cur_v, ok := i["chan"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "chan"
+			}
 			tmp["chan"] = flattenWirelessControllerWtpRadio3ChannelChan(cur_v, d, pre_append, sv)
 		}
 
@@ -2357,15 +2437,26 @@ func flattenWirelessControllerWtpRadio4Vaps(v interface{}, d *schema.ResourceDat
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenWirelessControllerWtpRadio4VapsName(cur_v, d, pre_append, sv)
 		}
 
@@ -2403,15 +2494,26 @@ func flattenWirelessControllerWtpRadio4Channel(v interface{}, d *schema.Resource
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "chan", "chan")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "chan"
 		if cur_v, ok := i["chan"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "chan"
+			}
 			tmp["chan"] = flattenWirelessControllerWtpRadio4ChannelChan(cur_v, d, pre_append, sv)
 		}
 
@@ -2989,6 +3091,8 @@ func expandWirelessControllerWtpLan(d *schema.ResourceData, v interface{}, pre s
 	pre_append = pre + ".0." + "port_ssid"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["port-ssid"], _ = expandWirelessControllerWtpLanPortSsid(d, i["port_ssid"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["port-ssid"] = nil
 	}
 	pre_append = pre + ".0." + "port1_mode"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -2997,6 +3101,8 @@ func expandWirelessControllerWtpLan(d *schema.ResourceData, v interface{}, pre s
 	pre_append = pre + ".0." + "port1_ssid"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["port1-ssid"], _ = expandWirelessControllerWtpLanPort1Ssid(d, i["port1_ssid"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["port1-ssid"] = nil
 	}
 	pre_append = pre + ".0." + "port2_mode"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3005,6 +3111,8 @@ func expandWirelessControllerWtpLan(d *schema.ResourceData, v interface{}, pre s
 	pre_append = pre + ".0." + "port2_ssid"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["port2-ssid"], _ = expandWirelessControllerWtpLanPort2Ssid(d, i["port2_ssid"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["port2-ssid"] = nil
 	}
 	pre_append = pre + ".0." + "port3_mode"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3013,6 +3121,8 @@ func expandWirelessControllerWtpLan(d *schema.ResourceData, v interface{}, pre s
 	pre_append = pre + ".0." + "port3_ssid"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["port3-ssid"], _ = expandWirelessControllerWtpLanPort3Ssid(d, i["port3_ssid"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["port3-ssid"] = nil
 	}
 	pre_append = pre + ".0." + "port4_mode"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3021,6 +3131,8 @@ func expandWirelessControllerWtpLan(d *schema.ResourceData, v interface{}, pre s
 	pre_append = pre + ".0." + "port4_ssid"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["port4-ssid"], _ = expandWirelessControllerWtpLanPort4Ssid(d, i["port4_ssid"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["port4-ssid"] = nil
 	}
 	pre_append = pre + ".0." + "port5_mode"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3029,6 +3141,8 @@ func expandWirelessControllerWtpLan(d *schema.ResourceData, v interface{}, pre s
 	pre_append = pre + ".0." + "port5_ssid"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["port5-ssid"], _ = expandWirelessControllerWtpLanPort5Ssid(d, i["port5_ssid"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["port5-ssid"] = nil
 	}
 	pre_append = pre + ".0." + "port6_mode"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3037,6 +3151,8 @@ func expandWirelessControllerWtpLan(d *schema.ResourceData, v interface{}, pre s
 	pre_append = pre + ".0." + "port6_ssid"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["port6-ssid"], _ = expandWirelessControllerWtpLanPort6Ssid(d, i["port6_ssid"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["port6-ssid"] = nil
 	}
 	pre_append = pre + ".0." + "port7_mode"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3045,6 +3161,8 @@ func expandWirelessControllerWtpLan(d *schema.ResourceData, v interface{}, pre s
 	pre_append = pre + ".0." + "port7_ssid"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["port7-ssid"], _ = expandWirelessControllerWtpLanPort7Ssid(d, i["port7_ssid"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["port7-ssid"] = nil
 	}
 	pre_append = pre + ".0." + "port8_mode"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3053,6 +3171,8 @@ func expandWirelessControllerWtpLan(d *schema.ResourceData, v interface{}, pre s
 	pre_append = pre + ".0." + "port8_ssid"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["port8-ssid"], _ = expandWirelessControllerWtpLanPort8Ssid(d, i["port8_ssid"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["port8-ssid"] = nil
 	}
 	pre_append = pre + ".0." + "port_esl_mode"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3061,6 +3181,8 @@ func expandWirelessControllerWtpLan(d *schema.ResourceData, v interface{}, pre s
 	pre_append = pre + ".0." + "port_esl_ssid"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["port-esl-ssid"], _ = expandWirelessControllerWtpLanPortEslSsid(d, i["port_esl_ssid"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["port-esl-ssid"] = nil
 	}
 
 	return result, nil
@@ -3187,6 +3309,8 @@ func expandWirelessControllerWtpRadio1(d *schema.ResourceData, v interface{}, pr
 	pre_append = pre + ".0." + "radio_id"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["radio-id"], _ = expandWirelessControllerWtpRadio1RadioId(d, i["radio_id"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["radio-id"] = nil
 	}
 	pre_append = pre + ".0." + "override_band"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3195,14 +3319,20 @@ func expandWirelessControllerWtpRadio1(d *schema.ResourceData, v interface{}, pr
 	pre_append = pre + ".0." + "band"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["band"], _ = expandWirelessControllerWtpRadio1Band(d, i["band"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["band"] = nil
 	}
 	pre_append = pre + ".0." + "override_analysis"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["override-analysis"], _ = expandWirelessControllerWtpRadio1OverrideAnalysis(d, i["override_analysis"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["override-analysis"] = nil
 	}
 	pre_append = pre + ".0." + "spectrum_analysis"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["spectrum-analysis"], _ = expandWirelessControllerWtpRadio1SpectrumAnalysis(d, i["spectrum_analysis"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["spectrum-analysis"] = nil
 	}
 	pre_append = pre + ".0." + "override_txpower"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3405,6 +3535,8 @@ func expandWirelessControllerWtpRadio2(d *schema.ResourceData, v interface{}, pr
 	pre_append = pre + ".0." + "radio_id"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["radio-id"], _ = expandWirelessControllerWtpRadio2RadioId(d, i["radio_id"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["radio-id"] = nil
 	}
 	pre_append = pre + ".0." + "override_band"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3413,14 +3545,20 @@ func expandWirelessControllerWtpRadio2(d *schema.ResourceData, v interface{}, pr
 	pre_append = pre + ".0." + "band"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["band"], _ = expandWirelessControllerWtpRadio2Band(d, i["band"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["band"] = nil
 	}
 	pre_append = pre + ".0." + "override_analysis"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["override-analysis"], _ = expandWirelessControllerWtpRadio2OverrideAnalysis(d, i["override_analysis"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["override-analysis"] = nil
 	}
 	pre_append = pre + ".0." + "spectrum_analysis"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["spectrum-analysis"], _ = expandWirelessControllerWtpRadio2SpectrumAnalysis(d, i["spectrum_analysis"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["spectrum-analysis"] = nil
 	}
 	pre_append = pre + ".0." + "override_txpower"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3627,14 +3765,20 @@ func expandWirelessControllerWtpRadio3(d *schema.ResourceData, v interface{}, pr
 	pre_append = pre + ".0." + "band"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["band"], _ = expandWirelessControllerWtpRadio3Band(d, i["band"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["band"] = nil
 	}
 	pre_append = pre + ".0." + "override_analysis"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["override-analysis"], _ = expandWirelessControllerWtpRadio3OverrideAnalysis(d, i["override_analysis"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["override-analysis"] = nil
 	}
 	pre_append = pre + ".0." + "spectrum_analysis"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["spectrum-analysis"], _ = expandWirelessControllerWtpRadio3SpectrumAnalysis(d, i["spectrum_analysis"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["spectrum-analysis"] = nil
 	}
 	pre_append = pre + ".0." + "override_txpower"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3837,14 +3981,20 @@ func expandWirelessControllerWtpRadio4(d *schema.ResourceData, v interface{}, pr
 	pre_append = pre + ".0." + "band"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["band"], _ = expandWirelessControllerWtpRadio4Band(d, i["band"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["band"] = nil
 	}
 	pre_append = pre + ".0." + "override_analysis"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["override-analysis"], _ = expandWirelessControllerWtpRadio4OverrideAnalysis(d, i["override_analysis"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["override-analysis"] = nil
 	}
 	pre_append = pre + ".0." + "spectrum_analysis"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["spectrum-analysis"], _ = expandWirelessControllerWtpRadio4SpectrumAnalysis(d, i["spectrum_analysis"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["spectrum-analysis"] = nil
 	}
 	pre_append = pre + ".0." + "override_txpower"
 	if _, ok := d.GetOk(pre_append); ok {

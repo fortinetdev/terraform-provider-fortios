@@ -15,7 +15,7 @@ The following arguments are supported:
 
 * `name` - CASB tenant match name.
 * `application` - CASB tenant application name.
-* `match_strategy` - CASB tenant match strategy. Valid values: `and`, `or`.
+* `match_strategy` - CASB tenant match strategy.
 * `match` - CASB tenant match rules. The structure of `match` block is documented below.
 * `attribute` - CASB tenant match rules. The structure of `attribute` block is documented below.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].

@@ -58,6 +58,11 @@ func resourceWebProxyProfile() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"header_client_cert": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"header_x_forwarded_for": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -343,6 +348,10 @@ func flattenWebProxyProfileHeaderViaResponse(v interface{}, d *schema.ResourceDa
 	return v
 }
 
+func flattenWebProxyProfileHeaderClientCert(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWebProxyProfileHeaderXForwardedFor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -388,55 +397,90 @@ func flattenWebProxyProfileHeaders(v interface{}, d *schema.ResourceData, pre st
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenWebProxyProfileHeadersId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenWebProxyProfileHeadersName(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "dstaddr"
 		if cur_v, ok := i["dstaddr"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "dstaddr"
+			}
 			tmp["dstaddr"] = flattenWebProxyProfileHeadersDstaddr(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "dstaddr6"
 		if cur_v, ok := i["dstaddr6"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "dstaddr6"
+			}
 			tmp["dstaddr6"] = flattenWebProxyProfileHeadersDstaddr6(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if cur_v, ok := i["action"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
+			}
 			tmp["action"] = flattenWebProxyProfileHeadersAction(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "content"
 		if cur_v, ok := i["content"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "content"
+			}
 			tmp["content"] = flattenWebProxyProfileHeadersContent(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "base64_encoding"
 		if cur_v, ok := i["base64-encoding"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "base64_encoding"
+			}
 			tmp["base64_encoding"] = flattenWebProxyProfileHeadersBase64Encoding(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "add_option"
 		if cur_v, ok := i["add-option"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "add_option"
+			}
 			tmp["add_option"] = flattenWebProxyProfileHeadersAddOption(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
 		if cur_v, ok := i["protocol"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
+			}
 			tmp["protocol"] = flattenWebProxyProfileHeadersProtocol(cur_v, d, pre_append, sv)
 		}
 
@@ -474,15 +518,26 @@ func flattenWebProxyProfileHeadersDstaddr(v interface{}, d *schema.ResourceData,
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenWebProxyProfileHeadersDstaddrName(cur_v, d, pre_append, sv)
 		}
 
@@ -516,15 +571,26 @@ func flattenWebProxyProfileHeadersDstaddr6(v interface{}, d *schema.ResourceData
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenWebProxyProfileHeadersDstaddr6Name(cur_v, d, pre_append, sv)
 		}
 
@@ -591,6 +657,12 @@ func refreshObjectWebProxyProfile(d *schema.ResourceData, o map[string]interface
 	if err = d.Set("header_via_response", flattenWebProxyProfileHeaderViaResponse(o["header-via-response"], d, "header_via_response", sv)); err != nil {
 		if !fortiAPIPatch(o["header-via-response"]) {
 			return fmt.Errorf("Error reading header_via_response: %v", err)
+		}
+	}
+
+	if err = d.Set("header_client_cert", flattenWebProxyProfileHeaderClientCert(o["header-client-cert"], d, "header_client_cert", sv)); err != nil {
+		if !fortiAPIPatch(o["header-client-cert"]) {
+			return fmt.Errorf("Error reading header_client_cert: %v", err)
 		}
 	}
 
@@ -674,6 +746,10 @@ func expandWebProxyProfileHeaderViaRequest(d *schema.ResourceData, v interface{}
 }
 
 func expandWebProxyProfileHeaderViaResponse(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWebProxyProfileHeaderClientCert(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -900,6 +976,15 @@ func getObjectWebProxyProfile(d *schema.ResourceData, sv string) (*map[string]in
 			return &obj, err
 		} else if t != nil {
 			obj["header-via-response"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("header_client_cert"); ok {
+		t, err := expandWebProxyProfileHeaderClientCert(d, v, "header_client_cert", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["header-client-cert"] = t
 		}
 	}
 

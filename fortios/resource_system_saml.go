@@ -111,6 +111,11 @@ func resourceSystemSaml() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
 			},
+			"require_signed_resp_and_asrt": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"tolerance": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
@@ -390,6 +395,10 @@ func flattenSystemSamlServerAddress(v interface{}, d *schema.ResourceData, pre s
 	return v
 }
 
+func flattenSystemSamlRequireSignedRespAndAsrt(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemSamlTolerance(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return convintf2i(v)
 }
@@ -415,70 +424,114 @@ func flattenSystemSamlServiceProviders(v interface{}, d *schema.ResourceData, pr
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenSystemSamlServiceProvidersName(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"
 		if cur_v, ok := i["prefix"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"
+			}
 			tmp["prefix"] = flattenSystemSamlServiceProvidersPrefix(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "sp_binding_protocol"
 		if cur_v, ok := i["sp-binding-protocol"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "sp_binding_protocol"
+			}
 			tmp["sp_binding_protocol"] = flattenSystemSamlServiceProvidersSpBindingProtocol(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "sp_cert"
 		if cur_v, ok := i["sp-cert"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "sp_cert"
+			}
 			tmp["sp_cert"] = flattenSystemSamlServiceProvidersSpCert(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "sp_entity_id"
 		if cur_v, ok := i["sp-entity-id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "sp_entity_id"
+			}
 			tmp["sp_entity_id"] = flattenSystemSamlServiceProvidersSpEntityId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "sp_single_sign_on_url"
 		if cur_v, ok := i["sp-single-sign-on-url"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "sp_single_sign_on_url"
+			}
 			tmp["sp_single_sign_on_url"] = flattenSystemSamlServiceProvidersSpSingleSignOnUrl(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "sp_single_logout_url"
 		if cur_v, ok := i["sp-single-logout-url"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "sp_single_logout_url"
+			}
 			tmp["sp_single_logout_url"] = flattenSystemSamlServiceProvidersSpSingleLogoutUrl(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "sp_portal_url"
 		if cur_v, ok := i["sp-portal-url"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "sp_portal_url"
+			}
 			tmp["sp_portal_url"] = flattenSystemSamlServiceProvidersSpPortalUrl(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "idp_entity_id"
 		if cur_v, ok := i["idp-entity-id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "idp_entity_id"
+			}
 			tmp["idp_entity_id"] = flattenSystemSamlServiceProvidersIdpEntityId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "idp_single_sign_on_url"
 		if cur_v, ok := i["idp-single-sign-on-url"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "idp_single_sign_on_url"
+			}
 			tmp["idp_single_sign_on_url"] = flattenSystemSamlServiceProvidersIdpSingleSignOnUrl(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "idp_single_logout_url"
 		if cur_v, ok := i["idp-single-logout-url"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "idp_single_logout_url"
+			}
 			tmp["idp_single_logout_url"] = flattenSystemSamlServiceProvidersIdpSingleLogoutUrl(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "assertion_attributes"
 		if cur_v, ok := i["assertion-attributes"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "assertion_attributes"
+			}
 			tmp["assertion_attributes"] = flattenSystemSamlServiceProvidersAssertionAttributes(cur_v, d, pre_append, sv)
 		}
 
@@ -552,20 +605,34 @@ func flattenSystemSamlServiceProvidersAssertionAttributes(v interface{}, d *sche
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenSystemSamlServiceProvidersAssertionAttributesName(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if cur_v, ok := i["type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
+			}
 			tmp["type"] = flattenSystemSamlServiceProvidersAssertionAttributesType(cur_v, d, pre_append, sv)
 		}
 
@@ -685,6 +752,12 @@ func refreshObjectSystemSaml(d *schema.ResourceData, o map[string]interface{}, s
 		}
 	}
 
+	if err = d.Set("require_signed_resp_and_asrt", flattenSystemSamlRequireSignedRespAndAsrt(o["require-signed-resp-and-asrt"], d, "require_signed_resp_and_asrt", sv)); err != nil {
+		if !fortiAPIPatch(o["require-signed-resp-and-asrt"]) {
+			return fmt.Errorf("Error reading require_signed_resp_and_asrt: %v", err)
+		}
+	}
+
 	if err = d.Set("tolerance", flattenSystemSamlTolerance(o["tolerance"], d, "tolerance", sv)); err != nil {
 		if !fortiAPIPatch(o["tolerance"]) {
 			return fmt.Errorf("Error reading tolerance: %v", err)
@@ -779,6 +852,10 @@ func expandSystemSamlIdpCert(d *schema.ResourceData, v interface{}, pre string, 
 }
 
 func expandSystemSamlServerAddress(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSamlRequireSignedRespAndAsrt(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1198,6 +1275,19 @@ func getObjectSystemSaml(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		}
 	} else if d.HasChange("server_address") {
 		obj["server-address"] = nil
+	}
+
+	if v, ok := d.GetOk("require_signed_resp_and_asrt"); ok {
+		if setArgNil {
+			obj["require-signed-resp-and-asrt"] = nil
+		} else {
+			t, err := expandSystemSamlRequireSignedRespAndAsrt(d, v, "require_signed_resp_and_asrt", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["require-signed-resp-and-asrt"] = t
+			}
+		}
 	}
 
 	if v, ok := d.GetOkExists("tolerance"); ok {

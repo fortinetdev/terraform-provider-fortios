@@ -772,30 +772,50 @@ func flattenSystemReplacemsgGroupMail(v interface{}, d *schema.ResourceData, pre
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "msg-type", "msg_type")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if cur_v, ok := i["msg-type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+			}
 			tmp["msg_type"] = flattenSystemReplacemsgGroupMailMsgType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
 		if cur_v, ok := i["buffer"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+			}
 			tmp["buffer"] = flattenSystemReplacemsgGroupMailBuffer(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
 		if cur_v, ok := i["header"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+			}
 			tmp["header"] = flattenSystemReplacemsgGroupMailHeader(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
 		if cur_v, ok := i["format"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+			}
 			tmp["format"] = flattenSystemReplacemsgGroupMailFormat(cur_v, d, pre_append, sv)
 		}
 
@@ -841,30 +861,50 @@ func flattenSystemReplacemsgGroupHttp(v interface{}, d *schema.ResourceData, pre
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "msg-type", "msg_type")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if cur_v, ok := i["msg-type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+			}
 			tmp["msg_type"] = flattenSystemReplacemsgGroupHttpMsgType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
 		if cur_v, ok := i["buffer"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+			}
 			tmp["buffer"] = flattenSystemReplacemsgGroupHttpBuffer(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
 		if cur_v, ok := i["header"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+			}
 			tmp["header"] = flattenSystemReplacemsgGroupHttpHeader(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
 		if cur_v, ok := i["format"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+			}
 			tmp["format"] = flattenSystemReplacemsgGroupHttpFormat(cur_v, d, pre_append, sv)
 		}
 
@@ -910,30 +950,50 @@ func flattenSystemReplacemsgGroupWebproxy(v interface{}, d *schema.ResourceData,
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "msg-type", "msg_type")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if cur_v, ok := i["msg-type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+			}
 			tmp["msg_type"] = flattenSystemReplacemsgGroupWebproxyMsgType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
 		if cur_v, ok := i["buffer"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+			}
 			tmp["buffer"] = flattenSystemReplacemsgGroupWebproxyBuffer(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
 		if cur_v, ok := i["header"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+			}
 			tmp["header"] = flattenSystemReplacemsgGroupWebproxyHeader(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
 		if cur_v, ok := i["format"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+			}
 			tmp["format"] = flattenSystemReplacemsgGroupWebproxyFormat(cur_v, d, pre_append, sv)
 		}
 
@@ -979,30 +1039,50 @@ func flattenSystemReplacemsgGroupFtp(v interface{}, d *schema.ResourceData, pre 
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "msg-type", "msg_type")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if cur_v, ok := i["msg-type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+			}
 			tmp["msg_type"] = flattenSystemReplacemsgGroupFtpMsgType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
 		if cur_v, ok := i["buffer"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+			}
 			tmp["buffer"] = flattenSystemReplacemsgGroupFtpBuffer(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
 		if cur_v, ok := i["header"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+			}
 			tmp["header"] = flattenSystemReplacemsgGroupFtpHeader(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
 		if cur_v, ok := i["format"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+			}
 			tmp["format"] = flattenSystemReplacemsgGroupFtpFormat(cur_v, d, pre_append, sv)
 		}
 
@@ -1048,30 +1128,50 @@ func flattenSystemReplacemsgGroupNntp(v interface{}, d *schema.ResourceData, pre
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "msg-type", "msg_type")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if cur_v, ok := i["msg-type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+			}
 			tmp["msg_type"] = flattenSystemReplacemsgGroupNntpMsgType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
 		if cur_v, ok := i["buffer"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+			}
 			tmp["buffer"] = flattenSystemReplacemsgGroupNntpBuffer(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
 		if cur_v, ok := i["header"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+			}
 			tmp["header"] = flattenSystemReplacemsgGroupNntpHeader(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
 		if cur_v, ok := i["format"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+			}
 			tmp["format"] = flattenSystemReplacemsgGroupNntpFormat(cur_v, d, pre_append, sv)
 		}
 
@@ -1117,30 +1217,50 @@ func flattenSystemReplacemsgGroupFortiguardWf(v interface{}, d *schema.ResourceD
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "msg-type", "msg_type")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if cur_v, ok := i["msg-type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+			}
 			tmp["msg_type"] = flattenSystemReplacemsgGroupFortiguardWfMsgType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
 		if cur_v, ok := i["buffer"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+			}
 			tmp["buffer"] = flattenSystemReplacemsgGroupFortiguardWfBuffer(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
 		if cur_v, ok := i["header"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+			}
 			tmp["header"] = flattenSystemReplacemsgGroupFortiguardWfHeader(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
 		if cur_v, ok := i["format"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+			}
 			tmp["format"] = flattenSystemReplacemsgGroupFortiguardWfFormat(cur_v, d, pre_append, sv)
 		}
 
@@ -1186,30 +1306,50 @@ func flattenSystemReplacemsgGroupSpam(v interface{}, d *schema.ResourceData, pre
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "msg-type", "msg_type")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if cur_v, ok := i["msg-type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+			}
 			tmp["msg_type"] = flattenSystemReplacemsgGroupSpamMsgType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
 		if cur_v, ok := i["buffer"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+			}
 			tmp["buffer"] = flattenSystemReplacemsgGroupSpamBuffer(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
 		if cur_v, ok := i["header"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+			}
 			tmp["header"] = flattenSystemReplacemsgGroupSpamHeader(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
 		if cur_v, ok := i["format"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+			}
 			tmp["format"] = flattenSystemReplacemsgGroupSpamFormat(cur_v, d, pre_append, sv)
 		}
 
@@ -1255,30 +1395,50 @@ func flattenSystemReplacemsgGroupAlertmail(v interface{}, d *schema.ResourceData
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "msg-type", "msg_type")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if cur_v, ok := i["msg-type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+			}
 			tmp["msg_type"] = flattenSystemReplacemsgGroupAlertmailMsgType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
 		if cur_v, ok := i["buffer"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+			}
 			tmp["buffer"] = flattenSystemReplacemsgGroupAlertmailBuffer(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
 		if cur_v, ok := i["header"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+			}
 			tmp["header"] = flattenSystemReplacemsgGroupAlertmailHeader(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
 		if cur_v, ok := i["format"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+			}
 			tmp["format"] = flattenSystemReplacemsgGroupAlertmailFormat(cur_v, d, pre_append, sv)
 		}
 
@@ -1324,30 +1484,50 @@ func flattenSystemReplacemsgGroupAdmin(v interface{}, d *schema.ResourceData, pr
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "msg-type", "msg_type")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if cur_v, ok := i["msg-type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+			}
 			tmp["msg_type"] = flattenSystemReplacemsgGroupAdminMsgType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
 		if cur_v, ok := i["buffer"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+			}
 			tmp["buffer"] = flattenSystemReplacemsgGroupAdminBuffer(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
 		if cur_v, ok := i["header"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+			}
 			tmp["header"] = flattenSystemReplacemsgGroupAdminHeader(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
 		if cur_v, ok := i["format"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+			}
 			tmp["format"] = flattenSystemReplacemsgGroupAdminFormat(cur_v, d, pre_append, sv)
 		}
 
@@ -1393,30 +1573,50 @@ func flattenSystemReplacemsgGroupAuth(v interface{}, d *schema.ResourceData, pre
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "msg-type", "msg_type")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if cur_v, ok := i["msg-type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+			}
 			tmp["msg_type"] = flattenSystemReplacemsgGroupAuthMsgType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
 		if cur_v, ok := i["buffer"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+			}
 			tmp["buffer"] = flattenSystemReplacemsgGroupAuthBuffer(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
 		if cur_v, ok := i["header"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+			}
 			tmp["header"] = flattenSystemReplacemsgGroupAuthHeader(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
 		if cur_v, ok := i["format"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+			}
 			tmp["format"] = flattenSystemReplacemsgGroupAuthFormat(cur_v, d, pre_append, sv)
 		}
 
@@ -1462,30 +1662,50 @@ func flattenSystemReplacemsgGroupSslvpn(v interface{}, d *schema.ResourceData, p
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "msg-type", "msg_type")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if cur_v, ok := i["msg-type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+			}
 			tmp["msg_type"] = flattenSystemReplacemsgGroupSslvpnMsgType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
 		if cur_v, ok := i["buffer"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+			}
 			tmp["buffer"] = flattenSystemReplacemsgGroupSslvpnBuffer(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
 		if cur_v, ok := i["header"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+			}
 			tmp["header"] = flattenSystemReplacemsgGroupSslvpnHeader(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
 		if cur_v, ok := i["format"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+			}
 			tmp["format"] = flattenSystemReplacemsgGroupSslvpnFormat(cur_v, d, pre_append, sv)
 		}
 
@@ -1531,30 +1751,50 @@ func flattenSystemReplacemsgGroupEc(v interface{}, d *schema.ResourceData, pre s
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "msg-type", "msg_type")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if cur_v, ok := i["msg-type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+			}
 			tmp["msg_type"] = flattenSystemReplacemsgGroupEcMsgType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
 		if cur_v, ok := i["buffer"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+			}
 			tmp["buffer"] = flattenSystemReplacemsgGroupEcBuffer(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
 		if cur_v, ok := i["header"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+			}
 			tmp["header"] = flattenSystemReplacemsgGroupEcHeader(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
 		if cur_v, ok := i["format"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+			}
 			tmp["format"] = flattenSystemReplacemsgGroupEcFormat(cur_v, d, pre_append, sv)
 		}
 
@@ -1600,30 +1840,50 @@ func flattenSystemReplacemsgGroupDeviceDetectionPortal(v interface{}, d *schema.
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "msg-type", "msg_type")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if cur_v, ok := i["msg-type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+			}
 			tmp["msg_type"] = flattenSystemReplacemsgGroupDeviceDetectionPortalMsgType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
 		if cur_v, ok := i["buffer"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+			}
 			tmp["buffer"] = flattenSystemReplacemsgGroupDeviceDetectionPortalBuffer(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
 		if cur_v, ok := i["header"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+			}
 			tmp["header"] = flattenSystemReplacemsgGroupDeviceDetectionPortalHeader(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
 		if cur_v, ok := i["format"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+			}
 			tmp["format"] = flattenSystemReplacemsgGroupDeviceDetectionPortalFormat(cur_v, d, pre_append, sv)
 		}
 
@@ -1669,30 +1929,50 @@ func flattenSystemReplacemsgGroupNacQuar(v interface{}, d *schema.ResourceData, 
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "msg-type", "msg_type")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if cur_v, ok := i["msg-type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+			}
 			tmp["msg_type"] = flattenSystemReplacemsgGroupNacQuarMsgType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
 		if cur_v, ok := i["buffer"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+			}
 			tmp["buffer"] = flattenSystemReplacemsgGroupNacQuarBuffer(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
 		if cur_v, ok := i["header"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+			}
 			tmp["header"] = flattenSystemReplacemsgGroupNacQuarHeader(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
 		if cur_v, ok := i["format"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+			}
 			tmp["format"] = flattenSystemReplacemsgGroupNacQuarFormat(cur_v, d, pre_append, sv)
 		}
 
@@ -1738,30 +2018,50 @@ func flattenSystemReplacemsgGroupTrafficQuota(v interface{}, d *schema.ResourceD
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "msg-type", "msg_type")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if cur_v, ok := i["msg-type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+			}
 			tmp["msg_type"] = flattenSystemReplacemsgGroupTrafficQuotaMsgType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
 		if cur_v, ok := i["buffer"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+			}
 			tmp["buffer"] = flattenSystemReplacemsgGroupTrafficQuotaBuffer(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
 		if cur_v, ok := i["header"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+			}
 			tmp["header"] = flattenSystemReplacemsgGroupTrafficQuotaHeader(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
 		if cur_v, ok := i["format"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+			}
 			tmp["format"] = flattenSystemReplacemsgGroupTrafficQuotaFormat(cur_v, d, pre_append, sv)
 		}
 
@@ -1807,30 +2107,50 @@ func flattenSystemReplacemsgGroupUtm(v interface{}, d *schema.ResourceData, pre 
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "msg-type", "msg_type")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if cur_v, ok := i["msg-type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+			}
 			tmp["msg_type"] = flattenSystemReplacemsgGroupUtmMsgType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
 		if cur_v, ok := i["buffer"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+			}
 			tmp["buffer"] = flattenSystemReplacemsgGroupUtmBuffer(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
 		if cur_v, ok := i["header"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+			}
 			tmp["header"] = flattenSystemReplacemsgGroupUtmHeader(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
 		if cur_v, ok := i["format"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+			}
 			tmp["format"] = flattenSystemReplacemsgGroupUtmFormat(cur_v, d, pre_append, sv)
 		}
 
@@ -1876,30 +2196,50 @@ func flattenSystemReplacemsgGroupCustomMessage(v interface{}, d *schema.Resource
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "msg-type", "msg_type")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if cur_v, ok := i["msg-type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+			}
 			tmp["msg_type"] = flattenSystemReplacemsgGroupCustomMessageMsgType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
 		if cur_v, ok := i["buffer"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+			}
 			tmp["buffer"] = flattenSystemReplacemsgGroupCustomMessageBuffer(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
 		if cur_v, ok := i["header"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+			}
 			tmp["header"] = flattenSystemReplacemsgGroupCustomMessageHeader(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
 		if cur_v, ok := i["format"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+			}
 			tmp["format"] = flattenSystemReplacemsgGroupCustomMessageFormat(cur_v, d, pre_append, sv)
 		}
 
@@ -1945,30 +2285,50 @@ func flattenSystemReplacemsgGroupIcap(v interface{}, d *schema.ResourceData, pre
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "msg-type", "msg_type")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if cur_v, ok := i["msg-type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+			}
 			tmp["msg_type"] = flattenSystemReplacemsgGroupIcapMsgType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
 		if cur_v, ok := i["buffer"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+			}
 			tmp["buffer"] = flattenSystemReplacemsgGroupIcapBuffer(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
 		if cur_v, ok := i["header"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+			}
 			tmp["header"] = flattenSystemReplacemsgGroupIcapHeader(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
 		if cur_v, ok := i["format"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+			}
 			tmp["format"] = flattenSystemReplacemsgGroupIcapFormat(cur_v, d, pre_append, sv)
 		}
 
@@ -2014,30 +2374,50 @@ func flattenSystemReplacemsgGroupAutomation(v interface{}, d *schema.ResourceDat
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "msg-type", "msg_type")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if cur_v, ok := i["msg-type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+			}
 			tmp["msg_type"] = flattenSystemReplacemsgGroupAutomationMsgType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
 		if cur_v, ok := i["buffer"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+			}
 			tmp["buffer"] = flattenSystemReplacemsgGroupAutomationBuffer(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
 		if cur_v, ok := i["header"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+			}
 			tmp["header"] = flattenSystemReplacemsgGroupAutomationHeader(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
 		if cur_v, ok := i["format"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+			}
 			tmp["format"] = flattenSystemReplacemsgGroupAutomationFormat(cur_v, d, pre_append, sv)
 		}
 

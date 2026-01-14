@@ -128,6 +128,18 @@ func dataSourceFirewallProxyPolicy() *schema.Resource {
 					},
 				},
 			},
+			"poolname6": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
 			"dstaddr": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
@@ -916,6 +928,42 @@ func dataSourceFlattenFirewallProxyPolicyPoolname(v interface{}, d *schema.Resou
 }
 
 func dataSourceFlattenFirewallProxyPolicyPoolnameName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallProxyPolicyPoolname6(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = dataSourceFlattenFirewallProxyPolicyPoolname6Name(i["name"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenFirewallProxyPolicyPoolname6Name(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1917,6 +1965,12 @@ func dataSourceRefreshObjectFirewallProxyPolicy(d *schema.ResourceData, o map[st
 	if err = d.Set("poolname", dataSourceFlattenFirewallProxyPolicyPoolname(o["poolname"], d, "poolname")); err != nil {
 		if !fortiAPIPatch(o["poolname"]) {
 			return fmt.Errorf("Error reading poolname: %v", err)
+		}
+	}
+
+	if err = d.Set("poolname6", dataSourceFlattenFirewallProxyPolicyPoolname6(o["poolname6"], d, "poolname6")); err != nil {
+		if !fortiAPIPatch(o["poolname6"]) {
+			return fmt.Errorf("Error reading poolname6: %v", err)
 		}
 	}
 

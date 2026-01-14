@@ -120,6 +120,11 @@ func resourceLogEventfilter() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"web_svc": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"webproxy": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -311,6 +316,10 @@ func flattenLogEventfilterRestApi(v interface{}, d *schema.ResourceData, pre str
 	return v
 }
 
+func flattenLogEventfilterWebSvc(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenLogEventfilterWebproxy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -420,6 +429,12 @@ func refreshObjectLogEventfilter(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("web_svc", flattenLogEventfilterWebSvc(o["web-svc"], d, "web_svc", sv)); err != nil {
+		if !fortiAPIPatch(o["web-svc"]) {
+			return fmt.Errorf("Error reading web_svc: %v", err)
+		}
+	}
+
 	if err = d.Set("webproxy", flattenLogEventfilterWebproxy(o["webproxy"], d, "webproxy", sv)); err != nil {
 		if !fortiAPIPatch(o["webproxy"]) {
 			return fmt.Errorf("Error reading webproxy: %v", err)
@@ -500,6 +515,10 @@ func expandLogEventfilterSwitchController(d *schema.ResourceData, v interface{},
 }
 
 func expandLogEventfilterRestApi(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogEventfilterWebSvc(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -729,6 +748,19 @@ func getObjectLogEventfilter(d *schema.ResourceData, setArgNil bool, sv string) 
 				return &obj, err
 			} else if t != nil {
 				obj["rest-api"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("web_svc"); ok {
+		if setArgNil {
+			obj["web-svc"] = nil
+		} else {
+			t, err := expandLogEventfilterWebSvc(d, v, "web_svc", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["web-svc"] = t
 			}
 		}
 	}

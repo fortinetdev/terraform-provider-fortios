@@ -729,40 +729,66 @@ func flattenReportLayoutPageHeaderHeaderItem(v interface{}, d *schema.ResourceDa
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenReportLayoutPageHeaderHeaderItemId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if cur_v, ok := i["description"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
+			}
 			tmp["description"] = flattenReportLayoutPageHeaderHeaderItemDescription(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if cur_v, ok := i["type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
+			}
 			tmp["type"] = flattenReportLayoutPageHeaderHeaderItemType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "style"
 		if cur_v, ok := i["style"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "style"
+			}
 			tmp["style"] = flattenReportLayoutPageHeaderHeaderItemStyle(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "content"
 		if cur_v, ok := i["content"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "content"
+			}
 			tmp["content"] = flattenReportLayoutPageHeaderHeaderItemContent(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "img_src"
 		if cur_v, ok := i["img-src"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "img_src"
+			}
 			tmp["img_src"] = flattenReportLayoutPageHeaderHeaderItemImgSrc(cur_v, d, pre_append, sv)
 		}
 
@@ -843,40 +869,66 @@ func flattenReportLayoutPageFooterFooterItem(v interface{}, d *schema.ResourceDa
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenReportLayoutPageFooterFooterItemId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if cur_v, ok := i["description"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
+			}
 			tmp["description"] = flattenReportLayoutPageFooterFooterItemDescription(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if cur_v, ok := i["type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
+			}
 			tmp["type"] = flattenReportLayoutPageFooterFooterItemType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "style"
 		if cur_v, ok := i["style"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "style"
+			}
 			tmp["style"] = flattenReportLayoutPageFooterFooterItemStyle(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "content"
 		if cur_v, ok := i["content"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "content"
+			}
 			tmp["content"] = flattenReportLayoutPageFooterFooterItemContent(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "img_src"
 		if cur_v, ok := i["img-src"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "img_src"
+			}
 			tmp["img_src"] = flattenReportLayoutPageFooterFooterItemImgSrc(cur_v, d, pre_append, sv)
 		}
 
@@ -930,130 +982,210 @@ func flattenReportLayoutBodyItem(v interface{}, d *schema.ResourceData, pre stri
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenReportLayoutBodyItemId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if cur_v, ok := i["description"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
+			}
 			tmp["description"] = flattenReportLayoutBodyItemDescription(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if cur_v, ok := i["type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
+			}
 			tmp["type"] = flattenReportLayoutBodyItemType(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "style"
 		if cur_v, ok := i["style"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "style"
+			}
 			tmp["style"] = flattenReportLayoutBodyItemStyle(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "top_n"
 		if cur_v, ok := i["top-n"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "top_n"
+			}
 			tmp["top_n"] = flattenReportLayoutBodyItemTopN(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "hide"
 		if cur_v, ok := i["hide"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "hide"
+			}
 			tmp["hide"] = flattenReportLayoutBodyItemHide(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "parameters"
 		if cur_v, ok := i["parameters"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "parameters"
+			}
 			tmp["parameters"] = flattenReportLayoutBodyItemParameters(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "text_component"
 		if cur_v, ok := i["text-component"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "text_component"
+			}
 			tmp["text_component"] = flattenReportLayoutBodyItemTextComponent(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "content"
 		if cur_v, ok := i["content"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "content"
+			}
 			tmp["content"] = flattenReportLayoutBodyItemContent(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "img_src"
 		if cur_v, ok := i["img-src"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "img_src"
+			}
 			tmp["img_src"] = flattenReportLayoutBodyItemImgSrc(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "list_component"
 		if cur_v, ok := i["list-component"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "list_component"
+			}
 			tmp["list_component"] = flattenReportLayoutBodyItemListComponent(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "list"
 		if cur_v, ok := i["list"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "list"
+			}
 			tmp["list"] = flattenReportLayoutBodyItemList(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "chart"
 		if cur_v, ok := i["chart"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "chart"
+			}
 			tmp["chart"] = flattenReportLayoutBodyItemChart(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "chart_options"
 		if cur_v, ok := i["chart-options"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "chart_options"
+			}
 			tmp["chart_options"] = flattenReportLayoutBodyItemChartOptions(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "drill_down_items"
 		if cur_v, ok := i["drill-down-items"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "drill_down_items"
+			}
 			tmp["drill_down_items"] = flattenReportLayoutBodyItemDrillDownItems(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "drill_down_types"
 		if cur_v, ok := i["drill-down-types"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "drill_down_types"
+			}
 			tmp["drill_down_types"] = flattenReportLayoutBodyItemDrillDownTypes(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "table_column_widths"
 		if cur_v, ok := i["table-column-widths"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "table_column_widths"
+			}
 			tmp["table_column_widths"] = flattenReportLayoutBodyItemTableColumnWidths(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "table_caption_style"
 		if cur_v, ok := i["table-caption-style"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "table_caption_style"
+			}
 			tmp["table_caption_style"] = flattenReportLayoutBodyItemTableCaptionStyle(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "table_head_style"
 		if cur_v, ok := i["table-head-style"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "table_head_style"
+			}
 			tmp["table_head_style"] = flattenReportLayoutBodyItemTableHeadStyle(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "table_odd_row_style"
 		if cur_v, ok := i["table-odd-row-style"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "table_odd_row_style"
+			}
 			tmp["table_odd_row_style"] = flattenReportLayoutBodyItemTableOddRowStyle(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "table_even_row_style"
 		if cur_v, ok := i["table-even-row-style"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "table_even_row_style"
+			}
 			tmp["table_even_row_style"] = flattenReportLayoutBodyItemTableEvenRowStyle(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "misc_component"
 		if cur_v, ok := i["misc-component"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "misc_component"
+			}
 			tmp["misc_component"] = flattenReportLayoutBodyItemMiscComponent(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "column"
 		if cur_v, ok := i["column"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "column"
+			}
 			tmp["column"] = flattenReportLayoutBodyItemColumn(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "title"
 		if cur_v, ok := i["title"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "title"
+			}
 			tmp["title"] = flattenReportLayoutBodyItemTitle(cur_v, d, pre_append, sv)
 		}
 
@@ -1107,25 +1239,42 @@ func flattenReportLayoutBodyItemParameters(v interface{}, d *schema.ResourceData
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenReportLayoutBodyItemParametersId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
 			tmp["name"] = flattenReportLayoutBodyItemParametersName(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
 		if cur_v, ok := i["value"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
+			}
 			tmp["value"] = flattenReportLayoutBodyItemParametersValue(cur_v, d, pre_append, sv)
 		}
 
@@ -1183,20 +1332,34 @@ func flattenReportLayoutBodyItemList(v interface{}, d *schema.ResourceData, pre 
 
 	result := make([]map[string]interface{}, 0, len(l))
 
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "id", "id")
+
 	con := 0
-	for _, r := range l {
+	for _, r := range parsed_list {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
 
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if cur_v, ok := i["id"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+			}
 			tmp["id"] = flattenReportLayoutBodyItemListId(cur_v, d, pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "content"
 		if cur_v, ok := i["content"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "content"
+			}
 			tmp["content"] = flattenReportLayoutBodyItemListContent(cur_v, d, pre_append, sv)
 		}
 
@@ -1482,14 +1645,20 @@ func expandReportLayoutPage(d *schema.ResourceData, v interface{}, pre string, s
 	pre_append = pre + ".0." + "column_break_before"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["column-break-before"], _ = expandReportLayoutPageColumnBreakBefore(d, i["column_break_before"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["column-break-before"] = nil
 	}
 	pre_append = pre + ".0." + "page_break_before"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["page-break-before"], _ = expandReportLayoutPagePageBreakBefore(d, i["page_break_before"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["page-break-before"] = nil
 	}
 	pre_append = pre + ".0." + "options"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["options"], _ = expandReportLayoutPageOptions(d, i["options"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["options"] = nil
 	}
 	pre_append = pre + ".0." + "header"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -1536,6 +1705,8 @@ func expandReportLayoutPageHeader(d *schema.ResourceData, v interface{}, pre str
 	pre_append = pre + ".0." + "style"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["style"], _ = expandReportLayoutPageHeaderStyle(d, i["style"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["style"] = nil
 	}
 	pre_append = pre + ".0." + "header_item"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -1648,6 +1819,8 @@ func expandReportLayoutPageFooter(d *schema.ResourceData, v interface{}, pre str
 	pre_append = pre + ".0." + "style"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["style"], _ = expandReportLayoutPageFooterStyle(d, i["style"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["style"] = nil
 	}
 	pre_append = pre + ".0." + "footer_item"
 	if _, ok := d.GetOk(pre_append); ok {

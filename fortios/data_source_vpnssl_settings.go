@@ -104,6 +104,10 @@ func dataSourceVpnSslSettings() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"tls_groups": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"idle_timeout": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
@@ -476,6 +480,10 @@ func dataSourceVpnSslSettings() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"remote_https_cert_check": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -587,6 +595,10 @@ func dataSourceFlattenVpnSslSettingsServercert(v interface{}, d *schema.Resource
 }
 
 func dataSourceFlattenVpnSslSettingsAlgorithm(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenVpnSslSettingsTlsGroups(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1291,6 +1303,10 @@ func dataSourceFlattenVpnSslSettingsServerHostname(v interface{}, d *schema.Reso
 	return v
 }
 
+func dataSourceFlattenVpnSslSettingsRemoteHttpsCertCheck(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceRefreshObjectVpnSslSettings(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
 
@@ -1405,6 +1421,12 @@ func dataSourceRefreshObjectVpnSslSettings(d *schema.ResourceData, o map[string]
 	if err = d.Set("algorithm", dataSourceFlattenVpnSslSettingsAlgorithm(o["algorithm"], d, "algorithm")); err != nil {
 		if !fortiAPIPatch(o["algorithm"]) {
 			return fmt.Errorf("Error reading algorithm: %v", err)
+		}
+	}
+
+	if err = d.Set("tls_groups", dataSourceFlattenVpnSslSettingsTlsGroups(o["tls-groups"], d, "tls_groups")); err != nil {
+		if !fortiAPIPatch(o["tls-groups"]) {
+			return fmt.Errorf("Error reading tls_groups: %v", err)
 		}
 	}
 
@@ -1753,6 +1775,12 @@ func dataSourceRefreshObjectVpnSslSettings(d *schema.ResourceData, o map[string]
 	if err = d.Set("server_hostname", dataSourceFlattenVpnSslSettingsServerHostname(o["server-hostname"], d, "server_hostname")); err != nil {
 		if !fortiAPIPatch(o["server-hostname"]) {
 			return fmt.Errorf("Error reading server_hostname: %v", err)
+		}
+	}
+
+	if err = d.Set("remote_https_cert_check", dataSourceFlattenVpnSslSettingsRemoteHttpsCertCheck(o["remote-https-cert-check"], d, "remote_https_cert_check")); err != nil {
+		if !fortiAPIPatch(o["remote-https-cert-check"]) {
+			return fmt.Errorf("Error reading remote_https_cert_check: %v", err)
 		}
 	}
 

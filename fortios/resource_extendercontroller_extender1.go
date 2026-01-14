@@ -1071,14 +1071,20 @@ func expandExtenderControllerExtender1ControllerReport(d *schema.ResourceData, v
 	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["status"], _ = expandExtenderControllerExtender1ControllerReportStatus(d, i["status"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["status"] = nil
 	}
 	pre_append = pre + ".0." + "interval"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["interval"], _ = expandExtenderControllerExtender1ControllerReportInterval(d, i["interval"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["interval"] = nil
 	}
 	pre_append = pre + ".0." + "signal_threshold"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["signal-threshold"], _ = expandExtenderControllerExtender1ControllerReportSignalThreshold(d, i["signal_threshold"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["signal-threshold"] = nil
 	}
 
 	return result, nil
@@ -1109,46 +1115,68 @@ func expandExtenderControllerExtender1Modem1(d *schema.ResourceData, v interface
 	pre_append = pre + ".0." + "ifname"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ifname"], _ = expandExtenderControllerExtender1Modem1Ifname(d, i["ifname"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["ifname"] = nil
 	}
 	pre_append = pre + ".0." + "redundant_mode"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["redundant-mode"], _ = expandExtenderControllerExtender1Modem1RedundantMode(d, i["redundant_mode"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["redundant-mode"] = nil
 	}
 	pre_append = pre + ".0." + "redundant_intf"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["redundant-intf"], _ = expandExtenderControllerExtender1Modem1RedundantIntf(d, i["redundant_intf"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["redundant-intf"] = nil
 	}
 	pre_append = pre + ".0." + "conn_status"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["conn-status"], _ = expandExtenderControllerExtender1Modem1ConnStatus(d, i["conn_status"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["conn-status"] = nil
 	}
 	pre_append = pre + ".0." + "default_sim"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["default-sim"], _ = expandExtenderControllerExtender1Modem1DefaultSim(d, i["default_sim"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["default-sim"] = nil
 	}
 	pre_append = pre + ".0." + "gps"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["gps"], _ = expandExtenderControllerExtender1Modem1Gps(d, i["gps"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["gps"] = nil
 	}
 	pre_append = pre + ".0." + "sim1_pin"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["sim1-pin"], _ = expandExtenderControllerExtender1Modem1Sim1Pin(d, i["sim1_pin"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["sim1-pin"] = nil
 	}
 	pre_append = pre + ".0." + "sim2_pin"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["sim2-pin"], _ = expandExtenderControllerExtender1Modem1Sim2Pin(d, i["sim2_pin"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["sim2-pin"] = nil
 	}
 	pre_append = pre + ".0." + "sim1_pin_code"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["sim1-pin-code"], _ = expandExtenderControllerExtender1Modem1Sim1PinCode(d, i["sim1_pin_code"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["sim1-pin-code"] = nil
 	}
 	pre_append = pre + ".0." + "sim2_pin_code"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["sim2-pin-code"], _ = expandExtenderControllerExtender1Modem1Sim2PinCode(d, i["sim2_pin_code"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["sim2-pin-code"] = nil
 	}
 	pre_append = pre + ".0." + "preferred_carrier"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["preferred-carrier"], _ = expandExtenderControllerExtender1Modem1PreferredCarrier(d, i["preferred_carrier"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["preferred-carrier"] = nil
 	}
 	pre_append = pre + ".0." + "auto_switch"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -1217,34 +1245,50 @@ func expandExtenderControllerExtender1Modem1AutoSwitch(d *schema.ResourceData, v
 	pre_append = pre + ".0." + "disconnect"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["disconnect"], _ = expandExtenderControllerExtender1Modem1AutoSwitchDisconnect(d, i["disconnect"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["disconnect"] = nil
 	}
 	pre_append = pre + ".0." + "disconnect_threshold"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["disconnect-threshold"], _ = expandExtenderControllerExtender1Modem1AutoSwitchDisconnectThreshold(d, i["disconnect_threshold"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["disconnect-threshold"] = nil
 	}
 	pre_append = pre + ".0." + "disconnect_period"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["disconnect-period"], _ = expandExtenderControllerExtender1Modem1AutoSwitchDisconnectPeriod(d, i["disconnect_period"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["disconnect-period"] = nil
 	}
 	pre_append = pre + ".0." + "signal"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["signal"], _ = expandExtenderControllerExtender1Modem1AutoSwitchSignal(d, i["signal"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["signal"] = nil
 	}
 	pre_append = pre + ".0." + "dataplan"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["dataplan"], _ = expandExtenderControllerExtender1Modem1AutoSwitchDataplan(d, i["dataplan"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["dataplan"] = nil
 	}
 	pre_append = pre + ".0." + "switch_back"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["switch-back"], _ = expandExtenderControllerExtender1Modem1AutoSwitchSwitchBack(d, i["switch_back"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["switch-back"] = nil
 	}
 	pre_append = pre + ".0." + "switch_back_time"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["switch-back-time"], _ = expandExtenderControllerExtender1Modem1AutoSwitchSwitchBackTime(d, i["switch_back_time"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["switch-back-time"] = nil
 	}
 	pre_append = pre + ".0." + "switch_back_timer"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["switch-back-timer"], _ = expandExtenderControllerExtender1Modem1AutoSwitchSwitchBackTimer(d, i["switch_back_timer"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["switch-back-timer"] = nil
 	}
 
 	return result, nil
@@ -1295,46 +1339,68 @@ func expandExtenderControllerExtender1Modem2(d *schema.ResourceData, v interface
 	pre_append = pre + ".0." + "ifname"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ifname"], _ = expandExtenderControllerExtender1Modem2Ifname(d, i["ifname"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["ifname"] = nil
 	}
 	pre_append = pre + ".0." + "redundant_mode"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["redundant-mode"], _ = expandExtenderControllerExtender1Modem2RedundantMode(d, i["redundant_mode"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["redundant-mode"] = nil
 	}
 	pre_append = pre + ".0." + "redundant_intf"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["redundant-intf"], _ = expandExtenderControllerExtender1Modem2RedundantIntf(d, i["redundant_intf"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["redundant-intf"] = nil
 	}
 	pre_append = pre + ".0." + "conn_status"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["conn-status"], _ = expandExtenderControllerExtender1Modem2ConnStatus(d, i["conn_status"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["conn-status"] = nil
 	}
 	pre_append = pre + ".0." + "default_sim"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["default-sim"], _ = expandExtenderControllerExtender1Modem2DefaultSim(d, i["default_sim"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["default-sim"] = nil
 	}
 	pre_append = pre + ".0." + "gps"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["gps"], _ = expandExtenderControllerExtender1Modem2Gps(d, i["gps"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["gps"] = nil
 	}
 	pre_append = pre + ".0." + "sim1_pin"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["sim1-pin"], _ = expandExtenderControllerExtender1Modem2Sim1Pin(d, i["sim1_pin"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["sim1-pin"] = nil
 	}
 	pre_append = pre + ".0." + "sim2_pin"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["sim2-pin"], _ = expandExtenderControllerExtender1Modem2Sim2Pin(d, i["sim2_pin"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["sim2-pin"] = nil
 	}
 	pre_append = pre + ".0." + "sim1_pin_code"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["sim1-pin-code"], _ = expandExtenderControllerExtender1Modem2Sim1PinCode(d, i["sim1_pin_code"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["sim1-pin-code"] = nil
 	}
 	pre_append = pre + ".0." + "sim2_pin_code"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["sim2-pin-code"], _ = expandExtenderControllerExtender1Modem2Sim2PinCode(d, i["sim2_pin_code"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["sim2-pin-code"] = nil
 	}
 	pre_append = pre + ".0." + "preferred_carrier"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["preferred-carrier"], _ = expandExtenderControllerExtender1Modem2PreferredCarrier(d, i["preferred_carrier"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["preferred-carrier"] = nil
 	}
 	pre_append = pre + ".0." + "auto_switch"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -1403,34 +1469,50 @@ func expandExtenderControllerExtender1Modem2AutoSwitch(d *schema.ResourceData, v
 	pre_append = pre + ".0." + "disconnect"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["disconnect"], _ = expandExtenderControllerExtender1Modem2AutoSwitchDisconnect(d, i["disconnect"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["disconnect"] = nil
 	}
 	pre_append = pre + ".0." + "disconnect_threshold"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["disconnect-threshold"], _ = expandExtenderControllerExtender1Modem2AutoSwitchDisconnectThreshold(d, i["disconnect_threshold"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["disconnect-threshold"] = nil
 	}
 	pre_append = pre + ".0." + "disconnect_period"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["disconnect-period"], _ = expandExtenderControllerExtender1Modem2AutoSwitchDisconnectPeriod(d, i["disconnect_period"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["disconnect-period"] = nil
 	}
 	pre_append = pre + ".0." + "signal"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["signal"], _ = expandExtenderControllerExtender1Modem2AutoSwitchSignal(d, i["signal"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["signal"] = nil
 	}
 	pre_append = pre + ".0." + "dataplan"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["dataplan"], _ = expandExtenderControllerExtender1Modem2AutoSwitchDataplan(d, i["dataplan"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["dataplan"] = nil
 	}
 	pre_append = pre + ".0." + "switch_back"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["switch-back"], _ = expandExtenderControllerExtender1Modem2AutoSwitchSwitchBack(d, i["switch_back"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["switch-back"] = nil
 	}
 	pre_append = pre + ".0." + "switch_back_time"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["switch-back-time"], _ = expandExtenderControllerExtender1Modem2AutoSwitchSwitchBackTime(d, i["switch_back_time"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["switch-back-time"] = nil
 	}
 	pre_append = pre + ".0." + "switch_back_timer"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["switch-back-timer"], _ = expandExtenderControllerExtender1Modem2AutoSwitchSwitchBackTimer(d, i["switch_back_timer"], pre_append, sv)
+	} else if d.HasChange(pre_append) {
+		result["switch-back-timer"] = nil
 	}
 
 	return result, nil

@@ -1,5 +1,28 @@
-## 1.24.0 (Unreleased)
+## 1.25.0 (Unreleased)
 
+
+## 1.24.0 (Jan 14, 2026)
+BUG FIXES:
+
+* Fix mac address upper case issue; 
+* Fix extra quote issue;
+* Fix nil pointer issue;
+* Ignore add empty value for variables that could affect other arguments;
+* Fix false required variables of resource firewall_centralsnatmap;
+* Fix issue of tcp_portrange could not be set of resource firewallservice_custom;
+* Fix table order mismatch issue;
+
+IMPROVEMENTS:
+
+* Support FortiOS version  7.6.5;
+* Support unset operation for complex variables;
+* Support unset operation for variable options of resource webfilter_profile;
+* Add validation function to validate subnet;
+
+FEATURES:
+
+* **New Resource:** `fortios_system_sovsase`
+* **New Resource:** `fortios_wirelesscontroller_lwprofile`
 
 ## 1.23.0 (Oct 02, 2025)
 BUG FIXES:

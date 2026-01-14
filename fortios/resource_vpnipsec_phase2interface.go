@@ -231,9 +231,10 @@ func resourceVpnIpsecPhase2Interface() *schema.Resource {
 				Computed: true,
 			},
 			"src_subnet": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Type:             schema.TypeString,
+				Optional:         true,
+				Computed:         true,
+				ValidateDiagFunc: validation.ToDiagFunc(isValidSubnet),
 			},
 			"src_subnet6": &schema.Schema{
 				Type:     schema.TypeString,
@@ -281,9 +282,10 @@ func resourceVpnIpsecPhase2Interface() *schema.Resource {
 				Computed: true,
 			},
 			"dst_subnet": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Type:             schema.TypeString,
+				Optional:         true,
+				Computed:         true,
+				ValidateDiagFunc: validation.ToDiagFunc(isValidSubnet),
 			},
 			"dst_subnet6": &schema.Schema{
 				Type:     schema.TypeString,
