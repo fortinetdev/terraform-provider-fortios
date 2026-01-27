@@ -36,6 +36,11 @@ func resourceSystemSnmpCommunity() *schema.Resource {
 				ForceNew: true,
 				Computed: true,
 			},
+			"update_if_exist": &schema.Schema{
+				Type:     schema.TypeBool,
+				Optional: true,
+				Computed: true,
+			},
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				ForceNew: true,
@@ -265,10 +270,31 @@ func resourceSystemSnmpCommunityCreate(d *schema.ResourceData, m interface{}) er
 		return fmt.Errorf("Error creating SystemSnmpCommunity resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSystemSnmpCommunity(obj, vdomparam)
+	update_if_exist := getUpdateIfExist(c, d)
+	mkey_tf, mkey_ok := d.GetOk("fosid")
+	mkey := fmt.Sprint(mkey_tf)
+	o := make(map[string]interface{})
+	existing := false
 
-	if err != nil {
-		return fmt.Errorf("Error creating SystemSnmpCommunity resource: %v", err)
+	if update_if_exist && mkey_ok {
+		// check existing
+		o, err = c.ReadSystemSnmpCommunity(mkey, vdomparam)
+		if err == nil && o != nil {
+			existing = true
+			// update if existing
+			o, err = c.UpdateSystemSnmpCommunity(obj, mkey, vdomparam)
+			if err != nil {
+				return fmt.Errorf("Error updating SystemSnmpCommunity resource: %v", err)
+			}
+		}
+	}
+
+	if !existing {
+		o, err = c.CreateSystemSnmpCommunity(obj, vdomparam)
+
+		if err != nil {
+			return fmt.Errorf("Error creating SystemSnmpCommunity resource: %v", err)
+		}
 	}
 
 	if o["mkey"] != nil && o["mkey"] != "" {

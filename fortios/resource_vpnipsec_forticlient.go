@@ -36,6 +36,11 @@ func resourceVpnIpsecForticlient() *schema.Resource {
 				ForceNew: true,
 				Computed: true,
 			},
+			"update_if_exist": &schema.Schema{
+				Type:     schema.TypeBool,
+				Optional: true,
+				Computed: true,
+			},
 			"realm": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -89,10 +94,31 @@ func resourceVpnIpsecForticlientCreate(d *schema.ResourceData, m interface{}) er
 		return fmt.Errorf("Error creating VpnIpsecForticlient resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateVpnIpsecForticlient(obj, vdomparam)
+	update_if_exist := getUpdateIfExist(c, d)
+	mkey_tf, mkey_ok := d.GetOk("realm")
+	mkey := fmt.Sprint(mkey_tf)
+	o := make(map[string]interface{})
+	existing := false
 
-	if err != nil {
-		return fmt.Errorf("Error creating VpnIpsecForticlient resource: %v", err)
+	if update_if_exist && mkey_ok {
+		// check existing
+		o, err = c.ReadVpnIpsecForticlient(mkey, vdomparam)
+		if err == nil && o != nil {
+			existing = true
+			// update if existing
+			o, err = c.UpdateVpnIpsecForticlient(obj, mkey, vdomparam)
+			if err != nil {
+				return fmt.Errorf("Error updating VpnIpsecForticlient resource: %v", err)
+			}
+		}
+	}
+
+	if !existing {
+		o, err = c.CreateVpnIpsecForticlient(obj, vdomparam)
+
+		if err != nil {
+			return fmt.Errorf("Error creating VpnIpsecForticlient resource: %v", err)
+		}
 	}
 
 	if o["mkey"] != nil && o["mkey"] != "" {

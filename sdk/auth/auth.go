@@ -15,6 +15,7 @@ type Auth struct {
 	CABundle        string
 	CABundleContent string
 	Vdom            string
+	UpdateIfExist   bool
 	Insecure        *bool
 	Refresh         bool
 	HTTPProxy       string
@@ -26,7 +27,7 @@ type Auth struct {
 }
 
 // NewAuth inits Auth object with the given metadata
-func NewAuth(hostname, token, username, password, cabundle, cabundlecontent, peerauth, cacert, clientcert, clientkey, vdom, httpproxy string) *Auth {
+func NewAuth(hostname, token, username, password, cabundle, cabundlecontent, peerauth, cacert, clientcert, clientkey, vdom, httpproxy string, updateIfExist bool) *Auth {
 	return &Auth{
 		Hostname:        hostname,
 		Token:           token,
@@ -35,6 +36,7 @@ func NewAuth(hostname, token, username, password, cabundle, cabundlecontent, pee
 		CABundle:        cabundle,
 		CABundleContent: cabundlecontent,
 		Vdom:            vdom,
+		UpdateIfExist:   updateIfExist,
 		HTTPProxy:       httpproxy,
 
 		PeerAuth:   peerauth,

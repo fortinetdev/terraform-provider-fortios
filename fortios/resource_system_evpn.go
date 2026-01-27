@@ -36,6 +36,11 @@ func resourceSystemEvpn() *schema.Resource {
 				ForceNew: true,
 				Computed: true,
 			},
+			"update_if_exist": &schema.Schema{
+				Type:     schema.TypeBool,
+				Optional: true,
+				Computed: true,
+			},
 			"fosid": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 65535),
@@ -125,10 +130,31 @@ func resourceSystemEvpnCreate(d *schema.ResourceData, m interface{}) error {
 		return fmt.Errorf("Error creating SystemEvpn resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSystemEvpn(obj, vdomparam)
+	update_if_exist := getUpdateIfExist(c, d)
+	mkey_tf, mkey_ok := d.GetOk("fosid")
+	mkey := fmt.Sprint(mkey_tf)
+	o := make(map[string]interface{})
+	existing := false
 
-	if err != nil {
-		return fmt.Errorf("Error creating SystemEvpn resource: %v", err)
+	if update_if_exist && mkey_ok {
+		// check existing
+		o, err = c.ReadSystemEvpn(mkey, vdomparam)
+		if err == nil && o != nil {
+			existing = true
+			// update if existing
+			o, err = c.UpdateSystemEvpn(obj, mkey, vdomparam)
+			if err != nil {
+				return fmt.Errorf("Error updating SystemEvpn resource: %v", err)
+			}
+		}
+	}
+
+	if !existing {
+		o, err = c.CreateSystemEvpn(obj, vdomparam)
+
+		if err != nil {
+			return fmt.Errorf("Error creating SystemEvpn resource: %v", err)
+		}
 	}
 
 	if o["mkey"] != nil && o["mkey"] != "" {

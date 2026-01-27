@@ -36,6 +36,11 @@ func resourceDnsfilterDomainFilter() *schema.Resource {
 				ForceNew: true,
 				Computed: true,
 			},
+			"update_if_exist": &schema.Schema{
+				Type:     schema.TypeBool,
+				Optional: true,
+				Computed: true,
+			},
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				ForceNew: true,
@@ -129,10 +134,31 @@ func resourceDnsfilterDomainFilterCreate(d *schema.ResourceData, m interface{}) 
 		return fmt.Errorf("Error creating DnsfilterDomainFilter resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateDnsfilterDomainFilter(obj, vdomparam)
+	update_if_exist := getUpdateIfExist(c, d)
+	mkey_tf, mkey_ok := d.GetOk("fosid")
+	mkey := fmt.Sprint(mkey_tf)
+	o := make(map[string]interface{})
+	existing := false
 
-	if err != nil {
-		return fmt.Errorf("Error creating DnsfilterDomainFilter resource: %v", err)
+	if update_if_exist && mkey_ok {
+		// check existing
+		o, err = c.ReadDnsfilterDomainFilter(mkey, vdomparam)
+		if err == nil && o != nil {
+			existing = true
+			// update if existing
+			o, err = c.UpdateDnsfilterDomainFilter(obj, mkey, vdomparam)
+			if err != nil {
+				return fmt.Errorf("Error updating DnsfilterDomainFilter resource: %v", err)
+			}
+		}
+	}
+
+	if !existing {
+		o, err = c.CreateDnsfilterDomainFilter(obj, vdomparam)
+
+		if err != nil {
+			return fmt.Errorf("Error creating DnsfilterDomainFilter resource: %v", err)
+		}
 	}
 
 	if o["mkey"] != nil && o["mkey"] != "" {

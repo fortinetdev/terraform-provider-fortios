@@ -36,6 +36,11 @@ func resourceSystemDdns() *schema.Resource {
 				ForceNew: true,
 				Computed: true,
 			},
+			"update_if_exist": &schema.Schema{
+				Type:     schema.TypeBool,
+				Optional: true,
+				Computed: true,
+			},
 			"ddnsid": &schema.Schema{
 				Type:     schema.TypeInt,
 				ForceNew: true,
@@ -201,10 +206,31 @@ func resourceSystemDdnsCreate(d *schema.ResourceData, m interface{}) error {
 		return fmt.Errorf("Error creating SystemDdns resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSystemDdns(obj, vdomparam)
+	update_if_exist := getUpdateIfExist(c, d)
+	mkey_tf, mkey_ok := d.GetOk("ddnsid")
+	mkey := fmt.Sprint(mkey_tf)
+	o := make(map[string]interface{})
+	existing := false
 
-	if err != nil {
-		return fmt.Errorf("Error creating SystemDdns resource: %v", err)
+	if update_if_exist && mkey_ok {
+		// check existing
+		o, err = c.ReadSystemDdns(mkey, vdomparam)
+		if err == nil && o != nil {
+			existing = true
+			// update if existing
+			o, err = c.UpdateSystemDdns(obj, mkey, vdomparam)
+			if err != nil {
+				return fmt.Errorf("Error updating SystemDdns resource: %v", err)
+			}
+		}
+	}
+
+	if !existing {
+		o, err = c.CreateSystemDdns(obj, vdomparam)
+
+		if err != nil {
+			return fmt.Errorf("Error creating SystemDdns resource: %v", err)
+		}
 	}
 
 	if o["mkey"] != nil && o["mkey"] != "" {

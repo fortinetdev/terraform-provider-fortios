@@ -36,6 +36,11 @@ func resourceWafSignature() *schema.Resource {
 				ForceNew: true,
 				Computed: true,
 			},
+			"update_if_exist": &schema.Schema{
+				Type:     schema.TypeBool,
+				Optional: true,
+				Computed: true,
+			},
 			"desc": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 511),
@@ -78,10 +83,31 @@ func resourceWafSignatureCreate(d *schema.ResourceData, m interface{}) error {
 		return fmt.Errorf("Error creating WafSignature resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateWafSignature(obj, vdomparam)
+	update_if_exist := getUpdateIfExist(c, d)
+	mkey_tf, mkey_ok := d.GetOk("fosid")
+	mkey := fmt.Sprint(mkey_tf)
+	o := make(map[string]interface{})
+	existing := false
 
-	if err != nil {
-		return fmt.Errorf("Error creating WafSignature resource: %v", err)
+	if update_if_exist && mkey_ok {
+		// check existing
+		o, err = c.ReadWafSignature(mkey, vdomparam)
+		if err == nil && o != nil {
+			existing = true
+			// update if existing
+			o, err = c.UpdateWafSignature(obj, mkey, vdomparam)
+			if err != nil {
+				return fmt.Errorf("Error updating WafSignature resource: %v", err)
+			}
+		}
+	}
+
+	if !existing {
+		o, err = c.CreateWafSignature(obj, vdomparam)
+
+		if err != nil {
+			return fmt.Errorf("Error creating WafSignature resource: %v", err)
+		}
 	}
 
 	if o["mkey"] != nil && o["mkey"] != "" {

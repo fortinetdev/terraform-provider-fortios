@@ -36,6 +36,11 @@ func resourceFirewallInterfacePolicy() *schema.Resource {
 				ForceNew: true,
 				Computed: true,
 			},
+			"update_if_exist": &schema.Schema{
+				Type:     schema.TypeBool,
+				Optional: true,
+				Computed: true,
+			},
 			"policyid": &schema.Schema{
 				Type:     schema.TypeInt,
 				ForceNew: true,
@@ -255,10 +260,31 @@ func resourceFirewallInterfacePolicyCreate(d *schema.ResourceData, m interface{}
 		return fmt.Errorf("Error creating FirewallInterfacePolicy resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateFirewallInterfacePolicy(obj, vdomparam)
+	update_if_exist := getUpdateIfExist(c, d)
+	mkey_tf, mkey_ok := d.GetOk("policyid")
+	mkey := fmt.Sprint(mkey_tf)
+	o := make(map[string]interface{})
+	existing := false
 
-	if err != nil {
-		return fmt.Errorf("Error creating FirewallInterfacePolicy resource: %v", err)
+	if update_if_exist && mkey_ok {
+		// check existing
+		o, err = c.ReadFirewallInterfacePolicy(mkey, vdomparam)
+		if err == nil && o != nil {
+			existing = true
+			// update if existing
+			o, err = c.UpdateFirewallInterfacePolicy(obj, mkey, vdomparam)
+			if err != nil {
+				return fmt.Errorf("Error updating FirewallInterfacePolicy resource: %v", err)
+			}
+		}
+	}
+
+	if !existing {
+		o, err = c.CreateFirewallInterfacePolicy(obj, vdomparam)
+
+		if err != nil {
+			return fmt.Errorf("Error creating FirewallInterfacePolicy resource: %v", err)
+		}
 	}
 
 	if o["mkey"] != nil && o["mkey"] != "" {

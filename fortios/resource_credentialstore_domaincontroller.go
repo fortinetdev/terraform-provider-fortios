@@ -36,6 +36,11 @@ func resourceCredentialStoreDomainController() *schema.Resource {
 				ForceNew: true,
 				Computed: true,
 			},
+			"update_if_exist": &schema.Schema{
+				Type:     schema.TypeBool,
+				Optional: true,
+				Computed: true,
+			},
 			"server_name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
@@ -110,10 +115,31 @@ func resourceCredentialStoreDomainControllerCreate(d *schema.ResourceData, m int
 		return fmt.Errorf("Error creating CredentialStoreDomainController resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateCredentialStoreDomainController(obj, vdomparam)
+	update_if_exist := getUpdateIfExist(c, d)
+	mkey_tf, mkey_ok := d.GetOk("server_name")
+	mkey := fmt.Sprint(mkey_tf)
+	o := make(map[string]interface{})
+	existing := false
 
-	if err != nil {
-		return fmt.Errorf("Error creating CredentialStoreDomainController resource: %v", err)
+	if update_if_exist && mkey_ok {
+		// check existing
+		o, err = c.ReadCredentialStoreDomainController(mkey, vdomparam)
+		if err == nil && o != nil {
+			existing = true
+			// update if existing
+			o, err = c.UpdateCredentialStoreDomainController(obj, mkey, vdomparam)
+			if err != nil {
+				return fmt.Errorf("Error updating CredentialStoreDomainController resource: %v", err)
+			}
+		}
+	}
+
+	if !existing {
+		o, err = c.CreateCredentialStoreDomainController(obj, vdomparam)
+
+		if err != nil {
+			return fmt.Errorf("Error creating CredentialStoreDomainController resource: %v", err)
+		}
 	}
 
 	if o["mkey"] != nil && o["mkey"] != "" {

@@ -22,6 +22,7 @@ The following arguments are supported:
 * `gck_keyid` - Key id, also referred as "kid".
 * `gck_access_token_lifetime` - Lifetime of automatically generated access tokens in minutes (default is 60 minutes).
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
+* `update_if_exist` - Equivalent functionality of import the resource. If set to true, will check whether the resource exist, if so, will do the UPDATE operation rather CREATE. Default is false. If you want to inherit the value of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

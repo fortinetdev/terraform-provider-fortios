@@ -106,6 +106,12 @@ func Provider() *schema.Provider {
 				Description: "Vdom name of FortiOS. It will apply to all resources. Specify variable `vdomparam` on each resource will override the vdom value on that resource.",
 			},
 
+			"update_if_exist": &schema.Schema{
+				Type:     schema.TypeBool,
+				Optional: true,
+				Default:  false,
+			},
+
 			"fmg_hostname": &schema.Schema{
 				Type:        schema.TypeString,
 				Optional:    true,
@@ -1117,6 +1123,7 @@ func providerConfigure(d *schema.ResourceData) (interface{}, error) {
 		CABundle:        d.Get("cabundlefile").(string),
 		CABundleContent: d.Get("cabundlecontent").(string),
 		Vdom:            d.Get("vdom").(string),
+		UpdateIfExist:   d.Get("update_if_exist").(bool),
 		HTTPProxy:       d.Get("http_proxy").(string),
 		FMG_Hostname:    d.Get("fmg_hostname").(string),
 		FMG_CABundle:    d.Get("fmg_cabundlefile").(string),

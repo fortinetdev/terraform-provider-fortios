@@ -26,6 +26,7 @@ type Config struct {
 	CABundle        string
 	CABundleContent string
 	Vdom            string
+	UpdateIfExist   bool
 	HTTPProxy       string
 
 	FMG_Hostname string
@@ -105,7 +106,7 @@ func bFortiManagerHostnameExist(c *Config) bool {
 func createFortiOSClient(fClient *FortiClient, c *Config) error {
 	config := &tls.Config{}
 
-	auth := auth.NewAuth(c.Hostname, c.Token, c.Username, c.Password, c.CABundle, c.CABundleContent, c.PeerAuth, c.CaCert, c.ClientCert, c.ClientKey, c.Vdom, c.HTTPProxy)
+	auth := auth.NewAuth(c.Hostname, c.Token, c.Username, c.Password, c.CABundle, c.CABundleContent, c.PeerAuth, c.CaCert, c.ClientCert, c.ClientKey, c.Vdom, c.HTTPProxy, c.UpdateIfExist)
 
 	if auth.Hostname == "" {
 		_, err := auth.GetEnvHostname()

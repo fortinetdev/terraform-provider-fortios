@@ -36,6 +36,11 @@ func resourceSystemIpsUrlfilterDns6() *schema.Resource {
 				ForceNew: true,
 				Computed: true,
 			},
+			"update_if_exist": &schema.Schema{
+				Type:     schema.TypeBool,
+				Optional: true,
+				Computed: true,
+			},
 			"address6": &schema.Schema{
 				Type:     schema.TypeString,
 				ForceNew: true,
@@ -78,10 +83,31 @@ func resourceSystemIpsUrlfilterDns6Create(d *schema.ResourceData, m interface{})
 		return fmt.Errorf("Error creating SystemIpsUrlfilterDns6 resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSystemIpsUrlfilterDns6(obj, vdomparam)
+	update_if_exist := getUpdateIfExist(c, d)
+	mkey_tf, mkey_ok := d.GetOk("address6")
+	mkey := fmt.Sprint(mkey_tf)
+	o := make(map[string]interface{})
+	existing := false
 
-	if err != nil {
-		return fmt.Errorf("Error creating SystemIpsUrlfilterDns6 resource: %v", err)
+	if update_if_exist && mkey_ok {
+		// check existing
+		o, err = c.ReadSystemIpsUrlfilterDns6(mkey, vdomparam)
+		if err == nil && o != nil {
+			existing = true
+			// update if existing
+			o, err = c.UpdateSystemIpsUrlfilterDns6(obj, mkey, vdomparam)
+			if err != nil {
+				return fmt.Errorf("Error updating SystemIpsUrlfilterDns6 resource: %v", err)
+			}
+		}
+	}
+
+	if !existing {
+		o, err = c.CreateSystemIpsUrlfilterDns6(obj, vdomparam)
+
+		if err != nil {
+			return fmt.Errorf("Error creating SystemIpsUrlfilterDns6 resource: %v", err)
+		}
 	}
 
 	if o["mkey"] != nil && o["mkey"] != "" {

@@ -36,6 +36,11 @@ func resourceSwitchControllerSecurityPolicy8021X() *schema.Resource {
 				ForceNew: true,
 				Computed: true,
 			},
+			"update_if_exist": &schema.Schema{
+				Type:     schema.TypeBool,
+				Optional: true,
+				Computed: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 31),
@@ -214,10 +219,31 @@ func resourceSwitchControllerSecurityPolicy8021XCreate(d *schema.ResourceData, m
 		return fmt.Errorf("Error creating SwitchControllerSecurityPolicy8021X resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSwitchControllerSecurityPolicy8021X(obj, vdomparam)
+	update_if_exist := getUpdateIfExist(c, d)
+	mkey_tf, mkey_ok := d.GetOk("name")
+	mkey := fmt.Sprint(mkey_tf)
+	o := make(map[string]interface{})
+	existing := false
 
-	if err != nil {
-		return fmt.Errorf("Error creating SwitchControllerSecurityPolicy8021X resource: %v", err)
+	if update_if_exist && mkey_ok {
+		// check existing
+		o, err = c.ReadSwitchControllerSecurityPolicy8021X(mkey, vdomparam)
+		if err == nil && o != nil {
+			existing = true
+			// update if existing
+			o, err = c.UpdateSwitchControllerSecurityPolicy8021X(obj, mkey, vdomparam)
+			if err != nil {
+				return fmt.Errorf("Error updating SwitchControllerSecurityPolicy8021X resource: %v", err)
+			}
+		}
+	}
+
+	if !existing {
+		o, err = c.CreateSwitchControllerSecurityPolicy8021X(obj, vdomparam)
+
+		if err != nil {
+			return fmt.Errorf("Error creating SwitchControllerSecurityPolicy8021X resource: %v", err)
+		}
 	}
 
 	if o["mkey"] != nil && o["mkey"] != "" {

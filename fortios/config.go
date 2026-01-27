@@ -15,6 +15,7 @@ import (
 
 	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+	forticlient "github.com/terraform-providers/terraform-provider-fortios/sdk/sdkcore"
 )
 
 func validateConvIPMask2CIDR(oOldIP, oNewIP string) string {
@@ -379,7 +380,7 @@ func bZero(v interface{}) bool {
 	return reflect.ValueOf(v).IsZero()
 }
 
-func mergeBlock(tf_list, rsp_list []interface{}, tf_mkey, api_mkey string) []interface{} {
+func mergeBlock(tf_list, rsp_list []interface{}, api_mkey, tf_mkey string) []interface{} {
 	result := []interface{}{}
 	mkey_index_map := make(map[string]int)
 
@@ -455,4 +456,13 @@ func isValidSubnet(i interface{}, k string) (warnings []string, errors []error) 
 		return
 	}
 	return
+}
+
+func getUpdateIfExist(c *forticlient.FortiSDKClient, d *schema.ResourceData) bool {
+	resourceVI, exists := d.GetOkExists("update_if_exist")
+	if exists {
+		return resourceVI.(bool)
+	} else {
+		return c.Config.Auth.UpdateIfExist
+	}
 }

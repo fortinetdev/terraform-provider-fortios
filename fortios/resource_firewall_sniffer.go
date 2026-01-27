@@ -36,6 +36,11 @@ func resourceFirewallSniffer() *schema.Resource {
 				ForceNew: true,
 				Computed: true,
 			},
+			"update_if_exist": &schema.Schema{
+				Type:     schema.TypeBool,
+				Optional: true,
+				Computed: true,
+			},
 			"fosid": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 9999),
@@ -321,10 +326,31 @@ func resourceFirewallSnifferCreate(d *schema.ResourceData, m interface{}) error 
 		return fmt.Errorf("Error creating FirewallSniffer resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateFirewallSniffer(obj, vdomparam)
+	update_if_exist := getUpdateIfExist(c, d)
+	mkey_tf, mkey_ok := d.GetOk("fosid")
+	mkey := fmt.Sprint(mkey_tf)
+	o := make(map[string]interface{})
+	existing := false
 
-	if err != nil {
-		return fmt.Errorf("Error creating FirewallSniffer resource: %v", err)
+	if update_if_exist && mkey_ok {
+		// check existing
+		o, err = c.ReadFirewallSniffer(mkey, vdomparam)
+		if err == nil && o != nil {
+			existing = true
+			// update if existing
+			o, err = c.UpdateFirewallSniffer(obj, mkey, vdomparam)
+			if err != nil {
+				return fmt.Errorf("Error updating FirewallSniffer resource: %v", err)
+			}
+		}
+	}
+
+	if !existing {
+		o, err = c.CreateFirewallSniffer(obj, vdomparam)
+
+		if err != nil {
+			return fmt.Errorf("Error creating FirewallSniffer resource: %v", err)
+		}
 	}
 
 	if o["mkey"] != nil && o["mkey"] != "" {

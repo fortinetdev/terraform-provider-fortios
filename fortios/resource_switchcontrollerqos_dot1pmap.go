@@ -36,6 +36,11 @@ func resourceSwitchControllerQosDot1PMap() *schema.Resource {
 				ForceNew: true,
 				Computed: true,
 			},
+			"update_if_exist": &schema.Schema{
+				Type:     schema.TypeBool,
+				Optional: true,
+				Computed: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
@@ -123,10 +128,31 @@ func resourceSwitchControllerQosDot1PMapCreate(d *schema.ResourceData, m interfa
 		return fmt.Errorf("Error creating SwitchControllerQosDot1PMap resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSwitchControllerQosDot1PMap(obj, vdomparam)
+	update_if_exist := getUpdateIfExist(c, d)
+	mkey_tf, mkey_ok := d.GetOk("name")
+	mkey := fmt.Sprint(mkey_tf)
+	o := make(map[string]interface{})
+	existing := false
 
-	if err != nil {
-		return fmt.Errorf("Error creating SwitchControllerQosDot1PMap resource: %v", err)
+	if update_if_exist && mkey_ok {
+		// check existing
+		o, err = c.ReadSwitchControllerQosDot1PMap(mkey, vdomparam)
+		if err == nil && o != nil {
+			existing = true
+			// update if existing
+			o, err = c.UpdateSwitchControllerQosDot1PMap(obj, mkey, vdomparam)
+			if err != nil {
+				return fmt.Errorf("Error updating SwitchControllerQosDot1PMap resource: %v", err)
+			}
+		}
+	}
+
+	if !existing {
+		o, err = c.CreateSwitchControllerQosDot1PMap(obj, vdomparam)
+
+		if err != nil {
+			return fmt.Errorf("Error creating SwitchControllerQosDot1PMap resource: %v", err)
+		}
 	}
 
 	if o["mkey"] != nil && o["mkey"] != "" {

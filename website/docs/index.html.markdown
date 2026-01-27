@@ -178,6 +178,8 @@ The following arguments are supported:
 
 * `vdom` - (Optional) If the FortiGate unit is running in VDOM mode, you can use this argument to specify the name of the vdom to be set .
 
+* `update_if_exist` - Equivalent functionality of import the resource. If set to true, will check whether the resource exist, if so, will do the UPDATE operation rather CREATE. Default is false. This will apply to all the resources, and resource level configuration will overwrite provider level configuration.
+
 * `http_proxy` - (Optional) HTTP proxy address. Set this argument to `ENV` if you want to use environment settings. By setting this argument to `ENV`, the provider will get the environment variable `HTTPS_PROXY` or `HTTP_PROXY`. Default is empty, which means no HTTP proxy.
 
 

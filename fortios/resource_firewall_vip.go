@@ -36,6 +36,11 @@ func resourceFirewallVip() *schema.Resource {
 				ForceNew: true,
 				Computed: true,
 			},
+			"update_if_exist": &schema.Schema{
+				Type:     schema.TypeBool,
+				Optional: true,
+				Computed: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
@@ -796,10 +801,31 @@ func resourceFirewallVipCreate(d *schema.ResourceData, m interface{}) error {
 		return fmt.Errorf("Error creating FirewallVip resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateFirewallVip(obj, vdomparam)
+	update_if_exist := getUpdateIfExist(c, d)
+	mkey_tf, mkey_ok := d.GetOk("name")
+	mkey := fmt.Sprint(mkey_tf)
+	o := make(map[string]interface{})
+	existing := false
 
-	if err != nil {
-		return fmt.Errorf("Error creating FirewallVip resource: %v", err)
+	if update_if_exist && mkey_ok {
+		// check existing
+		o, err = c.ReadFirewallVip(mkey, vdomparam)
+		if err == nil && o != nil {
+			existing = true
+			// update if existing
+			o, err = c.UpdateFirewallVip(obj, mkey, vdomparam)
+			if err != nil {
+				return fmt.Errorf("Error updating FirewallVip resource: %v", err)
+			}
+		}
+	}
+
+	if !existing {
+		o, err = c.CreateFirewallVip(obj, vdomparam)
+
+		if err != nil {
+			return fmt.Errorf("Error creating FirewallVip resource: %v", err)
+		}
 	}
 
 	if o["mkey"] != nil && o["mkey"] != "" {

@@ -41,6 +41,7 @@ The following arguments are supported:
 * `output_size` - Number of megabytes to limit script output to (10 - 1024, default = 10).
 * `timeout` - Maximum running time for this script in seconds (0 = no timeout).
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
+* `update_if_exist` - Equivalent functionality of import the resource. If set to true, will check whether the resource exist, if so, will do the UPDATE operation rather CREATE. Default is false. If you want to inherit the value of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

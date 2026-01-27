@@ -36,6 +36,11 @@ func resourceFirewallInternetServiceIpblVendor() *schema.Resource {
 				ForceNew: true,
 				Computed: true,
 			},
+			"update_if_exist": &schema.Schema{
+				Type:     schema.TypeBool,
+				Optional: true,
+				Computed: true,
+			},
 			"fosid": &schema.Schema{
 				Type: schema.TypeInt,
 				Optional: true,
@@ -77,11 +82,32 @@ func resourceFirewallInternetServiceIpblVendorCreate(d *schema.ResourceData, m i
 		return fmt.Errorf("Error creating FirewallInternetServiceIpblVendor resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateFirewallInternetServiceIpblVendor(obj, vdomparam)
+	update_if_exist := getUpdateIfExist(c, d)
+	mkey_tf, mkey_ok := d.GetOk("fosid")
+	mkey := fmt.Sprint(mkey_tf)
+	o := make(map[string]interface{})
+	existing := false
 
-	if err != nil {
-		return fmt.Errorf("Error creating FirewallInternetServiceIpblVendor resource: %v", err)
+	if update_if_exist && mkey_ok {
+		// check existing
+		o, err = c.ReadFirewallInternetServiceIpblVendor(mkey, vdomparam)
+		if err == nil && o != nil {
+			existing = true
+			// update if existing
+			o, err = c.UpdateFirewallInternetServiceIpblVendor(obj, mkey, vdomparam)
+			if err != nil {
+				return fmt.Errorf("Error updating FirewallInternetServiceIpblVendor resource: %v", err)
+			}
+		}
 	}
+
+	if !existing {
+		o, err = c.CreateFirewallInternetServiceIpblVendor(obj, vdomparam)
+
+		if err != nil {
+			return fmt.Errorf("Error creating FirewallInternetServiceIpblVendor resource: %v", err)
+		}
+    }
 
 	if o["mkey"] != nil && o["mkey"] != "" {
 		d.SetId(strconv.Itoa(int(o["mkey"].(float64))))

@@ -36,6 +36,11 @@ func resourceWebfilterFtgdLocalRating() *schema.Resource {
 				ForceNew: true,
 				Computed: true,
 			},
+			"update_if_exist": &schema.Schema{
+				Type:     schema.TypeBool,
+				Optional: true,
+				Computed: true,
+			},
 			"url": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 511),
@@ -88,10 +93,31 @@ func resourceWebfilterFtgdLocalRatingCreate(d *schema.ResourceData, m interface{
 		return fmt.Errorf("Error creating WebfilterFtgdLocalRating resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateWebfilterFtgdLocalRating(obj, vdomparam)
+	update_if_exist := getUpdateIfExist(c, d)
+	mkey_tf, mkey_ok := d.GetOk("url")
+	mkey := fmt.Sprint(mkey_tf)
+	o := make(map[string]interface{})
+	existing := false
 
-	if err != nil {
-		return fmt.Errorf("Error creating WebfilterFtgdLocalRating resource: %v", err)
+	if update_if_exist && mkey_ok {
+		// check existing
+		o, err = c.ReadWebfilterFtgdLocalRating(mkey, vdomparam)
+		if err == nil && o != nil {
+			existing = true
+			// update if existing
+			o, err = c.UpdateWebfilterFtgdLocalRating(obj, mkey, vdomparam)
+			if err != nil {
+				return fmt.Errorf("Error updating WebfilterFtgdLocalRating resource: %v", err)
+			}
+		}
+	}
+
+	if !existing {
+		o, err = c.CreateWebfilterFtgdLocalRating(obj, vdomparam)
+
+		if err != nil {
+			return fmt.Errorf("Error creating WebfilterFtgdLocalRating resource: %v", err)
+		}
 	}
 
 	if o["mkey"] != nil && o["mkey"] != "" {

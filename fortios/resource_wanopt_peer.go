@@ -36,6 +36,11 @@ func resourceWanoptPeer() *schema.Resource {
 				ForceNew: true,
 				Computed: true,
 			},
+			"update_if_exist": &schema.Schema{
+				Type:     schema.TypeBool,
+				Optional: true,
+				Computed: true,
+			},
 			"peer_host_id": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -79,10 +84,31 @@ func resourceWanoptPeerCreate(d *schema.ResourceData, m interface{}) error {
 		return fmt.Errorf("Error creating WanoptPeer resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateWanoptPeer(obj, vdomparam)
+	update_if_exist := getUpdateIfExist(c, d)
+	mkey_tf, mkey_ok := d.GetOk("peer_host_id")
+	mkey := fmt.Sprint(mkey_tf)
+	o := make(map[string]interface{})
+	existing := false
 
-	if err != nil {
-		return fmt.Errorf("Error creating WanoptPeer resource: %v", err)
+	if update_if_exist && mkey_ok {
+		// check existing
+		o, err = c.ReadWanoptPeer(mkey, vdomparam)
+		if err == nil && o != nil {
+			existing = true
+			// update if existing
+			o, err = c.UpdateWanoptPeer(obj, mkey, vdomparam)
+			if err != nil {
+				return fmt.Errorf("Error updating WanoptPeer resource: %v", err)
+			}
+		}
+	}
+
+	if !existing {
+		o, err = c.CreateWanoptPeer(obj, vdomparam)
+
+		if err != nil {
+			return fmt.Errorf("Error creating WanoptPeer resource: %v", err)
+		}
 	}
 
 	if o["mkey"] != nil && o["mkey"] != "" {

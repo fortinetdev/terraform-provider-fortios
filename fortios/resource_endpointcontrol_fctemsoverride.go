@@ -36,6 +36,11 @@ func resourceEndpointControlFctemsOverride() *schema.Resource {
 				ForceNew: true,
 				Computed: true,
 			},
+			"update_if_exist": &schema.Schema{
+				Type:     schema.TypeBool,
+				Optional: true,
+				Computed: true,
+			},
 			"ems_id": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 7),
@@ -206,10 +211,31 @@ func resourceEndpointControlFctemsOverrideCreate(d *schema.ResourceData, m inter
 		return fmt.Errorf("Error creating EndpointControlFctemsOverride resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateEndpointControlFctemsOverride(obj, vdomparam)
+	update_if_exist := getUpdateIfExist(c, d)
+	mkey_tf, mkey_ok := d.GetOk("ems_id")
+	mkey := fmt.Sprint(mkey_tf)
+	o := make(map[string]interface{})
+	existing := false
 
-	if err != nil {
-		return fmt.Errorf("Error creating EndpointControlFctemsOverride resource: %v", err)
+	if update_if_exist && mkey_ok {
+		// check existing
+		o, err = c.ReadEndpointControlFctemsOverride(mkey, vdomparam)
+		if err == nil && o != nil {
+			existing = true
+			// update if existing
+			o, err = c.UpdateEndpointControlFctemsOverride(obj, mkey, vdomparam)
+			if err != nil {
+				return fmt.Errorf("Error updating EndpointControlFctemsOverride resource: %v", err)
+			}
+		}
+	}
+
+	if !existing {
+		o, err = c.CreateEndpointControlFctemsOverride(obj, vdomparam)
+
+		if err != nil {
+			return fmt.Errorf("Error creating EndpointControlFctemsOverride resource: %v", err)
+		}
 	}
 
 	if o["mkey"] != nil && o["mkey"] != "" {

@@ -36,6 +36,11 @@ func resourceEmailfilterBword() *schema.Resource {
 				ForceNew: true,
 				Computed: true,
 			},
+			"update_if_exist": &schema.Schema{
+				Type:     schema.TypeBool,
+				Optional: true,
+				Computed: true,
+			},
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				ForceNew: true,
@@ -141,10 +146,31 @@ func resourceEmailfilterBwordCreate(d *schema.ResourceData, m interface{}) error
 		return fmt.Errorf("Error creating EmailfilterBword resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateEmailfilterBword(obj, vdomparam)
+	update_if_exist := getUpdateIfExist(c, d)
+	mkey_tf, mkey_ok := d.GetOk("fosid")
+	mkey := fmt.Sprint(mkey_tf)
+	o := make(map[string]interface{})
+	existing := false
 
-	if err != nil {
-		return fmt.Errorf("Error creating EmailfilterBword resource: %v", err)
+	if update_if_exist && mkey_ok {
+		// check existing
+		o, err = c.ReadEmailfilterBword(mkey, vdomparam)
+		if err == nil && o != nil {
+			existing = true
+			// update if existing
+			o, err = c.UpdateEmailfilterBword(obj, mkey, vdomparam)
+			if err != nil {
+				return fmt.Errorf("Error updating EmailfilterBword resource: %v", err)
+			}
+		}
+	}
+
+	if !existing {
+		o, err = c.CreateEmailfilterBword(obj, vdomparam)
+
+		if err != nil {
+			return fmt.Errorf("Error creating EmailfilterBword resource: %v", err)
+		}
 	}
 
 	if o["mkey"] != nil && o["mkey"] != "" {

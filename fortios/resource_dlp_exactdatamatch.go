@@ -36,6 +36,11 @@ func resourceDlpExactDataMatch() *schema.Resource {
 				ForceNew: true,
 				Computed: true,
 			},
+			"update_if_exist": &schema.Schema{
+				Type:     schema.TypeBool,
+				Optional: true,
+				Computed: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -117,10 +122,31 @@ func resourceDlpExactDataMatchCreate(d *schema.ResourceData, m interface{}) erro
 		return fmt.Errorf("Error creating DlpExactDataMatch resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateDlpExactDataMatch(obj, vdomparam)
+	update_if_exist := getUpdateIfExist(c, d)
+	mkey_tf, mkey_ok := d.GetOk("name")
+	mkey := fmt.Sprint(mkey_tf)
+	o := make(map[string]interface{})
+	existing := false
 
-	if err != nil {
-		return fmt.Errorf("Error creating DlpExactDataMatch resource: %v", err)
+	if update_if_exist && mkey_ok {
+		// check existing
+		o, err = c.ReadDlpExactDataMatch(mkey, vdomparam)
+		if err == nil && o != nil {
+			existing = true
+			// update if existing
+			o, err = c.UpdateDlpExactDataMatch(obj, mkey, vdomparam)
+			if err != nil {
+				return fmt.Errorf("Error updating DlpExactDataMatch resource: %v", err)
+			}
+		}
+	}
+
+	if !existing {
+		o, err = c.CreateDlpExactDataMatch(obj, vdomparam)
+
+		if err != nil {
+			return fmt.Errorf("Error creating DlpExactDataMatch resource: %v", err)
+		}
 	}
 
 	if o["mkey"] != nil && o["mkey"] != "" {

@@ -36,6 +36,11 @@ func resourceWirelessControllerSyslogProfile() *schema.Resource {
 				ForceNew: true,
 				Computed: true,
 			},
+			"update_if_exist": &schema.Schema{
+				Type:     schema.TypeBool,
+				Optional: true,
+				Computed: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -120,10 +125,31 @@ func resourceWirelessControllerSyslogProfileCreate(d *schema.ResourceData, m int
 		return fmt.Errorf("Error creating WirelessControllerSyslogProfile resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateWirelessControllerSyslogProfile(obj, vdomparam)
+	update_if_exist := getUpdateIfExist(c, d)
+	mkey_tf, mkey_ok := d.GetOk("name")
+	mkey := fmt.Sprint(mkey_tf)
+	o := make(map[string]interface{})
+	existing := false
 
-	if err != nil {
-		return fmt.Errorf("Error creating WirelessControllerSyslogProfile resource: %v", err)
+	if update_if_exist && mkey_ok {
+		// check existing
+		o, err = c.ReadWirelessControllerSyslogProfile(mkey, vdomparam)
+		if err == nil && o != nil {
+			existing = true
+			// update if existing
+			o, err = c.UpdateWirelessControllerSyslogProfile(obj, mkey, vdomparam)
+			if err != nil {
+				return fmt.Errorf("Error updating WirelessControllerSyslogProfile resource: %v", err)
+			}
+		}
+	}
+
+	if !existing {
+		o, err = c.CreateWirelessControllerSyslogProfile(obj, vdomparam)
+
+		if err != nil {
+			return fmt.Errorf("Error creating WirelessControllerSyslogProfile resource: %v", err)
+		}
 	}
 
 	if o["mkey"] != nil && o["mkey"] != "" {

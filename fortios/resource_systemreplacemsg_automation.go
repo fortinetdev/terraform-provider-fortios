@@ -36,6 +36,11 @@ func resourceSystemReplacemsgAutomation() *schema.Resource {
 				ForceNew: true,
 				Computed: true,
 			},
+			"update_if_exist": &schema.Schema{
+				Type:     schema.TypeBool,
+				Optional: true,
+				Computed: true,
+			},
 			"msg_type": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 28),
@@ -89,10 +94,31 @@ func resourceSystemReplacemsgAutomationCreate(d *schema.ResourceData, m interfac
 		return fmt.Errorf("Error creating SystemReplacemsgAutomation resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSystemReplacemsgAutomation(obj, vdomparam)
+	update_if_exist := getUpdateIfExist(c, d)
+	mkey_tf, mkey_ok := d.GetOk("msg_type")
+	mkey := fmt.Sprint(mkey_tf)
+	o := make(map[string]interface{})
+	existing := false
 
-	if err != nil {
-		return fmt.Errorf("Error creating SystemReplacemsgAutomation resource: %v", err)
+	if update_if_exist && mkey_ok {
+		// check existing
+		o, err = c.ReadSystemReplacemsgAutomation(mkey, vdomparam)
+		if err == nil && o != nil {
+			existing = true
+			// update if existing
+			o, err = c.UpdateSystemReplacemsgAutomation(obj, mkey, vdomparam)
+			if err != nil {
+				return fmt.Errorf("Error updating SystemReplacemsgAutomation resource: %v", err)
+			}
+		}
+	}
+
+	if !existing {
+		o, err = c.CreateSystemReplacemsgAutomation(obj, vdomparam)
+
+		if err != nil {
+			return fmt.Errorf("Error creating SystemReplacemsgAutomation resource: %v", err)
+		}
 	}
 
 	if o["mkey"] != nil && o["mkey"] != "" {

@@ -1,6 +1,15 @@
 ## 1.25.0 (Unreleased)
 
 
+## 1.24.1 (Jan 27, 2026)
+BUG FIXES:
+
+* Fix table missing element issue;
+
+IMPROVEMENTS:
+
+* Support option of update_if_exist to import resource if it is pre-exsiting;
+
 ## 1.24.0 (Jan 14, 2026)
 BUG FIXES:
 

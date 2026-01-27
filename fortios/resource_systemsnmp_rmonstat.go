@@ -36,6 +36,11 @@ func resourceSystemSnmpRmonStat() *schema.Resource {
 				ForceNew: true,
 				Computed: true,
 			},
+			"update_if_exist": &schema.Schema{
+				Type:     schema.TypeBool,
+				Optional: true,
+				Computed: true,
+			},
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				ForceNew: true,
@@ -83,10 +88,31 @@ func resourceSystemSnmpRmonStatCreate(d *schema.ResourceData, m interface{}) err
 		return fmt.Errorf("Error creating SystemSnmpRmonStat resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSystemSnmpRmonStat(obj, vdomparam)
+	update_if_exist := getUpdateIfExist(c, d)
+	mkey_tf, mkey_ok := d.GetOk("fosid")
+	mkey := fmt.Sprint(mkey_tf)
+	o := make(map[string]interface{})
+	existing := false
 
-	if err != nil {
-		return fmt.Errorf("Error creating SystemSnmpRmonStat resource: %v", err)
+	if update_if_exist && mkey_ok {
+		// check existing
+		o, err = c.ReadSystemSnmpRmonStat(mkey, vdomparam)
+		if err == nil && o != nil {
+			existing = true
+			// update if existing
+			o, err = c.UpdateSystemSnmpRmonStat(obj, mkey, vdomparam)
+			if err != nil {
+				return fmt.Errorf("Error updating SystemSnmpRmonStat resource: %v", err)
+			}
+		}
+	}
+
+	if !existing {
+		o, err = c.CreateSystemSnmpRmonStat(obj, vdomparam)
+
+		if err != nil {
+			return fmt.Errorf("Error creating SystemSnmpRmonStat resource: %v", err)
+		}
 	}
 
 	if o["mkey"] != nil && o["mkey"] != "" {

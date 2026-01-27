@@ -36,6 +36,11 @@ func resourceFirewallPolicy6() *schema.Resource {
 				ForceNew: true,
 				Computed: true,
 			},
+			"update_if_exist": &schema.Schema{
+				Type:     schema.TypeBool,
+				Optional: true,
+				Computed: true,
+			},
 			"policyid": &schema.Schema{
 				Type:     schema.TypeInt,
 				ForceNew: true,
@@ -623,10 +628,31 @@ func resourceFirewallPolicy6Create(d *schema.ResourceData, m interface{}) error 
 		return fmt.Errorf("Error creating FirewallPolicy6 resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateFirewallPolicy6(obj, vdomparam)
+	update_if_exist := getUpdateIfExist(c, d)
+	mkey_tf, mkey_ok := d.GetOk("policyid")
+	mkey := fmt.Sprint(mkey_tf)
+	o := make(map[string]interface{})
+	existing := false
 
-	if err != nil {
-		return fmt.Errorf("Error creating FirewallPolicy6 resource: %v", err)
+	if update_if_exist && mkey_ok {
+		// check existing
+		o, err = c.ReadFirewallPolicy6(mkey, vdomparam)
+		if err == nil && o != nil {
+			existing = true
+			// update if existing
+			o, err = c.UpdateFirewallPolicy6(obj, mkey, vdomparam)
+			if err != nil {
+				return fmt.Errorf("Error updating FirewallPolicy6 resource: %v", err)
+			}
+		}
+	}
+
+	if !existing {
+		o, err = c.CreateFirewallPolicy6(obj, vdomparam)
+
+		if err != nil {
+			return fmt.Errorf("Error creating FirewallPolicy6 resource: %v", err)
+		}
 	}
 
 	if o["mkey"] != nil && o["mkey"] != "" {

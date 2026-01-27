@@ -52,6 +52,7 @@ The following arguments are supported:
 * `lcp_echo_interval` - Time in seconds between PPPoE Link Control Protocol (LCP) echo requests.
 * `lcp_max_echo_fails` - Maximum missed LCP echo messages before disconnect.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
+* `update_if_exist` - Equivalent functionality of import the resource. If set to true, will check whether the resource exist, if so, will do the UPDATE operation rather CREATE. Default is false. If you want to inherit the value of the provider, please do not set this parameter.
 
 
 ## Attribute Reference
