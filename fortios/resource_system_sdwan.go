@@ -1387,7 +1387,7 @@ func resourceSystemSdwan() *schema.Resource {
 							},
 						},
 						"priority_members": &schema.Schema{
-							Type:     schema.TypeSet,
+							Type:     schema.TypeList,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -1399,7 +1399,7 @@ func resourceSystemSdwan() *schema.Resource {
 							},
 						},
 						"priority_zone": &schema.Schema{
-							Type:     schema.TypeSet,
+							Type:     schema.TypeList,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
@@ -5811,13 +5811,12 @@ func flattenSystemSdwanServicePriorityMembers(v interface{}, d *schema.ResourceD
 		}
 	}
 
-	parsed_list := mergeBlock(tf_list, l, "seq-num", "seq_num")
-
 	con := 0
-	for _, r := range parsed_list {
+	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		tf_exist := i["tf_exist"].(bool)
+
+		tf_exist := con < len(tf_list)
 
 		if cur_v, ok := i["seq-num"]; ok {
 			pre_append := ""
@@ -5832,7 +5831,6 @@ func flattenSystemSdwanServicePriorityMembers(v interface{}, d *schema.ResourceD
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "seq_num", d)
 	return result
 }
 
@@ -5864,13 +5862,12 @@ func flattenSystemSdwanServicePriorityZone(v interface{}, d *schema.ResourceData
 		}
 	}
 
-	parsed_list := mergeBlock(tf_list, l, "name", "name")
-
 	con := 0
-	for _, r := range parsed_list {
+	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		tf_exist := i["tf_exist"].(bool)
+
+		tf_exist := con < len(tf_list)
 
 		if cur_v, ok := i["name"]; ok {
 			pre_append := ""
@@ -5885,7 +5882,6 @@ func flattenSystemSdwanServicePriorityZone(v interface{}, d *schema.ResourceData
 		con += 1
 	}
 
-	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -9640,7 +9636,7 @@ func expandSystemSdwanServiceSlaId(d *schema.ResourceData, v interface{}, pre st
 }
 
 func expandSystemSdwanServicePriorityMembers(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.(*schema.Set).List()
+	l := v.([]interface{})
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
@@ -9668,7 +9664,7 @@ func expandSystemSdwanServicePriorityMembersSeqNum(d *schema.ResourceData, v int
 }
 
 func expandSystemSdwanServicePriorityZone(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.(*schema.Set).List()
+	l := v.([]interface{})
 	result := make([]map[string]interface{}, 0, len(l))
 
 	if len(l) == 0 || l[0] == nil {
