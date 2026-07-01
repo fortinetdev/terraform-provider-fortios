@@ -27,4 +27,6 @@ The following attributes are exported:
 * `label_day` - Configure a window during the time of day in which the schedule job is executed.
 * `color` - Color of icon on the GUI.
 * `fabric_object` - Security Fabric global object setting.
+* `fabric_force_sync` - Enable/disable forced synchronization of configuration objects from the root FortiGate unit to the downstream devices.  Configuration conflict check is skipped.
+* `fabric_object_source` - Source of truth for fabric object.
 

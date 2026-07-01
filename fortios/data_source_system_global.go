@@ -224,6 +224,10 @@ func dataSourceSystemGlobal() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"log_fsck_timeout": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
 			"dst": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -283,6 +287,22 @@ func dataSourceSystemGlobal() *schema.Resource {
 			"virtual_switch_vlan": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
+			},
+			"split_port_mode": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"interface": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"split_mode": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
 			},
 			"split_port": &schema.Schema{
 				Type:     schema.TypeString,
@@ -577,6 +597,10 @@ func dataSourceSystemGlobal() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"single_vdom_npuvlink": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"upgrade_report": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -749,6 +773,10 @@ func dataSourceSystemGlobal() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"tcp_congestion_control": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"security_rating_result_submission": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -787,6 +815,14 @@ func dataSourceSystemGlobal() *schema.Resource {
 			},
 			"fortiextender_provision_on_authorization": &schema.Schema{
 				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"telemetry_controller": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"telemetry_data_port": &schema.Schema{
+				Type:     schema.TypeInt,
 				Computed: true,
 			},
 			"switch_controller": &schema.Schema{
@@ -997,6 +1033,46 @@ func dataSourceSystemGlobal() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"gui_login_request_rate_limit": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"http_request_limit": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"admin_http_login_request_size_limit": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"admin_http_json_request_limit": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"http_unauthenticated_request_limit": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"admin_http_request_header_timeout": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"admin_http_request_body_timeout": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"admin_http_unauthenticated_request_body_timeout": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"admin_http_rate_limit_max_requests": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"admin_http_rate_limit_exempt_auth": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"rest_api_key_url_query": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -1137,6 +1213,10 @@ func dataSourceSystemGlobal() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"gui_custom_theme": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"gui_date_format": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -1253,6 +1333,10 @@ func dataSourceSystemGlobal() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"gtpu_dynamic_source_port": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"user_history_password_threshold": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
@@ -1282,6 +1366,10 @@ func dataSourceSystemGlobal() *schema.Resource {
 				Computed: true,
 			},
 			"tls_session_cache": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"gui_restrict_theme_change": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -1519,6 +1607,10 @@ func dataSourceFlattenSystemGlobalAutorunLogFsck(v interface{}, d *schema.Resour
 	return v
 }
 
+func dataSourceFlattenSystemGlobalLogFsckTimeout(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemGlobalDst(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -1576,6 +1668,51 @@ func dataSourceFlattenSystemGlobalPmtuDiscovery(v interface{}, d *schema.Resourc
 }
 
 func dataSourceFlattenSystemGlobalVirtualSwitchVlan(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalSplitPortMode(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
+		if _, ok := i["interface"]; ok {
+			tmp["interface"] = dataSourceFlattenSystemGlobalSplitPortModeInterface(i["interface"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "split_mode"
+		if _, ok := i["split-mode"]; ok {
+			tmp["split_mode"] = dataSourceFlattenSystemGlobalSplitPortModeSplitMode(i["split-mode"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenSystemGlobalSplitPortModeInterface(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalSplitPortModeSplitMode(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1871,6 +2008,10 @@ func dataSourceFlattenSystemGlobalCheckResetRange(v interface{}, d *schema.Resou
 	return v
 }
 
+func dataSourceFlattenSystemGlobalSingleVdomNpuvlink(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemGlobalUpgradeReport(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -2043,6 +2184,10 @@ func dataSourceFlattenSystemGlobalAdminScp(v interface{}, d *schema.ResourceData
 	return v
 }
 
+func dataSourceFlattenSystemGlobalTcpCongestionControl(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemGlobalSecurityRatingResultSubmission(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -2087,6 +2232,14 @@ func dataSourceFlattenSystemGlobalFortiextenderVlanMode(v interface{}, d *schema
 }
 
 func dataSourceFlattenSystemGlobalFortiextenderProvisionOnAuthorization(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalTelemetryController(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalTelemetryDataPort(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -2305,6 +2458,46 @@ func dataSourceFlattenSystemGlobalGuiRestApiCache(v interface{}, d *schema.Resou
 	return v
 }
 
+func dataSourceFlattenSystemGlobalGuiLoginRequestRateLimit(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalHttpRequestLimit(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalAdminHttpLoginRequestSizeLimit(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalAdminHttpJsonRequestLimit(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalHttpUnauthenticatedRequestLimit(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalAdminHttpRequestHeaderTimeout(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalAdminHttpRequestBodyTimeout(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalAdminHttpUnauthenticatedRequestBodyTimeout(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalAdminHttpRateLimitMaxRequests(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalAdminHttpRateLimitExemptAuth(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemGlobalRestApiKeyUrlQuery(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -2442,6 +2635,10 @@ func dataSourceFlattenSystemGlobalAutoAuthExtensionDevice(v interface{}, d *sche
 }
 
 func dataSourceFlattenSystemGlobalGuiTheme(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalGuiCustomTheme(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -2585,6 +2782,10 @@ func dataSourceFlattenSystemGlobalFortigslbIntegration(v interface{}, d *schema.
 	return v
 }
 
+func dataSourceFlattenSystemGlobalGtpuDynamicSourcePort(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemGlobalUserHistoryPasswordThreshold(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -2614,6 +2815,10 @@ func dataSourceFlattenSystemGlobalApplicationBandwidthTracking(v interface{}, d 
 }
 
 func dataSourceFlattenSystemGlobalTlsSessionCache(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGlobalGuiRestrictThemeChange(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -2914,6 +3119,12 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 		}
 	}
 
+	if err = d.Set("log_fsck_timeout", dataSourceFlattenSystemGlobalLogFsckTimeout(o["log-fsck-timeout"], d, "log_fsck_timeout")); err != nil {
+		if !fortiAPIPatch(o["log-fsck-timeout"]) {
+			return fmt.Errorf("Error reading log_fsck_timeout: %v", err)
+		}
+	}
+
 	if err = d.Set("dst", dataSourceFlattenSystemGlobalDst(o["dst"], d, "dst")); err != nil {
 		if !fortiAPIPatch(o["dst"]) {
 			return fmt.Errorf("Error reading dst: %v", err)
@@ -3001,6 +3212,12 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 	if err = d.Set("virtual_switch_vlan", dataSourceFlattenSystemGlobalVirtualSwitchVlan(o["virtual-switch-vlan"], d, "virtual_switch_vlan")); err != nil {
 		if !fortiAPIPatch(o["virtual-switch-vlan"]) {
 			return fmt.Errorf("Error reading virtual_switch_vlan: %v", err)
+		}
+	}
+
+	if err = d.Set("split_port_mode", dataSourceFlattenSystemGlobalSplitPortMode(o["split-port-mode"], d, "split_port_mode")); err != nil {
+		if !fortiAPIPatch(o["split-port-mode"]) {
+			return fmt.Errorf("Error reading split_port_mode: %v", err)
 		}
 	}
 
@@ -3436,6 +3653,12 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 		}
 	}
 
+	if err = d.Set("single_vdom_npuvlink", dataSourceFlattenSystemGlobalSingleVdomNpuvlink(o["single-vdom-npuvlink"], d, "single_vdom_npuvlink")); err != nil {
+		if !fortiAPIPatch(o["single-vdom-npuvlink"]) {
+			return fmt.Errorf("Error reading single_vdom_npuvlink: %v", err)
+		}
+	}
+
 	if err = d.Set("upgrade_report", dataSourceFlattenSystemGlobalUpgradeReport(o["upgrade-report"], d, "upgrade_report")); err != nil {
 		if !fortiAPIPatch(o["upgrade-report"]) {
 			return fmt.Errorf("Error reading upgrade_report: %v", err)
@@ -3694,6 +3917,12 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 		}
 	}
 
+	if err = d.Set("tcp_congestion_control", dataSourceFlattenSystemGlobalTcpCongestionControl(o["tcp-congestion-control"], d, "tcp_congestion_control")); err != nil {
+		if !fortiAPIPatch(o["tcp-congestion-control"]) {
+			return fmt.Errorf("Error reading tcp_congestion_control: %v", err)
+		}
+	}
+
 	if err = d.Set("security_rating_result_submission", dataSourceFlattenSystemGlobalSecurityRatingResultSubmission(o["security-rating-result-submission"], d, "security_rating_result_submission")); err != nil {
 		if !fortiAPIPatch(o["security-rating-result-submission"]) {
 			return fmt.Errorf("Error reading security_rating_result_submission: %v", err)
@@ -3751,6 +3980,18 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 	if err = d.Set("fortiextender_provision_on_authorization", dataSourceFlattenSystemGlobalFortiextenderProvisionOnAuthorization(o["fortiextender-provision-on-authorization"], d, "fortiextender_provision_on_authorization")); err != nil {
 		if !fortiAPIPatch(o["fortiextender-provision-on-authorization"]) {
 			return fmt.Errorf("Error reading fortiextender_provision_on_authorization: %v", err)
+		}
+	}
+
+	if err = d.Set("telemetry_controller", dataSourceFlattenSystemGlobalTelemetryController(o["telemetry-controller"], d, "telemetry_controller")); err != nil {
+		if !fortiAPIPatch(o["telemetry-controller"]) {
+			return fmt.Errorf("Error reading telemetry_controller: %v", err)
+		}
+	}
+
+	if err = d.Set("telemetry_data_port", dataSourceFlattenSystemGlobalTelemetryDataPort(o["telemetry-data-port"], d, "telemetry_data_port")); err != nil {
+		if !fortiAPIPatch(o["telemetry-data-port"]) {
+			return fmt.Errorf("Error reading telemetry_data_port: %v", err)
 		}
 	}
 
@@ -4066,6 +4307,66 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 		}
 	}
 
+	if err = d.Set("gui_login_request_rate_limit", dataSourceFlattenSystemGlobalGuiLoginRequestRateLimit(o["gui-login-request-rate-limit"], d, "gui_login_request_rate_limit")); err != nil {
+		if !fortiAPIPatch(o["gui-login-request-rate-limit"]) {
+			return fmt.Errorf("Error reading gui_login_request_rate_limit: %v", err)
+		}
+	}
+
+	if err = d.Set("http_request_limit", dataSourceFlattenSystemGlobalHttpRequestLimit(o["http-request-limit"], d, "http_request_limit")); err != nil {
+		if !fortiAPIPatch(o["http-request-limit"]) {
+			return fmt.Errorf("Error reading http_request_limit: %v", err)
+		}
+	}
+
+	if err = d.Set("admin_http_login_request_size_limit", dataSourceFlattenSystemGlobalAdminHttpLoginRequestSizeLimit(o["admin-http-login-request-size-limit"], d, "admin_http_login_request_size_limit")); err != nil {
+		if !fortiAPIPatch(o["admin-http-login-request-size-limit"]) {
+			return fmt.Errorf("Error reading admin_http_login_request_size_limit: %v", err)
+		}
+	}
+
+	if err = d.Set("admin_http_json_request_limit", dataSourceFlattenSystemGlobalAdminHttpJsonRequestLimit(o["admin-http-json-request-limit"], d, "admin_http_json_request_limit")); err != nil {
+		if !fortiAPIPatch(o["admin-http-json-request-limit"]) {
+			return fmt.Errorf("Error reading admin_http_json_request_limit: %v", err)
+		}
+	}
+
+	if err = d.Set("http_unauthenticated_request_limit", dataSourceFlattenSystemGlobalHttpUnauthenticatedRequestLimit(o["http-unauthenticated-request-limit"], d, "http_unauthenticated_request_limit")); err != nil {
+		if !fortiAPIPatch(o["http-unauthenticated-request-limit"]) {
+			return fmt.Errorf("Error reading http_unauthenticated_request_limit: %v", err)
+		}
+	}
+
+	if err = d.Set("admin_http_request_header_timeout", dataSourceFlattenSystemGlobalAdminHttpRequestHeaderTimeout(o["admin-http-request-header-timeout"], d, "admin_http_request_header_timeout")); err != nil {
+		if !fortiAPIPatch(o["admin-http-request-header-timeout"]) {
+			return fmt.Errorf("Error reading admin_http_request_header_timeout: %v", err)
+		}
+	}
+
+	if err = d.Set("admin_http_request_body_timeout", dataSourceFlattenSystemGlobalAdminHttpRequestBodyTimeout(o["admin-http-request-body-timeout"], d, "admin_http_request_body_timeout")); err != nil {
+		if !fortiAPIPatch(o["admin-http-request-body-timeout"]) {
+			return fmt.Errorf("Error reading admin_http_request_body_timeout: %v", err)
+		}
+	}
+
+	if err = d.Set("admin_http_unauthenticated_request_body_timeout", dataSourceFlattenSystemGlobalAdminHttpUnauthenticatedRequestBodyTimeout(o["admin-http-unauthenticated-request-body-timeout"], d, "admin_http_unauthenticated_request_body_timeout")); err != nil {
+		if !fortiAPIPatch(o["admin-http-unauthenticated-request-body-timeout"]) {
+			return fmt.Errorf("Error reading admin_http_unauthenticated_request_body_timeout: %v", err)
+		}
+	}
+
+	if err = d.Set("admin_http_rate_limit_max_requests", dataSourceFlattenSystemGlobalAdminHttpRateLimitMaxRequests(o["admin-http-rate-limit-max-requests"], d, "admin_http_rate_limit_max_requests")); err != nil {
+		if !fortiAPIPatch(o["admin-http-rate-limit-max-requests"]) {
+			return fmt.Errorf("Error reading admin_http_rate_limit_max_requests: %v", err)
+		}
+	}
+
+	if err = d.Set("admin_http_rate_limit_exempt_auth", dataSourceFlattenSystemGlobalAdminHttpRateLimitExemptAuth(o["admin-http-rate-limit-exempt-auth"], d, "admin_http_rate_limit_exempt_auth")); err != nil {
+		if !fortiAPIPatch(o["admin-http-rate-limit-exempt-auth"]) {
+			return fmt.Errorf("Error reading admin_http_rate_limit_exempt_auth: %v", err)
+		}
+	}
+
 	if err = d.Set("rest_api_key_url_query", dataSourceFlattenSystemGlobalRestApiKeyUrlQuery(o["rest-api-key-url-query"], d, "rest_api_key_url_query")); err != nil {
 		if !fortiAPIPatch(o["rest-api-key-url-query"]) {
 			return fmt.Errorf("Error reading rest_api_key_url_query: %v", err)
@@ -4276,6 +4577,12 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 		}
 	}
 
+	if err = d.Set("gui_custom_theme", dataSourceFlattenSystemGlobalGuiCustomTheme(o["gui-custom-theme"], d, "gui_custom_theme")); err != nil {
+		if !fortiAPIPatch(o["gui-custom-theme"]) {
+			return fmt.Errorf("Error reading gui_custom_theme: %v", err)
+		}
+	}
+
 	if err = d.Set("gui_date_format", dataSourceFlattenSystemGlobalGuiDateFormat(o["gui-date-format"], d, "gui_date_format")); err != nil {
 		if !fortiAPIPatch(o["gui-date-format"]) {
 			return fmt.Errorf("Error reading gui_date_format: %v", err)
@@ -4438,6 +4745,12 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 		}
 	}
 
+	if err = d.Set("gtpu_dynamic_source_port", dataSourceFlattenSystemGlobalGtpuDynamicSourcePort(o["gtpu-dynamic-source-port"], d, "gtpu_dynamic_source_port")); err != nil {
+		if !fortiAPIPatch(o["gtpu-dynamic-source-port"]) {
+			return fmt.Errorf("Error reading gtpu_dynamic_source_port: %v", err)
+		}
+	}
+
 	if err = d.Set("user_history_password_threshold", dataSourceFlattenSystemGlobalUserHistoryPasswordThreshold(o["user-history-password-threshold"], d, "user_history_password_threshold")); err != nil {
 		if !fortiAPIPatch(o["user-history-password-threshold"]) {
 			return fmt.Errorf("Error reading user_history_password_threshold: %v", err)
@@ -4483,6 +4796,12 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 	if err = d.Set("tls_session_cache", dataSourceFlattenSystemGlobalTlsSessionCache(o["tls-session-cache"], d, "tls_session_cache")); err != nil {
 		if !fortiAPIPatch(o["tls-session-cache"]) {
 			return fmt.Errorf("Error reading tls_session_cache: %v", err)
+		}
+	}
+
+	if err = d.Set("gui_restrict_theme_change", dataSourceFlattenSystemGlobalGuiRestrictThemeChange(o["gui-restrict-theme-change"], d, "gui_restrict_theme_change")); err != nil {
+		if !fortiAPIPatch(o["gui-restrict-theme-change"]) {
+			return fmt.Errorf("Error reading gui_restrict_theme_change: %v", err)
 		}
 	}
 

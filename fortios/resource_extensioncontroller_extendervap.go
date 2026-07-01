@@ -150,6 +150,49 @@ func resourceExtensionControllerExtenderVap() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 			},
+			"security_mode": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"security_external_web": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 255),
+				Optional:     true,
+			},
+			"security_redirect_url": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 255),
+				Optional:     true,
+			},
+			"security_exempt_list": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+			},
+			"security_groups": &schema.Schema{
+				Type:     schema.TypeSet,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+						},
+					},
+				},
+			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -409,8 +452,83 @@ func flattenExtensionControllerExtenderVapAllowaccess(v interface{}, d *schema.R
 	return v
 }
 
+func flattenExtensionControllerExtenderVapSecurityMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenExtensionControllerExtenderVapSecurityExternalWeb(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenExtensionControllerExtenderVapSecurityRedirectUrl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenExtensionControllerExtenderVapSecurityExemptList(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenExtensionControllerExtenderVapSecurityGroups(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
+	con := 0
+	for _, r := range parsed_list {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
+
+		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
+			tmp["name"] = flattenExtensionControllerExtenderVapSecurityGroupsName(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenExtensionControllerExtenderVapSecurityGroupsName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectExtensionControllerExtenderVap(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
 
 	if err = d.Set("name", flattenExtensionControllerExtenderVapName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -526,6 +644,46 @@ func refreshObjectExtensionControllerExtenderVap(d *schema.ResourceData, o map[s
 		}
 	}
 
+	if err = d.Set("security_mode", flattenExtensionControllerExtenderVapSecurityMode(o["security-mode"], d, "security_mode", sv)); err != nil {
+		if !fortiAPIPatch(o["security-mode"]) {
+			return fmt.Errorf("Error reading security_mode: %v", err)
+		}
+	}
+
+	if err = d.Set("security_external_web", flattenExtensionControllerExtenderVapSecurityExternalWeb(o["security-external-web"], d, "security_external_web", sv)); err != nil {
+		if !fortiAPIPatch(o["security-external-web"]) {
+			return fmt.Errorf("Error reading security_external_web: %v", err)
+		}
+	}
+
+	if err = d.Set("security_redirect_url", flattenExtensionControllerExtenderVapSecurityRedirectUrl(o["security-redirect-url"], d, "security_redirect_url", sv)); err != nil {
+		if !fortiAPIPatch(o["security-redirect-url"]) {
+			return fmt.Errorf("Error reading security_redirect_url: %v", err)
+		}
+	}
+
+	if err = d.Set("security_exempt_list", flattenExtensionControllerExtenderVapSecurityExemptList(o["security-exempt-list"], d, "security_exempt_list", sv)); err != nil {
+		if !fortiAPIPatch(o["security-exempt-list"]) {
+			return fmt.Errorf("Error reading security_exempt_list: %v", err)
+		}
+	}
+
+	if b_get_all_tables {
+		if err = d.Set("security_groups", flattenExtensionControllerExtenderVapSecurityGroups(o["security-groups"], d, "security_groups", sv)); err != nil {
+			if !fortiAPIPatch(o["security-groups"]) {
+				return fmt.Errorf("Error reading security_groups: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("security_groups"); ok {
+			if err = d.Set("security_groups", flattenExtensionControllerExtenderVapSecurityGroups(o["security-groups"], d, "security_groups", sv)); err != nil {
+				if !fortiAPIPatch(o["security-groups"]) {
+					return fmt.Errorf("Error reading security_groups: %v", err)
+				}
+			}
+		}
+	}
+
 	return nil
 }
 
@@ -616,6 +774,50 @@ func expandExtensionControllerExtenderVapEndIp(d *schema.ResourceData, v interfa
 }
 
 func expandExtensionControllerExtenderVapAllowaccess(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandExtensionControllerExtenderVapSecurityMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandExtensionControllerExtenderVapSecurityExternalWeb(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandExtensionControllerExtenderVapSecurityRedirectUrl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandExtensionControllerExtenderVapSecurityExemptList(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandExtensionControllerExtenderVapSecurityGroups(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.(*schema.Set).List()
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		tmp["name"], _ = expandExtensionControllerExtenderVapSecurityGroupsName(d, i["name"], pre_append, sv)
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandExtensionControllerExtenderVapSecurityGroupsName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -827,6 +1029,57 @@ func getObjectExtensionControllerExtenderVap(d *schema.ResourceData, sv string) 
 		}
 	} else if d.HasChange("allowaccess") {
 		obj["allowaccess"] = nil
+	}
+
+	if v, ok := d.GetOk("security_mode"); ok {
+		t, err := expandExtensionControllerExtenderVapSecurityMode(d, v, "security_mode", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["security-mode"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("security_external_web"); ok {
+		t, err := expandExtensionControllerExtenderVapSecurityExternalWeb(d, v, "security_external_web", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["security-external-web"] = t
+		}
+	} else if d.HasChange("security_external_web") {
+		obj["security-external-web"] = nil
+	}
+
+	if v, ok := d.GetOk("security_redirect_url"); ok {
+		t, err := expandExtensionControllerExtenderVapSecurityRedirectUrl(d, v, "security_redirect_url", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["security-redirect-url"] = t
+		}
+	} else if d.HasChange("security_redirect_url") {
+		obj["security-redirect-url"] = nil
+	}
+
+	if v, ok := d.GetOk("security_exempt_list"); ok {
+		t, err := expandExtensionControllerExtenderVapSecurityExemptList(d, v, "security_exempt_list", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["security-exempt-list"] = t
+		}
+	} else if d.HasChange("security_exempt_list") {
+		obj["security-exempt-list"] = nil
+	}
+
+	if v, ok := d.GetOk("security_groups"); ok || d.HasChange("security_groups") {
+		t, err := expandExtensionControllerExtenderVapSecurityGroups(d, v, "security_groups", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["security-groups"] = t
+		}
 	}
 
 	return &obj, nil

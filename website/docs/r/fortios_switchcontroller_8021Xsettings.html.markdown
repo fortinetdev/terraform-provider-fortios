@@ -28,11 +28,13 @@ The following arguments are supported:
 * `max_reauth_attempt` - Maximum number of authentication attempts (0 - 15, default = 3).
 * `tx_period` - 802.1X Tx period (seconds, default=30).
 * `mab_reauth` - Enable/disable MAB re-authentication. Valid values: `disable`, `enable`.
+* `mab_entry_as` - Configure MAB MAC entry as static or dynamic (default = static). Valid values: `static`, `dynamic`.
 * `mac_username_delimiter` - MAC authentication username delimiter (default = hyphen). Valid values: `colon`, `hyphen`, `none`, `single-hyphen`.
 * `mac_password_delimiter` - MAC authentication password delimiter (default = hyphen). Valid values: `colon`, `hyphen`, `none`, `single-hyphen`.
 * `mac_calling_station_delimiter` - MAC calling station delimiter (default = hyphen). Valid values: `colon`, `hyphen`, `none`, `single-hyphen`.
 * `mac_called_station_delimiter` - MAC called station delimiter (default = hyphen). Valid values: `colon`, `hyphen`, `none`, `single-hyphen`.
 * `mac_case` - MAC case (default = lowercase). Valid values: `lowercase`, `uppercase`.
+* `allow_mac_move` - Enable/disable MAC move (default = enable). Valid values: `disable`, `enable`.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 

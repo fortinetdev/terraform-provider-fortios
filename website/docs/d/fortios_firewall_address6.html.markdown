@@ -22,8 +22,10 @@ The following attributes are exported:
 * `name` - Address name.
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `type` - Type of IPv6 address object (default = ipprefix).
+* `sub_type` - Sub-type of address.
 * `route_tag` - route-tag address.
 * `macaddr` - Multiple MAC address ranges. The structure of `macaddr` block is documented below.
+* `addr_8021x` - 802.1X address. The structure of `addr_8021x` block is documented below.
 * `start_mac` - First MAC address in the range.
 * `end_mac` - Last MAC address in the range.
 * `sdn` - SDN.
@@ -34,6 +36,8 @@ The following attributes are exported:
 * `fqdn` - Fully qualified domain name.
 * `country` - IPv6 addresses associated to a specific country.
 * `cache_ttl` - Minimal TTL of individual IPv6 addresses in FQDN cache.
+* `display_with` - Display object with first tag, all tags, or just the icon.
+* `custom_tags` - Custom tags. The structure of `custom_tags` block is documented below.
 * `visibility` - Enable/disable the visibility of the object in the GUI.
 * `color` - Integer value to determine the color of the icon in the GUI (range 1 to 32, default = 0, which sets the value to 1).
 * `obj_id` - Object ID for NSX.
@@ -49,12 +53,30 @@ The following attributes are exported:
 * `sdn_tag` - SDN Tag.
 * `filter` - Match criteria filter.
 * `sdn_addr_type` - Type of addresses to collect.
+* `obj_tag` - Tag of dynamic address object.
+* `tag_detection_level` - Tag detection level of dynamic address object.
+* `tag_type` - Tag type of dynamic address object.
+* `obsolete` - Indicates whether the address can be used.
 * `passive_fqdn_learning` - Enable/disable passive learning of FQDNs.  When enabled, the FortiGate learns, trusts, and saves FQDNs from endpoint DNS queries (default = enable).
 * `fabric_object` - Security Fabric global object setting.
+* `fabric_force_sync` - Enable/disable forced synchronization of configuration objects from the root FortiGate unit to the downstream devices.  Configuration conflict check is skipped.
+* `fabric_object_source` - Source of truth for fabric object.
 
 The `macaddr` block contains:
 
 * `macaddr` - MAC address ranges <start>[-<end>] separated by space.
+
+The `addr_8021x` block contains:
+
+* `interface` - Interface name.
+* `mac` - MAC address.
+* `acct_user` - Account user name.
+* `ip6` - IPv6 address.
+* `vlan_id` - VLAN ID.
+
+The `custom_tags` block contains:
+
+* `name` - Names of custom tags used with this address.
 
 The `list` block contains:
 

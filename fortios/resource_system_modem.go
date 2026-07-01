@@ -270,6 +270,7 @@ func resourceSystemModem() *schema.Resource {
 			"priority": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
+				Computed: true,
 			},
 		},
 	}
@@ -1656,8 +1657,6 @@ func getObjectSystemModem(d *schema.ResourceData, setArgNil bool, sv string) (*m
 				obj["priority"] = t
 			}
 		}
-	} else if d.HasChange("priority") {
-		obj["priority"] = nil
 	}
 
 	return &obj, nil

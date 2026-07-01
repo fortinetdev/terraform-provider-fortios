@@ -70,6 +70,7 @@ func resourceSystemSaml() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
+				Computed:     true,
 			},
 			"entity_id": &schema.Schema{
 				Type:         schema.TypeString,
@@ -80,11 +81,13 @@ func resourceSystemSaml() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
+				Computed:     true,
 			},
 			"single_logout_url": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
+				Computed:     true,
 			},
 			"idp_entity_id": &schema.Schema{
 				Type:         schema.TypeString,
@@ -175,16 +178,19 @@ func resourceSystemSaml() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 255),
 							Optional:     true,
+							Computed:     true,
 						},
 						"idp_single_sign_on_url": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 255),
 							Optional:     true,
+							Computed:     true,
 						},
 						"idp_single_logout_url": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 255),
 							Optional:     true,
+							Computed:     true,
 						},
 						"assertion_attributes": &schema.Schema{
 							Type:     schema.TypeList,
@@ -819,19 +825,7 @@ func expandSystemSamlBindingProtocol(d *schema.ResourceData, v interface{}, pre 
 	return v, nil
 }
 
-func expandSystemSamlPortalUrl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
 func expandSystemSamlEntityId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandSystemSamlSingleSignOnUrl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandSystemSamlSingleLogoutUrl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -935,27 +929,6 @@ func expandSystemSamlServiceProviders(d *schema.ResourceData, v interface{}, pre
 			tmp["sp-portal-url"] = nil
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "idp_entity_id"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["idp-entity-id"], _ = expandSystemSamlServiceProvidersIdpEntityId(d, i["idp_entity_id"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["idp-entity-id"] = nil
-		}
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "idp_single_sign_on_url"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["idp-single-sign-on-url"], _ = expandSystemSamlServiceProvidersIdpSingleSignOnUrl(d, i["idp_single_sign_on_url"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["idp-single-sign-on-url"] = nil
-		}
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "idp_single_logout_url"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["idp-single-logout-url"], _ = expandSystemSamlServiceProvidersIdpSingleLogoutUrl(d, i["idp_single_logout_url"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["idp-single-logout-url"] = nil
-		}
-
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "assertion_attributes"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["assertion-attributes"], _ = expandSystemSamlServiceProvidersAssertionAttributes(d, i["assertion_attributes"], pre_append, sv)
@@ -1000,18 +973,6 @@ func expandSystemSamlServiceProvidersSpSingleLogoutUrl(d *schema.ResourceData, v
 }
 
 func expandSystemSamlServiceProvidersSpPortalUrl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandSystemSamlServiceProvidersIdpEntityId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandSystemSamlServiceProvidersIdpSingleSignOnUrl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandSystemSamlServiceProvidersIdpSingleLogoutUrl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1142,21 +1103,6 @@ func getObjectSystemSaml(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		}
 	}
 
-	if v, ok := d.GetOk("portal_url"); ok {
-		if setArgNil {
-			obj["portal-url"] = nil
-		} else {
-			t, err := expandSystemSamlPortalUrl(d, v, "portal_url", sv)
-			if err != nil {
-				return &obj, err
-			} else if t != nil {
-				obj["portal-url"] = t
-			}
-		}
-	} else if d.HasChange("portal_url") {
-		obj["portal-url"] = nil
-	}
-
 	if v, ok := d.GetOk("entity_id"); ok {
 		if setArgNil {
 			obj["entity-id"] = nil
@@ -1170,36 +1116,6 @@ func getObjectSystemSaml(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		}
 	} else if d.HasChange("entity_id") {
 		obj["entity-id"] = nil
-	}
-
-	if v, ok := d.GetOk("single_sign_on_url"); ok {
-		if setArgNil {
-			obj["single-sign-on-url"] = nil
-		} else {
-			t, err := expandSystemSamlSingleSignOnUrl(d, v, "single_sign_on_url", sv)
-			if err != nil {
-				return &obj, err
-			} else if t != nil {
-				obj["single-sign-on-url"] = t
-			}
-		}
-	} else if d.HasChange("single_sign_on_url") {
-		obj["single-sign-on-url"] = nil
-	}
-
-	if v, ok := d.GetOk("single_logout_url"); ok {
-		if setArgNil {
-			obj["single-logout-url"] = nil
-		} else {
-			t, err := expandSystemSamlSingleLogoutUrl(d, v, "single_logout_url", sv)
-			if err != nil {
-				return &obj, err
-			} else if t != nil {
-				obj["single-logout-url"] = t
-			}
-		}
-	} else if d.HasChange("single_logout_url") {
-		obj["single-logout-url"] = nil
 	}
 
 	if v, ok := d.GetOk("idp_entity_id"); ok {

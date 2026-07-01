@@ -265,6 +265,7 @@ func resourceSwitchControllerLocation() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
@@ -285,6 +286,7 @@ func resourceSwitchControllerLocation() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
 							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
@@ -1175,10 +1177,6 @@ func expandSwitchControllerLocationAddressCivic(d *schema.ResourceData, v interf
 	} else if d.HasChange(pre_append) {
 		result["zip"] = nil
 	}
-	pre_append = pre + ".0." + "parent_key"
-	if _, ok := d.GetOk(pre_append); ok {
-		result["parent-key"], _ = expandSwitchControllerLocationAddressCivicParentKey(d, i["parent_key"], pre_append, sv)
-	}
 
 	return result, nil
 }
@@ -1315,10 +1313,6 @@ func expandSwitchControllerLocationAddressCivicZip(d *schema.ResourceData, v int
 	return v, nil
 }
 
-func expandSwitchControllerLocationAddressCivicParentKey(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
 func expandSwitchControllerLocationCoordinates(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
@@ -1355,12 +1349,6 @@ func expandSwitchControllerLocationCoordinates(d *schema.ResourceData, v interfa
 	} else if d.HasChange(pre_append) {
 		result["longitude"] = nil
 	}
-	pre_append = pre + ".0." + "parent_key"
-	if _, ok := d.GetOk(pre_append); ok {
-		result["parent-key"], _ = expandSwitchControllerLocationCoordinatesParentKey(d, i["parent_key"], pre_append, sv)
-	} else if d.HasChange(pre_append) {
-		result["parent-key"] = nil
-	}
 
 	return result, nil
 }
@@ -1385,10 +1373,6 @@ func expandSwitchControllerLocationCoordinatesLongitude(d *schema.ResourceData, 
 	return v, nil
 }
 
-func expandSwitchControllerLocationCoordinatesParentKey(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
 func expandSwitchControllerLocationElinNumber(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
@@ -1405,21 +1389,11 @@ func expandSwitchControllerLocationElinNumber(d *schema.ResourceData, v interfac
 	} else if d.HasChange(pre_append) {
 		result["elin-num"] = nil
 	}
-	pre_append = pre + ".0." + "parent_key"
-	if _, ok := d.GetOk(pre_append); ok {
-		result["parent-key"], _ = expandSwitchControllerLocationElinNumberParentKey(d, i["parent_key"], pre_append, sv)
-	} else if d.HasChange(pre_append) {
-		result["parent-key"] = nil
-	}
 
 	return result, nil
 }
 
 func expandSwitchControllerLocationElinNumberElinNum(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandSwitchControllerLocationElinNumberParentKey(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

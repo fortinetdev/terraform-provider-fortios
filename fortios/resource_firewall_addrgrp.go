@@ -137,12 +137,40 @@ func resourceFirewallAddrgrp() *schema.Resource {
 					},
 				},
 			},
+			"display_with": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"custom_tags": &schema.Schema{
+				Type:     schema.TypeSet,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 35),
+							Optional:     true,
+						},
+					},
+				},
+			},
 			"allow_routing": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"fabric_object": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"fabric_force_sync": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"fabric_object_source": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -597,11 +625,76 @@ func flattenFirewallAddrgrpTaggingTagsName(v interface{}, d *schema.ResourceData
 	return v
 }
 
+func flattenFirewallAddrgrpDisplayWith(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallAddrgrpCustomTags(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
+	con := 0
+	for _, r := range parsed_list {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
+
+		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
+			tmp["name"] = flattenFirewallAddrgrpCustomTagsName(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenFirewallAddrgrpCustomTagsName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallAddrgrpAllowRouting(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
 func flattenFirewallAddrgrpFabricObject(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallAddrgrpFabricForceSync(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallAddrgrpFabricObjectSource(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -710,6 +803,28 @@ func refreshObjectFirewallAddrgrp(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
+	if err = d.Set("display_with", flattenFirewallAddrgrpDisplayWith(o["display-with"], d, "display_with", sv)); err != nil {
+		if !fortiAPIPatch(o["display-with"]) {
+			return fmt.Errorf("Error reading display_with: %v", err)
+		}
+	}
+
+	if b_get_all_tables {
+		if err = d.Set("custom_tags", flattenFirewallAddrgrpCustomTags(o["custom-tags"], d, "custom_tags", sv)); err != nil {
+			if !fortiAPIPatch(o["custom-tags"]) {
+				return fmt.Errorf("Error reading custom_tags: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("custom_tags"); ok {
+			if err = d.Set("custom_tags", flattenFirewallAddrgrpCustomTags(o["custom-tags"], d, "custom_tags", sv)); err != nil {
+				if !fortiAPIPatch(o["custom-tags"]) {
+					return fmt.Errorf("Error reading custom_tags: %v", err)
+				}
+			}
+		}
+	}
+
 	if err = d.Set("allow_routing", flattenFirewallAddrgrpAllowRouting(o["allow-routing"], d, "allow_routing", sv)); err != nil {
 		if !fortiAPIPatch(o["allow-routing"]) {
 			return fmt.Errorf("Error reading allow_routing: %v", err)
@@ -719,6 +834,18 @@ func refreshObjectFirewallAddrgrp(d *schema.ResourceData, o map[string]interface
 	if err = d.Set("fabric_object", flattenFirewallAddrgrpFabricObject(o["fabric-object"], d, "fabric_object", sv)); err != nil {
 		if !fortiAPIPatch(o["fabric-object"]) {
 			return fmt.Errorf("Error reading fabric_object: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_force_sync", flattenFirewallAddrgrpFabricForceSync(o["fabric-force-sync"], d, "fabric_force_sync", sv)); err != nil {
+		if !fortiAPIPatch(o["fabric-force-sync"]) {
+			return fmt.Errorf("Error reading fabric_force_sync: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_object_source", flattenFirewallAddrgrpFabricObjectSource(o["fabric-object-source"], d, "fabric_object_source", sv)); err != nil {
+		if !fortiAPIPatch(o["fabric-object-source"]) {
+			return fmt.Errorf("Error reading fabric_object_source: %v", err)
 		}
 	}
 
@@ -898,11 +1025,51 @@ func expandFirewallAddrgrpTaggingTagsName(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
+func expandFirewallAddrgrpDisplayWith(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallAddrgrpCustomTags(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.(*schema.Set).List()
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		tmp["name"], _ = expandFirewallAddrgrpCustomTagsName(d, i["name"], pre_append, sv)
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandFirewallAddrgrpCustomTagsName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallAddrgrpAllowRouting(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
 func expandFirewallAddrgrpFabricObject(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallAddrgrpFabricForceSync(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallAddrgrpFabricObjectSource(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1016,6 +1183,24 @@ func getObjectFirewallAddrgrp(d *schema.ResourceData, sv string) (*map[string]in
 		}
 	}
 
+	if v, ok := d.GetOk("display_with"); ok {
+		t, err := expandFirewallAddrgrpDisplayWith(d, v, "display_with", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["display-with"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("custom_tags"); ok || d.HasChange("custom_tags") {
+		t, err := expandFirewallAddrgrpCustomTags(d, v, "custom_tags", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["custom-tags"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("allow_routing"); ok {
 		t, err := expandFirewallAddrgrpAllowRouting(d, v, "allow_routing", sv)
 		if err != nil {
@@ -1031,6 +1216,24 @@ func getObjectFirewallAddrgrp(d *schema.ResourceData, sv string) (*map[string]in
 			return &obj, err
 		} else if t != nil {
 			obj["fabric-object"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("fabric_force_sync"); ok {
+		t, err := expandFirewallAddrgrpFabricForceSync(d, v, "fabric_force_sync", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fabric-force-sync"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("fabric_object_source"); ok {
+		t, err := expandFirewallAddrgrpFabricObjectSource(d, v, "fabric_object_source", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fabric-object-source"] = t
 		}
 	}
 

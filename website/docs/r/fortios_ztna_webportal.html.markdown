@@ -38,6 +38,9 @@ The following arguments are supported:
 * `customize_forticlient_download_url` - Enable support of customized download URL for FortiClient. Valid values: `enable`, `disable`.
 * `windows_forticlient_download_url` - Download URL for Windows FortiClient.
 * `macos_forticlient_download_url` - Download URL for Mac FortiClient.
+* `bookmarks` - Dynamic bookmarks.
+* `llm_proxy` - Enable LLM Proxy. Valid values: `enable`, `disable`.
+* `llm_profile` - LLM Profile.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 * `update_if_exist` - Equivalent functionality of import the resource. If set to true, will check whether the resource exist, if so, will do the UPDATE operation rather CREATE. Default is false. If you want to inherit the value of the provider, please do not set this parameter.
 

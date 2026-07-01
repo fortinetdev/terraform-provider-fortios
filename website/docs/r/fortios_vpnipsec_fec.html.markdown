@@ -23,13 +23,27 @@ The following arguments are supported:
 The `mappings` block supports:
 
 * `seqno` - Sequence number (1 - 64).
-* `base` - Number of base FEC packets (1 - 20).
-* `redundant` - Number of redundant FEC packets (1 - 5).
+* `base` - Number of base FEC packets. On FortiOS versions 7.0.2-7.6.7: 1 - 20. On FortiOS versions >= 8.0.0: 1 - 40.
+* `redundant` - Number of redundant FEC packets On FortiOS versions 7.0.2-7.6.7: 1 - 5. On FortiOS versions >= 8.0.0: 0 - 20.
 * `packet_loss_threshold` - Apply FEC parameters when packet loss is >= threshold (0 - 100, 0 means no threshold).
+* `packet_loss_threshold_negate` - Negate packet loss threshold. Valid values: `enable`, `disable`.
 * `latency_threshold` - Apply FEC parameters when latency is <= threshold (0 means no threshold).
+* `latency_threshold_negate` - Negate latency threshold. Valid values: `enable`, `disable`.
 * `bandwidth_up_threshold` - Apply FEC parameters when available up bandwidth is >= threshold (kbps, 0 means no threshold).
+* `bandwidth_up_threshold_negate` - Negate up bandwidth threshold. Valid values: `enable`, `disable`.
 * `bandwidth_down_threshold` - Apply FEC parameters when available down bandwidth is >= threshold (kbps, 0 means no threshold).
+* `bandwidth_down_threshold_negate` - Negate down bandwidth threshold. Valid values: `enable`, `disable`.
 * `bandwidth_bi_threshold` - Apply FEC parameters when available bi-bandwidth is >= threshold (kbps, 0 means no threshold).
+* `bandwidth_bi_threshold_negate` - Negate bi-bandwidth threshold. Valid values: `enable`, `disable`.
+* `tos` - FEC redundancy mapping table for specific type of service (TOS). The structure of `tos` block is documented below.
+
+The `tos` block supports:
+
+* `seqno` - Sequence number (1 - 8).
+* `tos` - Type of service bit pattern.
+* `tos_mask` - Type of service evaluated bits.
+* `base` - Number of base FEC packets (1 - 40).
+* `redundant` - Number of redundant FEC packets (0 - 20).
 
 
 ## Attribute Reference

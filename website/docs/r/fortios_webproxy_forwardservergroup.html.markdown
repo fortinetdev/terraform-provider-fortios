@@ -40,6 +40,10 @@ resource "fortios_webproxy_forwardservergroup" "trname1" {
 The following arguments are supported:
 
 * `name` - Configure a forward server group consisting one or multiple forward servers. Supports failover and load balancing.
+* `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
+* `fabric_object` - Security Fabric global object setting. Valid values: `enable`, `disable`.
+* `fabric_force_sync` - Enable/disable forced synchronization of configuration objects from the root FortiGate unit to the downstream devices.  Configuration conflict check is skipped. Valid values: `enable`, `disable`.
+* `fabric_object_source` - Source of truth for fabric object. Valid values: `member`, `local`, `root`.
 * `affinity` - Enable/disable affinity, attaching a source-ip's traffic to the assigned forwarding server until the forward-server-affinity-timeout is reached (under web-proxy global). Valid values: `enable`, `disable`.
 * `ldb_method` - Load balance method: weighted or least-session.
 * `group_down_option` - Action to take when all of the servers in the forward server group are down: block sessions until at least one server is back up or pass sessions to their destination. Valid values: `block`, `pass`.

@@ -19,7 +19,6 @@ The following arguments are supported:
 * `authorized` - FortiExtender Administration (enable or disable).
 * `ext_name` - FortiExtender name.
 * `description` - Description.
-* `vdom` - VDOM.
 * `device_id` - Device ID.
 * `extension_type` - Extension type for this FortiExtender. Valid values: `wan-extension`, `lan-extension`.
 * `profile` - FortiExtender profile configuration.
@@ -55,6 +54,7 @@ The `wan_extension` block supports:
 
 In addition to all the above arguments, the following attributes are exported:
 * `id` - an identifier for the resource with format {{name}}.
+* `vdom` - VDOM.
 
 ## Import
 

@@ -52,6 +52,22 @@ func dataSourceFirewallShaperTrafficShaper() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"uuid": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"fabric_object": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"fabric_force_sync": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"fabric_object_source": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"diffserv": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -175,6 +191,22 @@ func dataSourceFlattenFirewallShaperTrafficShaperPerPolicy(v interface{}, d *sch
 	return v
 }
 
+func dataSourceFlattenFirewallShaperTrafficShaperUuid(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallShaperTrafficShaperFabricObject(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallShaperTrafficShaperFabricForceSync(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallShaperTrafficShaperFabricObjectSource(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallShaperTrafficShaperDiffserv(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -263,6 +295,30 @@ func dataSourceRefreshObjectFirewallShaperTrafficShaper(d *schema.ResourceData, 
 	if err = d.Set("per_policy", dataSourceFlattenFirewallShaperTrafficShaperPerPolicy(o["per-policy"], d, "per_policy")); err != nil {
 		if !fortiAPIPatch(o["per-policy"]) {
 			return fmt.Errorf("Error reading per_policy: %v", err)
+		}
+	}
+
+	if err = d.Set("uuid", dataSourceFlattenFirewallShaperTrafficShaperUuid(o["uuid"], d, "uuid")); err != nil {
+		if !fortiAPIPatch(o["uuid"]) {
+			return fmt.Errorf("Error reading uuid: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_object", dataSourceFlattenFirewallShaperTrafficShaperFabricObject(o["fabric-object"], d, "fabric_object")); err != nil {
+		if !fortiAPIPatch(o["fabric-object"]) {
+			return fmt.Errorf("Error reading fabric_object: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_force_sync", dataSourceFlattenFirewallShaperTrafficShaperFabricForceSync(o["fabric-force-sync"], d, "fabric_force_sync")); err != nil {
+		if !fortiAPIPatch(o["fabric-force-sync"]) {
+			return fmt.Errorf("Error reading fabric_force_sync: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_object_source", dataSourceFlattenFirewallShaperTrafficShaperFabricObjectSource(o["fabric-object-source"], d, "fabric_object_source")); err != nil {
+		if !fortiAPIPatch(o["fabric-object-source"]) {
+			return fmt.Errorf("Error reading fabric_object_source: %v", err)
 		}
 	}
 

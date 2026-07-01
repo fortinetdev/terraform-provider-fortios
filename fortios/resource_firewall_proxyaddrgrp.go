@@ -110,6 +110,24 @@ func resourceFirewallProxyAddrgrp() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
 			},
+			"display_with": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"custom_tags": &schema.Schema{
+				Type:     schema.TypeSet,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 35),
+							Optional:     true,
+						},
+					},
+				},
+			},
 			"visibility": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -499,6 +517,63 @@ func flattenFirewallProxyAddrgrpComment(v interface{}, d *schema.ResourceData, p
 	return v
 }
 
+func flattenFirewallProxyAddrgrpDisplayWith(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallProxyAddrgrpCustomTags(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
+	con := 0
+	for _, r := range parsed_list {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
+
+		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
+			tmp["name"] = flattenFirewallProxyAddrgrpCustomTagsName(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenFirewallProxyAddrgrpCustomTagsName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallProxyAddrgrpVisibility(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -571,6 +646,28 @@ func refreshObjectFirewallProxyAddrgrp(d *schema.ResourceData, o map[string]inte
 	if err = d.Set("comment", flattenFirewallProxyAddrgrpComment(o["comment"], d, "comment", sv)); err != nil {
 		if !fortiAPIPatch(o["comment"]) {
 			return fmt.Errorf("Error reading comment: %v", err)
+		}
+	}
+
+	if err = d.Set("display_with", flattenFirewallProxyAddrgrpDisplayWith(o["display-with"], d, "display_with", sv)); err != nil {
+		if !fortiAPIPatch(o["display-with"]) {
+			return fmt.Errorf("Error reading display_with: %v", err)
+		}
+	}
+
+	if b_get_all_tables {
+		if err = d.Set("custom_tags", flattenFirewallProxyAddrgrpCustomTags(o["custom-tags"], d, "custom_tags", sv)); err != nil {
+			if !fortiAPIPatch(o["custom-tags"]) {
+				return fmt.Errorf("Error reading custom_tags: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("custom_tags"); ok {
+			if err = d.Set("custom_tags", flattenFirewallProxyAddrgrpCustomTags(o["custom-tags"], d, "custom_tags", sv)); err != nil {
+				if !fortiAPIPatch(o["custom-tags"]) {
+					return fmt.Errorf("Error reading custom_tags: %v", err)
+				}
+			}
 		}
 	}
 
@@ -716,6 +813,38 @@ func expandFirewallProxyAddrgrpComment(d *schema.ResourceData, v interface{}, pr
 	return v, nil
 }
 
+func expandFirewallProxyAddrgrpDisplayWith(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallProxyAddrgrpCustomTags(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.(*schema.Set).List()
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		tmp["name"], _ = expandFirewallProxyAddrgrpCustomTagsName(d, i["name"], pre_append, sv)
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandFirewallProxyAddrgrpCustomTagsName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallProxyAddrgrpVisibility(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -790,6 +919,24 @@ func getObjectFirewallProxyAddrgrp(d *schema.ResourceData, sv string) (*map[stri
 		}
 	} else if d.HasChange("comment") {
 		obj["comment"] = nil
+	}
+
+	if v, ok := d.GetOk("display_with"); ok {
+		t, err := expandFirewallProxyAddrgrpDisplayWith(d, v, "display_with", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["display-with"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("custom_tags"); ok || d.HasChange("custom_tags") {
+		t, err := expandFirewallProxyAddrgrpCustomTags(d, v, "custom_tags", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["custom-tags"] = t
+		}
 	}
 
 	if v, ok := d.GetOk("visibility"); ok {

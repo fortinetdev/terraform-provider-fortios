@@ -73,6 +73,12 @@ func resourceSystemDnsServer() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"ssl_cert": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
 		},
 	}
 }
@@ -273,6 +279,10 @@ func flattenSystemDnsServerDoq(v interface{}, d *schema.ResourceData, pre string
 	return v
 }
 
+func flattenSystemDnsServerSslCert(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectSystemDnsServer(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -312,6 +322,12 @@ func refreshObjectSystemDnsServer(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
+	if err = d.Set("ssl_cert", flattenSystemDnsServerSslCert(o["ssl-cert"], d, "ssl_cert", sv)); err != nil {
+		if !fortiAPIPatch(o["ssl-cert"]) {
+			return fmt.Errorf("Error reading ssl_cert: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -342,6 +358,10 @@ func expandSystemDnsServerDoh3(d *schema.ResourceData, v interface{}, pre string
 }
 
 func expandSystemDnsServerDoq(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemDnsServerSslCert(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -401,6 +421,15 @@ func getObjectSystemDnsServer(d *schema.ResourceData, sv string) (*map[string]in
 			return &obj, err
 		} else if t != nil {
 			obj["doq"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ssl_cert"); ok {
+		t, err := expandSystemDnsServerSslCert(d, v, "ssl_cert", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ssl-cert"] = t
 		}
 	}
 

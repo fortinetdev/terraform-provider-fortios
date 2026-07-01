@@ -32,14 +32,17 @@ The `entry` block supports:
 The `port_range` block supports:
 
 * `id` - Custom entry port range ID.
-* `start_port` - Starting TCP/UDP/SCTP destination port (1 to 65535).
-* `end_port` - Ending TCP/UDP/SCTP destination port (1 to 65535).
 
 
 ## Attribute Reference
 
 In addition to all the above arguments, the following attributes are exported:
 * `id` - an identifier for the resource with format {{fosid}}.
+
+The `port_range` block contains following attibutes:
+
+* `start_port` - Starting TCP/UDP/SCTP destination port (1 to 65535).
+* `end_port` - Ending TCP/UDP/SCTP destination port (1 to 65535).
 
 ## Import
 

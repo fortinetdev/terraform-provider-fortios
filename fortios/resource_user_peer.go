@@ -83,6 +83,20 @@ func resourceUserPeer() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
 			},
+			"checkemail": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 127),
+				Optional:     true,
+			},
+			"checkip": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+			},
+			"checkhost": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 255),
+				Optional:     true,
+			},
 			"mfa_username": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -339,6 +353,18 @@ func flattenUserPeerMfaServer(v interface{}, d *schema.ResourceData, pre string,
 	return v
 }
 
+func flattenUserPeerCheckemail(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserPeerCheckip(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserPeerCheckhost(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenUserPeerMfaUsername(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -411,6 +437,24 @@ func refreshObjectUserPeer(d *schema.ResourceData, o map[string]interface{}, sv 
 	if err = d.Set("mfa_server", flattenUserPeerMfaServer(o["mfa-server"], d, "mfa_server", sv)); err != nil {
 		if !fortiAPIPatch(o["mfa-server"]) {
 			return fmt.Errorf("Error reading mfa_server: %v", err)
+		}
+	}
+
+	if err = d.Set("checkemail", flattenUserPeerCheckemail(o["checkemail"], d, "checkemail", sv)); err != nil {
+		if !fortiAPIPatch(o["checkemail"]) {
+			return fmt.Errorf("Error reading checkemail: %v", err)
+		}
+	}
+
+	if err = d.Set("checkip", flattenUserPeerCheckip(o["checkip"], d, "checkip", sv)); err != nil {
+		if !fortiAPIPatch(o["checkip"]) {
+			return fmt.Errorf("Error reading checkip: %v", err)
+		}
+	}
+
+	if err = d.Set("checkhost", flattenUserPeerCheckhost(o["checkhost"], d, "checkhost", sv)); err != nil {
+		if !fortiAPIPatch(o["checkhost"]) {
+			return fmt.Errorf("Error reading checkhost: %v", err)
 		}
 	}
 
@@ -488,6 +532,18 @@ func expandUserPeerMfaMode(d *schema.ResourceData, v interface{}, pre string, sv
 }
 
 func expandUserPeerMfaServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserPeerCheckemail(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserPeerCheckip(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserPeerCheckhost(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -608,6 +664,39 @@ func getObjectUserPeer(d *schema.ResourceData, sv string) (*map[string]interface
 		}
 	} else if d.HasChange("mfa_server") {
 		obj["mfa-server"] = nil
+	}
+
+	if v, ok := d.GetOk("checkemail"); ok {
+		t, err := expandUserPeerCheckemail(d, v, "checkemail", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["checkemail"] = t
+		}
+	} else if d.HasChange("checkemail") {
+		obj["checkemail"] = nil
+	}
+
+	if v, ok := d.GetOk("checkip"); ok {
+		t, err := expandUserPeerCheckip(d, v, "checkip", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["checkip"] = t
+		}
+	} else if d.HasChange("checkip") {
+		obj["checkip"] = nil
+	}
+
+	if v, ok := d.GetOk("checkhost"); ok {
+		t, err := expandUserPeerCheckhost(d, v, "checkhost", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["checkhost"] = t
+		}
+	} else if d.HasChange("checkhost") {
+		obj["checkhost"] = nil
 	}
 
 	if v, ok := d.GetOk("mfa_username"); ok {

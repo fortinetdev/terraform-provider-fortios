@@ -32,6 +32,22 @@ func dataSourceFirewallShaperPerIpShaper() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"uuid": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"fabric_object": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"fabric_force_sync": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"fabric_object_source": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"max_bandwidth": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
@@ -119,6 +135,22 @@ func dataSourceFlattenFirewallShaperPerIpShaperName(v interface{}, d *schema.Res
 	return v
 }
 
+func dataSourceFlattenFirewallShaperPerIpShaperUuid(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallShaperPerIpShaperFabricObject(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallShaperPerIpShaperFabricForceSync(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallShaperPerIpShaperFabricObjectSource(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallShaperPerIpShaperMaxBandwidth(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -161,6 +193,30 @@ func dataSourceRefreshObjectFirewallShaperPerIpShaper(d *schema.ResourceData, o 
 	if err = d.Set("name", dataSourceFlattenFirewallShaperPerIpShaperName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
+		}
+	}
+
+	if err = d.Set("uuid", dataSourceFlattenFirewallShaperPerIpShaperUuid(o["uuid"], d, "uuid")); err != nil {
+		if !fortiAPIPatch(o["uuid"]) {
+			return fmt.Errorf("Error reading uuid: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_object", dataSourceFlattenFirewallShaperPerIpShaperFabricObject(o["fabric-object"], d, "fabric_object")); err != nil {
+		if !fortiAPIPatch(o["fabric-object"]) {
+			return fmt.Errorf("Error reading fabric_object: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_force_sync", dataSourceFlattenFirewallShaperPerIpShaperFabricForceSync(o["fabric-force-sync"], d, "fabric_force_sync")); err != nil {
+		if !fortiAPIPatch(o["fabric-force-sync"]) {
+			return fmt.Errorf("Error reading fabric_force_sync: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_object_source", dataSourceFlattenFirewallShaperPerIpShaperFabricObjectSource(o["fabric-object-source"], d, "fabric_object_source")); err != nil {
+		if !fortiAPIPatch(o["fabric-object-source"]) {
+			return fmt.Errorf("Error reading fabric_object_source: %v", err)
 		}
 	}
 

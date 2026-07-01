@@ -36,10 +36,19 @@ func resourceSystemFortisandbox() *schema.Resource {
 				ForceNew: true,
 				Computed: true,
 			},
+			"device": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
+			},
+			"default": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
 			},
 			"forticloud": &schema.Schema{
 				Type:     schema.TypeString,
@@ -96,6 +105,19 @@ func resourceSystemFortisandbox() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
 			},
+			"cn_list": &schema.Schema{
+				Type:     schema.TypeSet,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"cn": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 63),
+							Optional:     true,
+						},
+					},
+				},
+			},
 			"cn": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
@@ -105,6 +127,16 @@ func resourceSystemFortisandbox() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
+			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
+			"get_all_tables": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
 			},
 		},
 	}
@@ -224,7 +256,15 @@ func resourceSystemFortisandboxRead(d *schema.ResourceData, m interface{}) error
 	return nil
 }
 
+func flattenSystemFortisandboxDevice(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemFortisandboxStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemFortisandboxDefault(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -272,6 +312,59 @@ func flattenSystemFortisandboxCa(v interface{}, d *schema.ResourceData, pre stri
 	return v
 }
 
+func flattenSystemFortisandboxCnList(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "cn", "cn")
+
+	con := 0
+	for _, r := range parsed_list {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
+
+		if cur_v, ok := i["cn"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "cn"
+			}
+			tmp["cn"] = flattenSystemFortisandboxCnListCn(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "cn", d)
+	return result
+}
+
+func flattenSystemFortisandboxCnListCn(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemFortisandboxCn(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -282,10 +375,28 @@ func flattenSystemFortisandboxCertificateVerification(v interface{}, d *schema.R
 
 func refreshObjectSystemFortisandbox(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+	var b_get_all_tables bool
+	if get_all_tables, ok := d.GetOk("get_all_tables"); ok {
+		b_get_all_tables = get_all_tables.(string) == "true"
+	} else {
+		b_get_all_tables = isImportTable()
+	}
+
+	if err = d.Set("device", flattenSystemFortisandboxDevice(o["device"], d, "device", sv)); err != nil {
+		if !fortiAPIPatch(o["device"]) {
+			return fmt.Errorf("Error reading device: %v", err)
+		}
+	}
 
 	if err = d.Set("status", flattenSystemFortisandboxStatus(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
 			return fmt.Errorf("Error reading status: %v", err)
+		}
+	}
+
+	if err = d.Set("default", flattenSystemFortisandboxDefault(o["default"], d, "default", sv)); err != nil {
+		if !fortiAPIPatch(o["default"]) {
+			return fmt.Errorf("Error reading default: %v", err)
 		}
 	}
 
@@ -355,6 +466,22 @@ func refreshObjectSystemFortisandbox(d *schema.ResourceData, o map[string]interf
 		}
 	}
 
+	if b_get_all_tables {
+		if err = d.Set("cn_list", flattenSystemFortisandboxCnList(o["cn-list"], d, "cn_list", sv)); err != nil {
+			if !fortiAPIPatch(o["cn-list"]) {
+				return fmt.Errorf("Error reading cn_list: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("cn_list"); ok {
+			if err = d.Set("cn_list", flattenSystemFortisandboxCnList(o["cn-list"], d, "cn_list", sv)); err != nil {
+				if !fortiAPIPatch(o["cn-list"]) {
+					return fmt.Errorf("Error reading cn_list: %v", err)
+				}
+			}
+		}
+	}
+
 	if err = d.Set("cn", flattenSystemFortisandboxCn(o["cn"], d, "cn", sv)); err != nil {
 		if !fortiAPIPatch(o["cn"]) {
 			return fmt.Errorf("Error reading cn: %v", err)
@@ -376,7 +503,15 @@ func flattenSystemFortisandboxFortiTestDebug(d *schema.ResourceData, fosdebugsn 
 	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
+func expandSystemFortisandboxDevice(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemFortisandboxStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemFortisandboxDefault(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -424,6 +559,34 @@ func expandSystemFortisandboxCa(d *schema.ResourceData, v interface{}, pre strin
 	return v, nil
 }
 
+func expandSystemFortisandboxCnList(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.(*schema.Set).List()
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		tmp["cn"], _ = expandSystemFortisandboxCnListCn(d, i["cn"], pre_append, sv)
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemFortisandboxCnListCn(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemFortisandboxCn(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -434,6 +597,21 @@ func expandSystemFortisandboxCertificateVerification(d *schema.ResourceData, v i
 
 func getObjectSystemFortisandbox(d *schema.ResourceData, setArgNil bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
+
+	if v, ok := d.GetOk("device"); ok {
+		if setArgNil {
+			obj["device"] = nil
+		} else {
+			t, err := expandSystemFortisandboxDevice(d, v, "device", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["device"] = t
+			}
+		}
+	} else if d.HasChange("device") {
+		obj["device"] = nil
+	}
 
 	if v, ok := d.GetOk("status"); ok {
 		if setArgNil {
@@ -446,6 +624,21 @@ func getObjectSystemFortisandbox(d *schema.ResourceData, setArgNil bool, sv stri
 				obj["status"] = t
 			}
 		}
+	}
+
+	if v, ok := d.GetOk("default"); ok {
+		if setArgNil {
+			obj["default"] = nil
+		} else {
+			t, err := expandSystemFortisandboxDefault(d, v, "default", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["default"] = t
+			}
+		}
+	} else if d.HasChange("default") {
+		obj["default"] = nil
 	}
 
 	if v, ok := d.GetOk("forticloud"); ok {
@@ -601,6 +794,19 @@ func getObjectSystemFortisandbox(d *schema.ResourceData, setArgNil bool, sv stri
 		}
 	} else if d.HasChange("ca") {
 		obj["ca"] = nil
+	}
+
+	if v, ok := d.GetOk("cn_list"); ok || d.HasChange("cn_list") {
+		if setArgNil {
+			obj["cn-list"] = make([]struct{}, 0)
+		} else {
+			t, err := expandSystemFortisandboxCnList(d, v, "cn_list", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["cn-list"] = t
+			}
+		}
 	}
 
 	if v, ok := d.GetOk("cn"); ok {

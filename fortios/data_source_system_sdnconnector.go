@@ -32,6 +32,22 @@ func dataSourceSystemSdnConnector() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"uuid": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"fabric_object": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"fabric_force_sync": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"fabric_object_source": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -148,6 +164,18 @@ func dataSourceSystemSdnConnector() *schema.Resource {
 									},
 								},
 							},
+						},
+					},
+				},
+			},
+			"k8s_allow_list": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 					},
 				},
@@ -500,6 +528,22 @@ func dataSourceFlattenSystemSdnConnectorName(v interface{}, d *schema.ResourceDa
 	return v
 }
 
+func dataSourceFlattenSystemSdnConnectorUuid(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemSdnConnectorFabricObject(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemSdnConnectorFabricForceSync(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemSdnConnectorFabricObjectSource(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemSdnConnectorStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -695,6 +739,42 @@ func dataSourceFlattenSystemSdnConnectorExternalAccountListRegionList(v interfac
 }
 
 func dataSourceFlattenSystemSdnConnectorExternalAccountListRegionListRegion(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemSdnConnectorK8SAllowList(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = dataSourceFlattenSystemSdnConnectorK8SAllowListName(i["name"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenSystemSdnConnectorK8SAllowListName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1318,6 +1398,30 @@ func dataSourceRefreshObjectSystemSdnConnector(d *schema.ResourceData, o map[str
 		}
 	}
 
+	if err = d.Set("uuid", dataSourceFlattenSystemSdnConnectorUuid(o["uuid"], d, "uuid")); err != nil {
+		if !fortiAPIPatch(o["uuid"]) {
+			return fmt.Errorf("Error reading uuid: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_object", dataSourceFlattenSystemSdnConnectorFabricObject(o["fabric-object"], d, "fabric_object")); err != nil {
+		if !fortiAPIPatch(o["fabric-object"]) {
+			return fmt.Errorf("Error reading fabric_object: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_force_sync", dataSourceFlattenSystemSdnConnectorFabricForceSync(o["fabric-force-sync"], d, "fabric_force_sync")); err != nil {
+		if !fortiAPIPatch(o["fabric-force-sync"]) {
+			return fmt.Errorf("Error reading fabric_force_sync: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_object_source", dataSourceFlattenSystemSdnConnectorFabricObjectSource(o["fabric-object-source"], d, "fabric_object_source")); err != nil {
+		if !fortiAPIPatch(o["fabric-object-source"]) {
+			return fmt.Errorf("Error reading fabric_object_source: %v", err)
+		}
+	}
+
 	if err = d.Set("status", dataSourceFlattenSystemSdnConnectorStatus(o["status"], d, "status")); err != nil {
 		if !fortiAPIPatch(o["status"]) {
 			return fmt.Errorf("Error reading status: %v", err)
@@ -1417,6 +1521,12 @@ func dataSourceRefreshObjectSystemSdnConnector(d *schema.ResourceData, o map[str
 	if err = d.Set("external_account_list", dataSourceFlattenSystemSdnConnectorExternalAccountList(o["external-account-list"], d, "external_account_list")); err != nil {
 		if !fortiAPIPatch(o["external-account-list"]) {
 			return fmt.Errorf("Error reading external_account_list: %v", err)
+		}
+	}
+
+	if err = d.Set("k8s_allow_list", dataSourceFlattenSystemSdnConnectorK8SAllowList(o["k8s-allow-list"], d, "k8s_allow_list")); err != nil {
+		if !fortiAPIPatch(o["k8s-allow-list"]) {
+			return fmt.Errorf("Error reading k8s_allow_list: %v", err)
 		}
 	}
 

@@ -30,6 +30,7 @@ The following arguments are supported:
 * `lan_extension_controller_addr` - Controller IP address or FQDN to connect.
 * `lan_extension_controller_port` - Controller port to connect.
 * `opmode` - Firewall operation mode (NAT or Transparent). Valid values: `nat`, `transparent`.
+* `policy_offload_level` - Configure firewall policy offload level. Valid values: `disable`, `dos-offload`.
 * `inspection_mode` - Inspection mode (proxy-based or flow-based). Valid values: `proxy`, `flow`.
 * `ngfw_mode` - Next Generation Firewall (NGFW) mode. Valid values: `profile-based`, `policy-based`.
 * `implicit_allow_dns` - Enable/disable implicitly allowing DNS traffic. Valid values: `enable`, `disable`.
@@ -75,12 +76,14 @@ The following arguments are supported:
 * `detect_unknown_esp` - Enable/disable detection of unknown ESP packets (default = enable). Valid values: `enable`, `disable`.
 * `intree_ses_best_route` - Force the intree session to always use the best route. Valid values: `force`, `disable`.
 * `auxiliary_session` - Enable/disable auxiliary session. Valid values: `enable`, `disable`.
+* `vrf_local_ip_isolation` - Enable/disable VRF local IP address isolation. Valid values: `enable`, `disable`.
 * `asymroute` - Enable/disable IPv4 asymmetric routing. Valid values: `enable`, `disable`.
 * `asymroute_icmp` - Enable/disable ICMP asymmetric routing. Valid values: `enable`, `disable`.
 * `tcp_session_without_syn` - Enable/disable allowing TCP session without SYN flags. Valid values: `enable`, `disable`.
 * `ses_denied_traffic` - Enable/disable including denied session in the session table. Valid values: `enable`, `disable`.
 * `ses_denied_multicast_traffic` - Enable/disable including denied multicast session in the session table. Valid values: `enable`, `disable`.
 * `strict_src_check` - Enable/disable strict source verification. Valid values: `enable`, `disable`.
+* `src_check_reply` - Enable/disable source verification for reply packets. Valid values: `enable`, `disable`.
 * `allow_linkdown_path` - Enable/disable link down path. Valid values: `enable`, `disable`.
 * `asymroute6` - Enable/disable asymmetric IPv6 routing. Valid values: `enable`, `disable`.
 * `asymroute6_icmp` - Enable/disable asymmetric ICMPv6 routing. Valid values: `enable`, `disable`.
@@ -140,12 +143,14 @@ The following arguments are supported:
 * `gui_wireless_controller` - Enable/disable the wireless controller on the GUI. Valid values: `enable`, `disable`.
 * `gui_advanced_wireless_features` - Enable/disable advanced wireless features in GUI. Valid values: `enable`, `disable`.
 * `gui_switch_controller` - Enable/disable the switch controller on the GUI. Valid values: `enable`, `disable`.
+* `gui_advanced_switch_features` - Enable/disable advanced switching features on the GUI. Valid values: `enable`, `disable`.
 * `gui_fortiap_split_tunneling` - Enable/disable FortiAP split tunneling on the GUI. Valid values: `enable`, `disable`.
 * `gui_webfilter_advanced` - Enable/disable advanced web filtering on the GUI. Valid values: `enable`, `disable`.
 * `gui_traffic_shaping` - Enable/disable traffic shaping on the GUI. Valid values: `enable`, `disable`.
 * `gui_wan_load_balancing` - Enable/disable SD-WAN on the GUI. Valid values: `enable`, `disable`.
 * `gui_antivirus` - Enable/disable AntiVirus on the GUI. Valid values: `enable`, `disable`.
 * `gui_webfilter` - Enable/disable Web filtering on the GUI. Valid values: `enable`, `disable`.
+* `gui_fortitelemetry` - Enable/disable FortiTelemetry on the GUI. Valid values: `enable`, `disable`.
 * `gui_videofilter` - Enable/disable Video filtering on the GUI. Valid values: `enable`, `disable`.
 * `gui_dnsfilter` - Enable/disable DNS Filtering on the GUI. Valid values: `enable`, `disable`.
 * `gui_waf_profile` - Enable/disable Web Application Firewall on the GUI. Valid values: `enable`, `disable`.
@@ -156,12 +161,14 @@ The following arguments are supported:
 * `gui_fortiextender_controller` - Enable/disable FortiExtender on the GUI. Valid values: `enable`, `disable`.
 * `gui_proxy_inspection` - Enable/disable the proxy features on the GUI. Valid values: `enable`, `disable`.
 * `gui_advanced_policy` - Enable/disable advanced policy configuration on the GUI. Valid values: `enable`, `disable`.
+* `gui_policy_custom_tags` - Enable/disable Allow configuring custom tags for polices on the GUI. Valid values: `enable`, `disable`.
 * `gui_allow_unnamed_policy` - Enable/disable the requirement for policy naming on the GUI. Valid values: `enable`, `disable`.
 * `gui_email_collection` - Enable/disable email collection on the GUI. Valid values: `enable`, `disable`.
 * `gui_domain_ip_reputation` - Enable/disable Domain and IP Reputation on the GUI. Valid values: `enable`, `disable`.
 * `gui_multiple_interface_policy` - Enable/disable adding multiple interfaces to a policy on the GUI. Valid values: `enable`, `disable`.
 * `gui_policy_disclaimer` - Enable/disable policy disclaimer on the GUI. Valid values: `enable`, `disable`.
 * `gui_ztna` - Enable/disable Zero Trust Network Access features on the GUI. Valid values: `enable`, `disable`.
+* `gui_reverse_connector` - Enable/disable Enable ZTNA Reverse Proxy Connector on the GUI. Valid values: `enable`, `disable`.
 * `gui_ot` - Enable/disable Show Operational Technology Purdue Model. Valid values: `enable`, `disable`.
 * `gui_dynamic_device_os_id` - Enable/disable Create dynamic addresses to manage known devices. Valid values: `enable`, `disable`.
 * `gui_gtp` - Enable/disable Manage general radio packet service (GPRS) protocols on the GUI. Valid values: `enable`, `disable`.
@@ -174,8 +181,12 @@ The following arguments are supported:
 * `ike_dn_format` - Configure IKE ASN.1 Distinguished Name format conventions. Valid values: `with-space`, `no-space`.
 * `ike_policy_route` - Enable/disable IKE Policy Based Routing (PBR). Valid values: `enable`, `disable`.
 * `ike_detailed_event_logs` - Enable/disable detail log for IKE events. Valid values: `disable`, `enable`.
+* `ike_proposal_visibility` - Enable/disable display only recommended proposals in IPsec tunnel configuration. Valid values: `recommended`, `all`.
 * `ike_port` - UDP port for IKE/IPsec traffic (default 500).
+* `ike_extra_ports` - Extra UDP ports for the IKE daemon to listen on other than 500 and 4500 (maximum 3).
+* `ike_tcp_service` - Enable/disable IKE TCP service. Valid values: `enable`, `disable`.
 * `ike_tcp_port` - TCP port for IKE/IPsec traffic. On FortiOS versions 7.4.2-7.6.0: default 4500. On FortiOS versions >= 7.6.1: default 443.
+* `ike_tls_service` - Enable/disable IKE TLS service. Valid values: `enable`, `disable`.
 * `ike_natt_port` - UDP port for IKE/IPsec traffic in NAT-T mode (default 4500).
 * `block_land_attack` - Enable/disable blocking of land attacks. Valid values: `disable`, `enable`.
 * `default_app_port_as_service` - Enable/disable policy service enforcement based on application default ports. Valid values: `enable`, `disable`.

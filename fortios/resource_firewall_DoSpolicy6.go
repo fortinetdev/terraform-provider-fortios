@@ -68,6 +68,19 @@ func resourceFirewallDosPolicy6() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Required:     true,
 			},
+			"custom_tags": &schema.Schema{
+				Type:     schema.TypeSet,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 35),
+							Optional:     true,
+						},
+					},
+				},
+			},
 			"srcaddr": &schema.Schema{
 				Type:     schema.TypeSet,
 				Required: true,
@@ -128,6 +141,41 @@ func resourceFirewallDosPolicy6() *schema.Resource {
 							Computed: true,
 						},
 						"action": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"synproxy_ttl": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"synproxy_tos": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"synproxy_tcp_mss": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"synproxy_tcp_sack": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"synproxy_tcp_timestamp": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"synproxy_tcp_window": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"synproxy_tcp_windowscale": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -364,6 +412,59 @@ func flattenFirewallDosPolicy6Interface(v interface{}, d *schema.ResourceData, p
 	return v
 }
 
+func flattenFirewallDosPolicy6CustomTags(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
+	con := 0
+	for _, r := range parsed_list {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
+
+		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
+			tmp["name"] = flattenFirewallDosPolicy6CustomTagsName(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenFirewallDosPolicy6CustomTagsName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallDosPolicy6Srcaddr(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -587,6 +688,62 @@ func flattenFirewallDosPolicy6Anomaly(v interface{}, d *schema.ResourceData, pre
 			tmp["action"] = flattenFirewallDosPolicy6AnomalyAction(cur_v, d, pre_append, sv)
 		}
 
+		if cur_v, ok := i["synproxy-ttl"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "synproxy_ttl"
+			}
+			tmp["synproxy_ttl"] = flattenFirewallDosPolicy6AnomalySynproxyTtl(cur_v, d, pre_append, sv)
+		}
+
+		if cur_v, ok := i["synproxy-tos"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "synproxy_tos"
+			}
+			tmp["synproxy_tos"] = flattenFirewallDosPolicy6AnomalySynproxyTos(cur_v, d, pre_append, sv)
+		}
+
+		if cur_v, ok := i["synproxy-tcp-mss"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "synproxy_tcp_mss"
+			}
+			tmp["synproxy_tcp_mss"] = flattenFirewallDosPolicy6AnomalySynproxyTcpMss(cur_v, d, pre_append, sv)
+		}
+
+		if cur_v, ok := i["synproxy-tcp-sack"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "synproxy_tcp_sack"
+			}
+			tmp["synproxy_tcp_sack"] = flattenFirewallDosPolicy6AnomalySynproxyTcpSack(cur_v, d, pre_append, sv)
+		}
+
+		if cur_v, ok := i["synproxy-tcp-timestamp"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "synproxy_tcp_timestamp"
+			}
+			tmp["synproxy_tcp_timestamp"] = flattenFirewallDosPolicy6AnomalySynproxyTcpTimestamp(cur_v, d, pre_append, sv)
+		}
+
+		if cur_v, ok := i["synproxy-tcp-window"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "synproxy_tcp_window"
+			}
+			tmp["synproxy_tcp_window"] = flattenFirewallDosPolicy6AnomalySynproxyTcpWindow(cur_v, d, pre_append, sv)
+		}
+
+		if cur_v, ok := i["synproxy-tcp-windowscale"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "synproxy_tcp_windowscale"
+			}
+			tmp["synproxy_tcp_windowscale"] = flattenFirewallDosPolicy6AnomalySynproxyTcpWindowscale(cur_v, d, pre_append, sv)
+		}
+
 		if cur_v, ok := i["quarantine"]; ok {
 			pre_append := ""
 			if tf_exist {
@@ -652,6 +809,34 @@ func flattenFirewallDosPolicy6AnomalyAction(v interface{}, d *schema.ResourceDat
 	return v
 }
 
+func flattenFirewallDosPolicy6AnomalySynproxyTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallDosPolicy6AnomalySynproxyTos(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallDosPolicy6AnomalySynproxyTcpMss(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallDosPolicy6AnomalySynproxyTcpSack(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallDosPolicy6AnomalySynproxyTcpTimestamp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallDosPolicy6AnomalySynproxyTcpWindow(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallDosPolicy6AnomalySynproxyTcpWindowscale(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallDosPolicy6AnomalyQuarantine(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -708,6 +893,22 @@ func refreshObjectFirewallDosPolicy6(d *schema.ResourceData, o map[string]interf
 	if err = d.Set("interface", flattenFirewallDosPolicy6Interface(o["interface"], d, "interface", sv)); err != nil {
 		if !fortiAPIPatch(o["interface"]) {
 			return fmt.Errorf("Error reading interface: %v", err)
+		}
+	}
+
+	if b_get_all_tables {
+		if err = d.Set("custom_tags", flattenFirewallDosPolicy6CustomTags(o["custom-tags"], d, "custom_tags", sv)); err != nil {
+			if !fortiAPIPatch(o["custom-tags"]) {
+				return fmt.Errorf("Error reading custom_tags: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("custom_tags"); ok {
+			if err = d.Set("custom_tags", flattenFirewallDosPolicy6CustomTags(o["custom-tags"], d, "custom_tags", sv)); err != nil {
+				if !fortiAPIPatch(o["custom-tags"]) {
+					return fmt.Errorf("Error reading custom_tags: %v", err)
+				}
+			}
 		}
 	}
 
@@ -801,6 +1002,34 @@ func expandFirewallDosPolicy6Comments(d *schema.ResourceData, v interface{}, pre
 }
 
 func expandFirewallDosPolicy6Interface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallDosPolicy6CustomTags(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.(*schema.Set).List()
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		tmp["name"], _ = expandFirewallDosPolicy6CustomTagsName(d, i["name"], pre_append, sv)
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandFirewallDosPolicy6CustomTagsName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -924,6 +1153,41 @@ func expandFirewallDosPolicy6Anomaly(d *schema.ResourceData, v interface{}, pre 
 			tmp["action"], _ = expandFirewallDosPolicy6AnomalyAction(d, i["action"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "synproxy_ttl"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["synproxy-ttl"], _ = expandFirewallDosPolicy6AnomalySynproxyTtl(d, i["synproxy_ttl"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "synproxy_tos"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["synproxy-tos"], _ = expandFirewallDosPolicy6AnomalySynproxyTos(d, i["synproxy_tos"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "synproxy_tcp_mss"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["synproxy-tcp-mss"], _ = expandFirewallDosPolicy6AnomalySynproxyTcpMss(d, i["synproxy_tcp_mss"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "synproxy_tcp_sack"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["synproxy-tcp-sack"], _ = expandFirewallDosPolicy6AnomalySynproxyTcpSack(d, i["synproxy_tcp_sack"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "synproxy_tcp_timestamp"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["synproxy-tcp-timestamp"], _ = expandFirewallDosPolicy6AnomalySynproxyTcpTimestamp(d, i["synproxy_tcp_timestamp"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "synproxy_tcp_window"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["synproxy-tcp-window"], _ = expandFirewallDosPolicy6AnomalySynproxyTcpWindow(d, i["synproxy_tcp_window"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "synproxy_tcp_windowscale"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["synproxy-tcp-windowscale"], _ = expandFirewallDosPolicy6AnomalySynproxyTcpWindowscale(d, i["synproxy_tcp_windowscale"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "quarantine"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["quarantine"], _ = expandFirewallDosPolicy6AnomalyQuarantine(d, i["quarantine"], pre_append, sv)
@@ -974,6 +1238,34 @@ func expandFirewallDosPolicy6AnomalyLog(d *schema.ResourceData, v interface{}, p
 }
 
 func expandFirewallDosPolicy6AnomalyAction(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallDosPolicy6AnomalySynproxyTtl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallDosPolicy6AnomalySynproxyTos(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallDosPolicy6AnomalySynproxyTcpMss(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallDosPolicy6AnomalySynproxyTcpSack(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallDosPolicy6AnomalySynproxyTcpTimestamp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallDosPolicy6AnomalySynproxyTcpWindow(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallDosPolicy6AnomalySynproxyTcpWindowscale(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1049,6 +1341,15 @@ func getObjectFirewallDosPolicy6(d *schema.ResourceData, sv string) (*map[string
 		}
 	} else if d.HasChange("interface") {
 		obj["interface"] = nil
+	}
+
+	if v, ok := d.GetOk("custom_tags"); ok || d.HasChange("custom_tags") {
+		t, err := expandFirewallDosPolicy6CustomTags(d, v, "custom_tags", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["custom-tags"] = t
+		}
 	}
 
 	if v, ok := d.GetOk("srcaddr"); ok || d.HasChange("srcaddr") {

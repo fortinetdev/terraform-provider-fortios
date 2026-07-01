@@ -32,7 +32,31 @@ func dataSourceUserSaml() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"uuid": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"fabric_object": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"fabric_force_sync": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"fabric_object_source": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"cert": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"type": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"service_provider_address": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -98,6 +122,14 @@ func dataSourceUserSaml() *schema.Resource {
 			},
 			"clock_tolerance": &schema.Schema{
 				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"realm": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"user_source": &schema.Schema{
+				Type:     schema.TypeString,
 				Computed: true,
 			},
 			"auth_url": &schema.Schema{
@@ -171,7 +203,31 @@ func dataSourceFlattenUserSamlName(v interface{}, d *schema.ResourceData, pre st
 	return v
 }
 
+func dataSourceFlattenUserSamlUuid(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenUserSamlFabricObject(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenUserSamlFabricForceSync(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenUserSamlFabricObjectSource(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenUserSamlCert(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenUserSamlType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenUserSamlServiceProviderAddress(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -239,6 +295,14 @@ func dataSourceFlattenUserSamlClockTolerance(v interface{}, d *schema.ResourceDa
 	return v
 }
 
+func dataSourceFlattenUserSamlRealm(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenUserSamlUserSource(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenUserSamlAuthUrl(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -268,9 +332,45 @@ func dataSourceRefreshObjectUserSaml(d *schema.ResourceData, o map[string]interf
 		}
 	}
 
+	if err = d.Set("uuid", dataSourceFlattenUserSamlUuid(o["uuid"], d, "uuid")); err != nil {
+		if !fortiAPIPatch(o["uuid"]) {
+			return fmt.Errorf("Error reading uuid: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_object", dataSourceFlattenUserSamlFabricObject(o["fabric-object"], d, "fabric_object")); err != nil {
+		if !fortiAPIPatch(o["fabric-object"]) {
+			return fmt.Errorf("Error reading fabric_object: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_force_sync", dataSourceFlattenUserSamlFabricForceSync(o["fabric-force-sync"], d, "fabric_force_sync")); err != nil {
+		if !fortiAPIPatch(o["fabric-force-sync"]) {
+			return fmt.Errorf("Error reading fabric_force_sync: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_object_source", dataSourceFlattenUserSamlFabricObjectSource(o["fabric-object-source"], d, "fabric_object_source")); err != nil {
+		if !fortiAPIPatch(o["fabric-object-source"]) {
+			return fmt.Errorf("Error reading fabric_object_source: %v", err)
+		}
+	}
+
 	if err = d.Set("cert", dataSourceFlattenUserSamlCert(o["cert"], d, "cert")); err != nil {
 		if !fortiAPIPatch(o["cert"]) {
 			return fmt.Errorf("Error reading cert: %v", err)
+		}
+	}
+
+	if err = d.Set("type", dataSourceFlattenUserSamlType(o["type"], d, "type")); err != nil {
+		if !fortiAPIPatch(o["type"]) {
+			return fmt.Errorf("Error reading type: %v", err)
+		}
+	}
+
+	if err = d.Set("service_provider_address", dataSourceFlattenUserSamlServiceProviderAddress(o["service-provider-address"], d, "service_provider_address")); err != nil {
+		if !fortiAPIPatch(o["service-provider-address"]) {
+			return fmt.Errorf("Error reading service_provider_address: %v", err)
 		}
 	}
 
@@ -367,6 +467,18 @@ func dataSourceRefreshObjectUserSaml(d *schema.ResourceData, o map[string]interf
 	if err = d.Set("clock_tolerance", dataSourceFlattenUserSamlClockTolerance(o["clock-tolerance"], d, "clock_tolerance")); err != nil {
 		if !fortiAPIPatch(o["clock-tolerance"]) {
 			return fmt.Errorf("Error reading clock_tolerance: %v", err)
+		}
+	}
+
+	if err = d.Set("realm", dataSourceFlattenUserSamlRealm(o["realm"], d, "realm")); err != nil {
+		if !fortiAPIPatch(o["realm"]) {
+			return fmt.Errorf("Error reading realm: %v", err)
+		}
+	}
+
+	if err = d.Set("user_source", dataSourceFlattenUserSamlUserSource(o["user-source"], d, "user_source")); err != nil {
+		if !fortiAPIPatch(o["user-source"]) {
+			return fmt.Errorf("Error reading user_source: %v", err)
 		}
 	}
 

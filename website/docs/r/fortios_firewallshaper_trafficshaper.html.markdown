@@ -29,11 +29,15 @@ resource "fortios_firewallshaper_trafficshaper" "trname" {
 The following arguments are supported:
 
 * `name` - Traffic shaper name.
-* `guaranteed_bandwidth` - Amount of bandwidth guaranteed for this shaper. Units depend on the bandwidth-unit setting. On FortiOS versions 6.2.0-6.4.2, 7.0.0-7.0.5, 7.2.0: 0 - 16776000. On FortiOS versions 6.4.10-6.4.15, 7.0.6-7.0.17, >= 7.2.1: 0 - 80000000.
-* `maximum_bandwidth` - Upper bandwidth limit enforced by this shaper. 0 means no limit. Units depend on the bandwidth-unit setting. On FortiOS versions 6.2.0-6.4.2, 7.0.0-7.0.5, 7.2.0: 0 - 16776000. On FortiOS versions 6.4.10-6.4.15, 7.0.6-7.0.17, >= 7.2.1: 0 - 80000000.
+* `guaranteed_bandwidth` - Amount of bandwidth guaranteed for this shaper. Units depend on the bandwidth-unit setting. On FortiOS versions 6.2.0-6.4.2, 7.0.0-7.0.5, 7.2.0: 0 - 16776000. On FortiOS versions 6.4.10-6.4.15, 7.0.6-7.0.19, 7.2.1-7.2.12, 7.4.0-7.6.7: 0 - 80000000. On FortiOS versions 7.2.13, >= 8.0.0: 0 - 100000000.
+* `maximum_bandwidth` - Upper bandwidth limit enforced by this shaper. 0 means no limit. Units depend on the bandwidth-unit setting. On FortiOS versions 6.2.0-6.4.2, 7.0.0-7.0.5, 7.2.0: 0 - 16776000. On FortiOS versions 6.4.10-6.4.15, 7.0.6-7.0.19, 7.2.1-7.2.12, 7.4.0-7.6.7: 0 - 80000000. On FortiOS versions 7.2.13, >= 8.0.0: 0 - 100000000.
 * `bandwidth_unit` - Unit of measurement for guaranteed and maximum bandwidth for this shaper (Kbps, Mbps or Gbps). Valid values: `kbps`, `mbps`, `gbps`.
 * `priority` - Higher priority traffic is more likely to be forwarded without delays and without compromising the guaranteed bandwidth. Valid values: `low`, `medium`, `high`.
 * `per_policy` - Enable/disable applying a separate shaper for each policy. For example, if enabled the guaranteed bandwidth is applied separately for each policy. Valid values: `disable`, `enable`.
+* `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
+* `fabric_object` - Security Fabric global object setting. Valid values: `enable`, `disable`.
+* `fabric_force_sync` - Enable/disable forced synchronization of configuration objects from the root FortiGate unit to the downstream devices.  Configuration conflict check is skipped. Valid values: `enable`, `disable`.
+* `fabric_object_source` - Source of truth for fabric object. Valid values: `member`, `local`, `root`.
 * `diffserv` - Enable/disable changing the DiffServ setting applied to traffic accepted by this shaper. Valid values: `enable`, `disable`.
 * `diffservcode` - DiffServ setting to be applied to traffic accepted by this shaper.
 * `dscp_marking_method` - Select DSCP marking method. Valid values: `multi-stage`, `static`.

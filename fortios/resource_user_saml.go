@@ -48,9 +48,39 @@ func resourceUserSaml() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"uuid": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"fabric_object": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"fabric_force_sync": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"fabric_object_source": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"cert": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+			},
+			"type": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"service_provider_address": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
 			},
 			"entity_id": &schema.Schema{
@@ -133,6 +163,17 @@ func resourceUserSaml() *schema.Resource {
 				ValidateFunc: validation.IntBetween(0, 300),
 				Optional:     true,
 				Computed:     true,
+			},
+			"realm": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
+			"user_source": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
 			},
 			"auth_url": &schema.Schema{
 				Type:         schema.TypeString,
@@ -339,7 +380,31 @@ func flattenUserSamlName(v interface{}, d *schema.ResourceData, pre string, sv s
 	return v
 }
 
+func flattenUserSamlUuid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserSamlFabricObject(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserSamlFabricForceSync(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserSamlFabricObjectSource(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenUserSamlCert(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserSamlType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserSamlServiceProviderAddress(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -407,6 +472,14 @@ func flattenUserSamlClockTolerance(v interface{}, d *schema.ResourceData, pre st
 	return convintf2i(v)
 }
 
+func flattenUserSamlRealm(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserSamlUserSource(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenUserSamlAuthUrl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -436,9 +509,45 @@ func refreshObjectUserSaml(d *schema.ResourceData, o map[string]interface{}, sv 
 		}
 	}
 
+	if err = d.Set("uuid", flattenUserSamlUuid(o["uuid"], d, "uuid", sv)); err != nil {
+		if !fortiAPIPatch(o["uuid"]) {
+			return fmt.Errorf("Error reading uuid: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_object", flattenUserSamlFabricObject(o["fabric-object"], d, "fabric_object", sv)); err != nil {
+		if !fortiAPIPatch(o["fabric-object"]) {
+			return fmt.Errorf("Error reading fabric_object: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_force_sync", flattenUserSamlFabricForceSync(o["fabric-force-sync"], d, "fabric_force_sync", sv)); err != nil {
+		if !fortiAPIPatch(o["fabric-force-sync"]) {
+			return fmt.Errorf("Error reading fabric_force_sync: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_object_source", flattenUserSamlFabricObjectSource(o["fabric-object-source"], d, "fabric_object_source", sv)); err != nil {
+		if !fortiAPIPatch(o["fabric-object-source"]) {
+			return fmt.Errorf("Error reading fabric_object_source: %v", err)
+		}
+	}
+
 	if err = d.Set("cert", flattenUserSamlCert(o["cert"], d, "cert", sv)); err != nil {
 		if !fortiAPIPatch(o["cert"]) {
 			return fmt.Errorf("Error reading cert: %v", err)
+		}
+	}
+
+	if err = d.Set("type", flattenUserSamlType(o["type"], d, "type", sv)); err != nil {
+		if !fortiAPIPatch(o["type"]) {
+			return fmt.Errorf("Error reading type: %v", err)
+		}
+	}
+
+	if err = d.Set("service_provider_address", flattenUserSamlServiceProviderAddress(o["service-provider-address"], d, "service_provider_address", sv)); err != nil {
+		if !fortiAPIPatch(o["service-provider-address"]) {
+			return fmt.Errorf("Error reading service_provider_address: %v", err)
 		}
 	}
 
@@ -538,6 +647,18 @@ func refreshObjectUserSaml(d *schema.ResourceData, o map[string]interface{}, sv 
 		}
 	}
 
+	if err = d.Set("realm", flattenUserSamlRealm(o["realm"], d, "realm", sv)); err != nil {
+		if !fortiAPIPatch(o["realm"]) {
+			return fmt.Errorf("Error reading realm: %v", err)
+		}
+	}
+
+	if err = d.Set("user_source", flattenUserSamlUserSource(o["user-source"], d, "user_source", sv)); err != nil {
+		if !fortiAPIPatch(o["user-source"]) {
+			return fmt.Errorf("Error reading user_source: %v", err)
+		}
+	}
+
 	if err = d.Set("auth_url", flattenUserSamlAuthUrl(o["auth-url"], d, "auth_url", sv)); err != nil {
 		if !fortiAPIPatch(o["auth-url"]) {
 			return fmt.Errorf("Error reading auth_url: %v", err)
@@ -581,7 +702,31 @@ func expandUserSamlName(d *schema.ResourceData, v interface{}, pre string, sv st
 	return v, nil
 }
 
+func expandUserSamlUuid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserSamlFabricObject(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserSamlFabricForceSync(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserSamlFabricObjectSource(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandUserSamlCert(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserSamlType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserSamlServiceProviderAddress(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -649,6 +794,14 @@ func expandUserSamlClockTolerance(d *schema.ResourceData, v interface{}, pre str
 	return v, nil
 }
 
+func expandUserSamlRealm(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserSamlUserSource(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandUserSamlAuthUrl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -681,6 +834,42 @@ func getObjectUserSaml(d *schema.ResourceData, sv string) (*map[string]interface
 		}
 	}
 
+	if v, ok := d.GetOk("uuid"); ok {
+		t, err := expandUserSamlUuid(d, v, "uuid", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["uuid"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("fabric_object"); ok {
+		t, err := expandUserSamlFabricObject(d, v, "fabric_object", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fabric-object"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("fabric_force_sync"); ok {
+		t, err := expandUserSamlFabricForceSync(d, v, "fabric_force_sync", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fabric-force-sync"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("fabric_object_source"); ok {
+		t, err := expandUserSamlFabricObjectSource(d, v, "fabric_object_source", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fabric-object-source"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("cert"); ok {
 		t, err := expandUserSamlCert(d, v, "cert", sv)
 		if err != nil {
@@ -690,6 +879,26 @@ func getObjectUserSaml(d *schema.ResourceData, sv string) (*map[string]interface
 		}
 	} else if d.HasChange("cert") {
 		obj["cert"] = nil
+	}
+
+	if v, ok := d.GetOk("type"); ok {
+		t, err := expandUserSamlType(d, v, "type", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["type"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("service_provider_address"); ok {
+		t, err := expandUserSamlServiceProviderAddress(d, v, "service_provider_address", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["service-provider-address"] = t
+		}
+	} else if d.HasChange("service_provider_address") {
+		obj["service-provider-address"] = nil
 	}
 
 	if v, ok := d.GetOk("entity_id"); ok {
@@ -854,6 +1063,26 @@ func getObjectUserSaml(d *schema.ResourceData, sv string) (*map[string]interface
 		} else if t != nil {
 			obj["clock-tolerance"] = t
 		}
+	}
+
+	if v, ok := d.GetOk("realm"); ok {
+		t, err := expandUserSamlRealm(d, v, "realm", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["realm"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("user_source"); ok {
+		t, err := expandUserSamlUserSource(d, v, "user_source", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["user-source"] = t
+		}
+	} else if d.HasChange("user_source") {
+		obj["user-source"] = nil
 	}
 
 	if v, ok := d.GetOk("auth_url"); ok {

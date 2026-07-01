@@ -48,6 +48,26 @@ func resourceSystemReplacemsgGroup() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"uuid": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"fabric_object": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"fabric_force_sync": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"fabric_object_source": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"comment": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
@@ -770,6 +790,22 @@ func resourceSystemReplacemsgGroupRead(d *schema.ResourceData, m interface{}) er
 }
 
 func flattenSystemReplacemsgGroupName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupUuid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupFabricObject(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupFabricForceSync(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupFabricObjectSource(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2487,6 +2523,30 @@ func refreshObjectSystemReplacemsgGroup(d *schema.ResourceData, o map[string]int
 		}
 	}
 
+	if err = d.Set("uuid", flattenSystemReplacemsgGroupUuid(o["uuid"], d, "uuid", sv)); err != nil {
+		if !fortiAPIPatch(o["uuid"]) {
+			return fmt.Errorf("Error reading uuid: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_object", flattenSystemReplacemsgGroupFabricObject(o["fabric-object"], d, "fabric_object", sv)); err != nil {
+		if !fortiAPIPatch(o["fabric-object"]) {
+			return fmt.Errorf("Error reading fabric_object: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_force_sync", flattenSystemReplacemsgGroupFabricForceSync(o["fabric-force-sync"], d, "fabric_force_sync", sv)); err != nil {
+		if !fortiAPIPatch(o["fabric-force-sync"]) {
+			return fmt.Errorf("Error reading fabric_force_sync: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_object_source", flattenSystemReplacemsgGroupFabricObjectSource(o["fabric-object-source"], d, "fabric_object_source", sv)); err != nil {
+		if !fortiAPIPatch(o["fabric-object-source"]) {
+			return fmt.Errorf("Error reading fabric_object_source: %v", err)
+		}
+	}
+
 	if err = d.Set("comment", flattenSystemReplacemsgGroupComment(o["comment"], d, "comment", sv)); err != nil {
 		if !fortiAPIPatch(o["comment"]) {
 			return fmt.Errorf("Error reading comment: %v", err)
@@ -2813,6 +2873,22 @@ func flattenSystemReplacemsgGroupFortiTestDebug(d *schema.ResourceData, fosdebug
 }
 
 func expandSystemReplacemsgGroupName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupUuid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupFabricObject(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupFabricForceSync(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupFabricObjectSource(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -4023,6 +4099,42 @@ func getObjectSystemReplacemsgGroup(d *schema.ResourceData, sv string) (*map[str
 			return &obj, err
 		} else if t != nil {
 			obj["name"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("uuid"); ok {
+		t, err := expandSystemReplacemsgGroupUuid(d, v, "uuid", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["uuid"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("fabric_object"); ok {
+		t, err := expandSystemReplacemsgGroupFabricObject(d, v, "fabric_object", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fabric-object"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("fabric_force_sync"); ok {
+		t, err := expandSystemReplacemsgGroupFabricForceSync(d, v, "fabric_force_sync", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fabric-force-sync"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("fabric_object_source"); ok {
+		t, err := expandSystemReplacemsgGroupFabricObjectSource(d, v, "fabric_object_source", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fabric-object-source"] = t
 		}
 	}
 

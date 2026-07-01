@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_system_ltemodem
-Configure USB LTE/WIMAX devices. Applies to FortiOS Version `7.0.4`.
+Configure USB LTE/WIMAX devices. Applies to FortiOS Version `7.0.4,7.2.13,8.0.0`.
 
 ## Argument Reference
 
@@ -15,6 +15,7 @@ The following arguments are supported:
 
 * `status` - Enable/disable USB LTE/WIMAX device. Valid values: `enable`, `disable`.
 * `extra_init` - Extra initialization string for USB LTE/WIMAX devices.
+* `pdptype` - Packet Data Protocol (PDP) context type. Valid values: `IPv4`.
 * `authtype` - Authentication type for PDP-IP packet data calls. Valid values: `none`, `pap`, `chap`.
 * `username` - Authentication username for PDP-IP packet data calls.
 * `passwd` - Authentication password for PDP-IP packet data calls.

@@ -18,7 +18,7 @@ The following arguments are supported:
 * `category` - Category of NAC policy.
 * `status` - Enable/disable NAC policy. Valid values: `enable`, `disable`.
 * `match_type` - Match and retain the devices based on the type. Valid values: `dynamic`, `override`.
-* `match_period` - Number of days the matched devices will be retained (0 - always retain)
+* `match_period` - Number of days the matched devices will be retained (0 - always retain) On FortiOS versions >= 8.0.0: 0 - 3072.
 * `match_remove` - Options to remove the matched override devices. Valid values: `default`, `link-down`.
 * `mac` - NAC policy matching MAC address.
 * `hw_vendor` - NAC policy matching hardware vendor.
@@ -40,6 +40,8 @@ The following arguments are supported:
 * `switch_auto_auth` - NAC device auto authorization when discovered and nac-policy matched. Valid values: `global`, `disable`, `enable`.
 * `switch_port_policy` - switch-port-policy to be applied on the matched NAC policy.
 * `switch_mac_policy` - switch-mac-policy to be applied on the matched NAC policy.
+* `port_setting_override` - Enable/disable port setting action on the NAC policy. Valid values: `disable`, `enable`.
+* `qos_policy` - Switch Port qos-policy action to be applied on the matched NAC policy.
 * `firewall_address` - Dynamic firewall address to associate MAC which match this policy.
 * `ssid_policy` - SSID policy to be applied on the matched NAC policy.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].

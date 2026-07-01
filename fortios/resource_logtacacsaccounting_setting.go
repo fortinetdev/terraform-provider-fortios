@@ -46,6 +46,18 @@ func resourceLogTacacsAccountingSetting() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
 			},
+			"port": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1, 65535),
+				Optional:     true,
+				Computed:     true,
+			},
+			"timeout": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1, 3600),
+				Optional:     true,
+				Computed:     true,
+			},
 			"server_key": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
@@ -198,6 +210,14 @@ func flattenLogTacacsAccountingSettingServer(v interface{}, d *schema.ResourceDa
 	return v
 }
 
+func flattenLogTacacsAccountingSettingPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenLogTacacsAccountingSettingTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
 func flattenLogTacacsAccountingSettingSourceIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -226,6 +246,18 @@ func refreshObjectLogTacacsAccountingSetting(d *schema.ResourceData, o map[strin
 	if err = d.Set("server", flattenLogTacacsAccountingSettingServer(o["server"], d, "server", sv)); err != nil {
 		if !fortiAPIPatch(o["server"]) {
 			return fmt.Errorf("Error reading server: %v", err)
+		}
+	}
+
+	if err = d.Set("port", flattenLogTacacsAccountingSettingPort(o["port"], d, "port", sv)); err != nil {
+		if !fortiAPIPatch(o["port"]) {
+			return fmt.Errorf("Error reading port: %v", err)
+		}
+	}
+
+	if err = d.Set("timeout", flattenLogTacacsAccountingSettingTimeout(o["timeout"], d, "timeout", sv)); err != nil {
+		if !fortiAPIPatch(o["timeout"]) {
+			return fmt.Errorf("Error reading timeout: %v", err)
 		}
 	}
 
@@ -267,6 +299,14 @@ func expandLogTacacsAccountingSettingStatus(d *schema.ResourceData, v interface{
 }
 
 func expandLogTacacsAccountingSettingServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogTacacsAccountingSettingPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogTacacsAccountingSettingTimeout(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -319,6 +359,32 @@ func getObjectLogTacacsAccountingSetting(d *schema.ResourceData, setArgNil bool,
 		}
 	} else if d.HasChange("server") {
 		obj["server"] = nil
+	}
+
+	if v, ok := d.GetOk("port"); ok {
+		if setArgNil {
+			obj["port"] = nil
+		} else {
+			t, err := expandLogTacacsAccountingSettingPort(d, v, "port", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["port"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("timeout"); ok {
+		if setArgNil {
+			obj["timeout"] = nil
+		} else {
+			t, err := expandLogTacacsAccountingSettingTimeout(d, v, "timeout", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["timeout"] = t
+			}
+		}
 	}
 
 	if v, ok := d.GetOk("server_key"); ok {

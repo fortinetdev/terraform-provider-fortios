@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_user_externalidentityprovider
-Configure external identity provider. Applies to FortiOS Version `7.2.8,7.2.9,7.2.10,7.2.11,7.2.12,7.4.2,7.4.3,7.4.4,7.4.5,7.4.6,7.4.7,7.4.8,7.6.0,7.6.1,7.6.2,7.6.3,7.6.4,7.6.5`.
+Configure external identity provider. Applies to FortiOS Version `7.2.8,7.2.9,7.2.10,7.2.11,7.2.12,7.2.13,7.4.2,7.4.3,7.4.4,7.4.5,7.4.6,7.4.7,7.4.8,7.4.9,7.4.11,7.4.12,7.6.0,7.6.1,7.6.2,7.6.3,7.6.4,7.6.5,7.6.6,7.6.7,8.0.0`.
 
 ## Argument Reference
 
@@ -16,7 +16,6 @@ The following arguments are supported:
 * `name` - External identity provider name.
 * `type` - External identity provider type. Valid values: `ms-graph`.
 * `version` - External identity API version. Valid values: `v1.0`, `beta`.
-* `url` - External identity provider URL (e.g. "https://example.com:8080/api/v1").
 * `user_attr_name` - User attribute name in authentication query.
 * `group_attr_name` - Group attribute name in authentication query.
 * `port` - External identity provider service port number (0 to use default).
@@ -34,6 +33,7 @@ The following arguments are supported:
 
 In addition to all the above arguments, the following attributes are exported:
 * `id` - an identifier for the resource with format {{name}}.
+* `url` - External identity provider URL (e.g. "https://example.com:8080/api/v1").
 
 ## Import
 

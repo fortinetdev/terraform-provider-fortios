@@ -29,6 +29,7 @@ The following attributes are exported:
 * `dst_addr` - Destination address name from available addresses. The structure of `dst_addr` block is documented below.
 * `dst_addr6` - IPv6 Destination address. The structure of `dst_addr6` block is documented below.
 * `dstintf` - Destination interface name from available interfaces. The structure of `dstintf` block is documented below.
+* `custom_tags` - Custom tags. The structure of `custom_tags` block is documented below.
 * `nat_ippool` - Name of the IP pools to be used to translate addresses from available IP Pools. The structure of `nat_ippool` block is documented below.
 * `nat_ippool6` - IPv6 pools to be used for source NAT. The structure of `nat_ippool6` block is documented below.
 * `port_preserve` - Enable/disable preservation of the original source port from source NAT if it has not been used.
@@ -65,6 +66,10 @@ The `dst_addr6` block contains:
 The `dstintf` block contains:
 
 * `name` - Interface name.
+
+The `custom_tags` block contains:
+
+* `name` - Names of custom tags used with this policy.
 
 The `nat_ippool` block contains:
 

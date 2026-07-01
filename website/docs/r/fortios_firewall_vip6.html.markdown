@@ -97,6 +97,7 @@ The following arguments are supported:
 * `nat66` - Enable/disable DNAT66. Valid values: `disable`, `enable`.
 * `nat64` - Enable/disable DNAT64. Valid values: `disable`, `enable`.
 * `add_nat64_route` - Enable/disable adding NAT64 route. Valid values: `disable`, `enable`.
+* `auth_virtual_host` - Virtual host for authentication portal.
 * `empty_cert_action` - Action for an empty client certificate. Valid values: `accept`, `block`, `accept-unmanageable`.
 * `user_agent_detect` - Enable/disable detecting device type by HTTP user-agent if no client certificate is provided. Valid values: `disable`, `enable`.
 * `client_cert` - Enable/disable requesting client certificate. Valid values: `disable`, `enable`.
@@ -115,7 +116,9 @@ The following arguments are supported:
 * `weblogic_server` - Enable to add an HTTP header to indicate SSL offloading for a WebLogic server. Valid values: `disable`, `enable`.
 * `websphere_server` - Enable to add an HTTP header to indicate SSL offloading for a WebSphere server. Valid values: `disable`, `enable`.
 * `ssl_mode` - Apply SSL offloading between the client and the FortiGate (half) or from the client to the FortiGate and from the FortiGate to the server (full). Valid values: `half`, `full`.
+* `ssl_upstream` - Apply SSL encryption between the FortiGate and the upstream server (default = disable). Valid values: `enable`, `disable`.
 * `ssl_certificate` - The name of the SSL certificate to use for SSL acceleration.
+* `ssl_server_client_certificate` - Name of the client certificate presented to realserver during SSL/TLS handshake if requested.
 * `ssl_dh_bits` - Number of bits to use in the Diffie-Hellman exchange for RSA encryption of SSL sessions. Valid values: `768`, `1024`, `1536`, `2048`, `3072`, `4096`.
 * `ssl_algorithm` - Permitted encryption algorithms for SSL sessions according to encryption strength. Valid values: `high`, `medium`, `low`, `custom`.
 * `ssl_cipher_suites` - SSL/TLS cipher suites acceptable from a client, ordered by priority. The structure of `ssl_cipher_suites` block is documented below.
@@ -140,6 +143,7 @@ The following arguments are supported:
 * `ssl_server_session_state_max` - Maximum number of FortiGate to Server SSL session states to keep.
 * `ssl_http_location_conversion` - Enable to replace HTTP with HTTPS in the reply's Location HTTP header field. Valid values: `enable`, `disable`.
 * `ssl_http_match_host` - Enable/disable HTTP host matching for location conversion. Valid values: `enable`, `disable`.
+* `ssl_http_strip_secure_cookies` - Enable/disable removal of HTTPS-only directives in the reply's Set-Cookie HTTP header fields. Valid values: `enable`, `disable`.
 * `ssl_hpkp` - Enable/disable including HPKP header in response. Valid values: `disable`, `enable`, `report-only`.
 * `ssl_hpkp_primary` - Certificate to generate primary HPKP pin from.
 * `ssl_hpkp_backup` - Certificate to generate backup HPKP pin from.

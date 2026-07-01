@@ -129,6 +129,7 @@ The `interface` block supports:
 * `static_group` - Statically set multicast groups to forward out.
 * `rpf_nbr_fail_back` - Enable/disable fail back for RPF neighbor query. Valid values: `enable`, `disable`.
 * `rpf_nbr_fail_back_filter` - Filter for fail back RPF neighbors.
+* `update_source` - Interface to use as source IP.
 * `join_group` - Join multicast groups. The structure of `join_group` block is documented below.
 * `igmp` - IGMP configuration options. The structure of `igmp` block is documented below.
 

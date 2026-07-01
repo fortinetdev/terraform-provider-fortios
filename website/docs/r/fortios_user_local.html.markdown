@@ -51,6 +51,10 @@ resource "fortios_user_local" "trname" {
 The following arguments are supported:
 
 * `name` - User name.
+* `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
+* `fabric_object` - Security Fabric global object setting. Valid values: `enable`, `disable`.
+* `fabric_force_sync` - Enable/disable forced synchronization of configuration objects from the root FortiGate unit to the downstream devices.  Configuration conflict check is skipped. Valid values: `enable`, `disable`.
+* `fabric_object_source` - Source of truth for fabric object. Valid values: `member`, `local`, `root`.
 * `fosid` - User ID.
 * `status` - (Required) Enable/disable allowing the local user to authenticate with the FortiGate unit. Valid values: `enable`, `disable`.
 * `type` - (Required) Authentication method.

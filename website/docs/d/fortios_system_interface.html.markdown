@@ -71,6 +71,8 @@ The following attributes are exported:
 * `fail_alert_interfaces` - Names of the FortiGate interfaces from which the link failure alert is sent for this interface. The structure of `fail_alert_interfaces` block is documented below.
 * `dhcp_client_identifier` - DHCP client identifier.
 * `dhcp_renew_time` - DHCP renew time in seconds (300-604800), 0 means use the renew time provided by the server.
+* `dhcp_egress_cos` - CoS in VLAN tag for outgoing DHCP packets.
+* `arp_egress_cos` - CoS in VLAN tag for outgoing ARP packets.
 * `ipunnumbered` - Unnumbered IP used for PPPoE interfaces for which no unique local address is provided.
 * `username` - Username of the PPPoE account, provided by your ISP.
 * `pppoe_egress_cos` - CoS in VLAN tag for outgoing PPPoE/PPP packets.
@@ -155,6 +157,8 @@ The following attributes are exported:
 * `outbandwidth` - Bandwidth limit for outgoing traffic (0 - 16776000 kbps).
 * `egress_shaping_profile` - Outgoing traffic shaping profile.
 * `ingress_shaping_profile` - Incoming traffic shaping profile.
+* `inbandwidth_source` - Determine which inbandwidth values to use for setting shaper.
+* `outbandwidth_source` - Determine which outbandwidth values to use for setting shaper.
 * `disconnect_threshold` - Time in milliseconds to wait before sending a notification that this interface is down or disconnected.
 * `spillover_threshold` - Egress Spillover threshold (0 - 16776000 kbps), 0 means unlimited.
 * `ingress_spillover_threshold` - Ingress Spillover threshold (0 - 16776000 kbps).
@@ -191,6 +195,10 @@ The following attributes are exported:
 * `captive_portal` - Enable/disable captive portal.
 * `security_mac_auth_bypass` - Enable/disable MAC authentication bypass.
 * `security_ip_auth_bypass` - Enable/disable IP authentication bypass.
+* `security_8021x_mode` - 802.1X mode.
+* `security_8021x_master` - 802.1X master virtual-switch.
+* `security_8021x_dynamic_vlan_id` - VLAN ID for virtual switch.
+* `security_8021x_member_mode` - 802.1X member mode.
 * `security_external_web` - URL of external authentication web server.
 * `security_external_logout` - URL of external authentication logout server.
 * `replacemsg_override_group` - Replacement message override group.
@@ -202,6 +210,7 @@ The following attributes are exported:
 * `ike_saml_server` - Configure IKE authentication SAML server.
 * `stp` - Enable/disable STP.
 * `stp_ha_secondary` - Control STP behaviour on HA secondary.
+* `stp_edge` - Enable/disable as STP edge port.
 * `device_identification` - Enable/disable passively gathering of device identity information about the devices on the network connected to this interface.
 * `exclude_signatures` - Exclude IOT or OT application signatures.
 * `device_user_identification` - Enable/disable passive gathering of user identity information about users on this interface.
@@ -230,10 +239,12 @@ The following attributes are exported:
 * `preserve_session_route` - Enable/disable preservation of session route when dirty.
 * `auto_auth_extension_device` - Enable/disable automatic authorization of dedicated Fortinet extension device on this interface.
 * `ap_discover` - Enable/disable automatic registration of unknown FortiAP devices.
+* `telemetry_discover` - Enable/disable automatic registration of unknown FortiTelemetry agents.
 * `fortilink_stacking` - Enable/disable FortiLink switch-stacking on this interface.
 * `fortilink_neighbor_detect` - Protocol for FortiGate neighbor discovery.
 * `ip_managed_by_fortiipam` - Enable/disable automatic IP address assignment of this interface by FortiIPAM.
 * `managed_subnetwork_size` - Number of IP addresses to be allocated by FortiIPAM and used by this FortiGate unit's DHCP server settings.
+* `ipam_conflicts` - Configure behavior for this interface on how to handle IPAM conflict detections.
 * `fortilink_split_interface` - Enable/disable FortiLink split interface to connect member link to different FortiSwitch in stack for uplink redundancy.
 * `internal` - Implicitly created.
 * `fortilink_backup_link` - fortilink split interface backup link.
@@ -258,6 +269,7 @@ The following attributes are exported:
 * `switch_controller_offload` - Enable/disable managed FortiSwitch routing offload.
 * `switch_controller_offload_ip` - IP for routing offload on FortiSwitch.
 * `switch_controller_offload_gw` - Enable/disable managed FortiSwitch routing offload gateway.
+* `switch_controller_fortilink_settings` - Integrated FortiLink settings for managed FortiSwitch.
 * `swc_vlan` - Creation status for switch-controller VLANs.
 * `swc_first_create` - Initial create for switch-controller VLANs.
 * `color` - Color of icon on the GUI.
@@ -268,6 +280,11 @@ The following attributes are exported:
 * `eap_password` - EAP password.
 * `eap_ca_cert` - EAP CA certificate name.
 * `eap_user_cert` - EAP user certificate name.
+* `np_qos_profile` - NP QoS profile ID.
+* `port_mirroring` - Enable/disable NP port mirroring.
+* `mirroring_direction` - Port mirroring direction.
+* `mirroring_port` - Mirroring port.
+* `mirroring_filter` - Mirroring filter. The structure of `mirroring_filter` block is documented below.
 * `default_purdue_level` - default purdue level of device detected on this interface.
 * `forward_error_correction` - Configure forward error correction (FEC).
 * `ipv6` - IPv6 of interface. The structure of `ipv6` block is documented below.
@@ -350,6 +367,14 @@ The `tags` block contains:
 
 * `name` - Tag name.
 
+The `mirroring_filter` block contains:
+
+* `filter_srcip` - Source IP and mask of mirroring filter.
+* `filter_dstip` - Destinatin IP and mask of mirroring filter.
+* `filter_sport` - Source port of mirroring filter.
+* `filter_dport` - Destinatin port of mirroring filter.
+* `filter_protocol` - Protocol of mirroring filter.
+
 The `ipv6` block contains:
 
 * `ip6_mode` - Addressing mode (static, DHCP, delegated).
@@ -362,7 +387,9 @@ The `ipv6` block contains:
 * `nd_cga_modifier` - Neighbor discovery CGA modifier.
 * `ip6_dns_server_override` - Enable/disable using the DNS server acquired by DHCP.
 * `ip6_address` - Primary IPv6 address prefix, syntax: xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx/xxx
+* `ip6_mgmt_address` - High Availability in-band management IPv6 address of this interface and should be in the same subnet with primary IPv6 address
 * `ip6_extra_addr` - Extra IPv6 address prefixes of interface. The structure of `ip6_extra_addr` block is documented below.
+* `ip6_link_local` - IPv6 link-local address of interface.
 * `ip6_allowaccess` - Allow management access to the interface.
 * `ip6_send_adv` - Enable/disable sending advertisements about the interface.
 * `icmp6_send_redirect` - Enable/disable sending of ICMPv6 redirects.
@@ -390,6 +417,7 @@ The `ipv6` block contains:
 * `ip6_rdnss_list` - Advertised IPv6 RDNSS list. The structure of `ip6_rdnss_list` block is documented below.
 * `ip6_dnssl_list` - Advertised IPv6 DNSS list. The structure of `ip6_dnssl_list` block is documented below.
 * `ip6_delegated_prefix_list` - Advertised IPv6 delegated prefix list. The structure of `ip6_delegated_prefix_list` block is documented below.
+* `dhcp6_egress_cos` - CoS in VLAN tag for outgoing DHCPv6 packets.
 * `dhcp6_relay_service` - Enable/disable DHCPv6 relay.
 * `dhcp6_relay_type` - DHCPv6 relay type.
 * `dhcp6_relay_source_interface` - Enable/disable use of address on this interface as the source address of the relay message.

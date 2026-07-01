@@ -71,6 +71,7 @@ func resourceExtensionControllerFortigate() *schema.Resource {
 			"vdom": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
+				Computed: true,
 			},
 			"device_id": &schema.Schema{
 				Type:     schema.TypeInt,
@@ -370,10 +371,6 @@ func expandExtensionControllerFortigateDescription(d *schema.ResourceData, v int
 	return v, nil
 }
 
-func expandExtensionControllerFortigateVdom(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
 func expandExtensionControllerFortigateDeviceId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -434,17 +431,6 @@ func getObjectExtensionControllerFortigate(d *schema.ResourceData, sv string) (*
 		}
 	} else if d.HasChange("description") {
 		obj["description"] = nil
-	}
-
-	if v, ok := d.GetOkExists("vdom"); ok {
-		t, err := expandExtensionControllerFortigateVdom(d, v, "vdom", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["vdom"] = t
-		}
-	} else if d.HasChange("vdom") {
-		obj["vdom"] = nil
 	}
 
 	if v, ok := d.GetOkExists("device_id"); ok {

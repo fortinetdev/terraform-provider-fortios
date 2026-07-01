@@ -50,6 +50,8 @@ The following arguments are supported:
 * `rest_api` - Enable/disable REST API logging. Valid values: `enable`, `disable`.
 * `web_svc` - Enable/disable web-svc performance logging. Valid values: `enable`, `disable`.
 * `webproxy` - Enable/disable web proxy event logging. Valid values: `enable`, `disable`.
+* `telemetry` - Enable/disable telemetry event logging. Valid values: `enable`, `disable`.
+* `ftnt_sec_mod` - Enable/disable Forti Security Module logging. Valid values: `enable`, `disable`.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 

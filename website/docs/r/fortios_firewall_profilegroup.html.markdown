@@ -24,6 +24,10 @@ resource "fortios_firewall_profilegroup" "trname" {
 The following arguments are supported:
 
 * `name` - (Required) Profile group name.
+* `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
+* `fabric_object` - Security Fabric global object setting. Valid values: `enable`, `disable`.
+* `fabric_force_sync` - Enable/disable forced synchronization of configuration objects from the root FortiGate unit to the downstream devices.  Configuration conflict check is skipped. Valid values: `enable`, `disable`.
+* `fabric_object_source` - Source of truth for fabric object. Valid values: `member`, `local`, `root`.
 * `av_profile` - Name of an existing Antivirus profile.
 * `webfilter_profile` - Name of an existing Web filter profile.
 * `dnsfilter_profile` - Name of an existing DNS filter profile.
@@ -45,6 +49,8 @@ The following arguments are supported:
 * `waf_profile` - Name of an existing Web application firewall profile.
 * `ssh_filter_profile` - Name of an existing SSH filter profile.
 * `casb_profile` - Name of an existing CASB profile.
+* `telemetry_profile` - Name of an existing telemetry profile.
+* `llm_profile` - Name of an existing LLM profile.
 * `profile_protocol_options` - Name of an existing Protocol options profile.
 * `ssl_ssh_profile` - Name of an existing SSL SSH profile.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.

@@ -70,7 +70,7 @@ func resourceUserNacPolicy() *schema.Resource {
 			},
 			"match_period": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 120),
+				ValidateFunc: validation.IntBetween(0, 3072),
 				Optional:     true,
 			},
 			"match_remove": &schema.Schema{
@@ -198,6 +198,16 @@ func resourceUserNacPolicy() *schema.Resource {
 				Optional:     true,
 			},
 			"switch_mac_policy": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 63),
+				Optional:     true,
+			},
+			"port_setting_override": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"qos_policy": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
@@ -653,6 +663,14 @@ func flattenUserNacPolicySwitchMacPolicy(v interface{}, d *schema.ResourceData, 
 	return v
 }
 
+func flattenUserNacPolicyPortSettingOverride(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserNacPolicyQosPolicy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenUserNacPolicyFirewallAddress(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -862,6 +880,18 @@ func refreshObjectUserNacPolicy(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
+	if err = d.Set("port_setting_override", flattenUserNacPolicyPortSettingOverride(o["port-setting-override"], d, "port_setting_override", sv)); err != nil {
+		if !fortiAPIPatch(o["port-setting-override"]) {
+			return fmt.Errorf("Error reading port_setting_override: %v", err)
+		}
+	}
+
+	if err = d.Set("qos_policy", flattenUserNacPolicyQosPolicy(o["qos-policy"], d, "qos_policy", sv)); err != nil {
+		if !fortiAPIPatch(o["qos-policy"]) {
+			return fmt.Errorf("Error reading qos_policy: %v", err)
+		}
+	}
+
 	if err = d.Set("firewall_address", flattenUserNacPolicyFirewallAddress(o["firewall-address"], d, "firewall_address", sv)); err != nil {
 		if !fortiAPIPatch(o["firewall-address"]) {
 			return fmt.Errorf("Error reading firewall_address: %v", err)
@@ -1060,6 +1090,14 @@ func expandUserNacPolicySwitchPortPolicy(d *schema.ResourceData, v interface{}, 
 }
 
 func expandUserNacPolicySwitchMacPolicy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserNacPolicyPortSettingOverride(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserNacPolicyQosPolicy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1349,6 +1387,26 @@ func getObjectUserNacPolicy(d *schema.ResourceData, sv string) (*map[string]inte
 		}
 	} else if d.HasChange("switch_mac_policy") {
 		obj["switch-mac-policy"] = nil
+	}
+
+	if v, ok := d.GetOk("port_setting_override"); ok {
+		t, err := expandUserNacPolicyPortSettingOverride(d, v, "port_setting_override", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["port-setting-override"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("qos_policy"); ok {
+		t, err := expandUserNacPolicyQosPolicy(d, v, "qos_policy", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["qos-policy"] = t
+		}
+	} else if d.HasChange("qos_policy") {
+		obj["qos-policy"] = nil
 	}
 
 	if v, ok := d.GetOk("firewall_address"); ok {

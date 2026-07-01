@@ -41,6 +41,8 @@ resource "fortios_firewall_addrgrp6" "trname" {
 The following arguments are supported:
 
 * `name` - IPv6 address group name.
+* `type` - Address group type. Valid values: `default`, `dynamic-tag`.
+* `category` - Address group category. Valid values: `default`, `ztna-ems-tag`.
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `visibility` - Enable/disable address group6 visibility in the GUI. Valid values: `enable`, `disable`.
 * `color` - Integer value to determine the color of the icon in the GUI (1 - 32, default = 0, which sets the value to 1).
@@ -49,7 +51,11 @@ The following arguments are supported:
 * `exclude` - Enable/disable address6 exclusion. Valid values: `enable`, `disable`.
 * `exclude_member` - Address6 exclusion member. The structure of `exclude_member` block is documented below.
 * `tagging` - Config object tagging. The structure of `tagging` block is documented below.
+* `display_with` - Display object with first tag, all tags, or just the icon. Valid values: `all-tags`, `first-tag-only`, `icon-and-color`.
+* `custom_tags` - Custom tags. The structure of `custom_tags` block is documented below.
 * `fabric_object` - Security Fabric global object setting. Valid values: `enable`, `disable`.
+* `fabric_force_sync` - Enable/disable forced synchronization of configuration objects from the root FortiGate unit to the downstream devices.  Configuration conflict check is skipped. Valid values: `enable`, `disable`.
+* `fabric_object_source` - Source of truth for fabric object. Valid values: `member`, `local`, `root`.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
 * `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
@@ -72,6 +78,10 @@ The `tagging` block supports:
 The `tags` block supports:
 
 * `name` - Tag name.
+
+The `custom_tags` block supports:
+
+* `name` - Names of custom tags used with this address group.
 
 
 ## Attribute Reference

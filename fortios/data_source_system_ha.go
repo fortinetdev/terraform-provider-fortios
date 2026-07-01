@@ -346,7 +346,39 @@ func dataSourceSystemHa() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"link_group": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"member": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"devname": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+						"min_members": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+					},
+				},
+			},
 			"monitor": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"link_group_monitor": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -396,6 +428,10 @@ func dataSourceSystemHa() *schema.Resource {
 							Computed: true,
 						},
 						"monitor": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"link_group_monitor": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -1025,7 +1061,97 @@ func dataSourceFlattenSystemHaSmtpProxyThreshold(v interface{}, d *schema.Resour
 	return v
 }
 
+func dataSourceFlattenSystemHaLinkGroup(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = dataSourceFlattenSystemHaLinkGroupName(i["name"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "member"
+		if _, ok := i["member"]; ok {
+			tmp["member"] = dataSourceFlattenSystemHaLinkGroupMember(i["member"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "min_members"
+		if _, ok := i["min-members"]; ok {
+			tmp["min_members"] = dataSourceFlattenSystemHaLinkGroupMinMembers(i["min-members"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenSystemHaLinkGroupName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemHaLinkGroupMember(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "devname"
+		if _, ok := i["devname"]; ok {
+			tmp["devname"] = dataSourceFlattenSystemHaLinkGroupMemberDevname(i["devname"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenSystemHaLinkGroupMemberDevname(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemHaLinkGroupMinMembers(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemHaMonitor(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemHaLinkGroupMonitor(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1097,6 +1223,11 @@ func dataSourceFlattenSystemHaVcluster(v interface{}, d *schema.ResourceData, pr
 			tmp["monitor"] = dataSourceFlattenSystemHaVclusterMonitor(i["monitor"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "link_group_monitor"
+		if _, ok := i["link-group-monitor"]; ok {
+			tmp["link_group_monitor"] = dataSourceFlattenSystemHaVclusterLinkGroupMonitor(i["link-group-monitor"], d, pre_append)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pingserver_monitor_interface"
 		if _, ok := i["pingserver-monitor-interface"]; ok {
 			tmp["pingserver_monitor_interface"] = dataSourceFlattenSystemHaVclusterPingserverMonitorInterface(i["pingserver-monitor-interface"], d, pre_append)
@@ -1152,6 +1283,10 @@ func dataSourceFlattenSystemHaVclusterOverrideWaitTime(v interface{}, d *schema.
 }
 
 func dataSourceFlattenSystemHaVclusterMonitor(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemHaVclusterLinkGroupMonitor(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1751,9 +1886,21 @@ func dataSourceRefreshObjectSystemHa(d *schema.ResourceData, o map[string]interf
 		}
 	}
 
+	if err = d.Set("link_group", dataSourceFlattenSystemHaLinkGroup(o["link-group"], d, "link_group")); err != nil {
+		if !fortiAPIPatch(o["link-group"]) {
+			return fmt.Errorf("Error reading link_group: %v", err)
+		}
+	}
+
 	if err = d.Set("monitor", dataSourceFlattenSystemHaMonitor(o["monitor"], d, "monitor")); err != nil {
 		if !fortiAPIPatch(o["monitor"]) {
 			return fmt.Errorf("Error reading monitor: %v", err)
+		}
+	}
+
+	if err = d.Set("link_group_monitor", dataSourceFlattenSystemHaLinkGroupMonitor(o["link-group-monitor"], d, "link_group_monitor")); err != nil {
+		if !fortiAPIPatch(o["link-group-monitor"]) {
+			return fmt.Errorf("Error reading link_group_monitor: %v", err)
 		}
 	}
 

@@ -249,6 +249,41 @@ func resourceFirewallSniffer() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"synproxy_ttl": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"synproxy_tos": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"synproxy_tcp_mss": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"synproxy_tcp_sack": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"synproxy_tcp_timestamp": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"synproxy_tcp_window": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"synproxy_tcp_windowscale": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"quarantine": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -724,6 +759,62 @@ func flattenFirewallSnifferAnomaly(v interface{}, d *schema.ResourceData, pre st
 			tmp["action"] = flattenFirewallSnifferAnomalyAction(cur_v, d, pre_append, sv)
 		}
 
+		if cur_v, ok := i["synproxy-ttl"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "synproxy_ttl"
+			}
+			tmp["synproxy_ttl"] = flattenFirewallSnifferAnomalySynproxyTtl(cur_v, d, pre_append, sv)
+		}
+
+		if cur_v, ok := i["synproxy-tos"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "synproxy_tos"
+			}
+			tmp["synproxy_tos"] = flattenFirewallSnifferAnomalySynproxyTos(cur_v, d, pre_append, sv)
+		}
+
+		if cur_v, ok := i["synproxy-tcp-mss"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "synproxy_tcp_mss"
+			}
+			tmp["synproxy_tcp_mss"] = flattenFirewallSnifferAnomalySynproxyTcpMss(cur_v, d, pre_append, sv)
+		}
+
+		if cur_v, ok := i["synproxy-tcp-sack"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "synproxy_tcp_sack"
+			}
+			tmp["synproxy_tcp_sack"] = flattenFirewallSnifferAnomalySynproxyTcpSack(cur_v, d, pre_append, sv)
+		}
+
+		if cur_v, ok := i["synproxy-tcp-timestamp"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "synproxy_tcp_timestamp"
+			}
+			tmp["synproxy_tcp_timestamp"] = flattenFirewallSnifferAnomalySynproxyTcpTimestamp(cur_v, d, pre_append, sv)
+		}
+
+		if cur_v, ok := i["synproxy-tcp-window"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "synproxy_tcp_window"
+			}
+			tmp["synproxy_tcp_window"] = flattenFirewallSnifferAnomalySynproxyTcpWindow(cur_v, d, pre_append, sv)
+		}
+
+		if cur_v, ok := i["synproxy-tcp-windowscale"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "synproxy_tcp_windowscale"
+			}
+			tmp["synproxy_tcp_windowscale"] = flattenFirewallSnifferAnomalySynproxyTcpWindowscale(cur_v, d, pre_append, sv)
+		}
+
 		if cur_v, ok := i["quarantine"]; ok {
 			pre_append := ""
 			if tf_exist {
@@ -786,6 +877,34 @@ func flattenFirewallSnifferAnomalyLog(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenFirewallSnifferAnomalyAction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallSnifferAnomalySynproxyTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallSnifferAnomalySynproxyTos(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallSnifferAnomalySynproxyTcpMss(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallSnifferAnomalySynproxyTcpSack(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallSnifferAnomalySynproxyTcpTimestamp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallSnifferAnomalySynproxyTcpWindow(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallSnifferAnomalySynproxyTcpWindowscale(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1283,6 +1402,41 @@ func expandFirewallSnifferAnomaly(d *schema.ResourceData, v interface{}, pre str
 			tmp["action"], _ = expandFirewallSnifferAnomalyAction(d, i["action"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "synproxy_ttl"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["synproxy-ttl"], _ = expandFirewallSnifferAnomalySynproxyTtl(d, i["synproxy_ttl"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "synproxy_tos"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["synproxy-tos"], _ = expandFirewallSnifferAnomalySynproxyTos(d, i["synproxy_tos"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "synproxy_tcp_mss"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["synproxy-tcp-mss"], _ = expandFirewallSnifferAnomalySynproxyTcpMss(d, i["synproxy_tcp_mss"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "synproxy_tcp_sack"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["synproxy-tcp-sack"], _ = expandFirewallSnifferAnomalySynproxyTcpSack(d, i["synproxy_tcp_sack"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "synproxy_tcp_timestamp"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["synproxy-tcp-timestamp"], _ = expandFirewallSnifferAnomalySynproxyTcpTimestamp(d, i["synproxy_tcp_timestamp"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "synproxy_tcp_window"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["synproxy-tcp-window"], _ = expandFirewallSnifferAnomalySynproxyTcpWindow(d, i["synproxy_tcp_window"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "synproxy_tcp_windowscale"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["synproxy-tcp-windowscale"], _ = expandFirewallSnifferAnomalySynproxyTcpWindowscale(d, i["synproxy_tcp_windowscale"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "quarantine"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["quarantine"], _ = expandFirewallSnifferAnomalyQuarantine(d, i["quarantine"], pre_append, sv)
@@ -1333,6 +1487,34 @@ func expandFirewallSnifferAnomalyLog(d *schema.ResourceData, v interface{}, pre 
 }
 
 func expandFirewallSnifferAnomalyAction(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallSnifferAnomalySynproxyTtl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallSnifferAnomalySynproxyTos(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallSnifferAnomalySynproxyTcpMss(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallSnifferAnomalySynproxyTcpSack(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallSnifferAnomalySynproxyTcpTimestamp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallSnifferAnomalySynproxyTcpWindow(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallSnifferAnomalySynproxyTcpWindowscale(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

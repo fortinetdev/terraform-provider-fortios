@@ -32,7 +32,7 @@ The following arguments are supported:
 * `cloud_server_type` - Cloud server type. Valid values: `production`, `alpha`, `beta`.
 * `capabilities` - List of EMS capabilities.
 * `call_timeout` - FortiClient EMS call timeout in seconds (1 - 180 seconds, default = 30).
-* `out_of_sync_threshold` - Outdated resource threshold in seconds (10 - 3600, default = 180).
+* `out_of_sync_threshold` - Outdated resource threshold in seconds. On FortiOS versions 7.4.0-7.6.7: 10 - 3600, default = 180. On FortiOS versions >= 8.0.0: 10 - 2592000, default = 345600.
 * `send_tags_to_all_vdoms` - Relax restrictions on tags to send all EMS tags to all VDOMs Valid values: `enable`, `disable`.
 * `websocket_override` - Enable/disable override behavior for how this FortiGate unit connects to EMS using a WebSocket connection. Valid values: `disable`, `enable`.
 * `preserve_ssl_session` - Enable/disable preservation of EMS SSL session connection. Warning, most users should not touch this setting. Valid values: `enable`, `disable`.

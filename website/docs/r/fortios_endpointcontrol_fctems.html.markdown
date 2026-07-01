@@ -13,7 +13,7 @@ Configure FortiClient Enterprise Management Server (EMS) entries. Applies to For
 
 The following arguments are supported:
 
-* `ems_id` - EMS ID in order. On FortiOS versions 7.0.8-7.0.17, 7.2.1-7.2.3: 1 - 5. On FortiOS versions >= 7.2.4: 1 - 7.
+* `ems_id` - EMS ID in order. On FortiOS versions 7.0.8-7.0.19, 7.2.1-7.2.3: 1 - 5. On FortiOS versions >= 7.2.4: 1 - 7.
 * `status` - Enable or disable this EMS configuration. Valid values: `enable`, `disable`.
 * `name` - FortiClient Enterprise Management Server (EMS) name.
 * `dirty_reason` - Dirty Reason for FortiClient EMS. Valid values: `none`, `mismatched-ems-sn`.
@@ -34,7 +34,7 @@ The following arguments are supported:
 * `cloud_server_type` - Cloud server type. Valid values: `production`, `alpha`, `beta`.
 * `capabilities` - List of EMS capabilities.
 * `call_timeout` - FortiClient EMS call timeout. On FortiOS versions 6.2.4-6.2.6: 500 - 30000 milliseconds, default = 5000. On FortiOS versions 6.4.0: 500 - 50000 milliseconds, default = 5000. On FortiOS versions >= 6.4.2: 1 - 180 seconds, default = 30. On FortiOS versions 6.4.1: 500 - 180000 milliseconds, default = 30000.
-* `out_of_sync_threshold` - Outdated resource threshold in seconds (10 - 3600, default = 180).
+* `out_of_sync_threshold` - Outdated resource threshold in seconds. On FortiOS versions 7.0.8-7.6.7: 10 - 3600, default = 180. On FortiOS versions >= 8.0.0: 10 - 2592000, default = 345600.
 * `send_tags_to_all_vdoms` - Relax restrictions on tags to send all EMS tags to all VDOMs Valid values: `enable`, `disable`.
 * `websocket_override` - Enable/disable override behavior for how this FortiGate unit connects to EMS using a WebSocket connection. Valid values: `disable`, `enable`.
 * `preserve_ssl_session` - Enable/disable preservation of EMS SSL session connection. WARNING: Most users should not touch this setting! Valid values: `enable`, `disable`.

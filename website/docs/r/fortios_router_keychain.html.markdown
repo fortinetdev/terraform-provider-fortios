@@ -37,8 +37,8 @@ The following arguments are supported:
 The `key` block supports:
 
 * `id` - Key ID (0 - 2147483647).
-* `accept_lifetime` - Lifetime of received authentication key (format: hh:mm:ss day month year).
-* `send_lifetime` - Lifetime of sent authentication key (format: hh:mm:ss day month year).
+* `accept_lifetime` - Lifetime of received authentication key.
+* `send_lifetime` - Lifetime of sent authentication key.
 * `key_string` - Password for the key. On FortiOS versions 6.2.0-7.0.0: max. = 35 characters. On FortiOS versions 7.0.1-7.0.3: maximum = 64 characters.
 * `algorithm` - Cryptographic algorithm.
 

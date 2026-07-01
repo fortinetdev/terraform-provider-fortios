@@ -32,6 +32,10 @@ func dataSourceSystemAdmin() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"disallowed_login_methods": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"wildcard": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -376,6 +380,42 @@ func dataSourceSystemAdmin() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"gui_theme_type": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"gui_theme": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"gui_custom_theme": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"gui_llm_provider": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"openai_api_key": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"openai_api_key_part2": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"openai_model": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"openai_project_id": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"openai_org_id": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"history0": &schema.Schema{
 				Type:      schema.TypeString,
 				Sensitive: true,
@@ -490,6 +530,10 @@ func dataSourceSystemAdminRead(d *schema.ResourceData, m interface{}) error {
 }
 
 func dataSourceFlattenSystemAdminName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemAdminDisallowedLoginMethods(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1133,6 +1177,42 @@ func dataSourceFlattenSystemAdminGuestLang(v interface{}, d *schema.ResourceData
 	return v
 }
 
+func dataSourceFlattenSystemAdminGuiThemeType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemAdminGuiTheme(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemAdminGuiCustomTheme(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemAdminGuiLlmProvider(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemAdminOpenaiApiKey(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemAdminOpenaiApiKeyPart2(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemAdminOpenaiModel(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemAdminOpenaiProjectId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemAdminOpenaiOrgId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemAdminHistory0(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -1309,6 +1389,12 @@ func dataSourceRefreshObjectSystemAdmin(d *schema.ResourceData, o map[string]int
 	if err = d.Set("name", dataSourceFlattenSystemAdminName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
+		}
+	}
+
+	if err = d.Set("disallowed_login_methods", dataSourceFlattenSystemAdminDisallowedLoginMethods(o["disallowed-login-methods"], d, "disallowed_login_methods")); err != nil {
+		if !fortiAPIPatch(o["disallowed-login-methods"]) {
+			return fmt.Errorf("Error reading disallowed_login_methods: %v", err)
 		}
 	}
 
@@ -1603,6 +1689,60 @@ func dataSourceRefreshObjectSystemAdmin(d *schema.ResourceData, o map[string]int
 	if err = d.Set("guest_lang", dataSourceFlattenSystemAdminGuestLang(o["guest-lang"], d, "guest_lang")); err != nil {
 		if !fortiAPIPatch(o["guest-lang"]) {
 			return fmt.Errorf("Error reading guest_lang: %v", err)
+		}
+	}
+
+	if err = d.Set("gui_theme_type", dataSourceFlattenSystemAdminGuiThemeType(o["gui-theme-type"], d, "gui_theme_type")); err != nil {
+		if !fortiAPIPatch(o["gui-theme-type"]) {
+			return fmt.Errorf("Error reading gui_theme_type: %v", err)
+		}
+	}
+
+	if err = d.Set("gui_theme", dataSourceFlattenSystemAdminGuiTheme(o["gui-theme"], d, "gui_theme")); err != nil {
+		if !fortiAPIPatch(o["gui-theme"]) {
+			return fmt.Errorf("Error reading gui_theme: %v", err)
+		}
+	}
+
+	if err = d.Set("gui_custom_theme", dataSourceFlattenSystemAdminGuiCustomTheme(o["gui-custom-theme"], d, "gui_custom_theme")); err != nil {
+		if !fortiAPIPatch(o["gui-custom-theme"]) {
+			return fmt.Errorf("Error reading gui_custom_theme: %v", err)
+		}
+	}
+
+	if err = d.Set("gui_llm_provider", dataSourceFlattenSystemAdminGuiLlmProvider(o["gui-llm-provider"], d, "gui_llm_provider")); err != nil {
+		if !fortiAPIPatch(o["gui-llm-provider"]) {
+			return fmt.Errorf("Error reading gui_llm_provider: %v", err)
+		}
+	}
+
+	if err = d.Set("openai_api_key", dataSourceFlattenSystemAdminOpenaiApiKey(o["openai-api-key"], d, "openai_api_key")); err != nil {
+		if !fortiAPIPatch(o["openai-api-key"]) {
+			return fmt.Errorf("Error reading openai_api_key: %v", err)
+		}
+	}
+
+	if err = d.Set("openai_api_key_part2", dataSourceFlattenSystemAdminOpenaiApiKeyPart2(o["openai-api-key-part2"], d, "openai_api_key_part2")); err != nil {
+		if !fortiAPIPatch(o["openai-api-key-part2"]) {
+			return fmt.Errorf("Error reading openai_api_key_part2: %v", err)
+		}
+	}
+
+	if err = d.Set("openai_model", dataSourceFlattenSystemAdminOpenaiModel(o["openai-model"], d, "openai_model")); err != nil {
+		if !fortiAPIPatch(o["openai-model"]) {
+			return fmt.Errorf("Error reading openai_model: %v", err)
+		}
+	}
+
+	if err = d.Set("openai_project_id", dataSourceFlattenSystemAdminOpenaiProjectId(o["openai-project-id"], d, "openai_project_id")); err != nil {
+		if !fortiAPIPatch(o["openai-project-id"]) {
+			return fmt.Errorf("Error reading openai_project_id: %v", err)
+		}
+	}
+
+	if err = d.Set("openai_org_id", dataSourceFlattenSystemAdminOpenaiOrgId(o["openai-org-id"], d, "openai_org_id")); err != nil {
+		if !fortiAPIPatch(o["openai-org-id"]) {
+			return fmt.Errorf("Error reading openai_org_id: %v", err)
 		}
 	}
 

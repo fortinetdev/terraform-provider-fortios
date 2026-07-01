@@ -20,6 +20,10 @@ Use this data source to get information on an fortios firewall internetservicecu
 The following attributes are exported:
 
 * `name` - Custom Internet Service group name.
+* `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
+* `fabric_object` - Security Fabric global object setting.
+* `fabric_force_sync` - Enable/disable forced synchronization of configuration objects from the root FortiGate unit to the downstream devices.  Configuration conflict check is skipped.
+* `fabric_object_source` - Source of truth for fabric object.
 * `comment` - Comment.
 * `member` - Custom Internet Service group members. The structure of `member` block is documented below.
 

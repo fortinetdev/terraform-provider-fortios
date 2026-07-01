@@ -16,7 +16,7 @@ The following arguments are supported:
 * `name` - Virtual host name.
 * `ssl_certificate` - SSL certificate for this host.
 * `host` - The host name.
-* `host_type` - Type of host pattern. Valid values: `sub-string`, `wildcard`.
+* `host_type` - Type of host pattern.
 * `replacemsg_group` - Access-proxy-virtual-host replacement message override group.
 * `empty_cert_action` - Action for an empty client certificate. Valid values: `accept`, `block`, `accept-unmanageable`.
 * `user_agent_detect` - Enable/disable detecting device type by HTTP user-agent if no client certificate is provided. Valid values: `disable`, `enable`.

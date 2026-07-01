@@ -20,6 +20,7 @@ Use this data source to get information on an fortios system admin
 The following attributes are exported:
 
 * `name` - User name.
+* `disallowed_login_methods` - Configure login methods that explicitly are disallowed. All other login methods not listed here are permitted by default.
 * `wildcard` - Enable/disable wildcard RADIUS authentication.
 * `remote_auth` - Enable/disable authentication using a remote RADIUS, LDAP, or TACACS+ server.
 * `remote_group` - User group name used for remote auth.
@@ -73,6 +74,15 @@ The following attributes are exported:
 * `guest_auth` - Enable/disable guest authentication.
 * `guest_usergroups` - Select guest user groups. The structure of `guest_usergroups` block is documented below.
 * `guest_lang` - Guest management portal language.
+* `gui_theme_type` - Use predefined themes or custom themes.
+* `gui_theme` - Predefined theme that overrides the default FortiGate theme.
+* `gui_custom_theme` - Custom theme that overrides the default FortiGate theme.
+* `gui_llm_provider` - Select the LLM provider.
+* `openai_api_key` - Openai API key.
+* `openai_api_key_part2` - OpenAI API key part 2 for excess length.
+* `openai_model` - OpenAI model.
+* `openai_project_id` - OpenAI project ID.
+* `openai_org_id` - OpenAI organization ID.
 * `history0` - history0
 * `history1` - history1
 * `login_time` - Record user login time. The structure of `login_time` block is documented below.

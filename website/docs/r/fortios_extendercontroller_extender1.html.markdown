@@ -78,7 +78,6 @@ The following arguments are supported:
 * `authorized` - (Required) FortiExtender Administration (enable or disable). Valid values: `disable`, `enable`.
 * `ext_name` - FortiExtender name.
 * `description` - Description.
-* `vdom` - VDOM
 * `login_password` - FortiExtender login password.
 * `controller_report` - FortiExtender controller report configuration. The structure of `controller_report` block is documented below.
 * `modem1` - Configuration options for modem 1. The structure of `modem1` block is documented below.
@@ -98,7 +97,6 @@ The `modem1` block supports:
 * `ifname` - FortiExtender interface name.
 * `redundant_mode` - FortiExtender mode. Valid values: `disable`, `enable`.
 * `redundant_intf` - Redundant interface.
-* `conn_status` - Connection status.
 * `default_sim` - Default SIM selection. Valid values: `sim1`, `sim2`, `carrier`, `cost`.
 * `gps` - FortiExtender GPS enable/disable. Valid values: `disable`, `enable`.
 * `sim1_pin` - SIM #1 PIN status. Valid values: `disable`, `enable`.
@@ -124,7 +122,6 @@ The `modem2` block supports:
 * `ifname` - FortiExtender interface name.
 * `redundant_mode` - FortiExtender mode. Valid values: `disable`, `enable`.
 * `redundant_intf` - Redundant interface.
-* `conn_status` - Connection status.
 * `default_sim` - Default SIM selection. Valid values: `sim1`, `sim2`, `carrier`, `cost`.
 * `gps` - FortiExtender GPS enable/disable. Valid values: `disable`, `enable`.
 * `sim1_pin` - SIM #1 PIN status. Valid values: `disable`, `enable`.
@@ -150,6 +147,15 @@ The `auto_switch` block supports:
 
 In addition to all the above arguments, the following attributes are exported:
 * `id` - an identifier for the resource with format {{name}}.
+* `vdom` - VDOM
+
+The `modem1` block contains following attibutes:
+
+* `conn_status` - Connection status.
+
+The `modem2` block contains following attibutes:
+
+* `conn_status` - Connection status.
 
 ## Import
 

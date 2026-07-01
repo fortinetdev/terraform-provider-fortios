@@ -90,6 +90,7 @@ func resourceSwitchControllerNacDevice() *schema.Resource {
 			"last_seen": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
+				Computed: true,
 			},
 		},
 	}
@@ -415,10 +416,6 @@ func expandSwitchControllerNacDeviceMacPolicy(d *schema.ResourceData, v interfac
 	return v, nil
 }
 
-func expandSwitchControllerNacDeviceLastSeen(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
 func getObjectSwitchControllerNacDevice(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
@@ -513,17 +510,6 @@ func getObjectSwitchControllerNacDevice(d *schema.ResourceData, sv string) (*map
 		}
 	} else if d.HasChange("mac_policy") {
 		obj["mac-policy"] = nil
-	}
-
-	if v, ok := d.GetOkExists("last_seen"); ok {
-		t, err := expandSwitchControllerNacDeviceLastSeen(d, v, "last_seen", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["last-seen"] = t
-		}
-	} else if d.HasChange("last_seen") {
-		obj["last-seen"] = nil
 	}
 
 	return &obj, nil

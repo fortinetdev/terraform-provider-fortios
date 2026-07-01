@@ -325,10 +325,6 @@ func expandUserCertificateName(d *schema.ResourceData, v interface{}, pre string
 	return v, nil
 }
 
-func expandUserCertificateId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
 func expandUserCertificateStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -354,15 +350,6 @@ func getObjectUserCertificate(d *schema.ResourceData, sv string) (*map[string]in
 			return &obj, err
 		} else if t != nil {
 			obj["name"] = t
-		}
-	}
-
-	if v, ok := d.GetOkExists("fosid"); ok {
-		t, err := expandUserCertificateId(d, v, "fosid", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["id"] = t
 		}
 	}
 

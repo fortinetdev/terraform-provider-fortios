@@ -296,6 +296,11 @@ func resourceWebProxyExplicit() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"client_certificate_blocklist": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -910,6 +915,10 @@ func flattenWebProxyExplicitTraceAuthNoRsp(v interface{}, d *schema.ResourceData
 	return v
 }
 
+func flattenWebProxyExplicitClientCertificateBlocklist(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectWebProxyExplicit(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 	var b_get_all_tables bool
@@ -1164,6 +1173,12 @@ func refreshObjectWebProxyExplicit(d *schema.ResourceData, o map[string]interfac
 	if err = d.Set("trace_auth_no_rsp", flattenWebProxyExplicitTraceAuthNoRsp(o["trace-auth-no-rsp"], d, "trace_auth_no_rsp", sv)); err != nil {
 		if !fortiAPIPatch(o["trace-auth-no-rsp"]) {
 			return fmt.Errorf("Error reading trace_auth_no_rsp: %v", err)
+		}
+	}
+
+	if err = d.Set("client_certificate_blocklist", flattenWebProxyExplicitClientCertificateBlocklist(o["client-certificate-blocklist"], d, "client_certificate_blocklist", sv)); err != nil {
+		if !fortiAPIPatch(o["client-certificate-blocklist"]) {
+			return fmt.Errorf("Error reading client_certificate_blocklist: %v", err)
 		}
 	}
 
@@ -1526,6 +1541,10 @@ func expandWebProxyExplicitSslAlgorithm(d *schema.ResourceData, v interface{}, p
 }
 
 func expandWebProxyExplicitTraceAuthNoRsp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWebProxyExplicitClientCertificateBlocklist(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2041,6 +2060,19 @@ func getObjectWebProxyExplicit(d *schema.ResourceData, setArgNil bool, sv string
 				return &obj, err
 			} else if t != nil {
 				obj["trace-auth-no-rsp"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("client_certificate_blocklist"); ok {
+		if setArgNil {
+			obj["client-certificate-blocklist"] = nil
+		} else {
+			t, err := expandWebProxyExplicitClientCertificateBlocklist(d, v, "client_certificate_blocklist", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["client-certificate-blocklist"] = t
 			}
 		}
 	}

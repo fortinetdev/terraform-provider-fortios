@@ -21,6 +21,9 @@ The following attributes are exported:
 
 * `name` - External resource name.
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
+* `fabric_object` - Security Fabric global object setting.
+* `fabric_force_sync` - Enable/disable forced synchronization of configuration objects from the root FortiGate unit to the downstream devices.  Configuration conflict check is skipped.
+* `fabric_object_source` - Source of truth for fabric object.
 * `status` - Enable/disable user resource.
 * `type` - User resource type.
 * `namespace` - Generic external connector address namespace.
@@ -30,6 +33,7 @@ The following attributes are exported:
 * `address_comment_field` - JSON Path to address description in generic address entry.
 * `update_method` - External resource update method.
 * `category` - User resource category.
+* `threat_feed_hash_mode` - Configure use of the external threat feed as either a hash database or plain text database (default = plain-text-db).
 * `username` - HTTP basic authentication user name.
 * `password` - HTTP basic authentication password.
 * `client_cert_auth` - Enable/disable using client certificate for TLS authentication.

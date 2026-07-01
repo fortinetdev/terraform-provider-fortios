@@ -28,7 +28,15 @@ func dataSourceSystemFortisandbox() *schema.Resource {
 				ForceNew: true,
 			},
 
+			"device": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"status": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"default": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -76,6 +84,18 @@ func dataSourceSystemFortisandbox() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"cn_list": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"cn": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
 			"cn": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -122,7 +142,15 @@ func dataSourceSystemFortisandboxRead(d *schema.ResourceData, m interface{}) err
 	return nil
 }
 
+func dataSourceFlattenSystemFortisandboxDevice(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemFortisandboxStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemFortisandboxDefault(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -170,6 +198,42 @@ func dataSourceFlattenSystemFortisandboxCa(v interface{}, d *schema.ResourceData
 	return v
 }
 
+func dataSourceFlattenSystemFortisandboxCnList(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "cn"
+		if _, ok := i["cn"]; ok {
+			tmp["cn"] = dataSourceFlattenSystemFortisandboxCnListCn(i["cn"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenSystemFortisandboxCnListCn(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemFortisandboxCn(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -181,9 +245,21 @@ func dataSourceFlattenSystemFortisandboxCertificateVerification(v interface{}, d
 func dataSourceRefreshObjectSystemFortisandbox(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
 
+	if err = d.Set("device", dataSourceFlattenSystemFortisandboxDevice(o["device"], d, "device")); err != nil {
+		if !fortiAPIPatch(o["device"]) {
+			return fmt.Errorf("Error reading device: %v", err)
+		}
+	}
+
 	if err = d.Set("status", dataSourceFlattenSystemFortisandboxStatus(o["status"], d, "status")); err != nil {
 		if !fortiAPIPatch(o["status"]) {
 			return fmt.Errorf("Error reading status: %v", err)
+		}
+	}
+
+	if err = d.Set("default", dataSourceFlattenSystemFortisandboxDefault(o["default"], d, "default")); err != nil {
+		if !fortiAPIPatch(o["default"]) {
+			return fmt.Errorf("Error reading default: %v", err)
 		}
 	}
 
@@ -250,6 +326,12 @@ func dataSourceRefreshObjectSystemFortisandbox(d *schema.ResourceData, o map[str
 	if err = d.Set("ca", dataSourceFlattenSystemFortisandboxCa(o["ca"], d, "ca")); err != nil {
 		if !fortiAPIPatch(o["ca"]) {
 			return fmt.Errorf("Error reading ca: %v", err)
+		}
+	}
+
+	if err = d.Set("cn_list", dataSourceFlattenSystemFortisandboxCnList(o["cn-list"], d, "cn_list")); err != nil {
+		if !fortiAPIPatch(o["cn-list"]) {
+			return fmt.Errorf("Error reading cn_list: %v", err)
 		}
 	}
 

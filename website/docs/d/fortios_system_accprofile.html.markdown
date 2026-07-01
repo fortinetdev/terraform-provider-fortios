@@ -49,6 +49,10 @@ The following attributes are exported:
 * `system_diagnostics` - Enable/disable permission to run system diagnostic commands.
 * `system_execute_ssh` - Enable/disable permission to execute SSH commands.
 * `system_execute_telnet` - Enable/disable permission to execute TELNET commands.
+* `gui_theme_type` - Use predefined themes or custom themes.
+* `gui_theme` - Predefined theme that overrides the default FortiGate theme.
+* `gui_custom_theme` - Custom theme that overrides the default FortiGate theme.
+* `gui_ai_assistant` - Enable/disable permission to use AI assistant.
 
 The `netgrp_permission` block contains:
 

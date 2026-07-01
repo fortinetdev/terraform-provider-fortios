@@ -47,6 +47,26 @@ func resourceDlpSensor() *schema.Resource {
 				ForceNew:     true,
 				Required:     true,
 			},
+			"uuid": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"fabric_object": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"fabric_force_sync": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"fabric_object_source": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"match_type": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -423,6 +443,22 @@ func resourceDlpSensorRead(d *schema.ResourceData, m interface{}) error {
 }
 
 func flattenDlpSensorName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenDlpSensorUuid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenDlpSensorFabricObject(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenDlpSensorFabricForceSync(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenDlpSensorFabricObjectSource(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -909,6 +945,30 @@ func refreshObjectDlpSensor(d *schema.ResourceData, o map[string]interface{}, sv
 		}
 	}
 
+	if err = d.Set("uuid", flattenDlpSensorUuid(o["uuid"], d, "uuid", sv)); err != nil {
+		if !fortiAPIPatch(o["uuid"]) {
+			return fmt.Errorf("Error reading uuid: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_object", flattenDlpSensorFabricObject(o["fabric-object"], d, "fabric_object", sv)); err != nil {
+		if !fortiAPIPatch(o["fabric-object"]) {
+			return fmt.Errorf("Error reading fabric_object: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_force_sync", flattenDlpSensorFabricForceSync(o["fabric-force-sync"], d, "fabric_force_sync", sv)); err != nil {
+		if !fortiAPIPatch(o["fabric-force-sync"]) {
+			return fmt.Errorf("Error reading fabric_force_sync: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_object_source", flattenDlpSensorFabricObjectSource(o["fabric-object-source"], d, "fabric_object_source", sv)); err != nil {
+		if !fortiAPIPatch(o["fabric-object-source"]) {
+			return fmt.Errorf("Error reading fabric_object_source: %v", err)
+		}
+	}
+
 	if err = d.Set("match_type", flattenDlpSensorMatchType(o["match-type"], d, "match_type", sv)); err != nil {
 		if !fortiAPIPatch(o["match-type"]) {
 			return fmt.Errorf("Error reading match_type: %v", err)
@@ -1023,6 +1083,22 @@ func flattenDlpSensorFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosd
 }
 
 func expandDlpSensorName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandDlpSensorUuid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandDlpSensorFabricObject(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandDlpSensorFabricForceSync(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandDlpSensorFabricObjectSource(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1376,6 +1452,42 @@ func getObjectDlpSensor(d *schema.ResourceData, sv string) (*map[string]interfac
 			return &obj, err
 		} else if t != nil {
 			obj["name"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("uuid"); ok {
+		t, err := expandDlpSensorUuid(d, v, "uuid", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["uuid"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("fabric_object"); ok {
+		t, err := expandDlpSensorFabricObject(d, v, "fabric_object", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fabric-object"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("fabric_force_sync"); ok {
+		t, err := expandDlpSensorFabricForceSync(d, v, "fabric_force_sync", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fabric-force-sync"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("fabric_object_source"); ok {
+		t, err := expandDlpSensorFabricObjectSource(d, v, "fabric_object_source", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fabric-object-source"] = t
 		}
 	}
 

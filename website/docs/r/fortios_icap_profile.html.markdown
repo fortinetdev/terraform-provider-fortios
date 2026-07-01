@@ -63,6 +63,10 @@ The following arguments are supported:
 * `extension_feature` - Enable/disable ICAP extension features. Valid values: `scan-progress`.
 * `scan_progress_interval` - Scan progress interval value.
 * `timeout` - Time (in seconds) that ICAP client waits for the response from ICAP server.
+* `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
+* `fabric_object` - Security Fabric global object setting. Valid values: `enable`, `disable`.
+* `fabric_force_sync` - Enable/disable forced synchronization of configuration objects from the root FortiGate unit to the downstream devices.  Configuration conflict check is skipped. Valid values: `enable`, `disable`.
+* `fabric_object_source` - Source of truth for fabric object. Valid values: `member`, `local`, `root`.
 * `icap_headers` - Configure ICAP forwarded request headers. The structure of `icap_headers` block is documented below.
 * `respmod_forward_rules` - ICAP response mode forward rules. The structure of `respmod_forward_rules` block is documented below.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].

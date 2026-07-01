@@ -48,6 +48,11 @@ func resourceSystemEvpn() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"type": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"rd": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
@@ -88,6 +93,30 @@ func resourceSystemEvpn() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
+			},
+			"adv_default_gw": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"distribute_local_route": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"virtual_mac_vrid": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1, 255),
+				Optional:     true,
+			},
+			"l3_instance": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+			},
+			"interface": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 15),
+				Optional:     true,
 			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
@@ -279,6 +308,10 @@ func flattenSystemEvpnId(v interface{}, d *schema.ResourceData, pre string, sv s
 	return convintf2i(v)
 }
 
+func flattenSystemEvpnType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemEvpnRd(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -397,6 +430,26 @@ func flattenSystemEvpnArpSuppression(v interface{}, d *schema.ResourceData, pre 
 	return v
 }
 
+func flattenSystemEvpnAdvDefaultGw(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemEvpnDistributeLocalRoute(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemEvpnVirtualMacVrid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenSystemEvpnL3Instance(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenSystemEvpnInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectSystemEvpn(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 	var b_get_all_tables bool
@@ -409,6 +462,12 @@ func refreshObjectSystemEvpn(d *schema.ResourceData, o map[string]interface{}, s
 	if err = d.Set("fosid", flattenSystemEvpnId(o["id"], d, "fosid", sv)); err != nil {
 		if !fortiAPIPatch(o["id"]) {
 			return fmt.Errorf("Error reading fosid: %v", err)
+		}
+	}
+
+	if err = d.Set("type", flattenSystemEvpnType(o["type"], d, "type", sv)); err != nil {
+		if !fortiAPIPatch(o["type"]) {
+			return fmt.Errorf("Error reading type: %v", err)
 		}
 	}
 
@@ -462,6 +521,36 @@ func refreshObjectSystemEvpn(d *schema.ResourceData, o map[string]interface{}, s
 		}
 	}
 
+	if err = d.Set("adv_default_gw", flattenSystemEvpnAdvDefaultGw(o["adv-default-gw"], d, "adv_default_gw", sv)); err != nil {
+		if !fortiAPIPatch(o["adv-default-gw"]) {
+			return fmt.Errorf("Error reading adv_default_gw: %v", err)
+		}
+	}
+
+	if err = d.Set("distribute_local_route", flattenSystemEvpnDistributeLocalRoute(o["distribute-local-route"], d, "distribute_local_route", sv)); err != nil {
+		if !fortiAPIPatch(o["distribute-local-route"]) {
+			return fmt.Errorf("Error reading distribute_local_route: %v", err)
+		}
+	}
+
+	if err = d.Set("virtual_mac_vrid", flattenSystemEvpnVirtualMacVrid(o["virtual-mac-vrid"], d, "virtual_mac_vrid", sv)); err != nil {
+		if !fortiAPIPatch(o["virtual-mac-vrid"]) {
+			return fmt.Errorf("Error reading virtual_mac_vrid: %v", err)
+		}
+	}
+
+	if err = d.Set("l3_instance", flattenSystemEvpnL3Instance(o["l3-instance"], d, "l3_instance", sv)); err != nil {
+		if !fortiAPIPatch(o["l3-instance"]) {
+			return fmt.Errorf("Error reading l3_instance: %v", err)
+		}
+	}
+
+	if err = d.Set("interface", flattenSystemEvpnInterface(o["interface"], d, "interface", sv)); err != nil {
+		if !fortiAPIPatch(o["interface"]) {
+			return fmt.Errorf("Error reading interface: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -472,6 +561,10 @@ func flattenSystemEvpnFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fos
 }
 
 func expandSystemEvpnId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemEvpnType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -543,6 +636,26 @@ func expandSystemEvpnArpSuppression(d *schema.ResourceData, v interface{}, pre s
 	return v, nil
 }
 
+func expandSystemEvpnAdvDefaultGw(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemEvpnDistributeLocalRoute(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemEvpnVirtualMacVrid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemEvpnL3Instance(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemEvpnInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectSystemEvpn(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
@@ -552,6 +665,15 @@ func getObjectSystemEvpn(d *schema.ResourceData, sv string) (*map[string]interfa
 			return &obj, err
 		} else if t != nil {
 			obj["id"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("type"); ok {
+		t, err := expandSystemEvpnType(d, v, "type", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["type"] = t
 		}
 	}
 
@@ -600,6 +722,57 @@ func getObjectSystemEvpn(d *schema.ResourceData, sv string) (*map[string]interfa
 		} else if t != nil {
 			obj["arp-suppression"] = t
 		}
+	}
+
+	if v, ok := d.GetOk("adv_default_gw"); ok {
+		t, err := expandSystemEvpnAdvDefaultGw(d, v, "adv_default_gw", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["adv-default-gw"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("distribute_local_route"); ok {
+		t, err := expandSystemEvpnDistributeLocalRoute(d, v, "distribute_local_route", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["distribute-local-route"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("virtual_mac_vrid"); ok {
+		t, err := expandSystemEvpnVirtualMacVrid(d, v, "virtual_mac_vrid", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["virtual-mac-vrid"] = t
+		}
+	} else if d.HasChange("virtual_mac_vrid") {
+		obj["virtual-mac-vrid"] = nil
+	}
+
+	if v, ok := d.GetOkExists("l3_instance"); ok {
+		t, err := expandSystemEvpnL3Instance(d, v, "l3_instance", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["l3-instance"] = t
+		}
+	} else if d.HasChange("l3_instance") {
+		obj["l3-instance"] = nil
+	}
+
+	if v, ok := d.GetOk("interface"); ok {
+		t, err := expandSystemEvpnInterface(d, v, "interface", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["interface"] = t
+		}
+	} else if d.HasChange("interface") {
+		obj["interface"] = nil
 	}
 
 	return &obj, nil

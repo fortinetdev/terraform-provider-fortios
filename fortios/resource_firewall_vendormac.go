@@ -50,15 +50,18 @@ func resourceFirewallVendorMac() *schema.Resource {
 				Type: schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional: true,
+				Computed: true,
 			},
 			"mac_number": &schema.Schema{
 				Type: schema.TypeInt,
 				Optional: true,
+				Computed: true,
 			},
 			"obsolete": &schema.Schema{
 				Type: schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
 				Optional: true,
+				Computed: true,
 			},
 		},
 	}
@@ -119,7 +122,7 @@ func resourceFirewallVendorMacCreate(d *schema.ResourceData, m interface{}) erro
     }
 
 	if o["mkey"] != nil && o["mkey"] != "" {
-		d.SetId(strconv.Itoa(int(o["mkey"].(float64))))
+		d.SetId(fmt.Sprintf("%v", o["mkey"]))
 	} else {
 		d.SetId("FirewallVendorMac")
 	}
@@ -162,7 +165,7 @@ func resourceFirewallVendorMacUpdate(d *schema.ResourceData, m interface{}) erro
 
 	log.Printf(strconv.Itoa(c.Retries))
 	if o["mkey"] != nil && o["mkey"] != "" {
-		d.SetId(strconv.Itoa(int(o["mkey"].(float64))))
+		d.SetId(fmt.Sprintf("%v", o["mkey"]))
 	} else {
 		d.SetId("FirewallVendorMac")
 	}
@@ -297,71 +300,9 @@ func flattenFirewallVendorMacFortiTestDebug(d *schema.ResourceData, fosdebugsn i
 }
 
 
-func expandFirewallVendorMacId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandFirewallVendorMacName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandFirewallVendorMacMacNumber(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandFirewallVendorMacObsolete(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
 
 func getObjectFirewallVendorMac(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
-
-	if v, ok := d.GetOkExists("fosid"); ok {
-		t, err := expandFirewallVendorMacId(d, v, "fosid", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["id"] = t
-		}
-	}
-
-
-	if v, ok := d.GetOk("name"); ok {
-		t, err := expandFirewallVendorMacName(d, v, "name", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["name"] = t
-		}
-    } else if d.HasChange("name") {
-		obj["name"] = nil
-	}
-
-
-	if v, ok := d.GetOkExists("mac_number"); ok {
-		t, err := expandFirewallVendorMacMacNumber(d, v, "mac_number", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["mac-number"] = t
-		}
-    } else if d.HasChange("mac_number") {
-		obj["mac-number"] = nil
-	}
-
-
-	if v, ok := d.GetOkExists("obsolete"); ok {
-		t, err := expandFirewallVendorMacObsolete(d, v, "obsolete", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["obsolete"] = t
-		}
-    } else if d.HasChange("obsolete") {
-		obj["obsolete"] = nil
-	}
 
 
 

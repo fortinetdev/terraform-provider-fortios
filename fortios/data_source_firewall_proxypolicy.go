@@ -80,6 +80,18 @@ func dataSourceFirewallProxyPolicy() *schema.Resource {
 					},
 				},
 			},
+			"ztna_destination": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
 			"srcintf": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
@@ -93,6 +105,18 @@ func dataSourceFirewallProxyPolicy() *schema.Resource {
 				},
 			},
 			"dstintf": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
+			"custom_tags": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
 				Elem: &schema.Resource{
@@ -428,6 +452,18 @@ func dataSourceFirewallProxyPolicy() *schema.Resource {
 					},
 				},
 			},
+			"fsso_groups": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
 			"http_tunnel_auth": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -557,6 +593,10 @@ func dataSourceFirewallProxyPolicy() *schema.Resource {
 				Computed: true,
 			},
 			"casb_profile": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"llm_profile": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -787,6 +827,42 @@ func dataSourceFlattenFirewallProxyPolicyZtnaProxyName(v interface{}, d *schema.
 	return v
 }
 
+func dataSourceFlattenFirewallProxyPolicyZtnaDestination(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = dataSourceFlattenFirewallProxyPolicyZtnaDestinationName(i["name"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenFirewallProxyPolicyZtnaDestinationName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallProxyPolicySrcintf(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -856,6 +932,42 @@ func dataSourceFlattenFirewallProxyPolicyDstintf(v interface{}, d *schema.Resour
 }
 
 func dataSourceFlattenFirewallProxyPolicyDstintfName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallProxyPolicyCustomTags(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = dataSourceFlattenFirewallProxyPolicyCustomTagsName(i["name"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenFirewallProxyPolicyCustomTagsName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1711,6 +1823,42 @@ func dataSourceFlattenFirewallProxyPolicyUsersName(v interface{}, d *schema.Reso
 	return v
 }
 
+func dataSourceFlattenFirewallProxyPolicyFssoGroups(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = dataSourceFlattenFirewallProxyPolicyFssoGroupsName(i["name"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenFirewallProxyPolicyFssoGroupsName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallProxyPolicyHttpTunnelAuth(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -1843,6 +1991,10 @@ func dataSourceFlattenFirewallProxyPolicyCasbProfile(v interface{}, d *schema.Re
 	return v
 }
 
+func dataSourceFlattenFirewallProxyPolicyLlmProfile(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallProxyPolicyProfileProtocolOptions(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -1944,6 +2096,12 @@ func dataSourceRefreshObjectFirewallProxyPolicy(d *schema.ResourceData, o map[st
 		}
 	}
 
+	if err = d.Set("ztna_destination", dataSourceFlattenFirewallProxyPolicyZtnaDestination(o["ztna-destination"], d, "ztna_destination")); err != nil {
+		if !fortiAPIPatch(o["ztna-destination"]) {
+			return fmt.Errorf("Error reading ztna_destination: %v", err)
+		}
+	}
+
 	if err = d.Set("srcintf", dataSourceFlattenFirewallProxyPolicySrcintf(o["srcintf"], d, "srcintf")); err != nil {
 		if !fortiAPIPatch(o["srcintf"]) {
 			return fmt.Errorf("Error reading srcintf: %v", err)
@@ -1953,6 +2111,12 @@ func dataSourceRefreshObjectFirewallProxyPolicy(d *schema.ResourceData, o map[st
 	if err = d.Set("dstintf", dataSourceFlattenFirewallProxyPolicyDstintf(o["dstintf"], d, "dstintf")); err != nil {
 		if !fortiAPIPatch(o["dstintf"]) {
 			return fmt.Errorf("Error reading dstintf: %v", err)
+		}
+	}
+
+	if err = d.Set("custom_tags", dataSourceFlattenFirewallProxyPolicyCustomTags(o["custom-tags"], d, "custom_tags")); err != nil {
+		if !fortiAPIPatch(o["custom-tags"]) {
+			return fmt.Errorf("Error reading custom_tags: %v", err)
 		}
 	}
 
@@ -2178,6 +2342,12 @@ func dataSourceRefreshObjectFirewallProxyPolicy(d *schema.ResourceData, o map[st
 		}
 	}
 
+	if err = d.Set("fsso_groups", dataSourceFlattenFirewallProxyPolicyFssoGroups(o["fsso-groups"], d, "fsso_groups")); err != nil {
+		if !fortiAPIPatch(o["fsso-groups"]) {
+			return fmt.Errorf("Error reading fsso_groups: %v", err)
+		}
+	}
+
 	if err = d.Set("http_tunnel_auth", dataSourceFlattenFirewallProxyPolicyHttpTunnelAuth(o["http-tunnel-auth"], d, "http_tunnel_auth")); err != nil {
 		if !fortiAPIPatch(o["http-tunnel-auth"]) {
 			return fmt.Errorf("Error reading http_tunnel_auth: %v", err)
@@ -2373,6 +2543,12 @@ func dataSourceRefreshObjectFirewallProxyPolicy(d *schema.ResourceData, o map[st
 	if err = d.Set("casb_profile", dataSourceFlattenFirewallProxyPolicyCasbProfile(o["casb-profile"], d, "casb_profile")); err != nil {
 		if !fortiAPIPatch(o["casb-profile"]) {
 			return fmt.Errorf("Error reading casb_profile: %v", err)
+		}
+	}
+
+	if err = d.Set("llm_profile", dataSourceFlattenFirewallProxyPolicyLlmProfile(o["llm-profile"], d, "llm_profile")); err != nil {
+		if !fortiAPIPatch(o["llm-profile"]) {
+			return fmt.Errorf("Error reading llm_profile: %v", err)
 		}
 	}
 

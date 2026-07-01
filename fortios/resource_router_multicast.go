@@ -399,6 +399,11 @@ func resourceRouterMulticast() *schema.Resource {
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
 						},
+						"update_source": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 15),
+							Optional:     true,
+						},
 						"join_group": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
@@ -1346,6 +1351,14 @@ func flattenRouterMulticastInterface(v interface{}, d *schema.ResourceData, pre 
 			tmp["rpf_nbr_fail_back_filter"] = flattenRouterMulticastInterfaceRpfNbrFailBackFilter(cur_v, d, pre_append, sv)
 		}
 
+		if cur_v, ok := i["update-source"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "update_source"
+			}
+			tmp["update_source"] = flattenRouterMulticastInterfaceUpdateSource(cur_v, d, pre_append, sv)
+		}
+
 		if cur_v, ok := i["join-group"]; ok {
 			pre_append := ""
 			if tf_exist {
@@ -1448,6 +1461,10 @@ func flattenRouterMulticastInterfaceRpfNbrFailBack(v interface{}, d *schema.Reso
 }
 
 func flattenRouterMulticastInterfaceRpfNbrFailBackFilter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterMulticastInterfaceUpdateSource(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2372,6 +2389,13 @@ func expandRouterMulticastInterface(d *schema.ResourceData, v interface{}, pre s
 			tmp["rpf-nbr-fail-back-filter"] = nil
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "update_source"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["update-source"], _ = expandRouterMulticastInterfaceUpdateSource(d, i["update_source"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["update-source"] = nil
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "join_group"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["join-group"], _ = expandRouterMulticastInterfaceJoinGroup(d, i["join_group"], pre_append, sv)
@@ -2471,6 +2495,10 @@ func expandRouterMulticastInterfaceRpfNbrFailBack(d *schema.ResourceData, v inte
 }
 
 func expandRouterMulticastInterfaceRpfNbrFailBackFilter(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterMulticastInterfaceUpdateSource(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

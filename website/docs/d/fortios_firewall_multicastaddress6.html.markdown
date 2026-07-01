@@ -25,6 +25,8 @@ The following attributes are exported:
 * `visibility` - Enable/disable visibility of the IPv6 multicast address on the GUI.
 * `color` - Color of icon on the GUI.
 * `tagging` - Config object tagging. The structure of `tagging` block is documented below.
+* `display_with` - Display object with first tag, all tags, or just the icon.
+* `custom_tags` - Custom tags. The structure of `custom_tags` block is documented below.
 
 The `tagging` block contains:
 
@@ -35,4 +37,8 @@ The `tagging` block contains:
 The `tags` block contains:
 
 * `name` - Tag name.
+
+The `custom_tags` block contains:
+
+* `name` - Names of custom tags used with this address.
 

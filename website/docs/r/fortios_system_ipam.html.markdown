@@ -43,15 +43,27 @@ The `rules` block supports:
 
 * `name` - IPAM rule name.
 * `description` - Description.
+* `item_type` - Configure whether item is an interface or an address. Valid values: `interface`, `address`.
+* `item_name` - Configure name or wildcard of item to match. The structure of `item_name` block is documented below.
 * `device` - Configure serial number or wildcard of Fortigate to match. The structure of `device` block is documented below.
+* `vdom` - Configure which VDOMs have access to this IPAM rule. The structure of `vdom` block is documented below.
 * `interface` - Configure name or wildcard of interface to match. The structure of `interface` block is documented below.
 * `role` - Configure role of interface to match. Valid values: `any`, `lan`, `wan`, `dmz`, `undefined`.
 * `pool` - Configure name of IPAM pool to use. The structure of `pool` block is documented below.
 * `dhcp` - Enable/disable DHCP server for matching IPAM interfaces. Valid values: `enable`, `disable`.
+* `dhcp_template` - DHCP template for assingned interface.
+
+The `item_name` block supports:
+
+* `name` - Name or wildcard.
 
 The `device` block supports:
 
 * `name` - Fortigate serial number or wildcard.
+
+The `vdom` block supports:
+
+* `name` - VDOM or wildcard.
 
 The `interface` block supports:
 

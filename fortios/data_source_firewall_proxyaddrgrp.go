@@ -88,6 +88,22 @@ func dataSourceFirewallProxyAddrgrp() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"display_with": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"custom_tags": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
 			"visibility": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -281,6 +297,46 @@ func dataSourceFlattenFirewallProxyAddrgrpComment(v interface{}, d *schema.Resou
 	return v
 }
 
+func dataSourceFlattenFirewallProxyAddrgrpDisplayWith(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallProxyAddrgrpCustomTags(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = dataSourceFlattenFirewallProxyAddrgrpCustomTagsName(i["name"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenFirewallProxyAddrgrpCustomTagsName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallProxyAddrgrpVisibility(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -327,6 +383,18 @@ func dataSourceRefreshObjectFirewallProxyAddrgrp(d *schema.ResourceData, o map[s
 	if err = d.Set("comment", dataSourceFlattenFirewallProxyAddrgrpComment(o["comment"], d, "comment")); err != nil {
 		if !fortiAPIPatch(o["comment"]) {
 			return fmt.Errorf("Error reading comment: %v", err)
+		}
+	}
+
+	if err = d.Set("display_with", dataSourceFlattenFirewallProxyAddrgrpDisplayWith(o["display-with"], d, "display_with")); err != nil {
+		if !fortiAPIPatch(o["display-with"]) {
+			return fmt.Errorf("Error reading display_with: %v", err)
+		}
+	}
+
+	if err = d.Set("custom_tags", dataSourceFlattenFirewallProxyAddrgrpCustomTags(o["custom-tags"], d, "custom_tags")); err != nil {
+		if !fortiAPIPatch(o["custom-tags"]) {
+			return fmt.Errorf("Error reading custom_tags: %v", err)
 		}
 	}
 

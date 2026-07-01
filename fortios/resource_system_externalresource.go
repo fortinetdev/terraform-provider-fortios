@@ -52,6 +52,21 @@ func resourceSystemExternalResource() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"fabric_object": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"fabric_force_sync": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"fabric_object_source": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -100,6 +115,11 @@ func resourceSystemExternalResource() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(192, 221),
 				Optional:     true,
+			},
+			"threat_feed_hash_mode": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"username": &schema.Schema{
 				Type:         schema.TypeString,
@@ -357,6 +377,18 @@ func flattenSystemExternalResourceUuid(v interface{}, d *schema.ResourceData, pr
 	return v
 }
 
+func flattenSystemExternalResourceFabricObject(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemExternalResourceFabricForceSync(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemExternalResourceFabricObjectSource(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemExternalResourceStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -391,6 +423,10 @@ func flattenSystemExternalResourceUpdateMethod(v interface{}, d *schema.Resource
 
 func flattenSystemExternalResourceCategory(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return convintf2i(v)
+}
+
+func flattenSystemExternalResourceThreatFeedHashMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
 }
 
 func flattenSystemExternalResourceUsername(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -460,6 +496,24 @@ func refreshObjectSystemExternalResource(d *schema.ResourceData, o map[string]in
 		}
 	}
 
+	if err = d.Set("fabric_object", flattenSystemExternalResourceFabricObject(o["fabric-object"], d, "fabric_object", sv)); err != nil {
+		if !fortiAPIPatch(o["fabric-object"]) {
+			return fmt.Errorf("Error reading fabric_object: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_force_sync", flattenSystemExternalResourceFabricForceSync(o["fabric-force-sync"], d, "fabric_force_sync", sv)); err != nil {
+		if !fortiAPIPatch(o["fabric-force-sync"]) {
+			return fmt.Errorf("Error reading fabric_force_sync: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_object_source", flattenSystemExternalResourceFabricObjectSource(o["fabric-object-source"], d, "fabric_object_source", sv)); err != nil {
+		if !fortiAPIPatch(o["fabric-object-source"]) {
+			return fmt.Errorf("Error reading fabric_object_source: %v", err)
+		}
+	}
+
 	if err = d.Set("status", flattenSystemExternalResourceStatus(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
 			return fmt.Errorf("Error reading status: %v", err)
@@ -511,6 +565,12 @@ func refreshObjectSystemExternalResource(d *schema.ResourceData, o map[string]in
 	if err = d.Set("category", flattenSystemExternalResourceCategory(o["category"], d, "category", sv)); err != nil {
 		if !fortiAPIPatch(o["category"]) {
 			return fmt.Errorf("Error reading category: %v", err)
+		}
+	}
+
+	if err = d.Set("threat_feed_hash_mode", flattenSystemExternalResourceThreatFeedHashMode(o["threat-feed-hash-mode"], d, "threat_feed_hash_mode", sv)); err != nil {
+		if !fortiAPIPatch(o["threat-feed-hash-mode"]) {
+			return fmt.Errorf("Error reading threat_feed_hash_mode: %v", err)
 		}
 	}
 
@@ -609,6 +669,18 @@ func expandSystemExternalResourceUuid(d *schema.ResourceData, v interface{}, pre
 	return v, nil
 }
 
+func expandSystemExternalResourceFabricObject(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemExternalResourceFabricForceSync(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemExternalResourceFabricObjectSource(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemExternalResourceStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -642,6 +714,10 @@ func expandSystemExternalResourceUpdateMethod(d *schema.ResourceData, v interfac
 }
 
 func expandSystemExternalResourceCategory(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemExternalResourceThreatFeedHashMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -719,6 +795,33 @@ func getObjectSystemExternalResource(d *schema.ResourceData, sv string) (*map[st
 			return &obj, err
 		} else if t != nil {
 			obj["uuid"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("fabric_object"); ok {
+		t, err := expandSystemExternalResourceFabricObject(d, v, "fabric_object", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fabric-object"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("fabric_force_sync"); ok {
+		t, err := expandSystemExternalResourceFabricForceSync(d, v, "fabric_force_sync", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fabric-force-sync"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("fabric_object_source"); ok {
+		t, err := expandSystemExternalResourceFabricObjectSource(d, v, "fabric_object_source", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fabric-object-source"] = t
 		}
 	}
 
@@ -805,6 +908,15 @@ func getObjectSystemExternalResource(d *schema.ResourceData, sv string) (*map[st
 		}
 	} else if d.HasChange("category") {
 		obj["category"] = nil
+	}
+
+	if v, ok := d.GetOk("threat_feed_hash_mode"); ok {
+		t, err := expandSystemExternalResourceThreatFeedHashMode(d, v, "threat_feed_hash_mode", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["threat-feed-hash-mode"] = t
+		}
 	}
 
 	if v, ok := d.GetOk("username"); ok {

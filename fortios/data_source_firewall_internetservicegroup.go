@@ -32,6 +32,22 @@ func dataSourceFirewallInternetServiceGroup() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"uuid": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"fabric_object": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"fabric_force_sync": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"fabric_object_source": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"comment": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -107,6 +123,22 @@ func dataSourceFlattenFirewallInternetServiceGroupName(v interface{}, d *schema.
 	return v
 }
 
+func dataSourceFlattenFirewallInternetServiceGroupUuid(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallInternetServiceGroupFabricObject(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallInternetServiceGroupFabricForceSync(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallInternetServiceGroupFabricObjectSource(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallInternetServiceGroupComment(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -166,6 +198,30 @@ func dataSourceRefreshObjectFirewallInternetServiceGroup(d *schema.ResourceData,
 	if err = d.Set("name", dataSourceFlattenFirewallInternetServiceGroupName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
+		}
+	}
+
+	if err = d.Set("uuid", dataSourceFlattenFirewallInternetServiceGroupUuid(o["uuid"], d, "uuid")); err != nil {
+		if !fortiAPIPatch(o["uuid"]) {
+			return fmt.Errorf("Error reading uuid: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_object", dataSourceFlattenFirewallInternetServiceGroupFabricObject(o["fabric-object"], d, "fabric_object")); err != nil {
+		if !fortiAPIPatch(o["fabric-object"]) {
+			return fmt.Errorf("Error reading fabric_object: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_force_sync", dataSourceFlattenFirewallInternetServiceGroupFabricForceSync(o["fabric-force-sync"], d, "fabric_force_sync")); err != nil {
+		if !fortiAPIPatch(o["fabric-force-sync"]) {
+			return fmt.Errorf("Error reading fabric_force_sync: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_object_source", dataSourceFlattenFirewallInternetServiceGroupFabricObjectSource(o["fabric-object-source"], d, "fabric_object_source")); err != nil {
+		if !fortiAPIPatch(o["fabric-object-source"]) {
+			return fmt.Errorf("Error reading fabric_object_source: %v", err)
 		}
 	}
 

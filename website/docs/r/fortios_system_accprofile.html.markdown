@@ -105,6 +105,10 @@ The following arguments are supported:
 * `system_diagnostics` - Enable/disable permission to run system diagnostic commands. Valid values: `enable`, `disable`.
 * `system_execute_ssh` - Enable/disable permission to execute SSH commands. Valid values: `enable`, `disable`.
 * `system_execute_telnet` - Enable/disable permission to execute TELNET commands. Valid values: `enable`, `disable`.
+* `gui_theme_type` - Use predefined themes or custom themes. Valid values: `predefined`, `custom`.
+* `gui_theme` - Predefined theme that overrides the default FortiGate theme. Valid values: `jade`, `neutrino`, `mariner`, `graphite`, `melongene`, `jet-stream`, `security-fabric`, `retro`, `dark-matter`, `onyx`, `eclipse`, `none`.
+* `gui_custom_theme` - Custom theme that overrides the default FortiGate theme.
+* `gui_ai_assistant` - Enable/disable permission to use AI assistant. Valid values: `enable`, `disable`.
 * `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 * `update_if_exist` - Equivalent functionality of import the resource. If set to true, will check whether the resource exist, if so, will do the UPDATE operation rather CREATE. Default is false. If you want to inherit the value of the provider, please do not set this parameter.

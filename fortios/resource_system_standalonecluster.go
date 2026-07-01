@@ -70,6 +70,11 @@ func resourceSystemStandaloneCluster() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"session_sync": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"cluster_peer": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -102,6 +107,16 @@ func resourceSystemStandaloneCluster() *schema.Resource {
 									},
 								},
 							},
+						},
+						"interface": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 15),
+							Optional:     true,
+						},
+						"source_ip": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
 						},
 						"down_intfs_before_sess_sync": &schema.Schema{
 							Type:     schema.TypeSet,
@@ -419,6 +434,10 @@ func flattenSystemStandaloneClusterAsymmetricTrafficControl(v interface{}, d *sc
 	return v
 }
 
+func flattenSystemStandaloneClusterSessionSync(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemStandaloneClusterClusterPeer(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -481,6 +500,22 @@ func flattenSystemStandaloneClusterClusterPeer(v interface{}, d *schema.Resource
 				pre_append = pre + "." + strconv.Itoa(con) + "." + "syncvd"
 			}
 			tmp["syncvd"] = flattenSystemStandaloneClusterClusterPeerSyncvd(cur_v, d, pre_append, sv)
+		}
+
+		if cur_v, ok := i["interface"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
+			}
+			tmp["interface"] = flattenSystemStandaloneClusterClusterPeerInterface(cur_v, d, pre_append, sv)
+		}
+
+		if cur_v, ok := i["source-ip"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "source_ip"
+			}
+			tmp["source_ip"] = flattenSystemStandaloneClusterClusterPeerSourceIp(cur_v, d, pre_append, sv)
 		}
 
 		if cur_v, ok := i["down-intfs-before-sess-sync"]; ok {
@@ -602,6 +637,14 @@ func flattenSystemStandaloneClusterClusterPeerSyncvd(v interface{}, d *schema.Re
 }
 
 func flattenSystemStandaloneClusterClusterPeerSyncvdName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemStandaloneClusterClusterPeerInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemStandaloneClusterClusterPeerSourceIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1092,6 +1135,12 @@ func refreshObjectSystemStandaloneCluster(d *schema.ResourceData, o map[string]i
 		}
 	}
 
+	if err = d.Set("session_sync", flattenSystemStandaloneClusterSessionSync(o["session-sync"], d, "session_sync", sv)); err != nil {
+		if !fortiAPIPatch(o["session-sync"]) {
+			return fmt.Errorf("Error reading session_sync: %v", err)
+		}
+	}
+
 	if b_get_all_tables {
 		if err = d.Set("cluster_peer", flattenSystemStandaloneClusterClusterPeer(o["cluster-peer"], d, "cluster_peer", sv)); err != nil {
 			if !fortiAPIPatch(o["cluster-peer"]) {
@@ -1205,6 +1254,10 @@ func expandSystemStandaloneClusterAsymmetricTrafficControl(d *schema.ResourceDat
 	return v, nil
 }
 
+func expandSystemStandaloneClusterSessionSync(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemStandaloneClusterClusterPeer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	result := make([]map[string]interface{}, 0, len(l))
@@ -1241,6 +1294,18 @@ func expandSystemStandaloneClusterClusterPeer(d *schema.ResourceData, v interfac
 			tmp["syncvd"], _ = expandSystemStandaloneClusterClusterPeerSyncvd(d, i["syncvd"], pre_append, sv)
 		} else if d.HasChange(pre_append) {
 			tmp["syncvd"] = make([]string, 0)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["interface"], _ = expandSystemStandaloneClusterClusterPeerInterface(d, i["interface"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["interface"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "source_ip"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["source-ip"], _ = expandSystemStandaloneClusterClusterPeerSourceIp(d, i["source_ip"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "down_intfs_before_sess_sync"
@@ -1322,6 +1387,14 @@ func expandSystemStandaloneClusterClusterPeerSyncvd(d *schema.ResourceData, v in
 }
 
 func expandSystemStandaloneClusterClusterPeerSyncvdName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemStandaloneClusterClusterPeerInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemStandaloneClusterClusterPeerSourceIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1716,6 +1789,19 @@ func getObjectSystemStandaloneCluster(d *schema.ResourceData, setArgNil bool, sv
 				return &obj, err
 			} else if t != nil {
 				obj["asymmetric-traffic-control"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("session_sync"); ok {
+		if setArgNil {
+			obj["session-sync"] = nil
+		} else {
+			t, err := expandSystemStandaloneClusterSessionSync(d, v, "session_sync", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["session-sync"] = t
 			}
 		}
 	}

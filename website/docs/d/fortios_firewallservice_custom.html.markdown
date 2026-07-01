@@ -39,7 +39,7 @@ The following attributes are exported:
 * `tcp_timewait_timer` - Set the length of the TCP TIME-WAIT state in seconds (1 - 300 sec, 0 = default).
 * `tcp_rst_timer` - Set the length of the TCP CLOSE state in seconds (5 - 300 sec, 0 = default).
 * `udp_idle_timer` - UDP half close timeout (0 - 86400 sec, 0 = default).
-* `session_ttl` - Session TTL (300 - 604800, 0 = default).
+* `session_ttl` - Session TTL (300 - 2764800, 0 = default).
 * `check_reset_range` - Configure the type of ICMP error message verification.
 * `comment` - Comment.
 * `color` - Color of icon on the GUI.
@@ -48,6 +48,8 @@ The following attributes are exported:
 * `app_category` - Application category ID. The structure of `app_category` block is documented below.
 * `application` - Application ID. The structure of `application` block is documented below.
 * `fabric_object` - Security Fabric global object setting.
+* `fabric_force_sync` - Enable/disable forced synchronization of configuration objects from the root FortiGate unit to the downstream devices.  Configuration conflict check is skipped.
+* `fabric_object_source` - Source of truth for fabric object.
 
 The `app_category` block contains:
 

@@ -25,6 +25,10 @@ The following attributes are exported:
 * `bandwidth_unit` - Unit of measurement for guaranteed and maximum bandwidth for this shaper (Kbps, Mbps or Gbps).
 * `priority` - Higher priority traffic is more likely to be forwarded without delays and without compromising the guaranteed bandwidth.
 * `per_policy` - Enable/disable applying a separate shaper for each policy. For example, if enabled the guaranteed bandwidth is applied separately for each policy.
+* `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
+* `fabric_object` - Security Fabric global object setting.
+* `fabric_force_sync` - Enable/disable forced synchronization of configuration objects from the root FortiGate unit to the downstream devices.  Configuration conflict check is skipped.
+* `fabric_object_source` - Source of truth for fabric object.
 * `diffserv` - Enable/disable changing the DiffServ setting applied to traffic accepted by this shaper.
 * `diffservcode` - DiffServ setting to be applied to traffic accepted by this shaper.
 * `dscp_marking_method` - Select DSCP marking method.

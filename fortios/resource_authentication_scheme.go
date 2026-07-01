@@ -78,6 +78,17 @@ func resourceAuthenticationScheme() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"oidc_server": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+			},
+			"oidc_timeout": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(30, 1200),
+				Optional:     true,
+				Computed:     true,
+			},
 			"fsso_agent_for_ntlm": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -87,6 +98,26 @@ func resourceAuthenticationScheme() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
+			},
+			"captcha": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"captcha_vendor": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"captcha_site_key": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 63),
+				Optional:     true,
+			},
+			"captcha_secret_key": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 63),
+				Optional:     true,
 			},
 			"fsso_guest": &schema.Schema{
 				Type:     schema.TypeString,
@@ -355,11 +386,35 @@ func flattenAuthenticationSchemeSamlTimeout(v interface{}, d *schema.ResourceDat
 	return convintf2i(v)
 }
 
+func flattenAuthenticationSchemeOidcServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAuthenticationSchemeOidcTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
 func flattenAuthenticationSchemeFssoAgentForNtlm(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
 func flattenAuthenticationSchemeRequireTfa(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAuthenticationSchemeCaptcha(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAuthenticationSchemeCaptchaVendor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAuthenticationSchemeCaptchaSiteKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenAuthenticationSchemeCaptchaSecretKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -499,6 +554,18 @@ func refreshObjectAuthenticationScheme(d *schema.ResourceData, o map[string]inte
 		}
 	}
 
+	if err = d.Set("oidc_server", flattenAuthenticationSchemeOidcServer(o["oidc-server"], d, "oidc_server", sv)); err != nil {
+		if !fortiAPIPatch(o["oidc-server"]) {
+			return fmt.Errorf("Error reading oidc_server: %v", err)
+		}
+	}
+
+	if err = d.Set("oidc_timeout", flattenAuthenticationSchemeOidcTimeout(o["oidc-timeout"], d, "oidc_timeout", sv)); err != nil {
+		if !fortiAPIPatch(o["oidc-timeout"]) {
+			return fmt.Errorf("Error reading oidc_timeout: %v", err)
+		}
+	}
+
 	if err = d.Set("fsso_agent_for_ntlm", flattenAuthenticationSchemeFssoAgentForNtlm(o["fsso-agent-for-ntlm"], d, "fsso_agent_for_ntlm", sv)); err != nil {
 		if !fortiAPIPatch(o["fsso-agent-for-ntlm"]) {
 			return fmt.Errorf("Error reading fsso_agent_for_ntlm: %v", err)
@@ -508,6 +575,30 @@ func refreshObjectAuthenticationScheme(d *schema.ResourceData, o map[string]inte
 	if err = d.Set("require_tfa", flattenAuthenticationSchemeRequireTfa(o["require-tfa"], d, "require_tfa", sv)); err != nil {
 		if !fortiAPIPatch(o["require-tfa"]) {
 			return fmt.Errorf("Error reading require_tfa: %v", err)
+		}
+	}
+
+	if err = d.Set("captcha", flattenAuthenticationSchemeCaptcha(o["captcha"], d, "captcha", sv)); err != nil {
+		if !fortiAPIPatch(o["captcha"]) {
+			return fmt.Errorf("Error reading captcha: %v", err)
+		}
+	}
+
+	if err = d.Set("captcha_vendor", flattenAuthenticationSchemeCaptchaVendor(o["captcha-vendor"], d, "captcha_vendor", sv)); err != nil {
+		if !fortiAPIPatch(o["captcha-vendor"]) {
+			return fmt.Errorf("Error reading captcha_vendor: %v", err)
+		}
+	}
+
+	if err = d.Set("captcha_site_key", flattenAuthenticationSchemeCaptchaSiteKey(o["captcha-site-key"], d, "captcha_site_key", sv)); err != nil {
+		if !fortiAPIPatch(o["captcha-site-key"]) {
+			return fmt.Errorf("Error reading captcha_site_key: %v", err)
+		}
+	}
+
+	if err = d.Set("captcha_secret_key", flattenAuthenticationSchemeCaptchaSecretKey(o["captcha-secret-key"], d, "captcha_secret_key", sv)); err != nil {
+		if !fortiAPIPatch(o["captcha-secret-key"]) {
+			return fmt.Errorf("Error reading captcha_secret_key: %v", err)
 		}
 	}
 
@@ -612,11 +703,35 @@ func expandAuthenticationSchemeSamlTimeout(d *schema.ResourceData, v interface{}
 	return v, nil
 }
 
+func expandAuthenticationSchemeOidcServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAuthenticationSchemeOidcTimeout(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandAuthenticationSchemeFssoAgentForNtlm(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
 func expandAuthenticationSchemeRequireTfa(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAuthenticationSchemeCaptcha(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAuthenticationSchemeCaptchaVendor(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAuthenticationSchemeCaptchaSiteKey(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAuthenticationSchemeCaptchaSecretKey(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -754,6 +869,26 @@ func getObjectAuthenticationScheme(d *schema.ResourceData, sv string) (*map[stri
 		}
 	}
 
+	if v, ok := d.GetOk("oidc_server"); ok {
+		t, err := expandAuthenticationSchemeOidcServer(d, v, "oidc_server", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["oidc-server"] = t
+		}
+	} else if d.HasChange("oidc_server") {
+		obj["oidc-server"] = nil
+	}
+
+	if v, ok := d.GetOk("oidc_timeout"); ok {
+		t, err := expandAuthenticationSchemeOidcTimeout(d, v, "oidc_timeout", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["oidc-timeout"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("fsso_agent_for_ntlm"); ok {
 		t, err := expandAuthenticationSchemeFssoAgentForNtlm(d, v, "fsso_agent_for_ntlm", sv)
 		if err != nil {
@@ -772,6 +907,46 @@ func getObjectAuthenticationScheme(d *schema.ResourceData, sv string) (*map[stri
 		} else if t != nil {
 			obj["require-tfa"] = t
 		}
+	}
+
+	if v, ok := d.GetOk("captcha"); ok {
+		t, err := expandAuthenticationSchemeCaptcha(d, v, "captcha", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["captcha"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("captcha_vendor"); ok {
+		t, err := expandAuthenticationSchemeCaptchaVendor(d, v, "captcha_vendor", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["captcha-vendor"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("captcha_site_key"); ok {
+		t, err := expandAuthenticationSchemeCaptchaSiteKey(d, v, "captcha_site_key", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["captcha-site-key"] = t
+		}
+	} else if d.HasChange("captcha_site_key") {
+		obj["captcha-site-key"] = nil
+	}
+
+	if v, ok := d.GetOk("captcha_secret_key"); ok {
+		t, err := expandAuthenticationSchemeCaptchaSecretKey(d, v, "captcha_secret_key", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["captcha-secret-key"] = t
+		}
+	} else if d.HasChange("captcha_secret_key") {
+		obj["captcha-secret-key"] = nil
 	}
 
 	if v, ok := d.GetOk("fsso_guest"); ok {

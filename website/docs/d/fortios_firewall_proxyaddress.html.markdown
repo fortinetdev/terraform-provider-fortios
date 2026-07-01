@@ -36,10 +36,13 @@ The following attributes are exported:
 * `header` - HTTP header name as a regular expression.
 * `case_sensitivity` - Enable to make the pattern case sensitive.
 * `header_group` - HTTP header group. The structure of `header_group` block is documented below.
+* `llm_servers` - LLM Proxy server names. The structure of `llm_servers` block is documented below.
 * `color` - Integer value to determine the color of the icon in the GUI (1 - 32, default = 0, which sets value to 1).
 * `tagging` - Config object tagging. The structure of `tagging` block is documented below.
 * `comment` - Optional comments.
 * `application` - SaaS application. The structure of `application` block is documented below.
+* `display_with` - Display object with first tag, all tags, or just the icon.
+* `custom_tags` - Custom tags. The structure of `custom_tags` block is documented below.
 * `visibility` - Enable/disable visibility of the object in the GUI.
 
 The `category` block contains:
@@ -52,6 +55,10 @@ The `header_group` block contains:
 * `header_name` - HTTP header.
 * `header` - HTTP header regular expression.
 * `case_sensitivity` - Case sensitivity in pattern.
+
+The `llm_servers` block contains:
+
+* `name` - Server name.
 
 The `tagging` block contains:
 
@@ -66,4 +73,8 @@ The `tags` block contains:
 The `application` block contains:
 
 * `name` - SaaS applicaton name.
+
+The `custom_tags` block contains:
+
+* `name` - Names of custom tags used with this address.
 

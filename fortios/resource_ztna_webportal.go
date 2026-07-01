@@ -172,6 +172,21 @@ func resourceZtnaWebPortal() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 1023),
 				Optional:     true,
 			},
+			"bookmarks": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+			},
+			"llm_proxy": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"llm_profile": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 79),
+				Optional:     true,
+			},
 		},
 	}
 }
@@ -448,6 +463,18 @@ func flattenZtnaWebPortalMacosForticlientDownloadUrl(v interface{}, d *schema.Re
 	return v
 }
 
+func flattenZtnaWebPortalBookmarks(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenZtnaWebPortalLlmProxy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenZtnaWebPortalLlmProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectZtnaWebPortal(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -601,6 +628,24 @@ func refreshObjectZtnaWebPortal(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
+	if err = d.Set("bookmarks", flattenZtnaWebPortalBookmarks(o["bookmarks"], d, "bookmarks", sv)); err != nil {
+		if !fortiAPIPatch(o["bookmarks"]) {
+			return fmt.Errorf("Error reading bookmarks: %v", err)
+		}
+	}
+
+	if err = d.Set("llm_proxy", flattenZtnaWebPortalLlmProxy(o["llm-proxy"], d, "llm_proxy", sv)); err != nil {
+		if !fortiAPIPatch(o["llm-proxy"]) {
+			return fmt.Errorf("Error reading llm_proxy: %v", err)
+		}
+	}
+
+	if err = d.Set("llm_profile", flattenZtnaWebPortalLlmProfile(o["llm-profile"], d, "llm_profile", sv)); err != nil {
+		if !fortiAPIPatch(o["llm-profile"]) {
+			return fmt.Errorf("Error reading llm_profile: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -707,6 +752,18 @@ func expandZtnaWebPortalWindowsForticlientDownloadUrl(d *schema.ResourceData, v 
 }
 
 func expandZtnaWebPortalMacosForticlientDownloadUrl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandZtnaWebPortalBookmarks(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandZtnaWebPortalLlmProxy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandZtnaWebPortalLlmProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -952,6 +1009,37 @@ func getObjectZtnaWebPortal(d *schema.ResourceData, sv string) (*map[string]inte
 		}
 	} else if d.HasChange("macos_forticlient_download_url") {
 		obj["macos-forticlient-download-url"] = nil
+	}
+
+	if v, ok := d.GetOk("bookmarks"); ok {
+		t, err := expandZtnaWebPortalBookmarks(d, v, "bookmarks", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["bookmarks"] = t
+		}
+	} else if d.HasChange("bookmarks") {
+		obj["bookmarks"] = nil
+	}
+
+	if v, ok := d.GetOk("llm_proxy"); ok {
+		t, err := expandZtnaWebPortalLlmProxy(d, v, "llm_proxy", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["llm-proxy"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("llm_profile"); ok {
+		t, err := expandZtnaWebPortalLlmProfile(d, v, "llm_profile", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["llm-profile"] = t
+		}
+	} else if d.HasChange("llm_profile") {
+		obj["llm-profile"] = nil
 	}
 
 	return &obj, nil

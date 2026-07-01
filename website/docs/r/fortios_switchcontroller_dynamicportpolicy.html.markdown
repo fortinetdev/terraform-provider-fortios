@@ -29,7 +29,7 @@ The `policy` block supports:
 * `status` - Enable/disable policy. Valid values: `enable`, `disable`.
 * `category` - Category of Dynamic port policy. Valid values: `device`, `interface-tag`.
 * `match_type` - Match and retain the devices based on the type. Valid values: `dynamic`, `override`.
-* `match_period` - Number of days the matched devices will be retained (0 - 120, 0 = always retain).
+* `match_period` - Duration to retain the matched devices. On FortiOS versions 7.4.4-7.6.7: Number of days (0 - 120, 0 = always retain).. On FortiOS versions >= 8.0.0: Number of hours (0 - 3072, 0 = always retain)..
 * `match_remove` - Options to remove the matched override devices. Valid values: `default`, `link-down`.
 * `interface_tags` - Policy matching the FortiSwitch interface object tags. The structure of `interface_tags` block is documented below.
 * `mac` - Policy matching MAC address.

@@ -32,10 +32,7 @@ The following arguments are supported:
 * `default_profile` - Default profile for new SSO admin.
 * `cert` - Certificate to sign SAML messages.
 * `binding_protocol` - IdP Binding protocol. Valid values: `post`, `redirect`.
-* `portal_url` - SP portal URL.
 * `entity_id` - SP entity ID.
-* `single_sign_on_url` - SP single sign-on URL.
-* `single_logout_url` - SP single logout URL.
 * `idp_entity_id` - IDP entity ID.
 * `idp_single_sign_on_url` - IDP single sign-on URL.
 * `idp_single_logout_url` - IDP single logout URL.
@@ -59,9 +56,6 @@ The `service_providers` block supports:
 * `sp_single_sign_on_url` - SP single sign-on URL.
 * `sp_single_logout_url` - SP single logout URL.
 * `sp_portal_url` - SP portal URL.
-* `idp_entity_id` - IDP entity ID.
-* `idp_single_sign_on_url` - IDP single sign-on URL.
-* `idp_single_logout_url` - IDP single logout URL.
 * `assertion_attributes` - Customized SAML attributes to send along with assertion. The structure of `assertion_attributes` block is documented below.
 
 The `assertion_attributes` block supports:
@@ -74,6 +68,15 @@ The `assertion_attributes` block supports:
 
 In addition to all the above arguments, the following attributes are exported:
 * `id` - an identifier for the resource.
+* `portal_url` - SP portal URL.
+* `single_sign_on_url` - SP single sign-on URL.
+* `single_logout_url` - SP single logout URL.
+
+The `service_providers` block contains following attibutes:
+
+* `idp_entity_id` - IDP entity ID.
+* `idp_single_sign_on_url` - IDP single sign-on URL.
+* `idp_single_logout_url` - IDP single logout URL.
 
 ## Import
 

@@ -56,7 +56,6 @@ The `address_civic` block supports:
 * `trailing_str_suffix` - Trailing street suffix.
 * `unit` - Unit (apartment, suite).
 * `zip` - Postal/zip code.
-* `parent_key` - Parent key name.
 
 The `coordinates` block supports:
 
@@ -65,18 +64,28 @@ The `coordinates` block supports:
 * `datum` - WGS84, NAD83, NAD83/MLLW. Valid values: `WGS84`, `NAD83`, `NAD83/MLLW`.
 * `latitude` - Floating point starting with +/- or ending with (N or S). For example, +/-16.67 or 16.67N.
 * `longitude` - Floating point starting with +/- or ending with (N or S). For example, +/-26.789 or 26.789E.
-* `parent_key` - Parent key name.
 
 The `elin_number` block supports:
 
 * `elin_num` - Configure ELIN callback number.
-* `parent_key` - Parent key name.
 
 
 ## Attribute Reference
 
 In addition to all the above arguments, the following attributes are exported:
 * `id` - an identifier for the resource with format {{name}}.
+
+The `address_civic` block contains following attibutes:
+
+* `parent_key` - Parent key name.
+
+The `coordinates` block contains following attibutes:
+
+* `parent_key` - Parent key name.
+
+The `elin_number` block contains following attibutes:
+
+* `parent_key` - Parent key name.
 
 ## Import
 

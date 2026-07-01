@@ -14,6 +14,10 @@ Configure Email Filter profiles. Applies to FortiOS Version `>= 6.2.4`.
 The following arguments are supported:
 
 * `name` - Profile name.
+* `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
+* `fabric_object` - Security Fabric global object setting. Valid values: `enable`, `disable`.
+* `fabric_force_sync` - Enable/disable forced synchronization of configuration objects from the root FortiGate unit to the downstream devices.  Configuration conflict check is skipped. Valid values: `enable`, `disable`.
+* `fabric_object_source` - Source of truth for fabric object. Valid values: `member`, `local`, `root`.
 * `comment` - Comment.
 * `feature_set` - Flow/proxy feature set. Valid values: `flow`, `proxy`.
 * `replacemsg_group` - Replacement message group.

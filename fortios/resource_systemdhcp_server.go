@@ -223,9 +223,32 @@ func resourceSystemDhcpServer() *schema.Resource {
 								},
 							},
 						},
+						"oui_match": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"oui_string": &schema.Schema{
+							Type:     schema.TypeSet,
+							Optional: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"oui_string": &schema.Schema{
+										Type:         schema.TypeString,
+										ValidateFunc: validation.StringLenBetween(0, 17),
+										Optional:     true,
+									},
+								},
+							},
+						},
 						"lease_time": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: intBetweenWithZero(300, 8640000),
+							Optional:     true,
+						},
+						"vendor": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 255),
 							Optional:     true,
 						},
 					},
@@ -258,6 +281,22 @@ func resourceSystemDhcpServer() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
+			},
+			"template": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+			},
+			"template_subnet": &schema.Schema{
+				Type:             schema.TypeString,
+				Optional:         true,
+				Computed:         true,
+				ValidateDiagFunc: validation.ToDiagFunc(isValidSubnet),
+			},
+			"template_subnet_from_interface": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"options": &schema.Schema{
 				Type:     schema.TypeList,
@@ -479,9 +518,32 @@ func resourceSystemDhcpServer() *schema.Resource {
 								},
 							},
 						},
+						"oui_match": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"oui_string": &schema.Schema{
+							Type:     schema.TypeSet,
+							Optional: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"oui_string": &schema.Schema{
+										Type:         schema.TypeString,
+										ValidateFunc: validation.StringLenBetween(0, 17),
+										Optional:     true,
+									},
+								},
+							},
+						},
 						"lease_time": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: intBetweenWithZero(300, 8640000),
+							Optional:     true,
+						},
+						"vendor": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 255),
 							Optional:     true,
 						},
 					},
@@ -929,12 +991,36 @@ func flattenSystemDhcpServerIpRange(v interface{}, d *schema.ResourceData, pre s
 			tmp["uci_string"] = flattenSystemDhcpServerIpRangeUciString(cur_v, d, pre_append, sv)
 		}
 
+		if cur_v, ok := i["oui-match"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "oui_match"
+			}
+			tmp["oui_match"] = flattenSystemDhcpServerIpRangeOuiMatch(cur_v, d, pre_append, sv)
+		}
+
+		if cur_v, ok := i["oui-string"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "oui_string"
+			}
+			tmp["oui_string"] = flattenSystemDhcpServerIpRangeOuiString(cur_v, d, pre_append, sv)
+		}
+
 		if cur_v, ok := i["lease-time"]; ok {
 			pre_append := ""
 			if tf_exist {
 				pre_append = pre + "." + strconv.Itoa(con) + "." + "lease_time"
 			}
 			tmp["lease_time"] = flattenSystemDhcpServerIpRangeLeaseTime(cur_v, d, pre_append, sv)
+		}
+
+		if cur_v, ok := i["vendor"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "vendor"
+			}
+			tmp["vendor"] = flattenSystemDhcpServerIpRangeVendor(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1072,8 +1158,69 @@ func flattenSystemDhcpServerIpRangeUciStringUciString(v interface{}, d *schema.R
 	return v
 }
 
+func flattenSystemDhcpServerIpRangeOuiMatch(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemDhcpServerIpRangeOuiString(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "oui-string", "oui_string")
+
+	con := 0
+	for _, r := range parsed_list {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
+
+		if cur_v, ok := i["oui-string"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "oui_string"
+			}
+			tmp["oui_string"] = flattenSystemDhcpServerIpRangeOuiStringOuiString(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "oui_string", d)
+	return result
+}
+
+func flattenSystemDhcpServerIpRangeOuiStringOuiString(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemDhcpServerIpRangeLeaseTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return convintf2i(v)
+}
+
+func flattenSystemDhcpServerIpRangeVendor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
 }
 
 func flattenSystemDhcpServerTimezoneOption(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1138,6 +1285,25 @@ func flattenSystemDhcpServerTftpServerTftpServer(v interface{}, d *schema.Resour
 }
 
 func flattenSystemDhcpServerFilename(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemDhcpServerTemplate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemDhcpServerTemplateSubnet(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v1, ok := d.GetOkExists(pre); ok && v != nil {
+		if s, ok := v1.(string); ok {
+			v = validateConvIPMask2CIDR(s, v.(string))
+			return v
+		}
+	}
+
+	return v
+}
+
+func flattenSystemDhcpServerTemplateSubnetFromInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1589,12 +1755,36 @@ func flattenSystemDhcpServerExcludeRange(v interface{}, d *schema.ResourceData, 
 			tmp["uci_string"] = flattenSystemDhcpServerExcludeRangeUciString(cur_v, d, pre_append, sv)
 		}
 
+		if cur_v, ok := i["oui-match"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "oui_match"
+			}
+			tmp["oui_match"] = flattenSystemDhcpServerExcludeRangeOuiMatch(cur_v, d, pre_append, sv)
+		}
+
+		if cur_v, ok := i["oui-string"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "oui_string"
+			}
+			tmp["oui_string"] = flattenSystemDhcpServerExcludeRangeOuiString(cur_v, d, pre_append, sv)
+		}
+
 		if cur_v, ok := i["lease-time"]; ok {
 			pre_append := ""
 			if tf_exist {
 				pre_append = pre + "." + strconv.Itoa(con) + "." + "lease_time"
 			}
 			tmp["lease_time"] = flattenSystemDhcpServerExcludeRangeLeaseTime(cur_v, d, pre_append, sv)
+		}
+
+		if cur_v, ok := i["vendor"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "vendor"
+			}
+			tmp["vendor"] = flattenSystemDhcpServerExcludeRangeVendor(cur_v, d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1732,8 +1922,69 @@ func flattenSystemDhcpServerExcludeRangeUciStringUciString(v interface{}, d *sch
 	return v
 }
 
+func flattenSystemDhcpServerExcludeRangeOuiMatch(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemDhcpServerExcludeRangeOuiString(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "oui-string", "oui_string")
+
+	con := 0
+	for _, r := range parsed_list {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
+
+		if cur_v, ok := i["oui-string"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "oui_string"
+			}
+			tmp["oui_string"] = flattenSystemDhcpServerExcludeRangeOuiStringOuiString(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "oui_string", d)
+	return result
+}
+
+func flattenSystemDhcpServerExcludeRangeOuiStringOuiString(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemDhcpServerExcludeRangeLeaseTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return convintf2i(v)
+}
+
+func flattenSystemDhcpServerExcludeRangeVendor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
 }
 
 func flattenSystemDhcpServerSharedSubnet(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2117,6 +2368,24 @@ func refreshObjectSystemDhcpServer(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
+	if err = d.Set("template", flattenSystemDhcpServerTemplate(o["template"], d, "template", sv)); err != nil {
+		if !fortiAPIPatch(o["template"]) {
+			return fmt.Errorf("Error reading template: %v", err)
+		}
+	}
+
+	if err = d.Set("template_subnet", flattenSystemDhcpServerTemplateSubnet(o["template-subnet"], d, "template_subnet", sv)); err != nil {
+		if !fortiAPIPatch(o["template-subnet"]) {
+			return fmt.Errorf("Error reading template_subnet: %v", err)
+		}
+	}
+
+	if err = d.Set("template_subnet_from_interface", flattenSystemDhcpServerTemplateSubnetFromInterface(o["template-subnet-from-interface"], d, "template_subnet_from_interface", sv)); err != nil {
+		if !fortiAPIPatch(o["template-subnet-from-interface"]) {
+			return fmt.Errorf("Error reading template_subnet_from_interface: %v", err)
+		}
+	}
+
 	if b_get_all_tables {
 		if err = d.Set("options", flattenSystemDhcpServerOptions(o["options"], d, "options", sv)); err != nil {
 			if !fortiAPIPatch(o["options"]) {
@@ -2445,11 +2714,30 @@ func expandSystemDhcpServerIpRange(d *schema.ResourceData, v interface{}, pre st
 			tmp["uci-string"] = make([]string, 0)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "oui_match"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["oui-match"], _ = expandSystemDhcpServerIpRangeOuiMatch(d, i["oui_match"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "oui_string"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["oui-string"], _ = expandSystemDhcpServerIpRangeOuiString(d, i["oui_string"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["oui-string"] = make([]string, 0)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "lease_time"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["lease-time"], _ = expandSystemDhcpServerIpRangeLeaseTime(d, i["lease_time"], pre_append, sv)
 		} else if d.HasChange(pre_append) {
 			tmp["lease-time"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vendor"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["vendor"], _ = expandSystemDhcpServerIpRangeVendor(d, i["vendor"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["vendor"] = nil
 		}
 
 		result = append(result, tmp)
@@ -2536,7 +2824,43 @@ func expandSystemDhcpServerIpRangeUciStringUciString(d *schema.ResourceData, v i
 	return v, nil
 }
 
+func expandSystemDhcpServerIpRangeOuiMatch(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemDhcpServerIpRangeOuiString(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.(*schema.Set).List()
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		tmp["oui-string"], _ = expandSystemDhcpServerIpRangeOuiStringOuiString(d, i["oui_string"], pre_append, sv)
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemDhcpServerIpRangeOuiStringOuiString(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemDhcpServerIpRangeLeaseTime(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemDhcpServerIpRangeVendor(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2577,6 +2901,18 @@ func expandSystemDhcpServerTftpServerTftpServer(d *schema.ResourceData, v interf
 }
 
 func expandSystemDhcpServerFilename(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemDhcpServerTemplate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemDhcpServerTemplateSubnet(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemDhcpServerTemplateSubnetFromInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2886,11 +3222,30 @@ func expandSystemDhcpServerExcludeRange(d *schema.ResourceData, v interface{}, p
 			tmp["uci-string"] = make([]string, 0)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "oui_match"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["oui-match"], _ = expandSystemDhcpServerExcludeRangeOuiMatch(d, i["oui_match"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "oui_string"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["oui-string"], _ = expandSystemDhcpServerExcludeRangeOuiString(d, i["oui_string"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["oui-string"] = make([]string, 0)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "lease_time"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["lease-time"], _ = expandSystemDhcpServerExcludeRangeLeaseTime(d, i["lease_time"], pre_append, sv)
 		} else if d.HasChange(pre_append) {
 			tmp["lease-time"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vendor"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["vendor"], _ = expandSystemDhcpServerExcludeRangeVendor(d, i["vendor"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["vendor"] = nil
 		}
 
 		result = append(result, tmp)
@@ -2977,7 +3332,43 @@ func expandSystemDhcpServerExcludeRangeUciStringUciString(d *schema.ResourceData
 	return v, nil
 }
 
+func expandSystemDhcpServerExcludeRangeOuiMatch(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemDhcpServerExcludeRangeOuiString(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.(*schema.Set).List()
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		tmp["oui-string"], _ = expandSystemDhcpServerExcludeRangeOuiStringOuiString(d, i["oui_string"], pre_append, sv)
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemDhcpServerExcludeRangeOuiStringOuiString(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemDhcpServerExcludeRangeLeaseTime(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemDhcpServerExcludeRangeVendor(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3384,6 +3775,35 @@ func getObjectSystemDhcpServer(d *schema.ResourceData, sv string) (*map[string]i
 		}
 	} else if d.HasChange("filename") {
 		obj["filename"] = nil
+	}
+
+	if v, ok := d.GetOk("template"); ok {
+		t, err := expandSystemDhcpServerTemplate(d, v, "template", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["template"] = t
+		}
+	} else if d.HasChange("template") {
+		obj["template"] = nil
+	}
+
+	if v, ok := d.GetOk("template_subnet"); ok {
+		t, err := expandSystemDhcpServerTemplateSubnet(d, v, "template_subnet", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["template-subnet"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("template_subnet_from_interface"); ok {
+		t, err := expandSystemDhcpServerTemplateSubnetFromInterface(d, v, "template_subnet_from_interface", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["template-subnet-from-interface"] = t
+		}
 	}
 
 	if v, ok := d.GetOk("options"); ok || d.HasChange("options") {

@@ -19,6 +19,10 @@ Use this data source to get information on an fortios system zone
 
 The following attributes are exported:
 
+* `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
+* `fabric_object` - Security Fabric global object setting.
+* `fabric_force_sync` - Enable/disable forced synchronization of configuration objects from the root FortiGate unit to the downstream devices.  Configuration conflict check is skipped.
+* `fabric_object_source` - Source of truth for fabric object.
 * `name` - Zone name.
 * `tagging` - Config object tagging. The structure of `tagging` block is documented below.
 * `description` - Description.

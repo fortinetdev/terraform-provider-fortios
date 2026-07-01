@@ -32,6 +32,10 @@ resource "fortios_firewall_ippool" "trname" {
 The following arguments are supported:
 
 * `name` - IP pool name.
+* `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
+* `fabric_object` - Security Fabric global object setting. Valid values: `enable`, `disable`.
+* `fabric_force_sync` - Enable/disable forced synchronization of configuration objects from the root FortiGate unit to the downstream devices.  Configuration conflict check is skipped. Valid values: `enable`, `disable`.
+* `fabric_object_source` - Source of truth for fabric object. Valid values: `member`, `local`, `root`.
 * `type` - IP pool type. On FortiOS versions 6.2.0-7.4.1: overload, one-to-one, fixed port range, or port block allocation. On FortiOS versions >= 7.4.2: overload, one-to-one, fixed-port-range, port-block-allocation, cgn-resource-allocation (hyperscale vdom only). Valid values: `overload`, `one-to-one`, `fixed-port-range`, `port-block-allocation`.
 * `startip` - (Required) First IPv4 address (inclusive) in the range for the address pool (format xxx.xxx.xxx.xxx, Default: 0.0.0.0).
 * `endip` - (Required) Final IPv4 address (inclusive) in the range for the address pool (format xxx.xxx.xxx.xxx, Default: 0.0.0.0).

@@ -48,13 +48,18 @@ func resourceDlpFpDocSource() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"uuid": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"server_type": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
 			},
 			"server": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 63),
 				Required:     true,
 			},
 			"period": &schema.Schema{
@@ -316,6 +321,10 @@ func flattenDlpFpDocSourceName(v interface{}, d *schema.ResourceData, pre string
 	return v
 }
 
+func flattenDlpFpDocSourceUuid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenDlpFpDocSourceServerType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -386,6 +395,12 @@ func refreshObjectDlpFpDocSource(d *schema.ResourceData, o map[string]interface{
 	if err = d.Set("name", flattenDlpFpDocSourceName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
+		}
+	}
+
+	if err = d.Set("uuid", flattenDlpFpDocSourceUuid(o["uuid"], d, "uuid", sv)); err != nil {
+		if !fortiAPIPatch(o["uuid"]) {
+			return fmt.Errorf("Error reading uuid: %v", err)
 		}
 	}
 
@@ -498,6 +513,10 @@ func expandDlpFpDocSourceName(d *schema.ResourceData, v interface{}, pre string,
 	return v, nil
 }
 
+func expandDlpFpDocSourceUuid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandDlpFpDocSourceServerType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -575,6 +594,15 @@ func getObjectDlpFpDocSource(d *schema.ResourceData, sv string) (*map[string]int
 			return &obj, err
 		} else if t != nil {
 			obj["name"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("uuid"); ok {
+		t, err := expandDlpFpDocSourceUuid(d, v, "uuid", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["uuid"] = t
 		}
 	}
 

@@ -29,9 +29,6 @@ The following arguments are supported:
 * `remote_cidr` - Remote subnet address and subnet mask.
 * `cgw_name` - AWS customer gateway name to be created.
 * `psksecret` - Pre-shared secret for PSK authentication. Auto-generated if not specified
-* `type` - SDN VPN type.
-* `status` - SDN VPN status.
-* `code` - SDN VPN error code.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 * `update_if_exist` - Equivalent functionality of import the resource. If set to true, will check whether the resource exist, if so, will do the UPDATE operation rather CREATE. Default is false. If you want to inherit the value of the provider, please do not set this parameter.
 
@@ -40,6 +37,9 @@ The following arguments are supported:
 
 In addition to all the above arguments, the following attributes are exported:
 * `id` - an identifier for the resource with format {{name}}.
+* `type` - SDN VPN type.
+* `status` - SDN VPN status.
+* `code` - SDN VPN error code.
 
 ## Import
 

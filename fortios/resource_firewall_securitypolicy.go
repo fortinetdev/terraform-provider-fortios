@@ -88,6 +88,19 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 					},
 				},
 			},
+			"custom_tags": &schema.Schema{
+				Type:     schema.TypeSet,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 35),
+							Optional:     true,
+						},
+					},
+				},
+			},
 			"srcaddr": &schema.Schema{
 				Type:     schema.TypeSet,
 				Optional: true,
@@ -694,6 +707,11 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
 			},
+			"llm_profile": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 47),
+				Optional:     true,
+			},
 			"application": &schema.Schema{
 				Type:     schema.TypeSet,
 				Optional: true,
@@ -1091,6 +1109,59 @@ func flattenFirewallSecurityPolicyDstintfSp(v interface{}, d *schema.ResourceDat
 }
 
 func flattenFirewallSecurityPolicyDstintfNameSp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallSecurityPolicyCustomTagsSp(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
+	con := 0
+	for _, r := range parsed_list {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
+
+		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
+			tmp["name"] = flattenFirewallSecurityPolicyCustomTagsNameSp(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenFirewallSecurityPolicyCustomTagsNameSp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2815,6 +2886,10 @@ func flattenFirewallSecurityPolicyCasbProfileSp(v interface{}, d *schema.Resourc
 	return v
 }
 
+func flattenFirewallSecurityPolicyLlmProfileSp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallSecurityPolicyApplicationSp(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -3250,6 +3325,22 @@ func refreshObjectFirewallSecurityPolicy(d *schema.ResourceData, o map[string]in
 			if err = d.Set("dstintf", flattenFirewallSecurityPolicyDstintfSp(o["dstintf"], d, "dstintf", sv)); err != nil {
 				if !fortiAPIPatch(o["dstintf"]) {
 					return fmt.Errorf("Error reading dstintf: %v", err)
+				}
+			}
+		}
+	}
+
+	if b_get_all_tables {
+		if err = d.Set("custom_tags", flattenFirewallSecurityPolicyCustomTagsSp(o["custom-tags"], d, "custom_tags", sv)); err != nil {
+			if !fortiAPIPatch(o["custom-tags"]) {
+				return fmt.Errorf("Error reading custom_tags: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("custom_tags"); ok {
+			if err = d.Set("custom_tags", flattenFirewallSecurityPolicyCustomTagsSp(o["custom-tags"], d, "custom_tags", sv)); err != nil {
+				if !fortiAPIPatch(o["custom-tags"]) {
+					return fmt.Errorf("Error reading custom_tags: %v", err)
 				}
 			}
 		}
@@ -3995,6 +4086,12 @@ func refreshObjectFirewallSecurityPolicy(d *schema.ResourceData, o map[string]in
 		}
 	}
 
+	if err = d.Set("llm_profile", flattenFirewallSecurityPolicyLlmProfileSp(o["llm-profile"], d, "llm_profile", sv)); err != nil {
+		if !fortiAPIPatch(o["llm-profile"]) {
+			return fmt.Errorf("Error reading llm_profile: %v", err)
+		}
+	}
+
 	if b_get_all_tables {
 		if err = d.Set("application", flattenFirewallSecurityPolicyApplicationSp(o["application"], d, "application", sv)); err != nil {
 			if !fortiAPIPatch(o["application"]) {
@@ -4195,6 +4292,34 @@ func expandFirewallSecurityPolicyDstintfSp(d *schema.ResourceData, v interface{}
 }
 
 func expandFirewallSecurityPolicyDstintfNameSp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallSecurityPolicyCustomTagsSp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.(*schema.Set).List()
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		tmp["name"], _ = expandFirewallSecurityPolicyCustomTagsNameSp(d, i["name"], pre_append, sv)
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandFirewallSecurityPolicyCustomTagsNameSp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -5194,6 +5319,10 @@ func expandFirewallSecurityPolicyCasbProfileSp(d *schema.ResourceData, v interfa
 	return v, nil
 }
 
+func expandFirewallSecurityPolicyLlmProfileSp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallSecurityPolicyApplicationSp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.(*schema.Set).List()
 	result := make([]map[string]interface{}, 0, len(l))
@@ -5452,6 +5581,15 @@ func getObjectFirewallSecurityPolicy(d *schema.ResourceData, sv string) (*map[st
 			return &obj, err
 		} else if t != nil {
 			obj["dstintf"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("custom_tags"); ok || d.HasChange("custom_tags") {
+		t, err := expandFirewallSecurityPolicyCustomTagsSp(d, v, "custom_tags", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["custom-tags"] = t
 		}
 	}
 
@@ -6174,6 +6312,17 @@ func getObjectFirewallSecurityPolicy(d *schema.ResourceData, sv string) (*map[st
 		obj["casb-profile"] = nil
 	}
 
+	if v, ok := d.GetOk("llm_profile"); ok {
+		t, err := expandFirewallSecurityPolicyLlmProfileSp(d, v, "llm_profile", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["llm-profile"] = t
+		}
+	} else if d.HasChange("llm_profile") {
+		obj["llm-profile"] = nil
+	}
+
 	if v, ok := d.GetOk("application"); ok || d.HasChange("application") {
 		t, err := expandFirewallSecurityPolicyApplicationSp(d, v, "application", sv)
 		if err != nil {
@@ -6215,7 +6364,7 @@ func getObjectFirewallSecurityPolicy(d *schema.ResourceData, sv string) (*map[st
 
 	if v, ok := d.GetOk("url_category"); ok || d.HasChange("url_category") {
 		new_version_map := map[string][]string{
-			"=": []string{"6.2.4", "6.2.6", "6.4.0", "6.4.1", "6.4.2", "6.4.10", "6.4.11", "6.4.12", "6.4.13", "6.4.14", "6.4.15", "7.0.0", "7.0.1", "7.0.2", "7.0.3", "7.0.4", "7.0.5", "7.0.6", "7.0.7", "7.0.8", "7.0.9", "7.0.10", "7.0.11", "7.0.12", "7.0.13", "7.0.14", "7.0.15", "7.0.16", "7.0.17"},
+			"=": []string{"6.2.4", "6.2.6", "6.4.0", "6.4.1", "6.4.2", "6.4.10", "6.4.11", "6.4.12", "6.4.13", "6.4.14", "6.4.15", "7.0.0", "7.0.1", "7.0.2", "7.0.3", "7.0.4", "7.0.5", "7.0.6", "7.0.7", "7.0.8", "7.0.9", "7.0.10", "7.0.11", "7.0.12", "7.0.13", "7.0.14", "7.0.15", "7.0.16", "7.0.17", "7.0.18", "7.0.19"},
 		}
 		if versionMatch, err := checkVersionMatch(sv, new_version_map); !versionMatch {
 			if _, ok := d.GetOk("url_category_unitary"); !ok && !d.HasChange("url_category_unitary") {

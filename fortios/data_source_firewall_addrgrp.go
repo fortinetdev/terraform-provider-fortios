@@ -112,11 +112,35 @@ func dataSourceFirewallAddrgrp() *schema.Resource {
 					},
 				},
 			},
+			"display_with": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"custom_tags": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
 			"allow_routing": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
 			"fabric_object": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"fabric_force_sync": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"fabric_object_source": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -357,11 +381,59 @@ func dataSourceFlattenFirewallAddrgrpTaggingTagsName(v interface{}, d *schema.Re
 	return v
 }
 
+func dataSourceFlattenFirewallAddrgrpDisplayWith(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallAddrgrpCustomTags(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = dataSourceFlattenFirewallAddrgrpCustomTagsName(i["name"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenFirewallAddrgrpCustomTagsName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallAddrgrpAllowRouting(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
 func dataSourceFlattenFirewallAddrgrpFabricObject(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallAddrgrpFabricForceSync(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallAddrgrpFabricObjectSource(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -434,6 +506,18 @@ func dataSourceRefreshObjectFirewallAddrgrp(d *schema.ResourceData, o map[string
 		}
 	}
 
+	if err = d.Set("display_with", dataSourceFlattenFirewallAddrgrpDisplayWith(o["display-with"], d, "display_with")); err != nil {
+		if !fortiAPIPatch(o["display-with"]) {
+			return fmt.Errorf("Error reading display_with: %v", err)
+		}
+	}
+
+	if err = d.Set("custom_tags", dataSourceFlattenFirewallAddrgrpCustomTags(o["custom-tags"], d, "custom_tags")); err != nil {
+		if !fortiAPIPatch(o["custom-tags"]) {
+			return fmt.Errorf("Error reading custom_tags: %v", err)
+		}
+	}
+
 	if err = d.Set("allow_routing", dataSourceFlattenFirewallAddrgrpAllowRouting(o["allow-routing"], d, "allow_routing")); err != nil {
 		if !fortiAPIPatch(o["allow-routing"]) {
 			return fmt.Errorf("Error reading allow_routing: %v", err)
@@ -443,6 +527,18 @@ func dataSourceRefreshObjectFirewallAddrgrp(d *schema.ResourceData, o map[string
 	if err = d.Set("fabric_object", dataSourceFlattenFirewallAddrgrpFabricObject(o["fabric-object"], d, "fabric_object")); err != nil {
 		if !fortiAPIPatch(o["fabric-object"]) {
 			return fmt.Errorf("Error reading fabric_object: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_force_sync", dataSourceFlattenFirewallAddrgrpFabricForceSync(o["fabric-force-sync"], d, "fabric_force_sync")); err != nil {
+		if !fortiAPIPatch(o["fabric-force-sync"]) {
+			return fmt.Errorf("Error reading fabric_force_sync: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_object_source", dataSourceFlattenFirewallAddrgrpFabricObjectSource(o["fabric-object-source"], d, "fabric_object_source")); err != nil {
+		if !fortiAPIPatch(o["fabric-object-source"]) {
+			return fmt.Errorf("Error reading fabric_object_source: %v", err)
 		}
 	}
 

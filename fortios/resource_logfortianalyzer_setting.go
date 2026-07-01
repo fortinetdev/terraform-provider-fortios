@@ -131,10 +131,12 @@ func resourceLogFortianalyzerSetting() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
+				Computed:     true,
 			},
 			"faz_type": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
+				Computed: true,
 			},
 			"certificate": &schema.Schema{
 				Type:         schema.TypeString,
@@ -168,6 +170,7 @@ func resourceLogFortianalyzerSetting() *schema.Resource {
 			"upload_time": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Computed: true,
 			},
 			"reliable": &schema.Schema{
 				Type:     schema.TypeString,
@@ -1092,8 +1095,6 @@ func getObjectLogFortianalyzerSetting(d *schema.ResourceData, setArgNil bool, sv
 				obj["mgmt-name"] = t
 			}
 		}
-	} else if d.HasChange("mgmt_name") {
-		obj["mgmt-name"] = nil
 	}
 
 	if v, ok := d.GetOkExists("faz_type"); ok {
@@ -1107,8 +1108,6 @@ func getObjectLogFortianalyzerSetting(d *schema.ResourceData, setArgNil bool, sv
 				obj["faz-type"] = t
 			}
 		}
-	} else if d.HasChange("faz_type") {
-		obj["faz-type"] = nil
 	}
 
 	if v, ok := d.GetOk("certificate"); ok {
@@ -1208,8 +1207,6 @@ func getObjectLogFortianalyzerSetting(d *schema.ResourceData, setArgNil bool, sv
 				obj["upload-time"] = t
 			}
 		}
-	} else if d.HasChange("upload_time") {
-		obj["upload-time"] = nil
 	}
 
 	if v, ok := d.GetOk("reliable"); ok {

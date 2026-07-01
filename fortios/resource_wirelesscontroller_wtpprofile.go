@@ -271,6 +271,11 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"ipsec_offload": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"dtls_in_kernel": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -403,6 +408,11 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 				Computed: true,
 			},
 			"default_mesh_root": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"n80211mc_mode": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -587,6 +597,12 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 						"frag_threshold": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(800, 2346),
+							Optional:     true,
+							Computed:     true,
+						},
+						"cca_threshold": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 7),
 							Optional:     true,
 							Computed:     true,
 						},
@@ -797,6 +813,11 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 54000),
 							Optional:     true,
+						},
+						"vap_status": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
 						},
 						"frequency_handoff": &schema.Schema{
 							Type:     schema.TypeString,
@@ -1045,6 +1066,12 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 							Optional:     true,
 							Computed:     true,
 						},
+						"cca_threshold": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 7),
+							Optional:     true,
+							Computed:     true,
+						},
 						"ap_sniffer_bufsize": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 32),
@@ -1252,6 +1279,11 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 54000),
 							Optional:     true,
+						},
+						"vap_status": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
 						},
 						"frequency_handoff": &schema.Schema{
 							Type:     schema.TypeString,
@@ -1495,6 +1527,12 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 							Optional:     true,
 							Computed:     true,
 						},
+						"cca_threshold": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 7),
+							Optional:     true,
+							Computed:     true,
+						},
 						"ap_sniffer_bufsize": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 32),
@@ -1702,6 +1740,11 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 54000),
 							Optional:     true,
+						},
+						"vap_status": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
 						},
 						"frequency_handoff": &schema.Schema{
 							Type:     schema.TypeString,
@@ -1945,6 +1988,12 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 							Optional:     true,
 							Computed:     true,
 						},
+						"cca_threshold": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 7),
+							Optional:     true,
+							Computed:     true,
+						},
 						"ap_sniffer_bufsize": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 32),
@@ -2152,6 +2201,11 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 54000),
 							Optional:     true,
+						},
+						"vap_status": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
 						},
 						"frequency_handoff": &schema.Schema{
 							Type:     schema.TypeString,
@@ -3251,6 +3305,10 @@ func flattenWirelessControllerWtpProfileDtlsPolicy(v interface{}, d *schema.Reso
 	return v
 }
 
+func flattenWirelessControllerWtpProfileIpsecOffload(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerWtpProfileDtlsInKernel(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -3464,6 +3522,10 @@ func flattenWirelessControllerWtpProfileDefaultMeshRoot(v interface{}, d *schema
 	return v
 }
 
+func flattenWirelessControllerWtpProfile80211McMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerWtpProfileRadio1(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -3641,6 +3703,11 @@ func flattenWirelessControllerWtpProfileRadio1(v interface{}, d *schema.Resource
 	pre_append = pre + ".0." + "frag_threshold"
 	if _, ok := i["frag-threshold"]; ok {
 		result["frag_threshold"] = flattenWirelessControllerWtpProfileRadio1FragThreshold(i["frag-threshold"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "cca_threshold"
+	if _, ok := i["cca-threshold"]; ok {
+		result["cca_threshold"] = flattenWirelessControllerWtpProfileRadio1CcaThreshold(i["cca-threshold"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "ap_sniffer_bufsize"
@@ -3857,6 +3924,11 @@ func flattenWirelessControllerWtpProfileRadio1(v interface{}, d *schema.Resource
 		result["max_distance"] = flattenWirelessControllerWtpProfileRadio1MaxDistance(i["max-distance"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "vap_status"
+	if _, ok := i["vap-status"]; ok {
+		result["vap_status"] = flattenWirelessControllerWtpProfileRadio1VapStatus(i["vap-status"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "frequency_handoff"
 	if _, ok := i["frequency-handoff"]; ok {
 		result["frequency_handoff"] = flattenWirelessControllerWtpProfileRadio1FrequencyHandoff(i["frequency-handoff"], d, pre_append, sv)
@@ -4042,6 +4114,10 @@ func flattenWirelessControllerWtpProfileRadio1FragThreshold(v interface{}, d *sc
 	return convintf2i(v)
 }
 
+func flattenWirelessControllerWtpProfileRadio1CcaThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerWtpProfileRadio1ApSnifferBufsize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return convintf2i(v)
 }
@@ -4192,6 +4268,10 @@ func flattenWirelessControllerWtpProfileRadio1MaxClients(v interface{}, d *schem
 
 func flattenWirelessControllerWtpProfileRadio1MaxDistance(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return convintf2i(v)
+}
+
+func flattenWirelessControllerWtpProfileRadio1VapStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
 }
 
 func flattenWirelessControllerWtpProfileRadio1FrequencyHandoff(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -4507,6 +4587,11 @@ func flattenWirelessControllerWtpProfileRadio2(v interface{}, d *schema.Resource
 		result["frag_threshold"] = flattenWirelessControllerWtpProfileRadio2FragThreshold(i["frag-threshold"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "cca_threshold"
+	if _, ok := i["cca-threshold"]; ok {
+		result["cca_threshold"] = flattenWirelessControllerWtpProfileRadio2CcaThreshold(i["cca-threshold"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "ap_sniffer_bufsize"
 	if _, ok := i["ap-sniffer-bufsize"]; ok {
 		result["ap_sniffer_bufsize"] = flattenWirelessControllerWtpProfileRadio2ApSnifferBufsize(i["ap-sniffer-bufsize"], d, pre_append, sv)
@@ -4721,6 +4806,11 @@ func flattenWirelessControllerWtpProfileRadio2(v interface{}, d *schema.Resource
 		result["max_distance"] = flattenWirelessControllerWtpProfileRadio2MaxDistance(i["max-distance"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "vap_status"
+	if _, ok := i["vap-status"]; ok {
+		result["vap_status"] = flattenWirelessControllerWtpProfileRadio2VapStatus(i["vap-status"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "frequency_handoff"
 	if _, ok := i["frequency-handoff"]; ok {
 		result["frequency_handoff"] = flattenWirelessControllerWtpProfileRadio2FrequencyHandoff(i["frequency-handoff"], d, pre_append, sv)
@@ -4906,6 +4996,10 @@ func flattenWirelessControllerWtpProfileRadio2FragThreshold(v interface{}, d *sc
 	return convintf2i(v)
 }
 
+func flattenWirelessControllerWtpProfileRadio2CcaThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerWtpProfileRadio2ApSnifferBufsize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return convintf2i(v)
 }
@@ -5056,6 +5150,10 @@ func flattenWirelessControllerWtpProfileRadio2MaxClients(v interface{}, d *schem
 
 func flattenWirelessControllerWtpProfileRadio2MaxDistance(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return convintf2i(v)
+}
+
+func flattenWirelessControllerWtpProfileRadio2VapStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
 }
 
 func flattenWirelessControllerWtpProfileRadio2FrequencyHandoff(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -5366,6 +5464,11 @@ func flattenWirelessControllerWtpProfileRadio3(v interface{}, d *schema.Resource
 		result["frag_threshold"] = flattenWirelessControllerWtpProfileRadio3FragThreshold(i["frag-threshold"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "cca_threshold"
+	if _, ok := i["cca-threshold"]; ok {
+		result["cca_threshold"] = flattenWirelessControllerWtpProfileRadio3CcaThreshold(i["cca-threshold"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "ap_sniffer_bufsize"
 	if _, ok := i["ap-sniffer-bufsize"]; ok {
 		result["ap_sniffer_bufsize"] = flattenWirelessControllerWtpProfileRadio3ApSnifferBufsize(i["ap-sniffer-bufsize"], d, pre_append, sv)
@@ -5580,6 +5683,11 @@ func flattenWirelessControllerWtpProfileRadio3(v interface{}, d *schema.Resource
 		result["max_distance"] = flattenWirelessControllerWtpProfileRadio3MaxDistance(i["max-distance"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "vap_status"
+	if _, ok := i["vap-status"]; ok {
+		result["vap_status"] = flattenWirelessControllerWtpProfileRadio3VapStatus(i["vap-status"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "frequency_handoff"
 	if _, ok := i["frequency-handoff"]; ok {
 		result["frequency_handoff"] = flattenWirelessControllerWtpProfileRadio3FrequencyHandoff(i["frequency-handoff"], d, pre_append, sv)
@@ -5761,6 +5869,10 @@ func flattenWirelessControllerWtpProfileRadio3FragThreshold(v interface{}, d *sc
 	return convintf2i(v)
 }
 
+func flattenWirelessControllerWtpProfileRadio3CcaThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerWtpProfileRadio3ApSnifferBufsize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return convintf2i(v)
 }
@@ -5911,6 +6023,10 @@ func flattenWirelessControllerWtpProfileRadio3MaxClients(v interface{}, d *schem
 
 func flattenWirelessControllerWtpProfileRadio3MaxDistance(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return convintf2i(v)
+}
+
+func flattenWirelessControllerWtpProfileRadio3VapStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
 }
 
 func flattenWirelessControllerWtpProfileRadio3FrequencyHandoff(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -6221,6 +6337,11 @@ func flattenWirelessControllerWtpProfileRadio4(v interface{}, d *schema.Resource
 		result["frag_threshold"] = flattenWirelessControllerWtpProfileRadio4FragThreshold(i["frag-threshold"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "cca_threshold"
+	if _, ok := i["cca-threshold"]; ok {
+		result["cca_threshold"] = flattenWirelessControllerWtpProfileRadio4CcaThreshold(i["cca-threshold"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "ap_sniffer_bufsize"
 	if _, ok := i["ap-sniffer-bufsize"]; ok {
 		result["ap_sniffer_bufsize"] = flattenWirelessControllerWtpProfileRadio4ApSnifferBufsize(i["ap-sniffer-bufsize"], d, pre_append, sv)
@@ -6435,6 +6556,11 @@ func flattenWirelessControllerWtpProfileRadio4(v interface{}, d *schema.Resource
 		result["max_distance"] = flattenWirelessControllerWtpProfileRadio4MaxDistance(i["max-distance"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "vap_status"
+	if _, ok := i["vap-status"]; ok {
+		result["vap_status"] = flattenWirelessControllerWtpProfileRadio4VapStatus(i["vap-status"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "frequency_handoff"
 	if _, ok := i["frequency-handoff"]; ok {
 		result["frequency_handoff"] = flattenWirelessControllerWtpProfileRadio4FrequencyHandoff(i["frequency-handoff"], d, pre_append, sv)
@@ -6616,6 +6742,10 @@ func flattenWirelessControllerWtpProfileRadio4FragThreshold(v interface{}, d *sc
 	return convintf2i(v)
 }
 
+func flattenWirelessControllerWtpProfileRadio4CcaThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerWtpProfileRadio4ApSnifferBufsize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return convintf2i(v)
 }
@@ -6766,6 +6896,10 @@ func flattenWirelessControllerWtpProfileRadio4MaxClients(v interface{}, d *schem
 
 func flattenWirelessControllerWtpProfileRadio4MaxDistance(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return convintf2i(v)
+}
+
+func flattenWirelessControllerWtpProfileRadio4VapStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
 }
 
 func flattenWirelessControllerWtpProfileRadio4FrequencyHandoff(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -7741,6 +7875,12 @@ func refreshObjectWirelessControllerWtpProfile(d *schema.ResourceData, o map[str
 		}
 	}
 
+	if err = d.Set("ipsec_offload", flattenWirelessControllerWtpProfileIpsecOffload(o["ipsec-offload"], d, "ipsec_offload", sv)); err != nil {
+		if !fortiAPIPatch(o["ipsec-offload"]) {
+			return fmt.Errorf("Error reading ipsec_offload: %v", err)
+		}
+	}
+
 	if err = d.Set("dtls_in_kernel", flattenWirelessControllerWtpProfileDtlsInKernel(o["dtls-in-kernel"], d, "dtls_in_kernel", sv)); err != nil {
 		if !fortiAPIPatch(o["dtls-in-kernel"]) {
 			return fmt.Errorf("Error reading dtls_in_kernel: %v", err)
@@ -7884,6 +8024,12 @@ func refreshObjectWirelessControllerWtpProfile(d *schema.ResourceData, o map[str
 	if err = d.Set("default_mesh_root", flattenWirelessControllerWtpProfileDefaultMeshRoot(o["default-mesh-root"], d, "default_mesh_root", sv)); err != nil {
 		if !fortiAPIPatch(o["default-mesh-root"]) {
 			return fmt.Errorf("Error reading default_mesh_root: %v", err)
+		}
+	}
+
+	if err = d.Set("n80211mc_mode", flattenWirelessControllerWtpProfile80211McMode(o["80211mc-mode"], d, "n80211mc_mode", sv)); err != nil {
+		if !fortiAPIPatch(o["80211mc-mode"]) {
+			return fmt.Errorf("Error reading n80211mc_mode: %v", err)
 		}
 	}
 
@@ -8484,6 +8630,10 @@ func expandWirelessControllerWtpProfileDtlsPolicy(d *schema.ResourceData, v inte
 	return v, nil
 }
 
+func expandWirelessControllerWtpProfileIpsecOffload(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWirelessControllerWtpProfileDtlsInKernel(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -8644,6 +8794,10 @@ func expandWirelessControllerWtpProfileDefaultMeshRoot(d *schema.ResourceData, v
 	return v, nil
 }
 
+func expandWirelessControllerWtpProfile80211McMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWirelessControllerWtpProfileRadio1(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
@@ -8797,6 +8951,10 @@ func expandWirelessControllerWtpProfileRadio1(d *schema.ResourceData, v interfac
 	pre_append = pre + ".0." + "frag_threshold"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["frag-threshold"], _ = expandWirelessControllerWtpProfileRadio1FragThreshold(d, i["frag_threshold"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "cca_threshold"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["cca-threshold"], _ = expandWirelessControllerWtpProfileRadio1CcaThreshold(d, i["cca_threshold"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "ap_sniffer_bufsize"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -9002,6 +9160,10 @@ func expandWirelessControllerWtpProfileRadio1(d *schema.ResourceData, v interfac
 	} else if d.HasChange(pre_append) {
 		result["max-distance"] = nil
 	}
+	pre_append = pre + ".0." + "vap_status"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["vap-status"], _ = expandWirelessControllerWtpProfileRadio1VapStatus(d, i["vap_status"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "frequency_handoff"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["frequency-handoff"], _ = expandWirelessControllerWtpProfileRadio1FrequencyHandoff(d, i["frequency_handoff"], pre_append, sv)
@@ -9186,6 +9348,10 @@ func expandWirelessControllerWtpProfileRadio1FragThreshold(d *schema.ResourceDat
 	return v, nil
 }
 
+func expandWirelessControllerWtpProfileRadio1CcaThreshold(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWirelessControllerWtpProfileRadio1ApSnifferBufsize(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -9347,6 +9513,10 @@ func expandWirelessControllerWtpProfileRadio1MaxClients(d *schema.ResourceData, 
 }
 
 func expandWirelessControllerWtpProfileRadio1MaxDistance(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio1VapStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -9588,6 +9758,10 @@ func expandWirelessControllerWtpProfileRadio2(d *schema.ResourceData, v interfac
 	if _, ok := d.GetOk(pre_append); ok {
 		result["frag-threshold"], _ = expandWirelessControllerWtpProfileRadio2FragThreshold(d, i["frag_threshold"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "cca_threshold"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["cca-threshold"], _ = expandWirelessControllerWtpProfileRadio2CcaThreshold(d, i["cca_threshold"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "ap_sniffer_bufsize"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ap-sniffer-bufsize"], _ = expandWirelessControllerWtpProfileRadio2ApSnifferBufsize(d, i["ap_sniffer_bufsize"], pre_append, sv)
@@ -9792,6 +9966,10 @@ func expandWirelessControllerWtpProfileRadio2(d *schema.ResourceData, v interfac
 	} else if d.HasChange(pre_append) {
 		result["max-distance"] = nil
 	}
+	pre_append = pre + ".0." + "vap_status"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["vap-status"], _ = expandWirelessControllerWtpProfileRadio2VapStatus(d, i["vap_status"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "frequency_handoff"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["frequency-handoff"], _ = expandWirelessControllerWtpProfileRadio2FrequencyHandoff(d, i["frequency_handoff"], pre_append, sv)
@@ -9976,6 +10154,10 @@ func expandWirelessControllerWtpProfileRadio2FragThreshold(d *schema.ResourceDat
 	return v, nil
 }
 
+func expandWirelessControllerWtpProfileRadio2CcaThreshold(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWirelessControllerWtpProfileRadio2ApSnifferBufsize(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -10137,6 +10319,10 @@ func expandWirelessControllerWtpProfileRadio2MaxClients(d *schema.ResourceData, 
 }
 
 func expandWirelessControllerWtpProfileRadio2MaxDistance(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio2VapStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -10372,6 +10558,10 @@ func expandWirelessControllerWtpProfileRadio3(d *schema.ResourceData, v interfac
 	if _, ok := d.GetOk(pre_append); ok {
 		result["frag-threshold"], _ = expandWirelessControllerWtpProfileRadio3FragThreshold(d, i["frag_threshold"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "cca_threshold"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["cca-threshold"], _ = expandWirelessControllerWtpProfileRadio3CcaThreshold(d, i["cca_threshold"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "ap_sniffer_bufsize"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ap-sniffer-bufsize"], _ = expandWirelessControllerWtpProfileRadio3ApSnifferBufsize(d, i["ap_sniffer_bufsize"], pre_append, sv)
@@ -10576,6 +10766,10 @@ func expandWirelessControllerWtpProfileRadio3(d *schema.ResourceData, v interfac
 	} else if d.HasChange(pre_append) {
 		result["max-distance"] = nil
 	}
+	pre_append = pre + ".0." + "vap_status"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["vap-status"], _ = expandWirelessControllerWtpProfileRadio3VapStatus(d, i["vap_status"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "frequency_handoff"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["frequency-handoff"], _ = expandWirelessControllerWtpProfileRadio3FrequencyHandoff(d, i["frequency_handoff"], pre_append, sv)
@@ -10756,6 +10950,10 @@ func expandWirelessControllerWtpProfileRadio3FragThreshold(d *schema.ResourceDat
 	return v, nil
 }
 
+func expandWirelessControllerWtpProfileRadio3CcaThreshold(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWirelessControllerWtpProfileRadio3ApSnifferBufsize(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -10917,6 +11115,10 @@ func expandWirelessControllerWtpProfileRadio3MaxClients(d *schema.ResourceData, 
 }
 
 func expandWirelessControllerWtpProfileRadio3MaxDistance(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio3VapStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -11152,6 +11354,10 @@ func expandWirelessControllerWtpProfileRadio4(d *schema.ResourceData, v interfac
 	if _, ok := d.GetOk(pre_append); ok {
 		result["frag-threshold"], _ = expandWirelessControllerWtpProfileRadio4FragThreshold(d, i["frag_threshold"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "cca_threshold"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["cca-threshold"], _ = expandWirelessControllerWtpProfileRadio4CcaThreshold(d, i["cca_threshold"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "ap_sniffer_bufsize"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ap-sniffer-bufsize"], _ = expandWirelessControllerWtpProfileRadio4ApSnifferBufsize(d, i["ap_sniffer_bufsize"], pre_append, sv)
@@ -11356,6 +11562,10 @@ func expandWirelessControllerWtpProfileRadio4(d *schema.ResourceData, v interfac
 	} else if d.HasChange(pre_append) {
 		result["max-distance"] = nil
 	}
+	pre_append = pre + ".0." + "vap_status"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["vap-status"], _ = expandWirelessControllerWtpProfileRadio4VapStatus(d, i["vap_status"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "frequency_handoff"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["frequency-handoff"], _ = expandWirelessControllerWtpProfileRadio4FrequencyHandoff(d, i["frequency_handoff"], pre_append, sv)
@@ -11536,6 +11746,10 @@ func expandWirelessControllerWtpProfileRadio4FragThreshold(d *schema.ResourceDat
 	return v, nil
 }
 
+func expandWirelessControllerWtpProfileRadio4CcaThreshold(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWirelessControllerWtpProfileRadio4ApSnifferBufsize(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -11697,6 +11911,10 @@ func expandWirelessControllerWtpProfileRadio4MaxClients(d *schema.ResourceData, 
 }
 
 func expandWirelessControllerWtpProfileRadio4MaxDistance(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpProfileRadio4VapStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -12650,6 +12868,15 @@ func getObjectWirelessControllerWtpProfile(d *schema.ResourceData, sv string) (*
 		}
 	}
 
+	if v, ok := d.GetOk("ipsec_offload"); ok {
+		t, err := expandWirelessControllerWtpProfileIpsecOffload(d, v, "ipsec_offload", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ipsec-offload"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("dtls_in_kernel"); ok {
 		t, err := expandWirelessControllerWtpProfileDtlsInKernel(d, v, "dtls_in_kernel", sv)
 		if err != nil {
@@ -12855,6 +13082,15 @@ func getObjectWirelessControllerWtpProfile(d *schema.ResourceData, sv string) (*
 			return &obj, err
 		} else if t != nil {
 			obj["default-mesh-root"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("n80211mc_mode"); ok {
+		t, err := expandWirelessControllerWtpProfile80211McMode(d, v, "n80211mc_mode", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["80211mc-mode"] = t
 		}
 	}
 

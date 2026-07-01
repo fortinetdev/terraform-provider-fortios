@@ -302,10 +302,6 @@ func expandSystemAffinityInterruptAffinityCpumask(d *schema.ResourceData, v inte
 	return v, nil
 }
 
-func expandSystemAffinityInterruptDefaultAffinityCpumask(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
 func getObjectSystemAffinityInterrupt(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
@@ -338,15 +334,6 @@ func getObjectSystemAffinityInterrupt(d *schema.ResourceData, sv string) (*map[s
 		}
 	} else if d.HasChange("affinity_cpumask") {
 		obj["affinity-cpumask"] = nil
-	}
-
-	if v, ok := d.GetOk("default_affinity_cpumask"); ok {
-		t, err := expandSystemAffinityInterruptDefaultAffinityCpumask(d, v, "default_affinity_cpumask", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["default-affinity-cpumask"] = t
-		}
 	}
 
 	return &obj, nil

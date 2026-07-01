@@ -138,9 +138,8 @@ func resourceFirewallServiceCustom() *schema.Resource {
 				Optional:     true,
 			},
 			"session_ttl": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(300, 604800),
-				Optional:     true,
+				Type:     schema.TypeString,
+				Optional: true,
 			},
 			"check_reset_range": &schema.Schema{
 				Type:     schema.TypeString,
@@ -194,6 +193,16 @@ func resourceFirewallServiceCustom() *schema.Resource {
 				},
 			},
 			"fabric_object": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"fabric_force_sync": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"fabric_object_source": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -465,7 +474,7 @@ func flattenFirewallServiceCustomUdpIdleTimer(v interface{}, d *schema.ResourceD
 }
 
 func flattenFirewallServiceCustomSessionTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return convintf2i(v)
+	return fmt.Sprintf("%v", v)
 }
 
 func flattenFirewallServiceCustomCheckResetRange(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -595,6 +604,14 @@ func flattenFirewallServiceCustomApplicationId(v interface{}, d *schema.Resource
 }
 
 func flattenFirewallServiceCustomFabricObject(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallServiceCustomFabricForceSync(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallServiceCustomFabricObjectSource(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -801,6 +818,18 @@ func refreshObjectFirewallServiceCustom(d *schema.ResourceData, o map[string]int
 		}
 	}
 
+	if err = d.Set("fabric_force_sync", flattenFirewallServiceCustomFabricForceSync(o["fabric-force-sync"], d, "fabric_force_sync", sv)); err != nil {
+		if !fortiAPIPatch(o["fabric-force-sync"]) {
+			return fmt.Errorf("Error reading fabric_force_sync: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_object_source", flattenFirewallServiceCustomFabricObjectSource(o["fabric-object-source"], d, "fabric_object_source", sv)); err != nil {
+		if !fortiAPIPatch(o["fabric-object-source"]) {
+			return fmt.Errorf("Error reading fabric_object_source: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -891,7 +920,7 @@ func expandFirewallServiceCustomUdpIdleTimer(d *schema.ResourceData, v interface
 }
 
 func expandFirewallServiceCustomSessionTtl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return convintf2i(v), nil
+	return fmt.Sprintf("%v", v), nil
 }
 
 func expandFirewallServiceCustomCheckResetRange(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
@@ -971,6 +1000,14 @@ func expandFirewallServiceCustomApplicationId(d *schema.ResourceData, v interfac
 }
 
 func expandFirewallServiceCustomFabricObject(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallServiceCustomFabricForceSync(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallServiceCustomFabricObjectSource(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1269,6 +1306,24 @@ func getObjectFirewallServiceCustom(d *schema.ResourceData, sv string) (*map[str
 			return &obj, err
 		} else if t != nil {
 			obj["fabric-object"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("fabric_force_sync"); ok {
+		t, err := expandFirewallServiceCustomFabricForceSync(d, v, "fabric_force_sync", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fabric-force-sync"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("fabric_object_source"); ok {
+		t, err := expandFirewallServiceCustomFabricObjectSource(d, v, "fabric_object_source", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fabric-object-source"] = t
 		}
 	}
 

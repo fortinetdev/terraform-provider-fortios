@@ -67,41 +67,51 @@ func resourceRuleOtvp() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
+				Computed:     true,
 			},
 			"severity": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Computed: true,
 			},
 			"location": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Computed: true,
 			},
 			"os": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Computed: true,
 			},
 			"application": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Computed: true,
 			},
 			"service": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Computed: true,
 			},
 			"rule_id": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
+				Computed: true,
 			},
 			"rev": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
+				Computed: true,
 			},
 			"date": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
+				Computed: true,
 			},
 			"metadata": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -113,10 +123,12 @@ func resourceRuleOtvp() *schema.Resource {
 						"metaid": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
+							Computed: true,
 						},
 						"valueid": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
+							Computed: true,
 						},
 					},
 				},
@@ -552,107 +564,6 @@ func expandRuleOtvpName(d *schema.ResourceData, v interface{}, pre string, sv st
 	return v, nil
 }
 
-func expandRuleOtvpLog(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandRuleOtvpLogPacket(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandRuleOtvpAction(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandRuleOtvpGroup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandRuleOtvpSeverity(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandRuleOtvpLocation(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandRuleOtvpOs(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandRuleOtvpApplication(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandRuleOtvpService(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandRuleOtvpRuleId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandRuleOtvpRev(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandRuleOtvpDate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandRuleOtvpMetadata(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
-	result := make([]map[string]interface{}, 0, len(l))
-
-	if len(l) == 0 || l[0] == nil {
-		return result, nil
-	}
-
-	con := 0
-	for _, r := range l {
-		tmp := make(map[string]interface{})
-		i := r.(map[string]interface{})
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandRuleOtvpMetadataId(d, i["id"], pre_append, sv)
-		}
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "metaid"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["metaid"], _ = expandRuleOtvpMetadataMetaid(d, i["metaid"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["metaid"] = nil
-		}
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "valueid"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["valueid"], _ = expandRuleOtvpMetadataValueid(d, i["valueid"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["valueid"] = nil
-		}
-
-		result = append(result, tmp)
-
-		con += 1
-	}
-
-	return result, nil
-}
-
-func expandRuleOtvpMetadataId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandRuleOtvpMetadataMetaid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandRuleOtvpMetadataValueid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
 func getObjectRuleOtvp(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
@@ -662,141 +573,6 @@ func getObjectRuleOtvp(d *schema.ResourceData, sv string) (*map[string]interface
 			return &obj, err
 		} else if t != nil {
 			obj["name"] = t
-		}
-	}
-
-	if v, ok := d.GetOk("log"); ok {
-		t, err := expandRuleOtvpLog(d, v, "log", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["log"] = t
-		}
-	}
-
-	if v, ok := d.GetOk("log_packet"); ok {
-		t, err := expandRuleOtvpLogPacket(d, v, "log_packet", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["log-packet"] = t
-		}
-	}
-
-	if v, ok := d.GetOk("action"); ok {
-		t, err := expandRuleOtvpAction(d, v, "action", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["action"] = t
-		}
-	}
-
-	if v, ok := d.GetOk("group"); ok {
-		t, err := expandRuleOtvpGroup(d, v, "group", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["group"] = t
-		}
-	} else if d.HasChange("group") {
-		obj["group"] = nil
-	}
-
-	if v, ok := d.GetOk("severity"); ok {
-		t, err := expandRuleOtvpSeverity(d, v, "severity", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["severity"] = t
-		}
-	} else if d.HasChange("severity") {
-		obj["severity"] = nil
-	}
-
-	if v, ok := d.GetOk("location"); ok {
-		t, err := expandRuleOtvpLocation(d, v, "location", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["location"] = t
-		}
-	} else if d.HasChange("location") {
-		obj["location"] = nil
-	}
-
-	if v, ok := d.GetOk("os"); ok {
-		t, err := expandRuleOtvpOs(d, v, "os", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["os"] = t
-		}
-	} else if d.HasChange("os") {
-		obj["os"] = nil
-	}
-
-	if v, ok := d.GetOk("application"); ok {
-		t, err := expandRuleOtvpApplication(d, v, "application", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["application"] = t
-		}
-	} else if d.HasChange("application") {
-		obj["application"] = nil
-	}
-
-	if v, ok := d.GetOk("service"); ok {
-		t, err := expandRuleOtvpService(d, v, "service", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["service"] = t
-		}
-	} else if d.HasChange("service") {
-		obj["service"] = nil
-	}
-
-	if v, ok := d.GetOkExists("rule_id"); ok {
-		t, err := expandRuleOtvpRuleId(d, v, "rule_id", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["rule-id"] = t
-		}
-	} else if d.HasChange("rule_id") {
-		obj["rule-id"] = nil
-	}
-
-	if v, ok := d.GetOkExists("rev"); ok {
-		t, err := expandRuleOtvpRev(d, v, "rev", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["rev"] = t
-		}
-	} else if d.HasChange("rev") {
-		obj["rev"] = nil
-	}
-
-	if v, ok := d.GetOkExists("date"); ok {
-		t, err := expandRuleOtvpDate(d, v, "date", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["date"] = t
-		}
-	} else if d.HasChange("date") {
-		obj["date"] = nil
-	}
-
-	if v, ok := d.GetOk("metadata"); ok || d.HasChange("metadata") {
-		t, err := expandRuleOtvpMetadata(d, v, "metadata", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["metadata"] = t
 		}
 	}
 

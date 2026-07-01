@@ -74,7 +74,6 @@ The `modem1` block supports:
 
 * `redundant_mode` - FortiExtender mode. Valid values: `disable`, `enable`.
 * `redundant_intf` - Redundant interface.
-* `conn_status` - Connection status.
 * `default_sim` - Default SIM selection. Valid values: `sim1`, `sim2`, `carrier`, `cost`.
 * `gps` - FortiExtender GPS enable/disable. Valid values: `disable`, `enable`.
 * `sim1_pin` - SIM #1 PIN status. Valid values: `disable`, `enable`.
@@ -104,7 +103,6 @@ The `modem2` block supports:
 
 * `redundant_mode` - FortiExtender mode. Valid values: `disable`, `enable`.
 * `redundant_intf` - Redundant interface.
-* `conn_status` - Connection status.
 * `default_sim` - Default SIM selection. Valid values: `sim1`, `sim2`, `carrier`, `cost`.
 * `gps` - FortiExtender GPS enable/disable. Valid values: `disable`, `enable`.
 * `sim1_pin` - SIM #1 PIN status. Valid values: `disable`, `enable`.
@@ -163,7 +161,7 @@ The `downlinks` block supports:
 
 The `vids` block supports:
 
-* `vid` - Please enter VID numbers (1 - 4089) with space separated. Up to 50 VIDs are accepted.
+* `vid` - Enter VID numbers (1 - 4089) separated by spaces. Up to 50 VIDs can be configured.
 
 The `traffic_split_services` block supports:
 
@@ -229,6 +227,14 @@ The `local_vaps` block supports:
 
 In addition to all the above arguments, the following attributes are exported:
 * `id` - an identifier for the resource with format {{name}}.
+
+The `modem1` block contains following attibutes:
+
+* `conn_status` - Connection status.
+
+The `modem2` block contains following attibutes:
+
+* `conn_status` - Connection status.
 
 ## Import
 

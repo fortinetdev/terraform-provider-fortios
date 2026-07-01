@@ -74,6 +74,17 @@ func resourceSwitchControllerSwitchProfile() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"private_data_encryption": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"private_data_encryption_key": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 64),
+				Optional:     true,
+				Sensitive:    true,
+			},
 		},
 	}
 }
@@ -270,6 +281,10 @@ func flattenSwitchControllerSwitchProfileRevisionBackupOnUpgrade(v interface{}, 
 	return v
 }
 
+func flattenSwitchControllerSwitchProfilePrivateDataEncryption(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectSwitchControllerSwitchProfile(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -303,6 +318,12 @@ func refreshObjectSwitchControllerSwitchProfile(d *schema.ResourceData, o map[st
 		}
 	}
 
+	if err = d.Set("private_data_encryption", flattenSwitchControllerSwitchProfilePrivateDataEncryption(o["private-data-encryption"], d, "private_data_encryption", sv)); err != nil {
+		if !fortiAPIPatch(o["private-data-encryption"]) {
+			return fmt.Errorf("Error reading private_data_encryption: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -333,6 +354,14 @@ func expandSwitchControllerSwitchProfileRevisionBackupOnLogout(d *schema.Resourc
 }
 
 func expandSwitchControllerSwitchProfileRevisionBackupOnUpgrade(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerSwitchProfilePrivateDataEncryption(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerSwitchProfilePrivateDataEncryptionKey(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -393,6 +422,26 @@ func getObjectSwitchControllerSwitchProfile(d *schema.ResourceData, sv string) (
 		} else if t != nil {
 			obj["revision-backup-on-upgrade"] = t
 		}
+	}
+
+	if v, ok := d.GetOk("private_data_encryption"); ok {
+		t, err := expandSwitchControllerSwitchProfilePrivateDataEncryption(d, v, "private_data_encryption", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["private-data-encryption"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("private_data_encryption_key"); ok {
+		t, err := expandSwitchControllerSwitchProfilePrivateDataEncryptionKey(d, v, "private_data_encryption_key", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["private-data-encryption-key"] = t
+		}
+	} else if d.HasChange("private_data_encryption_key") {
+		obj["private-data-encryption-key"] = nil
 	}
 
 	return &obj, nil

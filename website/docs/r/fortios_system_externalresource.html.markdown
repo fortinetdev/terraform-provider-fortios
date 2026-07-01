@@ -28,6 +28,9 @@ The following arguments are supported:
 
 * `name` - (Required) External resource name.
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
+* `fabric_object` - Security Fabric global object setting. Valid values: `enable`, `disable`.
+* `fabric_force_sync` - Enable/disable forced synchronization of configuration objects from the root FortiGate unit to the downstream devices.  Configuration conflict check is skipped. Valid values: `enable`, `disable`.
+* `fabric_object_source` - Source of truth for fabric object. Valid values: `member`, `local`, `root`.
 * `status` - Enable/disable user resource. Valid values: `enable`, `disable`.
 * `type` - User resource type.
 * `namespace` - Generic external connector address namespace.
@@ -35,8 +38,9 @@ The following arguments are supported:
 * `address_name_field` - JSON Path to address name in generic address entry.
 * `address_data_field` - JSON Path to address data in generic address entry.
 * `address_comment_field` - JSON Path to address description in generic address entry.
-* `update_method` - External resource update method. Valid values: `feed`, `push`.
+* `update_method` - External resource update method.
 * `category` - User resource category.
+* `threat_feed_hash_mode` - Configure use of the external threat feed as either a hash database or plain text database (default = plain-text-db). Valid values: `hash-db`, `plain-text-db`.
 * `username` - HTTP basic authentication user name.
 * `password` - HTTP basic authentication password.
 * `client_cert_auth` - Enable/disable using client certificate for TLS authentication. Valid values: `enable`, `disable`.

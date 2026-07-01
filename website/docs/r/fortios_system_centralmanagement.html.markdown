@@ -67,6 +67,7 @@ The following arguments are supported:
 * `fmg_update_port` - Port used to communicate with FortiManager that is acting as a FortiGuard update server. Valid values: `8890`, `443`.
 * `fmg_update_http_header` - Enable/disable inclusion of HTTP header in update request. Valid values: `enable`, `disable`.
 * `include_default_servers` - Enable/disable inclusion of public FortiGuard servers in the override server list. Valid values: `enable`, `disable`.
+* `use_default_servers_as_main` - Enable/disable use of the public FortiGuard servers as main servers. Valid values: `enable`, `disable`.
 * `enc_algorithm` - Encryption strength for communications between the FortiGate and central management. Valid values: `default`, `high`, `low`.
 * `interface_select_method` - Specify how to select outgoing interface to reach server. Valid values: `auto`, `sdwan`, `specify`.
 * `interface` - Specify outgoing interface to reach server.

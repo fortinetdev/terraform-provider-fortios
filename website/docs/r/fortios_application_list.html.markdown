@@ -31,6 +31,10 @@ resource "fortios_application_list" "trname" {
 The following arguments are supported:
 
 * `name` - (Required) List name.
+* `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
+* `fabric_object` - Security Fabric global object setting. Valid values: `enable`, `disable`.
+* `fabric_force_sync` - Enable/disable forced synchronization of configuration objects from the root FortiGate unit to the downstream devices.  Configuration conflict check is skipped. Valid values: `enable`, `disable`.
+* `fabric_object_source` - Source of truth for fabric object. Valid values: `member`, `local`, `root`.
 * `comment` - comments
 * `replacemsg_group` - Replacement message group.
 * `extended_log` - Enable/disable extended logging. Valid values: `enable`, `disable`.
@@ -41,7 +45,7 @@ The following arguments are supported:
 * `force_inclusion_ssl_di_sigs` - Enable/disable forced inclusion of SSL deep inspection signatures. Valid values: `disable`, `enable`.
 * `unknown_application_action` - Pass or block traffic from unknown applications. Valid values: `pass`, `block`.
 * `unknown_application_log` - Enable/disable logging for unknown applications. Valid values: `disable`, `enable`.
-* `p2p_block_list` - P2P applications to be blocklisted. Valid values: `skype`, `edonkey`, `bittorrent`.
+* `p2p_block_list` - P2P applications to be blocklisted.
 * `p2p_black_list` - P2P applications to be black listed. Valid values: `skype`, `edonkey`, `bittorrent`.
 * `deep_app_inspection` - Enable/disable deep application inspection. Valid values: `disable`, `enable`.
 * `options` - Basic application protocol signatures allowed by default.
@@ -65,6 +69,7 @@ The `entries` block supports:
 * `technology` - Application technology filter.
 * `behavior` - Application behavior filter.
 * `popularity` - Application popularity filter (1 - 5, from least to most popular). Valid values: `1`, `2`, `3`, `4`, `5`.
+* `classification` - Application classification filter. Valid values: `none`, `sanctioned`, `unsanctioned`, `unclassified`.
 * `exclusion` - ID of excluded applications. The structure of `exclusion` block is documented below.
 * `parameters` - Application parameters. The structure of `parameters` block is documented below.
 * `action` - Pass or block traffic, or reset connection for traffic from this application. Valid values: `pass`, `block`, `reset`.

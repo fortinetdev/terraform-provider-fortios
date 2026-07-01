@@ -14,6 +14,10 @@ Configure IPS sensor.
 The following arguments are supported:
 
 * `name` - (Required) Sensor name.
+* `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
+* `fabric_object` - Security Fabric global object setting. Valid values: `enable`, `disable`.
+* `fabric_force_sync` - Enable/disable forced synchronization of configuration objects from the root FortiGate unit to the downstream devices.  Configuration conflict check is skipped. Valid values: `enable`, `disable`.
+* `fabric_object_source` - Source of truth for fabric object. Valid values: `member`, `local`, `root`.
 * `comment` - Comment.
 * `replacemsg_group` - Replacement message group.
 * `block_malicious_url` - Enable/disable malicious URL blocking. Valid values: `disable`, `enable`.

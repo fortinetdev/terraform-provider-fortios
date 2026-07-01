@@ -620,16 +620,6 @@ func expandFirewallInternetServiceDefinitionEntryPortRange(d *schema.ResourceDat
 			tmp["id"], _ = expandFirewallInternetServiceDefinitionEntryPortRangeId(d, i["id"], pre_append, sv)
 		}
 
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "start_port"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["start-port"], _ = expandFirewallInternetServiceDefinitionEntryPortRangeStartPort(d, i["start_port"], pre_append, sv)
-		}
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "end_port"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["end-port"], _ = expandFirewallInternetServiceDefinitionEntryPortRangeEndPort(d, i["end_port"], pre_append, sv)
-		}
-
 		result = append(result, tmp)
 
 		con += 1
@@ -639,14 +629,6 @@ func expandFirewallInternetServiceDefinitionEntryPortRange(d *schema.ResourceDat
 }
 
 func expandFirewallInternetServiceDefinitionEntryPortRangeId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandFirewallInternetServiceDefinitionEntryPortRangeStartPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandFirewallInternetServiceDefinitionEntryPortRangeEndPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

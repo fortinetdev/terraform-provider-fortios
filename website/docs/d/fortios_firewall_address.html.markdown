@@ -39,6 +39,7 @@ The following attributes are exported:
 * `sub_type` - Sub-type of address.
 * `clearpass_spt` - SPT (System Posture Token) value.
 * `macaddr` - Multiple MAC address ranges. The structure of `macaddr` block is documented below.
+* `addr_8021x` - 802.1X address. The structure of `addr_8021x` block is documented below.
 * `start_mac` - First MAC address in the range.
 * `end_mac` - Last MAC address in the range.
 * `start_ip` - First IP address (inclusive) in the range for the address.
@@ -63,12 +64,16 @@ The following attributes are exported:
 * `tag_detection_level` - Tag detection level of dynamic address object.
 * `tag_type` - Tag type of dynamic address object.
 * `hw_vendor` - Dynamic address matching hardware vendor.
+* `hw_version` - Dynamic address matching hardware version.
 * `hw_model` - Dynamic address matching hardware model.
 * `os` - Dynamic address matching operating system.
 * `sw_version` - Dynamic address matching software version.
+* `agent_id` - Telemetry agent id.
 * `comment` - Comment.
 * `visibility` - Enable/disable address visibility in the GUI.
 * `associated_interface` - Network interface associated with address.
+* `display_with` - Display object with first tag, all tags, or just the icon & color.
+* `custom_tags` - Custom tags. The structure of `custom_tags` block is documented below.
 * `color` - Color of icon on the GUI.
 * `filter` - Match criteria filter.
 * `sdn_addr_type` - Type of addresses to collect.
@@ -77,12 +82,25 @@ The following attributes are exported:
 * `list` - IP address list. The structure of `list` block is documented below.
 * `tagging` - Config object tagging. The structure of `tagging` block is documented below.
 * `allow_routing` - Enable/disable use of this address in the static route configuration.
+* `managed_subnetwork_size` - Number of IP addresses to be allocated by FortiIPAM for this address.
+* `ipam_allocate_unique` - Allocate unique subnet for FortiIPAM managed fabric-object address.
 * `passive_fqdn_learning` - Enable/disable passive learning of FQDNs.  When enabled, the FortiGate learns, trusts, and saves FQDNs from endpoint DNS queries (default = enable).
+* `obsolete` - Indicates whether the address can be used.
 * `fabric_object` - Security Fabric global object setting.
+* `fabric_force_sync` - Enable/disable forced synchronization of configuration objects from the root FortiGate unit to the downstream devices.  Configuration conflict check is skipped.
+* `fabric_object_source` - Source of truth for fabric object.
 
 The `macaddr` block contains:
 
 * `macaddr` - MAC address ranges <start>[-<end>] separated by space.
+
+The `addr_8021x` block contains:
+
+* `interface` - Interface name.
+* `mac` - MAC address.
+* `acct_user` - Account user name.
+* `ip` - IP address.
+* `vlan_id` - VLAN ID.
 
 The `fsso_group` block contains:
 
@@ -91,6 +109,10 @@ The `fsso_group` block contains:
 The `sso_attribute_value` block contains:
 
 * `name` - RADIUS user group name.
+
+The `custom_tags` block contains:
+
+* `name` - Names of custom tags used with this address.
 
 The `list` block contains:
 

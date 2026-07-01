@@ -76,6 +76,22 @@ func dataSourceFirewallMulticastAddress6() *schema.Resource {
 					},
 				},
 			},
+			"display_with": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"custom_tags": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
 		},
 	}
 }
@@ -229,6 +245,46 @@ func dataSourceFlattenFirewallMulticastAddress6TaggingTagsName(v interface{}, d 
 	return v
 }
 
+func dataSourceFlattenFirewallMulticastAddress6DisplayWith(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallMulticastAddress6CustomTags(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = dataSourceFlattenFirewallMulticastAddress6CustomTagsName(i["name"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenFirewallMulticastAddress6CustomTagsName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceRefreshObjectFirewallMulticastAddress6(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
 
@@ -265,6 +321,18 @@ func dataSourceRefreshObjectFirewallMulticastAddress6(d *schema.ResourceData, o 
 	if err = d.Set("tagging", dataSourceFlattenFirewallMulticastAddress6Tagging(o["tagging"], d, "tagging")); err != nil {
 		if !fortiAPIPatch(o["tagging"]) {
 			return fmt.Errorf("Error reading tagging: %v", err)
+		}
+	}
+
+	if err = d.Set("display_with", dataSourceFlattenFirewallMulticastAddress6DisplayWith(o["display-with"], d, "display_with")); err != nil {
+		if !fortiAPIPatch(o["display-with"]) {
+			return fmt.Errorf("Error reading display_with: %v", err)
+		}
+	}
+
+	if err = d.Set("custom_tags", dataSourceFlattenFirewallMulticastAddress6CustomTags(o["custom-tags"], d, "custom_tags")); err != nil {
+		if !fortiAPIPatch(o["custom-tags"]) {
+			return fmt.Errorf("Error reading custom_tags: %v", err)
 		}
 	}
 

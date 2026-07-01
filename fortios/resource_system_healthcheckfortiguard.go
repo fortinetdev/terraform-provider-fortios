@@ -57,6 +57,7 @@ func resourceSystemHealthCheckFortiguard() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
 				Optional:     true,
+				Computed:     true,
 			},
 			"protocol": &schema.Schema{
 				Type:     schema.TypeString,
@@ -299,10 +300,6 @@ func expandSystemHealthCheckFortiguardServer(d *schema.ResourceData, v interface
 	return v, nil
 }
 
-func expandSystemHealthCheckFortiguardObsolete(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
 func expandSystemHealthCheckFortiguardProtocol(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -328,17 +325,6 @@ func getObjectSystemHealthCheckFortiguard(d *schema.ResourceData, sv string) (*m
 		}
 	} else if d.HasChange("server") {
 		obj["server"] = nil
-	}
-
-	if v, ok := d.GetOkExists("obsolete"); ok {
-		t, err := expandSystemHealthCheckFortiguardObsolete(d, v, "obsolete", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["obsolete"] = t
-		}
-	} else if d.HasChange("obsolete") {
-		obj["obsolete"] = nil
 	}
 
 	if v, ok := d.GetOk("protocol"); ok {

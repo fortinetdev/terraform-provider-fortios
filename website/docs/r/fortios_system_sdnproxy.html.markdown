@@ -14,6 +14,10 @@ Configure SDN proxy. Applies to FortiOS Version `>= 7.4.0`.
 The following arguments are supported:
 
 * `name` - SDN proxy name.
+* `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
+* `fabric_object` - Security Fabric global object setting. Valid values: `enable`, `disable`.
+* `fabric_force_sync` - Enable/disable forced synchronization of configuration objects from the root FortiGate unit to the downstream devices.  Configuration conflict check is skipped. Valid values: `enable`, `disable`.
+* `fabric_object_source` - Source of truth for fabric object. Valid values: `member`, `local`, `root`.
 * `type` - Type of SDN proxy. Valid values: `general`, `fortimanager`.
 * `server` - Server address of the SDN proxy.
 * `server_port` - Port number of the SDN proxy.

@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_system_virtualswitch
-Configure virtual hardware switch interfaces. Applies to FortiOS Version `7.0.4`.
+Configure virtual hardware switch interfaces. Applies to FortiOS Version `7.0.4,7.2.13,8.0.0`.
 
 ## Argument Reference
 

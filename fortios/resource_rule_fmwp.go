@@ -77,6 +77,7 @@ func resourceRuleFmwp() *schema.Resource {
 			"location": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Computed: true,
 			},
 			"os": &schema.Schema{
 				Type:     schema.TypeString,
@@ -110,6 +111,7 @@ func resourceRuleFmwp() *schema.Resource {
 			},
 			"metadata": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -121,10 +123,12 @@ func resourceRuleFmwp() *schema.Resource {
 						"metaid": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
+							Computed: true,
 						},
 						"valueid": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
+							Computed: true,
 						},
 					},
 				},
@@ -560,107 +564,6 @@ func expandRuleFmwpName(d *schema.ResourceData, v interface{}, pre string, sv st
 	return v, nil
 }
 
-func expandRuleFmwpLog(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandRuleFmwpLogPacket(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandRuleFmwpAction(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandRuleFmwpGroup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandRuleFmwpSeverity(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandRuleFmwpLocation(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandRuleFmwpOs(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandRuleFmwpApplication(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandRuleFmwpService(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandRuleFmwpRuleId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandRuleFmwpRev(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandRuleFmwpDate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandRuleFmwpMetadata(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
-	result := make([]map[string]interface{}, 0, len(l))
-
-	if len(l) == 0 || l[0] == nil {
-		return result, nil
-	}
-
-	con := 0
-	for _, r := range l {
-		tmp := make(map[string]interface{})
-		i := r.(map[string]interface{})
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandRuleFmwpMetadataId(d, i["id"], pre_append, sv)
-		}
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "metaid"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["metaid"], _ = expandRuleFmwpMetadataMetaid(d, i["metaid"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["metaid"] = nil
-		}
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "valueid"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["valueid"], _ = expandRuleFmwpMetadataValueid(d, i["valueid"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["valueid"] = nil
-		}
-
-		result = append(result, tmp)
-
-		con += 1
-	}
-
-	return result, nil
-}
-
-func expandRuleFmwpMetadataId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandRuleFmwpMetadataMetaid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandRuleFmwpMetadataValueid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
 func getObjectRuleFmwp(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
@@ -670,125 +573,6 @@ func getObjectRuleFmwp(d *schema.ResourceData, sv string) (*map[string]interface
 			return &obj, err
 		} else if t != nil {
 			obj["name"] = t
-		}
-	}
-
-	if v, ok := d.GetOk("log"); ok {
-		t, err := expandRuleFmwpLog(d, v, "log", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["log"] = t
-		}
-	}
-
-	if v, ok := d.GetOk("log_packet"); ok {
-		t, err := expandRuleFmwpLogPacket(d, v, "log_packet", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["log-packet"] = t
-		}
-	}
-
-	if v, ok := d.GetOk("action"); ok {
-		t, err := expandRuleFmwpAction(d, v, "action", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["action"] = t
-		}
-	}
-
-	if v, ok := d.GetOk("group"); ok {
-		t, err := expandRuleFmwpGroup(d, v, "group", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["group"] = t
-		}
-	}
-
-	if v, ok := d.GetOk("severity"); ok {
-		t, err := expandRuleFmwpSeverity(d, v, "severity", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["severity"] = t
-		}
-	}
-
-	if v, ok := d.GetOk("location"); ok {
-		t, err := expandRuleFmwpLocation(d, v, "location", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["location"] = t
-		}
-	} else if d.HasChange("location") {
-		obj["location"] = nil
-	}
-
-	if v, ok := d.GetOk("os"); ok {
-		t, err := expandRuleFmwpOs(d, v, "os", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["os"] = t
-		}
-	}
-
-	if v, ok := d.GetOk("application"); ok {
-		t, err := expandRuleFmwpApplication(d, v, "application", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["application"] = t
-		}
-	}
-
-	if v, ok := d.GetOk("service"); ok {
-		t, err := expandRuleFmwpService(d, v, "service", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["service"] = t
-		}
-	}
-
-	if v, ok := d.GetOkExists("rule_id"); ok {
-		t, err := expandRuleFmwpRuleId(d, v, "rule_id", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["rule-id"] = t
-		}
-	}
-
-	if v, ok := d.GetOkExists("rev"); ok {
-		t, err := expandRuleFmwpRev(d, v, "rev", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["rev"] = t
-		}
-	}
-
-	if v, ok := d.GetOkExists("date"); ok {
-		t, err := expandRuleFmwpDate(d, v, "date", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["date"] = t
-		}
-	}
-
-	if v, ok := d.GetOk("metadata"); ok || d.HasChange("metadata") {
-		t, err := expandRuleFmwpMetadata(d, v, "metadata", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["metadata"] = t
 		}
 	}
 

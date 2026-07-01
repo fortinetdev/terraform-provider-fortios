@@ -155,6 +155,19 @@ func resourceFirewallProxyAddress() *schema.Resource {
 					},
 				},
 			},
+			"llm_servers": &schema.Schema{
+				Type:     schema.TypeSet,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+						},
+					},
+				},
+			},
 			"color": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 32),
@@ -204,6 +217,24 @@ func resourceFirewallProxyAddress() *schema.Resource {
 						"name": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+						},
+					},
+				},
+			},
+			"display_with": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"custom_tags": &schema.Schema{
+				Type:     schema.TypeSet,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
 						},
 					},
@@ -601,6 +632,59 @@ func flattenFirewallProxyAddressHeaderGroupCaseSensitivity(v interface{}, d *sch
 	return v
 }
 
+func flattenFirewallProxyAddressLlmServers(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
+	con := 0
+	for _, r := range parsed_list {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
+
+		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
+			tmp["name"] = flattenFirewallProxyAddressLlmServersName(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenFirewallProxyAddressLlmServersName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallProxyAddressColor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return convintf2i(v)
 }
@@ -788,6 +872,63 @@ func flattenFirewallProxyAddressApplicationName(v interface{}, d *schema.Resourc
 	return v
 }
 
+func flattenFirewallProxyAddressDisplayWith(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallProxyAddressCustomTags(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
+	con := 0
+	for _, r := range parsed_list {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
+
+		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
+			tmp["name"] = flattenFirewallProxyAddressCustomTagsName(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenFirewallProxyAddressCustomTagsName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallProxyAddressVisibility(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -923,6 +1064,22 @@ func refreshObjectFirewallProxyAddress(d *schema.ResourceData, o map[string]inte
 		}
 	}
 
+	if b_get_all_tables {
+		if err = d.Set("llm_servers", flattenFirewallProxyAddressLlmServers(o["llm-servers"], d, "llm_servers", sv)); err != nil {
+			if !fortiAPIPatch(o["llm-servers"]) {
+				return fmt.Errorf("Error reading llm_servers: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("llm_servers"); ok {
+			if err = d.Set("llm_servers", flattenFirewallProxyAddressLlmServers(o["llm-servers"], d, "llm_servers", sv)); err != nil {
+				if !fortiAPIPatch(o["llm-servers"]) {
+					return fmt.Errorf("Error reading llm_servers: %v", err)
+				}
+			}
+		}
+	}
+
 	if err = d.Set("color", flattenFirewallProxyAddressColor(o["color"], d, "color", sv)); err != nil {
 		if !fortiAPIPatch(o["color"]) {
 			return fmt.Errorf("Error reading color: %v", err)
@@ -962,6 +1119,28 @@ func refreshObjectFirewallProxyAddress(d *schema.ResourceData, o map[string]inte
 			if err = d.Set("application", flattenFirewallProxyAddressApplication(o["application"], d, "application", sv)); err != nil {
 				if !fortiAPIPatch(o["application"]) {
 					return fmt.Errorf("Error reading application: %v", err)
+				}
+			}
+		}
+	}
+
+	if err = d.Set("display_with", flattenFirewallProxyAddressDisplayWith(o["display-with"], d, "display_with", sv)); err != nil {
+		if !fortiAPIPatch(o["display-with"]) {
+			return fmt.Errorf("Error reading display_with: %v", err)
+		}
+	}
+
+	if b_get_all_tables {
+		if err = d.Set("custom_tags", flattenFirewallProxyAddressCustomTags(o["custom-tags"], d, "custom_tags", sv)); err != nil {
+			if !fortiAPIPatch(o["custom-tags"]) {
+				return fmt.Errorf("Error reading custom_tags: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("custom_tags"); ok {
+			if err = d.Set("custom_tags", flattenFirewallProxyAddressCustomTags(o["custom-tags"], d, "custom_tags", sv)); err != nil {
+				if !fortiAPIPatch(o["custom-tags"]) {
+					return fmt.Errorf("Error reading custom_tags: %v", err)
 				}
 			}
 		}
@@ -1132,6 +1311,34 @@ func expandFirewallProxyAddressHeaderGroupCaseSensitivity(d *schema.ResourceData
 	return v, nil
 }
 
+func expandFirewallProxyAddressLlmServers(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.(*schema.Set).List()
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		tmp["name"], _ = expandFirewallProxyAddressLlmServersName(d, i["name"], pre_append, sv)
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandFirewallProxyAddressLlmServersName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallProxyAddressColor(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -1244,6 +1451,38 @@ func expandFirewallProxyAddressApplication(d *schema.ResourceData, v interface{}
 }
 
 func expandFirewallProxyAddressApplicationName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallProxyAddressDisplayWith(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallProxyAddressCustomTags(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.(*schema.Set).List()
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		tmp["name"], _ = expandFirewallProxyAddressCustomTagsName(d, i["name"], pre_append, sv)
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandFirewallProxyAddressCustomTagsName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1429,6 +1668,15 @@ func getObjectFirewallProxyAddress(d *schema.ResourceData, sv string) (*map[stri
 		}
 	}
 
+	if v, ok := d.GetOk("llm_servers"); ok || d.HasChange("llm_servers") {
+		t, err := expandFirewallProxyAddressLlmServers(d, v, "llm_servers", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["llm-servers"] = t
+		}
+	}
+
 	if v, ok := d.GetOkExists("color"); ok {
 		t, err := expandFirewallProxyAddressColor(d, v, "color", sv)
 		if err != nil {
@@ -1466,6 +1714,24 @@ func getObjectFirewallProxyAddress(d *schema.ResourceData, sv string) (*map[stri
 			return &obj, err
 		} else if t != nil {
 			obj["application"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("display_with"); ok {
+		t, err := expandFirewallProxyAddressDisplayWith(d, v, "display_with", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["display-with"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("custom_tags"); ok || d.HasChange("custom_tags") {
+		t, err := expandFirewallProxyAddressCustomTags(d, v, "custom_tags", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["custom-tags"] = t
 		}
 	}
 

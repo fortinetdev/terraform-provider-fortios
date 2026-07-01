@@ -53,7 +53,7 @@ func resourceRouterKeyChain() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type:     schema.TypeInt,
+							Type:     schema.TypeString,
 							Optional: true,
 						},
 						"accept_lifetime": &schema.Schema{
@@ -352,7 +352,7 @@ func flattenRouterKeyChainKey(v interface{}, d *schema.ResourceData, pre string,
 }
 
 func flattenRouterKeyChainKeyId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return convintf2i(v)
+	return fmt.Sprintf("%v", v)
 }
 
 func flattenRouterKeyChainKeyAcceptLifetime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -467,7 +467,7 @@ func expandRouterKeyChainKey(d *schema.ResourceData, v interface{}, pre string, 
 }
 
 func expandRouterKeyChainKeyId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return convintf2i(v), nil
+	return fmt.Sprintf("%v", v), nil
 }
 
 func expandRouterKeyChainKeyAcceptLifetime(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {

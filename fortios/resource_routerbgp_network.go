@@ -71,6 +71,11 @@ func resourceRouterbgpNetwork() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
 			},
+			"internet_service_name": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 79),
+				Optional:     true,
+			},
 		},
 	}
 }
@@ -278,6 +283,10 @@ func flattenRouterbgpNetworkPrefixName(v interface{}, d *schema.ResourceData, pr
 	return v
 }
 
+func flattenRouterbgpNetworkInternetServiceName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectRouterbgpNetwork(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -317,6 +326,12 @@ func refreshObjectRouterbgpNetwork(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
+	if err = d.Set("internet_service_name", flattenRouterbgpNetworkInternetServiceName(o["internet-service-name"], d, "internet_service_name", sv)); err != nil {
+		if !fortiAPIPatch(o["internet-service-name"]) {
+			return fmt.Errorf("Error reading internet_service_name: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -347,6 +362,10 @@ func expandRouterbgpNetworkRouteMap(d *schema.ResourceData, v interface{}, pre s
 }
 
 func expandRouterbgpNetworkPrefixName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterbgpNetworkInternetServiceName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -409,6 +428,17 @@ func getObjectRouterbgpNetwork(d *schema.ResourceData, sv string) (*map[string]i
 		}
 	} else if d.HasChange("prefix_name") {
 		obj["prefix-name"] = nil
+	}
+
+	if v, ok := d.GetOk("internet_service_name"); ok {
+		t, err := expandRouterbgpNetworkInternetServiceName(d, v, "internet_service_name", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["internet-service-name"] = t
+		}
+	} else if d.HasChange("internet_service_name") {
+		obj["internet-service-name"] = nil
 	}
 
 	return &obj, nil

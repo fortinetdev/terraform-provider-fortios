@@ -30,6 +30,10 @@ resource "fortios_user_fsso" "trname" {
 The following arguments are supported:
 
 * `name` - (Required) Name.
+* `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
+* `fabric_object` - Security Fabric global object setting. Valid values: `enable`, `disable`.
+* `fabric_force_sync` - Enable/disable forced synchronization of configuration objects from the root FortiGate unit to the downstream devices.  Configuration conflict check is skipped. Valid values: `enable`, `disable`.
+* `fabric_object_source` - Source of truth for fabric object. Valid values: `member`, `local`, `root`.
 * `type` - Server type.
 * `server` - (Required) Domain name or IP address of the first FSSO collector agent.
 * `port` - Port of the first FSSO collector agent.

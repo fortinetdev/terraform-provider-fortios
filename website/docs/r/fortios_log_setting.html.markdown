@@ -56,6 +56,7 @@ The following arguments are supported:
 * `neighbor_event` - Enable/disable neighbor event logging. Valid values: `enable`, `disable`.
 * `brief_traffic_format` - Enable/disable brief format traffic logging. Valid values: `enable`, `disable`.
 * `user_anonymize` - Enable/disable anonymizing user names in log messages. Valid values: `enable`, `disable`.
+* `fortiview_weekly_data` - Enable/disable FortiView weekly data. Valid values: `enable`, `disable`.
 * `expolicy_implicit_log` - Enable/disable explicit proxy firewall implicit policy logging. Valid values: `enable`, `disable`.
 * `log_policy_comment` - Enable/disable inserting policy comments into traffic logs. Valid values: `enable`, `disable`.
 * `log_policy_name` - Enable/disable inserting policy name into traffic logs. Valid values: `enable`, `disable`.
@@ -67,7 +68,9 @@ The following arguments are supported:
 * `long_live_session_stat` - Enable/disable long-live-session statistics logging. Valid values: `enable`, `disable`.
 * `extended_utm_log` - Enable/disable extended UTM logging. Valid values: `enable`, `disable`.
 * `zone_name` - Enable/disable zone name logging. Valid values: `enable`, `disable`.
+* `tacacs_accounting_server_alternate` - Enable/disable TACACS Acounting Server alternating. Valid values: `enable`, `disable`.
 * `web_svc_perf` - Enable/disable web-svc performance logging. Valid values: `enable`, `disable`.
+* `detailed_svc_name` - Enable/disable logging of the specific service name or the top-most service group name. Valid values: `enable`, `disable`.
 * `custom_log_fields` - Custom fields to append to all log messages. The structure of `custom_log_fields` block is documented below.
 * `anonymization_hash` - User name anonymization hash salt.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].

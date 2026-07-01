@@ -56,40 +56,49 @@ func resourceRuleOtdt() *schema.Resource {
 			"category": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
+				Computed: true,
 			},
 			"popularity": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
 				Optional:     true,
+				Computed:     true,
 			},
 			"risk": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
 				Optional:     true,
+				Computed:     true,
 			},
 			"weight": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
 				Optional:     true,
+				Computed:     true,
 			},
 			"protocol": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Computed: true,
 			},
 			"technology": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Computed: true,
 			},
 			"behavior": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Computed: true,
 			},
 			"vendor": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Computed: true,
 			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -97,12 +106,14 @@ func resourceRuleOtdt() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 31),
 							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"metadata": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -114,10 +125,12 @@ func resourceRuleOtdt() *schema.Resource {
 						"metaid": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
+							Computed: true,
 						},
 						"valueid": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
+							Computed: true,
 						},
 					},
 				},
@@ -592,128 +605,6 @@ func expandRuleOtdtName(d *schema.ResourceData, v interface{}, pre string, sv st
 	return v, nil
 }
 
-func expandRuleOtdtId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandRuleOtdtCategory(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandRuleOtdtPopularity(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandRuleOtdtRisk(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandRuleOtdtWeight(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandRuleOtdtProtocol(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandRuleOtdtTechnology(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandRuleOtdtBehavior(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandRuleOtdtVendor(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandRuleOtdtParameters(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
-	result := make([]map[string]interface{}, 0, len(l))
-
-	if len(l) == 0 || l[0] == nil {
-		return result, nil
-	}
-
-	con := 0
-	for _, r := range l {
-		tmp := make(map[string]interface{})
-		i := r.(map[string]interface{})
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandRuleOtdtParametersName(d, i["name"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["name"] = nil
-		}
-
-		result = append(result, tmp)
-
-		con += 1
-	}
-
-	return result, nil
-}
-
-func expandRuleOtdtParametersName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandRuleOtdtMetadata(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
-	result := make([]map[string]interface{}, 0, len(l))
-
-	if len(l) == 0 || l[0] == nil {
-		return result, nil
-	}
-
-	con := 0
-	for _, r := range l {
-		tmp := make(map[string]interface{})
-		i := r.(map[string]interface{})
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandRuleOtdtMetadataId(d, i["id"], pre_append, sv)
-		}
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "metaid"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["metaid"], _ = expandRuleOtdtMetadataMetaid(d, i["metaid"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["metaid"] = nil
-		}
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "valueid"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["valueid"], _ = expandRuleOtdtMetadataValueid(d, i["valueid"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["valueid"] = nil
-		}
-
-		result = append(result, tmp)
-
-		con += 1
-	}
-
-	return result, nil
-}
-
-func expandRuleOtdtMetadataId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandRuleOtdtMetadataMetaid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandRuleOtdtMetadataValueid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
 func getObjectRuleOtdt(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
@@ -723,121 +614,6 @@ func getObjectRuleOtdt(d *schema.ResourceData, sv string) (*map[string]interface
 			return &obj, err
 		} else if t != nil {
 			obj["name"] = t
-		}
-	}
-
-	if v, ok := d.GetOkExists("fosid"); ok {
-		t, err := expandRuleOtdtId(d, v, "fosid", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["id"] = t
-		}
-	}
-
-	if v, ok := d.GetOkExists("category"); ok {
-		t, err := expandRuleOtdtCategory(d, v, "category", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["category"] = t
-		}
-	} else if d.HasChange("category") {
-		obj["category"] = nil
-	}
-
-	if v, ok := d.GetOkExists("popularity"); ok {
-		t, err := expandRuleOtdtPopularity(d, v, "popularity", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["popularity"] = t
-		}
-	} else if d.HasChange("popularity") {
-		obj["popularity"] = nil
-	}
-
-	if v, ok := d.GetOkExists("risk"); ok {
-		t, err := expandRuleOtdtRisk(d, v, "risk", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["risk"] = t
-		}
-	} else if d.HasChange("risk") {
-		obj["risk"] = nil
-	}
-
-	if v, ok := d.GetOkExists("weight"); ok {
-		t, err := expandRuleOtdtWeight(d, v, "weight", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["weight"] = t
-		}
-	} else if d.HasChange("weight") {
-		obj["weight"] = nil
-	}
-
-	if v, ok := d.GetOk("protocol"); ok {
-		t, err := expandRuleOtdtProtocol(d, v, "protocol", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["protocol"] = t
-		}
-	} else if d.HasChange("protocol") {
-		obj["protocol"] = nil
-	}
-
-	if v, ok := d.GetOk("technology"); ok {
-		t, err := expandRuleOtdtTechnology(d, v, "technology", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["technology"] = t
-		}
-	} else if d.HasChange("technology") {
-		obj["technology"] = nil
-	}
-
-	if v, ok := d.GetOk("behavior"); ok {
-		t, err := expandRuleOtdtBehavior(d, v, "behavior", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["behavior"] = t
-		}
-	} else if d.HasChange("behavior") {
-		obj["behavior"] = nil
-	}
-
-	if v, ok := d.GetOk("vendor"); ok {
-		t, err := expandRuleOtdtVendor(d, v, "vendor", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["vendor"] = t
-		}
-	} else if d.HasChange("vendor") {
-		obj["vendor"] = nil
-	}
-
-	if v, ok := d.GetOk("parameters"); ok || d.HasChange("parameters") {
-		t, err := expandRuleOtdtParameters(d, v, "parameters", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["parameters"] = t
-		}
-	}
-
-	if v, ok := d.GetOk("metadata"); ok || d.HasChange("metadata") {
-		t, err := expandRuleOtdtMetadata(d, v, "metadata", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["metadata"] = t
 		}
 	}
 

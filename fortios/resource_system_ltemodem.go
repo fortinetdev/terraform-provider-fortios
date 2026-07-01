@@ -46,6 +46,10 @@ func resourceSystemLteModem() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
 			},
+			"pdptype": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+			},
 			"authtype": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -215,6 +219,10 @@ func flattenSystemLteModemExtraInit(v interface{}, d *schema.ResourceData, pre s
 	return v
 }
 
+func flattenSystemLteModemPdptype(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemLteModemAuthtype(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -255,6 +263,12 @@ func refreshObjectSystemLteModem(d *schema.ResourceData, o map[string]interface{
 	if err = d.Set("extra_init", flattenSystemLteModemExtraInit(o["extra-init"], d, "extra_init", sv)); err != nil {
 		if !fortiAPIPatch(o["extra-init"]) {
 			return fmt.Errorf("Error reading extra_init: %v", err)
+		}
+	}
+
+	if err = d.Set("pdptype", flattenSystemLteModemPdptype(o["pdptype"], d, "pdptype", sv)); err != nil {
+		if !fortiAPIPatch(o["pdptype"]) {
+			return fmt.Errorf("Error reading pdptype: %v", err)
 		}
 	}
 
@@ -314,6 +328,10 @@ func expandSystemLteModemStatus(d *schema.ResourceData, v interface{}, pre strin
 }
 
 func expandSystemLteModemExtraInit(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemLteModemPdptype(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -378,6 +396,21 @@ func getObjectSystemLteModem(d *schema.ResourceData, setArgNil bool, sv string) 
 		}
 	} else if d.HasChange("extra_init") {
 		obj["extra-init"] = nil
+	}
+
+	if v, ok := d.GetOk("pdptype"); ok {
+		if setArgNil {
+			obj["pdptype"] = nil
+		} else {
+			t, err := expandSystemLteModemPdptype(d, v, "pdptype", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["pdptype"] = t
+			}
+		}
+	} else if d.HasChange("pdptype") {
+		obj["pdptype"] = nil
 	}
 
 	if v, ok := d.GetOk("authtype"); ok {

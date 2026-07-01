@@ -42,13 +42,18 @@ The following attributes are exported:
 * `downstream_access` - Enable/disable downstream device access to this device's configuration and data.
 * `legacy_authentication` - Enable/disable legacy authentication.
 * `downstream_accprofile` - Default access profile for requests from downstream devices.
+* `fabric_object_change_auto_cascade` - Enable/disable the cascade mode for fabric objects datasource check.
 * `fixed_key` - Auto-generated fixed key used when this device is the root. (Will automatically be generated if not set.)
 * `trusted_list` - Pre-authorized and blocked security fabric nodes. The structure of `trusted_list` block is documented below.
+* `upload_shared_objects` - Configure uploading shared objects entries to the tree.
+* `autoclear_removed_shared_objects` - Control system behavior for deleted shared objects.
+* `shared_objects` - Fabric-wide objects shared by non-root nodes. The structure of `shared_objects` block is documented below.
 * `fabric_connector` - Fabric connector configuration. The structure of `fabric_connector` block is documented below.
 * `forticloud_account_enforcement` - Fabric FortiCloud account unification.
 * `file_mgmt` - Enable/disable Security Fabric daemon file management.
 * `file_quota` - Maximum amount of memory that can be used by the daemon files (in bytes).
 * `file_quota_warning` - Warn when the set percentage of quota has been used.
+* `fabric_datasource_exemption` - Disable the fabric datasource check on the tables when synchronizing them. The structure of `fabric_datasource_exemption` block is documented below.
 * `fabric_device` - Fabric device configuration. The structure of `fabric_device` block is documented below.
 
 The `trusted_list` block contains:
@@ -58,9 +63,28 @@ The `trusted_list` block contains:
 * `serial` - Serial.
 * `certificate` - Certificate.
 * `action` - Security fabric authorization action.
+* `role` - Device role to this member.
 * `ha_members` - HA members.
 * `downstream_authorization` - Trust authorizations by this node's administrator.
 * `index` - Index of the downstream in tree.
+* `ca` - Name of a CA on the downstream's certificat chain.
+* `ca_fingerprint` - SHA512 fingerprint of a CA on the downstream's certificate chain.
+* `cn` - Certificate CNs used by HA members.
+
+The `shared_objects` block contains:
+
+* `name` - UID of the source device.
+* `trusted_list_entry` - Trusted list entry name.
+* `objects` - CMDB table entries. The structure of `objects` block is documented below.
+
+The `objects` block contains:
+
+* `pathname` - CMDB path and object name.
+* `keys` - Keys of CMDB table entries. The structure of `keys` block is documented below.
+
+The `keys` block contains:
+
+* `name` - key.
 
 The `fabric_connector` block contains:
 
@@ -72,6 +96,11 @@ The `fabric_connector` block contains:
 The `vdom` block contains:
 
 * `name` - Virtual domain name.
+
+The `fabric_datasource_exemption` block contains:
+
+* `name` - Name.
+* `status` - Enable/disable the fabric datasource check on the target table.
 
 The `fabric_device` block contains:
 

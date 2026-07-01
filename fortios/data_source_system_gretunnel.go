@@ -92,6 +92,14 @@ func dataSourceSystemGreTunnel() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"auto_asic_offload": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"loopback_ecmp_offload": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"keepalive_interval": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
@@ -211,6 +219,14 @@ func dataSourceFlattenSystemGreTunnelDiffservcode(v interface{}, d *schema.Resou
 	return v
 }
 
+func dataSourceFlattenSystemGreTunnelAutoAsicOffload(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemGreTunnelLoopbackEcmpOffload(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemGreTunnelKeepaliveInterval(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -315,6 +331,18 @@ func dataSourceRefreshObjectSystemGreTunnel(d *schema.ResourceData, o map[string
 	if err = d.Set("diffservcode", dataSourceFlattenSystemGreTunnelDiffservcode(o["diffservcode"], d, "diffservcode")); err != nil {
 		if !fortiAPIPatch(o["diffservcode"]) {
 			return fmt.Errorf("Error reading diffservcode: %v", err)
+		}
+	}
+
+	if err = d.Set("auto_asic_offload", dataSourceFlattenSystemGreTunnelAutoAsicOffload(o["auto-asic-offload"], d, "auto_asic_offload")); err != nil {
+		if !fortiAPIPatch(o["auto-asic-offload"]) {
+			return fmt.Errorf("Error reading auto_asic_offload: %v", err)
+		}
+	}
+
+	if err = d.Set("loopback_ecmp_offload", dataSourceFlattenSystemGreTunnelLoopbackEcmpOffload(o["loopback-ecmp-offload"], d, "loopback_ecmp_offload")); err != nil {
+		if !fortiAPIPatch(o["loopback-ecmp-offload"]) {
+			return fmt.Errorf("Error reading loopback_ecmp_offload: %v", err)
 		}
 	}
 

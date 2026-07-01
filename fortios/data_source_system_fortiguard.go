@@ -120,6 +120,10 @@ func dataSourceSystemFortiguard() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"proxy_fqdn_host": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"fortiguard_anycast": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -420,6 +424,10 @@ func dataSourceFlattenSystemFortiguardFdsLicenseExpiringDays(v interface{}, d *s
 }
 
 func dataSourceFlattenSystemFortiguardSubscribeUpdateNotification(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemFortiguardProxyFqdnHost(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -733,6 +741,12 @@ func dataSourceRefreshObjectSystemFortiguard(d *schema.ResourceData, o map[strin
 	if err = d.Set("subscribe_update_notification", dataSourceFlattenSystemFortiguardSubscribeUpdateNotification(o["subscribe-update-notification"], d, "subscribe_update_notification")); err != nil {
 		if !fortiAPIPatch(o["subscribe-update-notification"]) {
 			return fmt.Errorf("Error reading subscribe_update_notification: %v", err)
+		}
+	}
+
+	if err = d.Set("proxy_fqdn_host", dataSourceFlattenSystemFortiguardProxyFqdnHost(o["proxy-fqdn-host"], d, "proxy_fqdn_host")); err != nil {
+		if !fortiAPIPatch(o["proxy-fqdn-host"]) {
+			return fmt.Errorf("Error reading proxy_fqdn_host: %v", err)
 		}
 	}
 

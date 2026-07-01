@@ -74,6 +74,19 @@ func resourceSystemPcpServer() *schema.Resource {
 								},
 							},
 						},
+						"client6_prefix": &schema.Schema{
+							Type:     schema.TypeSet,
+							Optional: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"prefix": &schema.Schema{
+										Type:         schema.TypeString,
+										ValidateFunc: validation.StringLenBetween(0, 79),
+										Optional:     true,
+									},
+								},
+							},
+						},
 						"ext_intf": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
@@ -166,6 +179,11 @@ func resourceSystemPcpServer() *schema.Resource {
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 3600),
 							Optional:     true,
+						},
+						"nat46": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
 						},
 					},
 				},
@@ -366,6 +384,14 @@ func flattenSystemPcpServerPools(v interface{}, d *schema.ResourceData, pre stri
 			tmp["client_subnet"] = flattenSystemPcpServerPoolsClientSubnet(cur_v, d, pre_append, sv)
 		}
 
+		if cur_v, ok := i["client6-prefix"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "client6_prefix"
+			}
+			tmp["client6_prefix"] = flattenSystemPcpServerPoolsClient6Prefix(cur_v, d, pre_append, sv)
+		}
+
 		if cur_v, ok := i["ext-intf"]; ok {
 			pre_append := ""
 			if tf_exist {
@@ -486,6 +512,14 @@ func flattenSystemPcpServerPools(v interface{}, d *schema.ResourceData, pre stri
 			tmp["recycle_delay"] = flattenSystemPcpServerPoolsRecycleDelay(cur_v, d, pre_append, sv)
 		}
 
+		if cur_v, ok := i["nat46"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "nat46"
+			}
+			tmp["nat46"] = flattenSystemPcpServerPoolsNat46(cur_v, d, pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -557,6 +591,59 @@ func flattenSystemPcpServerPoolsClientSubnet(v interface{}, d *schema.ResourceDa
 }
 
 func flattenSystemPcpServerPoolsClientSubnetSubnet(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemPcpServerPoolsClient6Prefix(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "prefix", "prefix")
+
+	con := 0
+	for _, r := range parsed_list {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
+
+		if cur_v, ok := i["prefix"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"
+			}
+			tmp["prefix"] = flattenSystemPcpServerPoolsClient6PrefixPrefix(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "prefix", d)
+	return result
+}
+
+func flattenSystemPcpServerPoolsClient6PrefixPrefix(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -718,6 +805,10 @@ func flattenSystemPcpServerPoolsRecycleDelay(v interface{}, d *schema.ResourceDa
 	return convintf2i(v)
 }
 
+func flattenSystemPcpServerPoolsNat46(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectSystemPcpServer(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 	var b_get_all_tables bool
@@ -800,6 +891,13 @@ func expandSystemPcpServerPools(d *schema.ResourceData, v interface{}, pre strin
 			tmp["client-subnet"], _ = expandSystemPcpServerPoolsClientSubnet(d, i["client_subnet"], pre_append, sv)
 		} else if d.HasChange(pre_append) {
 			tmp["client-subnet"] = make([]string, 0)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "client6_prefix"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["client6-prefix"], _ = expandSystemPcpServerPoolsClient6Prefix(d, i["client6_prefix"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["client6-prefix"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ext_intf"
@@ -891,6 +989,11 @@ func expandSystemPcpServerPools(d *schema.ResourceData, v interface{}, pre strin
 			tmp["recycle-delay"] = nil
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "nat46"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["nat46"], _ = expandSystemPcpServerPoolsNat46(d, i["nat46"], pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -936,6 +1039,34 @@ func expandSystemPcpServerPoolsClientSubnet(d *schema.ResourceData, v interface{
 }
 
 func expandSystemPcpServerPoolsClientSubnetSubnet(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemPcpServerPoolsClient6Prefix(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.(*schema.Set).List()
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		tmp["prefix"], _ = expandSystemPcpServerPoolsClient6PrefixPrefix(d, i["prefix"], pre_append, sv)
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemPcpServerPoolsClient6PrefixPrefix(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1044,6 +1175,10 @@ func expandSystemPcpServerPoolsIntlIntfInterfaceName(d *schema.ResourceData, v i
 }
 
 func expandSystemPcpServerPoolsRecycleDelay(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemPcpServerPoolsNat46(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

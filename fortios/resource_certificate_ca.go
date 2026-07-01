@@ -51,6 +51,9 @@ func resourceCertificateCa() *schema.Resource {
 				Type:      schema.TypeString,
 				Required:  true,
 				Sensitive: true,
+				DiffSuppressFunc: func(k, old, new string, d *schema.ResourceData) bool {
+					return strings.TrimSpace(old) == strings.TrimSpace(new)
+				},
 			},
 			"range": &schema.Schema{
 				Type:     schema.TypeString,

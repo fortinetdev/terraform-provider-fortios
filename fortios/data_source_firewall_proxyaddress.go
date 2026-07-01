@@ -124,6 +124,18 @@ func dataSourceFirewallProxyAddress() *schema.Resource {
 					},
 				},
 			},
+			"llm_servers": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
 			"color": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
@@ -161,6 +173,22 @@ func dataSourceFirewallProxyAddress() *schema.Resource {
 				Computed: true,
 			},
 			"application": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
+			"display_with": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"custom_tags": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
 				Elem: &schema.Resource{
@@ -382,6 +410,42 @@ func dataSourceFlattenFirewallProxyAddressHeaderGroupCaseSensitivity(v interface
 	return v
 }
 
+func dataSourceFlattenFirewallProxyAddressLlmServers(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = dataSourceFlattenFirewallProxyAddressLlmServersName(i["name"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenFirewallProxyAddressLlmServersName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallProxyAddressColor(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -512,6 +576,46 @@ func dataSourceFlattenFirewallProxyAddressApplicationName(v interface{}, d *sche
 	return v
 }
 
+func dataSourceFlattenFirewallProxyAddressDisplayWith(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallProxyAddressCustomTags(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = dataSourceFlattenFirewallProxyAddressCustomTagsName(i["name"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenFirewallProxyAddressCustomTagsName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallProxyAddressVisibility(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -621,6 +725,12 @@ func dataSourceRefreshObjectFirewallProxyAddress(d *schema.ResourceData, o map[s
 		}
 	}
 
+	if err = d.Set("llm_servers", dataSourceFlattenFirewallProxyAddressLlmServers(o["llm-servers"], d, "llm_servers")); err != nil {
+		if !fortiAPIPatch(o["llm-servers"]) {
+			return fmt.Errorf("Error reading llm_servers: %v", err)
+		}
+	}
+
 	if err = d.Set("color", dataSourceFlattenFirewallProxyAddressColor(o["color"], d, "color")); err != nil {
 		if !fortiAPIPatch(o["color"]) {
 			return fmt.Errorf("Error reading color: %v", err)
@@ -642,6 +752,18 @@ func dataSourceRefreshObjectFirewallProxyAddress(d *schema.ResourceData, o map[s
 	if err = d.Set("application", dataSourceFlattenFirewallProxyAddressApplication(o["application"], d, "application")); err != nil {
 		if !fortiAPIPatch(o["application"]) {
 			return fmt.Errorf("Error reading application: %v", err)
+		}
+	}
+
+	if err = d.Set("display_with", dataSourceFlattenFirewallProxyAddressDisplayWith(o["display-with"], d, "display_with")); err != nil {
+		if !fortiAPIPatch(o["display-with"]) {
+			return fmt.Errorf("Error reading display_with: %v", err)
+		}
+	}
+
+	if err = d.Set("custom_tags", dataSourceFlattenFirewallProxyAddressCustomTags(o["custom-tags"], d, "custom_tags")); err != nil {
+		if !fortiAPIPatch(o["custom-tags"]) {
+			return fmt.Errorf("Error reading custom_tags: %v", err)
 		}
 	}
 

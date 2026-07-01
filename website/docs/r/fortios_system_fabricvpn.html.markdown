@@ -16,11 +16,12 @@ The following arguments are supported:
 * `status` - Enable/disable Fabric VPN. Valid values: `enable`, `disable`.
 * `sync_mode` - Setting synchronised by fabric or manual. Valid values: `enable`, `disable`.
 * `branch_name` - Branch name.
-* `policy_rule` - Policy creation rule. Valid values: `health-check`, `manual`, `auto`.
+* `policy_rule` - Policy creation rule.
 * `vpn_role` - Fabric VPN role. Valid values: `hub`, `spoke`.
 * `overlays` - Local overlay interfaces table. The structure of `overlays` block is documented below.
 * `advertised_subnets` - Local advertised subnets. The structure of `advertised_subnets` block is documented below.
 * `loopback_address_block` - IPv4 address and subnet mask for hub's loopback address, syntax: X.X.X.X/24.
+* `loopback_address_block_ipam` - IPAM firewall address that will be used for hub's loopback address.
 * `loopback_interface` - Loopback interface.
 * `loopback_advertised_subnet` - Loopback advertised subnet reference.
 * `psksecret` - Pre-shared secret for ADVPN.
@@ -37,6 +38,7 @@ The `overlays` block supports:
 * `name` - Overlay name.
 * `ipsec_network_id` - VPN gateway network ID.
 * `overlay_tunnel_block` - IPv4 address and subnet mask for the overlay tunnel , syntax: X.X.X.X/24.
+* `overlay_tunnel_block_ipam` - Source for the overlay tunnel, obtained from the firewall addresses managed by IPAM
 * `remote_gw` - IP address of the hub gateway (Set by hub).
 * `interface` - Underlying interface name.
 * `bgp_neighbor` - Underlying BGP neighbor entry.

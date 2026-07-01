@@ -73,6 +73,7 @@ The following arguments are supported:
 * `gui_prompt_auto_upgrade` - Enable/disable prompting of automatic patch-level firmware upgrade recommendation. Valid values: `enable`, `disable`.
 * `fds_license_expiring_days` - Threshold for number of days before FortiGuard license expiration to generate license expiring event log (1 - 100 days, default = 15).
 * `subscribe_update_notification` - Enable/disable subscription to receive update notification from FortiGuard. Valid values: `enable`, `disable`.
+* `proxy_fqdn_host` - Enable/disable preference of the FQDN as host header, if resolved by DNS, in the CONNECT request to FortiGuard servers. For use when the FortiGate unit is behind a proxy server. Valid values: `enable`, `disable`.
 * `fortiguard_anycast` - Enable/disable use of FortiGuard's anycast network. Valid values: `enable`, `disable`.
 * `fortiguard_anycast_source` - Configure which of Fortinet's servers to provide FortiGuard services in FortiGuard's anycast network. Default is Fortinet. Valid values: `fortinet`, `aws`, `debug`.
 * `antispam_force_off` - Enable/disable turning off the FortiGuard antispam service. Valid values: `enable`, `disable`.
@@ -108,8 +109,6 @@ The following arguments are supported:
 * `proxy_server_port` - Port used to communicate with the proxy server.
 * `proxy_username` - Proxy user name.
 * `proxy_password` - Proxy user password.
-* `videofilter_license` - Interval of time between license checks for the FortiGuard video filter contract.
-* `videofilter_expiration` - Expiration date of the FortiGuard video filter contract.
 * `ddns_server_ip` - IP address of the FortiDDNS server.
 * `ddns_server_ip6` - IPv6 address of the FortiDDNS server.
 * `ddns_server_port` - Port used to communicate with FortiDDNS servers.
@@ -123,6 +122,8 @@ The following arguments are supported:
 
 In addition to all the above arguments, the following attributes are exported:
 * `id` - an identifier for the resource.
+* `videofilter_license` - Interval of time between license checks for the FortiGuard video filter contract.
+* `videofilter_expiration` - Expiration date of the FortiGuard video filter contract.
 
 ## Import
 

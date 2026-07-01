@@ -132,11 +132,13 @@ func resourceSystemSdnVpn() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
 				Optional:     true,
+				Computed:     true,
 			},
 			"code": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
 				Optional:     true,
+				Computed:     true,
 			},
 		},
 	}
@@ -594,18 +596,6 @@ func expandSystemSdnVpnPsksecret(d *schema.ResourceData, v interface{}, pre stri
 	return v, nil
 }
 
-func expandSystemSdnVpnType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandSystemSdnVpnStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandSystemSdnVpnCode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
 func getObjectSystemSdnVpn(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
@@ -767,37 +757,6 @@ func getObjectSystemSdnVpn(d *schema.ResourceData, sv string) (*map[string]inter
 		}
 	} else if d.HasChange("psksecret") {
 		obj["psksecret"] = nil
-	}
-
-	if v, ok := d.GetOkExists("type"); ok {
-		t, err := expandSystemSdnVpnType(d, v, "type", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["type"] = t
-		}
-	}
-
-	if v, ok := d.GetOkExists("status"); ok {
-		t, err := expandSystemSdnVpnStatus(d, v, "status", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["status"] = t
-		}
-	} else if d.HasChange("status") {
-		obj["status"] = nil
-	}
-
-	if v, ok := d.GetOkExists("code"); ok {
-		t, err := expandSystemSdnVpnCode(d, v, "code", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["code"] = t
-		}
-	} else if d.HasChange("code") {
-		obj["code"] = nil
 	}
 
 	return &obj, nil

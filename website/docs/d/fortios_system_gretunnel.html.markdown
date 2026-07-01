@@ -35,6 +35,8 @@ The following attributes are exported:
 * `key_inbound` - Require received GRE packets contain this key (0 - 4294967295).
 * `dscp_copying` - Enable/disable DSCP copying.
 * `diffservcode` - DiffServ setting to be applied to GRE tunnel outer IP header.
+* `auto_asic_offload` - Enable/disable automatic ASIC offloading.
+* `loopback_ecmp_offload` - Enable/disable tunnel over loopback ecmp offloading support.
 * `keepalive_interval` - Keepalive message interval (0 - 32767, 0 = disabled).
 * `keepalive_failtimes` - Number of consecutive unreturned keepalive messages before a GRE connection is considered down (1 - 255).
 

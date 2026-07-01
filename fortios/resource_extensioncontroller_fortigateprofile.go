@@ -377,10 +377,6 @@ func expandExtensionControllerFortigateProfileId(d *schema.ResourceData, v inter
 	return v, nil
 }
 
-func expandExtensionControllerFortigateProfileExtension(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
 func expandExtensionControllerFortigateProfileLanExtension(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
@@ -443,15 +439,6 @@ func getObjectExtensionControllerFortigateProfile(d *schema.ResourceData, sv str
 			return &obj, err
 		} else if t != nil {
 			obj["id"] = t
-		}
-	}
-
-	if v, ok := d.GetOk("extension"); ok {
-		t, err := expandExtensionControllerFortigateProfileExtension(d, v, "extension", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["extension"] = t
 		}
 	}
 

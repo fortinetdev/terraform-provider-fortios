@@ -102,6 +102,7 @@ func resourceApplicationName() *schema.Resource {
 			},
 			"parameters": &schema.Schema{
 				Type:     schema.TypeList,
+				Computed: true,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
@@ -109,6 +110,7 @@ func resourceApplicationName() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 31),
 							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
@@ -669,39 +671,6 @@ func expandApplicationNameVendor(d *schema.ResourceData, v interface{}, pre stri
 	return v, nil
 }
 
-func expandApplicationNameParameters(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	l := v.([]interface{})
-	result := make([]map[string]interface{}, 0, len(l))
-
-	if len(l) == 0 || l[0] == nil {
-		return result, nil
-	}
-
-	con := 0
-	for _, r := range l {
-		tmp := make(map[string]interface{})
-		i := r.(map[string]interface{})
-		pre_append := "" // table
-
-		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
-		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandApplicationNameParametersName(d, i["name"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["name"] = nil
-		}
-
-		result = append(result, tmp)
-
-		con += 1
-	}
-
-	return result, nil
-}
-
-func expandApplicationNameParametersName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
 func expandApplicationNameParameter(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -862,15 +831,6 @@ func getObjectApplicationName(d *schema.ResourceData, sv string) (*map[string]in
 			return &obj, err
 		} else if t != nil {
 			obj["vendor"] = t
-		}
-	}
-
-	if v, ok := d.GetOk("parameters"); ok || d.HasChange("parameters") {
-		t, err := expandApplicationNameParameters(d, v, "parameters", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["parameters"] = t
 		}
 	}
 

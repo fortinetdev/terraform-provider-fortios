@@ -73,6 +73,7 @@ The following arguments are supported:
 * `multi_factor_authentication` - Enforce all login methods to require an additional authentication factor (default = optional). Valid values: `optional`, `mandatory`.
 * `ssl_min_proto_version` - Minimum supported protocol version for SSL/TLS connections (default = TLSv1.2).
 * `autorun_log_fsck` - Enable/disable automatic log partition check after ungraceful shutdown. Valid values: `enable`, `disable`.
+* `log_fsck_timeout` - Configure the maximum the number of seconds the FortiGate unit waits while the file system check is in progress before allowing the boot process to complete and the system fully is operational.  Zero seconds means the FortiGate unit waits until the file system check is complete (0 - 3600, default = 300).
 * `dst` - Enable/disable daylight saving time. Valid values: `enable`, `disable`.
 * `timezone` - Number corresponding to your time zone from 00 to 86. Enter set timezone ? to view the list of time zones and the numbers that represent them.
 * `traffic_priority` - Choose Type of Service (ToS) or Differentiated Services Code Point (DSCP) for traffic prioritization in traffic shaping. Valid values: `tos`, `dscp`.
@@ -88,6 +89,7 @@ The following arguments are supported:
 * `honor_df` - Enable/disable honoring of Don't-Fragment (DF) flag. Valid values: `enable`, `disable`.
 * `pmtu_discovery` - Enable/disable path MTU discovery. Valid values: `enable`, `disable`.
 * `virtual_switch_vlan` - Enable/disable virtual switch VLAN. Valid values: `enable`, `disable`.
+* `split_port_mode` - Configure split port mode of ports. The structure of `split_port_mode` block is documented below.
 * `split_port` - Split port(s) to multiple 10Gbps ports.
 * `revision_image_auto_backup` - Enable/disable back-up of the latest configuration revision after the firmware is upgraded. Valid values: `enable`, `disable`.
 * `revision_backup_on_logout` - Enable/disable back-up of the latest configuration revision when an administrator logs out of the CLI or GUI. Valid values: `enable`, `disable`.
@@ -161,8 +163,9 @@ The following arguments are supported:
 * `cpu_use_threshold` - Threshold at which CPU usage is reported. (% of total CPU, default = 90).
 * `log_single_cpu_high` - Enable/disable logging the event of a single CPU core reaching CPU usage threshold. Valid values: `enable`, `disable`.
 * `check_reset_range` - Configure ICMP error message verification. You can either apply strict RST range checking or disable it. Valid values: `strict`, `disable`.
+* `single_vdom_npuvlink` - Enable/disable NPU VDOMs links for single VDOM. Valid values: `enable`, `disable`.
 * `upgrade_report` - Enable/disable the generation of an upgrade report when upgrading the firmware. Valid values: `enable`, `disable`.
-* `vdom_mode` - Enable/disable support for split/multiple virtual domains (VDOMs). Valid values: `no-vdom`, `split-vdom`, `multi-vdom`.
+* `vdom_mode` - Enable/disable support for multiple virtual domains (VDOMs).
 * `vdom_admin` - Enable/disable support for multiple virtual domains (VDOMs). Valid values: `enable`, `disable`.
 * `long_vdom_name` - Enable/disable long VDOM name support. Valid values: `enable`, `disable`.
 * `edit_vdom_prompt` - Enable/disable edit new VDOM prompt. Valid values: `enable`, `disable`.
@@ -204,6 +207,7 @@ The following arguments are supported:
 * `cfg_revert_timeout` - Time-out for reverting to the last saved configuration. (10 - 4294967295 seconds, default = 600).
 * `reboot_upon_config_restore` - Enable/disable reboot of system upon restoring configuration. Valid values: `enable`, `disable`.
 * `admin_scp` - Enable/disable using SCP to download the system configuration. You can use SCP as an alternative method for backing up the configuration. Valid values: `enable`, `disable`.
+* `tcp_congestion_control` - Configure TCP congestion control algorithm (default = cubic). Valid values: `cubic`, `bbr`.
 * `security_rating_result_submission` - Enable/disable the submission of Security Rating results to FortiGuard. Valid values: `enable`, `disable`.
 * `security_rating_run_on_schedule` - Enable/disable scheduled runs of Security Rating. Valid values: `enable`, `disable`.
 * `wireless_controller` - Enable/disable the wireless controller feature to use the FortiGate unit to manage FortiAPs. Valid values: `enable`, `disable`.
@@ -214,6 +218,8 @@ The following arguments are supported:
 * `fortiextender_discovery_lockdown` - Enable/disable FortiExtender CAPWAP lockdown. Valid values: `disable`, `enable`.
 * `fortiextender_vlan_mode` - Enable/disable FortiExtender VLAN mode. Valid values: `enable`, `disable`.
 * `fortiextender_provision_on_authorization` - Enable/disable automatic provisioning of latest FortiExtender firmware on authorization. Valid values: `enable`, `disable`.
+* `telemetry_controller` - Enable/disable FortiTelemetry controller to manage FortiTelemetry agents. Valid values: `enable`, `disable`.
+* `telemetry_data_port` - FortiTelemetry data channel port (1024 - 49150, default = 35246).
 * `switch_controller` - Enable/disable switch controller feature. Switch controller allows you to manage FortiSwitch from the FortiGate itself. Valid values: `disable`, `enable`.
 * `switch_controller_reserved_network` - Enable reserved network subnet for controlled switches. This is available when the switch controller is enabled.
 * `dnsproxy_worker_count` - DNS proxy worker count.
@@ -266,6 +272,16 @@ The following arguments are supported:
 * `log_uuid_address` - Enable/disable insertion of address UUIDs to traffic logs. Valid values: `enable`, `disable`.
 * `log_ssl_connection` - Enable/disable logging of SSL connection events. Valid values: `enable`, `disable`.
 * `gui_rest_api_cache` - Enable/disable REST API result caching on FortiGate. Valid values: `enable`, `disable`.
+* `gui_login_request_rate_limit` - Conifgure number of login requests to maintain in the request queue (0 - 30, default = 0 for no rate limit).
+* `http_request_limit` - HTTP request body size limit.
+* `admin_http_login_request_size_limit` - HTTP login request body size limit in bytes.
+* `admin_http_json_request_limit` - HTTP JSON request body size limit in bytes (0 will disable the limit).
+* `http_unauthenticated_request_limit` - HTTP request body size limit before authentication.
+* `admin_http_request_header_timeout` - HTTP request header timeout, in milliseconds (0 will disable the timeout).
+* `admin_http_request_body_timeout` - Authenticated HTTP request body timeout, in milliseconds (0 will disable the timeout).
+* `admin_http_unauthenticated_request_body_timeout` - Unauthenticated HTTP request body timeout, in milliseconds, before authentication (0 will disable the timeout).
+* `admin_http_rate_limit_max_requests` - Maximum number of HTTP requests that are allowed to be made in a second by a single client (0 will disable rate limiting).
+* `admin_http_rate_limit_exempt_auth` - Enable/disable exemption of authenticated administrator sessions from rate limiting. Valid values: `enable`, `disable`.
 * `rest_api_key_url_query` - Enable/disable support for passing REST API keys through URL query parameters. Valid values: `enable`, `disable`.
 * `gui_cdn_domain_override` - Domain of CDN server.
 * `gui_fortiguard_resource_fetch` - Enable/disable retrieving static GUI resources from FortiGuard. Disabling it will improve GUI load time for air-gapped environments. Valid values: `enable`, `disable`.
@@ -301,6 +317,7 @@ The following arguments are supported:
 * `private_data_encryption` - Enable/disable private data encryption using an AES 128-bit key. Valid values: `disable`, `enable`.
 * `auto_auth_extension_device` - Enable/disable automatic authorization of dedicated Fortinet extension devices. Valid values: `enable`, `disable`.
 * `gui_theme` - Color scheme for the administration GUI.
+* `gui_custom_theme` - Custom theme that overrides the default FortiGate themes.
 * `gui_date_format` - Default date format used throughout GUI. Valid values: `yyyy/MM/dd`, `dd/MM/yyyy`, `MM/dd/yyyy`, `yyyy-MM-dd`, `dd-MM-yyyy`, `MM-dd-yyyy`.
 * `gui_date_time_source` - Source from which the FortiGate GUI uses to display date and time entries. Valid values: `system`, `browser`.
 * `igmp_state_limit` - Maximum number of IGMP memberships (96 - 64000, default = 3200).
@@ -328,6 +345,7 @@ The following arguments are supported:
 * `interface_subnet_usage` - Enable/disable allowing use of interface-subnet setting in firewall addresses (default = enable). Valid values: `disable`, `enable`.
 * `sflowd_max_children_num` - Maximum number of sflowd child processes allowed to run.
 * `fortigslb_integration` - Enable/disable integration with the FortiGSLB cloud service. Valid values: `disable`, `enable`.
+* `gtpu_dynamic_source_port` - Enable/disable GTP-U dynamic source port support. Valid values: `enable`, `disable`.
 * `user_history_password_threshold` - Maximum number of previous passwords saved per admin/user (3 - 15, default = 3).
 * `auth_session_auto_backup` - Enable/disable automatic and periodic backup of authentication sessions (default = disable). Sessions are restored upon bootup. Valid values: `enable`, `disable`.
 * `auth_session_auto_backup_interval` - Configure automatic authentication session backup interval in minutes (default = 15). Valid values: `1min`, `5min`, `15min`, `30min`, `1hr`.
@@ -336,9 +354,15 @@ The following arguments are supported:
 * `scim_server_cert` - Server certificate that the FortiGate uses for SCIM connections.
 * `application_bandwidth_tracking` - Enable/disable application bandwidth tracking. Valid values: `disable`, `enable`.
 * `tls_session_cache` - Enable/disable TLS session cache. Valid values: `enable`, `disable`.
+* `gui_restrict_theme_change` - Enable/disable restricting editing and assigning override themes to super admins. Valid values: `enable`, `disable`.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
 * `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
+
+The `split_port_mode` block supports:
+
+* `interface` - Split port interface.
+* `split_mode` - The configuration mode for the split port interface.
 
 The `internet_service_download_list` block supports:
 

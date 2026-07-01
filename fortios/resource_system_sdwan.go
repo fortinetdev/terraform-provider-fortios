@@ -146,6 +146,23 @@ func resourceSystemSdwan() *schema.Resource {
 							ValidateFunc: validation.IntBetween(0, 512),
 							Optional:     true,
 						},
+						"duplication_threshold_upbandwidth": &schema.Schema{
+							Type:     schema.TypeInt,
+							Optional: true,
+						},
+						"duplication_threshold_dwbandwidth": &schema.Schema{
+							Type:     schema.TypeInt,
+							Optional: true,
+						},
+						"duplication_threshold_bibandwidth": &schema.Schema{
+							Type:     schema.TypeInt,
+							Optional: true,
+						},
+						"duplication_threshold_bandwidth": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"interface": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
@@ -224,6 +241,38 @@ func resourceSystemSdwan() *schema.Resource {
 							Optional:     true,
 						},
 						"volume_ratio": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(1, 255),
+							Optional:     true,
+							Computed:     true,
+						},
+						"quota_limit": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(0, 10485760),
+							Optional:     true,
+						},
+						"billing_start_day": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(1, 31),
+							Optional:     true,
+							Computed:     true,
+						},
+						"overage": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"overage_weight": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(0, 255),
+							Optional:     true,
+							Computed:     true,
+						},
+						"overage_cost": &schema.Schema{
+							Type:     schema.TypeInt,
+							Optional: true,
+						},
+						"overage_volume_ratio": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 255),
 							Optional:     true,
@@ -981,6 +1030,11 @@ func resourceSystemSdwan() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"bandwidth_type": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"shortcut_stickiness": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -1582,6 +1636,26 @@ func resourceSystemSdwan() *schema.Resource {
 								},
 							},
 						},
+						"tos": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"tos_mask": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+						},
+						"members": &schema.Schema{
+							Type:     schema.TypeSet,
+							Optional: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"seq_num": &schema.Schema{
+										Type:     schema.TypeInt,
+										Optional: true,
+									},
+								},
+							},
+						},
 						"packet_duplication": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -1962,6 +2036,38 @@ func flattenSystemSdwanMembers(v interface{}, d *schema.ResourceData, pre string
 			tmp["seq_num"] = flattenSystemSdwanMembersSeqNum(cur_v, d, pre_append, sv)
 		}
 
+		if cur_v, ok := i["duplication-threshold-upbandwidth"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "duplication_threshold_upbandwidth"
+			}
+			tmp["duplication_threshold_upbandwidth"] = flattenSystemSdwanMembersDuplicationThresholdUpbandwidth(cur_v, d, pre_append, sv)
+		}
+
+		if cur_v, ok := i["duplication-threshold-dwbandwidth"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "duplication_threshold_dwbandwidth"
+			}
+			tmp["duplication_threshold_dwbandwidth"] = flattenSystemSdwanMembersDuplicationThresholdDwbandwidth(cur_v, d, pre_append, sv)
+		}
+
+		if cur_v, ok := i["duplication-threshold-bibandwidth"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "duplication_threshold_bibandwidth"
+			}
+			tmp["duplication_threshold_bibandwidth"] = flattenSystemSdwanMembersDuplicationThresholdBibandwidth(cur_v, d, pre_append, sv)
+		}
+
+		if cur_v, ok := i["duplication-threshold-bandwidth"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "duplication_threshold_bandwidth"
+			}
+			tmp["duplication_threshold_bandwidth"] = flattenSystemSdwanMembersDuplicationThresholdBandwidth(cur_v, d, pre_append, sv)
+		}
+
 		if cur_v, ok := i["interface"]; ok {
 			pre_append := ""
 			if tf_exist {
@@ -2090,6 +2196,54 @@ func flattenSystemSdwanMembers(v interface{}, d *schema.ResourceData, pre string
 			tmp["volume_ratio"] = flattenSystemSdwanMembersVolumeRatio(cur_v, d, pre_append, sv)
 		}
 
+		if cur_v, ok := i["quota-limit"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "quota_limit"
+			}
+			tmp["quota_limit"] = flattenSystemSdwanMembersQuotaLimit(cur_v, d, pre_append, sv)
+		}
+
+		if cur_v, ok := i["billing-start-day"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "billing_start_day"
+			}
+			tmp["billing_start_day"] = flattenSystemSdwanMembersBillingStartDay(cur_v, d, pre_append, sv)
+		}
+
+		if cur_v, ok := i["overage"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "overage"
+			}
+			tmp["overage"] = flattenSystemSdwanMembersOverage(cur_v, d, pre_append, sv)
+		}
+
+		if cur_v, ok := i["overage-weight"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "overage_weight"
+			}
+			tmp["overage_weight"] = flattenSystemSdwanMembersOverageWeight(cur_v, d, pre_append, sv)
+		}
+
+		if cur_v, ok := i["overage-cost"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "overage_cost"
+			}
+			tmp["overage_cost"] = flattenSystemSdwanMembersOverageCost(cur_v, d, pre_append, sv)
+		}
+
+		if cur_v, ok := i["overage-volume-ratio"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "overage_volume_ratio"
+			}
+			tmp["overage_volume_ratio"] = flattenSystemSdwanMembersOverageVolumeRatio(cur_v, d, pre_append, sv)
+		}
+
 		if cur_v, ok := i["status"]; ok {
 			pre_append := ""
 			if tf_exist {
@@ -2125,6 +2279,22 @@ func flattenSystemSdwanMembers(v interface{}, d *schema.ResourceData, pre string
 
 func flattenSystemSdwanMembersSeqNum(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return convintf2i(v)
+}
+
+func flattenSystemSdwanMembersDuplicationThresholdUpbandwidth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenSystemSdwanMembersDuplicationThresholdDwbandwidth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenSystemSdwanMembersDuplicationThresholdBibandwidth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenSystemSdwanMembersDuplicationThresholdBandwidth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
 }
 
 func flattenSystemSdwanMembersInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -2188,6 +2358,30 @@ func flattenSystemSdwanMembersIngressSpilloverThreshold(v interface{}, d *schema
 }
 
 func flattenSystemSdwanMembersVolumeRatio(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenSystemSdwanMembersQuotaLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenSystemSdwanMembersBillingStartDay(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenSystemSdwanMembersOverage(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdwanMembersOverageWeight(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenSystemSdwanMembersOverageCost(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenSystemSdwanMembersOverageVolumeRatio(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return convintf2i(v)
 }
 
@@ -4152,6 +4346,14 @@ func flattenSystemSdwanService(v interface{}, d *schema.ResourceData, pre string
 			tmp["load_balance"] = flattenSystemSdwanServiceLoadBalance(cur_v, d, pre_append, sv)
 		}
 
+		if cur_v, ok := i["bandwidth-type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "bandwidth_type"
+			}
+			tmp["bandwidth_type"] = flattenSystemSdwanServiceBandwidthType(cur_v, d, pre_append, sv)
+		}
+
 		if cur_v, ok := i["shortcut-stickiness"]; ok {
 			pre_append := ""
 			if tf_exist {
@@ -4686,6 +4888,10 @@ func flattenSystemSdwanServiceAddrMode(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenSystemSdwanServiceLoadBalance(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdwanServiceBandwidthType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -6041,6 +6247,30 @@ func flattenSystemSdwanDuplication(v interface{}, d *schema.ResourceData, pre st
 			tmp["service"] = flattenSystemSdwanDuplicationService(cur_v, d, pre_append, sv)
 		}
 
+		if cur_v, ok := i["tos"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "tos"
+			}
+			tmp["tos"] = flattenSystemSdwanDuplicationTos(cur_v, d, pre_append, sv)
+		}
+
+		if cur_v, ok := i["tos-mask"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "tos_mask"
+			}
+			tmp["tos_mask"] = flattenSystemSdwanDuplicationTosMask(cur_v, d, pre_append, sv)
+		}
+
+		if cur_v, ok := i["members"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "members"
+			}
+			tmp["members"] = flattenSystemSdwanDuplicationMembers(cur_v, d, pre_append, sv)
+		}
+
 		if cur_v, ok := i["packet-duplication"]; ok {
 			pre_append := ""
 			if tf_exist {
@@ -6502,6 +6732,67 @@ func flattenSystemSdwanDuplicationServiceName(v interface{}, d *schema.ResourceD
 	return v
 }
 
+func flattenSystemSdwanDuplicationTos(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdwanDuplicationTosMask(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemSdwanDuplicationMembers(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "seq-num", "seq_num")
+
+	con := 0
+	for _, r := range parsed_list {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
+
+		if cur_v, ok := i["seq-num"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "seq_num"
+			}
+			tmp["seq_num"] = flattenSystemSdwanDuplicationMembersSeqNum(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "seq_num", d)
+	return result
+}
+
+func flattenSystemSdwanDuplicationMembersSeqNum(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
 func flattenSystemSdwanDuplicationPacketDuplication(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -6880,6 +7171,32 @@ func expandSystemSdwanMembers(d *schema.ResourceData, v interface{}, pre string,
 			tmp["seq-num"] = nil
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "duplication_threshold_upbandwidth"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["duplication-threshold-upbandwidth"], _ = expandSystemSdwanMembersDuplicationThresholdUpbandwidth(d, i["duplication_threshold_upbandwidth"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["duplication-threshold-upbandwidth"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "duplication_threshold_dwbandwidth"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["duplication-threshold-dwbandwidth"], _ = expandSystemSdwanMembersDuplicationThresholdDwbandwidth(d, i["duplication_threshold_dwbandwidth"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["duplication-threshold-dwbandwidth"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "duplication_threshold_bibandwidth"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["duplication-threshold-bibandwidth"], _ = expandSystemSdwanMembersDuplicationThresholdBibandwidth(d, i["duplication_threshold_bibandwidth"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["duplication-threshold-bibandwidth"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "duplication_threshold_bandwidth"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["duplication-threshold-bandwidth"], _ = expandSystemSdwanMembersDuplicationThresholdBandwidth(d, i["duplication_threshold_bandwidth"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["interface"], _ = expandSystemSdwanMembersInterface(d, i["interface"], pre_append, sv)
@@ -6972,6 +7289,40 @@ func expandSystemSdwanMembers(d *schema.ResourceData, v interface{}, pre string,
 			tmp["volume-ratio"], _ = expandSystemSdwanMembersVolumeRatio(d, i["volume_ratio"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "quota_limit"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["quota-limit"], _ = expandSystemSdwanMembersQuotaLimit(d, i["quota_limit"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["quota-limit"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "billing_start_day"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["billing-start-day"], _ = expandSystemSdwanMembersBillingStartDay(d, i["billing_start_day"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "overage"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["overage"], _ = expandSystemSdwanMembersOverage(d, i["overage"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "overage_weight"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["overage-weight"], _ = expandSystemSdwanMembersOverageWeight(d, i["overage_weight"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "overage_cost"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["overage-cost"], _ = expandSystemSdwanMembersOverageCost(d, i["overage_cost"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["overage-cost"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "overage_volume_ratio"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["overage-volume-ratio"], _ = expandSystemSdwanMembersOverageVolumeRatio(d, i["overage_volume_ratio"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["status"], _ = expandSystemSdwanMembersStatus(d, i["status"], pre_append, sv)
@@ -7000,6 +7351,22 @@ func expandSystemSdwanMembers(d *schema.ResourceData, v interface{}, pre string,
 }
 
 func expandSystemSdwanMembersSeqNum(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanMembersDuplicationThresholdUpbandwidth(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanMembersDuplicationThresholdDwbandwidth(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanMembersDuplicationThresholdBibandwidth(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanMembersDuplicationThresholdBandwidth(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -7064,6 +7431,30 @@ func expandSystemSdwanMembersIngressSpilloverThreshold(d *schema.ResourceData, v
 }
 
 func expandSystemSdwanMembersVolumeRatio(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanMembersQuotaLimit(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanMembersBillingStartDay(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanMembersOverage(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanMembersOverageWeight(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanMembersOverageCost(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanMembersOverageVolumeRatio(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -8425,7 +8816,7 @@ func expandSystemSdwanNeighbor(d *schema.ResourceData, v interface{}, pre string
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "member"
 		if _, ok := d.GetOk(pre_append); ok {
 			new_version_map := map[string][]string{
-				"=": []string{"6.4.1", "6.4.2", "6.4.10", "6.4.11", "6.4.12", "6.4.13", "6.4.14", "6.4.15", "7.0.0", "7.0.1", "7.0.2", "7.0.3", "7.0.4", "7.0.5", "7.0.6", "7.0.7", "7.0.8", "7.0.9", "7.0.10", "7.0.11", "7.0.12", "7.0.13", "7.0.14", "7.0.15", "7.0.16", "7.0.17"},
+				"=": []string{"6.4.1", "6.4.2", "6.4.10", "6.4.11", "6.4.12", "6.4.13", "6.4.14", "6.4.15", "7.0.0", "7.0.1", "7.0.2", "7.0.3", "7.0.4", "7.0.5", "7.0.6", "7.0.7", "7.0.8", "7.0.9", "7.0.10", "7.0.11", "7.0.12", "7.0.13", "7.0.14", "7.0.15", "7.0.16", "7.0.17", "7.0.18", "7.0.19"},
 			}
 			if versionMatch, err := checkVersionMatch(sv, new_version_map); !versionMatch {
 				if _, ok := d.GetOk("member_block"); !ok && !d.HasChange("member_block") {
@@ -8581,6 +8972,11 @@ func expandSystemSdwanService(d *schema.ResourceData, v interface{}, pre string,
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "load_balance"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["load-balance"], _ = expandSystemSdwanServiceLoadBalance(d, i["load_balance"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "bandwidth_type"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["bandwidth-type"], _ = expandSystemSdwanServiceBandwidthType(d, i["bandwidth_type"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "shortcut_stickiness"
@@ -8984,6 +9380,10 @@ func expandSystemSdwanServiceAddrMode(d *schema.ResourceData, v interface{}, pre
 }
 
 func expandSystemSdwanServiceLoadBalance(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanServiceBandwidthType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -9816,6 +10216,27 @@ func expandSystemSdwanDuplication(d *schema.ResourceData, v interface{}, pre str
 			tmp["service"] = make([]string, 0)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "tos"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["tos"], _ = expandSystemSdwanDuplicationTos(d, i["tos"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["tos"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "tos_mask"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["tos-mask"], _ = expandSystemSdwanDuplicationTosMask(d, i["tos_mask"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["tos-mask"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "members"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["members"], _ = expandSystemSdwanDuplicationMembers(d, i["members"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["members"] = make([]string, 0)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "packet_duplication"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["packet-duplication"], _ = expandSystemSdwanDuplicationPacketDuplication(d, i["packet_duplication"], pre_append, sv)
@@ -10064,6 +10485,42 @@ func expandSystemSdwanDuplicationService(d *schema.ResourceData, v interface{}, 
 }
 
 func expandSystemSdwanDuplicationServiceName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanDuplicationTos(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanDuplicationTosMask(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemSdwanDuplicationMembers(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.(*schema.Set).List()
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		tmp["seq-num"], _ = expandSystemSdwanDuplicationMembersSeqNum(d, i["seq_num"], pre_append, sv)
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemSdwanDuplicationMembersSeqNum(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

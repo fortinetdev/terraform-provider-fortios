@@ -51,6 +51,9 @@ func resourceCertificateRemote() *schema.Resource {
 			"remote": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				DiffSuppressFunc: func(k, old, new string, d *schema.ResourceData) bool {
+					return strings.TrimSpace(old) == strings.TrimSpace(new)
+				},
 			},
 			"range": &schema.Schema{
 				Type:     schema.TypeString,

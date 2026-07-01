@@ -320,6 +320,22 @@ func dataSourceSystemAccprofile() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"gui_theme_type": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"gui_theme": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"gui_custom_theme": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"gui_ai_assistant": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -874,6 +890,22 @@ func dataSourceFlattenSystemAccprofileSystemExecuteTelnet(v interface{}, d *sche
 	return v
 }
 
+func dataSourceFlattenSystemAccprofileGuiThemeType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemAccprofileGuiTheme(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemAccprofileGuiCustomTheme(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemAccprofileGuiAiAssistant(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceRefreshObjectSystemAccprofile(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
 
@@ -1054,6 +1086,30 @@ func dataSourceRefreshObjectSystemAccprofile(d *schema.ResourceData, o map[strin
 	if err = d.Set("system_execute_telnet", dataSourceFlattenSystemAccprofileSystemExecuteTelnet(o["system-execute-telnet"], d, "system_execute_telnet")); err != nil {
 		if !fortiAPIPatch(o["system-execute-telnet"]) {
 			return fmt.Errorf("Error reading system_execute_telnet: %v", err)
+		}
+	}
+
+	if err = d.Set("gui_theme_type", dataSourceFlattenSystemAccprofileGuiThemeType(o["gui-theme-type"], d, "gui_theme_type")); err != nil {
+		if !fortiAPIPatch(o["gui-theme-type"]) {
+			return fmt.Errorf("Error reading gui_theme_type: %v", err)
+		}
+	}
+
+	if err = d.Set("gui_theme", dataSourceFlattenSystemAccprofileGuiTheme(o["gui-theme"], d, "gui_theme")); err != nil {
+		if !fortiAPIPatch(o["gui-theme"]) {
+			return fmt.Errorf("Error reading gui_theme: %v", err)
+		}
+	}
+
+	if err = d.Set("gui_custom_theme", dataSourceFlattenSystemAccprofileGuiCustomTheme(o["gui-custom-theme"], d, "gui_custom_theme")); err != nil {
+		if !fortiAPIPatch(o["gui-custom-theme"]) {
+			return fmt.Errorf("Error reading gui_custom_theme: %v", err)
+		}
+	}
+
+	if err = d.Set("gui_ai_assistant", dataSourceFlattenSystemAccprofileGuiAiAssistant(o["gui-ai-assistant"], d, "gui_ai_assistant")); err != nil {
+		if !fortiAPIPatch(o["gui-ai-assistant"]) {
+			return fmt.Errorf("Error reading gui_ai_assistant: %v", err)
 		}
 	}
 

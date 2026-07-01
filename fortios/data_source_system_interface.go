@@ -220,6 +220,14 @@ func dataSourceSystemInterface() *schema.Resource {
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
+			"dhcp_egress_cos": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"arp_egress_cos": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"ipunnumbered": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -554,6 +562,14 @@ func dataSourceSystemInterface() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"inbandwidth_source": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"outbandwidth_source": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"disconnect_threshold": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
@@ -714,6 +730,22 @@ func dataSourceSystemInterface() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"security_8021x_mode": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"security_8021x_master": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"security_8021x_dynamic_vlan_id": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"security_8021x_member_mode": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"security_external_web": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -763,6 +795,10 @@ func dataSourceSystemInterface() *schema.Resource {
 				Computed: true,
 			},
 			"stp_ha_secondary": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"stp_edge": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -1002,6 +1038,10 @@ func dataSourceSystemInterface() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"telemetry_discover": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"fortilink_stacking": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -1015,6 +1055,10 @@ func dataSourceSystemInterface() *schema.Resource {
 				Computed: true,
 			},
 			"managed_subnetwork_size": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"ipam_conflicts": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -1126,6 +1170,10 @@ func dataSourceSystemInterface() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"switch_controller_fortilink_settings": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"swc_vlan": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
@@ -1190,6 +1238,50 @@ func dataSourceSystemInterface() *schema.Resource {
 			"eap_user_cert": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
+			},
+			"np_qos_profile": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"port_mirroring": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"mirroring_direction": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"mirroring_port": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"mirroring_filter": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"filter_srcip": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"filter_dstip": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"filter_sport": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"filter_dport": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"filter_protocol": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+					},
+				},
 			},
 			"default_purdue_level": &schema.Schema{
 				Type:     schema.TypeString,
@@ -1268,6 +1360,10 @@ func dataSourceSystemInterface() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"ip6_mgmt_address": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"ip6_extra_addr": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
@@ -1279,6 +1375,10 @@ func dataSourceSystemInterface() *schema.Resource {
 									},
 								},
 							},
+						},
+						"ip6_link_local": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"ip6_allowaccess": &schema.Schema{
 							Type:     schema.TypeString,
@@ -1507,6 +1607,10 @@ func dataSourceSystemInterface() *schema.Resource {
 									},
 								},
 							},
+						},
+						"dhcp6_egress_cos": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
 						},
 						"dhcp6_relay_service": &schema.Schema{
 							Type:     schema.TypeString,
@@ -1978,6 +2082,14 @@ func dataSourceFlattenSystemInterfaceDhcpRenewTime(v interface{}, d *schema.Reso
 	return v
 }
 
+func dataSourceFlattenSystemInterfaceDhcpEgressCos(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceArpEgressCos(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemInterfaceIpunnumbered(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -2331,6 +2443,14 @@ func dataSourceFlattenSystemInterfaceIngressShapingProfile(v interface{}, d *sch
 	return v
 }
 
+func dataSourceFlattenSystemInterfaceInbandwidthSource(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceOutbandwidthSource(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemInterfaceDisconnectThreshold(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -2546,6 +2666,22 @@ func dataSourceFlattenSystemInterfaceSecurityIpAuthBypass(v interface{}, d *sche
 	return v
 }
 
+func dataSourceFlattenSystemInterfaceSecurity8021XMode(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceSecurity8021XMaster(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceSecurity8021XDynamicVlanId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceSecurity8021XMemberMode(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemInterfaceSecurityExternalWeb(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -2619,6 +2755,10 @@ func dataSourceFlattenSystemInterfaceStp(v interface{}, d *schema.ResourceData, 
 }
 
 func dataSourceFlattenSystemInterfaceStpHaSecondary(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceStpEdge(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -3062,6 +3202,10 @@ func dataSourceFlattenSystemInterfaceApDiscover(v interface{}, d *schema.Resourc
 	return v
 }
 
+func dataSourceFlattenSystemInterfaceTelemetryDiscover(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemInterfaceFortilinkStacking(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -3075,6 +3219,10 @@ func dataSourceFlattenSystemInterfaceIpManagedByFortiipam(v interface{}, d *sche
 }
 
 func dataSourceFlattenSystemInterfaceManagedSubnetworkSize(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceIpamConflicts(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -3215,6 +3363,10 @@ func dataSourceFlattenSystemInterfaceSwitchControllerOffloadGw(v interface{}, d 
 	return v
 }
 
+func dataSourceFlattenSystemInterfaceSwitchControllerFortilinkSettings(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemInterfaceSwcVlan(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -3337,6 +3489,94 @@ func dataSourceFlattenSystemInterfaceEapUserCert(v interface{}, d *schema.Resour
 	return v
 }
 
+func dataSourceFlattenSystemInterfaceNpQosProfile(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfacePortMirroring(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceMirroringDirection(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceMirroringPort(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceMirroringFilter(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	i := v.(map[string]interface{})
+	result := make(map[string]interface{})
+
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "filter_srcip"
+	if _, ok := i["filter-srcip"]; ok {
+		result["filter_srcip"] = dataSourceFlattenSystemInterfaceMirroringFilterFilterSrcip(i["filter-srcip"], d, pre_append)
+	}
+
+	pre_append = pre + ".0." + "filter_dstip"
+	if _, ok := i["filter-dstip"]; ok {
+		result["filter_dstip"] = dataSourceFlattenSystemInterfaceMirroringFilterFilterDstip(i["filter-dstip"], d, pre_append)
+	}
+
+	pre_append = pre + ".0." + "filter_sport"
+	if _, ok := i["filter-sport"]; ok {
+		result["filter_sport"] = dataSourceFlattenSystemInterfaceMirroringFilterFilterSport(i["filter-sport"], d, pre_append)
+	}
+
+	pre_append = pre + ".0." + "filter_dport"
+	if _, ok := i["filter-dport"]; ok {
+		result["filter_dport"] = dataSourceFlattenSystemInterfaceMirroringFilterFilterDport(i["filter-dport"], d, pre_append)
+	}
+
+	pre_append = pre + ".0." + "filter_protocol"
+	if _, ok := i["filter-protocol"]; ok {
+		result["filter_protocol"] = dataSourceFlattenSystemInterfaceMirroringFilterFilterProtocol(i["filter-protocol"], d, pre_append)
+	}
+
+	lastresult := []map[string]interface{}{result}
+	return lastresult
+}
+
+func dataSourceFlattenSystemInterfaceMirroringFilterFilterSrcip(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	if v1, ok := d.GetOkExists(pre); ok && v != nil {
+		if s, ok := v1.(string); ok {
+			v = validateConvIPMask2CIDR(s, v.(string))
+			return v
+		}
+	}
+
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceMirroringFilterFilterDstip(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	if v1, ok := d.GetOkExists(pre); ok && v != nil {
+		if s, ok := v1.(string); ok {
+			v = validateConvIPMask2CIDR(s, v.(string))
+			return v
+		}
+	}
+
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceMirroringFilterFilterSport(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceMirroringFilterFilterDport(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceMirroringFilterFilterProtocol(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemInterfaceDefaultPurdueLevel(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -3404,9 +3644,19 @@ func dataSourceFlattenSystemInterfaceIpv6(v interface{}, d *schema.ResourceData,
 		result["ip6_address"] = dataSourceFlattenSystemInterfaceIpv6Ip6Address(i["ip6-address"], d, pre_append)
 	}
 
+	pre_append = pre + ".0." + "ip6_mgmt_address"
+	if _, ok := i["ip6-mgmt-address"]; ok {
+		result["ip6_mgmt_address"] = dataSourceFlattenSystemInterfaceIpv6Ip6MgmtAddress(i["ip6-mgmt-address"], d, pre_append)
+	}
+
 	pre_append = pre + ".0." + "ip6_extra_addr"
 	if _, ok := i["ip6-extra-addr"]; ok {
 		result["ip6_extra_addr"] = dataSourceFlattenSystemInterfaceIpv6Ip6ExtraAddr(i["ip6-extra-addr"], d, pre_append)
+	}
+
+	pre_append = pre + ".0." + "ip6_link_local"
+	if _, ok := i["ip6-link-local"]; ok {
+		result["ip6_link_local"] = dataSourceFlattenSystemInterfaceIpv6Ip6LinkLocal(i["ip6-link-local"], d, pre_append)
 	}
 
 	pre_append = pre + ".0." + "ip6_allowaccess"
@@ -3542,6 +3792,11 @@ func dataSourceFlattenSystemInterfaceIpv6(v interface{}, d *schema.ResourceData,
 	pre_append = pre + ".0." + "ip6_delegated_prefix_list"
 	if _, ok := i["ip6-delegated-prefix-list"]; ok {
 		result["ip6_delegated_prefix_list"] = dataSourceFlattenSystemInterfaceIpv6Ip6DelegatedPrefixList(i["ip6-delegated-prefix-list"], d, pre_append)
+	}
+
+	pre_append = pre + ".0." + "dhcp6_egress_cos"
+	if _, ok := i["dhcp6-egress-cos"]; ok {
+		result["dhcp6_egress_cos"] = dataSourceFlattenSystemInterfaceIpv6Dhcp6EgressCos(i["dhcp6-egress-cos"], d, pre_append)
 	}
 
 	pre_append = pre + ".0." + "dhcp6_relay_service"
@@ -3741,6 +3996,10 @@ func dataSourceFlattenSystemInterfaceIpv6Ip6Address(v interface{}, d *schema.Res
 	return v
 }
 
+func dataSourceFlattenSystemInterfaceIpv6Ip6MgmtAddress(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemInterfaceIpv6Ip6ExtraAddr(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -3774,6 +4033,10 @@ func dataSourceFlattenSystemInterfaceIpv6Ip6ExtraAddr(v interface{}, d *schema.R
 }
 
 func dataSourceFlattenSystemInterfaceIpv6Ip6ExtraAddrPrefix(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceIpv6Ip6LinkLocal(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -4236,6 +4499,10 @@ func dataSourceFlattenSystemInterfaceIpv6Ip6DelegatedPrefixListRdnss(v interface
 }
 
 func dataSourceFlattenSystemInterfaceIpv6Ip6DelegatedPrefixListDnsslService(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemInterfaceIpv6Dhcp6EgressCos(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -4740,6 +5007,18 @@ func dataSourceRefreshObjectSystemInterface(d *schema.ResourceData, o map[string
 		}
 	}
 
+	if err = d.Set("dhcp_egress_cos", dataSourceFlattenSystemInterfaceDhcpEgressCos(o["dhcp-egress-cos"], d, "dhcp_egress_cos")); err != nil {
+		if !fortiAPIPatch(o["dhcp-egress-cos"]) {
+			return fmt.Errorf("Error reading dhcp_egress_cos: %v", err)
+		}
+	}
+
+	if err = d.Set("arp_egress_cos", dataSourceFlattenSystemInterfaceArpEgressCos(o["arp-egress-cos"], d, "arp_egress_cos")); err != nil {
+		if !fortiAPIPatch(o["arp-egress-cos"]) {
+			return fmt.Errorf("Error reading arp_egress_cos: %v", err)
+		}
+	}
+
 	if err = d.Set("ipunnumbered", dataSourceFlattenSystemInterfaceIpunnumbered(o["ipunnumbered"], d, "ipunnumbered")); err != nil {
 		if !fortiAPIPatch(o["ipunnumbered"]) {
 			return fmt.Errorf("Error reading ipunnumbered: %v", err)
@@ -5226,6 +5505,18 @@ func dataSourceRefreshObjectSystemInterface(d *schema.ResourceData, o map[string
 		}
 	}
 
+	if err = d.Set("inbandwidth_source", dataSourceFlattenSystemInterfaceInbandwidthSource(o["inbandwidth-source"], d, "inbandwidth_source")); err != nil {
+		if !fortiAPIPatch(o["inbandwidth-source"]) {
+			return fmt.Errorf("Error reading inbandwidth_source: %v", err)
+		}
+	}
+
+	if err = d.Set("outbandwidth_source", dataSourceFlattenSystemInterfaceOutbandwidthSource(o["outbandwidth-source"], d, "outbandwidth_source")); err != nil {
+		if !fortiAPIPatch(o["outbandwidth-source"]) {
+			return fmt.Errorf("Error reading outbandwidth_source: %v", err)
+		}
+	}
+
 	if err = d.Set("disconnect_threshold", dataSourceFlattenSystemInterfaceDisconnectThreshold(o["disconnect-threshold"], d, "disconnect_threshold")); err != nil {
 		if !fortiAPIPatch(o["disconnect-threshold"]) {
 			return fmt.Errorf("Error reading disconnect_threshold: %v", err)
@@ -5442,6 +5733,30 @@ func dataSourceRefreshObjectSystemInterface(d *schema.ResourceData, o map[string
 		}
 	}
 
+	if err = d.Set("security_8021x_mode", dataSourceFlattenSystemInterfaceSecurity8021XMode(o["security-8021x-mode"], d, "security_8021x_mode")); err != nil {
+		if !fortiAPIPatch(o["security-8021x-mode"]) {
+			return fmt.Errorf("Error reading security_8021x_mode: %v", err)
+		}
+	}
+
+	if err = d.Set("security_8021x_master", dataSourceFlattenSystemInterfaceSecurity8021XMaster(o["security-8021x-master"], d, "security_8021x_master")); err != nil {
+		if !fortiAPIPatch(o["security-8021x-master"]) {
+			return fmt.Errorf("Error reading security_8021x_master: %v", err)
+		}
+	}
+
+	if err = d.Set("security_8021x_dynamic_vlan_id", dataSourceFlattenSystemInterfaceSecurity8021XDynamicVlanId(o["security-8021x-dynamic-vlan-id"], d, "security_8021x_dynamic_vlan_id")); err != nil {
+		if !fortiAPIPatch(o["security-8021x-dynamic-vlan-id"]) {
+			return fmt.Errorf("Error reading security_8021x_dynamic_vlan_id: %v", err)
+		}
+	}
+
+	if err = d.Set("security_8021x_member_mode", dataSourceFlattenSystemInterfaceSecurity8021XMemberMode(o["security-8021x-member-mode"], d, "security_8021x_member_mode")); err != nil {
+		if !fortiAPIPatch(o["security-8021x-member-mode"]) {
+			return fmt.Errorf("Error reading security_8021x_member_mode: %v", err)
+		}
+	}
+
 	if err = d.Set("security_external_web", dataSourceFlattenSystemInterfaceSecurityExternalWeb(o["security-external-web"], d, "security_external_web")); err != nil {
 		if !fortiAPIPatch(o["security-external-web"]) {
 			return fmt.Errorf("Error reading security_external_web: %v", err)
@@ -5505,6 +5820,12 @@ func dataSourceRefreshObjectSystemInterface(d *schema.ResourceData, o map[string
 	if err = d.Set("stp_ha_secondary", dataSourceFlattenSystemInterfaceStpHaSecondary(o["stp-ha-secondary"], d, "stp_ha_secondary")); err != nil {
 		if !fortiAPIPatch(o["stp-ha-secondary"]) {
 			return fmt.Errorf("Error reading stp_ha_secondary: %v", err)
+		}
+	}
+
+	if err = d.Set("stp_edge", dataSourceFlattenSystemInterfaceStpEdge(o["stp-edge"], d, "stp_edge")); err != nil {
+		if !fortiAPIPatch(o["stp-edge"]) {
+			return fmt.Errorf("Error reading stp_edge: %v", err)
 		}
 	}
 
@@ -5676,6 +5997,12 @@ func dataSourceRefreshObjectSystemInterface(d *schema.ResourceData, o map[string
 		}
 	}
 
+	if err = d.Set("telemetry_discover", dataSourceFlattenSystemInterfaceTelemetryDiscover(o["telemetry-discover"], d, "telemetry_discover")); err != nil {
+		if !fortiAPIPatch(o["telemetry-discover"]) {
+			return fmt.Errorf("Error reading telemetry_discover: %v", err)
+		}
+	}
+
 	if err = d.Set("fortilink_stacking", dataSourceFlattenSystemInterfaceFortilinkStacking(o["fortilink-stacking"], d, "fortilink_stacking")); err != nil {
 		if !fortiAPIPatch(o["fortilink-stacking"]) {
 			return fmt.Errorf("Error reading fortilink_stacking: %v", err)
@@ -5697,6 +6024,12 @@ func dataSourceRefreshObjectSystemInterface(d *schema.ResourceData, o map[string
 	if err = d.Set("managed_subnetwork_size", dataSourceFlattenSystemInterfaceManagedSubnetworkSize(o["managed-subnetwork-size"], d, "managed_subnetwork_size")); err != nil {
 		if !fortiAPIPatch(o["managed-subnetwork-size"]) {
 			return fmt.Errorf("Error reading managed_subnetwork_size: %v", err)
+		}
+	}
+
+	if err = d.Set("ipam_conflicts", dataSourceFlattenSystemInterfaceIpamConflicts(o["ipam-conflicts"], d, "ipam_conflicts")); err != nil {
+		if !fortiAPIPatch(o["ipam-conflicts"]) {
+			return fmt.Errorf("Error reading ipam_conflicts: %v", err)
 		}
 	}
 
@@ -5844,6 +6177,12 @@ func dataSourceRefreshObjectSystemInterface(d *schema.ResourceData, o map[string
 		}
 	}
 
+	if err = d.Set("switch_controller_fortilink_settings", dataSourceFlattenSystemInterfaceSwitchControllerFortilinkSettings(o["switch-controller-fortilink-settings"], d, "switch_controller_fortilink_settings")); err != nil {
+		if !fortiAPIPatch(o["switch-controller-fortilink-settings"]) {
+			return fmt.Errorf("Error reading switch_controller_fortilink_settings: %v", err)
+		}
+	}
+
 	if err = d.Set("swc_vlan", dataSourceFlattenSystemInterfaceSwcVlan(o["swc-vlan"], d, "swc_vlan")); err != nil {
 		if !fortiAPIPatch(o["swc-vlan"]) {
 			return fmt.Errorf("Error reading swc_vlan: %v", err)
@@ -5895,6 +6234,36 @@ func dataSourceRefreshObjectSystemInterface(d *schema.ResourceData, o map[string
 	if err = d.Set("eap_user_cert", dataSourceFlattenSystemInterfaceEapUserCert(o["eap-user-cert"], d, "eap_user_cert")); err != nil {
 		if !fortiAPIPatch(o["eap-user-cert"]) {
 			return fmt.Errorf("Error reading eap_user_cert: %v", err)
+		}
+	}
+
+	if err = d.Set("np_qos_profile", dataSourceFlattenSystemInterfaceNpQosProfile(o["np-qos-profile"], d, "np_qos_profile")); err != nil {
+		if !fortiAPIPatch(o["np-qos-profile"]) {
+			return fmt.Errorf("Error reading np_qos_profile: %v", err)
+		}
+	}
+
+	if err = d.Set("port_mirroring", dataSourceFlattenSystemInterfacePortMirroring(o["port-mirroring"], d, "port_mirroring")); err != nil {
+		if !fortiAPIPatch(o["port-mirroring"]) {
+			return fmt.Errorf("Error reading port_mirroring: %v", err)
+		}
+	}
+
+	if err = d.Set("mirroring_direction", dataSourceFlattenSystemInterfaceMirroringDirection(o["mirroring-direction"], d, "mirroring_direction")); err != nil {
+		if !fortiAPIPatch(o["mirroring-direction"]) {
+			return fmt.Errorf("Error reading mirroring_direction: %v", err)
+		}
+	}
+
+	if err = d.Set("mirroring_port", dataSourceFlattenSystemInterfaceMirroringPort(o["mirroring-port"], d, "mirroring_port")); err != nil {
+		if !fortiAPIPatch(o["mirroring-port"]) {
+			return fmt.Errorf("Error reading mirroring_port: %v", err)
+		}
+	}
+
+	if err = d.Set("mirroring_filter", dataSourceFlattenSystemInterfaceMirroringFilter(o["mirroring-filter"], d, "mirroring_filter")); err != nil {
+		if !fortiAPIPatch(o["mirroring-filter"]) {
+			return fmt.Errorf("Error reading mirroring_filter: %v", err)
 		}
 	}
 

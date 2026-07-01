@@ -15,6 +15,15 @@ The following arguments are supported:
 
 * `name` - FortiCloud SSO admin name.
 * `accprofile` - FortiCloud SSO admin user access profile.
+* `gui_theme_type` - Use predefined themes or custom themes. Valid values: `predefined`, `custom`.
+* `gui_theme` - Predefined theme that overrides the default FortiGate theme. Valid values: `jade`, `neutrino`, `mariner`, `graphite`, `melongene`, `jet-stream`, `security-fabric`, `retro`, `dark-matter`, `onyx`, `eclipse`, `none`.
+* `gui_custom_theme` - Custom theme that overrides the default FortiGate theme.
+* `gui_llm_provider` - Select the LLM provider. Valid values: `fortiai`, `openai`.
+* `openai_api_key` - OpenAI API key.
+* `openai_api_key_part2` - OpenAI API key part 2 for excess length.
+* `openai_model` - OpenAI model.
+* `openai_project_id` - OpenAI project ID.
+* `openai_org_id` - OpenAI organization ID.
 * `vdom` - Virtual domain(s) that the administrator can access. The structure of `vdom` block is documented below.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
 * `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 

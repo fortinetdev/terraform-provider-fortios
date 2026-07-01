@@ -36,6 +36,18 @@ func dataSourceSystemExternalResource() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"fabric_object": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"fabric_force_sync": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"fabric_object_source": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -70,6 +82,10 @@ func dataSourceSystemExternalResource() *schema.Resource {
 			},
 			"category": &schema.Schema{
 				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"threat_feed_hash_mode": &schema.Schema{
+				Type:     schema.TypeString,
 				Computed: true,
 			},
 			"username": &schema.Schema{
@@ -184,6 +200,18 @@ func dataSourceFlattenSystemExternalResourceUuid(v interface{}, d *schema.Resour
 	return v
 }
 
+func dataSourceFlattenSystemExternalResourceFabricObject(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemExternalResourceFabricForceSync(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemExternalResourceFabricObjectSource(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemExternalResourceStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -217,6 +245,10 @@ func dataSourceFlattenSystemExternalResourceUpdateMethod(v interface{}, d *schem
 }
 
 func dataSourceFlattenSystemExternalResourceCategory(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemExternalResourceThreatFeedHashMode(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -291,6 +323,24 @@ func dataSourceRefreshObjectSystemExternalResource(d *schema.ResourceData, o map
 		}
 	}
 
+	if err = d.Set("fabric_object", dataSourceFlattenSystemExternalResourceFabricObject(o["fabric-object"], d, "fabric_object")); err != nil {
+		if !fortiAPIPatch(o["fabric-object"]) {
+			return fmt.Errorf("Error reading fabric_object: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_force_sync", dataSourceFlattenSystemExternalResourceFabricForceSync(o["fabric-force-sync"], d, "fabric_force_sync")); err != nil {
+		if !fortiAPIPatch(o["fabric-force-sync"]) {
+			return fmt.Errorf("Error reading fabric_force_sync: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_object_source", dataSourceFlattenSystemExternalResourceFabricObjectSource(o["fabric-object-source"], d, "fabric_object_source")); err != nil {
+		if !fortiAPIPatch(o["fabric-object-source"]) {
+			return fmt.Errorf("Error reading fabric_object_source: %v", err)
+		}
+	}
+
 	if err = d.Set("status", dataSourceFlattenSystemExternalResourceStatus(o["status"], d, "status")); err != nil {
 		if !fortiAPIPatch(o["status"]) {
 			return fmt.Errorf("Error reading status: %v", err)
@@ -342,6 +392,12 @@ func dataSourceRefreshObjectSystemExternalResource(d *schema.ResourceData, o map
 	if err = d.Set("category", dataSourceFlattenSystemExternalResourceCategory(o["category"], d, "category")); err != nil {
 		if !fortiAPIPatch(o["category"]) {
 			return fmt.Errorf("Error reading category: %v", err)
+		}
+	}
+
+	if err = d.Set("threat_feed_hash_mode", dataSourceFlattenSystemExternalResourceThreatFeedHashMode(o["threat-feed-hash-mode"], d, "threat_feed_hash_mode")); err != nil {
+		if !fortiAPIPatch(o["threat-feed-hash-mode"]) {
+			return fmt.Errorf("Error reading threat_feed_hash_mode: %v", err)
 		}
 	}
 

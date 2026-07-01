@@ -50,6 +50,7 @@ The following arguments are supported:
 * `comments` - Comment.
 * `srcintf` - Incoming (ingress) interface. The structure of `srcintf` block is documented below.
 * `dstintf` - Outgoing (egress) interface. The structure of `dstintf` block is documented below.
+* `custom_tags` - Custom tags. The structure of `custom_tags` block is documented below.
 * `srcaddr` - Source IPv4 address name and address group names. The structure of `srcaddr` block is documented below.
 * `dstaddr` - Destination IPv4 address name and address group names. The structure of `dstaddr` block is documented below.
 * `srcaddr4` - Source IPv4 address name and address group names. The structure of `srcaddr4` block is documented below.
@@ -125,6 +126,7 @@ The following arguments are supported:
 * `videofilter_profile` - Name of an existing VideoFilter profile.
 * `ssh_filter_profile` - Name of an existing SSH filter profile.
 * `casb_profile` - Name of an existing CASB profile.
+* `llm_profile` - Name of an existing LLM profile.
 * `application` - Application ID list. The structure of `application` block is documented below.
 * `app_category` - Application category ID list. The structure of `app_category` block is documented below.
 * `url_category_unitary` - URL categories or groups. *Due to the data type change of API, for other versions of FortiOS, please check variable `url-category`.*
@@ -145,6 +147,10 @@ The `srcintf` block supports:
 The `dstintf` block supports:
 
 * `name` - Interface name.
+
+The `custom_tags` block supports:
+
+* `name` - Names of custom tags used with this policy.
 
 The `srcaddr` block supports:
 

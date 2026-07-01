@@ -14,9 +14,11 @@ Configure ztna web-portal bookmark. Applies to FortiOS Version `>= 7.6.1`.
 The following arguments are supported:
 
 * `name` - Bookmark name.
+* `type` - Bookmark type. Valid values: `user`, `ldap-dynamic`, `saml-dynamic`.
 * `users` - User name. The structure of `users` block is documented below.
 * `groups` - User groups. The structure of `groups` block is documented below.
 * `bookmarks` - Bookmark table. The structure of `bookmarks` block is documented below.
+* `llm_secure_proxy` - LLM secure proxy. The structure of `llm_secure_proxy` block is documented below.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
 * `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
@@ -35,6 +37,7 @@ The `bookmarks` block supports:
 * `name` - Bookmark name.
 * `apptype` - Application type. Valid values: `ftp`, `rdp`, `sftp`, `smb`, `ssh`, `telnet`, `vnc`, `web`.
 * `url` - URL parameter.
+* `verify_cert` - Enable/disable certificate verification of the real server. Valid values: `enable`, `disable`.
 * `host` - Host name/IP parameter.
 * `folder` - Network shared file folder parameter.
 * `domain` - Login domain.
@@ -54,6 +57,15 @@ The `bookmarks` block supports:
 * `width` - Screen width (range from 0 - 65535, default = 0).
 * `height` - Screen height (range from 0 - 65535, default = 0).
 * `vnc_keyboard_layout` - Keyboard layout. Valid values: `default`, `da`, `nl`, `en-uk`, `en-uk-ext`, `fi`, `fr`, `fr-be`, `fr-ca-mul`, `de`, `de-ch`, `it`, `it-142`, `pt`, `pt-br-abnt2`, `no`, `gd`, `es`, `sv`, `us-intl`.
+
+The `llm_secure_proxy` block supports:
+
+* `all_llm_servers` - Include all LLM servers. Valid values: `enable`, `disable`.
+* `llm_servers` - LLM proxy server names. The structure of `llm_servers` block is documented below.
+
+The `llm_servers` block supports:
+
+* `name` - Server name.
 
 
 ## Attribute Reference

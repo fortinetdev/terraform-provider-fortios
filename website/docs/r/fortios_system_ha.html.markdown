@@ -55,7 +55,7 @@ resource "fortios_system_ha" "trname" {
 
 The following arguments are supported:
 
-* `group_id` - HA group ID. Must be the same for all members. On FortiOS versions 6.2.0-6.2.6: 0 - 255. On FortiOS versions 7.0.2-7.0.17: 0 - 1023. On FortiOS versions 7.2.0: 0 - 1023;  or 0 - 7 when there are more than 2 vclusters.
+* `group_id` - HA group ID. Must be the same for all members. On FortiOS versions 6.2.0-6.2.6: 0 - 255. On FortiOS versions 7.0.2-7.0.19: 0 - 1023. On FortiOS versions 7.2.0: 0 - 1023;  or 0 - 7 when there are more than 2 vclusters.
 * `group_name` - Cluster group name. Must be the same for all members.
 * `mode` - HA mode. Must be the same for all members. FGSP requires standalone. Valid values: `standalone`, `a-a`, `a-p`.
 * `sync_packet_balance` - Enable/disable HA packet distribution to multiple CPUs. Valid values: `enable`, `disable`.
@@ -120,7 +120,9 @@ The following arguments are supported:
 * `nntp_proxy_threshold` - Dynamic weighted load balancing weight and high and low number of NNTP proxy sessions.
 * `pop3_proxy_threshold` - Dynamic weighted load balancing weight and high and low number of POP3 proxy sessions.
 * `smtp_proxy_threshold` - Dynamic weighted load balancing weight and high and low number of SMTP proxy sessions.
+* `link_group` - Link group table. The structure of `link_group` block is documented below.
 * `monitor` - Interfaces to check for port monitoring (or link failure).
+* `link_group_monitor` - Link groups to check for port monitoring.
 * `pingserver_monitor_interface` - Interfaces to check for remote IP monitoring.
 * `pingserver_failover_threshold` - Remote IP monitoring failover threshold (0 - 50).
 * `pingserver_secondary_force_reset` - Enable to force the cluster to negotiate after a remote IP monitoring failover. Valid values: `enable`, `disable`.
@@ -169,6 +171,16 @@ The `unicast_peers` block supports:
 * `id` - Table ID.
 * `peer_ip` - Unicast peer IP.
 
+The `link_group` block supports:
+
+* `name` - Name.
+* `member` - Member interface in this link group. The structure of `member` block is documented below.
+* `min_members` - Minimum number of members that must be up before this link group is considered up.
+
+The `member` block supports:
+
+* `devname` - Interface name.
+
 The `vcluster` block supports:
 
 * `vcluster_id` - ID.
@@ -176,6 +188,7 @@ The `vcluster` block supports:
 * `priority` - Increase the priority to select the primary unit (0 - 255).
 * `override_wait_time` - Delay negotiating if override is enabled (0 - 3600 sec). Reduces how often the cluster negotiates.
 * `monitor` - Interfaces to check for port monitoring (or link failure).
+* `link_group_monitor` - Link groups to check for port monitoring.
 * `pingserver_monitor_interface` - Interfaces to check for remote IP monitoring.
 * `pingserver_failover_threshold` - Remote IP monitoring failover threshold (0 - 50).
 * `pingserver_secondary_force_reset` - Enable to force the cluster to negotiate after a remote IP monitoring failover. Valid values: `enable`, `disable`.

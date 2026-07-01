@@ -29,9 +29,10 @@ The following arguments are supported:
 * `wan_port_mode` - Enable/disable using a WAN port as a LAN port. Valid values: `wan-lan`, `wan-only`.
 * `lan` - WTP LAN port mapping. The structure of `lan` block is documented below.
 * `energy_efficient_ethernet` - Enable/disable use of energy efficient Ethernet on WTP. Valid values: `enable`, `disable`.
-* `led_state` - Enable/disable use of LEDs on WTP. On FortiOS versions 6.2.0-7.4.7, 7.6.0-7.6.3: default = disable. On FortiOS versions 7.4.8, >= 7.6.4: default = enable. Valid values: `enable`, `disable`.
+* `led_state` - Enable/disable use of LEDs on WTP. On FortiOS versions 6.2.0-7.4.7, 7.6.0-7.6.3: default = disable. On FortiOS versions 7.4.8-7.4.12, >= 7.6.4: default = enable. Valid values: `enable`, `disable`.
 * `led_schedules` - Recurring firewall schedules for illuminating LEDs on the FortiAP. If led-state is enabled, LEDs will be visible when at least one of the schedules is valid. Separate multiple schedule names with a space. The structure of `led_schedules` block is documented below.
 * `dtls_policy` - WTP data channel DTLS policy (default = clear-text).
+* `ipsec_offload` - Enable/disable data channel IPSec offloading (default = enable). Valid values: `enable`, `disable`.
 * `dtls_in_kernel` - Enable/disable data channel DTLS in kernel. Valid values: `enable`, `disable`.
 * `max_clients` - Maximum number of stations (STAs) supported by the WTP (default = 0, meaning no client limitation).
 * `handoff_rssi` - Minimum received signal strength indicator (RSSI) value for handoff (20 - 30, default = 25).
@@ -54,6 +55,7 @@ The following arguments are supported:
 * `frequency_handoff` - Enable/disable frequency handoff of clients to other channels (default = disable). Valid values: `enable`, `disable`.
 * `ap_handoff` - Enable/disable AP handoff of clients to other APs (default = disable). Valid values: `enable`, `disable`.
 * `default_mesh_root` - Configure default mesh root SSID when it is not included by radio's SSID configuration. Valid values: `enable`, `disable`.
+* `n80211mc_mode` - Set 802.11mc mode of the AP (default = auto). Valid values: `auto`, `initiator`, `responder`.
 * `radio_1` - Configuration options for radio 1. The structure of `radio_1` block is documented below.
 * `radio_2` - Configuration options for radio 2. The structure of `radio_2` block is documented below.
 * `radio_3` - Configuration options for radio 3. The structure of `radio_3` block is documented below.
@@ -82,7 +84,7 @@ The following arguments are supported:
 * `apcfg_auto_cert_scep_keytype` - Key type (default = rsa) Valid values: `rsa`, `ec`.
 * `apcfg_auto_cert_scep_keysize` - Key size: 1024, 1536, 2048, 4096 (default 2048). Valid values: `1024`, `1536`, `2048`, `4096`.
 * `apcfg_auto_cert_scep_ec_name` - Elliptic curve name: secp256r1, secp384r1 and secp521r1. (default secp256r1). Valid values: `secp256r1`, `secp384r1`, `secp521r1`.
-* `apcfg_auto_cert_scep_sub_fully_dn` - Full DN of the subject (e.g C=US,ST=CA,L=Sunnyvale,O=Fortinet,OU=Dep1,emailAddress=test@example.com). There should be no space in between the attributes. Supported DN attributes (case-sensitive) are:C,ST,L,O,OU,emailAddress. The CN defaults to the deviceâ€™s SN and cannot be changed.
+* `apcfg_auto_cert_scep_sub_fully_dn` - Full DN of the subject (e.g C=US,ST=CA,L=Sunnyvale,O=Fortinet,OU=Dep1,emailAddress=test@example.com). There should be no space in between the attributes. Supported DN attributes (case-sensitive) are:C,ST,L,O,OU,emailAddress. The CN defaults to the device's SN and cannot be changed.
 * `apcfg_auto_cert_scep_url` - SCEP server URL.
 * `apcfg_auto_cert_scep_password` - SCEP server challenge password for auto-regeneration.
 * `apcfg_auto_cert_scep_ca_id` - CA identifier of the CA server for signing via SCEP.
@@ -162,7 +164,7 @@ The `radio_1` block supports:
 * `channel_bonding_ext` - Channel bandwidth extension: 320 MHz-1 and 320 MHz-2 (default = 320 MHz-2). Valid values: `320MHz-1`, `320MHz-2`.
 * `optional_antenna` - Optional antenna used on FAP (default = none).
 * `optional_antenna_gain` - Optional antenna gain in dBi (0 to 20, default = 0).
-* `auto_power_level` - Enable/disable automatic power-level adjustment to prevent co-channel interference. On FortiOS versions 6.2.0, 7.4.8, >= 7.6.4: default = disable. On FortiOS versions 6.2.4-7.4.7, 7.6.0-7.6.3: default = enable. Valid values: `enable`, `disable`.
+* `auto_power_level` - Enable/disable automatic power-level adjustment to prevent co-channel interference. On FortiOS versions 6.2.0, 7.4.8-7.4.12, >= 7.6.4: default = disable. On FortiOS versions 6.2.4-7.4.7, 7.6.0-7.6.3: default = enable. Valid values: `enable`, `disable`.
 * `auto_power_high` - The upper bound of automatic transmit power adjustment in dBm (the actual range of transmit power depends on the AP platform type).
 * `auto_power_low` - The lower bound of automatic transmit power adjustment in dBm (the actual range of transmit power depends on the AP platform type).
 * `auto_power_target` - Target of automatic transmit power adjustment in dBm (-95 to -20, default = -70).
@@ -172,9 +174,10 @@ The `radio_1` block supports:
 * `dtim` - Delivery Traffic Indication Map (DTIM) period (1 - 255, default = 1). Set higher to save battery life of WiFi client in power-save mode.
 * `beacon_interval` - Beacon interval. The time between beacon frames in milliseconds. Actual range of beacon interval depends on the AP platform type (default = 100).
 * `n80211d` - Enable/disable 802.11d countryie(default = enable). Valid values: `enable`, `disable`.
-* `n80211mc` - Enable/disable 802.11mc responder mode (default = disable). Valid values: `enable`, `disable`.
+* `n80211mc` - Enable/disable radio 802.11mc capability (default = disable). Valid values: `enable`, `disable`.
 * `rts_threshold` - Maximum packet size for RTS transmissions, specifying the maximum size of a data packet before RTS/CTS (256 - 2346 bytes, default = 2346).
 * `frag_threshold` - Maximum packet size that can be sent without fragmentation (800 - 2346 bytes, default = 2346).
+* `cca_threshold` - Configure Clear Channel Assessment (CCA) threshold in dBm (-94 to -11, default = 0, 0 for unconfigured).
 * `ap_sniffer_bufsize` - Sniffer buffer size (1 - 32 MB, default = 16).
 * `ap_sniffer_chan` - Channel on which to operate the sniffer (default = 6).
 * `ap_sniffer_chan_width` - Channel bandwidth for sniffer. Valid values: `320MHz`, `240MHz`, `160MHz`, `80MHz`, `40MHz`, `20MHz`.
@@ -216,6 +219,7 @@ The `radio_1` block supports:
 * `arrp_profile` - Distributed Automatic Radio Resource Provisioning (DARRP) profile name to assign to the radio.
 * `max_clients` - Maximum number of stations (STAs) or WiFi clients supported by the radio. Range depends on the hardware.
 * `max_distance` - Maximum expected distance between the AP and clients (0 - 54000 m, default = 0).
+* `vap_status` - Enable/disable all configured SSIDs on this radio (default = enable). Valid values: `enable`, `disable`.
 * `frequency_handoff` - Enable/disable frequency handoff of clients to other channels (default = disable). Valid values: `enable`, `disable`.
 * `ap_handoff` - Enable/disable AP handoff of clients to other APs (default = disable). Valid values: `enable`, `disable`.
 * `vap_all` -  On FortiOS versions 6.2.0-6.4.0: Enable/disable the automatic inheritance of all Virtual Access Points (VAPs) (default = enable). On FortiOS versions >= 6.4.1: Configure method for assigning SSIDs to this FortiAP (default = automatically assign tunnel SSIDs).
@@ -257,7 +261,7 @@ The `radio_2` block supports:
 * `channel_bonding_ext` - Channel bandwidth extension: 320 MHz-1 and 320 MHz-2 (default = 320 MHz-2). Valid values: `320MHz-1`, `320MHz-2`.
 * `optional_antenna` - Optional antenna used on FAP (default = none).
 * `optional_antenna_gain` - Optional antenna gain in dBi (0 to 20, default = 0).
-* `auto_power_level` - Enable/disable automatic power-level adjustment to prevent co-channel interference. On FortiOS versions 6.2.0, 7.4.8, >= 7.6.4: default = disable. On FortiOS versions 6.2.4-7.4.7, 7.6.0-7.6.3: default = enable. Valid values: `enable`, `disable`.
+* `auto_power_level` - Enable/disable automatic power-level adjustment to prevent co-channel interference. On FortiOS versions 6.2.0, 7.4.8-7.4.12, >= 7.6.4: default = disable. On FortiOS versions 6.2.4-7.4.7, 7.6.0-7.6.3: default = enable. Valid values: `enable`, `disable`.
 * `auto_power_high` - The upper bound of automatic transmit power adjustment in dBm (the actual range of transmit power depends on the AP platform type).
 * `auto_power_low` - The lower bound of automatic transmit power adjustment in dBm (the actual range of transmit power depends on the AP platform type).
 * `auto_power_target` - Target of automatic transmit power adjustment in dBm (-95 to -20, default = -70).
@@ -267,9 +271,10 @@ The `radio_2` block supports:
 * `dtim` - Delivery Traffic Indication Map (DTIM) period (1 - 255, default = 1). Set higher to save battery life of WiFi client in power-save mode.
 * `beacon_interval` - Beacon interval. The time between beacon frames in milliseconds. Actual range of beacon interval depends on the AP platform type (default = 100).
 * `n80211d` - Enable/disable 802.11d countryie(default = enable). Valid values: `enable`, `disable`.
-* `n80211mc` - Enable/disable 802.11mc responder mode (default = disable). Valid values: `enable`, `disable`.
+* `n80211mc` - Enable/disable radio 802.11mc capability (default = disable). Valid values: `enable`, `disable`.
 * `rts_threshold` - Maximum packet size for RTS transmissions, specifying the maximum size of a data packet before RTS/CTS (256 - 2346 bytes, default = 2346).
 * `frag_threshold` - Maximum packet size that can be sent without fragmentation (800 - 2346 bytes, default = 2346).
+* `cca_threshold` - Configure Clear Channel Assessment (CCA) threshold in dBm (-94 to -11, default = 0, 0 for unconfigured).
 * `ap_sniffer_bufsize` - Sniffer buffer size (1 - 32 MB, default = 16).
 * `ap_sniffer_chan` - Channel on which to operate the sniffer (default = 6).
 * `ap_sniffer_chan_width` - Channel bandwidth for sniffer. Valid values: `320MHz`, `240MHz`, `160MHz`, `80MHz`, `40MHz`, `20MHz`.
@@ -311,6 +316,7 @@ The `radio_2` block supports:
 * `arrp_profile` - Distributed Automatic Radio Resource Provisioning (DARRP) profile name to assign to the radio.
 * `max_clients` - Maximum number of stations (STAs) or WiFi clients supported by the radio. Range depends on the hardware.
 * `max_distance` - Maximum expected distance between the AP and clients (0 - 54000 m, default = 0).
+* `vap_status` - Enable/disable all configured SSIDs on this radio (default = enable). Valid values: `enable`, `disable`.
 * `frequency_handoff` - Enable/disable frequency handoff of clients to other channels (default = disable). Valid values: `enable`, `disable`.
 * `ap_handoff` - Enable/disable AP handoff of clients to other APs (default = disable). Valid values: `enable`, `disable`.
 * `vap_all` -  On FortiOS versions 6.2.0-6.4.0: Enable/disable the automatic inheritance of all Virtual Access Points (VAPs) (default = enable). On FortiOS versions >= 6.4.1: Configure method for assigning SSIDs to this FortiAP (default = automatically assign tunnel SSIDs).
@@ -351,7 +357,7 @@ The `radio_3` block supports:
 * `channel_bonding_ext` - Channel bandwidth extension: 320 MHz-1 and 320 MHz-2 (default = 320 MHz-2). Valid values: `320MHz-1`, `320MHz-2`.
 * `optional_antenna` - Optional antenna used on FAP (default = none).
 * `optional_antenna_gain` - Optional antenna gain in dBi (0 to 20, default = 0).
-* `auto_power_level` - Enable/disable automatic power-level adjustment to prevent co-channel interference. On FortiOS versions 6.2.4-7.4.7, 7.6.0-7.6.3: default = enable. On FortiOS versions 7.4.8, >= 7.6.4: default = disable. Valid values: `enable`, `disable`.
+* `auto_power_level` - Enable/disable automatic power-level adjustment to prevent co-channel interference. On FortiOS versions 6.2.4-7.4.7, 7.6.0-7.6.3: default = enable. On FortiOS versions 7.4.8-7.4.12, >= 7.6.4: default = disable. Valid values: `enable`, `disable`.
 * `auto_power_high` - The upper bound of automatic transmit power adjustment in dBm (the actual range of transmit power depends on the AP platform type).
 * `auto_power_low` - The lower bound of automatic transmit power adjustment in dBm (the actual range of transmit power depends on the AP platform type).
 * `auto_power_target` - Target of automatic transmit power adjustment in dBm (-95 to -20, default = -70).
@@ -361,9 +367,10 @@ The `radio_3` block supports:
 * `dtim` - Delivery Traffic Indication Map (DTIM) period (1 - 255, default = 1). Set higher to save battery life of WiFi client in power-save mode.
 * `beacon_interval` - Beacon interval. The time between beacon frames in milliseconds. Actual range of beacon interval depends on the AP platform type (default = 100).
 * `n80211d` - Enable/disable 802.11d countryie(default = enable). Valid values: `enable`, `disable`.
-* `n80211mc` - Enable/disable 802.11mc responder mode (default = disable). Valid values: `enable`, `disable`.
+* `n80211mc` - Enable/disable radio 802.11mc capability (default = disable). Valid values: `enable`, `disable`.
 * `rts_threshold` - Maximum packet size for RTS transmissions, specifying the maximum size of a data packet before RTS/CTS (256 - 2346 bytes, default = 2346).
 * `frag_threshold` - Maximum packet size that can be sent without fragmentation (800 - 2346 bytes, default = 2346).
+* `cca_threshold` - Configure Clear Channel Assessment (CCA) threshold in dBm (-94 to -11, default = 0, 0 for unconfigured).
 * `ap_sniffer_bufsize` - Sniffer buffer size (1 - 32 MB, default = 16).
 * `ap_sniffer_chan` - Channel on which to operate the sniffer (default = 6).
 * `ap_sniffer_chan_width` - Channel bandwidth for sniffer. Valid values: `320MHz`, `240MHz`, `160MHz`, `80MHz`, `40MHz`, `20MHz`.
@@ -405,6 +412,7 @@ The `radio_3` block supports:
 * `arrp_profile` - Distributed Automatic Radio Resource Provisioning (DARRP) profile name to assign to the radio.
 * `max_clients` - Maximum number of stations (STAs) or WiFi clients supported by the radio. Range depends on the hardware.
 * `max_distance` - Maximum expected distance between the AP and clients (0 - 54000 m, default = 0).
+* `vap_status` - Enable/disable all configured SSIDs on this radio (default = enable). Valid values: `enable`, `disable`.
 * `frequency_handoff` - Enable/disable frequency handoff of clients to other channels (default = disable). Valid values: `enable`, `disable`.
 * `ap_handoff` - Enable/disable AP handoff of clients to other APs (default = disable). Valid values: `enable`, `disable`.
 * `vap_all` -  On FortiOS versions 6.2.4-6.4.0: Enable/disable the automatic inheritance of all Virtual Access Points (VAPs) (default = enable). On FortiOS versions >= 6.4.1: Configure method for assigning SSIDs to this FortiAP (default = automatically assign tunnel SSIDs).
@@ -445,7 +453,7 @@ The `radio_4` block supports:
 * `channel_bonding_ext` - Channel bandwidth extension: 320 MHz-1 and 320 MHz-2 (default = 320 MHz-2). Valid values: `320MHz-1`, `320MHz-2`.
 * `optional_antenna` - Optional antenna used on FAP (default = none).
 * `optional_antenna_gain` - Optional antenna gain in dBi (0 to 20, default = 0).
-* `auto_power_level` - Enable/disable automatic power-level adjustment to prevent co-channel interference. On FortiOS versions 6.2.4-7.4.7, 7.6.0-7.6.3: default = enable. On FortiOS versions 7.4.8, >= 7.6.4: default = disable. Valid values: `enable`, `disable`.
+* `auto_power_level` - Enable/disable automatic power-level adjustment to prevent co-channel interference. On FortiOS versions 6.2.4-7.4.7, 7.6.0-7.6.3: default = enable. On FortiOS versions 7.4.8-7.4.12, >= 7.6.4: default = disable. Valid values: `enable`, `disable`.
 * `auto_power_high` - The upper bound of automatic transmit power adjustment in dBm (the actual range of transmit power depends on the AP platform type).
 * `auto_power_low` - The lower bound of automatic transmit power adjustment in dBm (the actual range of transmit power depends on the AP platform type).
 * `auto_power_target` - Target of automatic transmit power adjustment in dBm (-95 to -20, default = -70).
@@ -455,9 +463,10 @@ The `radio_4` block supports:
 * `dtim` - Delivery Traffic Indication Map (DTIM) period (1 - 255, default = 1). Set higher to save battery life of WiFi client in power-save mode.
 * `beacon_interval` - Beacon interval. The time between beacon frames in milliseconds. Actual range of beacon interval depends on the AP platform type (default = 100).
 * `n80211d` - Enable/disable 802.11d countryie(default = enable). Valid values: `enable`, `disable`.
-* `n80211mc` - Enable/disable 802.11mc responder mode (default = disable). Valid values: `enable`, `disable`.
+* `n80211mc` - Enable/disable radio 802.11mc capability (default = disable). Valid values: `enable`, `disable`.
 * `rts_threshold` - Maximum packet size for RTS transmissions, specifying the maximum size of a data packet before RTS/CTS (256 - 2346 bytes, default = 2346).
 * `frag_threshold` - Maximum packet size that can be sent without fragmentation (800 - 2346 bytes, default = 2346).
+* `cca_threshold` - Configure Clear Channel Assessment (CCA) threshold in dBm (-94 to -11, default = 0, 0 for unconfigured).
 * `ap_sniffer_bufsize` - Sniffer buffer size (1 - 32 MB, default = 16).
 * `ap_sniffer_chan` - Channel on which to operate the sniffer (default = 6).
 * `ap_sniffer_chan_width` - Channel bandwidth for sniffer. Valid values: `320MHz`, `240MHz`, `160MHz`, `80MHz`, `40MHz`, `20MHz`.
@@ -499,6 +508,7 @@ The `radio_4` block supports:
 * `arrp_profile` - Distributed Automatic Radio Resource Provisioning (DARRP) profile name to assign to the radio.
 * `max_clients` - Maximum number of stations (STAs) or WiFi clients supported by the radio. Range depends on the hardware.
 * `max_distance` - Maximum expected distance between the AP and clients (0 - 54000 m, default = 0).
+* `vap_status` - Enable/disable all configured SSIDs on this radio (default = enable). Valid values: `enable`, `disable`.
 * `frequency_handoff` - Enable/disable frequency handoff of clients to other channels (default = disable). Valid values: `enable`, `disable`.
 * `ap_handoff` - Enable/disable AP handoff of clients to other APs (default = disable). Valid values: `enable`, `disable`.
 * `vap_all` -  On FortiOS versions 6.2.4-6.4.0: Enable/disable the automatic inheritance of all Virtual Access Points (VAPs) (default = enable). On FortiOS versions >= 6.4.1: Configure method for assigning SSIDs to this FortiAP (default = automatically assign tunnel SSIDs).

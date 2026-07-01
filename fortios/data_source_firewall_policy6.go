@@ -341,7 +341,7 @@ func dataSourceFirewallPolicy6() *schema.Resource {
 				},
 			},
 			"session_ttl": &schema.Schema{
-				Type:     schema.TypeInt,
+				Type:     schema.TypeString,
 				Computed: true,
 			},
 			"inbound": &schema.Schema{

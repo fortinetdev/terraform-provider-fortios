@@ -19,7 +19,9 @@ Use this data source to get information on fortios system fortisandbox
 
 The following attributes are exported:
 
+* `device` - Device Name.
 * `status` - Enable/disable FortiSandbox.
+* `default` - Set as default FortiSandbox.
 * `forticloud` - Enable/disable FortiSandbox Cloud.
 * `inline_scan` - Enable/disable FortiSandbox inline scan.
 * `server` - IPv4 or IPv6 address of the remote FortiSandbox.
@@ -31,6 +33,11 @@ The following attributes are exported:
 * `ssl_min_proto_version` - Minimum supported protocol version for SSL/TLS connections (default is to follow system global setting).
 * `email` - Notifier email address.
 * `ca` - The CA that signs remote FortiSandbox certificate, empty for no check.
+* `cn_list` - The CN list of remote server certificate, case sensitive, empty for no check. The structure of `cn_list` block is documented below.
 * `cn` - The CN of remote server certificate, case sensitive, empty for no check.
 * `certificate_verification` - Enable/disable identity verification of FortiSandbox by use of certificate.
+
+The `cn_list` block contains:
+
+* `cn` - CN Name.
 

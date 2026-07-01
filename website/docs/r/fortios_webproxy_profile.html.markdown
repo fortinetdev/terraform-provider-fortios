@@ -31,6 +31,10 @@ resource "fortios_webproxy_profile" "trname" {
 The following arguments are supported:
 
 * `name` - Profile name.
+* `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
+* `fabric_object` - Security Fabric global object setting. Valid values: `enable`, `disable`.
+* `fabric_force_sync` - Enable/disable forced synchronization of configuration objects from the root FortiGate unit to the downstream devices.  Configuration conflict check is skipped. Valid values: `enable`, `disable`.
+* `fabric_object_source` - Source of truth for fabric object. Valid values: `member`, `local`, `root`.
 * `header_client_ip` - Action to take on the HTTP client-IP header in forwarded requests: forwards (pass), adds, or removes the HTTP header. Valid values: `pass`, `add`, `remove`.
 * `header_via_request` - Action to take on the HTTP via header in forwarded requests: forwards (pass), adds, or removes the HTTP header. Valid values: `pass`, `add`, `remove`.
 * `header_via_response` - Action to take on the HTTP via header in forwarded responses: forwards (pass), adds, or removes the HTTP header. Valid values: `pass`, `add`, `remove`.
@@ -55,7 +59,7 @@ The `headers` block supports:
 * `dstaddr` - Destination address and address group names. The structure of `dstaddr` block is documented below.
 * `dstaddr6` - Destination address and address group names (IPv6). The structure of `dstaddr6` block is documented below.
 * `action` - Action when the HTTP header is forwarded.
-* `content` - HTTP header content (max length: 3999 characters).
+* `content` - HTTP header content. On FortiOS versions 6.2.0-7.6.6: max length: 3999 characters. On FortiOS versions >= 7.6.7: max length: 16383 characters.
 * `base64_encoding` - Enable/disable use of base64 encoding of HTTP content. Valid values: `disable`, `enable`.
 * `add_option` - Configure options to append content to existing HTTP header or add new HTTP header.
 * `protocol` - Configure protocol(s) to take add-option action on (HTTP, HTTPS, or both). Valid values: `https`, `http`.

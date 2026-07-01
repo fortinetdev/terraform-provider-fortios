@@ -121,6 +121,11 @@ func resourceLogSetting() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"fortiview_weekly_data": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"expolicy_implicit_log": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -175,7 +180,17 @@ func resourceLogSetting() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"tacacs_accounting_server_alternate": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"web_svc_perf": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"detailed_svc_name": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -394,6 +409,10 @@ func flattenLogSettingUserAnonymize(v interface{}, d *schema.ResourceData, pre s
 	return v
 }
 
+func flattenLogSettingFortiviewWeeklyData(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenLogSettingExpolicyImplicitLog(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -438,7 +457,15 @@ func flattenLogSettingZoneName(v interface{}, d *schema.ResourceData, pre string
 	return v
 }
 
+func flattenLogSettingTacacsAccountingServerAlternate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenLogSettingWebSvcPerf(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenLogSettingDetailedSvcName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -610,6 +637,12 @@ func refreshObjectLogSetting(d *schema.ResourceData, o map[string]interface{}, s
 		}
 	}
 
+	if err = d.Set("fortiview_weekly_data", flattenLogSettingFortiviewWeeklyData(o["fortiview-weekly-data"], d, "fortiview_weekly_data", sv)); err != nil {
+		if !fortiAPIPatch(o["fortiview-weekly-data"]) {
+			return fmt.Errorf("Error reading fortiview_weekly_data: %v", err)
+		}
+	}
+
 	if err = d.Set("expolicy_implicit_log", flattenLogSettingExpolicyImplicitLog(o["expolicy-implicit-log"], d, "expolicy_implicit_log", sv)); err != nil {
 		if !fortiAPIPatch(o["expolicy-implicit-log"]) {
 			return fmt.Errorf("Error reading expolicy_implicit_log: %v", err)
@@ -676,9 +709,21 @@ func refreshObjectLogSetting(d *schema.ResourceData, o map[string]interface{}, s
 		}
 	}
 
+	if err = d.Set("tacacs_accounting_server_alternate", flattenLogSettingTacacsAccountingServerAlternate(o["tacacs-accounting-server-alternate"], d, "tacacs_accounting_server_alternate", sv)); err != nil {
+		if !fortiAPIPatch(o["tacacs-accounting-server-alternate"]) {
+			return fmt.Errorf("Error reading tacacs_accounting_server_alternate: %v", err)
+		}
+	}
+
 	if err = d.Set("web_svc_perf", flattenLogSettingWebSvcPerf(o["web-svc-perf"], d, "web_svc_perf", sv)); err != nil {
 		if !fortiAPIPatch(o["web-svc-perf"]) {
 			return fmt.Errorf("Error reading web_svc_perf: %v", err)
+		}
+	}
+
+	if err = d.Set("detailed_svc_name", flattenLogSettingDetailedSvcName(o["detailed-svc-name"], d, "detailed_svc_name", sv)); err != nil {
+		if !fortiAPIPatch(o["detailed-svc-name"]) {
+			return fmt.Errorf("Error reading detailed_svc_name: %v", err)
 		}
 	}
 
@@ -781,6 +826,10 @@ func expandLogSettingUserAnonymize(d *schema.ResourceData, v interface{}, pre st
 	return v, nil
 }
 
+func expandLogSettingFortiviewWeeklyData(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandLogSettingExpolicyImplicitLog(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -825,7 +874,15 @@ func expandLogSettingZoneName(d *schema.ResourceData, v interface{}, pre string,
 	return v, nil
 }
 
+func expandLogSettingTacacsAccountingServerAlternate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandLogSettingWebSvcPerf(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogSettingDetailedSvcName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1085,6 +1142,19 @@ func getObjectLogSetting(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		}
 	}
 
+	if v, ok := d.GetOk("fortiview_weekly_data"); ok {
+		if setArgNil {
+			obj["fortiview-weekly-data"] = nil
+		} else {
+			t, err := expandLogSettingFortiviewWeeklyData(d, v, "fortiview_weekly_data", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["fortiview-weekly-data"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("expolicy_implicit_log"); ok {
 		if setArgNil {
 			obj["expolicy-implicit-log"] = nil
@@ -1230,6 +1300,19 @@ func getObjectLogSetting(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 		}
 	}
 
+	if v, ok := d.GetOk("tacacs_accounting_server_alternate"); ok {
+		if setArgNil {
+			obj["tacacs-accounting-server-alternate"] = nil
+		} else {
+			t, err := expandLogSettingTacacsAccountingServerAlternate(d, v, "tacacs_accounting_server_alternate", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["tacacs-accounting-server-alternate"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("web_svc_perf"); ok {
 		if setArgNil {
 			obj["web-svc-perf"] = nil
@@ -1239,6 +1322,19 @@ func getObjectLogSetting(d *schema.ResourceData, setArgNil bool, sv string) (*ma
 				return &obj, err
 			} else if t != nil {
 				obj["web-svc-perf"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("detailed_svc_name"); ok {
+		if setArgNil {
+			obj["detailed-svc-name"] = nil
+		} else {
+			t, err := expandLogSettingDetailedSvcName(d, v, "detailed_svc_name", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["detailed-svc-name"] = t
 			}
 		}
 	}

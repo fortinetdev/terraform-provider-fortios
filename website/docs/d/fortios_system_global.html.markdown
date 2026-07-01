@@ -79,6 +79,7 @@ The following attributes are exported:
 * `multi_factor_authentication` - Enforce all login methods to require an additional authentication factor (default = optional).
 * `ssl_min_proto_version` - Minimum supported protocol version for SSL/TLS connections (default = TLSv1.2).
 * `autorun_log_fsck` - Enable/disable automatic log partition check after ungraceful shutdown.
+* `log_fsck_timeout` - Configure the maximum the number of seconds the FortiGate unit waits while the file system check is in progress before allowing the boot process to complete and the system fully is operational.  Zero seconds means the FortiGate unit waits until the file system check is complete (0 - 3600, default = 300).
 * `dst` - Enable/disable daylight saving time.
 * `timezone` - Number corresponding to your time zone from 00 to 86. Enter set timezone ? to view the list of time zones and the numbers that represent them.
 * `traffic_priority` - Choose Type of Service (ToS) or Differentiated Services Code Point (DSCP) for traffic prioritization in traffic shaping.
@@ -94,6 +95,7 @@ The following attributes are exported:
 * `honor_df` - Enable/disable honoring of Don't-Fragment (DF) flag.
 * `pmtu_discovery` - Enable/disable path MTU discovery.
 * `virtual_switch_vlan` - Enable/disable virtual switch VLAN.
+* `split_port_mode` - Configure split port mode of ports. The structure of `split_port_mode` block is documented below.
 * `split_port` - Split port(s) to multiple 10Gbps ports.
 * `revision_image_auto_backup` - Enable/disable back-up of the latest configuration revision after the firmware is upgraded.
 * `revision_backup_on_logout` - Enable/disable back-up of the latest configuration revision when an administrator logs out of the CLI or GUI.
@@ -167,6 +169,7 @@ The following attributes are exported:
 * `cpu_use_threshold` - Threshold at which CPU usage is reported. (% of total CPU, default = 90).
 * `log_single_cpu_high` - Enable/disable logging the event of a single CPU core reaching CPU usage threshold.
 * `check_reset_range` - Configure ICMP error message verification. You can either apply strict RST range checking or disable it.
+* `single_vdom_npuvlink` - Enable/disable NPU VDOMs links for single VDOM.
 * `upgrade_report` - Enable/disable the generation of an upgrade report when upgrading the firmware.
 * `vdom_mode` - Enable/disable support for split/multiple virtual domains (VDOMs).
 * `vdom_admin` - Enable/disable support for multiple virtual domains (VDOMs).
@@ -210,6 +213,7 @@ The following attributes are exported:
 * `cfg_revert_timeout` - Time-out for reverting to the last saved configuration.
 * `reboot_upon_config_restore` - Enable/disable reboot of system upon restoring configuration.
 * `admin_scp` - Enable/disable using SCP to download the system configuration. You can use SCP as an alternative method for backing up the configuration.
+* `tcp_congestion_control` - Configure TCP congestion control algorithm (default = cubic).
 * `security_rating_result_submission` - Enable/disable the submission of Security Rating results to FortiGuard.
 * `security_rating_run_on_schedule` - Enable/disable scheduled runs of Security Rating.
 * `wireless_controller` - Enable/disable the wireless controller feature to use the FortiGate unit to manage FortiAPs.
@@ -220,6 +224,8 @@ The following attributes are exported:
 * `fortiextender_discovery_lockdown` - Enable/disable FortiExtender CAPWAP lockdown.
 * `fortiextender_vlan_mode` - Enable/disable FortiExtender VLAN mode.
 * `fortiextender_provision_on_authorization` - Enable/disable automatic provisioning of latest FortiExtender firmware on authorization.
+* `telemetry_controller` - Enable/disable FortiTelemetry controller to manage FortiTelemetry agents.
+* `telemetry_data_port` - FortiTelemetry data channel port (1024 - 49150, default = 35246).
 * `switch_controller` - Enable/disable switch controller feature. Switch controller allows you to manage FortiSwitch from the FortiGate itself.
 * `switch_controller_reserved_network` - Enable reserved network subnet for controlled switches. This is available when the switch controller is enabled.
 * `dnsproxy_worker_count` - DNS proxy worker count.
@@ -272,6 +278,16 @@ The following attributes are exported:
 * `log_uuid_address` - Enable/disable insertion of address UUIDs to traffic logs.
 * `log_ssl_connection` - Enable/disable logging of SSL connection events.
 * `gui_rest_api_cache` - Enable/disable REST API result caching on FortiGate.
+* `gui_login_request_rate_limit` - Conifgure number of login requests to maintain in the request queue (0 - 30, default = 0 for no rate limit).
+* `http_request_limit` - HTTP request body size limit.
+* `admin_http_login_request_size_limit` - HTTP login request body size limit in bytes.
+* `admin_http_json_request_limit` - HTTP JSON request body size limit in bytes (0 will disable the limit).
+* `http_unauthenticated_request_limit` - HTTP request body size limit before authentication.
+* `admin_http_request_header_timeout` - HTTP request header timeout, in milliseconds (0 will disable the timeout).
+* `admin_http_request_body_timeout` - Authenticated HTTP request body timeout, in milliseconds (0 will disable the timeout).
+* `admin_http_unauthenticated_request_body_timeout` - Unauthenticated HTTP request body timeout, in milliseconds, before authentication (0 will disable the timeout).
+* `admin_http_rate_limit_max_requests` - Maximum number of HTTP requests that are allowed to be made in a second by a single client (0 will disable rate limiting).
+* `admin_http_rate_limit_exempt_auth` - Enable/disable exemption of authenticated administrator sessions from rate limiting.
 * `rest_api_key_url_query` - Enable/disable support for passing REST API keys through URL query parameters.
 * `gui_cdn_domain_override` - Domain of CDN server.
 * `gui_fortiguard_resource_fetch` - Enable/disable retrieving static GUI resources from FortiGuard. Disabling it will improve GUI load time for air-gapped environments.
@@ -307,6 +323,7 @@ The following attributes are exported:
 * `private_data_encryption` - Enable/disable private data encryption using an AES 128-bit key.
 * `auto_auth_extension_device` - Enable/disable automatic authorization of dedicated Fortinet extension devices.
 * `gui_theme` - Color scheme for the administration GUI.
+* `gui_custom_theme` - Custom theme that overrides the default FortiGate themes.
 * `gui_date_format` - Default date format used throughout GUI.
 * `gui_date_time_source` - Source from which the FortiGate GUI uses to display date and time entries.
 * `igmp_state_limit` - Maximum number of IGMP memberships (96 - 64000, default = 3200).
@@ -334,6 +351,7 @@ The following attributes are exported:
 * `interface_subnet_usage` - Enable/disable allowing use of interface-subnet setting in firewall addresses (default = enable).
 * `sflowd_max_children_num` - Maximum number of sflowd child processes allowed to run.
 * `fortigslb_integration` - Enable/disable integration with the FortiGSLB cloud service.
+* `gtpu_dynamic_source_port` - Enable/disable GTP-U dynamic source port support.
 * `user_history_password_threshold` - Maximum number of previous passwords saved per admin/user (3 - 15, default = 3).
 * `auth_session_auto_backup` - Enable/disable automatic and periodic backup of authentication sessions (default = disable). Sessions are restored upon bootup.
 * `auth_session_auto_backup_interval` - Configure automatic authentication session backup interval in minutes (default = 15).
@@ -342,6 +360,12 @@ The following attributes are exported:
 * `scim_server_cert` - Server certificate that the FortiGate uses for SCIM connections.
 * `application_bandwidth_tracking` - Enable/disable application bandwidth tracking.
 * `tls_session_cache` - Enable/disable TLS session cache.
+* `gui_restrict_theme_change` - Enable/disable restricting editing and assigning override themes to super admins.
+
+The `split_port_mode` block contains:
+
+* `interface` - Split port interface.
+* `split_mode` - The configuration mode for the split port interface.
 
 The `internet_service_download_list` block contains:
 

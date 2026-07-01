@@ -136,6 +136,10 @@ func dataSourceSystemCentralManagement() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"use_default_servers_as_main": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"enc_algorithm": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -347,6 +351,10 @@ func dataSourceFlattenSystemCentralManagementIncludeDefaultServers(v interface{}
 	return v
 }
 
+func dataSourceFlattenSystemCentralManagementUseDefaultServersAsMain(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemCentralManagementEncAlgorithm(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -483,6 +491,12 @@ func dataSourceRefreshObjectSystemCentralManagement(d *schema.ResourceData, o ma
 	if err = d.Set("include_default_servers", dataSourceFlattenSystemCentralManagementIncludeDefaultServers(o["include-default-servers"], d, "include_default_servers")); err != nil {
 		if !fortiAPIPatch(o["include-default-servers"]) {
 			return fmt.Errorf("Error reading include_default_servers: %v", err)
+		}
+	}
+
+	if err = d.Set("use_default_servers_as_main", dataSourceFlattenSystemCentralManagementUseDefaultServersAsMain(o["use-default-servers-as-main"], d, "use_default_servers_as_main")); err != nil {
+		if !fortiAPIPatch(o["use-default-servers-as-main"]) {
+			return fmt.Errorf("Error reading use_default_servers_as_main: %v", err)
 		}
 	}
 

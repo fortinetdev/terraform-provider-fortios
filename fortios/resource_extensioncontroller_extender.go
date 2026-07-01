@@ -701,10 +701,6 @@ func expandExtensionControllerExtenderDescription(d *schema.ResourceData, v inte
 	return v, nil
 }
 
-func expandExtensionControllerExtenderVdom(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
 func expandExtensionControllerExtenderDeviceId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -919,15 +915,6 @@ func getObjectExtensionControllerExtender(d *schema.ResourceData, sv string) (*m
 		}
 	} else if d.HasChange("description") {
 		obj["description"] = nil
-	}
-
-	if v, ok := d.GetOkExists("vdom"); ok {
-		t, err := expandExtensionControllerExtenderVdom(d, v, "vdom", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["vdom"] = t
-		}
 	}
 
 	if v, ok := d.GetOkExists("device_id"); ok {

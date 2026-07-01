@@ -426,7 +426,9 @@ func mergeBlock(tf_list, rsp_list []interface{}, api_mkey, tf_mkey string) []int
 	// add items only in response
 	for _, idx := range mkey_index_map {
 		v := rsp_list[idx].(map[string]interface{})
-		if zeroCount > 0 {
+		if len(tf_list) == 0 {
+			v["tf_exist"] = true
+		} else if zeroCount > 0 {
 			v["tf_exist"] = true
 			zeroCount -= 1
 		} else {
@@ -464,5 +466,82 @@ func getUpdateIfExist(c *forticlient.FortiSDKClient, d *schema.ResourceData) boo
 		return resourceVI.(bool)
 	} else {
 		return c.Config.Auth.UpdateIfExist
+	}
+}
+
+func equalStringOfList(old, new string) bool {
+	oldSet := make(map[string]struct{})
+	newSet := make(map[string]struct{})
+
+	for _, s := range strings.Fields(old) {
+		oldSet[s] = struct{}{}
+	}
+
+	for _, s := range strings.Fields(new) {
+		newSet[s] = struct{}{}
+	}
+
+	if len(oldSet) != len(newSet) {
+		return false
+	}
+
+	for k := range oldSet {
+		if _, exists := newSet[k]; !exists {
+			return false
+		}
+	}
+
+	return true
+}
+
+func dedup(v interface{}) interface{} {
+	switch val := v.(type) {
+	case string:
+		seen := make(map[string]struct{})
+		result := make([]string, 0)
+
+		for _, item := range strings.Fields(val) {
+			if _, exists := seen[item]; !exists {
+				seen[item] = struct{}{}
+				result = append(result, item)
+			}
+		}
+
+		return strings.Join(result, " ")
+
+	case []string:
+		seen := make(map[string]struct{})
+		result := make([]string, 0, len(val))
+
+		for _, item := range val {
+			if _, exists := seen[item]; !exists {
+				seen[item] = struct{}{}
+				result = append(result, item)
+			}
+		}
+
+		return result
+
+	case []interface{}:
+		seen := make(map[string]struct{})
+		result := make([]interface{}, 0, len(val))
+
+		for _, item := range val {
+			s, ok := item.(string)
+			if !ok {
+				result = append(result, item)
+				continue
+			}
+
+			if _, exists := seen[s]; !exists {
+				seen[s] = struct{}{}
+				result = append(result, s)
+			}
+		}
+
+		return result
+
+	default:
+		return v
 	}
 }

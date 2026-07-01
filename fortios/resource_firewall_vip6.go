@@ -234,6 +234,11 @@ func resourceFirewallVip6() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"auth_virtual_host": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 79),
+				Optional:     true,
+			},
 			"empty_cert_action": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -391,9 +396,19 @@ func resourceFirewallVip6() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"ssl_upstream": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"ssl_certificate": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+			},
+			"ssl_server_client_certificate": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 79),
+				Optional:     true,
 			},
 			"ssl_dh_bits": &schema.Schema{
 				Type:     schema.TypeString,
@@ -547,6 +562,11 @@ func resourceFirewallVip6() *schema.Resource {
 				Computed: true,
 			},
 			"ssl_http_match_host": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"ssl_http_strip_secure_cookies": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -1056,6 +1076,10 @@ func flattenFirewallVip6AddNat64Route(v interface{}, d *schema.ResourceData, pre
 	return v
 }
 
+func flattenFirewallVip6AuthVirtualHost(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallVip6EmptyCertAction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1321,8 +1345,16 @@ func flattenFirewallVip6SslMode(v interface{}, d *schema.ResourceData, pre strin
 	return v
 }
 
+func flattenFirewallVip6SslUpstream(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallVip6SslCertificate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return convmap2str(v, d.Get("ssl_certificate"), "name")
+}
+
+func flattenFirewallVip6SslServerClientCertificate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
 }
 
 func flattenFirewallVip6SslDhBits(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1564,6 +1596,10 @@ func flattenFirewallVip6SslHttpLocationConversion(v interface{}, d *schema.Resou
 }
 
 func flattenFirewallVip6SslHttpMatchHost(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallVip6SslHttpStripSecureCookies(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1863,6 +1899,12 @@ func refreshObjectFirewallVip6(d *schema.ResourceData, o map[string]interface{},
 		}
 	}
 
+	if err = d.Set("auth_virtual_host", flattenFirewallVip6AuthVirtualHost(o["auth-virtual-host"], d, "auth_virtual_host", sv)); err != nil {
+		if !fortiAPIPatch(o["auth-virtual-host"]) {
+			return fmt.Errorf("Error reading auth_virtual_host: %v", err)
+		}
+	}
+
 	if err = d.Set("empty_cert_action", flattenFirewallVip6EmptyCertAction(o["empty-cert-action"], d, "empty_cert_action", sv)); err != nil {
 		if !fortiAPIPatch(o["empty-cert-action"]) {
 			return fmt.Errorf("Error reading empty_cert_action: %v", err)
@@ -1981,9 +2023,21 @@ func refreshObjectFirewallVip6(d *schema.ResourceData, o map[string]interface{},
 		}
 	}
 
+	if err = d.Set("ssl_upstream", flattenFirewallVip6SslUpstream(o["ssl-upstream"], d, "ssl_upstream", sv)); err != nil {
+		if !fortiAPIPatch(o["ssl-upstream"]) {
+			return fmt.Errorf("Error reading ssl_upstream: %v", err)
+		}
+	}
+
 	if err = d.Set("ssl_certificate", flattenFirewallVip6SslCertificate(o["ssl-certificate"], d, "ssl_certificate", sv)); err != nil {
 		if !fortiAPIPatch(o["ssl-certificate"]) {
 			return fmt.Errorf("Error reading ssl_certificate: %v", err)
+		}
+	}
+
+	if err = d.Set("ssl_server_client_certificate", flattenFirewallVip6SslServerClientCertificate(o["ssl-server-client-certificate"], d, "ssl_server_client_certificate", sv)); err != nil {
+		if !fortiAPIPatch(o["ssl-server-client-certificate"]) {
+			return fmt.Errorf("Error reading ssl_server_client_certificate: %v", err)
 		}
 	}
 
@@ -2148,6 +2202,12 @@ func refreshObjectFirewallVip6(d *schema.ResourceData, o map[string]interface{},
 	if err = d.Set("ssl_http_match_host", flattenFirewallVip6SslHttpMatchHost(o["ssl-http-match-host"], d, "ssl_http_match_host", sv)); err != nil {
 		if !fortiAPIPatch(o["ssl-http-match-host"]) {
 			return fmt.Errorf("Error reading ssl_http_match_host: %v", err)
+		}
+	}
+
+	if err = d.Set("ssl_http_strip_secure_cookies", flattenFirewallVip6SslHttpStripSecureCookies(o["ssl-http-strip-secure-cookies"], d, "ssl_http_strip_secure_cookies", sv)); err != nil {
+		if !fortiAPIPatch(o["ssl-http-strip-secure-cookies"]) {
+			return fmt.Errorf("Error reading ssl_http_strip_secure_cookies: %v", err)
 		}
 	}
 
@@ -2460,6 +2520,10 @@ func expandFirewallVip6AddNat64Route(d *schema.ResourceData, v interface{}, pre 
 	return v, nil
 }
 
+func expandFirewallVip6AuthVirtualHost(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallVip6EmptyCertAction(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -2695,6 +2759,10 @@ func expandFirewallVip6SslMode(d *schema.ResourceData, v interface{}, pre string
 	return v, nil
 }
 
+func expandFirewallVip6SslUpstream(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallVip6SslCertificate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	new_version_map := map[string][]string{
 		">=": []string{"7.4.2"},
@@ -2715,6 +2783,10 @@ func expandFirewallVip6SslCertificate(d *schema.ResourceData, v interface{}, pre
 	} else {
 		return v, nil
 	}
+}
+
+func expandFirewallVip6SslServerClientCertificate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
 }
 
 func expandFirewallVip6SslDhBits(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
@@ -2908,6 +2980,10 @@ func expandFirewallVip6SslHttpLocationConversion(d *schema.ResourceData, v inter
 }
 
 func expandFirewallVip6SslHttpMatchHost(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallVip6SslHttpStripSecureCookies(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3247,6 +3323,17 @@ func getObjectFirewallVip6(d *schema.ResourceData, sv string) (*map[string]inter
 		}
 	}
 
+	if v, ok := d.GetOk("auth_virtual_host"); ok {
+		t, err := expandFirewallVip6AuthVirtualHost(d, v, "auth_virtual_host", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["auth-virtual-host"] = t
+		}
+	} else if d.HasChange("auth_virtual_host") {
+		obj["auth-virtual-host"] = nil
+	}
+
 	if v, ok := d.GetOk("empty_cert_action"); ok {
 		t, err := expandFirewallVip6EmptyCertAction(d, v, "empty_cert_action", sv)
 		if err != nil {
@@ -3417,6 +3504,15 @@ func getObjectFirewallVip6(d *schema.ResourceData, sv string) (*map[string]inter
 		}
 	}
 
+	if v, ok := d.GetOk("ssl_upstream"); ok {
+		t, err := expandFirewallVip6SslUpstream(d, v, "ssl_upstream", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ssl-upstream"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("ssl_certificate"); ok {
 		t, err := expandFirewallVip6SslCertificate(d, v, "ssl_certificate", sv)
 		if err != nil {
@@ -3426,6 +3522,17 @@ func getObjectFirewallVip6(d *schema.ResourceData, sv string) (*map[string]inter
 		}
 	} else if d.HasChange("ssl_certificate") {
 		obj["ssl-certificate"] = nil
+	}
+
+	if v, ok := d.GetOk("ssl_server_client_certificate"); ok {
+		t, err := expandFirewallVip6SslServerClientCertificate(d, v, "ssl_server_client_certificate", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ssl-server-client-certificate"] = t
+		}
+	} else if d.HasChange("ssl_server_client_certificate") {
+		obj["ssl-server-client-certificate"] = nil
 	}
 
 	if v, ok := d.GetOk("ssl_dh_bits"); ok {
@@ -3643,6 +3750,15 @@ func getObjectFirewallVip6(d *schema.ResourceData, sv string) (*map[string]inter
 			return &obj, err
 		} else if t != nil {
 			obj["ssl-http-match-host"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ssl_http_strip_secure_cookies"); ok {
+		t, err := expandFirewallVip6SslHttpStripSecureCookies(d, v, "ssl_http_strip_secure_cookies", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ssl-http-strip-secure-cookies"] = t
 		}
 	}
 

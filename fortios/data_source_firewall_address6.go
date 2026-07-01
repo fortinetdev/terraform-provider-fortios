@@ -40,6 +40,10 @@ func dataSourceFirewallAddress6() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"sub_type": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"route_tag": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
@@ -51,6 +55,34 @@ func dataSourceFirewallAddress6() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 						"macaddr": &schema.Schema{
 							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
+			"addr_8021x": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"interface": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"mac": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"acct_user": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"ip6": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"vlan_id": &schema.Schema{
+							Type:     schema.TypeInt,
 							Computed: true,
 						},
 					},
@@ -95,6 +127,22 @@ func dataSourceFirewallAddress6() *schema.Resource {
 			"cache_ttl": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
+			},
+			"display_with": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"custom_tags": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
 			},
 			"visibility": &schema.Schema{
 				Type:     schema.TypeString,
@@ -204,11 +252,35 @@ func dataSourceFirewallAddress6() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"obj_tag": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"tag_detection_level": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"tag_type": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"obsolete": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
 			"passive_fqdn_learning": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
 			"fabric_object": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"fabric_force_sync": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"fabric_object_source": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -271,6 +343,10 @@ func dataSourceFlattenFirewallAddress6Type(v interface{}, d *schema.ResourceData
 	return v
 }
 
+func dataSourceFlattenFirewallAddress6SubType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallAddress6RouteTag(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -311,6 +387,78 @@ func dataSourceFlattenFirewallAddress6MacaddrMacaddr(v interface{}, d *schema.Re
 	return v
 }
 
+func dataSourceFlattenFirewallAddress6Addr8021X(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
+		if _, ok := i["interface"]; ok {
+			tmp["interface"] = dataSourceFlattenFirewallAddress6Addr8021XInterface(i["interface"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "mac"
+		if _, ok := i["mac"]; ok {
+			tmp["mac"] = dataSourceFlattenFirewallAddress6Addr8021XMac(i["mac"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "acct_user"
+		if _, ok := i["acct-user"]; ok {
+			tmp["acct_user"] = dataSourceFlattenFirewallAddress6Addr8021XAcctUser(i["acct-user"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip6"
+		if _, ok := i["ip6"]; ok {
+			tmp["ip6"] = dataSourceFlattenFirewallAddress6Addr8021XIp6(i["ip6"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vlan_id"
+		if _, ok := i["vlan-id"]; ok {
+			tmp["vlan_id"] = dataSourceFlattenFirewallAddress6Addr8021XVlanId(i["vlan-id"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenFirewallAddress6Addr8021XInterface(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallAddress6Addr8021XMac(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallAddress6Addr8021XAcctUser(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallAddress6Addr8021XIp6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallAddress6Addr8021XVlanId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallAddress6StartMac(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -348,6 +496,46 @@ func dataSourceFlattenFirewallAddress6Country(v interface{}, d *schema.ResourceD
 }
 
 func dataSourceFlattenFirewallAddress6CacheTtl(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallAddress6DisplayWith(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallAddress6CustomTags(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = dataSourceFlattenFirewallAddress6CustomTagsName(i["name"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenFirewallAddress6CustomTagsName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -575,11 +763,35 @@ func dataSourceFlattenFirewallAddress6SdnAddrType(v interface{}, d *schema.Resou
 	return v
 }
 
+func dataSourceFlattenFirewallAddress6ObjTag(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallAddress6TagDetectionLevel(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallAddress6TagType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallAddress6Obsolete(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallAddress6PassiveFqdnLearning(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
 func dataSourceFlattenFirewallAddress6FabricObject(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallAddress6FabricForceSync(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallAddress6FabricObjectSource(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -604,6 +816,12 @@ func dataSourceRefreshObjectFirewallAddress6(d *schema.ResourceData, o map[strin
 		}
 	}
 
+	if err = d.Set("sub_type", dataSourceFlattenFirewallAddress6SubType(o["sub-type"], d, "sub_type")); err != nil {
+		if !fortiAPIPatch(o["sub-type"]) {
+			return fmt.Errorf("Error reading sub_type: %v", err)
+		}
+	}
+
 	if err = d.Set("route_tag", dataSourceFlattenFirewallAddress6RouteTag(o["route-tag"], d, "route_tag")); err != nil {
 		if !fortiAPIPatch(o["route-tag"]) {
 			return fmt.Errorf("Error reading route_tag: %v", err)
@@ -613,6 +831,12 @@ func dataSourceRefreshObjectFirewallAddress6(d *schema.ResourceData, o map[strin
 	if err = d.Set("macaddr", dataSourceFlattenFirewallAddress6Macaddr(o["macaddr"], d, "macaddr")); err != nil {
 		if !fortiAPIPatch(o["macaddr"]) {
 			return fmt.Errorf("Error reading macaddr: %v", err)
+		}
+	}
+
+	if err = d.Set("addr_8021x", dataSourceFlattenFirewallAddress6Addr8021X(o["addr-8021x"], d, "addr_8021x")); err != nil {
+		if !fortiAPIPatch(o["addr-8021x"]) {
+			return fmt.Errorf("Error reading addr_8021x: %v", err)
 		}
 	}
 
@@ -673,6 +897,18 @@ func dataSourceRefreshObjectFirewallAddress6(d *schema.ResourceData, o map[strin
 	if err = d.Set("cache_ttl", dataSourceFlattenFirewallAddress6CacheTtl(o["cache-ttl"], d, "cache_ttl")); err != nil {
 		if !fortiAPIPatch(o["cache-ttl"]) {
 			return fmt.Errorf("Error reading cache_ttl: %v", err)
+		}
+	}
+
+	if err = d.Set("display_with", dataSourceFlattenFirewallAddress6DisplayWith(o["display-with"], d, "display_with")); err != nil {
+		if !fortiAPIPatch(o["display-with"]) {
+			return fmt.Errorf("Error reading display_with: %v", err)
+		}
+	}
+
+	if err = d.Set("custom_tags", dataSourceFlattenFirewallAddress6CustomTags(o["custom-tags"], d, "custom_tags")); err != nil {
+		if !fortiAPIPatch(o["custom-tags"]) {
+			return fmt.Errorf("Error reading custom_tags: %v", err)
 		}
 	}
 
@@ -766,6 +1002,30 @@ func dataSourceRefreshObjectFirewallAddress6(d *schema.ResourceData, o map[strin
 		}
 	}
 
+	if err = d.Set("obj_tag", dataSourceFlattenFirewallAddress6ObjTag(o["obj-tag"], d, "obj_tag")); err != nil {
+		if !fortiAPIPatch(o["obj-tag"]) {
+			return fmt.Errorf("Error reading obj_tag: %v", err)
+		}
+	}
+
+	if err = d.Set("tag_detection_level", dataSourceFlattenFirewallAddress6TagDetectionLevel(o["tag-detection-level"], d, "tag_detection_level")); err != nil {
+		if !fortiAPIPatch(o["tag-detection-level"]) {
+			return fmt.Errorf("Error reading tag_detection_level: %v", err)
+		}
+	}
+
+	if err = d.Set("tag_type", dataSourceFlattenFirewallAddress6TagType(o["tag-type"], d, "tag_type")); err != nil {
+		if !fortiAPIPatch(o["tag-type"]) {
+			return fmt.Errorf("Error reading tag_type: %v", err)
+		}
+	}
+
+	if err = d.Set("obsolete", dataSourceFlattenFirewallAddress6Obsolete(o["obsolete"], d, "obsolete")); err != nil {
+		if !fortiAPIPatch(o["obsolete"]) {
+			return fmt.Errorf("Error reading obsolete: %v", err)
+		}
+	}
+
 	if err = d.Set("passive_fqdn_learning", dataSourceFlattenFirewallAddress6PassiveFqdnLearning(o["passive-fqdn-learning"], d, "passive_fqdn_learning")); err != nil {
 		if !fortiAPIPatch(o["passive-fqdn-learning"]) {
 			return fmt.Errorf("Error reading passive_fqdn_learning: %v", err)
@@ -775,6 +1035,18 @@ func dataSourceRefreshObjectFirewallAddress6(d *schema.ResourceData, o map[strin
 	if err = d.Set("fabric_object", dataSourceFlattenFirewallAddress6FabricObject(o["fabric-object"], d, "fabric_object")); err != nil {
 		if !fortiAPIPatch(o["fabric-object"]) {
 			return fmt.Errorf("Error reading fabric_object: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_force_sync", dataSourceFlattenFirewallAddress6FabricForceSync(o["fabric-force-sync"], d, "fabric_force_sync")); err != nil {
+		if !fortiAPIPatch(o["fabric-force-sync"]) {
+			return fmt.Errorf("Error reading fabric_force_sync: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_object_source", dataSourceFlattenFirewallAddress6FabricObjectSource(o["fabric-object-source"], d, "fabric_object_source")); err != nil {
+		if !fortiAPIPatch(o["fabric-object-source"]) {
+			return fmt.Errorf("Error reading fabric_object_source: %v", err)
 		}
 	}
 

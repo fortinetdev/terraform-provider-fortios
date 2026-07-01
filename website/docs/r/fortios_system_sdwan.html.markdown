@@ -50,6 +50,10 @@ The `zone` block supports:
 The `members` block supports:
 
 * `seq_num` - Sequence number On FortiOS versions >= 6.4.2: 1-512. On FortiOS versions 6.4.1: 1-255.
+* `duplication_threshold_upbandwidth` - Bandwidth upstream threshold value in kilobytes per second (0 - 4294967295, default = 0).
+* `duplication_threshold_dwbandwidth` - Bandwidth downstream threshold value in kilobytes per second (0 - 4294967295, default = 0).
+* `duplication_threshold_bibandwidth` - Bandwidth bistream threshold value in kilobytes per second (0 - 4294967295, default = 0).
+* `duplication_threshold_bandwidth` - Configure duplication threshold bandwidth interface in the SD-WAN. Valid values: `overlay`, `underlay`.
 * `interface` - Interface name.
 * `zone` - Zone name.
 * `gateway` - The default gateway for this interface. Usually the default gateway of the Internet service provider that this interface is connected to.
@@ -66,6 +70,12 @@ The `members` block supports:
 * `spillover_threshold` - Egress spillover threshold for this interface (0 - 16776000 kbit/s). When this traffic volume threshold is reached, new sessions spill over to other interfaces in the SD-WAN.
 * `ingress_spillover_threshold` - Ingress spillover threshold for this interface (0 - 16776000 kbit/s). When this traffic volume threshold is reached, new sessions spill over to other interfaces in the SD-WAN.
 * `volume_ratio` - Measured volume ratio (this value / sum of all values = percentage of link volume, 1 - 255).
+* `quota_limit` - Volume quota limit assigned to this member in gigabytes (0 - 10485760, default = 0).
+* `billing_start_day` - Volume billing start day when this member's volume usgage will begin to calculate.
+* `overage` - Enable/disable the volume overage when member's volume usage reaches quota-limit. Valid values: `disable`, `enable`.
+* `overage_weight` - Weight value for this member when its volume is over quota and overage is enabled.
+* `overage_cost` - Cost value for this member when its volume is over quota and overage is enabled(0 - 4294967295, default = 0).
+* `overage_volume_ratio` - Volume ratio value for this member when its volume is over quota and overage is enabled(1 - 255, default = 1).
 * `status` - Enable/disable this interface in the SD-WAN. Valid values: `disable`, `enable`.
 * `transport_group` - Measured transport group (0 - 255).
 * `comment` - Comments.
@@ -95,8 +105,8 @@ The `health_check` block supports:
 * `http_match` - Response string expected from the server if the protocol is HTTP.
 * `dns_request_domain` - Fully qualified domain name to resolve for the DNS probe.
 * `dns_match_ip` - Response IP expected from DNS server if the protocol is DNS.
-* `interval` - Status check interval in milliseconds, or the time between attempting to connect to the server (default = 500). On FortiOS versions 6.4.1-7.0.10, 7.2.0-7.2.4: 500 - 3600*1000 msec. On FortiOS versions 7.0.11-7.0.17, >= 7.2.6: 20 - 3600*1000 msec.
-* `probe_timeout` - Time to wait before a probe packet is considered lost (default = 500). On FortiOS versions 6.4.2-7.0.10, 7.2.0-7.2.4: 500 - 3600*1000 msec. On FortiOS versions 6.4.1: 500 - 5000 msec. On FortiOS versions 7.0.11-7.0.17, >= 7.2.6: 20 - 3600*1000 msec.
+* `interval` - Status check interval in milliseconds, or the time between attempting to connect to the server (default = 500). On FortiOS versions 6.4.1-7.0.10, 7.2.0-7.2.4: 500 - 3600*1000 msec. On FortiOS versions 7.0.11-7.0.19, >= 7.2.6: 20 - 3600*1000 msec.
+* `probe_timeout` - Time to wait before a probe packet is considered lost (default = 500). On FortiOS versions 6.4.2-7.0.10, 7.2.0-7.2.4: 500 - 3600*1000 msec. On FortiOS versions 6.4.1: 500 - 5000 msec. On FortiOS versions 7.0.11-7.0.19, >= 7.2.6: 20 - 3600*1000 msec.
 * `agent_probe_timeout` - Time to wait before a probe packet is considered lost when detect-mode is agent (5000 - 3600*1000 msec, default = 60000).
 * `remote_probe_timeout` - Time to wait before a probe packet is considered lost when detect-mode is remote (20 - 3600*1000 msec, default = 5000).
 * `failtime` - Number of failures before server is considered lost (1 - 3600, default = 5).
@@ -231,6 +241,7 @@ The `service` block supports:
 * `name` - SD-WAN rule name.
 * `addr_mode` - Address mode (IPv4 or IPv6). Valid values: `ipv4`, `ipv6`.
 * `load_balance` - Enable/disable load-balance. Valid values: `enable`, `disable`.
+* `bandwidth_type` - Overlay/underlay bandwidth-type. Valid values: `overlay`, `underlay`.
 * `shortcut_stickiness` - Enable/disable shortcut-stickiness of ADVPN. Valid values: `enable`, `disable`.
 * `input_device` - Source interface name. The structure of `input_device` block is documented below.
 * `input_device_negate` - Enable/disable negation of input device match. Valid values: `enable`, `disable`.
@@ -388,6 +399,9 @@ The `duplication` block supports:
 * `srcintf` - Incoming (ingress) interfaces or zones. The structure of `srcintf` block is documented below.
 * `dstintf` - Outgoing (egress) interfaces or zones. The structure of `dstintf` block is documented below.
 * `service` - Service and service group name. The structure of `service` block is documented below.
+* `tos` - Type of service bit pattern.
+* `tos_mask` - Type of service evaluated bits.
+* `members` - Member sequence number list. The structure of `members` block is documented below.
 * `packet_duplication` - Configure packet duplication method. Valid values: `disable`, `force`, `on-demand`.
 * `sla_match_service` - Enable/disable packet duplication matching health-check SLAs in service rule. Valid values: `enable`, `disable`.
 * `packet_de_duplication` - Enable/disable discarding of packets that have been duplicated. Valid values: `enable`, `disable`.
@@ -423,6 +437,10 @@ The `dstintf` block supports:
 The `service` block supports:
 
 * `name` - Service and service group name.
+
+The `members` block supports:
+
+* `seq_num` - Member sequence number.
 
 
 ## Attribute Reference

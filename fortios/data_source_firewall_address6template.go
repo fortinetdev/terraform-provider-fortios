@@ -88,6 +88,14 @@ func dataSourceFirewallAddress6Template() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"fabric_force_sync": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"fabric_object_source": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -268,6 +276,14 @@ func dataSourceFlattenFirewallAddress6TemplateFabricObject(v interface{}, d *sch
 	return v
 }
 
+func dataSourceFlattenFirewallAddress6TemplateFabricForceSync(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallAddress6TemplateFabricObjectSource(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceRefreshObjectFirewallAddress6Template(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
 
@@ -304,6 +320,18 @@ func dataSourceRefreshObjectFirewallAddress6Template(d *schema.ResourceData, o m
 	if err = d.Set("fabric_object", dataSourceFlattenFirewallAddress6TemplateFabricObject(o["fabric-object"], d, "fabric_object")); err != nil {
 		if !fortiAPIPatch(o["fabric-object"]) {
 			return fmt.Errorf("Error reading fabric_object: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_force_sync", dataSourceFlattenFirewallAddress6TemplateFabricForceSync(o["fabric-force-sync"], d, "fabric_force_sync")); err != nil {
+		if !fortiAPIPatch(o["fabric-force-sync"]) {
+			return fmt.Errorf("Error reading fabric_force_sync: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_object_source", dataSourceFlattenFirewallAddress6TemplateFabricObjectSource(o["fabric-object-source"], d, "fabric_object_source")); err != nil {
+		if !fortiAPIPatch(o["fabric-object-source"]) {
+			return fmt.Errorf("Error reading fabric_object_source: %v", err)
 		}
 	}
 

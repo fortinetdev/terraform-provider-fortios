@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_extendercontroller_extenderprofile
-FortiExtender extender profile configuration. Applies to FortiOS Version `7.0.2,7.0.3,7.0.4,7.0.5,7.0.6,7.0.7,7.0.8,7.0.9,7.0.10,7.0.11,7.0.12,7.0.13,7.0.14,7.0.15,7.0.16,7.0.17,7.2.0`.
+FortiExtender extender profile configuration. Applies to FortiOS Version `7.0.2,7.0.3,7.0.4,7.0.5,7.0.6,7.0.7,7.0.8,7.0.9,7.0.10,7.0.11,7.0.12,7.0.13,7.0.14,7.0.15,7.0.16,7.0.17,7.0.18,7.0.19,7.2.0`.
 
 ## Argument Reference
 
@@ -73,7 +73,6 @@ The `modem1` block supports:
 
 * `redundant_mode` - FortiExtender mode. Valid values: `disable`, `enable`.
 * `redundant_intf` - Redundant interface.
-* `conn_status` - Connection status.
 * `default_sim` - Default SIM selection. Valid values: `sim1`, `sim2`, `carrier`, `cost`.
 * `gps` - FortiExtender GPS enable/disable. Valid values: `disable`, `enable`.
 * `sim1_pin` - SIM #1 PIN status. Valid values: `disable`, `enable`.
@@ -98,7 +97,6 @@ The `modem2` block supports:
 
 * `redundant_mode` - FortiExtender mode. Valid values: `disable`, `enable`.
 * `redundant_intf` - Redundant interface.
-* `conn_status` - Connection status.
 * `default_sim` - Default SIM selection. Valid values: `sim1`, `sim2`, `carrier`, `cost`.
 * `gps` - FortiExtender GPS enable/disable. Valid values: `disable`, `enable`.
 * `sim1_pin` - SIM #1 PIN status. Valid values: `disable`, `enable`.
@@ -139,6 +137,14 @@ The `backhaul` block supports:
 
 In addition to all the above arguments, the following attributes are exported:
 * `id` - an identifier for the resource with format {{name}}.
+
+The `modem1` block contains following attibutes:
+
+* `conn_status` - Connection status.
+
+The `modem2` block contains following attibutes:
+
+* `conn_status` - Connection status.
 
 ## Import
 

@@ -20,7 +20,13 @@ Use this data source to get information on an fortios user saml
 The following attributes are exported:
 
 * `name` - SAML server entry name.
+* `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
+* `fabric_object` - Security Fabric global object setting.
+* `fabric_force_sync` - Enable/disable forced synchronization of configuration objects from the root FortiGate unit to the downstream devices.  Configuration conflict check is skipped.
+* `fabric_object_source` - Source of truth for fabric object.
 * `cert` - Certificate to sign SAML messages.
+* `type` - SAML type.
+* `service_provider_address` - The address to handle SAML auth request. To include a port, append it after a colon.
 * `entity_id` - SP entity ID.
 * `single_sign_on_url` - SP single sign-on URL.
 * `single_logout_url` - SP single logout URL.
@@ -37,6 +43,8 @@ The following attributes are exported:
 * `require_signed_resp_and_asrt` - Require both response and assertion from IDP to be signed when FGT acts as SP (default = disable).
 * `limit_relaystate` - Enable/disable limiting of relay-state parameter when it exceeds SAML 2.0 specification limits (80 bytes).
 * `clock_tolerance` - Clock skew tolerance in seconds (0 - 300, default = 15, 0 = no tolerance).
+* `realm` - FortiIdentity cloud realm.
+* `user_source` - FortiIdentity cloud user souce.
 * `auth_url` - URL to verify authentication.
 * `adfs_claim` - Enable/disable ADFS Claim for user/group attribute in assertion statement (default = disable).
 * `user_claim_type` - User name claim in assertion statement.

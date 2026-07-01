@@ -18,6 +18,7 @@ The following arguments are supported:
 * `name` - Policy name.
 * `comments` - Comment.
 * `interface` - (Required) Incoming interface name from available interfaces.
+* `custom_tags` - Custom tags. The structure of `custom_tags` block is documented below.
 * `srcaddr` - (Required) Source address name from available addresses. The structure of `srcaddr` block is documented below.
 * `dstaddr` - (Required) Destination address name from available addresses. The structure of `dstaddr` block is documented below.
 * `service` - Service object from available options. The structure of `service` block is documented below.
@@ -26,6 +27,10 @@ The following arguments are supported:
 * `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 * `update_if_exist` - Equivalent functionality of import the resource. If set to true, will check whether the resource exist, if so, will do the UPDATE operation rather CREATE. Default is false. If you want to inherit the value of the provider, please do not set this parameter.
+
+The `custom_tags` block supports:
+
+* `name` - Names of custom tags used with this policy.
 
 The `srcaddr` block supports:
 
@@ -45,11 +50,18 @@ The `anomaly` block supports:
 * `status` - Enable/disable this anomaly. Valid values: `disable`, `enable`.
 * `log` - Enable/disable anomaly logging. Valid values: `enable`, `disable`.
 * `action` - Action taken when the threshold is reached.
+* `synproxy_ttl` - Determine Time to live (TTL) value for packets replied by syn proxy module. Valid values: `32`, `64`, `128`, `255`.
+* `synproxy_tos` - Determine TCP differentiated services code point value (type of service). Valid values: `0`, `10`, `12`, `14`, `18`, `20`, `22`, `26`, `28`, `30`, `34`, `36`, `38`, `40`, `46`, `255`.
+* `synproxy_tcp_mss` - Determine TCP maximum segment size (MSS) value for packets replied by syn proxy module. Valid values: `0`, `256`, `512`, `1024`, `1300`, `1360`, `1460`, `1500`.
+* `synproxy_tcp_sack` - enable/disable TCP selective acknowledage (SACK) for packets replied by syn proxy module. Valid values: `enable`, `disable`.
+* `synproxy_tcp_timestamp` - enable/disable TCP timestamp option for packets replied by syn proxy module. Valid values: `enable`, `disable`.
+* `synproxy_tcp_window` - Determine TCP Window size for packets replied by syn proxy module. Valid values: `4096`, `8192`, `16384`, `32768`.
+* `synproxy_tcp_windowscale` - Determine TCP window scale option value for packets replied by syn proxy module. Valid values: `0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `11`, `12`, `13`, `14`.
 * `quarantine` - Quarantine method. Valid values: `none`, `attacker`.
 * `quarantine_expiry` - Duration of quarantine. (Format ###d##h##m, minimum 1m, maximum 364d23h59m, default = 5m). Requires quarantine set to attacker.
 * `quarantine_log` - Enable/disable quarantine logging. Valid values: `disable`, `enable`.
-* `threshold` - Anomaly threshold. Number of detected instances that triggers the anomaly action. On FortiOS versions 6.2.0-6.4.2, 7.0.0-7.0.5, 7.2.0: packets per minute. On FortiOS versions 6.4.10-6.4.15, 7.0.6-7.0.17, >= 7.2.1: packets per second or concurrent session number.
-* `thresholddefault` - Number of detected instances which triggers action (1 - 2147483647, default = 1000). Note that each anomaly has a different threshold value assigned to it. On FortiOS versions 6.2.0-6.4.2, 7.0.0-7.0.5, 7.2.0: packets per minute. On FortiOS versions 6.4.10-6.4.15, 7.0.6-7.0.17, >= 7.2.1: packets per second or concurrent session number.
+* `threshold` - Anomaly threshold. Number of detected instances that triggers the anomaly action. On FortiOS versions 6.2.0-6.4.2, 7.0.0-7.0.5, 7.2.0: packets per minute. On FortiOS versions 6.4.10-6.4.15, 7.0.6-7.0.19, >= 7.2.1: packets per second or concurrent session number.
+* `thresholddefault` - Number of detected instances which triggers action (1 - 2147483647, default = 1000). Note that each anomaly has a different threshold value assigned to it. On FortiOS versions 6.2.0-6.4.2, 7.0.0-7.0.5, 7.2.0: packets per minute. On FortiOS versions 6.4.10-6.4.15, 7.0.6-7.0.19, >= 7.2.1: packets per second or concurrent session number.
 
 
 ## Attribute Reference

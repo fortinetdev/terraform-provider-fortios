@@ -32,6 +32,7 @@ The following attributes are exported:
 
 * `as_string` - Router AS number, asplain/asdot/asdot+ format, 0 to disable BGP.
 * `as` - Router AS number, valid from 1 to 4294967295, 0 to disable BGP.
+* `display_options` - Display options for Router AS number
 * `router_id` - Router ID.
 * `keepalive_timer` - Frequency to send keep alive requests.
 * `holdtime_timer` - Number of seconds to mark peer as dead.
@@ -43,6 +44,7 @@ The following attributes are exported:
 * `bestpath_med_missing_as_worst` - Enable/disable treat missing MED as least preferred.
 * `client_to_client_reflection` - Enable/disable client-to-client route reflection.
 * `dampening` - Enable/disable route-flap dampening.
+* `dampening6` - Enable/disable IPv6 route-flap dampening.
 * `deterministic_med` - Enable/disable enforce deterministic comparison of MED.
 * `ebgp_multipath` - Enable/disable EBGP multi-path.
 * `ibgp_multipath` - Enable/disable IBGP multi-path.
@@ -68,6 +70,12 @@ The following attributes are exported:
 * `dampening_suppress` - Threshold to suppress routes.
 * `dampening_max_suppress_time` - Maximum minutes a route can be suppressed.
 * `dampening_unreachability_half_life` - Unreachability half-life time for penalty (min).
+* `dampening6_route_map` - Criteria for IPv6 dampening.
+* `dampening6_reachability_half_life` - IPv6 reachability half-life time for penalty (min).
+* `dampening6_reuse` - Threshold to reuse IPv6 routes.
+* `dampening6_suppress` - Threshold to suppress IPv6 routes.
+* `dampening6_max_suppress_time` - Maximum minutes an IPv6 route can be suppressed.
+* `dampening6_unreachability_half_life` - IPv6 unreachability half-life time for penalty (min).
 * `default_local_preference` - Default local preference.
 * `scan_time` - Background scanner interval (sec), 0 to disable it.
 * `distance_external` - Distance for routes external to the AS.
@@ -121,6 +129,7 @@ The `aggregate_address6` block contains:
 The `neighbor` block contains:
 
 * `ip` - IP/IPv6 address of neighbor.
+* `name` - Name of this neighbor.
 * `advertisement_interval` - Minimum interval (sec) between sending updates.
 * `allowas_in_enable` - Enable/disable IPv4 Enable to allow my AS in AS path.
 * `allowas_in_enable6` - Enable/disable IPv6 Enable to allow my AS in AS path.
@@ -163,6 +172,8 @@ The `neighbor` block contains:
 * `next_hop_self_rr6` - Enable/disable setting nexthop's address to interface's IPv6 address for route-reflector routes.
 * `next_hop_self_vpnv4` - Enable/disable setting VPNv4 next-hop to interface's IP address for this neighbor.
 * `next_hop_self_vpnv6` - Enable/disable use of outgoing interface's IP address as VPNv6 next-hop for this neighbor.
+* `next_hop_self_rr_vpnv4` - Enable/disable setting of the nexthop's address to interface's address for route-reflector VPNv4 routes.
+* `next_hop_self_rr_vpnv6` - Enable/disable setting of the nexthop's address to interface's address for route-reflector VPNv6 routes.
 * `override_capability` - Enable/disable override result of capability negotiation.
 * `passive` - Enable/disable sending of open messages to this neighbor.
 * `remove_private_as` - Enable/disable remove private AS number from IPv4 outbound updates.
@@ -185,6 +196,7 @@ The `neighbor` block contains:
 * `rr_attr_allow_change_vpnv4` - Enable/disable allowing change of route attributes when advertising to VPNv4 route reflector clients.
 * `rr_attr_allow_change_vpnv6` - Enable/disable allowing change of route attributes when advertising to VPNv6 route reflector clients.
 * `rr_attr_allow_change_evpn` - Enable/disable allowing change of route attributes when advertising to L2VPN EVPN route reflector clients.
+* `adv_evpn_route` - Types of EVPN routes that can be advertised to this neighbor as IPv4 routes.
 * `shutdown` - Enable/disable shutdown this neighbor.
 * `soft_reconfiguration` - Enable/disable allow IPv4 inbound soft reconfiguration.
 * `soft_reconfiguration6` - Enable/disable allow IPv6 inbound soft reconfiguration.
@@ -239,6 +251,7 @@ The `neighbor` block contains:
 * `prefix_list_out_vpnv4` - Outbound filter for VPNv4 updates to this neighbor.
 * `prefix_list_out_vpnv6` - Outbound filter for VPNv6 updates to this neighbor.
 * `remote_as` - AS number of neighbor.
+* `display_options` - Display options for remote AS number
 * `local_as` - Local AS number of neighbor.
 * `local_as_no_prepend` - Do not prepend local-as to incoming updates.
 * `local_as_replace_as` - Replace real AS with local-as in outgoing updates.
@@ -268,6 +281,7 @@ The `neighbor` block contains:
 * `unsuppress_map` - IPv4 Route map to selectively unsuppress suppressed routes.
 * `unsuppress_map6` - IPv6 Route map to selectively unsuppress suppressed routes.
 * `update_source` - Interface to use as source IP/IPv6 address of TCP connections.
+* `enforce_preferred_source` - Enable/disable enforce usage of the update-source as preferred source for IPv4 routes learned from this neighbor.
 * `weight` - Neighbor weight.
 * `restart_time` - Graceful restart delay time (sec, 0 = global default).
 * `additional_path` - Enable/disable IPv4 additional-path capability.
@@ -282,6 +296,10 @@ The `neighbor` block contains:
 * `auth_options` - Key-chain name for TCP authentication options.
 * `conditional_advertise` - Conditional advertisement. The structure of `conditional_advertise` block is documented below.
 * `conditional_advertise6` - IPv6 conditional advertisement. The structure of `conditional_advertise6` block is documented below.
+* `graceful_shutdown_community` - Graceful shutdown community.
+* `graceful_shutdown_local_preference` - Graceful shutdown local preference.
+* `graceful_shutdown_delay` - Delay in seconds before graceful shutdown ends.
+* `use_sdwan` - Use SDWAN rules for BGP connection.
 
 The `conditional_advertise` block contains:
 
@@ -340,6 +358,8 @@ The `neighbor_group` block contains:
 * `next_hop_self_rr6` - Enable/disable setting nexthop's address to interface's IPv6 address for route-reflector routes.
 * `next_hop_self_vpnv4` - Enable/disable setting VPNv4 next-hop to interface's IP address for this neighbor.
 * `next_hop_self_vpnv6` - Enable/disable use of outgoing interface's IP address as VPNv6 next-hop for this neighbor.
+* `next_hop_self_rr_vpnv4` - Enable/disable setting of the nexthop's address to interface's address for route-reflector VPNv4 routes.
+* `next_hop_self_rr_vpnv6` - Enable/disable setting of the nexthop's address to interface's address for route-reflector VPNv6 routes.
 * `override_capability` - Enable/disable override result of capability negotiation.
 * `passive` - Enable/disable sending of open messages to this neighbor.
 * `remove_private_as` - Enable/disable remove private AS number from IPv4 outbound updates.
@@ -362,6 +382,7 @@ The `neighbor_group` block contains:
 * `rr_attr_allow_change_vpnv4` - Enable/disable allowing change of route attributes when advertising to VPNv4 route reflector clients.
 * `rr_attr_allow_change_vpnv6` - Enable/disable allowing change of route attributes when advertising to VPNv6 route reflector clients.
 * `rr_attr_allow_change_evpn` - Enable/disable allowing change of route attributes when advertising to L2VPN EVPN route reflector clients.
+* `adv_evpn_route` - Types of EVPN routes that can be advertised to this neighbor as IPv4 routes.
 * `shutdown` - Enable/disable shutdown this neighbor.
 * `soft_reconfiguration` - Enable/disable allow IPv4 inbound soft reconfiguration.
 * `soft_reconfiguration6` - Enable/disable allow IPv6 inbound soft reconfiguration.
@@ -416,6 +437,7 @@ The `neighbor_group` block contains:
 * `prefix_list_out_vpnv4` - Outbound filter for VPNv4 updates to this neighbor.
 * `prefix_list_out_vpnv6` - Outbound filter for VPNv6 updates to this neighbor.
 * `remote_as` - AS number of neighbor.
+* `display_options` - Display options for remote AS number
 * `remote_as_filter` - BGP filter for remote AS.
 * `local_as` - Local AS number of neighbor.
 * `local_as_no_prepend` - Do not prepend local-as to incoming updates.
@@ -446,6 +468,7 @@ The `neighbor_group` block contains:
 * `unsuppress_map` - IPv4 Route map to selectively unsuppress suppressed routes.
 * `unsuppress_map6` - IPv6 Route map to selectively unsuppress suppressed routes.
 * `update_source` - Interface to use as source IP/IPv6 address of TCP connections.
+* `enforce_preferred_source` - Enable/disable enforce usage of the update-source as preferred source for IPv4 routes learned from this neighbor.
 * `weight` - Neighbor weight.
 * `restart_time` - Graceful restart delay time (sec, 0 = global default).
 * `additional_path` - Enable/disable IPv4 additional-path capability.
@@ -458,6 +481,10 @@ The `neighbor_group` block contains:
 * `adv_additional_path_vpnv6` - Number of VPNv6 additional paths that can be advertised to this neighbor.
 * `password` - Password used in MD5 authentication.
 * `auth_options` - Key-chain name for TCP authentication options.
+* `graceful_shutdown_community` - Graceful shutdown community.
+* `graceful_shutdown_local_preference` - Graceful shutdown local preference.
+* `graceful_shutdown_delay` - Delay in seconds before graceful shutdown ends.
+* `use_sdwan` - Use SDWAN rules for BGP connection.
 
 The `neighbor_range` block contains:
 
@@ -481,6 +508,7 @@ The `network` block contains:
 * `backdoor` - Enable/disable route as backdoor.
 * `route_map` - Route map to modify generated route.
 * `prefix_name` - Name of firewall address or address group.
+* `internet_service_name` - Name of internet service.
 
 The `network6` block contains:
 
@@ -494,7 +522,9 @@ The `redistribute` block contains:
 
 * `name` - Distribute list entry name.
 * `status` - Status
+* `status_evpn` - EVPN redistribution status.
 * `route_map` - Route map name.
+* `route_map_evpn` - Route map name for EVPN redistribution.
 
 The `redistribute6` block contains:
 

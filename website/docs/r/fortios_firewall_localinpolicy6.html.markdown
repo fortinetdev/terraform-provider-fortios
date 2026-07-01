@@ -41,6 +41,7 @@ The following arguments are supported:
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `intf_block` - Incoming interface name from available options. *Due to the data type change of API, for other versions of FortiOS, please check variable `intf`.* The structure of `intf_block` block is documented below.
 * `intf` - Incoming interface name from available options. *Due to the data type change of API, for other versions of FortiOS, please check variable `intf_block`.*
+* `custom_tags` - Custom tags. The structure of `custom_tags` block is documented below.
 * `srcaddr` - (Required) Source address object from available options. The structure of `srcaddr` block is documented below.
 * `srcaddr_negate` - When enabled srcaddr specifies what the source address must NOT be. Valid values: `enable`, `disable`.
 * `dstaddr` - (Required) Destination address object from available options. The structure of `dstaddr` block is documented below.
@@ -68,6 +69,10 @@ The following arguments are supported:
 The `intf_block` block supports:
 
 * `name` - Address name.
+
+The `custom_tags` block supports:
+
+* `name` - Names of custom tags used with this policy.
 
 The `srcaddr` block supports:
 

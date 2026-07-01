@@ -17,13 +17,13 @@ The following arguments are supported:
 * `comment` - Comment.
 * `selection_period` - Period in seconds to measure average channel load, noise floor, spectral RSSI (default = 3600).
 * `monitor_period` - Period in seconds to measure average transmit retries and receive errors (default = 300).
-* `weight_managed_ap` - Weight in DARRP channel score calculation for managed APs (0 - 2000, default = 50).
-* `weight_rogue_ap` - Weight in DARRP channel score calculation for rogue APs (0 - 2000, default = 10).
-* `weight_noise_floor` - Weight in DARRP channel score calculation for noise floor (0 - 2000, default = 40).
-* `weight_channel_load` - Weight in DARRP channel score calculation for channel load (0 - 2000, default = 20).
-* `weight_spectral_rssi` - Weight in DARRP channel score calculation for spectral RSSI (0 - 2000, default = 40).
-* `weight_weather_channel` - Weight in DARRP channel score calculation for weather channel (0 - 2000) On FortiOS versions 6.4.2-7.6.2: default = 1000. On FortiOS versions >= 7.6.3: default = 0.
-* `weight_dfs_channel` - Weight in DARRP channel score calculation for DFS channel (0 - 2000). On FortiOS versions 6.4.2-7.6.2: default = 500. On FortiOS versions >= 7.6.3: default = 0.
+* `weight_managed_ap` - Weight in DARRP channel score calculation for managed APs (default = 50). On FortiOS versions 6.4.2-7.6.7: 0 - 2000. On FortiOS versions >= 8.0.0: 0 - 200.
+* `weight_rogue_ap` - Weight in DARRP channel score calculation for rogue APs. On FortiOS versions 6.4.2-7.6.7: 0 - 2000, default = 10. On FortiOS versions >= 8.0.0: 0 - 200, default = 0.
+* `weight_noise_floor` - Weight in DARRP channel score calculation for noise floor (default = 40). On FortiOS versions 6.4.2-7.6.7: 0 - 2000. On FortiOS versions >= 8.0.0: 0 - 200.
+* `weight_channel_load` - Weight in DARRP channel score calculation for channel load (default = 20). On FortiOS versions 6.4.2-7.6.7: 0 - 2000. On FortiOS versions >= 8.0.0: 0 - 200.
+* `weight_spectral_rssi` - Weight in DARRP channel score calculation for spectral RSSI (default = 40). On FortiOS versions 6.4.2-7.6.7: 0 - 2000. On FortiOS versions >= 8.0.0: 0 - 200.
+* `weight_weather_channel` - Weight in DARRP channel score calculation for weather channel. On FortiOS versions 6.4.2-7.6.2: 0 - 2000, default = 1000. On FortiOS versions 7.6.3-7.6.7: 0 - 2000, default = 0. On FortiOS versions >= 8.0.0: 0 - 200, default = 100.
+* `weight_dfs_channel` - Weight in DARRP channel score calculation for DFS channel. On FortiOS versions 6.4.2-7.6.2: 0 - 2000, default = 500. On FortiOS versions 7.6.3-7.6.7: 0 - 2000, default = 0. On FortiOS versions >= 8.0.0: 0 - 200, default = 50.
 * `threshold_ap` - Threshold to reject channel in DARRP channel selection phase 1 due to surrounding APs (0 - 500, default = 250).
 * `threshold_noise_floor` - Threshold in dBm to reject channel in DARRP channel selection phase 1 due to noise floor (-95 to -20, default = -85).
 * `threshold_channel_load` - Threshold in percentage to reject channel in DARRP channel selection phase 1 due to channel load (0 - 100, default = 60).

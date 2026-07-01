@@ -37,6 +37,7 @@ resource "fortios_dlp_fpdocsource" "trname" {
 The following arguments are supported:
 
 * `name` - Name of the DLP fingerprint database.
+* `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `server_type` - (Required) Protocol used to communicate with the file server. Currently only Samba (SMB) servers are supported. Valid values: `samba`.
 * `server` - (Required) IPv4 or IPv6 address of the server.
 * `period` - Frequency for which the FortiGate checks the server for new or changed files. Valid values: `none`, `daily`, `weekly`, `monthly`.

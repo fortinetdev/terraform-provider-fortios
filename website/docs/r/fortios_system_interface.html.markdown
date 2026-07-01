@@ -75,6 +75,8 @@ The following arguments are supported:
 * `fail_alert_interfaces` - Names of the FortiGate interfaces from which the link failure alert is sent for this interface. The structure of `fail_alert_interfaces` block is documented below.
 * `dhcp_client_identifier` - DHCP client identifier.
 * `dhcp_renew_time` - DHCP renew time in seconds (300-604800), 0 means use the renew time provided by the server.
+* `dhcp_egress_cos` - CoS in VLAN tag for outgoing DHCP packets. Valid values: `cos0`, `cos1`, `cos2`, `cos3`, `cos4`, `cos5`, `cos6`, `cos7`.
+* `arp_egress_cos` - CoS in VLAN tag for outgoing ARP packets. Valid values: `cos0`, `cos1`, `cos2`, `cos3`, `cos4`, `cos5`, `cos6`, `cos7`.
 * `ipunnumbered` - Unnumbered IP used for PPPoE interfaces for which no unique local address is provided.
 * `username` - Username of the PPPoE account, provided by your ISP.
 * `pppoe_egress_cos` - CoS in VLAN tag for outgoing PPPoE/PPP packets. Valid values: `cos0`, `cos1`, `cos2`, `cos3`, `cos4`, `cos5`, `cos6`, `cos7`.
@@ -154,11 +156,13 @@ The following arguments are supported:
 * `explicit_ftp_proxy` - Enable/disable the explicit FTP proxy on this interface. Valid values: `enable`, `disable`.
 * `proxy_captive_portal` - Enable/disable proxy captive portal on this interface. Valid values: `enable`, `disable`.
 * `tcp_mss` - TCP maximum segment size. 0 means do not change segment size.
-* `mediatype` - Select SFP media interface type Valid values: `none`, `gmii`, `sgmii`, `sr`, `lr`, `cr`, `sr4`, `lr4`, `cr4`.
-* `inbandwidth` - Bandwidth limit for incoming traffic, 0 means unlimited. On FortiOS versions 6.2.0-6.4.2, 7.0.0-7.0.5, 7.2.0: 0 - 16776000 kbps. On FortiOS versions 6.4.10-6.4.15, 7.0.6-7.0.17, >= 7.2.1: 0 - 80000000 kbps.
-* `outbandwidth` - Bandwidth limit for outgoing traffic, 0 means unlimited. On FortiOS versions 6.2.0-6.2.6: 0 - 16776000 kbps. On FortiOS versions 6.4.10-6.4.15, 7.0.6-7.0.17, >= 7.2.1: 0 - 80000000 kbps.
+* `mediatype` - Select SFP media interface type
+* `inbandwidth` - Bandwidth limit for incoming traffic, 0 means unlimited. On FortiOS versions 6.2.0-6.4.2, 7.0.0-7.0.5, 7.2.0: 0 - 16776000 kbps. On FortiOS versions 6.4.10-6.4.15, 7.0.6-7.0.19, 7.2.1-7.2.12, 7.4.0-7.6.7: 0 - 80000000 kbps. On FortiOS versions 7.2.13, >= 8.0.0: 0 - 100000000 kbps.
+* `outbandwidth` - Bandwidth limit for outgoing traffic, 0 means unlimited. On FortiOS versions 6.2.0-6.2.6: 0 - 16776000 kbps. On FortiOS versions 6.4.10-6.4.15, 7.0.6-7.0.19, 7.2.1-7.2.12, 7.4.0-7.6.7: 0 - 80000000 kbps. On FortiOS versions 7.2.13, >= 8.0.0: 0 - 100000000 kbps.
 * `egress_shaping_profile` - Outgoing traffic shaping profile.
 * `ingress_shaping_profile` - Incoming traffic shaping profile.
+* `inbandwidth_source` - Determine which inbandwidth values to use for setting shaper. Valid values: `default`, `measured`.
+* `outbandwidth_source` - Determine which outbandwidth values to use for setting shaper. Valid values: `default`, `measured`.
 * `disconnect_threshold` - Time in milliseconds to wait before sending a notification that this interface is down or disconnected.
 * `spillover_threshold` - Egress Spillover threshold (0 - 16776000 kbps), 0 means unlimited.
 * `ingress_spillover_threshold` - Ingress Spillover threshold (0 - 16776000 kbps), 0 means unlimited.
@@ -195,6 +199,10 @@ The following arguments are supported:
 * `captive_portal` - Enable/disable captive portal.
 * `security_mac_auth_bypass` - Enable/disable MAC authentication bypass. Valid values: `mac-auth-only`, `enable`, `disable`.
 * `security_ip_auth_bypass` - Enable/disable IP authentication bypass. Valid values: `enable`, `disable`.
+* `security_8021x_mode` - 802.1X mode. Valid values: `default`, `dynamic-vlan`, `fallback`, `slave`.
+* `security_8021x_master` - 802.1X master virtual-switch.
+* `security_8021x_dynamic_vlan_id` - VLAN ID for virtual switch.
+* `security_8021x_member_mode` - 802.1X member mode. Valid values: `switch`, `disable`.
 * `security_external_web` - URL of external authentication web server.
 * `security_external_logout` - URL of external authentication logout server.
 * `replacemsg_override_group` - Replacement message override group.
@@ -206,6 +214,7 @@ The following arguments are supported:
 * `ike_saml_server` - Configure IKE authentication SAML server.
 * `stp` - Enable/disable STP. Valid values: `disable`, `enable`.
 * `stp_ha_secondary` - Control STP behaviour on HA secondary. Valid values: `disable`, `enable`, `priority-adjust`.
+* `stp_edge` - Enable/disable as STP edge port. Valid values: `disable`, `enable`.
 * `device_identification` - Enable/disable passively gathering of device identity information about the devices on the network connected to this interface. Valid values: `enable`, `disable`.
 * `exclude_signatures` - Exclude IOT or OT application signatures. Valid values: `iot`, `ot`.
 * `device_user_identification` - Enable/disable passive gathering of user identity information about users on this interface. Valid values: `enable`, `disable`.
@@ -234,10 +243,12 @@ The following arguments are supported:
 * `preserve_session_route` - Enable/disable preservation of session route when dirty. Valid values: `enable`, `disable`.
 * `auto_auth_extension_device` - Enable/disable automatic authorization of dedicated Fortinet extension device on this interface. Valid values: `enable`, `disable`.
 * `ap_discover` - Enable/disable automatic registration of unknown FortiAP devices. Valid values: `enable`, `disable`.
+* `telemetry_discover` - Enable/disable automatic registration of unknown FortiTelemetry agents. Valid values: `enable`, `disable`.
 * `fortilink_stacking` - Enable/disable FortiLink switch-stacking on this interface. Valid values: `enable`, `disable`.
 * `fortilink_neighbor_detect` - Protocol for FortiGate neighbor discovery. Valid values: `lldp`, `fortilink`.
 * `ip_managed_by_fortiipam` - Enable/disable automatic IP address assignment of this interface by FortiIPAM.
 * `managed_subnetwork_size` - Number of IP addresses to be allocated by FortiIPAM and used by this FortiGate unit's DHCP server settings.
+* `ipam_conflicts` - Configure behavior for this interface on how to handle IPAM conflict detections. Valid values: `enable`, `disable`.
 * `fortilink_split_interface` - Enable/disable FortiLink split interface to connect member link to different FortiSwitch in stack for uplink redundancy. Valid values: `enable`, `disable`.
 * `internal` - Implicitly created.
 * `fortilink_backup_link` - fortilink split interface backup link.
@@ -262,7 +273,7 @@ The following arguments are supported:
 * `switch_controller_offload` - Enable/disable managed FortiSwitch routing offload. Valid values: `enable`, `disable`.
 * `switch_controller_offload_ip` - IP for routing offload on FortiSwitch.
 * `switch_controller_offload_gw` - Enable/disable managed FortiSwitch routing offload gateway. Valid values: `enable`, `disable`.
-* `swc_vlan` - Creation status for switch-controller VLANs.
+* `switch_controller_fortilink_settings` - Integrated FortiLink settings for managed FortiSwitch.
 * `swc_first_create` - Initial create for switch-controller VLANs.
 * `color` - Color of icon on the GUI.
 * `tagging` - Config object tagging. The structure of `tagging` block is documented below.
@@ -272,8 +283,13 @@ The following arguments are supported:
 * `eap_password` - EAP password.
 * `eap_ca_cert` - EAP CA certificate name.
 * `eap_user_cert` - EAP user certificate name.
+* `np_qos_profile` - NP QoS profile ID.
+* `port_mirroring` - Enable/disable NP port mirroring. Valid values: `disable`, `enable`.
+* `mirroring_direction` - Port mirroring direction. Valid values: `rx`.
+* `mirroring_port` - Mirroring port.
+* `mirroring_filter` - Mirroring filter. The structure of `mirroring_filter` block is documented below.
 * `default_purdue_level` - default purdue level of device detected on this interface. Valid values: `1`, `1.5`, `2`, `2.5`, `3`, `3.5`, `4`, `5`, `5.5`.
-* `forward_error_correction` - Configure forward error correction (FEC). Valid values: `none`, `disable`, `cl91-rs-fec`, `cl74-fc-fec`.
+* `forward_error_correction` - Enable/disable forward error correction (FEC).
 * `ipv6` - IPv6 of interface. The structure of `ipv6` block is documented below.
 * `autogenerated` - Indicates whether the interface is automatically created by FortiGate, for example, created during the VPN creation process. If it is, set it to "auto", else keep it empty.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
@@ -312,7 +328,7 @@ The `vrrp` block supports:
 * `vrgrp` - VRRP group ID (1 - 65535).
 * `vrip` - IP address of the virtual router.
 * `priority` - Priority of the virtual router (1 - 255).
-* `adv_interval` - Advertisement interval. On FortiOS versions 6.2.0-7.4.8: 1 - 255 seconds. On FortiOS versions >= 7.6.0: 250 - 255000 milliseconds.
+* `adv_interval` - Advertisement interval. On FortiOS versions 6.2.0-7.4.12: 1 - 255 seconds. On FortiOS versions >= 7.6.0: 250 - 255000 milliseconds.
 * `start_time` - Startup time (1 - 255 seconds).
 * `preempt` - Enable/disable preempt mode. Valid values: `enable`, `disable`.
 * `accept_mode` - Enable/disable accept mode. Valid values: `enable`, `disable`.
@@ -359,6 +375,14 @@ The `tags` block supports:
 
 * `name` - Tag name.
 
+The `mirroring_filter` block supports:
+
+* `filter_srcip` - Source IP and mask of mirroring filter.
+* `filter_dstip` - Destinatin IP and mask of mirroring filter.
+* `filter_sport` - Source port of mirroring filter.
+* `filter_dport` - Destinatin port of mirroring filter.
+* `filter_protocol` - Protocol of mirroring filter.
+
 The `ipv6` block supports:
 
 * `ip6_mode` - Addressing mode (static, DHCP, delegated). Valid values: `static`, `dhcp`, `pppoe`, `delegated`.
@@ -371,7 +395,9 @@ The `ipv6` block supports:
 * `nd_cga_modifier` - Neighbor discovery CGA modifier.
 * `ip6_dns_server_override` - Enable/disable using the DNS server acquired by DHCP. Valid values: `enable`, `disable`.
 * `ip6_address` - Primary IPv6 address prefix, syntax: xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx/xxx
+* `ip6_mgmt_address` - High Availability in-band management IPv6 address of this interface and should be in the same subnet with primary IPv6 address
 * `ip6_extra_addr` - Extra IPv6 address prefixes of interface. The structure of `ip6_extra_addr` block is documented below.
+* `ip6_link_local` - IPv6 link-local address of interface.
 * `ip6_allowaccess` - Allow management access to the interface.
 * `ip6_send_adv` - Enable/disable sending advertisements about the interface. Valid values: `enable`, `disable`.
 * `icmp6_send_redirect` - Enable/disable sending of ICMPv6 redirects. Valid values: `enable`, `disable`.
@@ -399,6 +425,7 @@ The `ipv6` block supports:
 * `ip6_rdnss_list` - Advertised IPv6 RDNSS list. The structure of `ip6_rdnss_list` block is documented below.
 * `ip6_dnssl_list` - Advertised IPv6 DNSS list. The structure of `ip6_dnssl_list` block is documented below.
 * `ip6_delegated_prefix_list` - Advertised IPv6 delegated prefix list. The structure of `ip6_delegated_prefix_list` block is documented below.
+* `dhcp6_egress_cos` - CoS in VLAN tag for outgoing DHCPv6 packets. Valid values: `cos0`, `cos1`, `cos2`, `cos3`, `cos4`, `cos5`, `cos6`, `cos7`.
 * `dhcp6_relay_service` - Enable/disable DHCPv6 relay. Valid values: `disable`, `enable`.
 * `dhcp6_relay_type` - DHCPv6 relay type. Valid values: `regular`.
 * `dhcp6_relay_source_interface` - Enable/disable use of address on this interface as the source address of the relay message. Valid values: `disable`, `enable`.
@@ -412,7 +439,6 @@ The `ipv6` block supports:
 * `dhcp6_prefix_hint` - DHCPv6 prefix that will be used as a hint to the upstream DHCPv6 server.
 * `dhcp6_prefix_hint_plt` - DHCPv6 prefix hint preferred life time (sec), 0 means unlimited lease time.
 * `dhcp6_prefix_hint_vlt` - DHCPv6 prefix hint valid life time (sec).
-* `cli_conn6_status` - CLI IPv6 connection status.
 * `vrrp_virtual_mac6` - Enable/disable virtual MAC for VRRP. Valid values: `enable`, `disable`.
 * `vrip6_link_local` - Link-local IPv6 address of virtual router.
 * `vrrp6` - IPv6 VRRP configuration. The structure of `vrrp6` block is documented below.
@@ -484,7 +510,7 @@ The `vrrp6` block supports:
 * `vrgrp` - VRRP group ID (1 - 65535).
 * `vrip6` - IPv6 address of the virtual router.
 * `priority` - Priority of the virtual router (1 - 255).
-* `adv_interval` - Advertisement interval. On FortiOS versions 6.2.0-7.4.8: 1 - 255 seconds. On FortiOS versions >= 7.6.0: 250 - 255000 milliseconds.
+* `adv_interval` - Advertisement interval. On FortiOS versions 6.2.0-7.4.12: 1 - 255 seconds. On FortiOS versions >= 7.6.0: 250 - 255000 milliseconds.
 * `start_time` - Startup time (1 - 255 seconds).
 * `preempt` - Enable/disable preempt mode. Valid values: `enable`, `disable`.
 * `accept_mode` - Enable/disable accept mode. Valid values: `enable`, `disable`.
@@ -500,6 +526,11 @@ The `vrrp6` block supports:
 
 In addition to all the above arguments, the following attributes are exported:
 * `id` - an identifier for the resource with format {{name}}.
+* `swc_vlan` - Creation status for switch-controller VLANs.
+
+The `ipv6` block contains following attibutes:
+
+* `cli_conn6_status` - CLI IPv6 connection status.
 
 ## Import
 

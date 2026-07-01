@@ -14,6 +14,10 @@ Define internet service names. Applies to FortiOS Version `>= 6.4.0`.
 The following arguments are supported:
 
 * `name` - Internet Service name.
+* `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
+* `fabric_object` - Security Fabric global object setting. Valid values: `enable`, `disable`.
+* `fabric_force_sync` - Enable/disable forced synchronization of configuration objects from the root FortiGate unit to the downstream devices.  Configuration conflict check is skipped. Valid values: `enable`, `disable`.
+* `fabric_object_source` - Source of truth for fabric object. Valid values: `member`, `local`, `root`.
 * `type` - Internet Service name type. Valid values: `default`, `location`.
 * `internet_service_id` - Internet Service ID.
 * `country_id` - Country or Area ID.

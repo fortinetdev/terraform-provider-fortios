@@ -323,9 +323,8 @@ func resourceWanoptProfile() *schema.Resource {
 							Computed: true,
 						},
 						"ssl_port": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(1, 65535),
-							Optional:     true,
+							Type:     schema.TypeString,
+							Optional: true,
 						},
 					},
 				},
@@ -985,7 +984,7 @@ func flattenWanoptProfileTcpSsl(v interface{}, d *schema.ResourceData, pre strin
 }
 
 func flattenWanoptProfileTcpSslPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return convintf2i(v)
+	return fmt.Sprintf("%v", v)
 }
 
 func refreshObjectWanoptProfile(d *schema.ResourceData, o map[string]interface{}, sv string) error {
@@ -1563,7 +1562,7 @@ func expandWanoptProfileTcpSsl(d *schema.ResourceData, v interface{}, pre string
 }
 
 func expandWanoptProfileTcpSslPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return convintf2i(v), nil
+	return fmt.Sprintf("%v", v), nil
 }
 
 func getObjectWanoptProfile(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {

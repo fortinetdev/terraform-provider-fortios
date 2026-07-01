@@ -20,6 +20,8 @@ The following arguments are supported:
 * `color` - Integer value to determine the color of the icon in the GUI (1 - 32, default = 0, which sets value to 1).
 * `tagging` - Config object tagging. The structure of `tagging` block is documented below.
 * `comment` - Optional comments.
+* `display_with` - Display object with first tag, all tags, or just the icon. Valid values: `all-tags`, `first-tag-only`, `icon-and-color`.
+* `custom_tags` - Custom tags. The structure of `custom_tags` block is documented below.
 * `visibility` - Enable/disable visibility of the object in the GUI. Valid values: `enable`, `disable`.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
 * `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
@@ -39,6 +41,10 @@ The `tagging` block supports:
 The `tags` block supports:
 
 * `name` - Tag name.
+
+The `custom_tags` block supports:
+
+* `name` - Names of custom tags used with this address.
 
 
 ## Attribute Reference

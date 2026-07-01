@@ -64,6 +64,11 @@ func resourceSwitchController8021XSettings() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"mab_entry_as": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"mac_username_delimiter": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -85,6 +90,11 @@ func resourceSwitchController8021XSettings() *schema.Resource {
 				Computed: true,
 			},
 			"mac_case": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"allow_mac_move": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -227,6 +237,10 @@ func flattenSwitchController8021XSettingsMabReauth(v interface{}, d *schema.Reso
 	return v
 }
 
+func flattenSwitchController8021XSettingsMabEntryAs(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSwitchController8021XSettingsMacUsernameDelimiter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -244,6 +258,10 @@ func flattenSwitchController8021XSettingsMacCalledStationDelimiter(v interface{}
 }
 
 func flattenSwitchController8021XSettingsMacCase(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchController8021XSettingsAllowMacMove(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -280,6 +298,12 @@ func refreshObjectSwitchController8021XSettings(d *schema.ResourceData, o map[st
 		}
 	}
 
+	if err = d.Set("mab_entry_as", flattenSwitchController8021XSettingsMabEntryAs(o["mab-entry-as"], d, "mab_entry_as", sv)); err != nil {
+		if !fortiAPIPatch(o["mab-entry-as"]) {
+			return fmt.Errorf("Error reading mab_entry_as: %v", err)
+		}
+	}
+
 	if err = d.Set("mac_username_delimiter", flattenSwitchController8021XSettingsMacUsernameDelimiter(o["mac-username-delimiter"], d, "mac_username_delimiter", sv)); err != nil {
 		if !fortiAPIPatch(o["mac-username-delimiter"]) {
 			return fmt.Errorf("Error reading mac_username_delimiter: %v", err)
@@ -307,6 +331,12 @@ func refreshObjectSwitchController8021XSettings(d *schema.ResourceData, o map[st
 	if err = d.Set("mac_case", flattenSwitchController8021XSettingsMacCase(o["mac-case"], d, "mac_case", sv)); err != nil {
 		if !fortiAPIPatch(o["mac-case"]) {
 			return fmt.Errorf("Error reading mac_case: %v", err)
+		}
+	}
+
+	if err = d.Set("allow_mac_move", flattenSwitchController8021XSettingsAllowMacMove(o["allow-mac-move"], d, "allow_mac_move", sv)); err != nil {
+		if !fortiAPIPatch(o["allow-mac-move"]) {
+			return fmt.Errorf("Error reading allow_mac_move: %v", err)
 		}
 	}
 
@@ -339,6 +369,10 @@ func expandSwitchController8021XSettingsMabReauth(d *schema.ResourceData, v inte
 	return v, nil
 }
 
+func expandSwitchController8021XSettingsMabEntryAs(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSwitchController8021XSettingsMacUsernameDelimiter(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -356,6 +390,10 @@ func expandSwitchController8021XSettingsMacCalledStationDelimiter(d *schema.Reso
 }
 
 func expandSwitchController8021XSettingsMacCase(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchController8021XSettingsAllowMacMove(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -427,6 +465,19 @@ func getObjectSwitchController8021XSettings(d *schema.ResourceData, setArgNil bo
 		}
 	}
 
+	if v, ok := d.GetOk("mab_entry_as"); ok {
+		if setArgNil {
+			obj["mab-entry-as"] = nil
+		} else {
+			t, err := expandSwitchController8021XSettingsMabEntryAs(d, v, "mab_entry_as", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["mab-entry-as"] = t
+			}
+		}
+	}
+
 	if v, ok := d.GetOk("mac_username_delimiter"); ok {
 		if setArgNil {
 			obj["mac-username-delimiter"] = nil
@@ -488,6 +539,19 @@ func getObjectSwitchController8021XSettings(d *schema.ResourceData, setArgNil bo
 				return &obj, err
 			} else if t != nil {
 				obj["mac-case"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("allow_mac_move"); ok {
+		if setArgNil {
+			obj["allow-mac-move"] = nil
+		} else {
+			t, err := expandSwitchController8021XSettingsAllowMacMove(d, v, "allow_mac_move", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["allow-mac-move"] = t
 			}
 		}
 	}

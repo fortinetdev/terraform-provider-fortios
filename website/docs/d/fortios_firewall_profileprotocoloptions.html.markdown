@@ -20,6 +20,10 @@ Use this data source to get information on an fortios firewall profileprotocolop
 The following attributes are exported:
 
 * `name` - Name.
+* `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
+* `fabric_object` - Security Fabric global object setting.
+* `fabric_force_sync` - Enable/disable forced synchronization of configuration objects from the root FortiGate unit to the downstream devices.  Configuration conflict check is skipped.
+* `fabric_object_source` - Source of truth for fabric object.
 * `comment` - Optional comments.
 * `feature_set` - Flow/proxy feature set.
 * `replacemsg_group` - Name of the replacement message group to be used
@@ -35,6 +39,7 @@ The following attributes are exported:
 * `ssh` - Configure SFTP and SCP protocol options. The structure of `ssh` block is documented below.
 * `dns` - Configure DNS protocol options. The structure of `dns` block is documented below.
 * `cifs` - Configure CIFS protocol options. The structure of `cifs` block is documented below.
+* `websocket` - Configure WebSocket protocol options. The structure of `websocket` block is documented below.
 * `mail_signature` - Configure Mail signature. The structure of `mail_signature` block is documented below.
 * `rpc_over_http` - Enable/disable inspection of RPC over HTTP.
 
@@ -54,6 +59,7 @@ The `http` block contains:
 * `fortinet_bar` - Enable/disable Fortinet bar on HTML content.
 * `fortinet_bar_port` - Port for use by Fortinet Bar (1 - 65535, default = 8011).
 * `streaming_content_bypass` - Enable/disable bypassing of streaming content from buffering.
+* `streaming_content_scan_type` - Enforce scan on certain streaming content type when streaming-content-bypass is enabled.
 * `switching_protocols` - Bypass from scanning, or block a connection that attempts to switch protocol.
 * `unknown_http_version` - How to handle HTTP sessions that do not comply with HTTP 0.9, 1.0, or 1.1.
 * `http_09` - Configure action to take upon receipt of HTTP 0.9 request.
@@ -200,6 +206,23 @@ The `server_keytab` block contains:
 
 * `principal` - Service principal.  For example, "host/cifsserver.example.com@example.com".
 * `keytab` - Base64 encoded keytab file containing credential of the server.
+
+The `websocket` block contains:
+
+* `status` - Enable/disable the active status of scanning for this protocol.
+* `options` - One or more options that can be applied to the session.
+* `comfort_interval` - Interval between successive transmissions of data for client comforting (seconds).
+* `comfort_amount` - Number of bytes to send in each transmission for client comforting (bytes).
+* `tunnel_non_websocket` - Configure how to process non-websocket traffic when a profile configured for websocket traffic accepts a non-websocket session.
+* `oversize_limit` - Maximum in-memory file size that can be scanned (MB).
+* `uncompressed_oversize_limit` - Maximum in-memory uncompressed file size that can be scanned (MB).
+* `uncompressed_nest_limit` - Maximum nested levels of compression that can be uncompressed and scanned (2 - 100, default = 12).
+* `stream_based_uncompressed_limit` - Maximum stream-based uncompressed data size that will be scanned in megabytes. Stream-based uncompression used only under certain conditions (unlimited = 0, default = 0).
+* `scan_bzip2` - Enable/disable scanning of BZip2 compressed files.
+* `tcp_window_type` - TCP window type to use for this protocol.
+* `tcp_window_minimum` - Minimum dynamic TCP window size.
+* `tcp_window_maximum` - Maximum dynamic TCP window size.
+* `tcp_window_size` - Set TCP static window size.
 
 The `mail_signature` block contains:
 

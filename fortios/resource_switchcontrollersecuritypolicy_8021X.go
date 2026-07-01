@@ -178,6 +178,22 @@ func resourceSwitchControllerSecurityPolicy8021X() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"client_limit": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(2, 20),
+				Optional:     true,
+				Computed:     true,
+			},
+			"eap_egress_tagged": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"allow_mac_move": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -513,6 +529,18 @@ func flattenSwitchControllerSecurityPolicy8021XDacl(v interface{}, d *schema.Res
 	return v
 }
 
+func flattenSwitchControllerSecurityPolicy8021XClientLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenSwitchControllerSecurityPolicy8021XEapEgressTagged(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerSecurityPolicy8021XAllowMacMove(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectSwitchControllerSecurityPolicy8021X(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 	var b_get_all_tables bool
@@ -682,6 +710,24 @@ func refreshObjectSwitchControllerSecurityPolicy8021X(d *schema.ResourceData, o 
 		}
 	}
 
+	if err = d.Set("client_limit", flattenSwitchControllerSecurityPolicy8021XClientLimit(o["client-limit"], d, "client_limit", sv)); err != nil {
+		if !fortiAPIPatch(o["client-limit"]) {
+			return fmt.Errorf("Error reading client_limit: %v", err)
+		}
+	}
+
+	if err = d.Set("eap_egress_tagged", flattenSwitchControllerSecurityPolicy8021XEapEgressTagged(o["eap-egress-tagged"], d, "eap_egress_tagged", sv)); err != nil {
+		if !fortiAPIPatch(o["eap-egress-tagged"]) {
+			return fmt.Errorf("Error reading eap_egress_tagged: %v", err)
+		}
+	}
+
+	if err = d.Set("allow_mac_move", flattenSwitchControllerSecurityPolicy8021XAllowMacMove(o["allow-mac-move"], d, "allow_mac_move", sv)); err != nil {
+		if !fortiAPIPatch(o["allow-mac-move"]) {
+			return fmt.Errorf("Error reading allow_mac_move: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -812,6 +858,18 @@ func expandSwitchControllerSecurityPolicy8021XAuthserverTimeoutTaggedVlanid(d *s
 }
 
 func expandSwitchControllerSecurityPolicy8021XDacl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerSecurityPolicy8021XClientLimit(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerSecurityPolicy8021XEapEgressTagged(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerSecurityPolicy8021XAllowMacMove(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1052,6 +1110,33 @@ func getObjectSwitchControllerSecurityPolicy8021X(d *schema.ResourceData, sv str
 			return &obj, err
 		} else if t != nil {
 			obj["dacl"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("client_limit"); ok {
+		t, err := expandSwitchControllerSecurityPolicy8021XClientLimit(d, v, "client_limit", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["client-limit"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("eap_egress_tagged"); ok {
+		t, err := expandSwitchControllerSecurityPolicy8021XEapEgressTagged(d, v, "eap_egress_tagged", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["eap-egress-tagged"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("allow_mac_move"); ok {
+		t, err := expandSwitchControllerSecurityPolicy8021XAllowMacMove(d, v, "allow_mac_move", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["allow-mac-move"] = t
 		}
 	}
 

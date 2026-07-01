@@ -29,6 +29,8 @@ The following attributes are exported:
 * `associated_interface` - Interface associated with the address object. When setting up a policy, only addresses associated with this interface are available.
 * `color` - Integer value to determine the color of the icon in the GUI (1 - 32, default = 0, which sets value to 1).
 * `tagging` - Config object tagging. The structure of `tagging` block is documented below.
+* `display_with` - Display object with first tag, all tags, or just the icon.
+* `custom_tags` - Custom tags. The structure of `custom_tags` block is documented below.
 
 The `tagging` block contains:
 
@@ -39,4 +41,8 @@ The `tagging` block contains:
 The `tags` block contains:
 
 * `name` - Tag name.
+
+The `custom_tags` block contains:
+
+* `name` - Names of custom tags used with this address.
 

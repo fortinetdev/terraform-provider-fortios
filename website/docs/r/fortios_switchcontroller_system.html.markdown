@@ -22,7 +22,7 @@ The following arguments are supported:
 * `iot_mac_idle` - MAC entry's idle time. MAC entry is removed after this value (0 - 10080 mins, default = 1440 mins).
 * `nac_periodic_interval` - Periodic time interval to run NAC engine. On FortiOS versions 7.0.0-7.4.3: 5 - 60 sec, default = 15. On FortiOS versions >= 7.4.4: 5 - 180 sec, default = 60.
 * `dynamic_periodic_interval` - Periodic time interval to run Dynamic port policy engine. On FortiOS versions 7.0.1-7.4.3: 5 - 60 sec, default = 15. On FortiOS versions >= 7.4.4: 5 - 180 sec, default = 60.
-* `tunnel_mode` - Compatible/strict tunnel mode.
+* `tunnel_mode` - Configure tunnel mode security On FortiOS versions >= 8.0.0: default = compatible.
 * `caputp_echo_interval` - Echo interval for the caputp echo requests from swtp.
 * `caputp_max_retransmit` - Maximum retransmission count for the caputp tunnel packets.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.

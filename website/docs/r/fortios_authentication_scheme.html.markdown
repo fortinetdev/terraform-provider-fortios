@@ -45,8 +45,14 @@ The following arguments are supported:
 * `domain_controller` - Domain controller setting.
 * `saml_server` - SAML configuration.
 * `saml_timeout` - SAML authentication timeout in seconds.
+* `oidc_server` - OpenID Connect server configuration.
+* `oidc_timeout` - OpenID Connect authentication timeout in seconds.
 * `fsso_agent_for_ntlm` - FSSO agent to use for NTLM authentication.
 * `require_tfa` - Enable/disable two-factor authentication (default = disable). Valid values: `enable`, `disable`.
+* `captcha` - Enable/disable CAPTCHA for form authentication (default = disable). Valid values: `enable`, `disable`.
+* `captcha_vendor` - CAPTCHA vendor (default = google-recaptcha-v2-checkbox). Valid values: `google-recaptcha-v2-checkbox`, `google-recaptcha-v2-invisible`, `google-recaptcha-v3`, `cloudflare-turnstile`.
+* `captcha_site_key` - CAPTCHA site key.
+* `captcha_secret_key` - CAPTCHA secret key.
 * `fsso_guest` - Enable/disable user fsso-guest authentication (default = disable). Valid values: `enable`, `disable`.
 * `user_cert` - Enable/disable authentication with user certificate (default = disable). Valid values: `enable`, `disable`.
 * `cert_http_header` - Enable/disable authentication with user certificate in Client-Cert HTTP header (default = disable). Valid values: `enable`, `disable`.

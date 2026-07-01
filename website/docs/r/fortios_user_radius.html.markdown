@@ -48,6 +48,10 @@ resource "fortios_user_radius" "trname" {
 The following arguments are supported:
 
 * `name` - RADIUS server entry name.
+* `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
+* `fabric_object` - Security Fabric global object setting. Valid values: `enable`, `disable`.
+* `fabric_force_sync` - Enable/disable forced synchronization of configuration objects from the root FortiGate unit to the downstream devices.  Configuration conflict check is skipped. Valid values: `enable`, `disable`.
+* `fabric_object_source` - Source of truth for fabric object. Valid values: `member`, `local`, `root`.
 * `server` - Primary RADIUS server CN domain name or IP address.
 * `secret` - Pre-shared secret key used to access the primary RADIUS server.
 * `secondary_server` - {<name_str|ip_str>} secondary RADIUS CN domain name or IP.

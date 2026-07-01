@@ -25,6 +25,7 @@ The `pools` block supports:
 * `description` - Description.
 * `id` - ID.
 * `client_subnet` - Subnets from which PCP requests are accepted. The structure of `client_subnet` block is documented below.
+* `client6_prefix` - Prefixes from which PCP requests are accepted. The structure of `client6_prefix` block is documented below.
 * `ext_intf` - External interface name.
 * `arp_reply` - Enable to respond to ARP requests for external IP (default = enable). Valid values: `disable`, `enable`.
 * `extip` - IP address or address range on the external interface that you want to map to an address on the internal network.
@@ -40,10 +41,15 @@ The `pools` block supports:
 * `announcement_count` - Number of multicast announcements.
 * `intl_intf` - Internal interface name. The structure of `intl_intf` block is documented below.
 * `recycle_delay` - Minimum delay (in seconds) the PCP Server will wait before recycling mappings that have expired (0 - 3600, default = 0).
+* `nat46` - Enable/disable NAT46. Valid values: `disable`, `enable`.
 
 The `client_subnet` block supports:
 
 * `subnet` - Client subnets.
+
+The `client6_prefix` block supports:
+
+* `prefix` - IPv6 Client prefixes.
 
 The `third_party_subnet` block supports:
 

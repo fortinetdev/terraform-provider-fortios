@@ -52,6 +52,10 @@ func dataSourceSystemDnsServer() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"ssl_cert": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -123,6 +127,10 @@ func dataSourceFlattenSystemDnsServerDoq(v interface{}, d *schema.ResourceData, 
 	return v
 }
 
+func dataSourceFlattenSystemDnsServerSslCert(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceRefreshObjectSystemDnsServer(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
 
@@ -159,6 +167,12 @@ func dataSourceRefreshObjectSystemDnsServer(d *schema.ResourceData, o map[string
 	if err = d.Set("doq", dataSourceFlattenSystemDnsServerDoq(o["doq"], d, "doq")); err != nil {
 		if !fortiAPIPatch(o["doq"]) {
 			return fmt.Errorf("Error reading doq: %v", err)
+		}
+	}
+
+	if err = d.Set("ssl_cert", dataSourceFlattenSystemDnsServerSslCert(o["ssl-cert"], d, "ssl_cert")); err != nil {
+		if !fortiAPIPatch(o["ssl-cert"]) {
+			return fmt.Errorf("Error reading ssl_cert: %v", err)
 		}
 	}
 

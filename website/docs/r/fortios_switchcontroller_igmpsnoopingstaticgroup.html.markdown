@@ -1,0 +1,53 @@
+---
+subcategory: "FortiGate Switch-Controller"
+layout: "fortios"
+page_title: "FortiOS: fortios_switchcontroller_igmpsnoopingstaticgroup"
+description: |-
+  Configure FortiSwitch IGMP snooping static group settings.
+---
+
+# fortios_switchcontroller_igmpsnoopingstaticgroup
+Configure FortiSwitch IGMP snooping static group settings. Applies to FortiOS Version `>= 8.0.0`.
+
+## Argument Reference
+
+The following arguments are supported:
+
+* `name` - IGMP snooping static group name.
+* `description` - IGMP snooping static group description.
+* `ignore_reports` - Enable/disable this ignore-reports. Valid values: `disable`, `enable`.
+* `mcast_addr` - IGMP snooping static group multicast IP.
+* `vlan` - VLAN name.
+* `ports` - Configure static group in switches. The structure of `ports` block is documented below.
+* `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
+* `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
+* `update_if_exist` - Equivalent functionality of import the resource. If set to true, will check whether the resource exist, if so, will do the UPDATE operation rather CREATE. Default is false. If you want to inherit the value of the provider, please do not set this parameter.
+
+The `ports` block supports:
+
+* `id` - ID.
+* `switch_id` - Switch ID.
+* `ports` - Port members. The structure of `ports` block is documented below.
+
+The `ports` block supports:
+
+* `igmp_port_name` - Interface name from available options.
+
+
+## Attribute Reference
+
+In addition to all the above arguments, the following attributes are exported:
+* `id` - an identifier for the resource with format {{name}}.
+
+## Import
+
+SwitchController IgmpSnoopingStaticGroup can be imported using any of these accepted formats:
+```
+$ terraform import fortios_switchcontroller_igmpsnoopingstaticgroup.labelname {{name}}
+
+If you do not want to import arguments of block:
+$ export "FORTIOS_IMPORT_TABLE"="false"
+$ terraform import fortios_switchcontroller_igmpsnoopingstaticgroup.labelname {{name}}
+$ unset "FORTIOS_IMPORT_TABLE"
+```

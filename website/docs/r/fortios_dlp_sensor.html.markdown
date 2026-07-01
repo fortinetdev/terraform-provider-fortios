@@ -27,6 +27,10 @@ resource "fortios_dlp_sensor" "trname" {
 The following arguments are supported:
 
 * `name` - (Required) Name of the DLP sensor.
+* `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
+* `fabric_object` - Security Fabric global object setting. Valid values: `enable`, `disable`.
+* `fabric_force_sync` - Enable/disable forced synchronization of configuration objects from the root FortiGate unit to the downstream devices.  Configuration conflict check is skipped. Valid values: `enable`, `disable`.
+* `fabric_object_source` - Source of truth for fabric object. Valid values: `member`, `local`, `root`.
 * `match_type` - Logical relation between entries (default = match-any). Valid values: `match-all`, `match-any`, `match-eval`.
 * `eval` - Expression to evaluate.
 * `comment` - Comment.

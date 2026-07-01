@@ -55,6 +55,7 @@ func resourceSystemFederatedUpgrade() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
+				Computed:     true,
 			},
 			"upgrade_id": &schema.Schema{
 				Type:     schema.TypeInt,
@@ -97,6 +98,7 @@ func resourceSystemFederatedUpgrade() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 64),
 				Optional:     true,
+				Computed:     true,
 			},
 			"node_list": &schema.Schema{
 				Type:     schema.TypeList,
@@ -894,8 +896,6 @@ func getObjectSystemFederatedUpgrade(d *schema.ResourceData, setArgNil bool, sv 
 				obj["failure-device"] = t
 			}
 		}
-	} else if d.HasChange("failure_device") {
-		obj["failure-device"] = nil
 	}
 
 	if v, ok := d.GetOkExists("upgrade_id"); ok {
@@ -993,8 +993,6 @@ func getObjectSystemFederatedUpgrade(d *schema.ResourceData, setArgNil bool, sv 
 				obj["starter-admin"] = t
 			}
 		}
-	} else if d.HasChange("starter_admin") {
-		obj["starter-admin"] = nil
 	}
 
 	if v, ok := d.GetOk("node_list"); ok || d.HasChange("node_list") {

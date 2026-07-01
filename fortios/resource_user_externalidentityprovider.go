@@ -60,6 +60,7 @@ func resourceUserExternalIdentityProvider() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
+				Computed:     true,
 			},
 			"user_attr_name": &schema.Schema{
 				Type:         schema.TypeString,
@@ -439,10 +440,6 @@ func expandUserExternalIdentityProviderVersion(d *schema.ResourceData, v interfa
 	return v, nil
 }
 
-func expandUserExternalIdentityProviderUrl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
 func expandUserExternalIdentityProviderUserAttrName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -511,17 +508,6 @@ func getObjectUserExternalIdentityProvider(d *schema.ResourceData, sv string) (*
 		}
 	} else if d.HasChange("version") {
 		obj["version"] = nil
-	}
-
-	if v, ok := d.GetOk("url"); ok {
-		t, err := expandUserExternalIdentityProviderUrl(d, v, "url", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["url"] = t
-		}
-	} else if d.HasChange("url") {
-		obj["url"] = nil
 	}
 
 	if v, ok := d.GetOk("user_attr_name"); ok {

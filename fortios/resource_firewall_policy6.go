@@ -397,9 +397,8 @@ func resourceFirewallPolicy6() *schema.Resource {
 				},
 			},
 			"session_ttl": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: intBetweenWithZero(300, 604800),
-				Optional:     true,
+				Type:     schema.TypeString,
+				Optional: true,
 			},
 			"inbound": &schema.Schema{
 				Type:     schema.TypeString,
@@ -1496,7 +1495,7 @@ func flattenFirewallPolicy6PoolnameName(v interface{}, d *schema.ResourceData, p
 }
 
 func flattenFirewallPolicy6SessionTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return convintf2i(v)
+	return fmt.Sprintf("%v", v)
 }
 
 func flattenFirewallPolicy6Inbound(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -3108,7 +3107,7 @@ func expandFirewallPolicy6PoolnameName(d *schema.ResourceData, v interface{}, pr
 }
 
 func expandFirewallPolicy6SessionTtl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return convintf2i(v), nil
+	return fmt.Sprintf("%v", v), nil
 }
 
 func expandFirewallPolicy6Inbound(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
@@ -3985,7 +3984,7 @@ func getObjectFirewallPolicy6(d *schema.ResourceData, sv string) (*map[string]in
 		}
 	}
 
-	if v, ok := d.GetOkExists("session_ttl"); ok {
+	if v, ok := d.GetOk("session_ttl"); ok {
 		t, err := expandFirewallPolicy6SessionTtl(d, v, "session_ttl", sv)
 		if err != nil {
 			return &obj, err

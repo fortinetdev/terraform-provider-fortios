@@ -32,6 +32,10 @@ func dataSourceRouterbgpNeighbor() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"name": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"advertisement_interval": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
@@ -200,6 +204,14 @@ func dataSourceRouterbgpNeighbor() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"next_hop_self_rr_vpnv4": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"next_hop_self_rr_vpnv6": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"override_capability": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -285,6 +297,10 @@ func dataSourceRouterbgpNeighbor() *schema.Resource {
 				Computed: true,
 			},
 			"rr_attr_allow_change_evpn": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"adv_evpn_route": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -501,11 +517,15 @@ func dataSourceRouterbgpNeighbor() *schema.Resource {
 				Computed: true,
 			},
 			"remote_as": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"display_options": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
 			},
 			"local_as": &schema.Schema{
-				Type:     schema.TypeInt,
+				Type:     schema.TypeString,
 				Computed: true,
 			},
 			"local_as_no_prepend": &schema.Schema{
@@ -620,6 +640,10 @@ func dataSourceRouterbgpNeighbor() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"enforce_preferred_source": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"weight": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
@@ -709,6 +733,22 @@ func dataSourceRouterbgpNeighbor() *schema.Resource {
 					},
 				},
 			},
+			"graceful_shutdown_community": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"graceful_shutdown_local_preference": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"graceful_shutdown_delay": &schema.Schema{
+				Type:     schema.TypeInt,
+				Computed: true,
+			},
+			"use_sdwan": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -757,6 +797,10 @@ func dataSourceRouterbgpNeighborRead(d *schema.ResourceData, m interface{}) erro
 }
 
 func dataSourceFlattenRouterbgpNeighborIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterbgpNeighborName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -928,6 +972,14 @@ func dataSourceFlattenRouterbgpNeighborNextHopSelfVpnv6(v interface{}, d *schema
 	return v
 }
 
+func dataSourceFlattenRouterbgpNeighborNextHopSelfRrVpnv4(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterbgpNeighborNextHopSelfRrVpnv6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenRouterbgpNeighborOverrideCapability(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -1013,6 +1065,10 @@ func dataSourceFlattenRouterbgpNeighborRrAttrAllowChangeVpnv6(v interface{}, d *
 }
 
 func dataSourceFlattenRouterbgpNeighborRrAttrAllowChangeEvpn(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterbgpNeighborAdvEvpnRoute(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1232,6 +1288,10 @@ func dataSourceFlattenRouterbgpNeighborRemoteAs(v interface{}, d *schema.Resourc
 	return v
 }
 
+func dataSourceFlattenRouterbgpNeighborDisplayOptions(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenRouterbgpNeighborLocalAs(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -1345,6 +1405,10 @@ func dataSourceFlattenRouterbgpNeighborUnsuppressMap6(v interface{}, d *schema.R
 }
 
 func dataSourceFlattenRouterbgpNeighborUpdateSource(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterbgpNeighborEnforcePreferredSource(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1504,12 +1568,34 @@ func dataSourceFlattenRouterbgpNeighborConditionalAdvertise6ConditionType(v inte
 	return v
 }
 
+func dataSourceFlattenRouterbgpNeighborGracefulShutdownCommunity(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterbgpNeighborGracefulShutdownLocalPreference(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterbgpNeighborGracefulShutdownDelay(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterbgpNeighborUseSdwan(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceRefreshObjectRouterbgpNeighbor(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
 
 	if err = d.Set("ip", dataSourceFlattenRouterbgpNeighborIp(o["ip"], d, "ip")); err != nil {
 		if !fortiAPIPatch(o["ip"]) {
 			return fmt.Errorf("Error reading ip: %v", err)
+		}
+	}
+
+	if err = d.Set("name", dataSourceFlattenRouterbgpNeighborName(o["name"], d, "name")); err != nil {
+		if !fortiAPIPatch(o["name"]) {
+			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
@@ -1765,6 +1851,18 @@ func dataSourceRefreshObjectRouterbgpNeighbor(d *schema.ResourceData, o map[stri
 		}
 	}
 
+	if err = d.Set("next_hop_self_rr_vpnv4", dataSourceFlattenRouterbgpNeighborNextHopSelfRrVpnv4(o["next-hop-self-rr-vpnv4"], d, "next_hop_self_rr_vpnv4")); err != nil {
+		if !fortiAPIPatch(o["next-hop-self-rr-vpnv4"]) {
+			return fmt.Errorf("Error reading next_hop_self_rr_vpnv4: %v", err)
+		}
+	}
+
+	if err = d.Set("next_hop_self_rr_vpnv6", dataSourceFlattenRouterbgpNeighborNextHopSelfRrVpnv6(o["next-hop-self-rr-vpnv6"], d, "next_hop_self_rr_vpnv6")); err != nil {
+		if !fortiAPIPatch(o["next-hop-self-rr-vpnv6"]) {
+			return fmt.Errorf("Error reading next_hop_self_rr_vpnv6: %v", err)
+		}
+	}
+
 	if err = d.Set("override_capability", dataSourceFlattenRouterbgpNeighborOverrideCapability(o["override-capability"], d, "override_capability")); err != nil {
 		if !fortiAPIPatch(o["override-capability"]) {
 			return fmt.Errorf("Error reading override_capability: %v", err)
@@ -1894,6 +1992,12 @@ func dataSourceRefreshObjectRouterbgpNeighbor(d *schema.ResourceData, o map[stri
 	if err = d.Set("rr_attr_allow_change_evpn", dataSourceFlattenRouterbgpNeighborRrAttrAllowChangeEvpn(o["rr-attr-allow-change-evpn"], d, "rr_attr_allow_change_evpn")); err != nil {
 		if !fortiAPIPatch(o["rr-attr-allow-change-evpn"]) {
 			return fmt.Errorf("Error reading rr_attr_allow_change_evpn: %v", err)
+		}
+	}
+
+	if err = d.Set("adv_evpn_route", dataSourceFlattenRouterbgpNeighborAdvEvpnRoute(o["adv-evpn-route"], d, "adv_evpn_route")); err != nil {
+		if !fortiAPIPatch(o["adv-evpn-route"]) {
+			return fmt.Errorf("Error reading adv_evpn_route: %v", err)
 		}
 	}
 
@@ -2221,6 +2325,12 @@ func dataSourceRefreshObjectRouterbgpNeighbor(d *schema.ResourceData, o map[stri
 		}
 	}
 
+	if err = d.Set("display_options", dataSourceFlattenRouterbgpNeighborDisplayOptions(o["display-options"], d, "display_options")); err != nil {
+		if !fortiAPIPatch(o["display-options"]) {
+			return fmt.Errorf("Error reading display_options: %v", err)
+		}
+	}
+
 	if err = d.Set("local_as", dataSourceFlattenRouterbgpNeighborLocalAs(o["local-as"], d, "local_as")); err != nil {
 		if !fortiAPIPatch(o["local-as"]) {
 			return fmt.Errorf("Error reading local_as: %v", err)
@@ -2395,6 +2505,12 @@ func dataSourceRefreshObjectRouterbgpNeighbor(d *schema.ResourceData, o map[stri
 		}
 	}
 
+	if err = d.Set("enforce_preferred_source", dataSourceFlattenRouterbgpNeighborEnforcePreferredSource(o["enforce-preferred-source"], d, "enforce_preferred_source")); err != nil {
+		if !fortiAPIPatch(o["enforce-preferred-source"]) {
+			return fmt.Errorf("Error reading enforce_preferred_source: %v", err)
+		}
+	}
+
 	if err = d.Set("weight", dataSourceFlattenRouterbgpNeighborWeight(o["weight"], d, "weight")); err != nil {
 		if !fortiAPIPatch(o["weight"]) {
 			return fmt.Errorf("Error reading weight: %v", err)
@@ -2470,6 +2586,30 @@ func dataSourceRefreshObjectRouterbgpNeighbor(d *schema.ResourceData, o map[stri
 	if err = d.Set("conditional_advertise6", dataSourceFlattenRouterbgpNeighborConditionalAdvertise6(o["conditional-advertise6"], d, "conditional_advertise6")); err != nil {
 		if !fortiAPIPatch(o["conditional-advertise6"]) {
 			return fmt.Errorf("Error reading conditional_advertise6: %v", err)
+		}
+	}
+
+	if err = d.Set("graceful_shutdown_community", dataSourceFlattenRouterbgpNeighborGracefulShutdownCommunity(o["graceful-shutdown-community"], d, "graceful_shutdown_community")); err != nil {
+		if !fortiAPIPatch(o["graceful-shutdown-community"]) {
+			return fmt.Errorf("Error reading graceful_shutdown_community: %v", err)
+		}
+	}
+
+	if err = d.Set("graceful_shutdown_local_preference", dataSourceFlattenRouterbgpNeighborGracefulShutdownLocalPreference(o["graceful-shutdown-local-preference"], d, "graceful_shutdown_local_preference")); err != nil {
+		if !fortiAPIPatch(o["graceful-shutdown-local-preference"]) {
+			return fmt.Errorf("Error reading graceful_shutdown_local_preference: %v", err)
+		}
+	}
+
+	if err = d.Set("graceful_shutdown_delay", dataSourceFlattenRouterbgpNeighborGracefulShutdownDelay(o["graceful-shutdown-delay"], d, "graceful_shutdown_delay")); err != nil {
+		if !fortiAPIPatch(o["graceful-shutdown-delay"]) {
+			return fmt.Errorf("Error reading graceful_shutdown_delay: %v", err)
+		}
+	}
+
+	if err = d.Set("use_sdwan", dataSourceFlattenRouterbgpNeighborUseSdwan(o["use-sdwan"], d, "use_sdwan")); err != nil {
+		if !fortiAPIPatch(o["use-sdwan"]) {
+			return fmt.Errorf("Error reading use_sdwan: %v", err)
 		}
 	}
 

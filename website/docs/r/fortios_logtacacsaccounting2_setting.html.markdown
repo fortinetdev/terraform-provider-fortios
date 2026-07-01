@@ -15,6 +15,8 @@ The following arguments are supported:
 
 * `status` - Enable/disable TACACS+ accounting. Valid values: `enable`, `disable`.
 * `server` - Address of TACACS+ server.
+* `port` - Server listen port.
+* `timeout` - connection time-out in seconds.
 * `server_key` - Key to access the TACACS+ server.
 * `source_ip` - Source IP address for communication to TACACS+ server.
 * `interface_select_method` - Specify how to select outgoing interface to reach server. Valid values: `auto`, `sdwan`, `specify`.

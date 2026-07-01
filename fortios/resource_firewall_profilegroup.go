@@ -46,6 +46,26 @@ func resourceFirewallProfileGroup() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 47),
 				Required:     true,
 			},
+			"uuid": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"fabric_object": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"fabric_force_sync": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"fabric_object_source": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"av_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 47),
@@ -147,6 +167,16 @@ func resourceFirewallProfileGroup() *schema.Resource {
 				Optional:     true,
 			},
 			"casb_profile": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 47),
+				Optional:     true,
+			},
+			"telemetry_profile": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 47),
+				Optional:     true,
+			},
+			"llm_profile": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 47),
 				Optional:     true,
@@ -343,6 +373,22 @@ func flattenFirewallProfileGroupName(v interface{}, d *schema.ResourceData, pre 
 	return v
 }
 
+func flattenFirewallProfileGroupUuid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallProfileGroupFabricObject(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallProfileGroupFabricForceSync(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallProfileGroupFabricObjectSource(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallProfileGroupAvProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -427,6 +473,14 @@ func flattenFirewallProfileGroupCasbProfile(v interface{}, d *schema.ResourceDat
 	return v
 }
 
+func flattenFirewallProfileGroupTelemetryProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallProfileGroupLlmProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenFirewallProfileGroupProfileProtocolOptions(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -441,6 +495,30 @@ func refreshObjectFirewallProfileGroup(d *schema.ResourceData, o map[string]inte
 	if err = d.Set("name", flattenFirewallProfileGroupName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
+		}
+	}
+
+	if err = d.Set("uuid", flattenFirewallProfileGroupUuid(o["uuid"], d, "uuid", sv)); err != nil {
+		if !fortiAPIPatch(o["uuid"]) {
+			return fmt.Errorf("Error reading uuid: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_object", flattenFirewallProfileGroupFabricObject(o["fabric-object"], d, "fabric_object", sv)); err != nil {
+		if !fortiAPIPatch(o["fabric-object"]) {
+			return fmt.Errorf("Error reading fabric_object: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_force_sync", flattenFirewallProfileGroupFabricForceSync(o["fabric-force-sync"], d, "fabric_force_sync", sv)); err != nil {
+		if !fortiAPIPatch(o["fabric-force-sync"]) {
+			return fmt.Errorf("Error reading fabric_force_sync: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_object_source", flattenFirewallProfileGroupFabricObjectSource(o["fabric-object-source"], d, "fabric_object_source", sv)); err != nil {
+		if !fortiAPIPatch(o["fabric-object-source"]) {
+			return fmt.Errorf("Error reading fabric_object_source: %v", err)
 		}
 	}
 
@@ -570,6 +648,18 @@ func refreshObjectFirewallProfileGroup(d *schema.ResourceData, o map[string]inte
 		}
 	}
 
+	if err = d.Set("telemetry_profile", flattenFirewallProfileGroupTelemetryProfile(o["telemetry-profile"], d, "telemetry_profile", sv)); err != nil {
+		if !fortiAPIPatch(o["telemetry-profile"]) {
+			return fmt.Errorf("Error reading telemetry_profile: %v", err)
+		}
+	}
+
+	if err = d.Set("llm_profile", flattenFirewallProfileGroupLlmProfile(o["llm-profile"], d, "llm_profile", sv)); err != nil {
+		if !fortiAPIPatch(o["llm-profile"]) {
+			return fmt.Errorf("Error reading llm_profile: %v", err)
+		}
+	}
+
 	if err = d.Set("profile_protocol_options", flattenFirewallProfileGroupProfileProtocolOptions(o["profile-protocol-options"], d, "profile_protocol_options", sv)); err != nil {
 		if !fortiAPIPatch(o["profile-protocol-options"]) {
 			return fmt.Errorf("Error reading profile_protocol_options: %v", err)
@@ -592,6 +682,22 @@ func flattenFirewallProfileGroupFortiTestDebug(d *schema.ResourceData, fosdebugs
 }
 
 func expandFirewallProfileGroupName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallProfileGroupUuid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallProfileGroupFabricObject(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallProfileGroupFabricForceSync(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallProfileGroupFabricObjectSource(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -679,6 +785,14 @@ func expandFirewallProfileGroupCasbProfile(d *schema.ResourceData, v interface{}
 	return v, nil
 }
 
+func expandFirewallProfileGroupTelemetryProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallProfileGroupLlmProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallProfileGroupProfileProtocolOptions(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -699,6 +813,42 @@ func getObjectFirewallProfileGroup(d *schema.ResourceData, sv string) (*map[stri
 		}
 	} else if d.HasChange("name") {
 		obj["name"] = nil
+	}
+
+	if v, ok := d.GetOk("uuid"); ok {
+		t, err := expandFirewallProfileGroupUuid(d, v, "uuid", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["uuid"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("fabric_object"); ok {
+		t, err := expandFirewallProfileGroupFabricObject(d, v, "fabric_object", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fabric-object"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("fabric_force_sync"); ok {
+		t, err := expandFirewallProfileGroupFabricForceSync(d, v, "fabric_force_sync", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fabric-force-sync"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("fabric_object_source"); ok {
+		t, err := expandFirewallProfileGroupFabricObjectSource(d, v, "fabric_object_source", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fabric-object-source"] = t
+		}
 	}
 
 	if v, ok := d.GetOk("av_profile"); ok {
@@ -930,6 +1080,28 @@ func getObjectFirewallProfileGroup(d *schema.ResourceData, sv string) (*map[stri
 		}
 	} else if d.HasChange("casb_profile") {
 		obj["casb-profile"] = nil
+	}
+
+	if v, ok := d.GetOk("telemetry_profile"); ok {
+		t, err := expandFirewallProfileGroupTelemetryProfile(d, v, "telemetry_profile", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["telemetry-profile"] = t
+		}
+	} else if d.HasChange("telemetry_profile") {
+		obj["telemetry-profile"] = nil
+	}
+
+	if v, ok := d.GetOk("llm_profile"); ok {
+		t, err := expandFirewallProfileGroupLlmProfile(d, v, "llm_profile", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["llm-profile"] = t
+		}
+	} else if d.HasChange("llm_profile") {
+		obj["llm-profile"] = nil
 	}
 
 	if v, ok := d.GetOk("profile_protocol_options"); ok {

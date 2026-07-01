@@ -22,6 +22,9 @@ The following attributes are exported:
 * `policyid` - Policy ID.
 * `name` - Policy name.
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
+* `fabric_object` - Security Fabric global object setting.
+* `fabric_force_sync` - Enable/disable forced synchronization of configuration objects from the root FortiGate unit to the downstream devices.  Configuration conflict check is skipped.
+* `fabric_object_source` - Source of truth for fabric object.
 * `srcintf` - Incoming (ingress) interface. The structure of `srcintf` block is documented below.
 * `dstintf` - Outgoing (egress) interface. The structure of `dstintf` block is documented below.
 * `srcaddr` - Source address and address group names. The structure of `srcaddr` block is documented below.
@@ -30,10 +33,13 @@ The following attributes are exported:
 * `dstaddr6` - Destination IPv6 address name and address group names. The structure of `dstaddr6` block is documented below.
 * `ztna_status` - Enable/disable zero trust access.
 * `ztna_device_ownership` - Enable/disable zero trust device ownership.
+* `custom_tags` - Custom tags. The structure of `custom_tags` block is documented below.
 * `ztna_ems_tag` - Source ztna-ems-tag names. The structure of `ztna_ems_tag` block is documented below.
 * `ztna_ems_tag_secondary` - Source ztna-ems-tag-secondary names. The structure of `ztna_ems_tag_secondary` block is documented below.
+* `ztna_ems_tag6` - Source ZTNA FortiClient EMS tag IPv6 names. The structure of `ztna_ems_tag6` block is documented below.
 * `ztna_tags_match_logic` - ZTNA tag matching logic.
 * `ztna_geo_tag` - Source ztna-geo-tag names. The structure of `ztna_geo_tag` block is documented below.
+* `ztna_destination` - Configure ZTNA destinations. Must be used with ZTNA traffic-forward-proxy. The structure of `ztna_destination` block is documented below.
 * `internet_service` - Enable/disable use of Internet Services for this policy. If enabled, destination address and service are not used. 
 * `internet_service_name` - Internet Service name. The structure of `internet_service_name` block is documented below.
 * `internet_service_id` - Internet Service ID. The structure of `internet_service_id` block is documented below.
@@ -117,6 +123,8 @@ The following attributes are exported:
 * `waf_profile` - Name of an existing Web application firewall profile.
 * `ssh_filter_profile` - Name of an existing SSH filter profile.
 * `casb_profile` - Name of an existing CASB profile.
+* `telemetry_profile` - Name of an existing telemetry profile.
+* `llm_profile` - Name of an existing LLM profile.
 * `profile_protocol_options` - Name of an existing Protocol options profile.
 * `ssl_ssh_profile` - Name of an existing SSL SSH profile.
 * `logtraffic` - Enable or disable logging. Log all sessions or security profile sessions.
@@ -184,6 +192,7 @@ The following attributes are exported:
 * `match_vip` - Enable to match packets that have had their destination addresses changed by a VIP.
 * `match_vip_only` - Enable/disable matching of only those packets that have had their destination addresses changed by a VIP.
 * `diffserv_copy` - Enable to copy packet's DiffServ values from session's original direction to its reply direction.
+* `skip_vrf_match` - Enable/disable skipping VRF matching on reply direction.
 * `diffserv_forward` - Enable to change packet's DiffServ values to the specified diffservcode-forward value.
 * `diffserv_reverse` - Enable to change packet's reverse (reply) DiffServ values to the specified diffservcode-rev value.
 * `diffservcode_forward` - Change packet's DiffServ to this value.
@@ -227,6 +236,7 @@ The following attributes are exported:
 * `internet_service_src_fortiguard` - FortiGuard Internet Service source name. The structure of `internet_service_src_fortiguard` block is documented below.
 * `internet_service6_fortiguard` - FortiGuard IPv6 Internet Service name. The structure of `internet_service6_fortiguard` block is documented below.
 * `internet_service6_src_fortiguard` - FortiGuard IPv6 Internet Service source name. The structure of `internet_service6_src_fortiguard` block is documented below.
+* `fabric_policy` - Fabric policy related attributes. The structure of `fabric_policy` block is documented below.
 
 The `srcintf` block contains:
 
@@ -252,6 +262,10 @@ The `dstaddr6` block contains:
 
 * `name` - Address name.
 
+The `custom_tags` block contains:
+
+* `name` - Names of custom tags used with this policy.
+
 The `ztna_ems_tag` block contains:
 
 * `name` - Address name.
@@ -260,9 +274,17 @@ The `ztna_ems_tag_secondary` block contains:
 
 * `name` - Address name.
 
+The `ztna_ems_tag6` block contains:
+
+* `name` - Address name.
+
 The `ztna_geo_tag` block contains:
 
 * `name` - Address name.
+
+The `ztna_destination` block contains:
+
+* `name` - ZTNA destination name.
 
 The `internet_service_name` block contains:
 
@@ -439,4 +461,9 @@ The `internet_service6_fortiguard` block contains:
 The `internet_service6_src_fortiguard` block contains:
 
 * `name` - FortiGuard Internet Service name.
+
+The `fabric_policy` block contains:
+
+* `from` - From device.
+* `to` - To device.
 

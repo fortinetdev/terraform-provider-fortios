@@ -26,11 +26,16 @@ The following arguments are supported:
 
 * `fosid` - (Required) ID.
 * `name` - (Required) Name of URL filter list.
+* `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
+* `fabric_object` - Security Fabric global object setting. Valid values: `enable`, `disable`.
+* `fabric_force_sync` - Enable/disable forced synchronization of configuration objects from the root FortiGate unit to the downstream devices.  Configuration conflict check is skipped. Valid values: `enable`, `disable`.
+* `fabric_object_source` - Source of truth for fabric object. Valid values: `member`, `local`, `root`.
 * `comment` - Optional comments.
 * `one_arm_ips_urlfilter` - Enable/disable DNS resolver for one-arm IPS URL filter operation. Valid values: `enable`, `disable`.
 * `ip_addr_block` - Enable/disable blocking URLs when the hostname appears as an IP address. Valid values: `enable`, `disable`.
 * `ip4_mapped_ip6` - Enable/disable matching of IPv4 mapped IPv6 URLs. Valid values: `enable`, `disable`.
 * `include_subdomains` - Enable/disable matching subdomains. Applies only to simple type (default = enable). Valid values: `enable`, `disable`.
+* `type` - Type of URL filter table (profile or category). Valid values: `profile`, `category`.
 * `entries` - URL filter entries. The structure of `entries` block is documented below.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
 * `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
@@ -41,7 +46,7 @@ The `entries` block supports:
 
 * `id` - Id.
 * `url` - URL to be filtered.
-* `type` - Filter type (simple, regex, or wildcard). Valid values: `simple`, `regex`, `wildcard`.
+* `type` - Filter type (simple or wildcard). If table type 'profile', regex also supported. Valid values: `simple`, `regex`, `wildcard`.
 * `action` - Action to take for URL filter matches. Valid values: `exempt`, `block`, `allow`, `monitor`.
 * `antiphish_action` - Action to take for AntiPhishing matches. Valid values: `block`, `log`.
 * `status` - Enable/disable this URL filter. Valid values: `enable`, `disable`.

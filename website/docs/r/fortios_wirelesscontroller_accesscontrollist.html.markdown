@@ -26,7 +26,7 @@ The `layer3_ipv4_rules` block supports:
 
 * `rule_id` - Rule ID (1 - 65535).
 * `comment` - Description.
-* `srcaddr` - Source IP address (any | local-LAN | IPv4 address[/<network mask | mask length>], default = any).
+* `srcaddr` - Source IP address (default = any). On FortiOS versions 6.4.0-7.6.7: any | local-LAN | IPv4 address[/<network mask | mask length>]. On FortiOS versions >= 8.0.0: any | local-LAN | IPv4 address[/<network mask | mask length>] | fqdn.
 * `srcport` - Source port (0 - 65535, default = 0, meaning any).
 * `dstaddr` - Destination IP address (any | local-LAN | IPv4 address[/<network mask | mask length>], default = any).
 * `dstport` - Destination port (0 - 65535, default = 0, meaning any).
@@ -37,7 +37,7 @@ The `layer3_ipv6_rules` block supports:
 
 * `rule_id` - Rule ID (1 - 65535).
 * `comment` - Description.
-* `srcaddr` - Source IPv6 address (any | local-LAN | IPv6 address[/prefix length]), default = any.
+* `srcaddr` - Source IPv6 address, default = any. On FortiOS versions 6.4.0-7.6.7: any | local-LAN | IPv6 address[/prefix length]. On FortiOS versions >= 8.0.0: any | local-LAN | IPv6 address[/prefix length] | fqdn.
 * `srcport` - Source port (0 - 65535, default = 0, meaning any).
 * `dstaddr` - Destination IPv6 address (any | local-LAN | IPv6 address[/prefix length]), default = any.
 * `dstport` - Destination port (0 - 65535, default = 0, meaning any).

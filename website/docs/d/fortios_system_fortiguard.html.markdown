@@ -42,6 +42,7 @@ The following attributes are exported:
 * `gui_prompt_auto_upgrade` - Enable/disable prompting of automatic patch-level firmware upgrade recommendation.
 * `fds_license_expiring_days` - Threshold for number of days before FortiGuard license expiration to generate license expiring event log (1 - 100 days, default = 15).
 * `subscribe_update_notification` - Enable/disable subscription to receive update notification from FortiGuard.
+* `proxy_fqdn_host` - Enable/disable preference of the FQDN as host header, if resolved by DNS, in the CONNECT request to FortiGuard servers. For use when the FortiGate unit is behind a proxy server.
 * `fortiguard_anycast` - Enable/disable use of FortiGuard's anycast network.
 * `fortiguard_anycast_source` - Configure which of Fortinet's servers to provide FortiGuard services in FortiGuard's anycast network. Default is Fortinet.
 * `antispam_force_off` - Enable/disable turning off the FortiGuard antispam service.

@@ -1,0 +1,37 @@
+---
+subcategory: "FortiGate System"
+layout: "fortios"
+page_title: "FortiOS: fortios_system_fortimq"
+description: |-
+  Configure FortiMQ settings.
+---
+
+# fortios_system_fortimq
+Configure FortiMQ settings. Applies to FortiOS Version `>= 8.0.0`.
+
+## Argument Reference
+
+The following arguments are supported:
+
+* `status` - Enable/disable FortiMQ features (default = enable). Valid values: `enable`, `disable`.
+* `publish_metadata` - Enable/disable the publishing of FortiGate metadata to the FortiMQ cloud sevice (default = enable). Valid values: `enable`, `disable`.
+* `ocsp_check` - Enable/disable OCSP check when connecting to FortiMQ cloud service (default = enable). Valid values: `enable`, `disable`.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
+
+
+## Attribute Reference
+
+In addition to all the above arguments, the following attributes are exported:
+* `id` - an identifier for the resource.
+
+## Import
+
+System Fortimq can be imported using any of these accepted formats:
+```
+$ terraform import fortios_system_fortimq.labelname SystemFortimq
+
+If you do not want to import arguments of block:
+$ export "FORTIOS_IMPORT_TABLE"="false"
+$ terraform import fortios_system_fortimq.labelname SystemFortimq
+$ unset "FORTIOS_IMPORT_TABLE"
+```

@@ -28,4 +28,6 @@ The following attributes are exported:
 * `color` - Color of icon on the GUI.
 * `expiration_days` - Write an event log message this many days before the schedule expires.
 * `fabric_object` - Security Fabric global object setting.
+* `fabric_force_sync` - Enable/disable forced synchronization of configuration objects from the root FortiGate unit to the downstream devices.  Configuration conflict check is skipped.
+* `fabric_object_source` - Source of truth for fabric object.
 

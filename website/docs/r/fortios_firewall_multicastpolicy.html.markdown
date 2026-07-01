@@ -48,6 +48,7 @@ The following arguments are supported:
 * `logtraffic` - Enable/disable logging traffic accepted by this policy.
 * `srcintf` - (Required) Source interface name.
 * `dstintf` - (Required) Destination interface name.
+* `custom_tags` - Custom tags. The structure of `custom_tags` block is documented below.
 * `srcaddr` - (Required) Source address objects. The structure of `srcaddr` block is documented below.
 * `dstaddr` - (Required) Destination address objects. The structure of `dstaddr` block is documented below.
 * `snat` - Enable/disable substitution of the outgoing interface IP address for the original source IP address (called source NAT or SNAT). Valid values: `enable`, `disable`.
@@ -65,6 +66,10 @@ The following arguments are supported:
 * `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 * `update_if_exist` - Equivalent functionality of import the resource. If set to true, will check whether the resource exist, if so, will do the UPDATE operation rather CREATE. Default is false. If you want to inherit the value of the provider, please do not set this parameter.
+
+The `custom_tags` block supports:
+
+* `name` - Names of custom tags used with this policy.
 
 The `srcaddr` block supports:
 

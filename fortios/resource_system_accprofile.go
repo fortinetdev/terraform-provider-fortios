@@ -407,6 +407,26 @@ func resourceSystemAccprofile() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"gui_theme_type": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"gui_theme": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"gui_custom_theme": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+			},
+			"gui_ai_assistant": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"get_all_tables": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -1095,6 +1115,22 @@ func flattenSystemAccprofileSystemExecuteTelnet(v interface{}, d *schema.Resourc
 	return v
 }
 
+func flattenSystemAccprofileGuiThemeType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemAccprofileGuiTheme(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemAccprofileGuiCustomTheme(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemAccprofileGuiAiAssistant(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectSystemAccprofile(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 	var b_get_all_tables bool
@@ -1341,6 +1377,30 @@ func refreshObjectSystemAccprofile(d *schema.ResourceData, o map[string]interfac
 	if err = d.Set("system_execute_telnet", flattenSystemAccprofileSystemExecuteTelnet(o["system-execute-telnet"], d, "system_execute_telnet", sv)); err != nil {
 		if !fortiAPIPatch(o["system-execute-telnet"]) {
 			return fmt.Errorf("Error reading system_execute_telnet: %v", err)
+		}
+	}
+
+	if err = d.Set("gui_theme_type", flattenSystemAccprofileGuiThemeType(o["gui-theme-type"], d, "gui_theme_type", sv)); err != nil {
+		if !fortiAPIPatch(o["gui-theme-type"]) {
+			return fmt.Errorf("Error reading gui_theme_type: %v", err)
+		}
+	}
+
+	if err = d.Set("gui_theme", flattenSystemAccprofileGuiTheme(o["gui-theme"], d, "gui_theme", sv)); err != nil {
+		if !fortiAPIPatch(o["gui-theme"]) {
+			return fmt.Errorf("Error reading gui_theme: %v", err)
+		}
+	}
+
+	if err = d.Set("gui_custom_theme", flattenSystemAccprofileGuiCustomTheme(o["gui-custom-theme"], d, "gui_custom_theme", sv)); err != nil {
+		if !fortiAPIPatch(o["gui-custom-theme"]) {
+			return fmt.Errorf("Error reading gui_custom_theme: %v", err)
+		}
+	}
+
+	if err = d.Set("gui_ai_assistant", flattenSystemAccprofileGuiAiAssistant(o["gui-ai-assistant"], d, "gui_ai_assistant", sv)); err != nil {
+		if !fortiAPIPatch(o["gui-ai-assistant"]) {
+			return fmt.Errorf("Error reading gui_ai_assistant: %v", err)
 		}
 	}
 
@@ -1831,6 +1891,22 @@ func expandSystemAccprofileSystemExecuteTelnet(d *schema.ResourceData, v interfa
 	return v, nil
 }
 
+func expandSystemAccprofileGuiThemeType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAccprofileGuiTheme(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAccprofileGuiCustomTheme(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAccprofileGuiAiAssistant(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectSystemAccprofile(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
@@ -2103,6 +2179,44 @@ func getObjectSystemAccprofile(d *schema.ResourceData, sv string) (*map[string]i
 			return &obj, err
 		} else if t != nil {
 			obj["system-execute-telnet"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("gui_theme_type"); ok {
+		t, err := expandSystemAccprofileGuiThemeType(d, v, "gui_theme_type", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["gui-theme-type"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("gui_theme"); ok {
+		t, err := expandSystemAccprofileGuiTheme(d, v, "gui_theme", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["gui-theme"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("gui_custom_theme"); ok {
+		t, err := expandSystemAccprofileGuiCustomTheme(d, v, "gui_custom_theme", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["gui-custom-theme"] = t
+		}
+	} else if d.HasChange("gui_custom_theme") {
+		obj["gui-custom-theme"] = nil
+	}
+
+	if v, ok := d.GetOk("gui_ai_assistant"); ok {
+		t, err := expandSystemAccprofileGuiAiAssistant(d, v, "gui_ai_assistant", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["gui-ai-assistant"] = t
 		}
 	}
 

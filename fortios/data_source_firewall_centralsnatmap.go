@@ -116,6 +116,18 @@ func dataSourceFirewallCentralSnatMap() *schema.Resource {
 					},
 				},
 			},
+			"custom_tags": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
 			"nat_ippool": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
@@ -459,6 +471,42 @@ func dataSourceFlattenFirewallCentralSnatMapDstintfName(v interface{}, d *schema
 	return v
 }
 
+func dataSourceFlattenFirewallCentralSnatMapCustomTags(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = dataSourceFlattenFirewallCentralSnatMapCustomTagsName(i["name"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenFirewallCentralSnatMapCustomTagsName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallCentralSnatMapNatIppool(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -631,6 +679,12 @@ func dataSourceRefreshObjectFirewallCentralSnatMap(d *schema.ResourceData, o map
 	if err = d.Set("dstintf", dataSourceFlattenFirewallCentralSnatMapDstintf(o["dstintf"], d, "dstintf")); err != nil {
 		if !fortiAPIPatch(o["dstintf"]) {
 			return fmt.Errorf("Error reading dstintf: %v", err)
+		}
+	}
+
+	if err = d.Set("custom_tags", dataSourceFlattenFirewallCentralSnatMapCustomTags(o["custom-tags"], d, "custom_tags")); err != nil {
+		if !fortiAPIPatch(o["custom-tags"]) {
+			return fmt.Errorf("Error reading custom_tags: %v", err)
 		}
 	}
 

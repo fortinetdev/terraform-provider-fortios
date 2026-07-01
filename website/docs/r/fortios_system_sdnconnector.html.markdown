@@ -32,6 +32,10 @@ resource "fortios_system_sdnconnector" "trname" {
 The following arguments are supported:
 
 * `name` - SDN connector name.
+* `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
+* `fabric_object` - Security Fabric global object setting. Valid values: `enable`, `disable`.
+* `fabric_force_sync` - Enable/disable forced synchronization of configuration objects from the root FortiGate unit to the downstream devices.  Configuration conflict check is skipped. Valid values: `enable`, `disable`.
+* `fabric_object_source` - Source of truth for fabric object. Valid values: `member`, `local`, `root`.
 * `status` - (Required) Enable/disable connection to the remote SDN connector. Valid values: `disable`, `enable`.
 * `type` - (Required) Type of SDN connector.
 * `proxy` - SDN proxy.
@@ -53,6 +57,7 @@ The following arguments are supported:
 * `vpc_id` - AWS VPC ID.
 * `alt_resource_ip` - Enable/disable AWS alternative resource IP. Valid values: `disable`, `enable`.
 * `external_account_list` - Configure AWS external account list. The structure of `external_account_list` block is documented below.
+* `k8s_allow_list` - Allow list for the kubernetes cluster The structure of `k8s_allow_list` block is documented below.
 * `tenant_id` - Tenant ID (directory ID).
 * `subscription_id` - Azure subscription ID.
 * `login_endpoint` - Azure Stack login endpoint.
@@ -111,6 +116,10 @@ The `external_account_list` block supports:
 The `region_list` block supports:
 
 * `region` - AWS region name.
+
+The `k8s_allow_list` block supports:
+
+* `name` - Kubernetes cluster name.
 
 The `nic` block supports:
 

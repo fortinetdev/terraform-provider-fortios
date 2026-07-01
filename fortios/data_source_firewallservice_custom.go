@@ -109,7 +109,7 @@ func dataSourceFirewallServiceCustom() *schema.Resource {
 				Computed: true,
 			},
 			"session_ttl": &schema.Schema{
-				Type:     schema.TypeInt,
+				Type:     schema.TypeString,
 				Computed: true,
 			},
 			"check_reset_range": &schema.Schema{
@@ -157,6 +157,14 @@ func dataSourceFirewallServiceCustom() *schema.Resource {
 				},
 			},
 			"fabric_object": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"fabric_force_sync": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"fabric_object_source": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -387,6 +395,14 @@ func dataSourceFlattenFirewallServiceCustomFabricObject(v interface{}, d *schema
 	return v
 }
 
+func dataSourceFlattenFirewallServiceCustomFabricForceSync(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallServiceCustomFabricObjectSource(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceRefreshObjectFirewallServiceCustom(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
 
@@ -561,6 +577,18 @@ func dataSourceRefreshObjectFirewallServiceCustom(d *schema.ResourceData, o map[
 	if err = d.Set("fabric_object", dataSourceFlattenFirewallServiceCustomFabricObject(o["fabric-object"], d, "fabric_object")); err != nil {
 		if !fortiAPIPatch(o["fabric-object"]) {
 			return fmt.Errorf("Error reading fabric_object: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_force_sync", dataSourceFlattenFirewallServiceCustomFabricForceSync(o["fabric-force-sync"], d, "fabric_force_sync")); err != nil {
+		if !fortiAPIPatch(o["fabric-force-sync"]) {
+			return fmt.Errorf("Error reading fabric_force_sync: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_object_source", dataSourceFlattenFirewallServiceCustomFabricObjectSource(o["fabric-object-source"], d, "fabric_object_source")); err != nil {
+		if !fortiAPIPatch(o["fabric-object-source"]) {
+			return fmt.Errorf("Error reading fabric_object_source: %v", err)
 		}
 	}
 

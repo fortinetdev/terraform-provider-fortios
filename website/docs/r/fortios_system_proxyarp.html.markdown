@@ -24,7 +24,7 @@ resource "fortios_system_proxyarp" "trname" {
 
 The following arguments are supported:
 
-* `fosid` - (Required) Unique integer ID of the entry.
+* `fosid` - Unique integer ID of the entry.
 * `interface` - (Required) Interface acting proxy-ARP.
 * `ip` - (Required) IP address or start IP to be proxied.
 * `end_ip` - End IP of IP range to be proxied.

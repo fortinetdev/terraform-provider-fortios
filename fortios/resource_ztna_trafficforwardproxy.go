@@ -102,6 +102,30 @@ func resourceZtnaTrafficForwardProxy() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
 			},
+			"url_route": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+						},
+						"url_pattern": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 511),
+							Optional:     true,
+							Computed:     true,
+						},
+						"service_connector": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+						},
+					},
+				},
+			},
 			"empty_cert_action": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -651,6 +675,83 @@ func flattenZtnaTrafficForwardProxyVip6(v interface{}, d *schema.ResourceData, p
 	return v
 }
 
+func flattenZtnaTrafficForwardProxyUrlRoute(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
+	con := 0
+	for _, r := range parsed_list {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
+
+		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
+			tmp["name"] = flattenZtnaTrafficForwardProxyUrlRouteName(cur_v, d, pre_append, sv)
+		}
+
+		if cur_v, ok := i["url-pattern"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "url_pattern"
+			}
+			tmp["url_pattern"] = flattenZtnaTrafficForwardProxyUrlRouteUrlPattern(cur_v, d, pre_append, sv)
+		}
+
+		if cur_v, ok := i["service-connector"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "service_connector"
+			}
+			tmp["service_connector"] = flattenZtnaTrafficForwardProxyUrlRouteServiceConnector(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenZtnaTrafficForwardProxyUrlRouteName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenZtnaTrafficForwardProxyUrlRouteUrlPattern(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenZtnaTrafficForwardProxyUrlRouteServiceConnector(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenZtnaTrafficForwardProxyEmptyCertAction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -1184,6 +1285,22 @@ func refreshObjectZtnaTrafficForwardProxy(d *schema.ResourceData, o map[string]i
 		}
 	}
 
+	if b_get_all_tables {
+		if err = d.Set("url_route", flattenZtnaTrafficForwardProxyUrlRoute(o["url-route"], d, "url_route", sv)); err != nil {
+			if !fortiAPIPatch(o["url-route"]) {
+				return fmt.Errorf("Error reading url_route: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("url_route"); ok {
+			if err = d.Set("url_route", flattenZtnaTrafficForwardProxyUrlRoute(o["url-route"], d, "url_route", sv)); err != nil {
+				if !fortiAPIPatch(o["url-route"]) {
+					return fmt.Errorf("Error reading url_route: %v", err)
+				}
+			}
+		}
+	}
+
 	if err = d.Set("empty_cert_action", flattenZtnaTrafficForwardProxyEmptyCertAction(o["empty-cert-action"], d, "empty_cert_action", sv)); err != nil {
 		if !fortiAPIPatch(o["empty-cert-action"]) {
 			return fmt.Errorf("Error reading empty_cert_action: %v", err)
@@ -1542,6 +1659,59 @@ func expandZtnaTrafficForwardProxyAuthVirtualHost(d *schema.ResourceData, v inte
 }
 
 func expandZtnaTrafficForwardProxyVip6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandZtnaTrafficForwardProxyUrlRoute(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["name"], _ = expandZtnaTrafficForwardProxyUrlRouteName(d, i["name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["name"] = nil
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "url_pattern"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["url-pattern"], _ = expandZtnaTrafficForwardProxyUrlRouteUrlPattern(d, i["url_pattern"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "service_connector"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["service-connector"], _ = expandZtnaTrafficForwardProxyUrlRouteServiceConnector(d, i["service_connector"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["service-connector"] = nil
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandZtnaTrafficForwardProxyUrlRouteName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandZtnaTrafficForwardProxyUrlRouteUrlPattern(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandZtnaTrafficForwardProxyUrlRouteServiceConnector(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2040,6 +2210,15 @@ func getObjectZtnaTrafficForwardProxy(d *schema.ResourceData, sv string) (*map[s
 		}
 	} else if d.HasChange("vip6") {
 		obj["vip6"] = nil
+	}
+
+	if v, ok := d.GetOk("url_route"); ok || d.HasChange("url_route") {
+		t, err := expandZtnaTrafficForwardProxyUrlRoute(d, v, "url_route", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["url-route"] = t
+		}
 	}
 
 	if v, ok := d.GetOk("empty_cert_action"); ok {

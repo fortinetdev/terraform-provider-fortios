@@ -30,8 +30,12 @@ The following attributes are exported:
 * `visibility` - Enable/disable address visibility in the GUI.
 * `color` - Color of icon on the GUI.
 * `tagging` - Config object tagging. The structure of `tagging` block is documented below.
+* `display_with` - Display object with first tag, all tags, or just the icon.
+* `custom_tags` - Custom tags. The structure of `custom_tags` block is documented below.
 * `allow_routing` - Enable/disable use of this group in the static route configuration.
 * `fabric_object` - Security Fabric global object setting.
+* `fabric_force_sync` - Enable/disable forced synchronization of configuration objects from the root FortiGate unit to the downstream devices.  Configuration conflict check is skipped.
+* `fabric_object_source` - Source of truth for fabric object.
 
 The `member` block contains:
 
@@ -50,4 +54,8 @@ The `tagging` block contains:
 The `tags` block contains:
 
 * `name` - Tag name.
+
+The `custom_tags` block contains:
+
+* `name` - Names of custom tags used with this address group.
 

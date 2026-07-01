@@ -39,6 +39,7 @@ The following attributes are exported:
 * `fmg_update_port` - Port used to communicate with FortiManager that is acting as a FortiGuard update server.
 * `fmg_update_http_header` - Enable/disable inclusion of HTTP header in update request.
 * `include_default_servers` - Enable/disable inclusion of public FortiGuard servers in the override server list.
+* `use_default_servers_as_main` - Enable/disable use of the public FortiGuard servers as main servers.
 * `enc_algorithm` - Encryption strength for communications between the FortiGate and central management.
 * `interface_select_method` - Specify how to select outgoing interface to reach server.
 * `interface` - Specify outgoing interface to reach server.

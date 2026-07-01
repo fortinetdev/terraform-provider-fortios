@@ -83,6 +83,16 @@ func resourceFirewallScheduleOnetime() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"fabric_force_sync": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"fabric_object_source": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -295,6 +305,14 @@ func flattenFirewallScheduleOnetimeFabricObject(v interface{}, d *schema.Resourc
 	return v
 }
 
+func flattenFirewallScheduleOnetimeFabricForceSync(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallScheduleOnetimeFabricObjectSource(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectFirewallScheduleOnetime(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -352,6 +370,18 @@ func refreshObjectFirewallScheduleOnetime(d *schema.ResourceData, o map[string]i
 		}
 	}
 
+	if err = d.Set("fabric_force_sync", flattenFirewallScheduleOnetimeFabricForceSync(o["fabric-force-sync"], d, "fabric_force_sync", sv)); err != nil {
+		if !fortiAPIPatch(o["fabric-force-sync"]) {
+			return fmt.Errorf("Error reading fabric_force_sync: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_object_source", flattenFirewallScheduleOnetimeFabricObjectSource(o["fabric-object-source"], d, "fabric_object_source", sv)); err != nil {
+		if !fortiAPIPatch(o["fabric-object-source"]) {
+			return fmt.Errorf("Error reading fabric_object_source: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -394,6 +424,14 @@ func expandFirewallScheduleOnetimeExpirationDays(d *schema.ResourceData, v inter
 }
 
 func expandFirewallScheduleOnetimeFabricObject(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallScheduleOnetimeFabricForceSync(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallScheduleOnetimeFabricObjectSource(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -490,6 +528,24 @@ func getObjectFirewallScheduleOnetime(d *schema.ResourceData, sv string) (*map[s
 			return &obj, err
 		} else if t != nil {
 			obj["fabric-object"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("fabric_force_sync"); ok {
+		t, err := expandFirewallScheduleOnetimeFabricForceSync(d, v, "fabric_force_sync", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fabric-force-sync"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("fabric_object_source"); ok {
+		t, err := expandFirewallScheduleOnetimeFabricObjectSource(d, v, "fabric_object_source", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fabric-object-source"] = t
 		}
 	}
 

@@ -209,6 +209,11 @@ func resourceWebProxyGlobal() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"ssl_bypass_cache": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -559,6 +564,10 @@ func flattenWebProxyGlobalRequestObsFold(v interface{}, d *schema.ResourceData, 
 	return v
 }
 
+func flattenWebProxyGlobalSslBypassCache(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectWebProxyGlobal(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 	var b_get_all_tables bool
@@ -774,6 +783,12 @@ func refreshObjectWebProxyGlobal(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("ssl_bypass_cache", flattenWebProxyGlobalSslBypassCache(o["ssl-bypass-cache"], d, "ssl_bypass_cache", sv)); err != nil {
+		if !fortiAPIPatch(o["ssl-bypass-cache"]) {
+			return fmt.Errorf("Error reading ssl_bypass_cache: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -952,6 +967,10 @@ func expandWebProxyGlobalProxyTransparentCertInspection(d *schema.ResourceData, 
 }
 
 func expandWebProxyGlobalRequestObsFold(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWebProxyGlobalSslBypassCache(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1369,6 +1388,19 @@ func getObjectWebProxyGlobal(d *schema.ResourceData, setArgNil bool, sv string) 
 				return &obj, err
 			} else if t != nil {
 				obj["request-obs-fold"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("ssl_bypass_cache"); ok {
+		if setArgNil {
+			obj["ssl-bypass-cache"] = nil
+		} else {
+			t, err := expandWebProxyGlobalSslBypassCache(d, v, "ssl_bypass_cache", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ssl-bypass-cache"] = t
 			}
 		}
 	}

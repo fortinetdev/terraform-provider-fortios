@@ -335,6 +335,50 @@ func (c *FortiSDKClient) ReadAntivirusSettings(mkey string, vdomparam string) (m
 	return
 }
 
+// UpdateApplicationClassificationSettings API operation for FortiOS updates the specified Classification Settings.
+// Returns the index value of the Classification Settings and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the application - classification-settings chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateApplicationClassificationSettings(params *map[string]interface{}, mkey string, vdomparam string) (output map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "PUT"
+	requestInput.params = params
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/application/classification-settings"
+
+	output, err = createUpdate(requestInput)
+	return
+}
+
+// DeleteApplicationClassificationSettings API operation for FortiOS deletes the specified Classification Settings.
+// Returns error for service API and SDK errors.
+// See the application - classification-settings chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteApplicationClassificationSettings(mkey string, vdomparam string) (err error) {
+
+	//No unset API for application - classification-settings
+	return
+}
+
+// ReadApplicationClassificationSettings API operation for FortiOS gets the Classification Settings
+// with the specified index value.
+// Returns the requested Classification Settings value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the application - classification-settings chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadApplicationClassificationSettings(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "GET"
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/application/classification-settings"
+
+	requestInput.bcomplex = true
+	mapTmp, err = read(requestInput)
+	return
+}
+
 // CreateApplicationCustom API operation for FortiOS creates a new Custom.
 // Returns the index value of the Custom and execution result when the request executes successfully.
 // Returns error for service API and SDK errors.
@@ -678,6 +722,76 @@ func (c *FortiSDKClient) ReadApplicationRuleSettings(mkey string, vdomparam stri
 	requestInput.method = "GET"
 	requestInput.vdomparam = vdomparam
 	requestInput.path = "/api/v2/cmdb/application/rule-settings"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	requestInput.bcomplex = false
+	mapTmp, err = read(requestInput)
+	return
+}
+
+// CreateApplicationUnsanctionedApps API operation for FortiOS creates a new Unsanctioned Apps.
+// Returns the index value of the Unsanctioned Apps and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the application - unsanctioned-apps chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateApplicationUnsanctionedApps(params *map[string]interface{}, vdomparam string) (output map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "POST"
+	requestInput.path = "/api/v2/cmdb/application/unsanctioned-apps"
+	requestInput.params = params
+	requestInput.vdomparam = vdomparam
+
+	output, err = createUpdate(requestInput)
+	return
+}
+
+// UpdateApplicationUnsanctionedApps API operation for FortiOS updates the specified Unsanctioned Apps.
+// Returns the index value of the Unsanctioned Apps and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the application - unsanctioned-apps chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateApplicationUnsanctionedApps(params *map[string]interface{}, mkey string, vdomparam string) (output map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "PUT"
+	requestInput.params = params
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/application/unsanctioned-apps"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	output, err = createUpdate(requestInput)
+	return
+}
+
+// DeleteApplicationUnsanctionedApps API operation for FortiOS deletes the specified Unsanctioned Apps.
+// Returns error for service API and SDK errors.
+// See the application - unsanctioned-apps chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteApplicationUnsanctionedApps(mkey string, vdomparam string) (err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "DELETE"
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/application/unsanctioned-apps"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	err = delete(requestInput)
+	return
+}
+
+// ReadApplicationUnsanctionedApps API operation for FortiOS gets the Unsanctioned Apps
+// with the specified index value.
+// Returns the requested Unsanctioned Apps value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the application - unsanctioned-apps chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadApplicationUnsanctionedApps(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "GET"
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/application/unsanctioned-apps"
 	requestInput.path += "/" + escapeURLString(mkey)
 
 	requestInput.bcomplex = false
@@ -5631,6 +5745,76 @@ func (c *FortiSDKClient) ReadFirewallCountry(mkey string, vdomparam string) (map
 	return
 }
 
+// CreateFirewallCustomTag API operation for FortiOS creates a new Custom Tag.
+// Returns the index value of the Custom Tag and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the firewall - custom-tag chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateFirewallCustomTag(params *map[string]interface{}, vdomparam string) (output map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "POST"
+	requestInput.path = "/api/v2/cmdb/firewall/custom-tag"
+	requestInput.params = params
+	requestInput.vdomparam = vdomparam
+
+	output, err = createUpdate(requestInput)
+	return
+}
+
+// UpdateFirewallCustomTag API operation for FortiOS updates the specified Custom Tag.
+// Returns the index value of the Custom Tag and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the firewall - custom-tag chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateFirewallCustomTag(params *map[string]interface{}, mkey string, vdomparam string) (output map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "PUT"
+	requestInput.params = params
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/firewall/custom-tag"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	output, err = createUpdate(requestInput)
+	return
+}
+
+// DeleteFirewallCustomTag API operation for FortiOS deletes the specified Custom Tag.
+// Returns error for service API and SDK errors.
+// See the firewall - custom-tag chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteFirewallCustomTag(mkey string, vdomparam string) (err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "DELETE"
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/firewall/custom-tag"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	err = delete(requestInput)
+	return
+}
+
+// ReadFirewallCustomTag API operation for FortiOS gets the Custom Tag
+// with the specified index value.
+// Returns the requested Custom Tag value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the firewall - custom-tag chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadFirewallCustomTag(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "GET"
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/firewall/custom-tag"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	requestInput.bcomplex = false
+	mapTmp, err = read(requestInput)
+	return
+}
+
 // CreateFirewallDecryptedTrafficMirror API operation for FortiOS creates a new Decrypted Traffic Mirror.
 // Returns the index value of the Decrypted Traffic Mirror and execution result when the request executes successfully.
 // Returns error for service API and SDK errors.
@@ -8563,6 +8747,76 @@ func (c *FortiSDKClient) ReadFirewallProxyAddress(mkey string, vdomparam string)
 	return
 }
 
+// CreateFirewallProxyAddress6 API operation for FortiOS creates a new Proxy Address6.
+// Returns the index value of the Proxy Address6 and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the firewall - proxy-address6 chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateFirewallProxyAddress6(params *map[string]interface{}, vdomparam string) (output map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "POST"
+	requestInput.path = "/api/v2/cmdb/firewall/proxy-address6"
+	requestInput.params = params
+	requestInput.vdomparam = vdomparam
+
+	output, err = createUpdate(requestInput)
+	return
+}
+
+// UpdateFirewallProxyAddress6 API operation for FortiOS updates the specified Proxy Address6.
+// Returns the index value of the Proxy Address6 and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the firewall - proxy-address6 chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateFirewallProxyAddress6(params *map[string]interface{}, mkey string, vdomparam string) (output map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "PUT"
+	requestInput.params = params
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/firewall/proxy-address6"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	output, err = createUpdate(requestInput)
+	return
+}
+
+// DeleteFirewallProxyAddress6 API operation for FortiOS deletes the specified Proxy Address6.
+// Returns error for service API and SDK errors.
+// See the firewall - proxy-address6 chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteFirewallProxyAddress6(mkey string, vdomparam string) (err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "DELETE"
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/firewall/proxy-address6"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	err = delete(requestInput)
+	return
+}
+
+// ReadFirewallProxyAddress6 API operation for FortiOS gets the Proxy Address6
+// with the specified index value.
+// Returns the requested Proxy Address6 value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the firewall - proxy-address6 chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadFirewallProxyAddress6(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "GET"
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/firewall/proxy-address6"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	requestInput.bcomplex = false
+	mapTmp, err = read(requestInput)
+	return
+}
+
 // CreateFirewallProxyAddrgrp API operation for FortiOS creates a new Proxy Addrgrp.
 // Returns the index value of the Proxy Addrgrp and execution result when the request executes successfully.
 // Returns error for service API and SDK errors.
@@ -8626,6 +8880,76 @@ func (c *FortiSDKClient) ReadFirewallProxyAddrgrp(mkey string, vdomparam string)
 	requestInput.method = "GET"
 	requestInput.vdomparam = vdomparam
 	requestInput.path = "/api/v2/cmdb/firewall/proxy-addrgrp"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	requestInput.bcomplex = false
+	mapTmp, err = read(requestInput)
+	return
+}
+
+// CreateFirewallProxyAddrgrp6 API operation for FortiOS creates a new Proxy Addrgrp6.
+// Returns the index value of the Proxy Addrgrp6 and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the firewall - proxy-addrgrp6 chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateFirewallProxyAddrgrp6(params *map[string]interface{}, vdomparam string) (output map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "POST"
+	requestInput.path = "/api/v2/cmdb/firewall/proxy-addrgrp6"
+	requestInput.params = params
+	requestInput.vdomparam = vdomparam
+
+	output, err = createUpdate(requestInput)
+	return
+}
+
+// UpdateFirewallProxyAddrgrp6 API operation for FortiOS updates the specified Proxy Addrgrp6.
+// Returns the index value of the Proxy Addrgrp6 and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the firewall - proxy-addrgrp6 chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateFirewallProxyAddrgrp6(params *map[string]interface{}, mkey string, vdomparam string) (output map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "PUT"
+	requestInput.params = params
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/firewall/proxy-addrgrp6"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	output, err = createUpdate(requestInput)
+	return
+}
+
+// DeleteFirewallProxyAddrgrp6 API operation for FortiOS deletes the specified Proxy Addrgrp6.
+// Returns error for service API and SDK errors.
+// See the firewall - proxy-addrgrp6 chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteFirewallProxyAddrgrp6(mkey string, vdomparam string) (err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "DELETE"
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/firewall/proxy-addrgrp6"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	err = delete(requestInput)
+	return
+}
+
+// ReadFirewallProxyAddrgrp6 API operation for FortiOS gets the Proxy Addrgrp6
+// with the specified index value.
+// Returns the requested Proxy Addrgrp6 value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the firewall - proxy-addrgrp6 chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadFirewallProxyAddrgrp6(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "GET"
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/firewall/proxy-addrgrp6"
 	requestInput.path += "/" + escapeURLString(mkey)
 
 	requestInput.bcomplex = false
@@ -11907,6 +12231,190 @@ func (c *FortiSDKClient) ReadIpsViewMap(mkey string, vdomparam string) (mapTmp m
 	return
 }
 
+// CreateLlmProfile API operation for FortiOS creates a new Profile.
+// Returns the index value of the Profile and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the llm - profile chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateLlmProfile(params *map[string]interface{}, vdomparam string) (output map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "POST"
+	requestInput.path = "/api/v2/cmdb/llm/profile"
+	requestInput.params = params
+	requestInput.vdomparam = vdomparam
+
+	output, err = createUpdate(requestInput)
+	return
+}
+
+// UpdateLlmProfile API operation for FortiOS updates the specified Profile.
+// Returns the index value of the Profile and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the llm - profile chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateLlmProfile(params *map[string]interface{}, mkey string, vdomparam string) (output map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "PUT"
+	requestInput.params = params
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/llm/profile"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	output, err = createUpdate(requestInput)
+	return
+}
+
+// DeleteLlmProfile API operation for FortiOS deletes the specified Profile.
+// Returns error for service API and SDK errors.
+// See the llm - profile chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteLlmProfile(mkey string, vdomparam string) (err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "DELETE"
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/llm/profile"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	err = delete(requestInput)
+	return
+}
+
+// ReadLlmProfile API operation for FortiOS gets the Profile
+// with the specified index value.
+// Returns the requested Profile value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the llm - profile chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadLlmProfile(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "GET"
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/llm/profile"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	requestInput.bcomplex = false
+	mapTmp, err = read(requestInput)
+	return
+}
+
+// UpdateLlmProxy API operation for FortiOS updates the specified Proxy.
+// Returns the index value of the Proxy and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the llm - proxy chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateLlmProxy(params *map[string]interface{}, mkey string, vdomparam string) (output map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "PUT"
+	requestInput.params = params
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/llm/proxy"
+
+	output, err = createUpdate(requestInput)
+	return
+}
+
+// DeleteLlmProxy API operation for FortiOS deletes the specified Proxy.
+// Returns error for service API and SDK errors.
+// See the llm - proxy chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteLlmProxy(mkey string, vdomparam string) (err error) {
+
+	//No unset API for llm - proxy
+	return
+}
+
+// ReadLlmProxy API operation for FortiOS gets the Proxy
+// with the specified index value.
+// Returns the requested Proxy value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the llm - proxy chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadLlmProxy(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "GET"
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/llm/proxy"
+
+	requestInput.bcomplex = true
+	mapTmp, err = read(requestInput)
+	return
+}
+
+// CreateLlmServer API operation for FortiOS creates a new Server.
+// Returns the index value of the Server and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the llm - server chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateLlmServer(params *map[string]interface{}, vdomparam string) (output map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "POST"
+	requestInput.path = "/api/v2/cmdb/llm/server"
+	requestInput.params = params
+	requestInput.vdomparam = vdomparam
+
+	output, err = createUpdate(requestInput)
+	return
+}
+
+// UpdateLlmServer API operation for FortiOS updates the specified Server.
+// Returns the index value of the Server and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the llm - server chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateLlmServer(params *map[string]interface{}, mkey string, vdomparam string) (output map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "PUT"
+	requestInput.params = params
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/llm/server"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	output, err = createUpdate(requestInput)
+	return
+}
+
+// DeleteLlmServer API operation for FortiOS deletes the specified Server.
+// Returns error for service API and SDK errors.
+// See the llm - server chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteLlmServer(mkey string, vdomparam string) (err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "DELETE"
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/llm/server"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	err = delete(requestInput)
+	return
+}
+
+// ReadLlmServer API operation for FortiOS gets the Server
+// with the specified index value.
+// Returns the requested Server value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the llm - server chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadLlmServer(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "GET"
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/llm/server"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	requestInput.bcomplex = false
+	mapTmp, err = read(requestInput)
+	return
+}
+
 // CreateLogCustomField API operation for FortiOS creates a new Custom Field.
 // Returns the index value of the Custom Field and execution result when the request executes successfully.
 // Returns error for service API and SDK errors.
@@ -11970,6 +12478,76 @@ func (c *FortiSDKClient) ReadLogCustomField(mkey string, vdomparam string) (mapT
 	requestInput.method = "GET"
 	requestInput.vdomparam = vdomparam
 	requestInput.path = "/api/v2/cmdb/log/custom-field"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	requestInput.bcomplex = false
+	mapTmp, err = read(requestInput)
+	return
+}
+
+// CreateLogCustomFormat API operation for FortiOS creates a new Custom Format.
+// Returns the index value of the Custom Format and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the log - custom-format chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateLogCustomFormat(params *map[string]interface{}, vdomparam string) (output map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "POST"
+	requestInput.path = "/api/v2/cmdb/log/custom-format"
+	requestInput.params = params
+	requestInput.vdomparam = vdomparam
+
+	output, err = createUpdate(requestInput)
+	return
+}
+
+// UpdateLogCustomFormat API operation for FortiOS updates the specified Custom Format.
+// Returns the index value of the Custom Format and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the log - custom-format chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateLogCustomFormat(params *map[string]interface{}, mkey string, vdomparam string) (output map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "PUT"
+	requestInput.params = params
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/log/custom-format"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	output, err = createUpdate(requestInput)
+	return
+}
+
+// DeleteLogCustomFormat API operation for FortiOS deletes the specified Custom Format.
+// Returns error for service API and SDK errors.
+// See the log - custom-format chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteLogCustomFormat(mkey string, vdomparam string) (err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "DELETE"
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/log/custom-format"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	err = delete(requestInput)
+	return
+}
+
+// ReadLogCustomFormat API operation for FortiOS gets the Custom Format
+// with the specified index value.
+// Returns the requested Custom Format value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the log - custom-format chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadLogCustomFormat(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "GET"
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/log/custom-format"
 	requestInput.path += "/" + escapeURLString(mkey)
 
 	requestInput.bcomplex = false
@@ -15729,6 +16307,76 @@ func (c *FortiSDKClient) ReadRouterMulticast6(mkey string, vdomparam string) (ma
 	return
 }
 
+// CreateRouterMulticast6Flow API operation for FortiOS creates a new Multicast6 Flow.
+// Returns the index value of the Multicast6 Flow and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the router - multicast6-flow chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateRouterMulticast6Flow(params *map[string]interface{}, vdomparam string) (output map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "POST"
+	requestInput.path = "/api/v2/cmdb/router/multicast6-flow"
+	requestInput.params = params
+	requestInput.vdomparam = vdomparam
+
+	output, err = createUpdate(requestInput)
+	return
+}
+
+// UpdateRouterMulticast6Flow API operation for FortiOS updates the specified Multicast6 Flow.
+// Returns the index value of the Multicast6 Flow and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the router - multicast6-flow chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateRouterMulticast6Flow(params *map[string]interface{}, mkey string, vdomparam string) (output map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "PUT"
+	requestInput.params = params
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/router/multicast6-flow"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	output, err = createUpdate(requestInput)
+	return
+}
+
+// DeleteRouterMulticast6Flow API operation for FortiOS deletes the specified Multicast6 Flow.
+// Returns error for service API and SDK errors.
+// See the router - multicast6-flow chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteRouterMulticast6Flow(mkey string, vdomparam string) (err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "DELETE"
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/router/multicast6-flow"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	err = delete(requestInput)
+	return
+}
+
+// ReadRouterMulticast6Flow API operation for FortiOS gets the Multicast6 Flow
+// with the specified index value.
+// Returns the requested Multicast6 Flow value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the router - multicast6-flow chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadRouterMulticast6Flow(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "GET"
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/router/multicast6-flow"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	requestInput.bcomplex = false
+	mapTmp, err = read(requestInput)
+	return
+}
+
 // UpdateRouterOspf API operation for FortiOS updates the specified Ospf.
 // Returns the index value of the Ospf and execution result when the request executes successfully.
 // Returns error for service API and SDK errors.
@@ -17679,6 +18327,76 @@ func (c *FortiSDKClient) ReadSwitchControllerIgmpSnooping(mkey string, vdomparam
 	requestInput.path = "/api/v2/cmdb/switch-controller/igmp-snooping"
 
 	requestInput.bcomplex = true
+	mapTmp, err = read(requestInput)
+	return
+}
+
+// CreateSwitchControllerIgmpSnoopingStaticGroup API operation for FortiOS creates a new Igmp Snooping Static Group.
+// Returns the index value of the Igmp Snooping Static Group and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the switch-controller - igmp-snooping-static-group chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateSwitchControllerIgmpSnoopingStaticGroup(params *map[string]interface{}, vdomparam string) (output map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "POST"
+	requestInput.path = "/api/v2/cmdb/switch-controller/igmp-snooping-static-group"
+	requestInput.params = params
+	requestInput.vdomparam = vdomparam
+
+	output, err = createUpdate(requestInput)
+	return
+}
+
+// UpdateSwitchControllerIgmpSnoopingStaticGroup API operation for FortiOS updates the specified Igmp Snooping Static Group.
+// Returns the index value of the Igmp Snooping Static Group and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the switch-controller - igmp-snooping-static-group chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateSwitchControllerIgmpSnoopingStaticGroup(params *map[string]interface{}, mkey string, vdomparam string) (output map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "PUT"
+	requestInput.params = params
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/switch-controller/igmp-snooping-static-group"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	output, err = createUpdate(requestInput)
+	return
+}
+
+// DeleteSwitchControllerIgmpSnoopingStaticGroup API operation for FortiOS deletes the specified Igmp Snooping Static Group.
+// Returns error for service API and SDK errors.
+// See the switch-controller - igmp-snooping-static-group chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteSwitchControllerIgmpSnoopingStaticGroup(mkey string, vdomparam string) (err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "DELETE"
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/switch-controller/igmp-snooping-static-group"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	err = delete(requestInput)
+	return
+}
+
+// ReadSwitchControllerIgmpSnoopingStaticGroup API operation for FortiOS gets the Igmp Snooping Static Group
+// with the specified index value.
+// Returns the requested Igmp Snooping Static Group value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the switch-controller - igmp-snooping-static-group chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadSwitchControllerIgmpSnoopingStaticGroup(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "GET"
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/switch-controller/igmp-snooping-static-group"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	requestInput.bcomplex = false
 	mapTmp, err = read(requestInput)
 	return
 }
@@ -20557,6 +21275,76 @@ func (c *FortiSDKClient) ReadSwitchControllerSecurityPolicy8021X(mkey string, vd
 	return
 }
 
+// CreateSwitchControllerSecurityPolicyAdmin API operation for FortiOS creates a new Admin.
+// Returns the index value of the Admin and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the switch-controller.security-policy - admin chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateSwitchControllerSecurityPolicyAdmin(params *map[string]interface{}, vdomparam string) (output map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "POST"
+	requestInput.path = "/api/v2/cmdb/switch-controller.security-policy/admin"
+	requestInput.params = params
+	requestInput.vdomparam = vdomparam
+
+	output, err = createUpdate(requestInput)
+	return
+}
+
+// UpdateSwitchControllerSecurityPolicyAdmin API operation for FortiOS updates the specified Admin.
+// Returns the index value of the Admin and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the switch-controller.security-policy - admin chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateSwitchControllerSecurityPolicyAdmin(params *map[string]interface{}, mkey string, vdomparam string) (output map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "PUT"
+	requestInput.params = params
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/switch-controller.security-policy/admin"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	output, err = createUpdate(requestInput)
+	return
+}
+
+// DeleteSwitchControllerSecurityPolicyAdmin API operation for FortiOS deletes the specified Admin.
+// Returns error for service API and SDK errors.
+// See the switch-controller.security-policy - admin chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteSwitchControllerSecurityPolicyAdmin(mkey string, vdomparam string) (err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "DELETE"
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/switch-controller.security-policy/admin"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	err = delete(requestInput)
+	return
+}
+
+// ReadSwitchControllerSecurityPolicyAdmin API operation for FortiOS gets the Admin
+// with the specified index value.
+// Returns the requested Admin value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the switch-controller.security-policy - admin chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadSwitchControllerSecurityPolicyAdmin(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "GET"
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/switch-controller.security-policy/admin"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	requestInput.bcomplex = false
+	mapTmp, err = read(requestInput)
+	return
+}
+
 // CreateSwitchControllerSecurityPolicyCaptivePortal API operation for FortiOS creates a new Captive Portal.
 // Returns the index value of the Captive Portal and execution result when the request executes successfully.
 // Returns error for service API and SDK errors.
@@ -23187,6 +23975,50 @@ func (c *FortiSDKClient) ReadSystemFortimanager(mkey string, vdomparam string) (
 	return
 }
 
+// UpdateSystemFortimq API operation for FortiOS updates the specified Fortimq.
+// Returns the index value of the Fortimq and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the system - fortimq chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateSystemFortimq(params *map[string]interface{}, mkey string, vdomparam string) (output map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "PUT"
+	requestInput.params = params
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/system/fortimq"
+
+	output, err = createUpdate(requestInput)
+	return
+}
+
+// DeleteSystemFortimq API operation for FortiOS deletes the specified Fortimq.
+// Returns error for service API and SDK errors.
+// See the system - fortimq chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteSystemFortimq(mkey string, vdomparam string) (err error) {
+
+	//No unset API for system - fortimq
+	return
+}
+
+// ReadSystemFortimq API operation for FortiOS gets the Fortimq
+// with the specified index value.
+// Returns the requested Fortimq value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the system - fortimq chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadSystemFortimq(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "GET"
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/system/fortimq"
+
+	requestInput.bcomplex = true
+	mapTmp, err = read(requestInput)
+	return
+}
+
 // UpdateSystemFortindr API operation for FortiOS updates the specified Fortindr.
 // Returns the index value of the Fortindr and execution result when the request executes successfully.
 // Returns error for service API and SDK errors.
@@ -25073,6 +25905,120 @@ func (c *FortiSDKClient) ReadSystemNpu(mkey string, vdomparam string) (mapTmp ma
 	return
 }
 
+// UpdateSystemNpuPost API operation for FortiOS updates the specified Npu Post.
+// Returns the index value of the Npu Post and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the system - npu-post chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateSystemNpuPost(params *map[string]interface{}, mkey string, vdomparam string) (output map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "PUT"
+	requestInput.params = params
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/system/npu-post"
+
+	output, err = createUpdate(requestInput)
+	return
+}
+
+// DeleteSystemNpuPost API operation for FortiOS deletes the specified Npu Post.
+// Returns error for service API and SDK errors.
+// See the system - npu-post chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteSystemNpuPost(mkey string, vdomparam string) (err error) {
+
+	//No unset API for system - npu-post
+	return
+}
+
+// ReadSystemNpuPost API operation for FortiOS gets the Npu Post
+// with the specified index value.
+// Returns the requested Npu Post value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the system - npu-post chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadSystemNpuPost(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "GET"
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/system/npu-post"
+
+	requestInput.bcomplex = true
+	mapTmp, err = read(requestInput)
+	return
+}
+
+// CreateSystemNpuVlink API operation for FortiOS creates a new Npu Vlink.
+// Returns the index value of the Npu Vlink and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the system - npu-vlink chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateSystemNpuVlink(params *map[string]interface{}, vdomparam string) (output map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "POST"
+	requestInput.path = "/api/v2/cmdb/system/npu-vlink"
+	requestInput.params = params
+	requestInput.vdomparam = vdomparam
+
+	output, err = createUpdate(requestInput)
+	return
+}
+
+// UpdateSystemNpuVlink API operation for FortiOS updates the specified Npu Vlink.
+// Returns the index value of the Npu Vlink and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the system - npu-vlink chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateSystemNpuVlink(params *map[string]interface{}, mkey string, vdomparam string) (output map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "PUT"
+	requestInput.params = params
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/system/npu-vlink"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	output, err = createUpdate(requestInput)
+	return
+}
+
+// DeleteSystemNpuVlink API operation for FortiOS deletes the specified Npu Vlink.
+// Returns error for service API and SDK errors.
+// See the system - npu-vlink chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteSystemNpuVlink(mkey string, vdomparam string) (err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "DELETE"
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/system/npu-vlink"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	err = delete(requestInput)
+	return
+}
+
+// ReadSystemNpuVlink API operation for FortiOS gets the Npu Vlink
+// with the specified index value.
+// Returns the requested Npu Vlink value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the system - npu-vlink chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadSystemNpuVlink(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "GET"
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/system/npu-vlink"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	requestInput.bcomplex = false
+	mapTmp, err = read(requestInput)
+	return
+}
+
 // UpdateSystemNtp API operation for FortiOS updates the specified Ntp.
 // Returns the index value of the Ntp and execution result when the request executes successfully.
 // Returns error for service API and SDK errors.
@@ -26371,50 +27317,6 @@ func (c *FortiSDKClient) ReadSystemSitTunnel(mkey string, vdomparam string) (map
 	return
 }
 
-// UpdateSystemSovSase API operation for FortiOS updates the specified Sov Sase.
-// Returns the index value of the Sov Sase and execution result when the request executes successfully.
-// Returns error for service API and SDK errors.
-// See the system - sov-sase chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) UpdateSystemSovSase(params *map[string]interface{}, mkey string, vdomparam string) (output map[string]interface{}, err error) {
-	requestInput := &requestInput{}
-
-	requestInput.fortiSDKClient = c
-	requestInput.method = "PUT"
-	requestInput.params = params
-	requestInput.vdomparam = vdomparam
-	requestInput.path = "/api/v2/cmdb/system/sov-sase"
-
-	output, err = createUpdate(requestInput)
-	return
-}
-
-// DeleteSystemSovSase API operation for FortiOS deletes the specified Sov Sase.
-// Returns error for service API and SDK errors.
-// See the system - sov-sase chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) DeleteSystemSovSase(mkey string, vdomparam string) (err error) {
-
-	//No unset API for system - sov-sase
-	return
-}
-
-// ReadSystemSovSase API operation for FortiOS gets the Sov Sase
-// with the specified index value.
-// Returns the requested Sov Sase value when the request executes successfully.
-// Returns error for service API and SDK errors.
-// See the system - sov-sase chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) ReadSystemSovSase(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
-	requestInput := &requestInput{}
-
-	requestInput.fortiSDKClient = c
-	requestInput.method = "GET"
-	requestInput.vdomparam = vdomparam
-	requestInput.path = "/api/v2/cmdb/system/sov-sase"
-
-	requestInput.bcomplex = true
-	mapTmp, err = read(requestInput)
-	return
-}
-
 // CreateSystemSmsServer API operation for FortiOS creates a new Sms Server.
 // Returns the index value of the Sms Server and execution result when the request executes successfully.
 // Returns error for service API and SDK errors.
@@ -26481,6 +27383,50 @@ func (c *FortiSDKClient) ReadSystemSmsServer(mkey string, vdomparam string) (map
 	requestInput.path += "/" + escapeURLString(mkey)
 
 	requestInput.bcomplex = false
+	mapTmp, err = read(requestInput)
+	return
+}
+
+// UpdateSystemSovSase API operation for FortiOS updates the specified Sov Sase.
+// Returns the index value of the Sov Sase and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the system - sov-sase chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateSystemSovSase(params *map[string]interface{}, mkey string, vdomparam string) (output map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "PUT"
+	requestInput.params = params
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/system/sov-sase"
+
+	output, err = createUpdate(requestInput)
+	return
+}
+
+// DeleteSystemSovSase API operation for FortiOS deletes the specified Sov Sase.
+// Returns error for service API and SDK errors.
+// See the system - sov-sase chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteSystemSovSase(mkey string, vdomparam string) (err error) {
+
+	//No unset API for system - sov-sase
+	return
+}
+
+// ReadSystemSovSase API operation for FortiOS gets the Sov Sase
+// with the specified index value.
+// Returns the requested Sov Sase value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the system - sov-sase chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadSystemSovSase(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "GET"
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/system/sov-sase"
+
+	requestInput.bcomplex = true
 	mapTmp, err = read(requestInput)
 	return
 }
@@ -27144,6 +28090,76 @@ func (c *FortiSDKClient) ReadSystemSwitchInterface(mkey string, vdomparam string
 	requestInput.method = "GET"
 	requestInput.vdomparam = vdomparam
 	requestInput.path = "/api/v2/cmdb/system/switch-interface"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	requestInput.bcomplex = false
+	mapTmp, err = read(requestInput)
+	return
+}
+
+// CreateSystemTheme API operation for FortiOS creates a new Theme.
+// Returns the index value of the Theme and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the system - theme chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateSystemTheme(params *map[string]interface{}, vdomparam string) (output map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "POST"
+	requestInput.path = "/api/v2/cmdb/system/theme"
+	requestInput.params = params
+	requestInput.vdomparam = vdomparam
+
+	output, err = createUpdate(requestInput)
+	return
+}
+
+// UpdateSystemTheme API operation for FortiOS updates the specified Theme.
+// Returns the index value of the Theme and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the system - theme chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateSystemTheme(params *map[string]interface{}, mkey string, vdomparam string) (output map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "PUT"
+	requestInput.params = params
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/system/theme"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	output, err = createUpdate(requestInput)
+	return
+}
+
+// DeleteSystemTheme API operation for FortiOS deletes the specified Theme.
+// Returns error for service API and SDK errors.
+// See the system - theme chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteSystemTheme(mkey string, vdomparam string) (err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "DELETE"
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/system/theme"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	err = delete(requestInput)
+	return
+}
+
+// ReadSystemTheme API operation for FortiOS gets the Theme
+// with the specified index value.
+// Returns the requested Theme value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the system - theme chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadSystemTheme(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "GET"
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/system/theme"
 	requestInput.path += "/" + escapeURLString(mkey)
 
 	requestInput.bcomplex = false
@@ -28476,6 +29492,76 @@ func (c *FortiSDKClient) ReadSystemDhcpServer(mkey string, vdomparam string) (ma
 	requestInput.method = "GET"
 	requestInput.vdomparam = vdomparam
 	requestInput.path = "/api/v2/cmdb/system.dhcp/server"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	requestInput.bcomplex = false
+	mapTmp, err = read(requestInput)
+	return
+}
+
+// CreateSystemDhcpTemplate API operation for FortiOS creates a new Template.
+// Returns the index value of the Template and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the system.dhcp - template chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateSystemDhcpTemplate(params *map[string]interface{}, vdomparam string) (output map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "POST"
+	requestInput.path = "/api/v2/cmdb/system.dhcp/template"
+	requestInput.params = params
+	requestInput.vdomparam = vdomparam
+
+	output, err = createUpdate(requestInput)
+	return
+}
+
+// UpdateSystemDhcpTemplate API operation for FortiOS updates the specified Template.
+// Returns the index value of the Template and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the system.dhcp - template chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateSystemDhcpTemplate(params *map[string]interface{}, mkey string, vdomparam string) (output map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "PUT"
+	requestInput.params = params
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/system.dhcp/template"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	output, err = createUpdate(requestInput)
+	return
+}
+
+// DeleteSystemDhcpTemplate API operation for FortiOS deletes the specified Template.
+// Returns error for service API and SDK errors.
+// See the system.dhcp - template chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteSystemDhcpTemplate(mkey string, vdomparam string) (err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "DELETE"
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/system.dhcp/template"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	err = delete(requestInput)
+	return
+}
+
+// ReadSystemDhcpTemplate API operation for FortiOS gets the Template
+// with the specified index value.
+// Returns the requested Template value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the system.dhcp - template chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadSystemDhcpTemplate(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "GET"
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/system.dhcp/template"
 	requestInput.path += "/" + escapeURLString(mkey)
 
 	requestInput.bcomplex = false
@@ -29913,6 +30999,418 @@ func (c *FortiSDKClient) ReadSystemSnmpUser(mkey string, vdomparam string) (mapT
 	return
 }
 
+// CreateTelemetryControllerAgent API operation for FortiOS creates a new Agent.
+// Returns the index value of the Agent and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the telemetry-controller - agent chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateTelemetryControllerAgent(params *map[string]interface{}, vdomparam string) (output map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "POST"
+	requestInput.path = "/api/v2/cmdb/telemetry-controller/agent"
+	requestInput.params = params
+	requestInput.vdomparam = vdomparam
+
+	output, err = createUpdate(requestInput)
+	return
+}
+
+// UpdateTelemetryControllerAgent API operation for FortiOS updates the specified Agent.
+// Returns the index value of the Agent and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the telemetry-controller - agent chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateTelemetryControllerAgent(params *map[string]interface{}, mkey string, vdomparam string) (output map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "PUT"
+	requestInput.params = params
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/telemetry-controller/agent"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	output, err = createUpdate(requestInput)
+	return
+}
+
+// DeleteTelemetryControllerAgent API operation for FortiOS deletes the specified Agent.
+// Returns error for service API and SDK errors.
+// See the telemetry-controller - agent chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteTelemetryControllerAgent(mkey string, vdomparam string) (err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "DELETE"
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/telemetry-controller/agent"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	err = delete(requestInput)
+	return
+}
+
+// ReadTelemetryControllerAgent API operation for FortiOS gets the Agent
+// with the specified index value.
+// Returns the requested Agent value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the telemetry-controller - agent chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadTelemetryControllerAgent(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "GET"
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/telemetry-controller/agent"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	requestInput.bcomplex = false
+	mapTmp, err = read(requestInput)
+	return
+}
+
+// CreateTelemetryControllerAgentProfile API operation for FortiOS creates a new Agent Profile.
+// Returns the index value of the Agent Profile and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the telemetry-controller - agent-profile chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateTelemetryControllerAgentProfile(params *map[string]interface{}, vdomparam string) (output map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "POST"
+	requestInput.path = "/api/v2/cmdb/telemetry-controller/agent-profile"
+	requestInput.params = params
+	requestInput.vdomparam = vdomparam
+
+	output, err = createUpdate(requestInput)
+	return
+}
+
+// UpdateTelemetryControllerAgentProfile API operation for FortiOS updates the specified Agent Profile.
+// Returns the index value of the Agent Profile and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the telemetry-controller - agent-profile chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateTelemetryControllerAgentProfile(params *map[string]interface{}, mkey string, vdomparam string) (output map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "PUT"
+	requestInput.params = params
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/telemetry-controller/agent-profile"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	output, err = createUpdate(requestInput)
+	return
+}
+
+// DeleteTelemetryControllerAgentProfile API operation for FortiOS deletes the specified Agent Profile.
+// Returns error for service API and SDK errors.
+// See the telemetry-controller - agent-profile chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteTelemetryControllerAgentProfile(mkey string, vdomparam string) (err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "DELETE"
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/telemetry-controller/agent-profile"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	err = delete(requestInput)
+	return
+}
+
+// ReadTelemetryControllerAgentProfile API operation for FortiOS gets the Agent Profile
+// with the specified index value.
+// Returns the requested Agent Profile value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the telemetry-controller - agent-profile chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadTelemetryControllerAgentProfile(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "GET"
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/telemetry-controller/agent-profile"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	requestInput.bcomplex = false
+	mapTmp, err = read(requestInput)
+	return
+}
+
+// UpdateTelemetryControllerAgentStatus API operation for FortiOS updates the specified Agent Status.
+// Returns the index value of the Agent Status and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the telemetry-controller - agent-status chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateTelemetryControllerAgentStatus(params *map[string]interface{}, mkey string, vdomparam string) (output map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "PUT"
+	requestInput.params = params
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/telemetry-controller/agent-status"
+
+	output, err = createUpdate(requestInput)
+	return
+}
+
+// DeleteTelemetryControllerAgentStatus API operation for FortiOS deletes the specified Agent Status.
+// Returns error for service API and SDK errors.
+// See the telemetry-controller - agent-status chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteTelemetryControllerAgentStatus(mkey string, vdomparam string) (err error) {
+
+	//No unset API for telemetry-controller - agent-status
+	return
+}
+
+// ReadTelemetryControllerAgentStatus API operation for FortiOS gets the Agent Status
+// with the specified index value.
+// Returns the requested Agent Status value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the telemetry-controller - agent-status chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadTelemetryControllerAgentStatus(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "GET"
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/telemetry-controller/agent-status"
+
+	requestInput.bcomplex = true
+	mapTmp, err = read(requestInput)
+	return
+}
+
+// UpdateTelemetryControllerAgentTask API operation for FortiOS updates the specified Agent Task.
+// Returns the index value of the Agent Task and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the telemetry-controller - agent-task chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateTelemetryControllerAgentTask(params *map[string]interface{}, mkey string, vdomparam string) (output map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "PUT"
+	requestInput.params = params
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/telemetry-controller/agent-task"
+
+	output, err = createUpdate(requestInput)
+	return
+}
+
+// DeleteTelemetryControllerAgentTask API operation for FortiOS deletes the specified Agent Task.
+// Returns error for service API and SDK errors.
+// See the telemetry-controller - agent-task chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteTelemetryControllerAgentTask(mkey string, vdomparam string) (err error) {
+
+	//No unset API for telemetry-controller - agent-task
+	return
+}
+
+// ReadTelemetryControllerAgentTask API operation for FortiOS gets the Agent Task
+// with the specified index value.
+// Returns the requested Agent Task value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the telemetry-controller - agent-task chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadTelemetryControllerAgentTask(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "GET"
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/telemetry-controller/agent-task"
+
+	requestInput.bcomplex = true
+	mapTmp, err = read(requestInput)
+	return
+}
+
+// UpdateTelemetryControllerGlobal API operation for FortiOS updates the specified Global.
+// Returns the index value of the Global and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the telemetry-controller - global chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateTelemetryControllerGlobal(params *map[string]interface{}, mkey string, vdomparam string) (output map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "PUT"
+	requestInput.params = params
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/telemetry-controller/global"
+
+	output, err = createUpdate(requestInput)
+	return
+}
+
+// DeleteTelemetryControllerGlobal API operation for FortiOS deletes the specified Global.
+// Returns error for service API and SDK errors.
+// See the telemetry-controller - global chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteTelemetryControllerGlobal(mkey string, vdomparam string) (err error) {
+
+	//No unset API for telemetry-controller - global
+	return
+}
+
+// ReadTelemetryControllerGlobal API operation for FortiOS gets the Global
+// with the specified index value.
+// Returns the requested Global value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the telemetry-controller - global chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadTelemetryControllerGlobal(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "GET"
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/telemetry-controller/global"
+
+	requestInput.bcomplex = true
+	mapTmp, err = read(requestInput)
+	return
+}
+
+// CreateTelemetryControllerProfile API operation for FortiOS creates a new Profile.
+// Returns the index value of the Profile and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the telemetry-controller - profile chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateTelemetryControllerProfile(params *map[string]interface{}, vdomparam string) (output map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "POST"
+	requestInput.path = "/api/v2/cmdb/telemetry-controller/profile"
+	requestInput.params = params
+	requestInput.vdomparam = vdomparam
+
+	output, err = createUpdate(requestInput)
+	return
+}
+
+// UpdateTelemetryControllerProfile API operation for FortiOS updates the specified Profile.
+// Returns the index value of the Profile and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the telemetry-controller - profile chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateTelemetryControllerProfile(params *map[string]interface{}, mkey string, vdomparam string) (output map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "PUT"
+	requestInput.params = params
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/telemetry-controller/profile"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	output, err = createUpdate(requestInput)
+	return
+}
+
+// DeleteTelemetryControllerProfile API operation for FortiOS deletes the specified Profile.
+// Returns error for service API and SDK errors.
+// See the telemetry-controller - profile chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteTelemetryControllerProfile(mkey string, vdomparam string) (err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "DELETE"
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/telemetry-controller/profile"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	err = delete(requestInput)
+	return
+}
+
+// ReadTelemetryControllerProfile API operation for FortiOS gets the Profile
+// with the specified index value.
+// Returns the requested Profile value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the telemetry-controller - profile chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadTelemetryControllerProfile(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "GET"
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/telemetry-controller/profile"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	requestInput.bcomplex = false
+	mapTmp, err = read(requestInput)
+	return
+}
+
+// CreateTelemetryControllerApplicationPredefine API operation for FortiOS creates a new Predefine.
+// Returns the index value of the Predefine and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the telemetry-controller.application - predefine chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateTelemetryControllerApplicationPredefine(params *map[string]interface{}, vdomparam string) (output map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "POST"
+	requestInput.path = "/api/v2/cmdb/telemetry-controller.application/predefine"
+	requestInput.params = params
+	requestInput.vdomparam = vdomparam
+
+	output, err = createUpdate(requestInput)
+	return
+}
+
+// UpdateTelemetryControllerApplicationPredefine API operation for FortiOS updates the specified Predefine.
+// Returns the index value of the Predefine and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the telemetry-controller.application - predefine chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateTelemetryControllerApplicationPredefine(params *map[string]interface{}, mkey string, vdomparam string) (output map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "PUT"
+	requestInput.params = params
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/telemetry-controller.application/predefine"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	output, err = createUpdate(requestInput)
+	return
+}
+
+// DeleteTelemetryControllerApplicationPredefine API operation for FortiOS deletes the specified Predefine.
+// Returns error for service API and SDK errors.
+// See the telemetry-controller.application - predefine chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteTelemetryControllerApplicationPredefine(mkey string, vdomparam string) (err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "DELETE"
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/telemetry-controller.application/predefine"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	err = delete(requestInput)
+	return
+}
+
+// ReadTelemetryControllerApplicationPredefine API operation for FortiOS gets the Predefine
+// with the specified index value.
+// Returns the requested Predefine value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the telemetry-controller.application - predefine chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadTelemetryControllerApplicationPredefine(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "GET"
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/telemetry-controller.application/predefine"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	requestInput.bcomplex = false
+	mapTmp, err = read(requestInput)
+	return
+}
+
 // CreateUserAdgrp API operation for FortiOS creates a new Adgrp.
 // Returns the index value of the Adgrp and execution result when the request executes successfully.
 // Returns error for service API and SDK errors.
@@ -31096,6 +32594,76 @@ func (c *FortiSDKClient) ReadUserNacPolicy(mkey string, vdomparam string) (mapTm
 	requestInput.method = "GET"
 	requestInput.vdomparam = vdomparam
 	requestInput.path = "/api/v2/cmdb/user/nac-policy"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	requestInput.bcomplex = false
+	mapTmp, err = read(requestInput)
+	return
+}
+
+// CreateUserOidc API operation for FortiOS creates a new Oidc.
+// Returns the index value of the Oidc and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the user - oidc chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateUserOidc(params *map[string]interface{}, vdomparam string) (output map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "POST"
+	requestInput.path = "/api/v2/cmdb/user/oidc"
+	requestInput.params = params
+	requestInput.vdomparam = vdomparam
+
+	output, err = createUpdate(requestInput)
+	return
+}
+
+// UpdateUserOidc API operation for FortiOS updates the specified Oidc.
+// Returns the index value of the Oidc and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the user - oidc chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateUserOidc(params *map[string]interface{}, mkey string, vdomparam string) (output map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "PUT"
+	requestInput.params = params
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/user/oidc"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	output, err = createUpdate(requestInput)
+	return
+}
+
+// DeleteUserOidc API operation for FortiOS deletes the specified Oidc.
+// Returns error for service API and SDK errors.
+// See the user - oidc chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteUserOidc(mkey string, vdomparam string) (err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "DELETE"
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/user/oidc"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	err = delete(requestInput)
+	return
+}
+
+// ReadUserOidc API operation for FortiOS gets the Oidc
+// with the specified index value.
+// Returns the requested Oidc value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the user - oidc chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadUserOidc(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "GET"
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/user/oidc"
 	requestInput.path += "/" + escapeURLString(mkey)
 
 	requestInput.bcomplex = false
@@ -36865,76 +38433,6 @@ func (c *FortiSDKClient) ReadWirelessControllerGlobal(mkey string, vdomparam str
 	return
 }
 
-// CreateWirelessControllerLwProfile API operation for FortiOS creates a new Lw Profile.
-// Returns the index value of the Lw Profile and execution result when the request executes successfully.
-// Returns error for service API and SDK errors.
-// See the wireless-controller - lw-profile chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) CreateWirelessControllerLwProfile(params *map[string]interface{}, vdomparam string) (output map[string]interface{}, err error) {
-	requestInput := &requestInput{}
-
-	requestInput.fortiSDKClient = c
-	requestInput.method = "POST"
-	requestInput.path = "/api/v2/cmdb/wireless-controller/lw-profile"
-	requestInput.params = params
-	requestInput.vdomparam = vdomparam
-
-	output, err = createUpdate(requestInput)
-	return
-}
-
-// UpdateWirelessControllerLwProfile API operation for FortiOS updates the specified Lw Profile.
-// Returns the index value of the Lw Profile and execution result when the request executes successfully.
-// Returns error for service API and SDK errors.
-// See the wireless-controller - lw-profile chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) UpdateWirelessControllerLwProfile(params *map[string]interface{}, mkey string, vdomparam string) (output map[string]interface{}, err error) {
-	requestInput := &requestInput{}
-
-	requestInput.fortiSDKClient = c
-	requestInput.method = "PUT"
-	requestInput.params = params
-	requestInput.vdomparam = vdomparam
-	requestInput.path = "/api/v2/cmdb/wireless-controller/lw-profile"
-	requestInput.path += "/" + escapeURLString(mkey)
-
-	output, err = createUpdate(requestInput)
-	return
-}
-
-// DeleteWirelessControllerLwProfile API operation for FortiOS deletes the specified Lw Profile.
-// Returns error for service API and SDK errors.
-// See the wireless-controller - lw-profile chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) DeleteWirelessControllerLwProfile(mkey string, vdomparam string) (err error) {
-	requestInput := &requestInput{}
-
-	requestInput.fortiSDKClient = c
-	requestInput.method = "DELETE"
-	requestInput.vdomparam = vdomparam
-	requestInput.path = "/api/v2/cmdb/wireless-controller/lw-profile"
-	requestInput.path += "/" + escapeURLString(mkey)
-
-	err = delete(requestInput)
-	return
-}
-
-// ReadWirelessControllerLwProfile API operation for FortiOS gets the Lw Profile
-// with the specified index value.
-// Returns the requested Lw Profile value when the request executes successfully.
-// Returns error for service API and SDK errors.
-// See the wireless-controller - lw-profile chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) ReadWirelessControllerLwProfile(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
-	requestInput := &requestInput{}
-
-	requestInput.fortiSDKClient = c
-	requestInput.method = "GET"
-	requestInput.vdomparam = vdomparam
-	requestInput.path = "/api/v2/cmdb/wireless-controller/lw-profile"
-	requestInput.path += "/" + escapeURLString(mkey)
-
-	requestInput.bcomplex = false
-	mapTmp, err = read(requestInput)
-	return
-}
-
 // UpdateWirelessControllerInterController API operation for FortiOS updates the specified Inter Controller.
 // Returns the index value of the Inter Controller and execution result when the request executes successfully.
 // Returns error for service API and SDK errors.
@@ -37019,6 +38517,76 @@ func (c *FortiSDKClient) ReadWirelessControllerLog(mkey string, vdomparam string
 	requestInput.path = "/api/v2/cmdb/wireless-controller/log"
 
 	requestInput.bcomplex = true
+	mapTmp, err = read(requestInput)
+	return
+}
+
+// CreateWirelessControllerLwProfile API operation for FortiOS creates a new Lw Profile.
+// Returns the index value of the Lw Profile and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the wireless-controller - lw-profile chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateWirelessControllerLwProfile(params *map[string]interface{}, vdomparam string) (output map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "POST"
+	requestInput.path = "/api/v2/cmdb/wireless-controller/lw-profile"
+	requestInput.params = params
+	requestInput.vdomparam = vdomparam
+
+	output, err = createUpdate(requestInput)
+	return
+}
+
+// UpdateWirelessControllerLwProfile API operation for FortiOS updates the specified Lw Profile.
+// Returns the index value of the Lw Profile and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the wireless-controller - lw-profile chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateWirelessControllerLwProfile(params *map[string]interface{}, mkey string, vdomparam string) (output map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "PUT"
+	requestInput.params = params
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/wireless-controller/lw-profile"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	output, err = createUpdate(requestInput)
+	return
+}
+
+// DeleteWirelessControllerLwProfile API operation for FortiOS deletes the specified Lw Profile.
+// Returns error for service API and SDK errors.
+// See the wireless-controller - lw-profile chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteWirelessControllerLwProfile(mkey string, vdomparam string) (err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "DELETE"
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/wireless-controller/lw-profile"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	err = delete(requestInput)
+	return
+}
+
+// ReadWirelessControllerLwProfile API operation for FortiOS gets the Lw Profile
+// with the specified index value.
+// Returns the requested Lw Profile value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the wireless-controller - lw-profile chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadWirelessControllerLwProfile(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "GET"
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/wireless-controller/lw-profile"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	requestInput.bcomplex = false
 	mapTmp, err = read(requestInput)
 	return
 }
@@ -39325,6 +40893,120 @@ func (c *FortiSDKClient) ReadWirelessControllerHotspot20QosMap(mkey string, vdom
 	return
 }
 
+// UpdateZtnaConnectorEdge API operation for FortiOS updates the specified Connector Edge.
+// Returns the index value of the Connector Edge and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the ztna - connector-edge chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateZtnaConnectorEdge(params *map[string]interface{}, mkey string, vdomparam string) (output map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "PUT"
+	requestInput.params = params
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/ztna/connector-edge"
+
+	output, err = createUpdate(requestInput)
+	return
+}
+
+// DeleteZtnaConnectorEdge API operation for FortiOS deletes the specified Connector Edge.
+// Returns error for service API and SDK errors.
+// See the ztna - connector-edge chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteZtnaConnectorEdge(mkey string, vdomparam string) (err error) {
+
+	//No unset API for ztna - connector-edge
+	return
+}
+
+// ReadZtnaConnectorEdge API operation for FortiOS gets the Connector Edge
+// with the specified index value.
+// Returns the requested Connector Edge value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the ztna - connector-edge chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadZtnaConnectorEdge(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "GET"
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/ztna/connector-edge"
+
+	requestInput.bcomplex = true
+	mapTmp, err = read(requestInput)
+	return
+}
+
+// CreateZtnaDestination API operation for FortiOS creates a new Destination.
+// Returns the index value of the Destination and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the ztna - destination chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateZtnaDestination(params *map[string]interface{}, vdomparam string) (output map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "POST"
+	requestInput.path = "/api/v2/cmdb/ztna/destination"
+	requestInput.params = params
+	requestInput.vdomparam = vdomparam
+
+	output, err = createUpdate(requestInput)
+	return
+}
+
+// UpdateZtnaDestination API operation for FortiOS updates the specified Destination.
+// Returns the index value of the Destination and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the ztna - destination chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateZtnaDestination(params *map[string]interface{}, mkey string, vdomparam string) (output map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "PUT"
+	requestInput.params = params
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/ztna/destination"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	output, err = createUpdate(requestInput)
+	return
+}
+
+// DeleteZtnaDestination API operation for FortiOS deletes the specified Destination.
+// Returns error for service API and SDK errors.
+// See the ztna - destination chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteZtnaDestination(mkey string, vdomparam string) (err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "DELETE"
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/ztna/destination"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	err = delete(requestInput)
+	return
+}
+
+// ReadZtnaDestination API operation for FortiOS gets the Destination
+// with the specified index value.
+// Returns the requested Destination value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the ztna - destination chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadZtnaDestination(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "GET"
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/ztna/destination"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	requestInput.bcomplex = false
+	mapTmp, err = read(requestInput)
+	return
+}
+
 // CreateZtnaReverseConnector API operation for FortiOS creates a new Reverse Connector.
 // Returns the index value of the Reverse Connector and execution result when the request executes successfully.
 // Returns error for service API and SDK errors.
@@ -39388,6 +41070,76 @@ func (c *FortiSDKClient) ReadZtnaReverseConnector(mkey string, vdomparam string)
 	requestInput.method = "GET"
 	requestInput.vdomparam = vdomparam
 	requestInput.path = "/api/v2/cmdb/ztna/reverse-connector"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	requestInput.bcomplex = false
+	mapTmp, err = read(requestInput)
+	return
+}
+
+// CreateZtnaServiceConnector API operation for FortiOS creates a new Service Connector.
+// Returns the index value of the Service Connector and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the ztna - service-connector chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateZtnaServiceConnector(params *map[string]interface{}, vdomparam string) (output map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "POST"
+	requestInput.path = "/api/v2/cmdb/ztna/service-connector"
+	requestInput.params = params
+	requestInput.vdomparam = vdomparam
+
+	output, err = createUpdate(requestInput)
+	return
+}
+
+// UpdateZtnaServiceConnector API operation for FortiOS updates the specified Service Connector.
+// Returns the index value of the Service Connector and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the ztna - service-connector chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateZtnaServiceConnector(params *map[string]interface{}, mkey string, vdomparam string) (output map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "PUT"
+	requestInput.params = params
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/ztna/service-connector"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	output, err = createUpdate(requestInput)
+	return
+}
+
+// DeleteZtnaServiceConnector API operation for FortiOS deletes the specified Service Connector.
+// Returns error for service API and SDK errors.
+// See the ztna - service-connector chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteZtnaServiceConnector(mkey string, vdomparam string) (err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "DELETE"
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/ztna/service-connector"
+	requestInput.path += "/" + escapeURLString(mkey)
+
+	err = delete(requestInput)
+	return
+}
+
+// ReadZtnaServiceConnector API operation for FortiOS gets the Service Connector
+// with the specified index value.
+// Returns the requested Service Connector value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the ztna - service-connector chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadZtnaServiceConnector(mkey string, vdomparam string) (mapTmp map[string]interface{}, err error) {
+	requestInput := &requestInput{}
+
+	requestInput.fortiSDKClient = c
+	requestInput.method = "GET"
+	requestInput.vdomparam = vdomparam
+	requestInput.path = "/api/v2/cmdb/ztna/service-connector"
 	requestInput.path += "/" + escapeURLString(mkey)
 
 	requestInput.bcomplex = false

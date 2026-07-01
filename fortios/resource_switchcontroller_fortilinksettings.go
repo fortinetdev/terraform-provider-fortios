@@ -70,6 +70,11 @@ func resourceSwitchControllerFortilinkSettings() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"admin_policy": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 31),
+				Optional:     true,
+			},
 			"nac_ports": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
@@ -114,11 +119,13 @@ func resourceSwitchControllerFortilinkSettings() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
+							Computed:     true,
 						},
 						"member_change": &schema.Schema{
 							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
 							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
@@ -324,6 +331,10 @@ func flattenSwitchControllerFortilinkSettingsAccessVlanMode(v interface{}, d *sc
 	return v
 }
 
+func flattenSwitchControllerFortilinkSettingsAdminPolicy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSwitchControllerFortilinkSettingsNacPorts(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -488,6 +499,12 @@ func refreshObjectSwitchControllerFortilinkSettings(d *schema.ResourceData, o ma
 		}
 	}
 
+	if err = d.Set("admin_policy", flattenSwitchControllerFortilinkSettingsAdminPolicy(o["admin-policy"], d, "admin_policy", sv)); err != nil {
+		if !fortiAPIPatch(o["admin-policy"]) {
+			return fmt.Errorf("Error reading admin_policy: %v", err)
+		}
+	}
+
 	if b_get_all_tables {
 		if err = d.Set("nac_ports", flattenSwitchControllerFortilinkSettingsNacPorts(o["nac-ports"], d, "nac_ports", sv)); err != nil {
 			if !fortiAPIPatch(o["nac-ports"]) {
@@ -533,6 +550,10 @@ func expandSwitchControllerFortilinkSettingsAccessVlanMode(d *schema.ResourceDat
 	return v, nil
 }
 
+func expandSwitchControllerFortilinkSettingsAdminPolicy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSwitchControllerFortilinkSettingsNacPorts(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
@@ -568,18 +589,6 @@ func expandSwitchControllerFortilinkSettingsNacPorts(d *schema.ResourceData, v i
 		result["nac-segment-vlans"], _ = expandSwitchControllerFortilinkSettingsNacPortsNacSegmentVlans(d, i["nac_segment_vlans"], pre_append, sv)
 	} else {
 		result["nac-segment-vlans"] = make([]string, 0)
-	}
-	pre_append = pre + ".0." + "parent_key"
-	if _, ok := d.GetOk(pre_append); ok {
-		result["parent-key"], _ = expandSwitchControllerFortilinkSettingsNacPortsParentKey(d, i["parent_key"], pre_append, sv)
-	} else if d.HasChange(pre_append) {
-		result["parent-key"] = nil
-	}
-	pre_append = pre + ".0." + "member_change"
-	if _, ok := d.GetOk(pre_append); ok {
-		result["member-change"], _ = expandSwitchControllerFortilinkSettingsNacPortsMemberChange(d, i["member_change"], pre_append, sv)
-	} else if d.HasChange(pre_append) {
-		result["member-change"] = nil
 	}
 
 	return result, nil
@@ -629,14 +638,6 @@ func expandSwitchControllerFortilinkSettingsNacPortsNacSegmentVlansVlanName(d *s
 	return v, nil
 }
 
-func expandSwitchControllerFortilinkSettingsNacPortsParentKey(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandSwitchControllerFortilinkSettingsNacPortsMemberChange(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
 func getObjectSwitchControllerFortilinkSettings(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
@@ -683,6 +684,17 @@ func getObjectSwitchControllerFortilinkSettings(d *schema.ResourceData, sv strin
 		} else if t != nil {
 			obj["access-vlan-mode"] = t
 		}
+	}
+
+	if v, ok := d.GetOk("admin_policy"); ok {
+		t, err := expandSwitchControllerFortilinkSettingsAdminPolicy(d, v, "admin_policy", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["admin-policy"] = t
+		}
+	} else if d.HasChange("admin_policy") {
+		obj["admin-policy"] = nil
 	}
 
 	if v, ok := d.GetOk("nac_ports"); ok {

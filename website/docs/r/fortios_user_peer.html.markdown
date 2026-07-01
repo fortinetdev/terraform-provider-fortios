@@ -34,6 +34,9 @@ The following arguments are supported:
 * `cn_type` - Peer certificate common name type. Valid values: `string`, `email`, `FQDN`, `ipv4`, `ipv6`.
 * `mfa_mode` - MFA mode for remote peer authentication/authorization. Valid values: `none`, `password`, `subject-identity`.
 * `mfa_server` - Name of a remote authenticator. Performs client access right check.
+* `checkemail` - Peer certificate email address. Check passes if the certificate SAN matches the specified email address. If the certificate has no email-type SAN, the emailAddress DN in the Subject is checked instead.
+* `checkip` - Peer certificate IP address. Check passes if the certificate SAN and the client IP both match the specified IP.
+* `checkhost` - Peer certificate hostname. Check passes if the certificate SAN matches the specified hostname, and the client IP matches the hostname's resolved IP. If the certificate has no DNS-type SAN, CN is checked instead.
 * `mfa_username` - Unified username for remote authentication.
 * `mfa_password` - Unified password for remote authentication. This field may be left empty when RADIUS authentication is used, in which case the FortiGate will use the RADIUS username as a password. 
 * `ldap_server` - Name of an LDAP server defined under the user ldap command. Performs client access rights check.

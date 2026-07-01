@@ -130,6 +130,16 @@ func resourceLogEventfilter() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"telemetry": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"ftnt_sec_mod": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -324,6 +334,14 @@ func flattenLogEventfilterWebproxy(v interface{}, d *schema.ResourceData, pre st
 	return v
 }
 
+func flattenLogEventfilterTelemetry(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenLogEventfilterFtntSecMod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectLogEventfilter(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -441,6 +459,18 @@ func refreshObjectLogEventfilter(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("telemetry", flattenLogEventfilterTelemetry(o["telemetry"], d, "telemetry", sv)); err != nil {
+		if !fortiAPIPatch(o["telemetry"]) {
+			return fmt.Errorf("Error reading telemetry: %v", err)
+		}
+	}
+
+	if err = d.Set("ftnt_sec_mod", flattenLogEventfilterFtntSecMod(o["ftnt-sec-mod"], d, "ftnt_sec_mod", sv)); err != nil {
+		if !fortiAPIPatch(o["ftnt-sec-mod"]) {
+			return fmt.Errorf("Error reading ftnt_sec_mod: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -523,6 +553,14 @@ func expandLogEventfilterWebSvc(d *schema.ResourceData, v interface{}, pre strin
 }
 
 func expandLogEventfilterWebproxy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogEventfilterTelemetry(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogEventfilterFtntSecMod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -774,6 +812,32 @@ func getObjectLogEventfilter(d *schema.ResourceData, setArgNil bool, sv string) 
 				return &obj, err
 			} else if t != nil {
 				obj["webproxy"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("telemetry"); ok {
+		if setArgNil {
+			obj["telemetry"] = nil
+		} else {
+			t, err := expandLogEventfilterTelemetry(d, v, "telemetry", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["telemetry"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("ftnt_sec_mod"); ok {
+		if setArgNil {
+			obj["ftnt-sec-mod"] = nil
+		} else {
+			t, err := expandLogEventfilterFtntSecMod(d, v, "ftnt_sec_mod", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ftnt-sec-mod"] = t
 			}
 		}
 	}

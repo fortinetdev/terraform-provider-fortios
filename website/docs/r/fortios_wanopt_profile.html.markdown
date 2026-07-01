@@ -148,7 +148,7 @@ The `tcp` block supports:
 * `log_traffic` - Enable/disable logging. Valid values: `enable`, `disable`.
 * `port` - Single port number or port number range for TCP. Only packets with a destination port number that matches this port number or range are accepted by this profile.
 * `ssl` - Enable/disable SSL/TLS offloading (hardware acceleration) for traffic in this tunnel. Valid values: `enable`, `disable`.
-* `ssl_port` - Port on which to expect HTTPS traffic for SSL/TLS offloading.
+* `ssl_port` - Port numbers or port number ranges on which to expect HTTPS traffic for SSL/TLS offloading.
 
 
 ## Attribute Reference

@@ -20,6 +20,7 @@ The following arguments are supported:
 * `encryption` - Enable/disable encryption when synchronizing sessions. Valid values: `enable`, `disable`.
 * `psksecret` - Pre-shared secret for session synchronization (ASCII string or hexadecimal encoded with a leading 0x).
 * `asymmetric_traffic_control` - Asymmetric traffic control mode. Valid values: `cps-preferred`, `strict-anti-replay`.
+* `session_sync` - Enable/disable session synchronization. Valid values: `enable`, `disable`.
 * `cluster_peer` - Configure FortiGate Session Life Support Protocol (FGSP) session synchronization. The structure of `cluster_peer` block is documented below.
 * `monitor_interface` - Configure a list of interfaces on which to monitor itself. Monitoring is performed on the status of the interface. The structure of `monitor_interface` block is documented below.
 * `pingsvr_monitor_interface` - List of pingsvr monitor interface to check for remote IP monitoring. The structure of `pingsvr_monitor_interface` block is documented below.
@@ -36,8 +37,10 @@ The `cluster_peer` block supports:
 * `peervd` - VDOM that contains the session synchronization link interface on the peer unit. Usually both peers would have the same peervd.
 * `peerip` - IP address of the interface on the peer unit that is used for the session synchronization link.
 * `syncvd` - Sessions from these VDOMs are synchronized using this session synchronization configuration. The structure of `syncvd` block is documented below.
+* `interface` - Outgoing interface for peer connections.
+* `source_ip` - Source IP address to use for peer connections.
 * `down_intfs_before_sess_sync` - List of interfaces to be turned down before session synchronization is complete. The structure of `down_intfs_before_sess_sync` block is documented below.
-* `hb_interval` - Heartbeat interval (1 - 20 (100*ms). Increase to reduce false positives.
+* `hb_interval` - Heartbeat interval (1 - 20) (100*ms). Increase to reduce false positives.
 * `hb_lost_threshold` - Lost heartbeat threshold (1 - 60). Increase to reduce false positives.
 * `ipsec_tunnel_sync` - Enable/disable IPsec tunnel synchronization. Valid values: `enable`, `disable`.
 * `secondary_add_ipsec_routes` - Enable/disable IKE route announcement on the backup unit. Valid values: `enable`, `disable`.

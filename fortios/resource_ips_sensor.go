@@ -47,6 +47,26 @@ func resourceIpsSensor() *schema.Resource {
 				ForceNew:     true,
 				Required:     true,
 			},
+			"uuid": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"fabric_object": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"fabric_force_sync": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"fabric_object_source": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"comment": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
@@ -103,21 +123,33 @@ func resourceIpsSensor() *schema.Resource {
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
+							DiffSuppressFunc: func(k, old, new string, d *schema.ResourceData) bool {
+								return equalStringOfList(old, new)
+							},
 						},
 						"protocol": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
+							DiffSuppressFunc: func(k, old, new string, d *schema.ResourceData) bool {
+								return equalStringOfList(old, new)
+							},
 						},
 						"os": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
+							DiffSuppressFunc: func(k, old, new string, d *schema.ResourceData) bool {
+								return equalStringOfList(old, new)
+							},
 						},
 						"application": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
+							DiffSuppressFunc: func(k, old, new string, d *schema.ResourceData) bool {
+								return equalStringOfList(old, new)
+							},
 						},
 						"default_action": &schema.Schema{
 							Type:     schema.TypeString,
@@ -554,6 +586,22 @@ func resourceIpsSensorRead(d *schema.ResourceData, m interface{}) error {
 }
 
 func flattenIpsSensorName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenIpsSensorUuid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenIpsSensorFabricObject(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenIpsSensorFabricForceSync(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenIpsSensorFabricObjectSource(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1650,6 +1698,30 @@ func refreshObjectIpsSensor(d *schema.ResourceData, o map[string]interface{}, sv
 		}
 	}
 
+	if err = d.Set("uuid", flattenIpsSensorUuid(o["uuid"], d, "uuid", sv)); err != nil {
+		if !fortiAPIPatch(o["uuid"]) {
+			return fmt.Errorf("Error reading uuid: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_object", flattenIpsSensorFabricObject(o["fabric-object"], d, "fabric_object", sv)); err != nil {
+		if !fortiAPIPatch(o["fabric-object"]) {
+			return fmt.Errorf("Error reading fabric_object: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_force_sync", flattenIpsSensorFabricForceSync(o["fabric-force-sync"], d, "fabric_force_sync", sv)); err != nil {
+		if !fortiAPIPatch(o["fabric-force-sync"]) {
+			return fmt.Errorf("Error reading fabric_force_sync: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_object_source", flattenIpsSensorFabricObjectSource(o["fabric-object-source"], d, "fabric_object_source", sv)); err != nil {
+		if !fortiAPIPatch(o["fabric-object-source"]) {
+			return fmt.Errorf("Error reading fabric_object_source: %v", err)
+		}
+	}
+
 	if err = d.Set("comment", flattenIpsSensorComment(o["comment"], d, "comment", sv)); err != nil {
 		if !fortiAPIPatch(o["comment"]) {
 			return fmt.Errorf("Error reading comment: %v", err)
@@ -1738,6 +1810,22 @@ func flattenIpsSensorFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosd
 }
 
 func expandIpsSensorName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandIpsSensorUuid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandIpsSensorFabricObject(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandIpsSensorFabricForceSync(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandIpsSensorFabricObjectSource(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2481,6 +2569,42 @@ func getObjectIpsSensor(d *schema.ResourceData, sv string) (*map[string]interfac
 			return &obj, err
 		} else if t != nil {
 			obj["name"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("uuid"); ok {
+		t, err := expandIpsSensorUuid(d, v, "uuid", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["uuid"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("fabric_object"); ok {
+		t, err := expandIpsSensorFabricObject(d, v, "fabric_object", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fabric-object"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("fabric_force_sync"); ok {
+		t, err := expandIpsSensorFabricForceSync(d, v, "fabric_force_sync", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fabric-force-sync"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("fabric_object_source"); ok {
+		t, err := expandIpsSensorFabricObjectSource(d, v, "fabric_object_source", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fabric-object-source"] = t
 		}
 	}
 

@@ -51,6 +51,26 @@ func resourceWebfilterUrlfilter() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Required:     true,
 			},
+			"uuid": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"fabric_object": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"fabric_force_sync": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"fabric_object_source": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"comment": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
@@ -72,6 +92,11 @@ func resourceWebfilterUrlfilter() *schema.Resource {
 				Computed: true,
 			},
 			"include_subdomains": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"type": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -333,6 +358,22 @@ func flattenWebfilterUrlfilterName(v interface{}, d *schema.ResourceData, pre st
 	return v
 }
 
+func flattenWebfilterUrlfilterUuid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWebfilterUrlfilterFabricObject(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWebfilterUrlfilterFabricForceSync(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWebfilterUrlfilterFabricObjectSource(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWebfilterUrlfilterComment(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -350,6 +391,10 @@ func flattenWebfilterUrlfilterIp4MappedIp6(v interface{}, d *schema.ResourceData
 }
 
 func flattenWebfilterUrlfilterIncludeSubdomains(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWebfilterUrlfilterType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -547,6 +592,30 @@ func refreshObjectWebfilterUrlfilter(d *schema.ResourceData, o map[string]interf
 		}
 	}
 
+	if err = d.Set("uuid", flattenWebfilterUrlfilterUuid(o["uuid"], d, "uuid", sv)); err != nil {
+		if !fortiAPIPatch(o["uuid"]) {
+			return fmt.Errorf("Error reading uuid: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_object", flattenWebfilterUrlfilterFabricObject(o["fabric-object"], d, "fabric_object", sv)); err != nil {
+		if !fortiAPIPatch(o["fabric-object"]) {
+			return fmt.Errorf("Error reading fabric_object: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_force_sync", flattenWebfilterUrlfilterFabricForceSync(o["fabric-force-sync"], d, "fabric_force_sync", sv)); err != nil {
+		if !fortiAPIPatch(o["fabric-force-sync"]) {
+			return fmt.Errorf("Error reading fabric_force_sync: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_object_source", flattenWebfilterUrlfilterFabricObjectSource(o["fabric-object-source"], d, "fabric_object_source", sv)); err != nil {
+		if !fortiAPIPatch(o["fabric-object-source"]) {
+			return fmt.Errorf("Error reading fabric_object_source: %v", err)
+		}
+	}
+
 	if err = d.Set("comment", flattenWebfilterUrlfilterComment(o["comment"], d, "comment", sv)); err != nil {
 		if !fortiAPIPatch(o["comment"]) {
 			return fmt.Errorf("Error reading comment: %v", err)
@@ -574,6 +643,12 @@ func refreshObjectWebfilterUrlfilter(d *schema.ResourceData, o map[string]interf
 	if err = d.Set("include_subdomains", flattenWebfilterUrlfilterIncludeSubdomains(o["include-subdomains"], d, "include_subdomains", sv)); err != nil {
 		if !fortiAPIPatch(o["include-subdomains"]) {
 			return fmt.Errorf("Error reading include_subdomains: %v", err)
+		}
+	}
+
+	if err = d.Set("type", flattenWebfilterUrlfilterType(o["type"], d, "type", sv)); err != nil {
+		if !fortiAPIPatch(o["type"]) {
+			return fmt.Errorf("Error reading type: %v", err)
 		}
 	}
 
@@ -610,6 +685,22 @@ func expandWebfilterUrlfilterName(d *schema.ResourceData, v interface{}, pre str
 	return v, nil
 }
 
+func expandWebfilterUrlfilterUuid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWebfilterUrlfilterFabricObject(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWebfilterUrlfilterFabricForceSync(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWebfilterUrlfilterFabricObjectSource(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWebfilterUrlfilterComment(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -627,6 +718,10 @@ func expandWebfilterUrlfilterIp4MappedIp6(d *schema.ResourceData, v interface{},
 }
 
 func expandWebfilterUrlfilterIncludeSubdomains(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWebfilterUrlfilterType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -782,6 +877,42 @@ func getObjectWebfilterUrlfilter(d *schema.ResourceData, sv string) (*map[string
 		obj["name"] = nil
 	}
 
+	if v, ok := d.GetOk("uuid"); ok {
+		t, err := expandWebfilterUrlfilterUuid(d, v, "uuid", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["uuid"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("fabric_object"); ok {
+		t, err := expandWebfilterUrlfilterFabricObject(d, v, "fabric_object", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fabric-object"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("fabric_force_sync"); ok {
+		t, err := expandWebfilterUrlfilterFabricForceSync(d, v, "fabric_force_sync", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fabric-force-sync"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("fabric_object_source"); ok {
+		t, err := expandWebfilterUrlfilterFabricObjectSource(d, v, "fabric_object_source", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fabric-object-source"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("comment"); ok {
 		t, err := expandWebfilterUrlfilterComment(d, v, "comment", sv)
 		if err != nil {
@@ -826,6 +957,15 @@ func getObjectWebfilterUrlfilter(d *schema.ResourceData, sv string) (*map[string
 			return &obj, err
 		} else if t != nil {
 			obj["include-subdomains"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("type"); ok {
+		t, err := expandWebfilterUrlfilterType(d, v, "type", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["type"] = t
 		}
 	}
 

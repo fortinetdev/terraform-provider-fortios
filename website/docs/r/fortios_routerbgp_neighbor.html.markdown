@@ -18,6 +18,7 @@ BGP neighbor table.
 The following arguments are supported:
 
 * `ip` - (Required) IP/IPv6 address of neighbor.
+* `name` - Name of this neighbor.
 * `advertisement_interval` - Minimum interval (sec) between sending updates.
 * `allowas_in_enable` - Enable/disable IPv4 Enable to allow my AS in AS path. Valid values: `enable`, `disable`.
 * `allowas_in_enable6` - Enable/disable IPv6 Enable to allow my AS in AS path. Valid values: `enable`, `disable`.
@@ -60,6 +61,8 @@ The following arguments are supported:
 * `next_hop_self_rr6` - Enable/disable setting nexthop's address to interface's IPv6 address for route-reflector routes. Valid values: `enable`, `disable`.
 * `next_hop_self_vpnv4` - Enable/disable setting VPNv4 next-hop to interface's IP address for this neighbor. Valid values: `enable`, `disable`.
 * `next_hop_self_vpnv6` - Enable/disable use of outgoing interface's IP address as VPNv6 next-hop for this neighbor. Valid values: `enable`, `disable`.
+* `next_hop_self_rr_vpnv4` - Enable/disable setting of the nexthop's address to interface's address for route-reflector VPNv4 routes. Valid values: `enable`, `disable`.
+* `next_hop_self_rr_vpnv6` - Enable/disable setting of the nexthop's address to interface's address for route-reflector VPNv6 routes. Valid values: `enable`, `disable`.
 * `override_capability` - Enable/disable override result of capability negotiation. Valid values: `enable`, `disable`.
 * `passive` - Enable/disable sending of open messages to this neighbor. Valid values: `enable`, `disable`.
 * `remove_private_as` - Enable/disable remove private AS number from IPv4 outbound updates. Valid values: `enable`, `disable`.
@@ -82,7 +85,8 @@ The following arguments are supported:
 * `rr_attr_allow_change_vpnv4` - Enable/disable allowing change of route attributes when advertising to VPNv4 route reflector clients. Valid values: `enable`, `disable`.
 * `rr_attr_allow_change_vpnv6` - Enable/disable allowing change of route attributes when advertising to VPNv6 route reflector clients. Valid values: `enable`, `disable`.
 * `rr_attr_allow_change_evpn` - Enable/disable allowing change of route attributes when advertising to L2VPN EVPN route reflector clients. Valid values: `enable`, `disable`.
-* `shutdown` - Enable/disable shutdown this neighbor. Valid values: `enable`, `disable`.
+* `adv_evpn_route` - Types of EVPN routes that can be advertised to this neighbor as IPv4 routes. Valid values: `type2`, `type5`, `local`.
+* `shutdown` - Enable/disable shutdown this neighbor.
 * `soft_reconfiguration` - Enable/disable allow IPv4 inbound soft reconfiguration. Valid values: `enable`, `disable`.
 * `soft_reconfiguration6` - Enable/disable allow IPv6 inbound soft reconfiguration. Valid values: `enable`, `disable`.
 * `soft_reconfiguration_vpnv4` - Enable/disable allow VPNv4 inbound soft reconfiguration. Valid values: `enable`, `disable`.
@@ -165,6 +169,7 @@ The following arguments are supported:
 * `unsuppress_map` - IPv4 Route map to selectively unsuppress suppressed routes.
 * `unsuppress_map6` - IPv6 Route map to selectively unsuppress suppressed routes.
 * `update_source` - Interface to use as source IP/IPv6 address of TCP connections.
+* `enforce_preferred_source` - Enable/disable enforce usage of the update-source as preferred source for IPv4 routes learned from this neighbor. Valid values: `enable`, `disable`.
 * `weight` - Neighbor weight. Set to -1 means unset this variable. CLI output may have different value on different FortiOS version.
 * `restart_time` - Graceful restart delay time (sec, 0 = global default).
 * `additional_path` - Enable/disable IPv4 additional-path capability. Valid values: `send`, `receive`, `both`, `disable`.
@@ -179,6 +184,10 @@ The following arguments are supported:
 * `auth_options` - Key-chain name for TCP authentication options.
 * `conditional_advertise` - Conditional advertisement. The structure of `conditional_advertise` block is documented below.
 * `conditional_advertise6` - IPv6 conditional advertisement. The structure of `conditional_advertise6` block is documented below.
+* `graceful_shutdown_community` - Graceful shutdown community.
+* `graceful_shutdown_local_preference` - Graceful shutdown local preference.
+* `graceful_shutdown_delay` - Delay in seconds before graceful shutdown ends.
+* `use_sdwan` - Use SDWAN rules for BGP connection. Valid values: `enable`, `disable`.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
 * `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
@@ -201,6 +210,7 @@ The `conditional_advertise6` block supports:
 
 In addition to all the above arguments, the following attributes are exported:
 * `id` - an identifier for the resource with format {{ip}}.
+* `display_options` - Display options for remote AS number
 
 ## Import
 

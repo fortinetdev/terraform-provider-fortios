@@ -26,18 +26,9 @@ The following arguments are supported:
 * `fsw_wan2_admin` - FortiSwitch WAN2 admin status; enable to authorize the FortiSwitch as a managed switch. Valid values: `discovered`, `disable`, `enable`.
 * `poe_pre_standard_detection` - Enable/disable PoE pre-standard detection. Valid values: `enable`, `disable`.
 * `dhcp_server_access_list` - DHCP snooping server access list. Valid values: `global`, `enable`, `disable`.
-* `poe_detection_type` - PoE detection type for FortiSwitch.
-* `max_poe_budget` - Max PoE budget for FortiSwitch.
 * `poe_lldp_detection` - Enable/disable PoE LLDP detection. Valid values: `enable`, `disable`.
-* `directly_connected` - Directly connected FortiSwitch.
-* `version` - FortiSwitch version.
 * `max_allowed_trunk_members` - FortiSwitch maximum allowed trunk members.
-* `pre_provisioned` - Pre-provisioned managed switch.
-* `l3_discovered` - Layer 3 management discovered.
 * `mgmt_mode` - FortiLink management mode.
-* `tunnel_discovered` - SOCKS tunnel management discovered.
-* `tdr_supported` - TDR supported.
-* `dynamic_capability` - List of features this FortiSwitch supports (not configurable) that is sent to the FortiGate device for subsequent configuration initiated by the FortiGate device.
 * `switch_device_tag` - User definable label/tag.
 * `switch_dhcp_opt43_key` - DHCP option43 key.
 * `mclag_igmp_snooping_aware` - Enable/disable MCLAG IGMP-snooping awareness. Valid values: `enable`, `disable`.
@@ -55,9 +46,11 @@ The following arguments are supported:
 * `flow_identity` - Flow-tracking netflow ipfix switch identity in hex format(00000000-FFFFFFFF default=0).
 * `staged_image_version` - Staged image version for FortiSwitch.
 * `delayed_restart_trigger` - Delayed restart triggered for this FortiSwitch.
+* `port_selection_criteria` - Algorithm for aggregate port selection. Valid values: `src-mac`, `dst-mac`, `src-dst-mac`, `src-ip`, `dst-ip`, `src-dst-ip`.
 * `firmware_provision` - Enable/disable provisioning of firmware to FortiSwitches on join connection. Valid values: `enable`, `disable`.
 * `firmware_provision_version` - Firmware version to provision to this FortiSwitch on bootup (major.minor.build, i.e. 6.2.1234).
 * `firmware_provision_latest` - Enable/disable one-time automatic provisioning of the latest firmware version. Valid values: `disable`, `once`.
+* `components` - Managed-switch component list. The structure of `components` block is documented below.
 * `ports` - Managed-switch port list. The structure of `ports` block is documented below.
 * `ip_source_guard` - IP source guard. The structure of `ip_source_guard` block is documented below.
 * `stp_settings` - Configuration method to edit Spanning Tree Protocol (STP) settings used to prevent bridge loops. The structure of `stp_settings` block is documented below.
@@ -101,6 +94,21 @@ The `vlan` block supports:
 * `vlan_name` - VLAN name.
 * `assignment_priority` - 802.1x Radius (Tunnel-Private-Group-Id) VLANID assign-by-name priority. A smaller value has a higher priority.
 
+The `components` block supports:
+
+* `name` - Managed-switch component name.
+* `component_id` - Managed-switch component id in stacking/chassis.
+* `serial_number` - Managed-switch component serial number.
+* `description` - Managed-switch component description.
+* `type` - Managed-switch component type. Valid values: `stack-node`, `supervisor`, `linecard`.
+* `role` - Managed-switch components role. Valid values: `None`, `Primary`, `Backup`, `Follower`, `Standalone`.
+* `admin_status` - Managed-switch component admin-status. Valid values: `disable`, `enable`.
+* `sw_version` - Managed-switch component software version.
+* `capability` - Managed-switch feature capability list.
+* `version` - Managed-switch component version.
+* `poe_detection_type` - Managed-switch component PoE detection type.
+* `max_allowed_trunk_members` - Managed-switch component maximum allowed trunk members.
+
 The `ports` block supports:
 
 * `port_name` - Switch port name.
@@ -123,19 +131,11 @@ The `ports` block supports:
 * `port_number` - Port number.
 * `port_prefix_type` - Port prefix type.
 * `fortilink_port` - FortiLink uplink port.
-* `link_status` - Port link status. Valid values: `up`, `down`.
 * `poe_capable` - PoE capable.
 * `pd_capable` - Powered device capable.
 * `stacking_port` - Stacking port.
-* `p2p_port` - General peer to peer tunnel port.
-* `mclag_icl_port` - MCLAG-ICL port.
-* `authenticated_port` - Peer to Peer Authenticated port.
-* `restricted_auth_port` - Peer to Peer Restricted Authenticated port.
-* `encrypted_port` - Peer to Peer Encrypted port.
 * `fiber_port` - Fiber-port.
-* `media_type` - Media type.
-* `poe_standard` - PoE standard supported.
-* `poe_max_power` - PoE maximum power.
+* `poe_max_power_mode` - PoE maximum power mode. Valid values: `class-based`, `30W`, `60W`.
 * `poe_mode_bt_cabable` - PoE mode IEEE 802.3BT capable.
 * `poe_port_mode` - Configure PoE port mode. Valid values: `ieee802-3af`, `ieee802-3at`, `ieee802-3bt`.
 * `poe_port_priority` - Configure PoE port priority. Valid values: `critical-priority`, `high-priority`, `low-priority`, `medium-priority`.
@@ -145,7 +145,6 @@ The `ports` block supports:
 * `isl_local_trunk_name` - ISL local trunk name.
 * `isl_peer_port_name` - ISL peer port name.
 * `isl_peer_device_name` - ISL peer device name.
-* `isl_peer_device_sn` - ISL peer device serial number.
 * `fgt_peer_port_name` - FGT peer port name.
 * `fgt_peer_device_name` - FGT peer device name.
 * `vlan` - Assign switch ports to a VLAN.
@@ -203,6 +202,9 @@ The `ports` block supports:
 * `allow_arp_monitor` - Enable/Disable allow ARP monitor. Valid values: `disable`, `enable`.
 * `qnq` - 802.1AD VLANs in the VDom.
 * `log_mac_event` - Enable/disable logging for dynamic MAC address events. Valid values: `disable`, `enable`.
+* `energy_efficient_ethernet` - Enable/disable energy efficient events. Valid values: `disable`, `enable`.
+* `eee_tx_wake_time` - Time for the transmitter to transition from low power idle (LPI) to its normal operating state in microseconds (0 - 2560, default = 30).
+* `eee_tx_idle_time` - Time in which the transmitter is in low power idle (LPI) before transitioning to the refresh state in microseconds (0 - 2560, default = 60).
 * `port_selection_criteria` - Algorithm for aggregate port selection. Valid values: `src-mac`, `dst-mac`, `src-dst-mac`, `src-ip`, `dst-ip`, `src-dst-ip`.
 * `description` - Description for port.
 * `lacp_speed` - end Link Aggregation Control Protocol (LACP) messages every 30 seconds (slow) or every second (fast). Valid values: `slow`, `fast`.
@@ -349,7 +351,7 @@ The `remote_log` block supports:
 The `storm_control` block supports:
 
 * `local_override` - Enable to override global FortiSwitch storm control settings for this FortiSwitch. Valid values: `enable`, `disable`.
-* `rate` - Rate in packets per second at which storm control drops excess traffic, default=500. On FortiOS versions 6.2.0-7.2.12: 1 - 10000000. On FortiOS versions >= 7.4.0: 0-10000000, drop-all=0.
+* `rate` - Rate in packets per second at which storm control drops excess traffic, default=500. On FortiOS versions 6.2.0-7.2.13: 1 - 10000000. On FortiOS versions >= 7.4.0: 0-10000000, drop-all=0.
 * `burst_size_level` - Increase level to handle bursty traffic (0 - 4, default = 0).
 * `unknown_unicast` - Enable/disable storm control to drop unknown unicast traffic. Valid values: `enable`, `disable`.
 * `unknown_multicast` - Enable/disable storm control to drop unknown multicast traffic. Valid values: `enable`, `disable`.
@@ -417,11 +419,13 @@ The `n802_1x_settings` block supports:
 * `max_reauth_attempt` - Maximum number of authentication attempts (0 - 15, default = 3).
 * `tx_period` - 802.1X Tx period (seconds, default=30).
 * `mab_reauth` - Enable or disable MAB reauthentication settings. Valid values: `disable`, `enable`.
+* `mab_entry_as` - Configure MAB MAC entry as static or dynamic (default = static). Valid values: `static`, `dynamic`.
 * `mac_username_delimiter` - MAC authentication username delimiter (default = hyphen). Valid values: `colon`, `hyphen`, `none`, `single-hyphen`.
 * `mac_password_delimiter` - MAC authentication password delimiter (default = hyphen). Valid values: `colon`, `hyphen`, `none`, `single-hyphen`.
 * `mac_calling_station_delimiter` - MAC calling station delimiter (default = hyphen). Valid values: `colon`, `hyphen`, `none`, `single-hyphen`.
 * `mac_called_station_delimiter` - MAC called station delimiter (default = hyphen). Valid values: `colon`, `hyphen`, `none`, `single-hyphen`.
 * `mac_case` - MAC case (default = lowercase). Valid values: `lowercase`, `uppercase`.
+* `allow_mac_move` - Enable/disable MAC move (default = enable). Valid values: `disable`, `enable`.
 
 The `router_vrf` block supports:
 
@@ -495,6 +499,34 @@ The `options` block supports:
 
 In addition to all the above arguments, the following attributes are exported:
 * `id` - an identifier for the resource with format {{switch_id}}.
+* `poe_detection_type` - PoE detection type for FortiSwitch.
+* `max_poe_budget` - Max PoE budget for FortiSwitch.
+* `directly_connected` - Directly connected FortiSwitch.
+* `version` - FortiSwitch version.
+* `pre_provisioned` - Pre-provisioned managed switch.
+* `l3_discovered` - Layer 3 management discovered.
+* `tunnel_discovered` - SOCKS tunnel management discovered.
+* `tdr_supported` - TDR supported.
+* `dynamic_capability` - List of features this FortiSwitch supports (not configurable) that is sent to the FortiGate device for subsequent configuration initiated by the FortiGate device.
+
+The `components` block contains following attibutes:
+
+* `status` - Managed-switch component status.
+* `dynamically_discovered` - Managed-switch component is dynamically discovered or not.
+* `switch_id` - Managed-switch component parent switch id.
+
+The `ports` block contains following attibutes:
+
+* `link_status` - Port link status.
+* `p2p_port` - General peer to peer tunnel port.
+* `mclag_icl_port` - MCLAG-ICL port.
+* `authenticated_port` - Peer to Peer Authenticated port.
+* `restricted_auth_port` - Peer to Peer Restricted Authenticated port.
+* `encrypted_port` - Peer to Peer Encrypted port.
+* `media_type` - Media type.
+* `poe_standard` - PoE standard supported.
+* `poe_max_power` - PoE maximum power.
+* `isl_peer_device_sn` - ISL peer device serial number.
 
 ## Import
 

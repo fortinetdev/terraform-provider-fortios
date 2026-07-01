@@ -48,6 +48,10 @@ func resourceSystemAdmin() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"disallowed_login_methods": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+			},
 			"wildcard": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -216,16 +220,25 @@ func resourceSystemAdmin() *schema.Resource {
 				Type:      schema.TypeString,
 				Optional:  true,
 				Sensitive: true,
+				DiffSuppressFunc: func(k, old, new string, d *schema.ResourceData) bool {
+					return strings.TrimSpace(old) == strings.TrimSpace(new)
+				},
 			},
 			"ssh_public_key2": &schema.Schema{
 				Type:      schema.TypeString,
 				Optional:  true,
 				Sensitive: true,
+				DiffSuppressFunc: func(k, old, new string, d *schema.ResourceData) bool {
+					return strings.TrimSpace(old) == strings.TrimSpace(new)
+				},
 			},
 			"ssh_public_key3": &schema.Schema{
 				Type:      schema.TypeString,
 				Optional:  true,
 				Sensitive: true,
+				DiffSuppressFunc: func(k, old, new string, d *schema.ResourceData) bool {
+					return strings.TrimSpace(old) == strings.TrimSpace(new)
+				},
 			},
 			"ssh_certificate": &schema.Schema{
 				Type:         schema.TypeString,
@@ -447,6 +460,49 @@ func resourceSystemAdmin() *schema.Resource {
 				},
 			},
 			"guest_lang": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+			},
+			"gui_theme_type": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"gui_theme": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"gui_custom_theme": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+			},
+			"gui_llm_provider": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"openai_api_key": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+			},
+			"openai_api_key_part2": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+			},
+			"openai_model": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+			},
+			"openai_project_id": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+			},
+			"openai_org_id": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
@@ -710,6 +766,10 @@ func resourceSystemAdminRead(d *schema.ResourceData, m interface{}) error {
 }
 
 func flattenSystemAdminName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemAdminDisallowedLoginMethods(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1488,6 +1548,42 @@ func flattenSystemAdminGuestLang(v interface{}, d *schema.ResourceData, pre stri
 	return v
 }
 
+func flattenSystemAdminGuiThemeType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemAdminGuiTheme(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemAdminGuiCustomTheme(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemAdminGuiLlmProvider(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemAdminOpenaiApiKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemAdminOpenaiApiKeyPart2(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemAdminOpenaiModel(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemAdminOpenaiProjectId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemAdminOpenaiOrgId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemAdminLoginTime(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -1736,6 +1832,12 @@ func refreshObjectSystemAdmin(d *schema.ResourceData, o map[string]interface{}, 
 	if err = d.Set("name", flattenSystemAdminName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
+		}
+	}
+
+	if err = d.Set("disallowed_login_methods", flattenSystemAdminDisallowedLoginMethods(o["disallowed-login-methods"], d, "disallowed_login_methods", sv)); err != nil {
+		if !fortiAPIPatch(o["disallowed-login-methods"]) {
+			return fmt.Errorf("Error reading disallowed_login_methods: %v", err)
 		}
 	}
 
@@ -2063,6 +2165,60 @@ func refreshObjectSystemAdmin(d *schema.ResourceData, o map[string]interface{}, 
 		}
 	}
 
+	if err = d.Set("gui_theme_type", flattenSystemAdminGuiThemeType(o["gui-theme-type"], d, "gui_theme_type", sv)); err != nil {
+		if !fortiAPIPatch(o["gui-theme-type"]) {
+			return fmt.Errorf("Error reading gui_theme_type: %v", err)
+		}
+	}
+
+	if err = d.Set("gui_theme", flattenSystemAdminGuiTheme(o["gui-theme"], d, "gui_theme", sv)); err != nil {
+		if !fortiAPIPatch(o["gui-theme"]) {
+			return fmt.Errorf("Error reading gui_theme: %v", err)
+		}
+	}
+
+	if err = d.Set("gui_custom_theme", flattenSystemAdminGuiCustomTheme(o["gui-custom-theme"], d, "gui_custom_theme", sv)); err != nil {
+		if !fortiAPIPatch(o["gui-custom-theme"]) {
+			return fmt.Errorf("Error reading gui_custom_theme: %v", err)
+		}
+	}
+
+	if err = d.Set("gui_llm_provider", flattenSystemAdminGuiLlmProvider(o["gui-llm-provider"], d, "gui_llm_provider", sv)); err != nil {
+		if !fortiAPIPatch(o["gui-llm-provider"]) {
+			return fmt.Errorf("Error reading gui_llm_provider: %v", err)
+		}
+	}
+
+	if err = d.Set("openai_api_key", flattenSystemAdminOpenaiApiKey(o["openai-api-key"], d, "openai_api_key", sv)); err != nil {
+		if !fortiAPIPatch(o["openai-api-key"]) {
+			return fmt.Errorf("Error reading openai_api_key: %v", err)
+		}
+	}
+
+	if err = d.Set("openai_api_key_part2", flattenSystemAdminOpenaiApiKeyPart2(o["openai-api-key-part2"], d, "openai_api_key_part2", sv)); err != nil {
+		if !fortiAPIPatch(o["openai-api-key-part2"]) {
+			return fmt.Errorf("Error reading openai_api_key_part2: %v", err)
+		}
+	}
+
+	if err = d.Set("openai_model", flattenSystemAdminOpenaiModel(o["openai-model"], d, "openai_model", sv)); err != nil {
+		if !fortiAPIPatch(o["openai-model"]) {
+			return fmt.Errorf("Error reading openai_model: %v", err)
+		}
+	}
+
+	if err = d.Set("openai_project_id", flattenSystemAdminOpenaiProjectId(o["openai-project-id"], d, "openai_project_id", sv)); err != nil {
+		if !fortiAPIPatch(o["openai-project-id"]) {
+			return fmt.Errorf("Error reading openai_project_id: %v", err)
+		}
+	}
+
+	if err = d.Set("openai_org_id", flattenSystemAdminOpenaiOrgId(o["openai-org-id"], d, "openai_org_id", sv)); err != nil {
+		if !fortiAPIPatch(o["openai-org-id"]) {
+			return fmt.Errorf("Error reading openai_org_id: %v", err)
+		}
+	}
+
 	if b_get_all_tables {
 		if err = d.Set("login_time", flattenSystemAdminLoginTime(o["login-time"], d, "login_time", sv)); err != nil {
 			if !fortiAPIPatch(o["login-time"]) {
@@ -2137,6 +2293,10 @@ func flattenSystemAdminFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fo
 }
 
 func expandSystemAdminName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAdminDisallowedLoginMethods(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2750,6 +2910,42 @@ func expandSystemAdminGuestLang(d *schema.ResourceData, v interface{}, pre strin
 	return v, nil
 }
 
+func expandSystemAdminGuiThemeType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAdminGuiTheme(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAdminGuiCustomTheme(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAdminGuiLlmProvider(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAdminOpenaiApiKey(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAdminOpenaiApiKeyPart2(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAdminOpenaiModel(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAdminOpenaiProjectId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAdminOpenaiOrgId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemAdminHistory0(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -2922,6 +3118,17 @@ func getObjectSystemAdmin(d *schema.ResourceData, sv string, opr string) (*map[s
 		} else if t != nil {
 			obj["name"] = t
 		}
+	}
+
+	if v, ok := d.GetOk("disallowed_login_methods"); ok {
+		t, err := expandSystemAdminDisallowedLoginMethods(d, v, "disallowed_login_methods", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["disallowed-login-methods"] = t
+		}
+	} else if d.HasChange("disallowed_login_methods") {
+		obj["disallowed-login-methods"] = nil
 	}
 
 	if v, ok := d.GetOk("wildcard"); ok {
@@ -3437,6 +3644,99 @@ func getObjectSystemAdmin(d *schema.ResourceData, sv string, opr string) (*map[s
 		}
 	} else if d.HasChange("guest_lang") {
 		obj["guest-lang"] = nil
+	}
+
+	if v, ok := d.GetOk("gui_theme_type"); ok {
+		t, err := expandSystemAdminGuiThemeType(d, v, "gui_theme_type", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["gui-theme-type"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("gui_theme"); ok {
+		t, err := expandSystemAdminGuiTheme(d, v, "gui_theme", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["gui-theme"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("gui_custom_theme"); ok {
+		t, err := expandSystemAdminGuiCustomTheme(d, v, "gui_custom_theme", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["gui-custom-theme"] = t
+		}
+	} else if d.HasChange("gui_custom_theme") {
+		obj["gui-custom-theme"] = nil
+	}
+
+	if v, ok := d.GetOk("gui_llm_provider"); ok {
+		t, err := expandSystemAdminGuiLlmProvider(d, v, "gui_llm_provider", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["gui-llm-provider"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("openai_api_key"); ok {
+		t, err := expandSystemAdminOpenaiApiKey(d, v, "openai_api_key", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["openai-api-key"] = t
+		}
+	} else if d.HasChange("openai_api_key") {
+		obj["openai-api-key"] = nil
+	}
+
+	if v, ok := d.GetOk("openai_api_key_part2"); ok {
+		t, err := expandSystemAdminOpenaiApiKeyPart2(d, v, "openai_api_key_part2", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["openai-api-key-part2"] = t
+		}
+	} else if d.HasChange("openai_api_key_part2") {
+		obj["openai-api-key-part2"] = nil
+	}
+
+	if v, ok := d.GetOk("openai_model"); ok {
+		t, err := expandSystemAdminOpenaiModel(d, v, "openai_model", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["openai-model"] = t
+		}
+	} else if d.HasChange("openai_model") {
+		obj["openai-model"] = nil
+	}
+
+	if v, ok := d.GetOk("openai_project_id"); ok {
+		t, err := expandSystemAdminOpenaiProjectId(d, v, "openai_project_id", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["openai-project-id"] = t
+		}
+	} else if d.HasChange("openai_project_id") {
+		obj["openai-project-id"] = nil
+	}
+
+	if v, ok := d.GetOk("openai_org_id"); ok {
+		t, err := expandSystemAdminOpenaiOrgId(d, v, "openai_org_id", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["openai-org-id"] = t
+		}
+	} else if d.HasChange("openai_org_id") {
+		obj["openai-org-id"] = nil
 	}
 
 	if v, ok := d.GetOk("history0"); ok {

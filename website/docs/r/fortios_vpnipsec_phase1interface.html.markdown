@@ -155,7 +155,8 @@ The following arguments are supported:
 * `aggregate_weight` - Link weight for aggregate.
 * `packet_redistribution` - Enable/disable packet distribution (RPS) on the IPsec interface. Valid values: `enable`, `disable`.
 * `peer_egress_shaping` - Enable/disable peer egress shaping. Valid values: `enable`, `disable`.
-* `peer_egress_shaping_value` - Configure outbound bandwidth to use for peer egress shaping in kbps (0 - 80000000, default = 0).
+* `peer_egress_shaping_value` - Configure outbound bandwidth to use for peer egress shaping in kbps (default = 0). On FortiOS versions 7.6.4-7.6.7: 0 - 80000000. On FortiOS versions >= 8.0.0: 0 - 100000000.
+* `multipath` - Configure the number of additional security associations (SAs) on a phase1 interface for each phase2 interface (0 - 31, default = 0).
 * `mode_cfg` - Enable/disable configuration method. Valid values: `disable`, `enable`.
 * `mode_cfg_allow_client_selector` - Enable/disable mode-cfg client to use custom phase2 selectors. Valid values: `disable`, `enable`.
 * `assign_ip` - Enable/disable assignment of IP to IPsec interface via configuration method. Valid values: `disable`, `enable`.
@@ -197,7 +198,7 @@ The following arguments are supported:
 * `client_auto_negotiate` - Enable/disable allowing the VPN client to bring up the tunnel when there is no traffic. Valid values: `disable`, `enable`.
 * `client_keep_alive` - Enable/disable allowing the VPN client to keep the tunnel up when there is no traffic. Valid values: `disable`, `enable`.
 * `backup_gateway` - Instruct unity clients about the backup gateway address(es). The structure of `backup_gateway` block is documented below.
-* `proposal` - (Required) Phase1 proposal. Valid values: `des-md5`, `des-sha1`, `des-sha256`, `des-sha384`, `des-sha512`, `3des-md5`, `3des-sha1`, `3des-sha256`, `3des-sha384`, `3des-sha512`, `aes128-md5`, `aes128-sha1`, `aes128-sha256`, `aes128-sha384`, `aes128-sha512`, `aes128gcm-prfsha1`, `aes128gcm-prfsha256`, `aes128gcm-prfsha384`, `aes128gcm-prfsha512`, `aes192-md5`, `aes192-sha1`, `aes192-sha256`, `aes192-sha384`, `aes192-sha512`, `aes256-md5`, `aes256-sha1`, `aes256-sha256`, `aes256-sha384`, `aes256-sha512`, `aes256gcm-prfsha1`, `aes256gcm-prfsha256`, `aes256gcm-prfsha384`, `aes256gcm-prfsha512`, `chacha20poly1305-prfsha1`, `chacha20poly1305-prfsha256`, `chacha20poly1305-prfsha384`, `chacha20poly1305-prfsha512`, `aria128-md5`, `aria128-sha1`, `aria128-sha256`, `aria128-sha384`, `aria128-sha512`, `aria192-md5`, `aria192-sha1`, `aria192-sha256`, `aria192-sha384`, `aria192-sha512`, `aria256-md5`, `aria256-sha1`, `aria256-sha256`, `aria256-sha384`, `aria256-sha512`, `seed-md5`, `seed-sha1`, `seed-sha256`, `seed-sha384`, `seed-sha512`.
+* `proposal` - (Required) Phase1 proposal.
 * `add_route` - Enable/disable control addition of a route to peer destination selector. Valid values: `disable`, `enable`.
 * `add_gw_route` - Enable/disable automatically add a route to the remote gateway. Valid values: `enable`, `disable`.
 * `psksecret` - Pre-shared secret for PSK authentication (ASCII string or hexadecimal encoded with a leading 0x).
@@ -274,17 +275,18 @@ The following arguments are supported:
 * `client_resume_interval` - Maximum time in seconds during which a VPN client may resume using a tunnel after a client PC has entered sleep mode or temporarily lost its network connection (120 - 172800). On FortiOS versions 7.4.4: default = 1800. On FortiOS versions >= 7.6.0: default = 7200.
 * `rekey` - Enable/disable phase1 rekey. Valid values: `enable`, `disable`.
 * `digital_signature_auth` - Enable/disable IKEv2 Digital Signature Authentication (RFC 7427). Valid values: `enable`, `disable`.
-* `signature_hash_alg` - Digital Signature Authentication hash algorithms. Valid values: `sha1`, `sha2-256`, `sha2-384`, `sha2-512`.
+* `signature_hash_alg` - Digital Signature Authentication hash algorithms.
 * `rsa_signature_format` - Digital Signature Authentication RSA signature format. Valid values: `pkcs1`, `pss`.
 * `rsa_signature_hash_override` - Enable/disable IKEv2 RSA signature hash algorithm override. Valid values: `enable`, `disable`.
 * `enforce_unique_id` - Enable/disable peer ID uniqueness check. Valid values: `disable`, `keep-new`, `keep-old`.
 * `cert_id_validation` - Enable/disable cross validation of peer ID and the identity in the peer's certificate as specified in RFC 4945. Valid values: `enable`, `disable`.
 * `fec_egress` - Enable/disable Forward Error Correction for egress IPsec traffic. Valid values: `enable`, `disable`.
+* `fec_separate_redundant_tunnel` - Enable/disable Forward Error Correction redundancy on separate tunnel. Valid values: `enable`, `disable`.
 * `fec_send_timeout` - Timeout in milliseconds before sending Forward Error Correction packets (1 - 1000).
-* `fec_base` - Number of base Forward Error Correction packets. On FortiOS versions 6.2.4-7.0.1: 1 - 100. On FortiOS versions >= 7.0.2: 1 - 20.
+* `fec_base` - Number of base Forward Error Correction packets. On FortiOS versions 6.2.4-7.0.1: 1 - 100. On FortiOS versions 7.0.2-7.6.7: 1 - 20. On FortiOS versions >= 8.0.0: 1 - 40.
 * `fec_codec_string` - Forward Error Correction encoding/decoding algorithm. *Due to the data type change of API, for other versions of FortiOS, please check variable `fec-codec`.* Valid values: `rs`, `xor`.
 * `fec_codec` - ipsec fec encoding/decoding algorithm (0: reed-solomon, 1: xor). *Due to the data type change of API, for other versions of FortiOS, please check variable `fec-codec_string`.*
-* `fec_redundant` - Number of redundant Forward Error Correction packets. On FortiOS versions 6.2.4-6.2.6: 0 - 100,  when fec-codec is reed-solomon  or 1 when fec-codec is xor. On FortiOS versions >= 7.0.2: 1 - 5 for reed-solomon, 1 for xor.
+* `fec_redundant` - Number of redundant Forward Error Correction packets. On FortiOS versions 6.2.4-7.0.1: 0 - 100,  when fec-codec is reed-solomon  or 1 when fec-codec is xor. On FortiOS versions 7.0.2-7.6.7: 1 - 5 for reed-solomon, 1 for xor. On FortiOS versions >= 8.0.0: 1 - 20 for reed-solomon, 1 for xor.
 * `fec_ingress` - Enable/disable Forward Error Correction for ingress IPsec traffic. Valid values: `enable`, `disable`.
 * `fec_receive_timeout` - Timeout in milliseconds before dropping Forward Error Correction packets. On FortiOS versions 6.2.4-7.0.1: 1 - 10000. On FortiOS versions >= 7.0.2: 1 - 1000.
 * `fec_health_check` - SD-WAN health check.
@@ -312,6 +314,7 @@ The following arguments are supported:
 * `remote_gw6_country` - IPv6 addresses associated to a specific country.
 * `cert_peer_username_validation` - Enable/disable cross validation of peer username and the identity in the peer's certificate. Valid values: `none`, `othername`, `rfc822name`, `cn`.
 * `cert_peer_username_strip` - Enable/disable domain stripping on certificate identity. Valid values: `disable`, `enable`.
+* `ztna_cert_scim_authorization` - Enable/disable SCIM authorization based on the ZTNA peer certificate identity. Valid values: `disable`, `email`, `user-name`, `display-name`, `external-id`.
 * `cert_trust_store` - CA certificate trust store. Valid values: `local`, `ems`.
 * `qkd` - Enable/disable use of Quantum Key Distribution (QKD) server. Valid values: `disable`, `allow`, `require`.
 * `qkd_hybrid` - Enable/disable use of Quantum Key Distribution (QKD) hybrid keys. Valid values: `disable`, `allow`, `require`.

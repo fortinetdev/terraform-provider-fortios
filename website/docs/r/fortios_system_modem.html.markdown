@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_system_modem
-Configure MODEM. Applies to FortiOS Version `7.0.4`.
+Configure MODEM. Applies to FortiOS Version `7.0.4,7.2.13,8.0.0`.
 
 ## Argument Reference
 
@@ -26,7 +26,7 @@ The following arguments are supported:
 * `holddown_timer` - Hold down timer in seconds (1 - 60 sec).
 * `connect_timeout` - Connection completion timeout (30 - 255 sec, default = 90).
 * `interface` - Name of redundant interface.
-* `wireless_port` - Enter wireless port number, 0 for default, 1 for first port, ... (0 - 4294967295, default = 0)
+* `wireless_port` - Enter wireless port number: 0 for default, 1 for first port, and so on (0 - 4294967295).
 * `dont_send_cr1` - Do not send CR when connected (ISP1). Valid values: `enable`, `disable`.
 * `phone1` - Phone number to connect to the dialup account (must not contain spaces, and should include standard special characters).
 * `dial_cmd1` - Dial command (this is often an ATD or ATDT command).
@@ -58,7 +58,7 @@ The following arguments are supported:
 * `traffic_check` - Enable/disable traffic-check. Valid values: `enable`, `disable`.
 * `action` - Dial up/stop MODEM. Valid values: `dial`, `stop`, `none`.
 * `distance` - Distance of learned routes (1 - 255, default = 1).
-* `priority` - Priority of learned routes (0 - 4294967295, default = 0).
+* `priority` - Priority of learned routes. On FortiOS versions 7.0.4, 7.2.13: 0 - 4294967295, default = 0. On FortiOS versions >= 8.0.0: 1 - 65535, default = 1.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 

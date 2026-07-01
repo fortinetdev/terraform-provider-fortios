@@ -25,6 +25,7 @@ The following arguments are supported:
 * `auth_portal` - Enable/disable authentication portal. Valid values: `disable`, `enable`.
 * `auth_virtual_host` - Virtual host for authentication portal.
 * `vip6` - Virtual IPv6 name.
+* `url_route` - Configure URL-based routing rules. The structure of `url_route` block is documented below.
 * `empty_cert_action` - Action of an empty client certificate. Valid values: `accept`, `block`, `accept-unmanageable`.
 * `log_blocked_traffic` - Enable/disable logging of blocked traffic. Valid values: `enable`, `disable`.
 * `svr_pool_multiplex` - Enable/disable server pool multiplexing. Share connected server in HTTP, HTTPS, and web-portal api-gateway. Valid values: `enable`, `disable`.
@@ -73,6 +74,12 @@ The following arguments are supported:
 * `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 * `update_if_exist` - Equivalent functionality of import the resource. If set to true, will check whether the resource exist, if so, will do the UPDATE operation rather CREATE. Default is false. If you want to inherit the value of the provider, please do not set this parameter.
+
+The `url_route` block supports:
+
+* `name` - Name of the URL route.
+* `url_pattern` - URL pattern used to match incoming requests.
+* `service_connector` - Service-connector to handle matched requests.
 
 The `quic` block supports:
 

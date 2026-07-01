@@ -136,6 +136,11 @@ func resourceAuthenticationSetting() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"ems_root_ca": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"user_cert_ca": &schema.Schema{
 				Type:     schema.TypeSet,
 				Optional: true,
@@ -364,6 +369,10 @@ func flattenAuthenticationSettingAuthHttps(v interface{}, d *schema.ResourceData
 
 func flattenAuthenticationSettingCaptivePortalSslPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return convintf2i(v)
+}
+
+func flattenAuthenticationSettingEmsRootCa(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
 }
 
 func flattenAuthenticationSettingUserCertCa(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
@@ -595,6 +604,12 @@ func refreshObjectAuthenticationSetting(d *schema.ResourceData, o map[string]int
 		}
 	}
 
+	if err = d.Set("ems_root_ca", flattenAuthenticationSettingEmsRootCa(o["ems-root-ca"], d, "ems_root_ca", sv)); err != nil {
+		if !fortiAPIPatch(o["ems-root-ca"]) {
+			return fmt.Errorf("Error reading ems_root_ca: %v", err)
+		}
+	}
+
 	if b_get_all_tables {
 		if err = d.Set("user_cert_ca", flattenAuthenticationSettingUserCertCa(o["user-cert-ca"], d, "user_cert_ca", sv)); err != nil {
 			if !fortiAPIPatch(o["user-cert-ca"]) {
@@ -709,6 +724,10 @@ func expandAuthenticationSettingAuthHttps(d *schema.ResourceData, v interface{},
 }
 
 func expandAuthenticationSettingCaptivePortalSslPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandAuthenticationSettingEmsRootCa(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1024,6 +1043,19 @@ func getObjectAuthenticationSetting(d *schema.ResourceData, setArgNil bool, sv s
 				return &obj, err
 			} else if t != nil {
 				obj["captive-portal-ssl-port"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("ems_root_ca"); ok {
+		if setArgNil {
+			obj["ems-root-ca"] = nil
+		} else {
+			t, err := expandAuthenticationSettingEmsRootCa(d, v, "ems_root_ca", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ems-root-ca"] = t
 			}
 		}
 	}

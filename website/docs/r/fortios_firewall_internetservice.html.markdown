@@ -21,11 +21,7 @@ The following arguments are supported:
 * `direction` - How this service may be used in a firewall policy (source, destination or both). Valid values: `src`, `dst`, `both`.
 * `database` - Database name this Internet Service belongs to. Valid values: `isdb`, `irdb`.
 * `ip_range_number` - Total number of IP ranges.
-* `extra_ip_range_number` - Extra number of IP ranges.
 * `ip_number` - Total number of IP addresses.
-* `ip6_range_number` - Number of IPv6 ranges.
-* `extra_ip6_range_number` - Extra number of IPv6 ranges.
-* `singularity` - Singular level of the Internet Service.
 * `obsolete` - Indicates whether the Internet Service can be used.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 * `update_if_exist` - Equivalent functionality of import the resource. If set to true, will check whether the resource exist, if so, will do the UPDATE operation rather CREATE. Default is false. If you want to inherit the value of the provider, please do not set this parameter.
@@ -35,6 +31,10 @@ The following arguments are supported:
 
 In addition to all the above arguments, the following attributes are exported:
 * `id` - an identifier for the resource with format {{fosid}}.
+* `extra_ip_range_number` - Extra number of IP ranges.
+* `ip6_range_number` - Number of IPv6 ranges.
+* `extra_ip6_range_number` - Extra number of IPv6 ranges.
+* `singularity` - Singular level of the Internet Service.
 
 ## Import
 

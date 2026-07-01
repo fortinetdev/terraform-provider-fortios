@@ -45,6 +45,7 @@ The following arguments are supported:
 * `captive_portal_port` - Captive portal port number (1 - 65535, default = 7830).
 * `auth_https` - Enable/disable redirecting HTTP user authentication to HTTPS. Valid values: `enable`, `disable`.
 * `captive_portal_ssl_port` - Captive portal SSL port number (1 - 65535, default = 7831).
+* `ems_root_ca` - Enable/disable use of the EMS root CA for FortiClient, ZTNA, and endpoint authentication (default = enable). Valid values: `enable`, `disable`.
 * `user_cert_ca` - CA certificate used for client certificate verification. The structure of `user_cert_ca` block is documented below.
 * `dev_range` - Address range for the IP based device query. The structure of `dev_range` block is documented below.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].

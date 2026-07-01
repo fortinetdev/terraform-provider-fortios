@@ -184,6 +184,11 @@ func resourceVpnCertificateSetting() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"csr_include_device_sn": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"certname_rsa1024": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -493,6 +498,10 @@ func flattenVpnCertificateSettingCertExpireWarning(v interface{}, d *schema.Reso
 	return convintf2i(v)
 }
 
+func flattenVpnCertificateSettingCsrIncludeDeviceSn(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenVpnCertificateSettingCertnameRsa1024(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -693,6 +702,12 @@ func refreshObjectVpnCertificateSetting(d *schema.ResourceData, o map[string]int
 	if err = d.Set("cert_expire_warning", flattenVpnCertificateSettingCertExpireWarning(o["cert-expire-warning"], d, "cert_expire_warning", sv)); err != nil {
 		if !fortiAPIPatch(o["cert-expire-warning"]) {
 			return fmt.Errorf("Error reading cert_expire_warning: %v", err)
+		}
+	}
+
+	if err = d.Set("csr_include_device_sn", flattenVpnCertificateSettingCsrIncludeDeviceSn(o["csr-include-device-sn"], d, "csr_include_device_sn", sv)); err != nil {
+		if !fortiAPIPatch(o["csr-include-device-sn"]) {
+			return fmt.Errorf("Error reading csr_include_device_sn: %v", err)
 		}
 	}
 
@@ -908,6 +923,10 @@ func expandVpnCertificateSettingCmpKeyUsageChecking(d *schema.ResourceData, v in
 }
 
 func expandVpnCertificateSettingCertExpireWarning(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnCertificateSettingCsrIncludeDeviceSn(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1285,6 +1304,19 @@ func getObjectVpnCertificateSetting(d *schema.ResourceData, setArgNil bool, sv s
 				return &obj, err
 			} else if t != nil {
 				obj["cert-expire-warning"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("csr_include_device_sn"); ok {
+		if setArgNil {
+			obj["csr-include-device-sn"] = nil
+		} else {
+			t, err := expandVpnCertificateSettingCsrIncludeDeviceSn(d, v, "csr_include_device_sn", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["csr-include-device-sn"] = t
 			}
 		}
 	}

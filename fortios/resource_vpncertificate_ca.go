@@ -50,6 +50,9 @@ func resourceVpnCertificateCa() *schema.Resource {
 			"ca": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
+				DiffSuppressFunc: func(k, old, new string, d *schema.ResourceData) bool {
+					return strings.TrimSpace(old) == strings.TrimSpace(new)
+				},
 			},
 			"range": &schema.Schema{
 				Type:     schema.TypeString,

@@ -14,7 +14,6 @@ Configure certificate users. Applies to FortiOS Version `>= 7.0.1`.
 The following arguments are supported:
 
 * `name` - User name.
-* `fosid` - User ID.
 * `status` - Enable/disable allowing the certificate user to authenticate with the FortiGate unit. Valid values: `enable`, `disable`.
 * `type` - Type of certificate authentication method. Valid values: `single-certificate`, `trusted-issuer`.
 * `common_name` - Certificate common name.
@@ -27,6 +26,7 @@ The following arguments are supported:
 
 In addition to all the above arguments, the following attributes are exported:
 * `id` - an identifier for the resource with format {{name}}.
+* `fosid` - User ID.
 
 ## Import
 

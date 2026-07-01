@@ -32,6 +32,7 @@ output output1 {
 The following attributes are exported:
 
 * `ip` - IP/IPv6 address of neighbor.
+* `name` - Name of this neighbor.
 * `advertisement_interval` - Minimum interval (sec) between sending updates.
 * `allowas_in_enable` - Enable/disable IPv4 Enable to allow my AS in AS path.
 * `allowas_in_enable6` - Enable/disable IPv6 Enable to allow my AS in AS path.
@@ -74,6 +75,8 @@ The following attributes are exported:
 * `next_hop_self_rr6` - Enable/disable setting nexthop's address to interface's IPv6 address for route-reflector routes.
 * `next_hop_self_vpnv4` - Enable/disable setting VPNv4 next-hop to interface's IP address for this neighbor.
 * `next_hop_self_vpnv6` - Enable/disable use of outgoing interface's IP address as VPNv6 next-hop for this neighbor.
+* `next_hop_self_rr_vpnv4` - Enable/disable setting of the nexthop's address to interface's address for route-reflector VPNv4 routes.
+* `next_hop_self_rr_vpnv6` - Enable/disable setting of the nexthop's address to interface's address for route-reflector VPNv6 routes.
 * `override_capability` - Enable/disable override result of capability negotiation.
 * `passive` - Enable/disable sending of open messages to this neighbor.
 * `remove_private_as` - Enable/disable remove private AS number from IPv4 outbound updates.
@@ -96,6 +99,7 @@ The following attributes are exported:
 * `rr_attr_allow_change_vpnv4` - Enable/disable allowing change of route attributes when advertising to VPNv4 route reflector clients.
 * `rr_attr_allow_change_vpnv6` - Enable/disable allowing change of route attributes when advertising to VPNv6 route reflector clients.
 * `rr_attr_allow_change_evpn` - Enable/disable allowing change of route attributes when advertising to L2VPN EVPN route reflector clients.
+* `adv_evpn_route` - Types of EVPN routes that can be advertised to this neighbor as IPv4 routes.
 * `shutdown` - Enable/disable shutdown this neighbor.
 * `soft_reconfiguration` - Enable/disable allow IPv4 inbound soft reconfiguration.
 * `soft_reconfiguration6` - Enable/disable allow IPv6 inbound soft reconfiguration.
@@ -150,6 +154,7 @@ The following attributes are exported:
 * `prefix_list_out_vpnv4` - Outbound filter for VPNv4 updates to this neighbor.
 * `prefix_list_out_vpnv6` - Outbound filter for VPNv6 updates to this neighbor.
 * `remote_as` - AS number of neighbor.
+* `display_options` - Display options for remote AS number
 * `local_as` - Local AS number of neighbor.
 * `local_as_no_prepend` - Do not prepend local-as to incoming updates.
 * `local_as_replace_as` - Replace real AS with local-as in outgoing updates.
@@ -179,6 +184,7 @@ The following attributes are exported:
 * `unsuppress_map` - IPv4 Route map to selectively unsuppress suppressed routes.
 * `unsuppress_map6` - IPv6 Route map to selectively unsuppress suppressed routes.
 * `update_source` - Interface to use as source IP/IPv6 address of TCP connections.
+* `enforce_preferred_source` - Enable/disable enforce usage of the update-source as preferred source for IPv4 routes learned from this neighbor.
 * `weight` - Neighbor weight.
 * `restart_time` - Graceful restart delay time (sec, 0 = global default).
 * `additional_path` - Enable/disable IPv4 additional-path capability.
@@ -193,6 +199,10 @@ The following attributes are exported:
 * `auth_options` - Key-chain name for TCP authentication options.
 * `conditional_advertise` - Conditional advertisement. The structure of `conditional_advertise` block is documented below.
 * `conditional_advertise6` - IPv6 conditional advertisement. The structure of `conditional_advertise6` block is documented below.
+* `graceful_shutdown_community` - Graceful shutdown community.
+* `graceful_shutdown_local_preference` - Graceful shutdown local preference.
+* `graceful_shutdown_delay` - Delay in seconds before graceful shutdown ends.
+* `use_sdwan` - Use SDWAN rules for BGP connection.
 
 The `conditional_advertise` block contains:
 

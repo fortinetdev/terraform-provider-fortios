@@ -80,6 +80,7 @@ func resourceFirewallInternetService() *schema.Resource {
 			"extra_ip_range_number": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
+				Computed: true,
 			},
 			"ip_number": &schema.Schema{
 				Type:     schema.TypeInt,
@@ -99,6 +100,7 @@ func resourceFirewallInternetService() *schema.Resource {
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
+				Computed:     true,
 			},
 			"obsolete": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -465,23 +467,7 @@ func expandFirewallInternetServiceIpRangeNumber(d *schema.ResourceData, v interf
 	return v, nil
 }
 
-func expandFirewallInternetServiceExtraIpRangeNumber(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
 func expandFirewallInternetServiceIpNumber(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandFirewallInternetServiceIp6RangeNumber(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandFirewallInternetServiceExtraIp6RangeNumber(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandFirewallInternetServiceSingularity(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -574,17 +560,6 @@ func getObjectFirewallInternetService(d *schema.ResourceData, sv string) (*map[s
 		obj["ip-range-number"] = nil
 	}
 
-	if v, ok := d.GetOkExists("extra_ip_range_number"); ok {
-		t, err := expandFirewallInternetServiceExtraIpRangeNumber(d, v, "extra_ip_range_number", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["extra-ip-range-number"] = t
-		}
-	} else if d.HasChange("extra_ip_range_number") {
-		obj["extra-ip-range-number"] = nil
-	}
-
 	if v, ok := d.GetOkExists("ip_number"); ok {
 		t, err := expandFirewallInternetServiceIpNumber(d, v, "ip_number", sv)
 		if err != nil {
@@ -594,35 +569,6 @@ func getObjectFirewallInternetService(d *schema.ResourceData, sv string) (*map[s
 		}
 	} else if d.HasChange("ip_number") {
 		obj["ip-number"] = nil
-	}
-
-	if v, ok := d.GetOkExists("ip6_range_number"); ok {
-		t, err := expandFirewallInternetServiceIp6RangeNumber(d, v, "ip6_range_number", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ip6-range-number"] = t
-		}
-	}
-
-	if v, ok := d.GetOkExists("extra_ip6_range_number"); ok {
-		t, err := expandFirewallInternetServiceExtraIp6RangeNumber(d, v, "extra_ip6_range_number", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["extra-ip6-range-number"] = t
-		}
-	}
-
-	if v, ok := d.GetOkExists("singularity"); ok {
-		t, err := expandFirewallInternetServiceSingularity(d, v, "singularity", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["singularity"] = t
-		}
-	} else if d.HasChange("singularity") {
-		obj["singularity"] = nil
 	}
 
 	if v, ok := d.GetOkExists("obsolete"); ok {

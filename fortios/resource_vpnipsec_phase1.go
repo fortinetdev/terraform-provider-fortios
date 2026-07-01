@@ -734,6 +734,11 @@ func resourceVpnIpsecPhase1() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"fec_separate_redundant_tunnel": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"fec_send_timeout": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 1000),
@@ -946,6 +951,11 @@ func resourceVpnIpsecPhase1() *schema.Resource {
 				Computed: true,
 			},
 			"cert_peer_username_strip": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"ztna_cert_scim_authorization": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -1958,6 +1968,10 @@ func flattenVpnIpsecPhase1FecEgress(v interface{}, d *schema.ResourceData, pre s
 	return v
 }
 
+func flattenVpnIpsecPhase1FecSeparateRedundantTunnel(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenVpnIpsecPhase1FecSendTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return convintf2i(v)
 }
@@ -2171,6 +2185,10 @@ func flattenVpnIpsecPhase1CertPeerUsernameValidation(v interface{}, d *schema.Re
 }
 
 func flattenVpnIpsecPhase1CertPeerUsernameStrip(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnIpsecPhase1ZtnaCertScimAuthorization(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2963,6 +2981,12 @@ func refreshObjectVpnIpsecPhase1(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("fec_separate_redundant_tunnel", flattenVpnIpsecPhase1FecSeparateRedundantTunnel(o["fec-separate-redundant-tunnel"], d, "fec_separate_redundant_tunnel", sv)); err != nil {
+		if !fortiAPIPatch(o["fec-separate-redundant-tunnel"]) {
+			return fmt.Errorf("Error reading fec_separate_redundant_tunnel: %v", err)
+		}
+	}
+
 	if err = d.Set("fec_send_timeout", flattenVpnIpsecPhase1FecSendTimeout(o["fec-send-timeout"], d, "fec_send_timeout", sv)); err != nil {
 		if !fortiAPIPatch(o["fec-send-timeout"]) {
 			return fmt.Errorf("Error reading fec_send_timeout: %v", err)
@@ -3214,6 +3238,12 @@ func refreshObjectVpnIpsecPhase1(d *schema.ResourceData, o map[string]interface{
 	if err = d.Set("cert_peer_username_strip", flattenVpnIpsecPhase1CertPeerUsernameStrip(o["cert-peer-username-strip"], d, "cert_peer_username_strip", sv)); err != nil {
 		if !fortiAPIPatch(o["cert-peer-username-strip"]) {
 			return fmt.Errorf("Error reading cert_peer_username_strip: %v", err)
+		}
+	}
+
+	if err = d.Set("ztna_cert_scim_authorization", flattenVpnIpsecPhase1ZtnaCertScimAuthorization(o["ztna-cert-scim-authorization"], d, "ztna_cert_scim_authorization", sv)); err != nil {
+		if !fortiAPIPatch(o["ztna-cert-scim-authorization"]) {
+			return fmt.Errorf("Error reading ztna_cert_scim_authorization: %v", err)
 		}
 	}
 
@@ -3916,6 +3946,10 @@ func expandVpnIpsecPhase1FecEgress(d *schema.ResourceData, v interface{}, pre st
 	return v, nil
 }
 
+func expandVpnIpsecPhase1FecSeparateRedundantTunnel(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandVpnIpsecPhase1FecSendTimeout(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -4097,6 +4131,10 @@ func expandVpnIpsecPhase1CertPeerUsernameValidation(d *schema.ResourceData, v in
 }
 
 func expandVpnIpsecPhase1CertPeerUsernameStrip(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnIpsecPhase1ZtnaCertScimAuthorization(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -5300,6 +5338,15 @@ func getObjectVpnIpsecPhase1(d *schema.ResourceData, sv string) (*map[string]int
 		}
 	}
 
+	if v, ok := d.GetOk("fec_separate_redundant_tunnel"); ok {
+		t, err := expandVpnIpsecPhase1FecSeparateRedundantTunnel(d, v, "fec_separate_redundant_tunnel", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fec-separate-redundant-tunnel"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("fec_send_timeout"); ok {
 		t, err := expandVpnIpsecPhase1FecSendTimeout(d, v, "fec_send_timeout", sv)
 		if err != nil {
@@ -5695,6 +5742,15 @@ func getObjectVpnIpsecPhase1(d *schema.ResourceData, sv string) (*map[string]int
 			return &obj, err
 		} else if t != nil {
 			obj["cert-peer-username-strip"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ztna_cert_scim_authorization"); ok {
+		t, err := expandVpnIpsecPhase1ZtnaCertScimAuthorization(d, v, "ztna_cert_scim_authorization", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ztna-cert-scim-authorization"] = t
 		}
 	}
 

@@ -31,7 +31,13 @@ resource "fortios_user_saml" "tr3" {
 The following arguments are supported:
 
 * `name` - SAML server entry name.
+* `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
+* `fabric_object` - Security Fabric global object setting. Valid values: `enable`, `disable`.
+* `fabric_force_sync` - Enable/disable forced synchronization of configuration objects from the root FortiGate unit to the downstream devices.  Configuration conflict check is skipped. Valid values: `enable`, `disable`.
+* `fabric_object_source` - Source of truth for fabric object. Valid values: `member`, `local`, `root`.
 * `cert` - Certificate to sign SAML messages.
+* `type` - SAML type. Valid values: `custom`, `fortiidentity-cloud`.
+* `service_provider_address` - The address to handle SAML auth request. To include a port, append it after a colon.
 * `entity_id` - (Required) SP entity ID.
 * `single_sign_on_url` - (Required) SP single sign-on URL.
 * `single_logout_url` - SP single logout URL.
@@ -48,6 +54,8 @@ The following arguments are supported:
 * `require_signed_resp_and_asrt` - Require both response and assertion from IDP to be signed when FGT acts as SP (default = disable). Valid values: `enable`, `disable`.
 * `limit_relaystate` - Enable/disable limiting of relay-state parameter when it exceeds SAML 2.0 specification limits (80 bytes). Valid values: `enable`, `disable`.
 * `clock_tolerance` - Clock skew tolerance in seconds (0 - 300, default = 15, 0 = no tolerance).
+* `realm` - FortiIdentity cloud realm.
+* `user_source` - FortiIdentity cloud user souce.
 * `auth_url` - URL to verify authentication.
 * `adfs_claim` - Enable/disable ADFS Claim for user/group attribute in assertion statement (default = disable). Valid values: `enable`, `disable`.
 * `user_claim_type` - User name claim in assertion statement. Valid values: `email`, `given-name`, `name`, `upn`, `common-name`, `email-adfs-1x`, `group`, `upn-adfs-1x`, `role`, `sur-name`, `ppid`, `name-identifier`, `authentication-method`, `deny-only-group-sid`, `deny-only-primary-sid`, `deny-only-primary-group-sid`, `group-sid`, `primary-group-sid`, `primary-sid`, `windows-account-name`.

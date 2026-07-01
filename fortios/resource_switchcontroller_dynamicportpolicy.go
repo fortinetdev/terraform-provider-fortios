@@ -91,7 +91,7 @@ func resourceSwitchControllerDynamicPortPolicy() *schema.Resource {
 						},
 						"match_period": &schema.Schema{
 							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 120),
+							ValidateFunc: validation.IntBetween(0, 3072),
 							Optional:     true,
 						},
 						"match_remove": &schema.Schema{

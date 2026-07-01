@@ -20,6 +20,8 @@ Use this data source to get information on an fortios firewall addrgrp6
 The following attributes are exported:
 
 * `name` - IPv6 address group name.
+* `type` - Address group type.
+* `category` - Address group category.
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `visibility` - Enable/disable address group6 visibility in the GUI.
 * `color` - Integer value to determine the color of the icon in the GUI (1 - 32, default = 0, which sets the value to 1).
@@ -28,7 +30,11 @@ The following attributes are exported:
 * `exclude` - Enable/disable address6 exclusion.
 * `exclude_member` - Address6 exclusion member. The structure of `exclude_member` block is documented below.
 * `tagging` - Config object tagging. The structure of `tagging` block is documented below.
+* `display_with` - Display object with first tag, all tags, or just the icon.
+* `custom_tags` - Custom tags. The structure of `custom_tags` block is documented below.
 * `fabric_object` - Security Fabric global object setting.
+* `fabric_force_sync` - Enable/disable forced synchronization of configuration objects from the root FortiGate unit to the downstream devices.  Configuration conflict check is skipped.
+* `fabric_object_source` - Source of truth for fabric object.
 
 The `member` block contains:
 
@@ -47,4 +53,8 @@ The `tagging` block contains:
 The `tags` block contains:
 
 * `name` - Tag name.
+
+The `custom_tags` block contains:
+
+* `name` - Names of custom tags used with this address group.
 

@@ -103,6 +103,11 @@ func resourceLogDiskSetting() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"upload_file_format": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"uploadip": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -367,6 +372,10 @@ func flattenLogDiskSettingUploadDestination(v interface{}, d *schema.ResourceDat
 	return v
 }
 
+func flattenLogDiskSettingUploadFileFormat(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenLogDiskSettingUploadip(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -515,6 +524,12 @@ func refreshObjectLogDiskSetting(d *schema.ResourceData, o map[string]interface{
 	if err = d.Set("upload_destination", flattenLogDiskSettingUploadDestination(o["upload-destination"], d, "upload_destination", sv)); err != nil {
 		if !fortiAPIPatch(o["upload-destination"]) {
 			return fmt.Errorf("Error reading upload_destination: %v", err)
+		}
+	}
+
+	if err = d.Set("upload_file_format", flattenLogDiskSettingUploadFileFormat(o["upload-file-format"], d, "upload_file_format", sv)); err != nil {
+		if !fortiAPIPatch(o["upload-file-format"]) {
+			return fmt.Errorf("Error reading upload_file_format: %v", err)
 		}
 	}
 
@@ -676,6 +691,10 @@ func expandLogDiskSettingUpload(d *schema.ResourceData, v interface{}, pre strin
 }
 
 func expandLogDiskSettingUploadDestination(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogDiskSettingUploadFileFormat(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -936,6 +955,19 @@ func getObjectLogDiskSetting(d *schema.ResourceData, setArgNil bool, sv string) 
 				return &obj, err
 			} else if t != nil {
 				obj["upload-destination"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("upload_file_format"); ok {
+		if setArgNil {
+			obj["upload-file-format"] = nil
+		} else {
+			t, err := expandLogDiskSettingUploadFileFormat(d, v, "upload_file_format", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["upload-file-format"] = t
 			}
 		}
 	}

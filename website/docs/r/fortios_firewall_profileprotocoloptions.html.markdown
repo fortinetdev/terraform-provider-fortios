@@ -123,6 +123,10 @@ resource "fortios_firewall_profileprotocoloptions" "trname" {
 The following arguments are supported:
 
 * `name` - (Required) Name.
+* `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
+* `fabric_object` - Security Fabric global object setting. Valid values: `enable`, `disable`.
+* `fabric_force_sync` - Enable/disable forced synchronization of configuration objects from the root FortiGate unit to the downstream devices.  Configuration conflict check is skipped. Valid values: `enable`, `disable`.
+* `fabric_object_source` - Source of truth for fabric object. Valid values: `member`, `local`, `root`.
 * `comment` - Optional comments.
 * `feature_set` - Flow/proxy feature set. Valid values: `flow`, `proxy`.
 * `replacemsg_group` - Name of the replacement message group to be used
@@ -138,6 +142,7 @@ The following arguments are supported:
 * `ssh` - Configure SFTP and SCP protocol options. The structure of `ssh` block is documented below.
 * `dns` - Configure DNS protocol options. The structure of `dns` block is documented below.
 * `cifs` - Configure CIFS protocol options. The structure of `cifs` block is documented below.
+* `websocket` - Configure WebSocket protocol options. The structure of `websocket` block is documented below.
 * `mail_signature` - Configure Mail signature. The structure of `mail_signature` block is documented below.
 * `rpc_over_http` - Enable/disable inspection of RPC over HTTP. Valid values: `enable`, `disable`.
 * `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
@@ -160,6 +165,7 @@ The `http` block supports:
 * `fortinet_bar` - Enable/disable Fortinet bar on HTML content. Valid values: `enable`, `disable`.
 * `fortinet_bar_port` - Port for use by Fortinet Bar (1 - 65535, default = 8011).
 * `streaming_content_bypass` - Enable/disable bypassing of streaming content from buffering. Valid values: `enable`, `disable`.
+* `streaming_content_scan_type` - Enforce scan on certain streaming content type when streaming-content-bypass is enabled. Valid values: `flv`, `octet`, `dvi`, `rtmp`, `mms-framed`, `msmediaview`, `pncmd`, `rtsp-tunnel`, `audio`, `audio-accp`, `audio-mpeg`, `pn-realaudio`, `pn-realaudio-plugin`, `mixed`, `x-mixed`, `event-stream`, `video`, `video-mp4`, `video-mpeg`, `video-xflv`, `video-xasf`.
 * `switching_protocols` - Bypass from scanning, or block a connection that attempts to switch protocol. Valid values: `bypass`, `block`.
 * `unknown_http_version` - How to handle HTTP sessions that do not comply with HTTP 0.9, 1.0, or 1.1. Valid values: `reject`, `tunnel`, `best-effort`.
 * `http_09` - Configure action to take upon receipt of HTTP 0.9 request. Valid values: `allow`, `block`.
@@ -306,6 +312,23 @@ The `server_keytab` block supports:
 
 * `principal` - Service principal.  For example, "host/cifsserver.example.com@example.com".
 * `keytab` - Base64 encoded keytab file containing credential of the server.
+
+The `websocket` block supports:
+
+* `status` - Enable/disable the active status of scanning for this protocol. Valid values: `enable`, `disable`.
+* `options` - One or more options that can be applied to the session. Valid values: `oversize`, `clientcomfort`, `servercomfort`.
+* `comfort_interval` - Interval between successive transmissions of data for client comforting (seconds).
+* `comfort_amount` - Number of bytes to send in each transmission for client comforting (bytes).
+* `tunnel_non_websocket` - Configure how to process non-websocket traffic when a profile configured for websocket traffic accepts a non-websocket session. Valid values: `enable`, `disable`.
+* `oversize_limit` - Maximum in-memory file size that can be scanned (MB).
+* `uncompressed_oversize_limit` - Maximum in-memory uncompressed file size that can be scanned (MB).
+* `uncompressed_nest_limit` - Maximum nested levels of compression that can be uncompressed and scanned (2 - 100, default = 12).
+* `stream_based_uncompressed_limit` - Maximum stream-based uncompressed data size that will be scanned in megabytes. Stream-based uncompression used only under certain conditions (unlimited = 0, default = 0).
+* `scan_bzip2` - Enable/disable scanning of BZip2 compressed files. Valid values: `enable`, `disable`.
+* `tcp_window_type` - TCP window type to use for this protocol. Valid values: `auto-tuning`, `system`, `static`, `dynamic`.
+* `tcp_window_minimum` - Minimum dynamic TCP window size.
+* `tcp_window_maximum` - Maximum dynamic TCP window size.
+* `tcp_window_size` - Set TCP static window size.
 
 The `mail_signature` block supports:
 

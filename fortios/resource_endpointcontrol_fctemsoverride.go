@@ -141,7 +141,7 @@ func resourceEndpointControlFctemsOverride() *schema.Resource {
 			},
 			"out_of_sync_threshold": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(10, 3600),
+				ValidateFunc: validation.IntBetween(10, 2592000),
 				Optional:     true,
 				Computed:     true,
 			},

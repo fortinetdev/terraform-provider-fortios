@@ -35,6 +35,7 @@ The `match` block supports:
 * `strategy` - CASB user activity rules strategy. Valid values: `and`, `or`.
 * `rules` - CASB user activity rules. The structure of `rules` block is documented below.
 * `tenant_extraction` - CASB user activity tenant extraction. The structure of `tenant_extraction` block is documented below.
+* `tenant_session_extraction` - CASB user activity tenant session extraction. The structure of `tenant_session_extraction` block is documented below.
 
 The `rules` block supports:
 
@@ -45,7 +46,7 @@ The `rules` block supports:
 * `match_pattern` - CASB user activity rule match pattern. Valid values: `simple`, `substr`, `regexp`.
 * `match_value` - CASB user activity rule match value.
 * `header_name` - CASB user activity rule header name.
-* `body_type` - CASB user activity match rule body type. Valid values: `json`.
+* `body_type` - CASB user activity match rule body type.
 * `jq` - CASB user activity rule match jq script.
 * `case_sensitive` - CASB user activity match case sensitive. Valid values: `enable`, `disable`.
 * `negate` - Enable/disable what the matching strategy must not be. Valid values: `enable`, `disable`.
@@ -71,7 +72,24 @@ The `filters` block supports:
 * `direction` - CASB tenant extraction filter direction. Valid values: `request`, `response`.
 * `place` - CASB tenant extraction filter place type. Valid values: `path`, `header`, `body`.
 * `header_name` - CASB tenant extraction filter header name.
-* `body_type` - CASB tenant extraction filter body type. Valid values: `json`.
+* `body_type` - CASB tenant extraction filter body type.
+
+The `tenant_session_extraction` block supports:
+
+* `status` - Enable/disable CASB session extraction. Valid values: `disable`, `enable`.
+* `session_source` - Enable/disable CASB session extraction source flag. Valid values: `disable`, `enable`.
+* `session_match` - CASB user activity session match name.
+* `jq` - CASB user activity session extraction jq script.
+* `filters` - CASB user activity session extraction filters. The structure of `filters` block is documented below.
+
+The `filters` block supports:
+
+* `id` - CASB content extraction filter ID.
+* `direction` - CASB content extraction filter direction. Valid values: `request`, `response`.
+* `place` - CASB content extraction filter place type. Valid values: `path`, `header`, `cookie`, `body`.
+* `header_name` - CASB content extraction filter header name.
+* `cookie_name` - CASB content extraction filter cookie name.
+* `body_type` - CASB content extraction filter body type. Valid values: `json`, `form`.
 
 The `control_options` block supports:
 

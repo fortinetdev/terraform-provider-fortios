@@ -70,6 +70,7 @@ func resourceExtenderControllerExtender1() *schema.Resource {
 			"vdom": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
+				Computed: true,
 			},
 			"login_password": &schema.Schema{
 				Type:         schema.TypeString,
@@ -123,6 +124,7 @@ func resourceExtenderControllerExtender1() *schema.Resource {
 						"conn_status": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
+							Computed: true,
 						},
 						"default_sim": &schema.Schema{
 							Type:     schema.TypeString,
@@ -228,6 +230,7 @@ func resourceExtenderControllerExtender1() *schema.Resource {
 						"conn_status": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
+							Computed: true,
 						},
 						"default_sim": &schema.Schema{
 							Type:     schema.TypeString,
@@ -1076,10 +1079,6 @@ func expandExtenderControllerExtender1Description(d *schema.ResourceData, v inte
 	return v, nil
 }
 
-func expandExtenderControllerExtender1Vdom(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
 func expandExtenderControllerExtender1LoginPassword(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -1156,12 +1155,6 @@ func expandExtenderControllerExtender1Modem1(d *schema.ResourceData, v interface
 	} else if d.HasChange(pre_append) {
 		result["redundant-intf"] = nil
 	}
-	pre_append = pre + ".0." + "conn_status"
-	if _, ok := d.GetOk(pre_append); ok {
-		result["conn-status"], _ = expandExtenderControllerExtender1Modem1ConnStatus(d, i["conn_status"], pre_append, sv)
-	} else if d.HasChange(pre_append) {
-		result["conn-status"] = nil
-	}
 	pre_append = pre + ".0." + "default_sim"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["default-sim"], _ = expandExtenderControllerExtender1Modem1DefaultSim(d, i["default_sim"], pre_append, sv)
@@ -1223,10 +1216,6 @@ func expandExtenderControllerExtender1Modem1RedundantMode(d *schema.ResourceData
 }
 
 func expandExtenderControllerExtender1Modem1RedundantIntf(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandExtenderControllerExtender1Modem1ConnStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1380,12 +1369,6 @@ func expandExtenderControllerExtender1Modem2(d *schema.ResourceData, v interface
 	} else if d.HasChange(pre_append) {
 		result["redundant-intf"] = nil
 	}
-	pre_append = pre + ".0." + "conn_status"
-	if _, ok := d.GetOk(pre_append); ok {
-		result["conn-status"], _ = expandExtenderControllerExtender1Modem2ConnStatus(d, i["conn_status"], pre_append, sv)
-	} else if d.HasChange(pre_append) {
-		result["conn-status"] = nil
-	}
 	pre_append = pre + ".0." + "default_sim"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["default-sim"], _ = expandExtenderControllerExtender1Modem2DefaultSim(d, i["default_sim"], pre_append, sv)
@@ -1447,10 +1430,6 @@ func expandExtenderControllerExtender1Modem2RedundantMode(d *schema.ResourceData
 }
 
 func expandExtenderControllerExtender1Modem2RedundantIntf(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandExtenderControllerExtender1Modem2ConnStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1628,17 +1607,6 @@ func getObjectExtenderControllerExtender1(d *schema.ResourceData, sv string) (*m
 		}
 	} else if d.HasChange("description") {
 		obj["description"] = nil
-	}
-
-	if v, ok := d.GetOkExists("vdom"); ok {
-		t, err := expandExtenderControllerExtender1Vdom(d, v, "vdom", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["vdom"] = t
-		}
-	} else if d.HasChange("vdom") {
-		obj["vdom"] = nil
 	}
 
 	if v, ok := d.GetOk("login_password"); ok {

@@ -68,8 +68,10 @@ The following arguments are supported:
 * `access_proxy` - IPv4 access proxy. The structure of `access_proxy` block is documented below.
 * `access_proxy6` - IPv6 access proxy. The structure of `access_proxy6` block is documented below.
 * `ztna_proxy` - IPv4 ZTNA traffic forward proxy. The structure of `ztna_proxy` block is documented below.
+* `ztna_destination` - ZTNA destinations (effective only with ZTNA traffic-forward-proxy). The structure of `ztna_destination` block is documented below.
 * `srcintf` - Source interface names. The structure of `srcintf` block is documented below.
 * `dstintf` - (Required) Destination interface names. The structure of `dstintf` block is documented below.
+* `custom_tags` - Custom tags. The structure of `custom_tags` block is documented below.
 * `srcaddr` - Source address objects. The structure of `srcaddr` block is documented below.
 * `poolname` - Name of IP pool object. The structure of `poolname` block is documented below.
 * `poolname6` - Name of IPv6 pool object. The structure of `poolname6` block is documented below.
@@ -107,6 +109,7 @@ The following arguments are supported:
 * `dstaddr6` - IPv6 destination address objects. The structure of `dstaddr6` block is documented below.
 * `groups` - Names of group objects. The structure of `groups` block is documented below.
 * `users` - Names of user objects. The structure of `users` block is documented below.
+* `fsso_groups` - Names of FSSO groups. The structure of `fsso_groups` block is documented below.
 * `http_tunnel_auth` - Enable/disable HTTP tunnel authentication. Valid values: `enable`, `disable`.
 * `ssh_policy_redirect` - Redirect SSH traffic to matching transparent proxy policy. Valid values: `enable`, `disable`.
 * `webproxy_forward_server` - Web proxy forward server name.
@@ -140,6 +143,7 @@ The following arguments are supported:
 * `waf_profile` - Name of an existing Web application firewall profile.
 * `ssh_filter_profile` - Name of an existing SSH filter profile.
 * `casb_profile` - Name of an existing CASB profile.
+* `llm_profile` - Name of an existing LLM profile.
 * `profile_protocol_options` - Name of an existing Protocol options profile.
 * `ssl_ssh_profile` - Name of an existing SSL SSH profile.
 * `replacemsg_override_group` - Authentication replacement message override group.
@@ -171,6 +175,10 @@ The `ztna_proxy` block supports:
 
 * `name` - ZTNA Traffic Forward Proxy name.
 
+The `ztna_destination` block supports:
+
+* `name` - ZTNA destination name.
+
 The `srcintf` block supports:
 
 * `name` - Interface name.
@@ -178,6 +186,10 @@ The `srcintf` block supports:
 The `dstintf` block supports:
 
 * `name` - Interface name.
+
+The `custom_tags` block supports:
+
+* `name` - Names of custom tags used with this policy.
 
 The `srcaddr` block supports:
 
@@ -266,6 +278,10 @@ The `groups` block supports:
 The `users` block supports:
 
 * `name` - Group name.
+
+The `fsso_groups` block supports:
+
+* `name` - FSSO Group name.
 
 
 ## Attribute Reference

@@ -50,14 +50,17 @@ func resourceIpsViewMap() *schema.Resource {
 			"vdom_id": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
+				Computed: true,
 			},
 			"policy_id": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
+				Computed: true,
 			},
 			"id_policy_id": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
+				Computed: true,
 			},
 			"which": &schema.Schema{
 				Type:     schema.TypeString,
@@ -302,79 +305,8 @@ func flattenIpsViewMapFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fos
 	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandIpsViewMapId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandIpsViewMapVdomId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandIpsViewMapPolicyId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandIpsViewMapIdPolicyId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandIpsViewMapWhich(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
 func getObjectIpsViewMap(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
-	if v, ok := d.GetOkExists("fosid"); ok {
-		t, err := expandIpsViewMapId(d, v, "fosid", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["id"] = t
-		}
-	}
-
-	if v, ok := d.GetOkExists("vdom_id"); ok {
-		t, err := expandIpsViewMapVdomId(d, v, "vdom_id", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["vdom-id"] = t
-		}
-	} else if d.HasChange("vdom_id") {
-		obj["vdom-id"] = nil
-	}
-
-	if v, ok := d.GetOkExists("policy_id"); ok {
-		t, err := expandIpsViewMapPolicyId(d, v, "policy_id", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["policy-id"] = t
-		}
-	} else if d.HasChange("policy_id") {
-		obj["policy-id"] = nil
-	}
-
-	if v, ok := d.GetOkExists("id_policy_id"); ok {
-		t, err := expandIpsViewMapIdPolicyId(d, v, "id_policy_id", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["id-policy-id"] = t
-		}
-	} else if d.HasChange("id_policy_id") {
-		obj["id-policy-id"] = nil
-	}
-
-	if v, ok := d.GetOk("which"); ok {
-		t, err := expandIpsViewMapWhich(d, v, "which", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["which"] = t
-		}
-	}
 
 	return &obj, nil
 }

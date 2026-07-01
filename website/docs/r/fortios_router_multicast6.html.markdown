@@ -30,6 +30,7 @@ The following arguments are supported:
 * `multicast_pmtu` - Enable/disable PMTU for IPv6 multicast. Valid values: `enable`, `disable`.
 * `interface` - Protocol Independent Multicast (PIM) interfaces. The structure of `interface` block is documented below.
 * `pim_sm_global` - PIM sparse-mode global settings. The structure of `pim_sm_global` block is documented below.
+* `pim_sm_global_vrf` - per-VRF PIM sparse-mode global settings. The structure of `pim_sm_global_vrf` block is documented below.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
 * `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
@@ -39,10 +40,24 @@ The `interface` block supports:
 * `name` - Interface name.
 * `hello_interval` - Interval between sending PIM hello messages in seconds (1 - 65535, default = 30).
 * `hello_holdtime` - Time before old neighbor information expires in seconds (1 - 65535, default = 105).
+* `rp_candidate` - Enable/disable compete to become RP in elections. Valid values: `enable`, `disable`.
+* `rp_candidate_group` - Multicast groups managed by this RP.
+* `rp_candidate_priority` - Router's priority as RP.
+* `rp_candidate_interval` - RP candidate advertisement interval (1 - 16383 sec, default = 60).
+* `static_group` - Statically set IPv6 multicast groups to forward out.
 
 The `pim_sm_global` block supports:
 
+* `bsr_candidate` - Enable/disable allowing this router to become a bootstrap router (BSR). Valid values: `enable`, `disable`.
+* `bsr_interface` - Interface to advertise as candidate BSR.
+* `bsr_priority` - BSR priority (0 - 255, default = 0).
+* `bsr_hash` - BSR hash length (0 - 128, default = 126).
+* `bsr_allow_quick_refresh` - Enable/disable accept BSR quick refresh packets from neighbors. Valid values: `enable`, `disable`.
+* `cisco_crp_prefix` - Enable/disable making candidate RP compatible with old Cisco IOS. Valid values: `enable`, `disable`.
 * `register_rate_limit` - Limit of packets/sec per source registered through this RP (0 means unlimited).
+* `cisco_ignore_rp_set_priority` - Use only hash for RP selection (compatibility with old Cisco IOS). Valid values: `enable`, `disable`.
+* `spt_threshold` - Enable/disable switching to source specific trees. Valid values: `enable`, `disable`.
+* `spt_threshold_group` - Groups allowed to switch to source tree.
 * `pim_use_sdwan` - Enable/disable use of SDWAN when checking RPF neighbor and sending of REG packet. Valid values: `enable`, `disable`.
 * `rp_address` - Statically configured RP addresses. The structure of `rp_address` block is documented below.
 
@@ -50,6 +65,24 @@ The `rp_address` block supports:
 
 * `id` - ID of the entry.
 * `ip6_address` - RP router IPv6 address.
+* `group` - Groups to use this RP.
+
+The `pim_sm_global_vrf` block supports:
+
+* `vrf` - VRF ID.
+* `bsr_candidate` - Enable/disable allowing this router to become a bootstrap router (BSR). Valid values: `enable`, `disable`.
+* `bsr_interface` - Interface to advertise as candidate BSR.
+* `bsr_priority` - BSR priority (0 - 255, default = 0).
+* `bsr_hash` - BSR hash length (0 - 128, default = 126).
+* `bsr_allow_quick_refresh` - Enable/disable accept BSR quick refresh packets from neighbors. Valid values: `enable`, `disable`.
+* `cisco_crp_prefix` - Enable/disable making candidate RP compatible with old Cisco IOS. Valid values: `enable`, `disable`.
+* `rp_address` - Statically configured RP addresses. The structure of `rp_address` block is documented below.
+
+The `rp_address` block supports:
+
+* `id` - ID of the entry.
+* `ip6_address` - RP router IPv6 address.
+* `group` - Groups to use this RP.
 
 
 ## Attribute Reference

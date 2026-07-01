@@ -1,4 +1,50 @@
-## 1.25.0 (Unreleased)
+## 1.26.0 (Unreleased)
+
+
+## 1.25.0 (July 01, 2026)
+BUG FIXES:
+
+* Support FortiOS v7.0.18, 7.0.19, 7.2.13, 7.4.9, 7.4.11, 7.4.12, 7.6.6, 7.6.7, 8.0.0;
+* Fix import issue for sub-tables;
+* Fix issue of HTTP response contains duplicate value;
+* Fix order issue for string string like list variables of resource isp_sensor;
+* Fix issue of always show changes for cert type of variable due to the extra space or new line;
+* Fix extra quote issue for resource system_ha;
+* Fix issue of lack of Computed feature for data source system_admin;
+* Update readonly arguments for resource switchcontroller_managedswitch;
+* Fix issue of varaible id is required for resource system_proxyarp;
+* Fix variable type issue;;
+
+FEATURES:
+
+* **New Resource:** `fortios_application_classificationsettings`
+* **New Resource:** `fortios_application_unsanctionedapps`
+* **New Resource:** `fortios_firewall_customtag`
+* **New Resource:** `fortios_firewall_proxyaddress6`
+* **New Resource:** `fortios_firewall_proxyaddrgrp6`
+* **New Resource:** `fortios_llm_profile`
+* **New Resource:** `fortios_llm_proxy`
+* **New Resource:** `fortios_llm_server`
+* **New Resource:** `fortios_log_customformat`
+* **New Resource:** `fortios_router_multicast6flow`
+* **New Resource:** `fortios_switchcontroller_igmpsnoopingstaticgroup`
+* **New Resource:** `fortios_switchcontrollersecuritypolicy_admin`
+* **New Resource:** `fortios_system_fortimq`
+* **New Resource:** `fortios_system_npupost`
+* **New Resource:** `fortios_system_npuvlink`
+* **New Resource:** `fortios_system_theme`
+* **New Resource:** `fortios_systemdhcp_template`
+* **New Resource:** `fortios_telemetrycontroller_agent`
+* **New Resource:** `fortios_telemetrycontroller_agentprofile`
+* **New Resource:** `fortios_telemetrycontroller_agentstatus`
+* **New Resource:** `fortios_telemetrycontroller_agenttask`
+* **New Resource:** `fortios_telemetrycontroller_global`
+* **New Resource:** `fortios_telemetrycontroller_profile`
+* **New Resource:** `fortios_telemetrycontrollerapplication_predefine`
+* **New Resource:** `fortios_user_oidc`
+* **New Resource:** `fortios_ztna_connectoredge`
+* **New Resource:** `fortios_ztna_destination`
+* **New Resource:** `fortios_ztna_serviceconnector`
 
 
 ## 1.24.1 (Jan 27, 2026)

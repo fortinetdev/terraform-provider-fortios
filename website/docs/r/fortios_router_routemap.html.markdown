@@ -117,11 +117,11 @@ The `rule` block supports:
 
 The `set_aspath` block supports:
 
-* `as` - AS number. Use quotes for repeating numbers, For example, "1 1 2". On FortiOS versions 6.2.0-7.0.0: 0 - 42949672. On FortiOS versions 7.0.1-7.0.3: 0 - 4294967295.
+* `as` - AS number. Use quotes for repeating numbers, For example, "1 1 2". On FortiOS versions 6.2.0-7.0.0: 0 - 42949672. On FortiOS versions >= 7.0.1: 0 - 4294967295.
 
 The `set_community` block supports:
 
-* `community` - Attribute: AA|AA:NN|internet|local-AS|no-advertise|no-export (exact match required for well known communities).
+* `community` -  On FortiOS versions 6.2.0-7.6.7: Attribute: AA|AA:NN|internet|local-AS|no-advertise|no-export (exact match required for well known communities).. On FortiOS versions >= 8.0.0: Attribute: AA|AA:NN|internet|local-AS|no-advertise|no-export|gshut.(exact match required for well known communities)..
 
 The `set_extcommunity_rt` block supports:
 

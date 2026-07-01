@@ -70,6 +70,19 @@ func resourceSystemVirtualWirePair() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 			},
+			"outer_vlan_id": &schema.Schema{
+				Type:     schema.TypeSet,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"vlanid": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(1, 4094),
+							Optional:     true,
+						},
+					},
+				},
+			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -321,6 +334,59 @@ func flattenSystemVirtualWirePairVlanFilter(v interface{}, d *schema.ResourceDat
 	return v
 }
 
+func flattenSystemVirtualWirePairOuterVlanId(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "vlanid", "vlanid")
+
+	con := 0
+	for _, r := range parsed_list {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
+
+		if cur_v, ok := i["vlanid"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "vlanid"
+			}
+			tmp["vlanid"] = flattenSystemVirtualWirePairOuterVlanIdVlanid(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "vlanid", d)
+	return result
+}
+
+func flattenSystemVirtualWirePairOuterVlanIdVlanid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
 func refreshObjectSystemVirtualWirePair(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 	var b_get_all_tables bool
@@ -361,6 +427,22 @@ func refreshObjectSystemVirtualWirePair(d *schema.ResourceData, o map[string]int
 	if err = d.Set("vlan_filter", flattenSystemVirtualWirePairVlanFilter(o["vlan-filter"], d, "vlan_filter", sv)); err != nil {
 		if !fortiAPIPatch(o["vlan-filter"]) {
 			return fmt.Errorf("Error reading vlan_filter: %v", err)
+		}
+	}
+
+	if b_get_all_tables {
+		if err = d.Set("outer_vlan_id", flattenSystemVirtualWirePairOuterVlanId(o["outer-vlan-id"], d, "outer_vlan_id", sv)); err != nil {
+			if !fortiAPIPatch(o["outer-vlan-id"]) {
+				return fmt.Errorf("Error reading outer_vlan_id: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("outer_vlan_id"); ok {
+			if err = d.Set("outer_vlan_id", flattenSystemVirtualWirePairOuterVlanId(o["outer-vlan-id"], d, "outer_vlan_id", sv)); err != nil {
+				if !fortiAPIPatch(o["outer-vlan-id"]) {
+					return fmt.Errorf("Error reading outer_vlan_id: %v", err)
+				}
+			}
 		}
 	}
 
@@ -413,6 +495,34 @@ func expandSystemVirtualWirePairVlanFilter(d *schema.ResourceData, v interface{}
 	return v, nil
 }
 
+func expandSystemVirtualWirePairOuterVlanId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.(*schema.Set).List()
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		tmp["vlanid"], _ = expandSystemVirtualWirePairOuterVlanIdVlanid(d, i["vlanid"], pre_append, sv)
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemVirtualWirePairOuterVlanIdVlanid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectSystemVirtualWirePair(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
@@ -452,6 +562,15 @@ func getObjectSystemVirtualWirePair(d *schema.ResourceData, sv string) (*map[str
 		}
 	} else if d.HasChange("vlan_filter") {
 		obj["vlan-filter"] = nil
+	}
+
+	if v, ok := d.GetOk("outer_vlan_id"); ok || d.HasChange("outer_vlan_id") {
+		t, err := expandSystemVirtualWirePairOuterVlanId(d, v, "outer_vlan_id", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["outer-vlan-id"] = t
+		}
 	}
 
 	return &obj, nil

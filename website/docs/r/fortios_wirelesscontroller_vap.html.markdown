@@ -39,6 +39,8 @@ The following arguments are supported:
 * `n80211v` - Enable/disable 802.11v assisted roaming (default = enable). Valid values: `disable`, `enable`.
 * `voice_enterprise` - Enable/disable 802.11k and 802.11v assisted Voice-Enterprise roaming (default = disable). Valid values: `disable`, `enable`.
 * `neighbor_report_dual_band` - Enable/disable dual-band neighbor report (default = disable). Valid values: `disable`, `enable`.
+* `radius_auth_survivability` - Enable/disable RADIUS authentication survivability (default = disable). Valid values: `disable`, `enable`.
+* `radius_auth_surviv_intv` - RADIUS authentication survivability cache timeout interval in seconds (3600 - 864000, default = 86400).
 * `fast_bss_transition` - Enable/disable 802.11r Fast BSS Transition (FT) (default = disable). Valid values: `disable`, `enable`.
 * `ft_mobility_domain` - Mobility domain identifier in FT (1 - 65535, default = 1000).
 * `ft_r0_key_lifetime` - Lifetime of the PMK-R0 key in FT, 1-65535 minutes.
@@ -64,7 +66,7 @@ The following arguments are supported:
 * `radius_mac_auth_server` - RADIUS-based MAC authentication server.
 * `radius_mac_auth_block_interval` - Don't send RADIUS MAC auth request again if the client has been rejected within specific interval (0 or 30 - 864000 seconds, default = 0, 0 to disable blocking).
 * `radius_mac_mpsk_auth` - Enable/disable RADIUS-based MAC authentication of clients for MPSK authentication (default = disable). Valid values: `enable`, `disable`.
-* `radius_mac_mpsk_timeout` - RADIUS MAC MPSK cache timeout interval (default = 86400). On FortiOS versions 7.0.2-7.0.8, 7.2.0: 1800 - 864000. On FortiOS versions 7.0.9-7.0.17, >= 7.2.1: 0 or 300 - 864000, 0 to disable caching.
+* `radius_mac_mpsk_timeout` - RADIUS MAC MPSK cache timeout interval (default = 86400). On FortiOS versions 7.0.2-7.0.8, 7.2.0: 1800 - 864000. On FortiOS versions 7.0.9-7.0.19, >= 7.2.1: 0 or 300 - 864000, 0 to disable caching.
 * `radius_mac_auth_usergroups` - Selective user groups that are permitted for RADIUS mac authentication. The structure of `radius_mac_auth_usergroups` block is documented below.
 * `auth` - Authentication protocol.
 * `encrypt` - Encryption protocol to use (only available when security is set to a WPA type). Valid values: `TKIP`, `AES`, `TKIP-AES`.
@@ -96,6 +98,7 @@ The following arguments are supported:
 * `portal_message_override_group` - Replacement message group for this VAP (only available when security is set to a captive portal type).
 * `portal_message_overrides` - Individual message overrides. The structure of `portal_message_overrides` block is documented below.
 * `portal_type` - Captive portal functionality. Configure how the captive portal authenticates users and whether it includes a disclaimer.
+* `captive_portal_dynamic_redirect_url` - Enable/disable captive portal dynamic redirect URL (default = disable). Valid values: `enable`, `disable`.
 * `selected_usergroups` - Selective user groups that are permitted to authenticate. The structure of `selected_usergroups` block is documented below.
 * `security_exempt_list` - Optional security exempt list for captive portal authentication.
 * `security_redirect_url` - Optional URL for redirecting users after they pass captive portal authentication.
@@ -150,8 +153,9 @@ The following arguments are supported:
 * `vlan_pool` - VLAN pool. The structure of `vlan_pool` block is documented below.
 * `dhcp_option43_insertion` - Enable/disable insertion of DHCP option 43 (default = enable). Valid values: `enable`, `disable`.
 * `dhcp_option82_insertion` - Enable/disable DHCP option 82 insert (default = disable). Valid values: `enable`, `disable`.
-* `dhcp_option82_circuit_id_insertion` - Enable/disable DHCP option 82 circuit-id insert (default = disable).
-* `dhcp_option82_remote_id_insertion` - Enable/disable DHCP option 82 remote-id insert (default = disable). Valid values: `style-1`, `disable`.
+* `dhcp_option82_delimiter` - DHCP option 82 field delimiter.
+* `dhcp_option82_circuit_id_insertion` - Selected fields of DHCP option 82 circuit-id insert.
+* `dhcp_option82_remote_id_insertion` - Selected fields of DHCP option 82 remote-id insert.
 * `ptk_rekey` - Enable/disable PTK rekey for WPA-Enterprise security. Valid values: `enable`, `disable`.
 * `ptk_rekey_intv` - PTK rekey interval (default = 86400). On FortiOS versions 6.2.0-7.4.3: 1800 - 864000 sec. On FortiOS versions >= 7.4.4: 600 - 864000 sec.
 * `gtk_rekey` - Enable/disable GTK rekey for WPA security. Valid values: `enable`, `disable`.

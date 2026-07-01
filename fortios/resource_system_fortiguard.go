@@ -156,6 +156,11 @@ func resourceSystemFortiguard() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"proxy_fqdn_host": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"fortiguard_anycast": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -589,6 +594,10 @@ func flattenSystemFortiguardSubscribeUpdateNotification(v interface{}, d *schema
 	return v
 }
 
+func flattenSystemFortiguardProxyFqdnHost(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemFortiguardFortiguardAnycast(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -895,6 +904,12 @@ func refreshObjectSystemFortiguard(d *schema.ResourceData, o map[string]interfac
 	if err = d.Set("subscribe_update_notification", flattenSystemFortiguardSubscribeUpdateNotification(o["subscribe-update-notification"], d, "subscribe_update_notification", sv)); err != nil {
 		if !fortiAPIPatch(o["subscribe-update-notification"]) {
 			return fmt.Errorf("Error reading subscribe_update_notification: %v", err)
+		}
+	}
+
+	if err = d.Set("proxy_fqdn_host", flattenSystemFortiguardProxyFqdnHost(o["proxy-fqdn-host"], d, "proxy_fqdn_host", sv)); err != nil {
+		if !fortiAPIPatch(o["proxy-fqdn-host"]) {
+			return fmt.Errorf("Error reading proxy_fqdn_host: %v", err)
 		}
 	}
 
@@ -1251,6 +1266,10 @@ func expandSystemFortiguardSubscribeUpdateNotification(d *schema.ResourceData, v
 	return v, nil
 }
 
+func expandSystemFortiguardProxyFqdnHost(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandSystemFortiguardFortiguardAnycast(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -1388,14 +1407,6 @@ func expandSystemFortiguardProxyUsername(d *schema.ResourceData, v interface{}, 
 }
 
 func expandSystemFortiguardProxyPassword(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandSystemFortiguardVideofilterLicense(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandSystemFortiguardVideofilterExpiration(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1727,6 +1738,19 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 				return &obj, err
 			} else if t != nil {
 				obj["subscribe-update-notification"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("proxy_fqdn_host"); ok {
+		if setArgNil {
+			obj["proxy-fqdn-host"] = nil
+		} else {
+			t, err := expandSystemFortiguardProxyFqdnHost(d, v, "proxy_fqdn_host", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["proxy-fqdn-host"] = t
 			}
 		}
 	}
@@ -2196,32 +2220,6 @@ func getObjectSystemFortiguard(d *schema.ResourceData, setArgNil bool, sv string
 		}
 	} else if d.HasChange("proxy_password") {
 		obj["proxy-password"] = nil
-	}
-
-	if v, ok := d.GetOkExists("videofilter_license"); ok {
-		if setArgNil {
-			obj["videofilter-license"] = nil
-		} else {
-			t, err := expandSystemFortiguardVideofilterLicense(d, v, "videofilter_license", sv)
-			if err != nil {
-				return &obj, err
-			} else if t != nil {
-				obj["videofilter-license"] = t
-			}
-		}
-	}
-
-	if v, ok := d.GetOkExists("videofilter_expiration"); ok {
-		if setArgNil {
-			obj["videofilter-expiration"] = nil
-		} else {
-			t, err := expandSystemFortiguardVideofilterExpiration(d, v, "videofilter_expiration", sv)
-			if err != nil {
-				return &obj, err
-			} else if t != nil {
-				obj["videofilter-expiration"] = t
-			}
-		}
 	}
 
 	if v, ok := d.GetOk("ddns_server_ip"); ok {

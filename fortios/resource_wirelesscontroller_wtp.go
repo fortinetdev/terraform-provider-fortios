@@ -94,6 +94,43 @@ func resourceWirelessControllerWtp() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"static_lowi": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"static_lowi_lat": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 15),
+				Optional:     true,
+				Computed:     true,
+			},
+			"static_lowi_lon": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 15),
+				Optional:     true,
+				Computed:     true,
+			},
+			"static_lowi_alt": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 500),
+				Optional:     true,
+			},
+			"static_lowi_lat_err": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 50),
+				Optional:     true,
+			},
+			"static_lowi_lon_err": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 50),
+				Optional:     true,
+			},
+			"static_lowi_alt_err": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 50),
+				Optional:     true,
+			},
 			"firmware_provision": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -112,6 +149,7 @@ func resourceWirelessControllerWtp() *schema.Resource {
 			"wtp_mode": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Computed: true,
 			},
 			"apcfg_profile": &schema.Schema{
 				Type:         schema.TypeString,
@@ -428,10 +466,31 @@ func resourceWirelessControllerWtp() *schema.Resource {
 							Optional:     true,
 							Computed:     true,
 						},
+						"override_vap_status": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"vap_status": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"override_vaps": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
+						},
+						"override_cca_threshold": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"cca_threshold": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 7),
+							Optional:     true,
+							Computed:     true,
 						},
 						"vap_all": &schema.Schema{
 							Type:     schema.TypeString,
@@ -549,10 +608,31 @@ func resourceWirelessControllerWtp() *schema.Resource {
 							Optional:     true,
 							Computed:     true,
 						},
+						"override_vap_status": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"vap_status": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"override_vaps": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
+						},
+						"override_cca_threshold": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"cca_threshold": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 7),
+							Optional:     true,
+							Computed:     true,
 						},
 						"vap_all": &schema.Schema{
 							Type:     schema.TypeString,
@@ -665,10 +745,31 @@ func resourceWirelessControllerWtp() *schema.Resource {
 							Optional:     true,
 							Computed:     true,
 						},
+						"override_vap_status": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"vap_status": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"override_vaps": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
+						},
+						"override_cca_threshold": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"cca_threshold": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 7),
+							Optional:     true,
+							Computed:     true,
 						},
 						"vap_all": &schema.Schema{
 							Type:     schema.TypeString,
@@ -781,10 +882,31 @@ func resourceWirelessControllerWtp() *schema.Resource {
 							Optional:     true,
 							Computed:     true,
 						},
+						"override_vap_status": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"vap_status": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"override_vaps": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
+						},
+						"override_cca_threshold": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"cca_threshold": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 7),
+							Optional:     true,
+							Computed:     true,
 						},
 						"vap_all": &schema.Schema{
 							Type:     schema.TypeString,
@@ -1079,6 +1201,34 @@ func flattenWirelessControllerWtpRegionX(v interface{}, d *schema.ResourceData, 
 
 func flattenWirelessControllerWtpRegionY(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
+}
+
+func flattenWirelessControllerWtpStaticLowi(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpStaticLowiLat(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpStaticLowiLon(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpStaticLowiAlt(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenWirelessControllerWtpStaticLowiLatErr(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenWirelessControllerWtpStaticLowiLonErr(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
+func flattenWirelessControllerWtpStaticLowiAltErr(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
 }
 
 func flattenWirelessControllerWtpFirmwareProvision(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1524,9 +1674,29 @@ func flattenWirelessControllerWtpRadio1(v interface{}, d *schema.ResourceData, p
 		result["power_value"] = flattenWirelessControllerWtpRadio1PowerValue(i["power-value"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "override_vap_status"
+	if _, ok := i["override-vap-status"]; ok {
+		result["override_vap_status"] = flattenWirelessControllerWtpRadio1OverrideVapStatus(i["override-vap-status"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "vap_status"
+	if _, ok := i["vap-status"]; ok {
+		result["vap_status"] = flattenWirelessControllerWtpRadio1VapStatus(i["vap-status"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "override_vaps"
 	if _, ok := i["override-vaps"]; ok {
 		result["override_vaps"] = flattenWirelessControllerWtpRadio1OverrideVaps(i["override-vaps"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "override_cca_threshold"
+	if _, ok := i["override-cca-threshold"]; ok {
+		result["override_cca_threshold"] = flattenWirelessControllerWtpRadio1OverrideCcaThreshold(i["override-cca-threshold"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "cca_threshold"
+	if _, ok := i["cca-threshold"]; ok {
+		result["cca_threshold"] = flattenWirelessControllerWtpRadio1CcaThreshold(i["cca-threshold"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "vap_all"
@@ -1610,7 +1780,23 @@ func flattenWirelessControllerWtpRadio1PowerValue(v interface{}, d *schema.Resou
 	return convintf2i(v)
 }
 
+func flattenWirelessControllerWtpRadio1OverrideVapStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpRadio1VapStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerWtpRadio1OverrideVaps(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpRadio1OverrideCcaThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpRadio1CcaThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1806,9 +1992,29 @@ func flattenWirelessControllerWtpRadio2(v interface{}, d *schema.ResourceData, p
 		result["power_value"] = flattenWirelessControllerWtpRadio2PowerValue(i["power-value"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "override_vap_status"
+	if _, ok := i["override-vap-status"]; ok {
+		result["override_vap_status"] = flattenWirelessControllerWtpRadio2OverrideVapStatus(i["override-vap-status"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "vap_status"
+	if _, ok := i["vap-status"]; ok {
+		result["vap_status"] = flattenWirelessControllerWtpRadio2VapStatus(i["vap-status"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "override_vaps"
 	if _, ok := i["override-vaps"]; ok {
 		result["override_vaps"] = flattenWirelessControllerWtpRadio2OverrideVaps(i["override-vaps"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "override_cca_threshold"
+	if _, ok := i["override-cca-threshold"]; ok {
+		result["override_cca_threshold"] = flattenWirelessControllerWtpRadio2OverrideCcaThreshold(i["override-cca-threshold"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "cca_threshold"
+	if _, ok := i["cca-threshold"]; ok {
+		result["cca_threshold"] = flattenWirelessControllerWtpRadio2CcaThreshold(i["cca-threshold"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "vap_all"
@@ -1892,7 +2098,23 @@ func flattenWirelessControllerWtpRadio2PowerValue(v interface{}, d *schema.Resou
 	return convintf2i(v)
 }
 
+func flattenWirelessControllerWtpRadio2OverrideVapStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpRadio2VapStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerWtpRadio2OverrideVaps(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpRadio2OverrideCcaThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpRadio2CcaThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2083,9 +2305,29 @@ func flattenWirelessControllerWtpRadio3(v interface{}, d *schema.ResourceData, p
 		result["power_value"] = flattenWirelessControllerWtpRadio3PowerValue(i["power-value"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "override_vap_status"
+	if _, ok := i["override-vap-status"]; ok {
+		result["override_vap_status"] = flattenWirelessControllerWtpRadio3OverrideVapStatus(i["override-vap-status"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "vap_status"
+	if _, ok := i["vap-status"]; ok {
+		result["vap_status"] = flattenWirelessControllerWtpRadio3VapStatus(i["vap-status"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "override_vaps"
 	if _, ok := i["override-vaps"]; ok {
 		result["override_vaps"] = flattenWirelessControllerWtpRadio3OverrideVaps(i["override-vaps"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "override_cca_threshold"
+	if _, ok := i["override-cca-threshold"]; ok {
+		result["override_cca_threshold"] = flattenWirelessControllerWtpRadio3OverrideCcaThreshold(i["override-cca-threshold"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "cca_threshold"
+	if _, ok := i["cca-threshold"]; ok {
+		result["cca_threshold"] = flattenWirelessControllerWtpRadio3CcaThreshold(i["cca-threshold"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "vap_all"
@@ -2165,7 +2407,23 @@ func flattenWirelessControllerWtpRadio3PowerValue(v interface{}, d *schema.Resou
 	return convintf2i(v)
 }
 
+func flattenWirelessControllerWtpRadio3OverrideVapStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpRadio3VapStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerWtpRadio3OverrideVaps(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpRadio3OverrideCcaThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpRadio3CcaThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2356,9 +2614,29 @@ func flattenWirelessControllerWtpRadio4(v interface{}, d *schema.ResourceData, p
 		result["power_value"] = flattenWirelessControllerWtpRadio4PowerValue(i["power-value"], d, pre_append, sv)
 	}
 
+	pre_append = pre + ".0." + "override_vap_status"
+	if _, ok := i["override-vap-status"]; ok {
+		result["override_vap_status"] = flattenWirelessControllerWtpRadio4OverrideVapStatus(i["override-vap-status"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "vap_status"
+	if _, ok := i["vap-status"]; ok {
+		result["vap_status"] = flattenWirelessControllerWtpRadio4VapStatus(i["vap-status"], d, pre_append, sv)
+	}
+
 	pre_append = pre + ".0." + "override_vaps"
 	if _, ok := i["override-vaps"]; ok {
 		result["override_vaps"] = flattenWirelessControllerWtpRadio4OverrideVaps(i["override-vaps"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "override_cca_threshold"
+	if _, ok := i["override-cca-threshold"]; ok {
+		result["override_cca_threshold"] = flattenWirelessControllerWtpRadio4OverrideCcaThreshold(i["override-cca-threshold"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "cca_threshold"
+	if _, ok := i["cca-threshold"]; ok {
+		result["cca_threshold"] = flattenWirelessControllerWtpRadio4CcaThreshold(i["cca-threshold"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "vap_all"
@@ -2438,7 +2716,23 @@ func flattenWirelessControllerWtpRadio4PowerValue(v interface{}, d *schema.Resou
 	return convintf2i(v)
 }
 
+func flattenWirelessControllerWtpRadio4OverrideVapStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpRadio4VapStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerWtpRadio4OverrideVaps(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpRadio4OverrideCcaThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerWtpRadio4CcaThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2646,6 +2940,48 @@ func refreshObjectWirelessControllerWtp(d *schema.ResourceData, o map[string]int
 	if err = d.Set("region_y", flattenWirelessControllerWtpRegionY(o["region-y"], d, "region_y", sv)); err != nil {
 		if !fortiAPIPatch(o["region-y"]) {
 			return fmt.Errorf("Error reading region_y: %v", err)
+		}
+	}
+
+	if err = d.Set("static_lowi", flattenWirelessControllerWtpStaticLowi(o["static-lowi"], d, "static_lowi", sv)); err != nil {
+		if !fortiAPIPatch(o["static-lowi"]) {
+			return fmt.Errorf("Error reading static_lowi: %v", err)
+		}
+	}
+
+	if err = d.Set("static_lowi_lat", flattenWirelessControllerWtpStaticLowiLat(o["static-lowi-lat"], d, "static_lowi_lat", sv)); err != nil {
+		if !fortiAPIPatch(o["static-lowi-lat"]) {
+			return fmt.Errorf("Error reading static_lowi_lat: %v", err)
+		}
+	}
+
+	if err = d.Set("static_lowi_lon", flattenWirelessControllerWtpStaticLowiLon(o["static-lowi-lon"], d, "static_lowi_lon", sv)); err != nil {
+		if !fortiAPIPatch(o["static-lowi-lon"]) {
+			return fmt.Errorf("Error reading static_lowi_lon: %v", err)
+		}
+	}
+
+	if err = d.Set("static_lowi_alt", flattenWirelessControllerWtpStaticLowiAlt(o["static-lowi-alt"], d, "static_lowi_alt", sv)); err != nil {
+		if !fortiAPIPatch(o["static-lowi-alt"]) {
+			return fmt.Errorf("Error reading static_lowi_alt: %v", err)
+		}
+	}
+
+	if err = d.Set("static_lowi_lat_err", flattenWirelessControllerWtpStaticLowiLatErr(o["static-lowi-lat-err"], d, "static_lowi_lat_err", sv)); err != nil {
+		if !fortiAPIPatch(o["static-lowi-lat-err"]) {
+			return fmt.Errorf("Error reading static_lowi_lat_err: %v", err)
+		}
+	}
+
+	if err = d.Set("static_lowi_lon_err", flattenWirelessControllerWtpStaticLowiLonErr(o["static-lowi-lon-err"], d, "static_lowi_lon_err", sv)); err != nil {
+		if !fortiAPIPatch(o["static-lowi-lon-err"]) {
+			return fmt.Errorf("Error reading static_lowi_lon_err: %v", err)
+		}
+	}
+
+	if err = d.Set("static_lowi_alt_err", flattenWirelessControllerWtpStaticLowiAltErr(o["static-lowi-alt-err"], d, "static_lowi_alt_err", sv)); err != nil {
+		if !fortiAPIPatch(o["static-lowi-alt-err"]) {
+			return fmt.Errorf("Error reading static_lowi_alt_err: %v", err)
 		}
 	}
 
@@ -2977,6 +3313,34 @@ func expandWirelessControllerWtpRegionX(d *schema.ResourceData, v interface{}, p
 }
 
 func expandWirelessControllerWtpRegionY(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpStaticLowi(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpStaticLowiLat(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpStaticLowiLon(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpStaticLowiAlt(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpStaticLowiLatErr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpStaticLowiLonErr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpStaticLowiAltErr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3392,9 +3756,25 @@ func expandWirelessControllerWtpRadio1(d *schema.ResourceData, v interface{}, pr
 	if _, ok := d.GetOk(pre_append); ok {
 		result["power-value"], _ = expandWirelessControllerWtpRadio1PowerValue(d, i["power_value"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "override_vap_status"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["override-vap-status"], _ = expandWirelessControllerWtpRadio1OverrideVapStatus(d, i["override_vap_status"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "vap_status"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["vap-status"], _ = expandWirelessControllerWtpRadio1VapStatus(d, i["vap_status"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "override_vaps"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["override-vaps"], _ = expandWirelessControllerWtpRadio1OverrideVaps(d, i["override_vaps"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "override_cca_threshold"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["override-cca-threshold"], _ = expandWirelessControllerWtpRadio1OverrideCcaThreshold(d, i["override_cca_threshold"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "cca_threshold"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["cca-threshold"], _ = expandWirelessControllerWtpRadio1CcaThreshold(d, i["cca_threshold"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "vap_all"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3476,7 +3856,23 @@ func expandWirelessControllerWtpRadio1PowerValue(d *schema.ResourceData, v inter
 	return v, nil
 }
 
+func expandWirelessControllerWtpRadio1OverrideVapStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpRadio1VapStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWirelessControllerWtpRadio1OverrideVaps(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpRadio1OverrideCcaThreshold(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpRadio1CcaThreshold(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3618,9 +4014,25 @@ func expandWirelessControllerWtpRadio2(d *schema.ResourceData, v interface{}, pr
 	if _, ok := d.GetOk(pre_append); ok {
 		result["power-value"], _ = expandWirelessControllerWtpRadio2PowerValue(d, i["power_value"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "override_vap_status"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["override-vap-status"], _ = expandWirelessControllerWtpRadio2OverrideVapStatus(d, i["override_vap_status"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "vap_status"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["vap-status"], _ = expandWirelessControllerWtpRadio2VapStatus(d, i["vap_status"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "override_vaps"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["override-vaps"], _ = expandWirelessControllerWtpRadio2OverrideVaps(d, i["override_vaps"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "override_cca_threshold"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["override-cca-threshold"], _ = expandWirelessControllerWtpRadio2OverrideCcaThreshold(d, i["override_cca_threshold"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "cca_threshold"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["cca-threshold"], _ = expandWirelessControllerWtpRadio2CcaThreshold(d, i["cca_threshold"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "vap_all"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3702,7 +4114,23 @@ func expandWirelessControllerWtpRadio2PowerValue(d *schema.ResourceData, v inter
 	return v, nil
 }
 
+func expandWirelessControllerWtpRadio2OverrideVapStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpRadio2VapStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWirelessControllerWtpRadio2OverrideVaps(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpRadio2OverrideCcaThreshold(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpRadio2CcaThreshold(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -3838,9 +4266,25 @@ func expandWirelessControllerWtpRadio3(d *schema.ResourceData, v interface{}, pr
 	if _, ok := d.GetOk(pre_append); ok {
 		result["power-value"], _ = expandWirelessControllerWtpRadio3PowerValue(d, i["power_value"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "override_vap_status"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["override-vap-status"], _ = expandWirelessControllerWtpRadio3OverrideVapStatus(d, i["override_vap_status"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "vap_status"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["vap-status"], _ = expandWirelessControllerWtpRadio3VapStatus(d, i["vap_status"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "override_vaps"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["override-vaps"], _ = expandWirelessControllerWtpRadio3OverrideVaps(d, i["override_vaps"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "override_cca_threshold"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["override-cca-threshold"], _ = expandWirelessControllerWtpRadio3OverrideCcaThreshold(d, i["override_cca_threshold"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "cca_threshold"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["cca-threshold"], _ = expandWirelessControllerWtpRadio3CcaThreshold(d, i["cca_threshold"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "vap_all"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -3918,7 +4362,23 @@ func expandWirelessControllerWtpRadio3PowerValue(d *schema.ResourceData, v inter
 	return v, nil
 }
 
+func expandWirelessControllerWtpRadio3OverrideVapStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpRadio3VapStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWirelessControllerWtpRadio3OverrideVaps(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpRadio3OverrideCcaThreshold(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpRadio3CcaThreshold(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -4054,9 +4514,25 @@ func expandWirelessControllerWtpRadio4(d *schema.ResourceData, v interface{}, pr
 	if _, ok := d.GetOk(pre_append); ok {
 		result["power-value"], _ = expandWirelessControllerWtpRadio4PowerValue(d, i["power_value"], pre_append, sv)
 	}
+	pre_append = pre + ".0." + "override_vap_status"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["override-vap-status"], _ = expandWirelessControllerWtpRadio4OverrideVapStatus(d, i["override_vap_status"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "vap_status"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["vap-status"], _ = expandWirelessControllerWtpRadio4VapStatus(d, i["vap_status"], pre_append, sv)
+	}
 	pre_append = pre + ".0." + "override_vaps"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["override-vaps"], _ = expandWirelessControllerWtpRadio4OverrideVaps(d, i["override_vaps"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "override_cca_threshold"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["override-cca-threshold"], _ = expandWirelessControllerWtpRadio4OverrideCcaThreshold(d, i["override_cca_threshold"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "cca_threshold"
+	if _, ok := d.GetOk(pre_append); ok {
+		result["cca-threshold"], _ = expandWirelessControllerWtpRadio4CcaThreshold(d, i["cca_threshold"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "vap_all"
 	if _, ok := d.GetOk(pre_append); ok {
@@ -4134,7 +4610,23 @@ func expandWirelessControllerWtpRadio4PowerValue(d *schema.ResourceData, v inter
 	return v, nil
 }
 
+func expandWirelessControllerWtpRadio4OverrideVapStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpRadio4VapStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWirelessControllerWtpRadio4OverrideVaps(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpRadio4OverrideCcaThreshold(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerWtpRadio4CcaThreshold(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -4329,6 +4821,77 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 		}
 	}
 
+	if v, ok := d.GetOk("static_lowi"); ok {
+		t, err := expandWirelessControllerWtpStaticLowi(d, v, "static_lowi", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["static-lowi"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("static_lowi_lat"); ok {
+		t, err := expandWirelessControllerWtpStaticLowiLat(d, v, "static_lowi_lat", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["static-lowi-lat"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("static_lowi_lon"); ok {
+		t, err := expandWirelessControllerWtpStaticLowiLon(d, v, "static_lowi_lon", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["static-lowi-lon"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("static_lowi_alt"); ok {
+		t, err := expandWirelessControllerWtpStaticLowiAlt(d, v, "static_lowi_alt", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["static-lowi-alt"] = t
+		}
+	} else if d.HasChange("static_lowi_alt") {
+		obj["static-lowi-alt"] = nil
+	}
+
+	if v, ok := d.GetOkExists("static_lowi_lat_err"); ok {
+		t, err := expandWirelessControllerWtpStaticLowiLatErr(d, v, "static_lowi_lat_err", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["static-lowi-lat-err"] = t
+		}
+	} else if d.HasChange("static_lowi_lat_err") {
+		obj["static-lowi-lat-err"] = nil
+	}
+
+	if v, ok := d.GetOkExists("static_lowi_lon_err"); ok {
+		t, err := expandWirelessControllerWtpStaticLowiLonErr(d, v, "static_lowi_lon_err", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["static-lowi-lon-err"] = t
+		}
+	} else if d.HasChange("static_lowi_lon_err") {
+		obj["static-lowi-lon-err"] = nil
+	}
+
+	if v, ok := d.GetOkExists("static_lowi_alt_err"); ok {
+		t, err := expandWirelessControllerWtpStaticLowiAltErr(d, v, "static_lowi_alt_err", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["static-lowi-alt-err"] = t
+		}
+	} else if d.HasChange("static_lowi_alt_err") {
+		obj["static-lowi-alt-err"] = nil
+	}
+
 	if v, ok := d.GetOk("firmware_provision"); ok {
 		t, err := expandWirelessControllerWtpFirmwareProvision(d, v, "firmware_provision", sv)
 		if err != nil {
@@ -4367,8 +4930,6 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["wtp-mode"] = t
 		}
-	} else if d.HasChange("wtp_mode") {
-		obj["wtp-mode"] = nil
 	}
 
 	if v, ok := d.GetOk("apcfg_profile"); ok {

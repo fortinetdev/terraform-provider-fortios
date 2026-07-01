@@ -55,7 +55,7 @@ The following arguments are supported:
 * `wins_server1` - WINS server 1.
 * `wins_server2` - WINS server 2.
 * `default_gateway` - Default gateway IP address assigned by the DHCP server.
-* `next_server` - IP address of a server (for example, a TFTP sever) that DHCP clients can download a boot file from.
+* `next_server` - IP address of a server, such as a TFTP server, from which DHCP clients can download a boot file.
 * `netmask` - (Required) Netmask assigned by the DHCP server.
 * `interface` - (Required) DHCP server can assign IP configurations to clients connected to this interface.
 * `ip_range` - DHCP IP range configuration. The structure of `ip_range` block is documented below.
@@ -63,6 +63,9 @@ The following arguments are supported:
 * `timezone` - Select the time zone to be assigned to DHCP clients.
 * `tftp_server` - One or more hostnames or IP addresses of the TFTP servers in quotes separated by spaces. The structure of `tftp_server` block is documented below.
 * `filename` - Name of the boot file on the TFTP server.
+* `template` - DHCP template associated with the server.
+* `template_subnet` - Configure template subnet.
+* `template_subnet_from_interface` - Use interface subnet as DHCP template subnet. Valid values: `disable`, `enable`.
 * `options` - DHCP options. The structure of `options` block is documented below.
 * `server_type` - DHCP server can be a normal DHCP server or an IPsec DHCP server. Valid values: `regular`, `ipsec`.
 * `ip_mode` - Method used to assign client IP. Valid values: `range`, `usrgrp`.
@@ -99,7 +102,10 @@ The `ip_range` block supports:
 * `vci_string` - One or more VCI strings in quotes separated by spaces. The structure of `vci_string` block is documented below.
 * `uci_match` - Enable/disable user class identifier (UCI) matching. When enabled only DHCP requests with a matching UCI are served with this range. Valid values: `disable`, `enable`.
 * `uci_string` - One or more UCI strings in quotes separated by spaces. The structure of `uci_string` block is documented below.
+* `oui_match` - Enable/disable organizationally unique identifier (OUI) matching. When enabled only DHCP requests with a matching OUI are served with this range. Valid values: `disable`, `enable`.
+* `oui_string` - One or more OUI strings in quotes separated by spaces (in format of xx:xx:xx). The structure of `oui_string` block is documented below.
 * `lease_time` - Lease time in seconds, 0 means default lease time.
+* `vendor` - Vendor this ip-range will be assigned to.
 
 The `vci_string` block supports:
 
@@ -108,6 +114,10 @@ The `vci_string` block supports:
 The `uci_string` block supports:
 
 * `uci_string` - UCI strings.
+
+The `oui_string` block supports:
+
+* `oui_string` - MAC OUI strings.
 
 The `tftp_server` block supports:
 
@@ -146,7 +156,10 @@ The `exclude_range` block supports:
 * `vci_string` - One or more VCI strings in quotes separated by spaces. The structure of `vci_string` block is documented below.
 * `uci_match` - Enable/disable user class identifier (UCI) matching. When enabled only DHCP requests with a matching UCI are served with this range. Valid values: `disable`, `enable`.
 * `uci_string` - One or more UCI strings in quotes separated by spaces. The structure of `uci_string` block is documented below.
+* `oui_match` - Enable/disable organizationally unique identifier (OUI) matching. When enabled only DHCP requests with a matching OUI are served with this range. Valid values: `disable`, `enable`.
+* `oui_string` - One or more OUI strings in quotes separated by spaces (in format of xx:xx:xx). The structure of `oui_string` block is documented below.
 * `lease_time` - Lease time in seconds, 0 means default lease time.
+* `vendor` - Vendor this ip-range will be assigned to.
 
 The `vci_string` block supports:
 
@@ -155,6 +168,10 @@ The `vci_string` block supports:
 The `uci_string` block supports:
 
 * `uci_string` - UCI strings.
+
+The `oui_string` block supports:
+
+* `oui_string` - MAC OUI strings.
 
 The `reserved_address` block supports:
 

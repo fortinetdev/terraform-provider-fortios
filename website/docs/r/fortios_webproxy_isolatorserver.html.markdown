@@ -14,6 +14,10 @@ Configure forward-server addresses. Applies to FortiOS Version `>= 7.6.1`.
 The following arguments are supported:
 
 * `name` - Server name.
+* `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
+* `fabric_object` - Security Fabric global object setting. Valid values: `enable`, `disable`.
+* `fabric_force_sync` - Enable/disable forced synchronization of configuration objects from the root FortiGate unit to the downstream devices.  Configuration conflict check is skipped. Valid values: `enable`, `disable`.
+* `fabric_object_source` - Source of truth for fabric object. Valid values: `member`, `local`, `root`.
 * `addr_type` - Address type of the forwarding proxy server: IP or FQDN. Valid values: `ip`, `ipv6`, `fqdn`.
 * `ip` - Forward proxy server IP address.
 * `ipv6` - Forward proxy server IPv6 address.

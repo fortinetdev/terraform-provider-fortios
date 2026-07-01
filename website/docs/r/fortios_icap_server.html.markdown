@@ -27,6 +27,10 @@ resource "fortios_icap_server" "trname" {
 The following arguments are supported:
 
 * `name` - Server name.
+* `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
+* `fabric_object` - Security Fabric global object setting. Valid values: `enable`, `disable`.
+* `fabric_force_sync` - Enable/disable forced synchronization of configuration objects from the root FortiGate unit to the downstream devices.  Configuration conflict check is skipped. Valid values: `enable`, `disable`.
+* `fabric_object_source` - Source of truth for fabric object. Valid values: `member`, `local`, `root`.
 * `addr_type` - Address type of the remote ICAP server: IPv4, IPv6 or FQDN. Valid values: `ip4`, `ip6`, `fqdn`.
 * `ip_version` - IP version. Valid values: `4`, `6`.
 * `ip_address` - IPv4 address of the ICAP server.

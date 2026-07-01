@@ -28,6 +28,8 @@ The following arguments are supported:
 * `login` - Enable/disable FortiSwitch serial console. Valid values: `enable`, `disable`.
 * `revision_backup_on_logout` - Enable/disable automatic revision backup upon logout from FortiSwitch. Valid values: `enable`, `disable`.
 * `revision_backup_on_upgrade` - Enable/disable automatic revision backup upon FortiSwitch image upgrade. Valid values: `enable`, `disable`.
+* `private_data_encryption` - Enable/disable private data encryption for non-admin passwords. Valid values: `enable`, `disable`.
+* `private_data_encryption_key` - Private data encryption key length (32 hexadecimal numbers).
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 * `update_if_exist` - Equivalent functionality of import the resource. If set to true, will check whether the resource exist, if so, will do the UPDATE operation rather CREATE. Default is false. If you want to inherit the value of the provider, please do not set this parameter.
 

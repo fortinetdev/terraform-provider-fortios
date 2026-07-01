@@ -23,6 +23,13 @@ The following arguments are supported:
 * `region` - Region name WTP is associated with.
 * `region_x` - Relative horizontal region coordinate (between 0 and 1).
 * `region_y` - Relative vertical region coordinate (between 0 and 1).
+* `static_lowi` - Enable/disable static LOWI position of the FortiAP. Valid values: `enable`, `disable`.
+* `static_lowi_lat` - Static LOWI latitude position of the AP (between -90 and 90 degrees).
+* `static_lowi_lon` - Static LOWI longitude position of the AP (between -180 and 180 degrees).
+* `static_lowi_alt` - Static LOWI altitude position of the AP (between 0 and 500 meters).
+* `static_lowi_lat_err` - Static LOWI latitude error of the AP (between 0 and 50 meters).
+* `static_lowi_lon_err` - Static LOWI longitude error of the AP (between 0 and 50 meters).
+* `static_lowi_alt_err` - Static LOWI altitude error of the AP (between 0 and 50 meters).
 * `firmware_provision` - Firmware version to provision to this FortiAP on bootup (major.minor.build, i.e. 6.2.1234).
 * `firmware_provision_latest` - Enable/disable one-time automatic provisioning of the latest firmware version. Valid values: `disable`, `once`.
 * `wtp_profile` - (Required) WTP profile name to apply to this WTP, AP or FortiAP.
@@ -109,7 +116,11 @@ The `radio_1` block supports:
 * `power_mode` - Set radio effective isotropic radiated power (EIRP) in dBm or by a percentage of the maximum EIRP (default = percentage). This power takes into account both radio transmit power and antenna gain. Higher power level settings may be constrained by local regulatory requirements and AP capabilities. Valid values: `dBm`, `percentage`.
 * `power_level` - Radio EIRP power level as a percentage of the maximum EIRP power (0 - 100, default = 100).
 * `power_value` - Radio EIRP power in dBm (1 - 33, default = 27).
+* `override_vap_status` - Enable to override WTP profile Virtual Access Point (VAP) enable/disable settings. Valid values: `enable`, `disable`.
+* `vap_status` - Enable/disable all configured SSIDs on this radio (default = enable). Valid values: `enable`, `disable`.
 * `override_vaps` - Enable to override WTP profile Virtual Access Point (VAP) settings. Valid values: `enable`, `disable`.
+* `override_cca_threshold` - Enable to override WTP profile CCA threshold enable/disable settings. Valid values: `enable`, `disable`.
+* `cca_threshold` - Configure Clear Channel Assessment (CCA) threshold in dBm (-94 to -11, default = 0, 0 for unconfigured).
 * `vap_all` -  On FortiOS versions 6.2.0-6.4.0: Enable/disable the automatic inheritance of all Virtual Access Points (VAPs) (default = enable). On FortiOS versions >= 6.4.1: Configure method for assigning SSIDs to this FortiAP (default = automatically assign tunnel SSIDs).
 * `vaps` - Manually selected list of Virtual Access Points (VAPs). The structure of `vaps` block is documented below.
 * `override_channel` - Enable to override WTP profile channel settings. Valid values: `enable`, `disable`.
@@ -139,7 +150,11 @@ The `radio_2` block supports:
 * `power_mode` - Set radio effective isotropic radiated power (EIRP) in dBm or by a percentage of the maximum EIRP (default = percentage). This power takes into account both radio transmit power and antenna gain. Higher power level settings may be constrained by local regulatory requirements and AP capabilities. Valid values: `dBm`, `percentage`.
 * `power_level` - Radio EIRP power level as a percentage of the maximum EIRP power (0 - 100, default = 100).
 * `power_value` - Radio EIRP power in dBm (1 - 33, default = 27).
+* `override_vap_status` - Enable to override WTP profile Virtual Access Point (VAP) enable/disable settings. Valid values: `enable`, `disable`.
+* `vap_status` - Enable/disable all configured SSIDs on this radio (default = enable). Valid values: `enable`, `disable`.
 * `override_vaps` - Enable to override WTP profile Virtual Access Point (VAP) settings. Valid values: `enable`, `disable`.
+* `override_cca_threshold` - Enable to override WTP profile CCA threshold enable/disable settings. Valid values: `enable`, `disable`.
+* `cca_threshold` - Configure Clear Channel Assessment (CCA) threshold in dBm (-94 to -11, default = 0, 0 for unconfigured).
 * `vap_all` -  On FortiOS versions 6.2.0-6.4.0: Enable/disable the automatic inheritance of all Virtual Access Points (VAPs) (default = enable). On FortiOS versions >= 6.4.1: Configure method for assigning SSIDs to this FortiAP (default = automatically assign tunnel SSIDs).
 * `vaps` - Manually selected list of Virtual Access Points (VAPs). The structure of `vaps` block is documented below.
 * `override_channel` - Enable to override WTP profile channel settings. Valid values: `enable`, `disable`.
@@ -168,7 +183,11 @@ The `radio_3` block supports:
 * `power_mode` - Set radio effective isotropic radiated power (EIRP) in dBm or by a percentage of the maximum EIRP (default = percentage). This power takes into account both radio transmit power and antenna gain. Higher power level settings may be constrained by local regulatory requirements and AP capabilities. Valid values: `dBm`, `percentage`.
 * `power_level` - Radio EIRP power level as a percentage of the maximum EIRP power (0 - 100, default = 100).
 * `power_value` - Radio EIRP power in dBm (1 - 33, default = 27).
+* `override_vap_status` - Enable to override WTP profile Virtual Access Point (VAP) enable/disable settings. Valid values: `enable`, `disable`.
+* `vap_status` - Enable/disable all configured SSIDs on this radio (default = enable). Valid values: `enable`, `disable`.
 * `override_vaps` - Enable to override WTP profile Virtual Access Point (VAP) settings. Valid values: `enable`, `disable`.
+* `override_cca_threshold` - Enable to override WTP profile CCA threshold enable/disable settings. Valid values: `enable`, `disable`.
+* `cca_threshold` - Configure Clear Channel Assessment (CCA) threshold in dBm (-94 to -11, default = 0, 0 for unconfigured).
 * `vap_all` -  On FortiOS versions 6.2.4-6.4.0: Enable/disable the automatic inheritance of all Virtual Access Points (VAPs) (default = enable). On FortiOS versions >= 6.4.1: Configure method for assigning SSIDs to this FortiAP (default = automatically assign tunnel SSIDs).
 * `vaps` - Manually selected list of Virtual Access Points (VAPs). The structure of `vaps` block is documented below.
 * `override_channel` - Enable to override WTP profile channel settings. Valid values: `enable`, `disable`.
@@ -197,7 +216,11 @@ The `radio_4` block supports:
 * `power_mode` - Set radio effective isotropic radiated power (EIRP) in dBm or by a percentage of the maximum EIRP (default = percentage). This power takes into account both radio transmit power and antenna gain. Higher power level settings may be constrained by local regulatory requirements and AP capabilities. Valid values: `dBm`, `percentage`.
 * `power_level` - Radio EIRP power level as a percentage of the maximum EIRP power (0 - 100, default = 100).
 * `power_value` - Radio EIRP power in dBm (1 - 33, default = 27).
+* `override_vap_status` - Enable to override WTP profile Virtual Access Point (VAP) enable/disable settings. Valid values: `enable`, `disable`.
+* `vap_status` - Enable/disable all configured SSIDs on this radio (default = enable). Valid values: `enable`, `disable`.
 * `override_vaps` - Enable to override WTP profile Virtual Access Point (VAP) settings. Valid values: `enable`, `disable`.
+* `override_cca_threshold` - Enable to override WTP profile CCA threshold enable/disable settings. Valid values: `enable`, `disable`.
+* `cca_threshold` - Configure Clear Channel Assessment (CCA) threshold in dBm (-94 to -11, default = 0, 0 for unconfigured).
 * `vap_all` -  On FortiOS versions 6.2.4-6.4.0: Enable/disable the automatic inheritance of all Virtual Access Points (VAPs) (default = enable). On FortiOS versions >= 6.4.1: Configure method for assigning SSIDs to this FortiAP (default = automatically assign tunnel SSIDs).
 * `vaps` - Manually selected list of Virtual Access Points (VAPs). The structure of `vaps` block is documented below.
 * `override_channel` - Enable to override WTP profile channel settings. Valid values: `enable`, `disable`.

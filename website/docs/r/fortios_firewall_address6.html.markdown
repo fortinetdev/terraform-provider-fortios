@@ -33,6 +33,7 @@ The following arguments are supported:
 * `name` - Address name.
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `type` - Type of IPv6 address object (default = ipprefix).
+* `sub_type` - Sub-type of address. Valid values: `sdn`, `ems-tag`, `8021x`.
 * `route_tag` - route-tag address.
 * `macaddr` - Multiple MAC address ranges. The structure of `macaddr` block is documented below.
 * `start_mac` - First MAC address in the range.
@@ -45,6 +46,8 @@ The following arguments are supported:
 * `fqdn` - Fully qualified domain name.
 * `country` - IPv6 addresses associated to a specific country.
 * `cache_ttl` - Minimal TTL of individual IPv6 addresses in FQDN cache.
+* `display_with` - Display object with first tag, all tags, or just the icon. Valid values: `all-tags`, `first-tag-only`, `icon-and-color`.
+* `custom_tags` - Custom tags. The structure of `custom_tags` block is documented below.
 * `visibility` - Enable/disable the visibility of the object in the GUI. Valid values: `enable`, `disable`.
 * `color` - Integer value to determine the color of the icon in the GUI (range 1 to 32, default = 0, which sets the value to 1).
 * `obj_id` - Object ID for NSX.
@@ -60,8 +63,13 @@ The following arguments are supported:
 * `sdn_tag` - SDN Tag.
 * `filter` - Match criteria filter.
 * `sdn_addr_type` - Type of addresses to collect. Valid values: `private`, `public`, `all`.
+* `obj_tag` - Tag of dynamic address object.
+* `tag_detection_level` - Tag detection level of dynamic address object.
+* `tag_type` - Tag type of dynamic address object.
 * `passive_fqdn_learning` - Enable/disable passive learning of FQDNs.  When enabled, the FortiGate learns, trusts, and saves FQDNs from endpoint DNS queries (default = enable). Valid values: `disable`, `enable`.
 * `fabric_object` - Security Fabric global object setting. Valid values: `enable`, `disable`.
+* `fabric_force_sync` - Enable/disable forced synchronization of configuration objects from the root FortiGate unit to the downstream devices.  Configuration conflict check is skipped. Valid values: `enable`, `disable`.
+* `fabric_object_source` - Source of truth for fabric object. Valid values: `member`, `local`, `root`.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
 * `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
@@ -70,6 +78,10 @@ The following arguments are supported:
 The `macaddr` block supports:
 
 * `macaddr` - MAC address ranges <start>[-<end>] separated by space.
+
+The `custom_tags` block supports:
+
+* `name` - Names of custom tags used with this address.
 
 The `list` block supports:
 
@@ -96,6 +108,16 @@ The `subnet_segment` block supports:
 
 In addition to all the above arguments, the following attributes are exported:
 * `id` - an identifier for the resource with format {{name}}.
+* `addr_8021x` - 802.1X address. The structure of `addr_8021x` block is documented below.
+* `obsolete` - Indicates whether the address can be used.
+
+The `addr_8021x` block contains following attibutes:
+
+* `interface` - Interface name.
+* `mac` - MAC address.
+* `acct_user` - Account user name.
+* `ip6` - IPv6 address.
+* `vlan_id` - VLAN ID.
 
 ## Import
 

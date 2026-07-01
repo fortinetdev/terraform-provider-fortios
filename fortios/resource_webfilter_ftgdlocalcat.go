@@ -52,6 +52,10 @@ func resourceWebfilterFtgdLocalCat() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"urlfilter_table": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+			},
 			"desc": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
@@ -243,6 +247,10 @@ func flattenWebfilterFtgdLocalCatId(v interface{}, d *schema.ResourceData, pre s
 	return convintf2i(v)
 }
 
+func flattenWebfilterFtgdLocalCatUrlfilterTable(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return convintf2i(v)
+}
+
 func flattenWebfilterFtgdLocalCatDesc(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -259,6 +267,12 @@ func refreshObjectWebfilterFtgdLocalCat(d *schema.ResourceData, o map[string]int
 	if err = d.Set("fosid", flattenWebfilterFtgdLocalCatId(o["id"], d, "fosid", sv)); err != nil {
 		if !fortiAPIPatch(o["id"]) {
 			return fmt.Errorf("Error reading fosid: %v", err)
+		}
+	}
+
+	if err = d.Set("urlfilter_table", flattenWebfilterFtgdLocalCatUrlfilterTable(o["urlfilter-table"], d, "urlfilter_table", sv)); err != nil {
+		if !fortiAPIPatch(o["urlfilter-table"]) {
+			return fmt.Errorf("Error reading urlfilter_table: %v", err)
 		}
 	}
 
@@ -285,6 +299,10 @@ func expandWebfilterFtgdLocalCatId(d *schema.ResourceData, v interface{}, pre st
 	return v, nil
 }
 
+func expandWebfilterFtgdLocalCatUrlfilterTable(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandWebfilterFtgdLocalCatDesc(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -308,6 +326,17 @@ func getObjectWebfilterFtgdLocalCat(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["id"] = t
 		}
+	}
+
+	if v, ok := d.GetOkExists("urlfilter_table"); ok {
+		t, err := expandWebfilterFtgdLocalCatUrlfilterTable(d, v, "urlfilter_table", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["urlfilter-table"] = t
+		}
+	} else if d.HasChange("urlfilter_table") {
+		obj["urlfilter-table"] = nil
 	}
 
 	if v, ok := d.GetOk("desc"); ok {

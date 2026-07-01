@@ -15,7 +15,6 @@ The following arguments are supported:
 
 * `name` - Status check or predefined health-check targets name.
 * `server` - Status check or predefined health-check domain name.
-* `obsolete` - Indicates whether Health Check service can be used.
 * `protocol` - Protocol name. Valid values: `ping`, `tcp-echo`, `udp-echo`, `http`, `https`, `twamp`, `dns`, `tcp-connect`, `ftp`.
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 * `update_if_exist` - Equivalent functionality of import the resource. If set to true, will check whether the resource exist, if so, will do the UPDATE operation rather CREATE. Default is false. If you want to inherit the value of the provider, please do not set this parameter.
@@ -25,6 +24,7 @@ The following arguments are supported:
 
 In addition to all the above arguments, the following attributes are exported:
 * `id` - an identifier for the resource with format {{name}}.
+* `obsolete` - Indicates whether Health Check service can be used.
 
 ## Import
 

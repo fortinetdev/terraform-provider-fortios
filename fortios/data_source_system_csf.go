@@ -121,6 +121,10 @@ func dataSourceSystemCsf() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"fabric_object_change_auto_cascade": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"fixed_key": &schema.Schema{
 				Type:      schema.TypeString,
 				Sensitive: true,
@@ -151,6 +155,10 @@ func dataSourceSystemCsf() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"role": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"ha_members": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
@@ -162,6 +170,66 @@ func dataSourceSystemCsf() *schema.Resource {
 						"index": &schema.Schema{
 							Type:     schema.TypeInt,
 							Computed: true,
+						},
+						"ca": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"ca_fingerprint": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"cn": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
+			"upload_shared_objects": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"autoclear_removed_shared_objects": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"shared_objects": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"trusted_list_entry": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"objects": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"pathname": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"keys": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+												"name": &schema.Schema{
+													Type:     schema.TypeString,
+													Computed: true,
+												},
+											},
+										},
+									},
+								},
+							},
 						},
 					},
 				},
@@ -213,6 +281,22 @@ func dataSourceSystemCsf() *schema.Resource {
 			"file_quota_warning": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
+			},
+			"fabric_datasource_exemption": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"status": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
 			},
 			"fabric_device": &schema.Schema{
 				Type:     schema.TypeList,
@@ -382,6 +466,10 @@ func dataSourceFlattenSystemCsfDownstreamAccprofile(v interface{}, d *schema.Res
 	return v
 }
 
+func dataSourceFlattenSystemCsfFabricObjectChangeAutoCascade(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemCsfFixedKey(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -430,6 +518,11 @@ func dataSourceFlattenSystemCsfTrustedList(v interface{}, d *schema.ResourceData
 			tmp["action"] = dataSourceFlattenSystemCsfTrustedListAction(i["action"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "role"
+		if _, ok := i["role"]; ok {
+			tmp["role"] = dataSourceFlattenSystemCsfTrustedListRole(i["role"], d, pre_append)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ha_members"
 		if _, ok := i["ha-members"]; ok {
 			tmp["ha_members"] = dataSourceFlattenSystemCsfTrustedListHaMembers(i["ha-members"], d, pre_append)
@@ -443,6 +536,21 @@ func dataSourceFlattenSystemCsfTrustedList(v interface{}, d *schema.ResourceData
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "index"
 		if _, ok := i["index"]; ok {
 			tmp["index"] = dataSourceFlattenSystemCsfTrustedListIndex(i["index"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "ca"
+		if _, ok := i["ca"]; ok {
+			tmp["ca"] = dataSourceFlattenSystemCsfTrustedListCa(i["ca"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "ca_fingerprint"
+		if _, ok := i["ca-fingerprint"]; ok {
+			tmp["ca_fingerprint"] = dataSourceFlattenSystemCsfTrustedListCaFingerprint(i["ca-fingerprint"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "cn"
+		if _, ok := i["cn"]; ok {
+			tmp["cn"] = dataSourceFlattenSystemCsfTrustedListCn(i["cn"], d, pre_append)
 		}
 
 		result = append(result, tmp)
@@ -473,6 +581,10 @@ func dataSourceFlattenSystemCsfTrustedListAction(v interface{}, d *schema.Resour
 	return v
 }
 
+func dataSourceFlattenSystemCsfTrustedListRole(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenSystemCsfTrustedListHaMembers(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -482,6 +594,153 @@ func dataSourceFlattenSystemCsfTrustedListDownstreamAuthorization(v interface{},
 }
 
 func dataSourceFlattenSystemCsfTrustedListIndex(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemCsfTrustedListCa(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemCsfTrustedListCaFingerprint(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemCsfTrustedListCn(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemCsfUploadSharedObjects(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemCsfAutoclearRemovedSharedObjects(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemCsfSharedObjects(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = dataSourceFlattenSystemCsfSharedObjectsName(i["name"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "trusted_list_entry"
+		if _, ok := i["trusted-list-entry"]; ok {
+			tmp["trusted_list_entry"] = dataSourceFlattenSystemCsfSharedObjectsTrustedListEntry(i["trusted-list-entry"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "objects"
+		if _, ok := i["objects"]; ok {
+			tmp["objects"] = dataSourceFlattenSystemCsfSharedObjectsObjects(i["objects"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenSystemCsfSharedObjectsName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemCsfSharedObjectsTrustedListEntry(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemCsfSharedObjectsObjects(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "pathname"
+		if _, ok := i["pathname"]; ok {
+			tmp["pathname"] = dataSourceFlattenSystemCsfSharedObjectsObjectsPathname(i["pathname"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "keys"
+		if _, ok := i["keys"]; ok {
+			tmp["keys"] = dataSourceFlattenSystemCsfSharedObjectsObjectsKeys(i["keys"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenSystemCsfSharedObjectsObjectsPathname(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemCsfSharedObjectsObjectsKeys(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = dataSourceFlattenSystemCsfSharedObjectsObjectsKeysName(i["name"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenSystemCsfSharedObjectsObjectsKeysName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -593,6 +852,51 @@ func dataSourceFlattenSystemCsfFileQuota(v interface{}, d *schema.ResourceData, 
 }
 
 func dataSourceFlattenSystemCsfFileQuotaWarning(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemCsfFabricDatasourceExemption(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = dataSourceFlattenSystemCsfFabricDatasourceExemptionName(i["name"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
+		if _, ok := i["status"]; ok {
+			tmp["status"] = dataSourceFlattenSystemCsfFabricDatasourceExemptionStatus(i["status"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenSystemCsfFabricDatasourceExemptionName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenSystemCsfFabricDatasourceExemptionStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -811,9 +1115,33 @@ func dataSourceRefreshObjectSystemCsf(d *schema.ResourceData, o map[string]inter
 		}
 	}
 
+	if err = d.Set("fabric_object_change_auto_cascade", dataSourceFlattenSystemCsfFabricObjectChangeAutoCascade(o["fabric-object-change-auto-cascade"], d, "fabric_object_change_auto_cascade")); err != nil {
+		if !fortiAPIPatch(o["fabric-object-change-auto-cascade"]) {
+			return fmt.Errorf("Error reading fabric_object_change_auto_cascade: %v", err)
+		}
+	}
+
 	if err = d.Set("trusted_list", dataSourceFlattenSystemCsfTrustedList(o["trusted-list"], d, "trusted_list")); err != nil {
 		if !fortiAPIPatch(o["trusted-list"]) {
 			return fmt.Errorf("Error reading trusted_list: %v", err)
+		}
+	}
+
+	if err = d.Set("upload_shared_objects", dataSourceFlattenSystemCsfUploadSharedObjects(o["upload-shared-objects"], d, "upload_shared_objects")); err != nil {
+		if !fortiAPIPatch(o["upload-shared-objects"]) {
+			return fmt.Errorf("Error reading upload_shared_objects: %v", err)
+		}
+	}
+
+	if err = d.Set("autoclear_removed_shared_objects", dataSourceFlattenSystemCsfAutoclearRemovedSharedObjects(o["autoclear-removed-shared-objects"], d, "autoclear_removed_shared_objects")); err != nil {
+		if !fortiAPIPatch(o["autoclear-removed-shared-objects"]) {
+			return fmt.Errorf("Error reading autoclear_removed_shared_objects: %v", err)
+		}
+	}
+
+	if err = d.Set("shared_objects", dataSourceFlattenSystemCsfSharedObjects(o["shared-objects"], d, "shared_objects")); err != nil {
+		if !fortiAPIPatch(o["shared-objects"]) {
+			return fmt.Errorf("Error reading shared_objects: %v", err)
 		}
 	}
 
@@ -844,6 +1172,12 @@ func dataSourceRefreshObjectSystemCsf(d *schema.ResourceData, o map[string]inter
 	if err = d.Set("file_quota_warning", dataSourceFlattenSystemCsfFileQuotaWarning(o["file-quota-warning"], d, "file_quota_warning")); err != nil {
 		if !fortiAPIPatch(o["file-quota-warning"]) {
 			return fmt.Errorf("Error reading file_quota_warning: %v", err)
+		}
+	}
+
+	if err = d.Set("fabric_datasource_exemption", dataSourceFlattenSystemCsfFabricDatasourceExemption(o["fabric-datasource-exemption"], d, "fabric_datasource_exemption")); err != nil {
+		if !fortiAPIPatch(o["fabric-datasource-exemption"]) {
+			return fmt.Errorf("Error reading fabric_datasource_exemption: %v", err)
 		}
 	}
 

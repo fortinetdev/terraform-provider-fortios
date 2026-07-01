@@ -17,19 +17,21 @@ The following arguments are supported:
 * `status` - Enable/disable scheduled speed test. Valid values: `disable`, `enable`.
 * `diffserv` - DSCP used for speed test.
 * `server_name` - Speed test server name.
+* `legacy_server_mode` - Legacy test server selection. Valid values: `disable`, `enable`.
 * `mode` - Protocol Auto(default), TCP or UDP used for speed test. Valid values: `UDP`, `TCP`, `Auto`.
 * `schedules` - Schedules for the interface. The structure of `schedules` block is documented below.
 * `dynamic_server` - Enable/disable dynamic server option. Valid values: `disable`, `enable`.
 * `ctrl_port` - Port of the controller to get access token.
 * `server_port` - Port of the server to run speed test.
+* `update_bandwidth_limit_unit` - Set the update bandwidth limits by values in kbps or percentages of interface's bandwidth. Valid values: `value`, `percentage`.
 * `update_shaper` - Set egress shaper based on the test result. Valid values: `disable`, `local`, `remote`, `both`.
 * `update_inbandwidth` - Enable/disable bypassing interface's inbound bandwidth setting. Valid values: `disable`, `enable`.
 * `update_outbandwidth` - Enable/disable bypassing interface's outbound bandwidth setting. Valid values: `disable`, `enable`.
 * `update_interface_shaping` - Enable/disable using the speedtest results as reference for interface shaping (overriding configured in/outbandwidth). Valid values: `disable`, `enable`.
-* `update_inbandwidth_maximum` - Maximum downloading bandwidth (kbps) to be used in a speed test.
-* `update_inbandwidth_minimum` - Minimum downloading bandwidth (kbps) to be considered effective.
-* `update_outbandwidth_maximum` - Maximum uploading bandwidth (kbps) to be used in a speed test.
-* `update_outbandwidth_minimum` - Minimum uploading bandwidth (kbps) to be considered effective.
+* `update_inbandwidth_maximum` - Maximum downloading bandwidth (kbps) to be used in a speed test. On FortiOS versions >= 8.0.0: also support percentage of the interface's inbandwidth.
+* `update_inbandwidth_minimum` - Minimum downloading bandwidth (kbps) to be considered effective. On FortiOS versions >= 8.0.0: also support percentage of the interface's inbandwidth.
+* `update_outbandwidth_maximum` - Maximum uploading bandwidth (kbps) to be used in a speed test. On FortiOS versions >= 8.0.0: also support percentage of the interface's inbandwidth.
+* `update_outbandwidth_minimum` - Minimum uploading bandwidth (kbps) to be considered effective. On FortiOS versions >= 8.0.0: also support percentage of the interface's inbandwidth.
 * `expected_inbandwidth_minimum` - Set the minimum inbandwidth threshold for applying speedtest results on shaping-profile.
 * `expected_inbandwidth_maximum` - Set the maximum inbandwidth threshold for applying speedtest results on shaping-profile.
 * `expected_outbandwidth_minimum` - Set the minimum outbandwidth threshold for applying speedtest results on shaping-profile.

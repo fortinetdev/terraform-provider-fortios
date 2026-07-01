@@ -161,6 +161,11 @@ func resourceWirelessControllerGlobal() *schema.Resource {
 				ValidateFunc: validation.IntBetween(0, 65535),
 				Optional:     true,
 			},
+			"max_vap_per_radio": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"max_sta_offline": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
@@ -420,6 +425,10 @@ func flattenWirelessControllerGlobalApLogServerPort(v interface{}, d *schema.Res
 	return convintf2i(v)
 }
 
+func flattenWirelessControllerGlobalMaxVapPerRadio(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenWirelessControllerGlobalMaxStaOffline(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return convintf2i(v)
 }
@@ -607,6 +616,12 @@ func refreshObjectWirelessControllerGlobal(d *schema.ResourceData, o map[string]
 		}
 	}
 
+	if err = d.Set("max_vap_per_radio", flattenWirelessControllerGlobalMaxVapPerRadio(o["max-vap-per-radio"], d, "max_vap_per_radio", sv)); err != nil {
+		if !fortiAPIPatch(o["max-vap-per-radio"]) {
+			return fmt.Errorf("Error reading max_vap_per_radio: %v", err)
+		}
+	}
+
 	if err = d.Set("max_sta_offline", flattenWirelessControllerGlobalMaxStaOffline(o["max-sta-offline"], d, "max_sta_offline", sv)); err != nil {
 		if !fortiAPIPatch(o["max-sta-offline"]) {
 			return fmt.Errorf("Error reading max_sta_offline: %v", err)
@@ -769,6 +784,10 @@ func expandWirelessControllerGlobalApLogServerIp(d *schema.ResourceData, v inter
 }
 
 func expandWirelessControllerGlobalApLogServerPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerGlobalMaxVapPerRadio(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1137,6 +1156,19 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData, setArgNil bool, s
 		}
 	} else if d.HasChange("ap_log_server_port") {
 		obj["ap-log-server-port"] = nil
+	}
+
+	if v, ok := d.GetOk("max_vap_per_radio"); ok {
+		if setArgNil {
+			obj["max-vap-per-radio"] = nil
+		} else {
+			t, err := expandWirelessControllerGlobalMaxVapPerRadio(d, v, "max_vap_per_radio", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["max-vap-per-radio"] = t
+			}
+		}
 	}
 
 	if v, ok := d.GetOkExists("max_sta_offline"); ok {

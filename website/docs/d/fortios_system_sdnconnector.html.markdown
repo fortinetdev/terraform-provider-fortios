@@ -20,6 +20,10 @@ Use this data source to get information on an fortios system sdnconnector
 The following attributes are exported:
 
 * `name` - SDN connector name.
+* `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
+* `fabric_object` - Security Fabric global object setting.
+* `fabric_force_sync` - Enable/disable forced synchronization of configuration objects from the root FortiGate unit to the downstream devices.  Configuration conflict check is skipped.
+* `fabric_object_source` - Source of truth for fabric object.
 * `status` - Enable/disable connection to the remote SDN connector.
 * `type` - Type of SDN connector.
 * `proxy` - SDN proxy.
@@ -41,6 +45,7 @@ The following attributes are exported:
 * `vpc_id` - AWS VPC ID.
 * `alt_resource_ip` - Enable/disable AWS alternative resource IP.
 * `external_account_list` - Configure AWS external account list. The structure of `external_account_list` block is documented below.
+* `k8s_allow_list` - Allow list for the kubernetes cluster The structure of `k8s_allow_list` block is documented below.
 * `tenant_id` - Tenant ID (directory ID).
 * `subscription_id` - Azure subscription ID.
 * `login_endpoint` - Azure Stack login endpoint.
@@ -95,6 +100,10 @@ The `external_account_list` block contains:
 The `region_list` block contains:
 
 * `region` - AWS region name.
+
+The `k8s_allow_list` block contains:
+
+* `name` - Kubernetes cluster name.
 
 The `nic` block contains:
 

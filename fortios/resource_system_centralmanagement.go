@@ -166,6 +166,11 @@ func resourceSystemCentralManagement() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"use_default_servers_as_main": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"enc_algorithm": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -503,6 +508,10 @@ func flattenSystemCentralManagementIncludeDefaultServers(v interface{}, d *schem
 	return v
 }
 
+func flattenSystemCentralManagementUseDefaultServersAsMain(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenSystemCentralManagementEncAlgorithm(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -655,6 +664,12 @@ func refreshObjectSystemCentralManagement(d *schema.ResourceData, o map[string]i
 	if err = d.Set("include_default_servers", flattenSystemCentralManagementIncludeDefaultServers(o["include-default-servers"], d, "include_default_servers", sv)); err != nil {
 		if !fortiAPIPatch(o["include-default-servers"]) {
 			return fmt.Errorf("Error reading include_default_servers: %v", err)
+		}
+	}
+
+	if err = d.Set("use_default_servers_as_main", flattenSystemCentralManagementUseDefaultServersAsMain(o["use-default-servers-as-main"], d, "use_default_servers_as_main", sv)); err != nil {
+		if !fortiAPIPatch(o["use-default-servers-as-main"]) {
+			return fmt.Errorf("Error reading use_default_servers_as_main: %v", err)
 		}
 	}
 
@@ -844,6 +859,10 @@ func expandSystemCentralManagementFmgUpdateHttpHeader(d *schema.ResourceData, v 
 }
 
 func expandSystemCentralManagementIncludeDefaultServers(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemCentralManagementUseDefaultServersAsMain(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1132,6 +1151,19 @@ func getObjectSystemCentralManagement(d *schema.ResourceData, setArgNil bool, sv
 				return &obj, err
 			} else if t != nil {
 				obj["include-default-servers"] = t
+			}
+		}
+	}
+
+	if v, ok := d.GetOk("use_default_servers_as_main"); ok {
+		if setArgNil {
+			obj["use-default-servers-as-main"] = nil
+		} else {
+			t, err := expandSystemCentralManagementUseDefaultServersAsMain(d, v, "use_default_servers_as_main", sv)
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["use-default-servers-as-main"] = t
 			}
 		}
 	}

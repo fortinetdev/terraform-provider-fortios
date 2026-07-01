@@ -93,6 +93,9 @@ The following arguments are supported:
 * `policyid` - Policy ID.
 * `name` - Policy name.
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
+* `fabric_object` - Security Fabric global object setting. Valid values: `enable`, `disable`.
+* `fabric_force_sync` - Enable/disable forced synchronization of configuration objects from the root FortiGate unit to the downstream devices.  Configuration conflict check is skipped. Valid values: `enable`, `disable`.
+* `fabric_object_source` - Source of truth for fabric object. Valid values: `member`, `local`, `root`.
 * `srcintf` - (Required) Incoming (ingress) interface. The structure of `srcintf` block is documented below.
 * `dstintf` - (Required) Outgoing (egress) interface. The structure of `dstintf` block is documented below.
 * `srcaddr` - Source address and address group names. The structure of `srcaddr` block is documented below.
@@ -101,10 +104,13 @@ The following arguments are supported:
 * `dstaddr6` - Destination IPv6 address name and address group names. The structure of `dstaddr6` block is documented below.
 * `ztna_status` - Enable/disable zero trust access. Valid values: `enable`, `disable`.
 * `ztna_device_ownership` - Enable/disable zero trust device ownership. Valid values: `enable`, `disable`.
+* `custom_tags` - Custom tags. The structure of `custom_tags` block is documented below.
 * `ztna_ems_tag` - Source ztna-ems-tag names. The structure of `ztna_ems_tag` block is documented below.
 * `ztna_ems_tag_secondary` - Source ztna-ems-tag-secondary names. The structure of `ztna_ems_tag_secondary` block is documented below.
+* `ztna_ems_tag6` - Source ZTNA FortiClient EMS tag IPv6 names. The structure of `ztna_ems_tag6` block is documented below.
 * `ztna_tags_match_logic` - ZTNA tag matching logic. Valid values: `or`, `and`.
 * `ztna_geo_tag` - Source ztna-geo-tag names. The structure of `ztna_geo_tag` block is documented below.
+* `ztna_destination` - Configure ZTNA destinations. Must be used with ZTNA traffic-forward-proxy. The structure of `ztna_destination` block is documented below.
 * `internet_service` - Enable/disable use of Internet Services for this policy. If enabled, destination address and service are not used.  Valid values: `enable`, `disable`.
 * `internet_service_name` - Internet Service name. The structure of `internet_service_name` block is documented below.
 * `internet_service_id` - Internet Service ID. The structure of `internet_service_id` block is documented below.
@@ -188,6 +194,8 @@ The following arguments are supported:
 * `waf_profile` - Name of an existing Web application firewall profile.
 * `ssh_filter_profile` - Name of an existing SSH filter profile.
 * `casb_profile` - Name of an existing CASB profile.
+* `telemetry_profile` - Name of an existing telemetry profile.
+* `llm_profile` - Name of an existing LLM profile.
 * `profile_protocol_options` - Name of an existing Protocol options profile.
 * `ssl_ssh_profile` - Name of an existing SSL SSH profile.
 * `logtraffic` - Enable or disable logging. Log all sessions or security profile sessions. Valid values: `all`, `utm`, `disable`.
@@ -255,6 +263,7 @@ The following arguments are supported:
 * `match_vip` - Enable to match packets that have had their destination addresses changed by a VIP. Valid values: `enable`, `disable`.
 * `match_vip_only` - Enable/disable matching of only those packets that have had their destination addresses changed by a VIP. Valid values: `enable`, `disable`.
 * `diffserv_copy` - Enable to copy packet's DiffServ values from session's original direction to its reply direction. Valid values: `enable`, `disable`.
+* `skip_vrf_match` - Enable/disable skipping VRF matching on reply direction. Valid values: `enable`, `disable`.
 * `diffserv_forward` - Enable to change packet's DiffServ values to the specified diffservcode-forward value. Valid values: `enable`, `disable`.
 * `diffserv_reverse` - Enable to change packet's reverse (reply) DiffServ values to the specified diffservcode-rev value. Valid values: `enable`, `disable`.
 * `diffservcode_forward` - Change packet's DiffServ to this value.
@@ -298,6 +307,7 @@ The following arguments are supported:
 * `internet_service_src_fortiguard` - FortiGuard Internet Service source name. The structure of `internet_service_src_fortiguard` block is documented below.
 * `internet_service6_fortiguard` - FortiGuard IPv6 Internet Service name. The structure of `internet_service6_fortiguard` block is documented below.
 * `internet_service6_src_fortiguard` - FortiGuard IPv6 Internet Service source name. The structure of `internet_service6_src_fortiguard` block is documented below.
+* `fabric_policy` - Fabric policy related attributes. The structure of `fabric_policy` block is documented below.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
 * `get_all_tables` - Get all sub-tables including unconfigured tables. Do not set this variable to true if you configure sub-table in another resource, otherwise, conflicts and overwrite will occur. Options: [ false, true ]. false: Default value, do not get unconfigured tables; true: get all tables including unconfigured tables. 
 * `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
@@ -327,6 +337,10 @@ The `dstaddr6` block supports:
 
 * `name` - Address name.
 
+The `custom_tags` block supports:
+
+* `name` - Names of custom tags used with this policy.
+
 The `ztna_ems_tag` block supports:
 
 * `name` - Address name.
@@ -335,9 +349,17 @@ The `ztna_ems_tag_secondary` block supports:
 
 * `name` - Address name.
 
+The `ztna_ems_tag6` block supports:
+
+* `name` - Address name.
+
 The `ztna_geo_tag` block supports:
 
 * `name` - Address name.
+
+The `ztna_destination` block supports:
+
+* `name` - ZTNA destination name.
 
 The `internet_service_name` block supports:
 
@@ -514,6 +536,11 @@ The `internet_service6_fortiguard` block supports:
 The `internet_service6_src_fortiguard` block supports:
 
 * `name` - FortiGuard Internet Service name.
+
+The `fabric_policy` block supports:
+
+* `from` - From device.
+* `to` - To device.
 
 
 ## Attribute Reference

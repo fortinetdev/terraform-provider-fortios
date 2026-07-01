@@ -128,7 +128,38 @@ func resourceSystemIpam() *schema.Resource {
 							ValidateFunc: validation.StringLenBetween(0, 127),
 							Optional:     true,
 						},
+						"item_type": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"item_name": &schema.Schema{
+							Type:     schema.TypeSet,
+							Optional: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"name": &schema.Schema{
+										Type:         schema.TypeString,
+										ValidateFunc: validation.StringLenBetween(0, 79),
+										Optional:     true,
+									},
+								},
+							},
+						},
 						"device": &schema.Schema{
+							Type:     schema.TypeSet,
+							Optional: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"name": &schema.Schema{
+										Type:         schema.TypeString,
+										ValidateFunc: validation.StringLenBetween(0, 79),
+										Optional:     true,
+									},
+								},
+							},
+						},
+						"vdom": &schema.Schema{
 							Type:     schema.TypeSet,
 							Optional: true,
 							Elem: &schema.Resource{
@@ -176,6 +207,11 @@ func resourceSystemIpam() *schema.Resource {
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
+						},
+						"dhcp_template": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
 						},
 					},
 				},
@@ -554,12 +590,36 @@ func flattenSystemIpamRules(v interface{}, d *schema.ResourceData, pre string, s
 			tmp["description"] = flattenSystemIpamRulesDescription(cur_v, d, pre_append, sv)
 		}
 
+		if cur_v, ok := i["item-type"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "item_type"
+			}
+			tmp["item_type"] = flattenSystemIpamRulesItemType(cur_v, d, pre_append, sv)
+		}
+
+		if cur_v, ok := i["item-name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "item_name"
+			}
+			tmp["item_name"] = flattenSystemIpamRulesItemName(cur_v, d, pre_append, sv)
+		}
+
 		if cur_v, ok := i["device"]; ok {
 			pre_append := ""
 			if tf_exist {
 				pre_append = pre + "." + strconv.Itoa(con) + "." + "device"
 			}
 			tmp["device"] = flattenSystemIpamRulesDevice(cur_v, d, pre_append, sv)
+		}
+
+		if cur_v, ok := i["vdom"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "vdom"
+			}
+			tmp["vdom"] = flattenSystemIpamRulesVdom(cur_v, d, pre_append, sv)
 		}
 
 		if cur_v, ok := i["interface"]; ok {
@@ -594,6 +654,14 @@ func flattenSystemIpamRules(v interface{}, d *schema.ResourceData, pre string, s
 			tmp["dhcp"] = flattenSystemIpamRulesDhcp(cur_v, d, pre_append, sv)
 		}
 
+		if cur_v, ok := i["dhcp-template"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "dhcp_template"
+			}
+			tmp["dhcp_template"] = flattenSystemIpamRulesDhcpTemplate(cur_v, d, pre_append, sv)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -608,6 +676,63 @@ func flattenSystemIpamRulesName(v interface{}, d *schema.ResourceData, pre strin
 }
 
 func flattenSystemIpamRulesDescription(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemIpamRulesItemType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemIpamRulesItemName(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
+	con := 0
+	for _, r := range parsed_list {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
+
+		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
+			tmp["name"] = flattenSystemIpamRulesItemNameName(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenSystemIpamRulesItemNameName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -661,6 +786,59 @@ func flattenSystemIpamRulesDevice(v interface{}, d *schema.ResourceData, pre str
 }
 
 func flattenSystemIpamRulesDeviceName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemIpamRulesVdom(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	if _, ok := v.([]interface{}); !ok {
+		log.Printf("[DEBUG] Argument %v is not type of []interface{}.", pre)
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	tf_list := []interface{}{}
+	if tf_v, ok := d.GetOk(pre); ok {
+		if tf_list, ok = tf_v.([]interface{}); !ok {
+			log.Printf("[DEBUG] Argument %v could not convert to []interface{}.", pre)
+		}
+	}
+
+	parsed_list := mergeBlock(tf_list, l, "name", "name")
+
+	con := 0
+	for _, r := range parsed_list {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		tf_exist := i["tf_exist"].(bool)
+
+		if cur_v, ok := i["name"]; ok {
+			pre_append := ""
+			if tf_exist {
+				pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+			}
+			tmp["name"] = flattenSystemIpamRulesVdomName(cur_v, d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenSystemIpamRulesVdomName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -775,6 +953,10 @@ func flattenSystemIpamRulesPoolName(v interface{}, d *schema.ResourceData, pre s
 }
 
 func flattenSystemIpamRulesDhcp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemIpamRulesDhcpTemplate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -1045,11 +1227,30 @@ func expandSystemIpamRules(d *schema.ResourceData, v interface{}, pre string, sv
 			tmp["description"] = nil
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "item_type"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["item-type"], _ = expandSystemIpamRulesItemType(d, i["item_type"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "item_name"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["item-name"], _ = expandSystemIpamRulesItemName(d, i["item_name"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["item-name"] = make([]string, 0)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "device"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["device"], _ = expandSystemIpamRulesDevice(d, i["device"], pre_append, sv)
 		} else if d.HasChange(pre_append) {
 			tmp["device"] = make([]string, 0)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vdom"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["vdom"], _ = expandSystemIpamRulesVdom(d, i["vdom"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["vdom"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
@@ -1076,6 +1277,13 @@ func expandSystemIpamRules(d *schema.ResourceData, v interface{}, pre string, sv
 			tmp["dhcp"], _ = expandSystemIpamRulesDhcp(d, i["dhcp"], pre_append, sv)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "dhcp_template"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["dhcp-template"], _ = expandSystemIpamRulesDhcpTemplate(d, i["dhcp_template"], pre_append, sv)
+		} else if d.HasChange(pre_append) {
+			tmp["dhcp-template"] = nil
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -1089,6 +1297,38 @@ func expandSystemIpamRulesName(d *schema.ResourceData, v interface{}, pre string
 }
 
 func expandSystemIpamRulesDescription(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemIpamRulesItemType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemIpamRulesItemName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.(*schema.Set).List()
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		tmp["name"], _ = expandSystemIpamRulesItemNameName(d, i["name"], pre_append, sv)
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemIpamRulesItemNameName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1117,6 +1357,34 @@ func expandSystemIpamRulesDevice(d *schema.ResourceData, v interface{}, pre stri
 }
 
 func expandSystemIpamRulesDeviceName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemIpamRulesVdom(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.(*schema.Set).List()
+	result := make([]map[string]interface{}, 0, len(l))
+
+	if len(l) == 0 || l[0] == nil {
+		return result, nil
+	}
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		tmp["name"], _ = expandSystemIpamRulesVdomName(d, i["name"], pre_append, sv)
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemIpamRulesVdomName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -1181,6 +1449,10 @@ func expandSystemIpamRulesPoolName(d *schema.ResourceData, v interface{}, pre st
 }
 
 func expandSystemIpamRulesDhcp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemIpamRulesDhcpTemplate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 

@@ -14,6 +14,10 @@ Configure an ICAP server group consisting of multiple forward servers. Supports 
 The following arguments are supported:
 
 * `name` - Configure an ICAP server group consisting one or multiple forward servers. Supports failover and load balancing.
+* `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
+* `fabric_object` - Security Fabric global object setting. Valid values: `enable`, `disable`.
+* `fabric_force_sync` - Enable/disable forced synchronization of configuration objects from the root FortiGate unit to the downstream devices.  Configuration conflict check is skipped. Valid values: `enable`, `disable`.
+* `fabric_object_source` - Source of truth for fabric object. Valid values: `member`, `local`, `root`.
 * `ldb_method` - Load balance method. Valid values: `weighted`, `least-session`, `active-passive`.
 * `server_list` - Add ICAP servers to a list to form a server group. Optionally assign weights to each server. The structure of `server_list` block is documented below.
 * `dynamic_sort_subtable` - Sort sub-tables, please do not set this parameter when configuring static sub-tables. Options: [ false, true, natural, alphabetical ]. false: Default value, do not sort tables; true/natural: sort tables in natural order. For example: [ a10, a2 ] --> [ a2, a10 ]; alphabetical: sort tables in alphabetical order. For example: [ a10, a2 ] --> [ a10, a2 ].
