@@ -17,7 +17,7 @@ data "fortios_system_interfacelist" sample1 {
 }
 
 output output1 {
-  value = data.fortios_system_interfacelist.sample2.namelist
+  value = data.fortios_system_interfacelist.sample1.namelist
 }
 ```
 
