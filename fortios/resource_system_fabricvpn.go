@@ -85,6 +85,7 @@ func resourceSystemFabricVpn() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
+							Computed:     true,
 						},
 						"remote_gw": &schema.Schema{
 							Type:     schema.TypeString,
@@ -179,6 +180,7 @@ func resourceSystemFabricVpn() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
+				Computed:     true,
 			},
 			"loopback_interface": &schema.Schema{
 				Type:         schema.TypeString,
@@ -923,8 +925,6 @@ func expandSystemFabricVpnOverlays(d *schema.ResourceData, v interface{}, pre st
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "overlay_tunnel_block_ipam"
 		if _, ok := d.GetOk(pre_append); ok {
 			tmp["overlay-tunnel-block-ipam"], _ = expandSystemFabricVpnOverlaysOverlayTunnelBlockIpam(d, i["overlay_tunnel_block_ipam"], pre_append, sv)
-		} else if d.HasChange(pre_append) {
-			tmp["overlay-tunnel-block-ipam"] = nil
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "remote_gw"
@@ -1297,8 +1297,6 @@ func getObjectSystemFabricVpn(d *schema.ResourceData, setArgNil bool, sv string)
 				obj["loopback-address-block-ipam"] = t
 			}
 		}
-	} else if d.HasChange("loopback_address_block_ipam") {
-		obj["loopback-address-block-ipam"] = nil
 	}
 
 	if v, ok := d.GetOk("loopback_interface"); ok {

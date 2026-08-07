@@ -140,6 +140,7 @@ func resourceFirewallServiceCustom() *schema.Resource {
 			"session_ttl": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Computed: true,
 			},
 			"check_reset_range": &schema.Schema{
 				Type:     schema.TypeString,
@@ -1229,8 +1230,6 @@ func getObjectFirewallServiceCustom(d *schema.ResourceData, sv string) (*map[str
 		} else if t != nil {
 			obj["session-ttl"] = t
 		}
-	} else if d.HasChange("session_ttl") {
-		obj["session-ttl"] = nil
 	}
 
 	if v, ok := d.GetOk("check_reset_range"); ok {

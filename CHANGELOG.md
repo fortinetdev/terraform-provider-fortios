@@ -1,5 +1,16 @@
-## 1.26.0 (Unreleased)
+## 1.27.0 (Unreleased)
 
+
+## 1.26.0 (Aug 07, 2026)
+BUG FIXES:
+
+* Fix order issue of resource system_interface;
+* Fix issue of raising error when set update_if_exist to true and the entry not exist;
+* Add resource system_virtualswitch_port_assignment to manage port assignment for virtual switches;
+
+FEATURES:
+
+* **New Resource:** `fortios_system_virtualswitch_port_assignment`
 
 ## 1.25.0 (July 01, 2026)
 BUG FIXES:

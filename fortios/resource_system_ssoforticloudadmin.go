@@ -85,6 +85,7 @@ func resourceSystemSsoForticloudAdmin() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
+				Computed:     true,
 			},
 			"openai_project_id": &schema.Schema{
 				Type:         schema.TypeString,
@@ -643,8 +644,6 @@ func getObjectSystemSsoForticloudAdmin(d *schema.ResourceData, sv string) (*map[
 		} else if t != nil {
 			obj["openai-api-key-part2"] = t
 		}
-	} else if d.HasChange("openai_api_key_part2") {
-		obj["openai-api-key-part2"] = nil
 	}
 
 	if v, ok := d.GetOk("openai_model"); ok {
@@ -654,8 +653,6 @@ func getObjectSystemSsoForticloudAdmin(d *schema.ResourceData, sv string) (*map[
 		} else if t != nil {
 			obj["openai-model"] = t
 		}
-	} else if d.HasChange("openai_model") {
-		obj["openai-model"] = nil
 	}
 
 	if v, ok := d.GetOk("openai_project_id"); ok {

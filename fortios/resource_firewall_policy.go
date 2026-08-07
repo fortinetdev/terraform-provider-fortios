@@ -1080,6 +1080,7 @@ func resourceFirewallPolicy() *schema.Resource {
 			"session_ttl": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Computed: true,
 			},
 			"vlan_cos_fwd": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -10919,8 +10920,6 @@ func getObjectFirewallPolicy(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["session-ttl"] = t
 		}
-	} else if d.HasChange("session_ttl") {
-		obj["session-ttl"] = nil
 	}
 
 	if v, ok := d.GetOkExists("vlan_cos_fwd"); ok {

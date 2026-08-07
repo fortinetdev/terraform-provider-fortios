@@ -643,8 +643,6 @@ func getObjectSystemSsoFortigateCloudAdmin(d *schema.ResourceData, sv string) (*
 		} else if t != nil {
 			obj["openai-api-key-part2"] = t
 		}
-	} else if d.HasChange("openai_api_key_part2") {
-		obj["openai-api-key-part2"] = nil
 	}
 
 	if v, ok := d.GetOk("openai_model"); ok {

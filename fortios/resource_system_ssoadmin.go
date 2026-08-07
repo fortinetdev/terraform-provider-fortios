@@ -662,8 +662,6 @@ func getObjectSystemSsoAdmin(d *schema.ResourceData, sv string) (*map[string]int
 		} else if t != nil {
 			obj["openai-api-key-part2"] = t
 		}
-	} else if d.HasChange("openai_api_key_part2") {
-		obj["openai-api-key-part2"] = nil
 	}
 
 	if v, ok := d.GetOk("openai_model"); ok {

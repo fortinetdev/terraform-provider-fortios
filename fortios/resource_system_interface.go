@@ -212,6 +212,9 @@ func resourceSystemInterface() *schema.Resource {
 			"allowaccess": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				DiffSuppressFunc: func(k, old, new string, d *schema.ResourceData) bool {
+					return equalStringOfList(old, new)
+				},
 			},
 			"gwdetect": &schema.Schema{
 				Type:     schema.TypeString,
@@ -1242,6 +1245,9 @@ func resourceSystemInterface() *schema.Resource {
 						"allowaccess": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							DiffSuppressFunc: func(k, old, new string, d *schema.ResourceData) bool {
+								return equalStringOfList(old, new)
+							},
 						},
 						"gwdetect": &schema.Schema{
 							Type:     schema.TypeString,
@@ -1706,6 +1712,9 @@ func resourceSystemInterface() *schema.Resource {
 						"ip6_allowaccess": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
+							DiffSuppressFunc: func(k, old, new string, d *schema.ResourceData) bool {
+								return equalStringOfList(old, new)
+							},
 						},
 						"ip6_send_adv": &schema.Schema{
 							Type:     schema.TypeString,
