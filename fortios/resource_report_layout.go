@@ -480,7 +480,9 @@ func resourceReportLayoutCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("ReportLayout")
 	}
 
-	return resourceReportLayoutRead(d, m)
+	return readBackAfterCreate(d, "ReportLayout", mkey,
+		func() (map[string]interface{}, error) { return c.ReadReportLayout(mkey, vdomparam) },
+		refreshObjectReportLayout, c.Fv)
 }
 
 func resourceReportLayoutUpdate(d *schema.ResourceData, m interface{}) error {

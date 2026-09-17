@@ -122,7 +122,9 @@ func resourceWirelessControllerSsidPolicyCreate(d *schema.ResourceData, m interf
 		d.SetId("WirelessControllerSsidPolicy")
 	}
 
-	return resourceWirelessControllerSsidPolicyRead(d, m)
+	return readBackAfterCreate(d, "WirelessControllerSsidPolicy", mkey,
+		func() (map[string]interface{}, error) { return c.ReadWirelessControllerSsidPolicy(mkey, vdomparam) },
+		refreshObjectWirelessControllerSsidPolicy, c.Fv)
 }
 
 func resourceWirelessControllerSsidPolicyUpdate(d *schema.ResourceData, m interface{}) error {

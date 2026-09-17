@@ -186,7 +186,9 @@ func resourceDiameterFilterProfileCreate(d *schema.ResourceData, m interface{}) 
 		d.SetId("DiameterFilterProfile")
 	}
 
-	return resourceDiameterFilterProfileRead(d, m)
+	return readBackAfterCreate(d, "DiameterFilterProfile", mkey,
+		func() (map[string]interface{}, error) { return c.ReadDiameterFilterProfile(mkey, vdomparam) },
+		refreshObjectDiameterFilterProfile, c.Fv)
 }
 
 func resourceDiameterFilterProfileUpdate(d *schema.ResourceData, m interface{}) error {

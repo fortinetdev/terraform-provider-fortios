@@ -170,7 +170,9 @@ func resourceFirewallTtlPolicyCreate(d *schema.ResourceData, m interface{}) erro
 		d.SetId("FirewallTtlPolicy")
 	}
 
-	return resourceFirewallTtlPolicyRead(d, m)
+	return readBackAfterCreate(d, "FirewallTtlPolicy", mkey,
+		func() (map[string]interface{}, error) { return c.ReadFirewallTtlPolicy(mkey, vdomparam) },
+		refreshObjectFirewallTtlPolicy, c.Fv)
 }
 
 func resourceFirewallTtlPolicyUpdate(d *schema.ResourceData, m interface{}) error {

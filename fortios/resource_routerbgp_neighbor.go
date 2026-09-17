@@ -1018,7 +1018,9 @@ func resourceRouterbgpNeighborCreate(d *schema.ResourceData, m interface{}) erro
 		d.SetId("RouterbgpNeighbor")
 	}
 
-	return resourceRouterbgpNeighborRead(d, m)
+	return readBackAfterCreate(d, "RouterbgpNeighbor", mkey,
+		func() (map[string]interface{}, error) { return c.ReadRouterbgpNeighbor(mkey, vdomparam) },
+		refreshObjectRouterbgpNeighbor, c.Fv)
 }
 
 func resourceRouterbgpNeighborUpdate(d *schema.ResourceData, m interface{}) error {

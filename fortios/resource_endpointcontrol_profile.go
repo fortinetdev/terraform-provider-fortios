@@ -633,7 +633,9 @@ func resourceEndpointControlProfileCreate(d *schema.ResourceData, m interface{})
 		d.SetId("EndpointControlProfile")
 	}
 
-	return resourceEndpointControlProfileRead(d, m)
+	return readBackAfterCreate(d, "EndpointControlProfile", mkey,
+		func() (map[string]interface{}, error) { return c.ReadEndpointControlProfile(mkey, vdomparam) },
+		refreshObjectEndpointControlProfile, c.Fv)
 }
 
 func resourceEndpointControlProfileUpdate(d *schema.ResourceData, m interface{}) error {

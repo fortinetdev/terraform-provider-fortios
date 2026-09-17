@@ -141,7 +141,9 @@ func resourceWebfilterSearchEngineCreate(d *schema.ResourceData, m interface{}) 
 		d.SetId("WebfilterSearchEngine")
 	}
 
-	return resourceWebfilterSearchEngineRead(d, m)
+	return readBackAfterCreate(d, "WebfilterSearchEngine", mkey,
+		func() (map[string]interface{}, error) { return c.ReadWebfilterSearchEngine(mkey, vdomparam) },
+		refreshObjectWebfilterSearchEngine, c.Fv)
 }
 
 func resourceWebfilterSearchEngineUpdate(d *schema.ResourceData, m interface{}) error {

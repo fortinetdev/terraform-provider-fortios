@@ -143,7 +143,9 @@ func resourceSystem3GModemCustomCreate(d *schema.ResourceData, m interface{}) er
 		d.SetId("System3GModemCustom")
 	}
 
-	return resourceSystem3GModemCustomRead(d, m)
+	return readBackAfterCreate(d, "System3GModemCustom", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSystem3GModemCustom(mkey, vdomparam) },
+		refreshObjectSystem3GModemCustom, c.Fv)
 }
 
 func resourceSystem3GModemCustomUpdate(d *schema.ResourceData, m interface{}) error {

@@ -151,7 +151,9 @@ func resourceFirewallSshHostKeyCreate(d *schema.ResourceData, m interface{}) err
 		d.SetId("FirewallSshHostKey")
 	}
 
-	return resourceFirewallSshHostKeyRead(d, m)
+	return readBackAfterCreate(d, "FirewallSshHostKey", mkey,
+		func() (map[string]interface{}, error) { return c.ReadFirewallSshHostKey(mkey, vdomparam) },
+		refreshObjectFirewallSshHostKey, c.Fv)
 }
 
 func resourceFirewallSshHostKeyUpdate(d *schema.ResourceData, m interface{}) error {

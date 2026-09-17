@@ -188,7 +188,9 @@ func resourceIcapServerCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("IcapServer")
 	}
 
-	return resourceIcapServerRead(d, m)
+	return readBackAfterCreate(d, "IcapServer", mkey,
+		func() (map[string]interface{}, error) { return c.ReadIcapServer(mkey, vdomparam) },
+		refreshObjectIcapServer, c.Fv)
 }
 
 func resourceIcapServerUpdate(d *schema.ResourceData, m interface{}) error {

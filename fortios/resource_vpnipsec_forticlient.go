@@ -127,7 +127,9 @@ func resourceVpnIpsecForticlientCreate(d *schema.ResourceData, m interface{}) er
 		d.SetId("VpnIpsecForticlient")
 	}
 
-	return resourceVpnIpsecForticlientRead(d, m)
+	return readBackAfterCreate(d, "VpnIpsecForticlient", mkey,
+		func() (map[string]interface{}, error) { return c.ReadVpnIpsecForticlient(mkey, vdomparam) },
+		refreshObjectVpnIpsecForticlient, c.Fv)
 }
 
 func resourceVpnIpsecForticlientUpdate(d *schema.ResourceData, m interface{}) error {

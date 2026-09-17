@@ -199,7 +199,9 @@ func resourceSystemApiUserCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("SystemApiUser")
 	}
 
-	return resourceSystemApiUserRead(d, m)
+	return readBackAfterCreate(d, "SystemApiUser", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSystemApiUser(mkey, vdomparam) },
+		refreshObjectSystemApiUser, c.Fv)
 }
 
 func resourceSystemApiUserUpdate(d *schema.ResourceData, m interface{}) error {

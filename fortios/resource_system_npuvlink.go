@@ -112,7 +112,9 @@ func resourceSystemNpuVlinkCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("SystemNpuVlink")
 	}
 
-	return resourceSystemNpuVlinkRead(d, m)
+	return readBackAfterCreate(d, "SystemNpuVlink", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSystemNpuVlink(mkey, vdomparam) },
+		refreshObjectSystemNpuVlink, c.Fv)
 }
 
 func resourceSystemNpuVlinkUpdate(d *schema.ResourceData, m interface{}) error {

@@ -184,7 +184,9 @@ func resourceEmailfilterIptrustCreate(d *schema.ResourceData, m interface{}) err
 		d.SetId("EmailfilterIptrust")
 	}
 
-	return resourceEmailfilterIptrustRead(d, m)
+	return readBackAfterCreate(d, "EmailfilterIptrust", mkey,
+		func() (map[string]interface{}, error) { return c.ReadEmailfilterIptrust(mkey, vdomparam) },
+		refreshObjectEmailfilterIptrust, c.Fv)
 }
 
 func resourceEmailfilterIptrustUpdate(d *schema.ResourceData, m interface{}) error {

@@ -208,7 +208,9 @@ func resourceSwitchControllerSnmpCommunityCreate(d *schema.ResourceData, m inter
 		d.SetId("SwitchControllerSnmpCommunity")
 	}
 
-	return resourceSwitchControllerSnmpCommunityRead(d, m)
+	return readBackAfterCreate(d, "SwitchControllerSnmpCommunity", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSwitchControllerSnmpCommunity(mkey, vdomparam) },
+		refreshObjectSwitchControllerSnmpCommunity, c.Fv)
 }
 
 func resourceSwitchControllerSnmpCommunityUpdate(d *schema.ResourceData, m interface{}) error {

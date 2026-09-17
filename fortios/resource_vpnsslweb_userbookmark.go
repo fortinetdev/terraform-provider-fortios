@@ -309,7 +309,9 @@ func resourceVpnSslWebUserBookmarkCreate(d *schema.ResourceData, m interface{}) 
 		d.SetId("VpnSslWebUserBookmark")
 	}
 
-	return resourceVpnSslWebUserBookmarkRead(d, m)
+	return readBackAfterCreate(d, "VpnSslWebUserBookmark", mkey,
+		func() (map[string]interface{}, error) { return c.ReadVpnSslWebUserBookmark(mkey, vdomparam) },
+		refreshObjectVpnSslWebUserBookmark, c.Fv)
 }
 
 func resourceVpnSslWebUserBookmarkUpdate(d *schema.ResourceData, m interface{}) error {

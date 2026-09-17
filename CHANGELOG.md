@@ -1,5 +1,10 @@
 ## 1.27.0 (Unreleased)
 
+## 1.26.1 (Sep 15, 2026)
+BUG FIXES:
+
+* Fix issue of mergeBlock missing numeric mkeys above 1e6 and adding an empty block for each ;
+* Add readBackAfterCreate retry helper for post-create transient 404, replacing silent state removal after Create;
 
 ## 1.26.0 (Aug 07, 2026)
 BUG FIXES:

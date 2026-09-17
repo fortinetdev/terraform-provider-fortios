@@ -257,7 +257,9 @@ func resourceReportThemeCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("ReportTheme")
 	}
 
-	return resourceReportThemeRead(d, m)
+	return readBackAfterCreate(d, "ReportTheme", mkey,
+		func() (map[string]interface{}, error) { return c.ReadReportTheme(mkey, vdomparam) },
+		refreshObjectReportTheme, c.Fv)
 }
 
 func resourceReportThemeUpdate(d *schema.ResourceData, m interface{}) error {

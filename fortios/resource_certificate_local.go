@@ -319,7 +319,9 @@ func resourceCertificateLocalCreate(d *schema.ResourceData, m interface{}) error
 		d.SetId("CertificateLocal")
 	}
 
-	return resourceCertificateLocalRead(d, m)
+	return readBackAfterCreate(d, "CertificateLocal", mkey,
+		func() (map[string]interface{}, error) { return c.ReadCertificateLocal(mkey, vdomparam) },
+		refreshObjectCertificateLocal, c.Fv)
 }
 
 func resourceCertificateLocalUpdate(d *schema.ResourceData, m interface{}) error {

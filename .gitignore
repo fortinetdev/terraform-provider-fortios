@@ -23,6 +23,7 @@
 /test/ddeeff.sh
 /test/example_testacc.sh
 /dist
+/internal_only
 
 *.backup
 ./*.tfstate

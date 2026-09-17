@@ -143,7 +143,9 @@ func resourceCifsDomainControllerCreate(d *schema.ResourceData, m interface{}) e
 		d.SetId("CifsDomainController")
 	}
 
-	return resourceCifsDomainControllerRead(d, m)
+	return readBackAfterCreate(d, "CifsDomainController", mkey,
+		func() (map[string]interface{}, error) { return c.ReadCifsDomainController(mkey, vdomparam) },
+		refreshObjectCifsDomainController, c.Fv)
 }
 
 func resourceCifsDomainControllerUpdate(d *schema.ResourceData, m interface{}) error {

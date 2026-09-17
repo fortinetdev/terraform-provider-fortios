@@ -262,7 +262,9 @@ func resourceSshFilterProfileCreate(d *schema.ResourceData, m interface{}) error
 		d.SetId("SshFilterProfile")
 	}
 
-	return resourceSshFilterProfileRead(d, m)
+	return readBackAfterCreate(d, "SshFilterProfile", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSshFilterProfile(mkey, vdomparam) },
+		refreshObjectSshFilterProfile, c.Fv)
 }
 
 func resourceSshFilterProfileUpdate(d *schema.ResourceData, m interface{}) error {

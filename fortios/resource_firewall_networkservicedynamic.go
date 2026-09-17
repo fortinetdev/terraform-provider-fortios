@@ -145,7 +145,9 @@ func resourceFirewallNetworkServiceDynamicCreate(d *schema.ResourceData, m inter
 		d.SetId("FirewallNetworkServiceDynamic")
 	}
 
-	return resourceFirewallNetworkServiceDynamicRead(d, m)
+	return readBackAfterCreate(d, "FirewallNetworkServiceDynamic", mkey,
+		func() (map[string]interface{}, error) { return c.ReadFirewallNetworkServiceDynamic(mkey, vdomparam) },
+		refreshObjectFirewallNetworkServiceDynamic, c.Fv)
 }
 
 func resourceFirewallNetworkServiceDynamicUpdate(d *schema.ResourceData, m interface{}) error {

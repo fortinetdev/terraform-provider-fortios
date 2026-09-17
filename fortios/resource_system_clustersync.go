@@ -265,7 +265,9 @@ func resourceSystemClusterSyncCreate(d *schema.ResourceData, m interface{}) erro
 		d.SetId("SystemClusterSync")
 	}
 
-	return resourceSystemClusterSyncRead(d, m)
+	return readBackAfterCreate(d, "SystemClusterSync", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSystemClusterSync(mkey, vdomparam) },
+		refreshObjectSystemClusterSync, c.Fv)
 }
 
 func resourceSystemClusterSyncUpdate(d *schema.ResourceData, m interface{}) error {

@@ -151,7 +151,9 @@ func resourceFirewallInternetServiceNameCreate(d *schema.ResourceData, m interfa
 		d.SetId("FirewallInternetServiceName")
 	}
 
-	return resourceFirewallInternetServiceNameRead(d, m)
+	return readBackAfterCreate(d, "FirewallInternetServiceName", mkey,
+		func() (map[string]interface{}, error) { return c.ReadFirewallInternetServiceName(mkey, vdomparam) },
+		refreshObjectFirewallInternetServiceName, c.Fv)
 }
 
 func resourceFirewallInternetServiceNameUpdate(d *schema.ResourceData, m interface{}) error {

@@ -503,7 +503,9 @@ func resourceFirewallAddressCreate(d *schema.ResourceData, m interface{}) error 
 		d.SetId("FirewallAddress")
 	}
 
-	return resourceFirewallAddressRead(d, m)
+	return readBackAfterCreate(d, "FirewallAddress", mkey,
+		func() (map[string]interface{}, error) { return c.ReadFirewallAddress(mkey, vdomparam) },
+		refreshObjectFirewallAddress, c.Fv)
 }
 
 func resourceFirewallAddressUpdate(d *schema.ResourceData, m interface{}) error {

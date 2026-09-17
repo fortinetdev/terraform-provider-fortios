@@ -136,7 +136,11 @@ func resourceSwitchControllerInitialConfigTemplateCreate(d *schema.ResourceData,
 		d.SetId("SwitchControllerInitialConfigTemplate")
 	}
 
-	return resourceSwitchControllerInitialConfigTemplateRead(d, m)
+	return readBackAfterCreate(d, "SwitchControllerInitialConfigTemplate", mkey,
+		func() (map[string]interface{}, error) {
+			return c.ReadSwitchControllerInitialConfigTemplate(mkey, vdomparam)
+		},
+		refreshObjectSwitchControllerInitialConfigTemplate, c.Fv)
 }
 
 func resourceSwitchControllerInitialConfigTemplateUpdate(d *schema.ResourceData, m interface{}) error {

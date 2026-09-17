@@ -288,7 +288,9 @@ func resourceDlpProfileCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("DlpProfile")
 	}
 
-	return resourceDlpProfileRead(d, m)
+	return readBackAfterCreate(d, "DlpProfile", mkey,
+		func() (map[string]interface{}, error) { return c.ReadDlpProfile(mkey, vdomparam) },
+		refreshObjectDlpProfile, c.Fv)
 }
 
 func resourceDlpProfileUpdate(d *schema.ResourceData, m interface{}) error {

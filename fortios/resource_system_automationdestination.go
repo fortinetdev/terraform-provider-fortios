@@ -145,7 +145,9 @@ func resourceSystemAutomationDestinationCreate(d *schema.ResourceData, m interfa
 		d.SetId("SystemAutomationDestination")
 	}
 
-	return resourceSystemAutomationDestinationRead(d, m)
+	return readBackAfterCreate(d, "SystemAutomationDestination", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSystemAutomationDestination(mkey, vdomparam) },
+		refreshObjectSystemAutomationDestination, c.Fv)
 }
 
 func resourceSystemAutomationDestinationUpdate(d *schema.ResourceData, m interface{}) error {

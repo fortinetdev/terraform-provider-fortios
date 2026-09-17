@@ -126,7 +126,9 @@ func resourceRouterospfNetworkCreate(d *schema.ResourceData, m interface{}) erro
 		d.SetId("RouterospfNetwork")
 	}
 
-	return resourceRouterospfNetworkRead(d, m)
+	return readBackAfterCreate(d, "RouterospfNetwork", mkey,
+		func() (map[string]interface{}, error) { return c.ReadRouterospfNetwork(mkey, vdomparam) },
+		refreshObjectRouterospfNetwork, c.Fv)
 }
 
 func resourceRouterospfNetworkUpdate(d *schema.ResourceData, m interface{}) error {

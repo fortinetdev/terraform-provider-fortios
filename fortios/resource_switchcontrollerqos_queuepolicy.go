@@ -178,7 +178,9 @@ func resourceSwitchControllerQosQueuePolicyCreate(d *schema.ResourceData, m inte
 		d.SetId("SwitchControllerQosQueuePolicy")
 	}
 
-	return resourceSwitchControllerQosQueuePolicyRead(d, m)
+	return readBackAfterCreate(d, "SwitchControllerQosQueuePolicy", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSwitchControllerQosQueuePolicy(mkey, vdomparam) },
+		refreshObjectSwitchControllerQosQueuePolicy, c.Fv)
 }
 
 func resourceSwitchControllerQosQueuePolicyUpdate(d *schema.ResourceData, m interface{}) error {

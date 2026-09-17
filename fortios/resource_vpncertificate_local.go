@@ -320,7 +320,9 @@ func resourceVpnCertificateLocalCreate(d *schema.ResourceData, m interface{}) er
 		d.SetId("VpnCertificateLocal")
 	}
 
-	return resourceVpnCertificateLocalRead(d, m)
+	return readBackAfterCreate(d, "VpnCertificateLocal", mkey,
+		func() (map[string]interface{}, error) { return c.ReadVpnCertificateLocal(mkey, vdomparam) },
+		refreshObjectVpnCertificateLocal, c.Fv)
 }
 
 func resourceVpnCertificateLocalUpdate(d *schema.ResourceData, m interface{}) error {

@@ -215,7 +215,9 @@ func resourceApplicationNameCreate(d *schema.ResourceData, m interface{}) error 
 		d.SetId("ApplicationName")
 	}
 
-	return resourceApplicationNameRead(d, m)
+	return readBackAfterCreate(d, "ApplicationName", mkey,
+		func() (map[string]interface{}, error) { return c.ReadApplicationName(mkey, vdomparam) },
+		refreshObjectApplicationName, c.Fv)
 }
 
 func resourceApplicationNameUpdate(d *schema.ResourceData, m interface{}) error {

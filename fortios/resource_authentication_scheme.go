@@ -246,7 +246,9 @@ func resourceAuthenticationSchemeCreate(d *schema.ResourceData, m interface{}) e
 		d.SetId("AuthenticationScheme")
 	}
 
-	return resourceAuthenticationSchemeRead(d, m)
+	return readBackAfterCreate(d, "AuthenticationScheme", mkey,
+		func() (map[string]interface{}, error) { return c.ReadAuthenticationScheme(mkey, vdomparam) },
+		refreshObjectAuthenticationScheme, c.Fv)
 }
 
 func resourceAuthenticationSchemeUpdate(d *schema.ResourceData, m interface{}) error {

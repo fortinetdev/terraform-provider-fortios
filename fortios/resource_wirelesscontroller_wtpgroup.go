@@ -144,7 +144,9 @@ func resourceWirelessControllerWtpGroupCreate(d *schema.ResourceData, m interfac
 		d.SetId("WirelessControllerWtpGroup")
 	}
 
-	return resourceWirelessControllerWtpGroupRead(d, m)
+	return readBackAfterCreate(d, "WirelessControllerWtpGroup", mkey,
+		func() (map[string]interface{}, error) { return c.ReadWirelessControllerWtpGroup(mkey, vdomparam) },
+		refreshObjectWirelessControllerWtpGroup, c.Fv)
 }
 
 func resourceWirelessControllerWtpGroupUpdate(d *schema.ResourceData, m interface{}) error {

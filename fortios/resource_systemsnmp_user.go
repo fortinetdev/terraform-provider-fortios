@@ -242,7 +242,9 @@ func resourceSystemSnmpUserCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("SystemSnmpUser")
 	}
 
-	return resourceSystemSnmpUserRead(d, m)
+	return readBackAfterCreate(d, "SystemSnmpUser", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSystemSnmpUser(mkey, vdomparam) },
+		refreshObjectSystemSnmpUser, c.Fv)
 }
 
 func resourceSystemSnmpUserUpdate(d *schema.ResourceData, m interface{}) error {

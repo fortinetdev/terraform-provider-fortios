@@ -122,7 +122,9 @@ func resourceWirelessControllerAddressCreate(d *schema.ResourceData, m interface
 		d.SetId("WirelessControllerAddress")
 	}
 
-	return resourceWirelessControllerAddressRead(d, m)
+	return readBackAfterCreate(d, "WirelessControllerAddress", mkey,
+		func() (map[string]interface{}, error) { return c.ReadWirelessControllerAddress(mkey, vdomparam) },
+		refreshObjectWirelessControllerAddress, c.Fv)
 }
 
 func resourceWirelessControllerAddressUpdate(d *schema.ResourceData, m interface{}) error {

@@ -157,7 +157,9 @@ func resourceSwitchControllerTrafficPolicyCreate(d *schema.ResourceData, m inter
 		d.SetId("SwitchControllerTrafficPolicy")
 	}
 
-	return resourceSwitchControllerTrafficPolicyRead(d, m)
+	return readBackAfterCreate(d, "SwitchControllerTrafficPolicy", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSwitchControllerTrafficPolicy(mkey, vdomparam) },
+		refreshObjectSwitchControllerTrafficPolicy, c.Fv)
 }
 
 func resourceSwitchControllerTrafficPolicyUpdate(d *schema.ResourceData, m interface{}) error {

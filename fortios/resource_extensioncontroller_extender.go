@@ -262,7 +262,9 @@ func resourceExtensionControllerExtenderCreate(d *schema.ResourceData, m interfa
 		d.SetId("ExtensionControllerExtender")
 	}
 
-	return resourceExtensionControllerExtenderRead(d, m)
+	return readBackAfterCreate(d, "ExtensionControllerExtender", mkey,
+		func() (map[string]interface{}, error) { return c.ReadExtensionControllerExtender(mkey, vdomparam) },
+		refreshObjectExtensionControllerExtender, c.Fv)
 }
 
 func resourceExtensionControllerExtenderUpdate(d *schema.ResourceData, m interface{}) error {

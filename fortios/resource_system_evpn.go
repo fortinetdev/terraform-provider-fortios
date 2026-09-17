@@ -192,7 +192,9 @@ func resourceSystemEvpnCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("SystemEvpn")
 	}
 
-	return resourceSystemEvpnRead(d, m)
+	return readBackAfterCreate(d, "SystemEvpn", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSystemEvpn(mkey, vdomparam) },
+		refreshObjectSystemEvpn, c.Fv)
 }
 
 func resourceSystemEvpnUpdate(d *schema.ResourceData, m interface{}) error {

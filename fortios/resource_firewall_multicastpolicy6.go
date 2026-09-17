@@ -232,7 +232,9 @@ func resourceFirewallMulticastPolicy6Create(d *schema.ResourceData, m interface{
 		d.SetId("FirewallMulticastPolicy6")
 	}
 
-	return resourceFirewallMulticastPolicy6Read(d, m)
+	return readBackAfterCreate(d, "FirewallMulticastPolicy6", mkey,
+		func() (map[string]interface{}, error) { return c.ReadFirewallMulticastPolicy6(mkey, vdomparam) },
+		refreshObjectFirewallMulticastPolicy6, c.Fv)
 }
 
 func resourceFirewallMulticastPolicy6Update(d *schema.ResourceData, m interface{}) error {

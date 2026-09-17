@@ -187,7 +187,9 @@ func resourceUserTacacsCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("UserTacacs")
 	}
 
-	return resourceUserTacacsRead(d, m)
+	return readBackAfterCreate(d, "UserTacacs", mkey,
+		func() (map[string]interface{}, error) { return c.ReadUserTacacs(mkey, vdomparam) },
+		refreshObjectUserTacacs, c.Fv)
 }
 
 func resourceUserTacacsUpdate(d *schema.ResourceData, m interface{}) error {

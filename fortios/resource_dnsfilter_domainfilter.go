@@ -187,7 +187,9 @@ func resourceDnsfilterDomainFilterCreate(d *schema.ResourceData, m interface{}) 
 		d.SetId("DnsfilterDomainFilter")
 	}
 
-	return resourceDnsfilterDomainFilterRead(d, m)
+	return readBackAfterCreate(d, "DnsfilterDomainFilter", mkey,
+		func() (map[string]interface{}, error) { return c.ReadDnsfilterDomainFilter(mkey, vdomparam) },
+		refreshObjectDnsfilterDomainFilter, c.Fv)
 }
 
 func resourceDnsfilterDomainFilterUpdate(d *schema.ResourceData, m interface{}) error {

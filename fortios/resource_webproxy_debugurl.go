@@ -127,7 +127,9 @@ func resourceWebProxyDebugUrlCreate(d *schema.ResourceData, m interface{}) error
 		d.SetId("WebProxyDebugUrl")
 	}
 
-	return resourceWebProxyDebugUrlRead(d, m)
+	return readBackAfterCreate(d, "WebProxyDebugUrl", mkey,
+		func() (map[string]interface{}, error) { return c.ReadWebProxyDebugUrl(mkey, vdomparam) },
+		refreshObjectWebProxyDebugUrl, c.Fv)
 }
 
 func resourceWebProxyDebugUrlUpdate(d *schema.ResourceData, m interface{}) error {

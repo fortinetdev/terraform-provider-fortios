@@ -125,7 +125,9 @@ func resourceSystemSessionHelperCreate(d *schema.ResourceData, m interface{}) er
 		d.SetId("SystemSessionHelper")
 	}
 
-	return resourceSystemSessionHelperRead(d, m)
+	return readBackAfterCreate(d, "SystemSessionHelper", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSystemSessionHelper(mkey, vdomparam) },
+		refreshObjectSystemSessionHelper, c.Fv)
 }
 
 func resourceSystemSessionHelperUpdate(d *schema.ResourceData, m interface{}) error {

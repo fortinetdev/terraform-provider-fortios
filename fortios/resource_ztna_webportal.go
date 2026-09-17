@@ -251,7 +251,9 @@ func resourceZtnaWebPortalCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("ZtnaWebPortal")
 	}
 
-	return resourceZtnaWebPortalRead(d, m)
+	return readBackAfterCreate(d, "ZtnaWebPortal", mkey,
+		func() (map[string]interface{}, error) { return c.ReadZtnaWebPortal(mkey, vdomparam) },
+		refreshObjectZtnaWebPortal, c.Fv)
 }
 
 func resourceZtnaWebPortalUpdate(d *schema.ResourceData, m interface{}) error {

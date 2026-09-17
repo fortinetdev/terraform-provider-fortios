@@ -157,7 +157,9 @@ func resourceSystemSdnProxyCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("SystemSdnProxy")
 	}
 
-	return resourceSystemSdnProxyRead(d, m)
+	return readBackAfterCreate(d, "SystemSdnProxy", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSystemSdnProxy(mkey, vdomparam) },
+		refreshObjectSystemSdnProxy, c.Fv)
 }
 
 func resourceSystemSdnProxyUpdate(d *schema.ResourceData, m interface{}) error {

@@ -155,7 +155,9 @@ func resourceSystemStorageCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("SystemStorage")
 	}
 
-	return resourceSystemStorageRead(d, m)
+	return readBackAfterCreate(d, "SystemStorage", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSystemStorage(mkey, vdomparam) },
+		refreshObjectSystemStorage, c.Fv)
 }
 
 func resourceSystemStorageUpdate(d *schema.ResourceData, m interface{}) error {

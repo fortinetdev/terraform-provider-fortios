@@ -142,7 +142,9 @@ func resourceVpnCertificateOcspServerCreate(d *schema.ResourceData, m interface{
 		d.SetId("VpnCertificateOcspServer")
 	}
 
-	return resourceVpnCertificateOcspServerRead(d, m)
+	return readBackAfterCreate(d, "VpnCertificateOcspServer", mkey,
+		func() (map[string]interface{}, error) { return c.ReadVpnCertificateOcspServer(mkey, vdomparam) },
+		refreshObjectVpnCertificateOcspServer, c.Fv)
 }
 
 func resourceVpnCertificateOcspServerUpdate(d *schema.ResourceData, m interface{}) error {

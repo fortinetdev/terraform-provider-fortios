@@ -285,7 +285,9 @@ func resourceSwitchControllerLldpProfileCreate(d *schema.ResourceData, m interfa
 		d.SetId("SwitchControllerLldpProfile")
 	}
 
-	return resourceSwitchControllerLldpProfileRead(d, m)
+	return readBackAfterCreate(d, "SwitchControllerLldpProfile", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSwitchControllerLldpProfile(mkey, vdomparam) },
+		refreshObjectSwitchControllerLldpProfile, c.Fv)
 }
 
 func resourceSwitchControllerLldpProfileUpdate(d *schema.ResourceData, m interface{}) error {

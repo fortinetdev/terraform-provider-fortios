@@ -132,7 +132,9 @@ func resourceUserPop3Create(d *schema.ResourceData, m interface{}) error {
 		d.SetId("UserPop3")
 	}
 
-	return resourceUserPop3Read(d, m)
+	return readBackAfterCreate(d, "UserPop3", mkey,
+		func() (map[string]interface{}, error) { return c.ReadUserPop3(mkey, vdomparam) },
+		refreshObjectUserPop3, c.Fv)
 }
 
 func resourceUserPop3Update(d *schema.ResourceData, m interface{}) error {

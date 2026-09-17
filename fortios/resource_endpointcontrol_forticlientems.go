@@ -156,7 +156,9 @@ func resourceEndpointControlForticlientEmsCreate(d *schema.ResourceData, m inter
 		d.SetId("EndpointControlForticlientEms")
 	}
 
-	return resourceEndpointControlForticlientEmsRead(d, m)
+	return readBackAfterCreate(d, "EndpointControlForticlientEms", mkey,
+		func() (map[string]interface{}, error) { return c.ReadEndpointControlForticlientEms(mkey, vdomparam) },
+		refreshObjectEndpointControlForticlientEms, c.Fv)
 }
 
 func resourceEndpointControlForticlientEmsUpdate(d *schema.ResourceData, m interface{}) error {

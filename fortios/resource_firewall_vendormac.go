@@ -127,7 +127,9 @@ func resourceFirewallVendorMacCreate(d *schema.ResourceData, m interface{}) erro
 		d.SetId("FirewallVendorMac")
 	}
 
-	return resourceFirewallVendorMacRead(d, m)
+	return readBackAfterCreate(d, "FirewallVendorMac", mkey,
+		func() (map[string]interface{}, error) { return c.ReadFirewallVendorMac(mkey, vdomparam) },
+		refreshObjectFirewallVendorMac, c.Fv)
 }
 
 func resourceFirewallVendorMacUpdate(d *schema.ResourceData, m interface{}) error {

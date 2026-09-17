@@ -870,7 +870,9 @@ func resourceFirewallAccessProxyCreate(d *schema.ResourceData, m interface{}) er
 		d.SetId("FirewallAccessProxy")
 	}
 
-	return resourceFirewallAccessProxyRead(d, m)
+	return readBackAfterCreate(d, "FirewallAccessProxy", mkey,
+		func() (map[string]interface{}, error) { return c.ReadFirewallAccessProxy(mkey, vdomparam) },
+		refreshObjectFirewallAccessProxy, c.Fv)
 }
 
 func resourceFirewallAccessProxyUpdate(d *schema.ResourceData, m interface{}) error {

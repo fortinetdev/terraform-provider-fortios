@@ -110,7 +110,11 @@ func resourceSwitchControllerSwitchInterfaceTagCreate(d *schema.ResourceData, m 
 		d.SetId("SwitchControllerSwitchInterfaceTag")
 	}
 
-	return resourceSwitchControllerSwitchInterfaceTagRead(d, m)
+	return readBackAfterCreate(d, "SwitchControllerSwitchInterfaceTag", mkey,
+		func() (map[string]interface{}, error) {
+			return c.ReadSwitchControllerSwitchInterfaceTag(mkey, vdomparam)
+		},
+		refreshObjectSwitchControllerSwitchInterfaceTag, c.Fv)
 }
 
 func resourceSwitchControllerSwitchInterfaceTagUpdate(d *schema.ResourceData, m interface{}) error {

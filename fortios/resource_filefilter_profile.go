@@ -223,7 +223,9 @@ func resourceFileFilterProfileCreate(d *schema.ResourceData, m interface{}) erro
 		d.SetId("FileFilterProfile")
 	}
 
-	return resourceFileFilterProfileRead(d, m)
+	return readBackAfterCreate(d, "FileFilterProfile", mkey,
+		func() (map[string]interface{}, error) { return c.ReadFileFilterProfile(mkey, vdomparam) },
+		refreshObjectFileFilterProfile, c.Fv)
 }
 
 func resourceFileFilterProfileUpdate(d *schema.ResourceData, m interface{}) error {

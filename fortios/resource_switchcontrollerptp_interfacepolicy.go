@@ -128,7 +128,11 @@ func resourceSwitchControllerPtpInterfacePolicyCreate(d *schema.ResourceData, m 
 		d.SetId("SwitchControllerPtpInterfacePolicy")
 	}
 
-	return resourceSwitchControllerPtpInterfacePolicyRead(d, m)
+	return readBackAfterCreate(d, "SwitchControllerPtpInterfacePolicy", mkey,
+		func() (map[string]interface{}, error) {
+			return c.ReadSwitchControllerPtpInterfacePolicy(mkey, vdomparam)
+		},
+		refreshObjectSwitchControllerPtpInterfacePolicy, c.Fv)
 }
 
 func resourceSwitchControllerPtpInterfacePolicyUpdate(d *schema.ResourceData, m interface{}) error {

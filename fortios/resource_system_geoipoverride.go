@@ -178,7 +178,9 @@ func resourceSystemGeoipOverrideCreate(d *schema.ResourceData, m interface{}) er
 		d.SetId("SystemGeoipOverride")
 	}
 
-	return resourceSystemGeoipOverrideRead(d, m)
+	return readBackAfterCreate(d, "SystemGeoipOverride", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSystemGeoipOverride(mkey, vdomparam) },
+		refreshObjectSystemGeoipOverride, c.Fv)
 }
 
 func resourceSystemGeoipOverrideUpdate(d *schema.ResourceData, m interface{}) error {

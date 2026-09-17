@@ -677,7 +677,9 @@ func resourceSystemReplacemsgGroupCreate(d *schema.ResourceData, m interface{}) 
 		d.SetId("SystemReplacemsgGroup")
 	}
 
-	return resourceSystemReplacemsgGroupRead(d, m)
+	return readBackAfterCreate(d, "SystemReplacemsgGroup", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSystemReplacemsgGroup(mkey, vdomparam) },
+		refreshObjectSystemReplacemsgGroup, c.Fv)
 }
 
 func resourceSystemReplacemsgGroupUpdate(d *schema.ResourceData, m interface{}) error {

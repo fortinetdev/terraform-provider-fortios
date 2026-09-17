@@ -205,7 +205,9 @@ func resourceDlpFpDocSourceCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("DlpFpDocSource")
 	}
 
-	return resourceDlpFpDocSourceRead(d, m)
+	return readBackAfterCreate(d, "DlpFpDocSource", mkey,
+		func() (map[string]interface{}, error) { return c.ReadDlpFpDocSource(mkey, vdomparam) },
+		refreshObjectDlpFpDocSource, c.Fv)
 }
 
 func resourceDlpFpDocSourceUpdate(d *schema.ResourceData, m interface{}) error {

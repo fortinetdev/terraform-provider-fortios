@@ -1051,7 +1051,9 @@ func resourceWirelessControllerWtpCreate(d *schema.ResourceData, m interface{}) 
 		d.SetId("WirelessControllerWtp")
 	}
 
-	return resourceWirelessControllerWtpRead(d, m)
+	return readBackAfterCreate(d, "WirelessControllerWtp", mkey,
+		func() (map[string]interface{}, error) { return c.ReadWirelessControllerWtp(mkey, vdomparam) },
+		refreshObjectWirelessControllerWtp, c.Fv)
 }
 
 func resourceWirelessControllerWtpUpdate(d *schema.ResourceData, m interface{}) error {

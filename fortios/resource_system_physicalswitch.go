@@ -122,7 +122,9 @@ func resourceSystemPhysicalSwitchCreate(d *schema.ResourceData, m interface{}) e
 		d.SetId("SystemPhysicalSwitch")
 	}
 
-	return resourceSystemPhysicalSwitchRead(d, m)
+	return readBackAfterCreate(d, "SystemPhysicalSwitch", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSystemPhysicalSwitch(mkey, vdomparam) },
+		refreshObjectSystemPhysicalSwitch, c.Fv)
 }
 
 func resourceSystemPhysicalSwitchUpdate(d *schema.ResourceData, m interface{}) error {

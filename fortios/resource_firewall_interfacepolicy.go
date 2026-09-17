@@ -293,7 +293,9 @@ func resourceFirewallInterfacePolicyCreate(d *schema.ResourceData, m interface{}
 		d.SetId("FirewallInterfacePolicy")
 	}
 
-	return resourceFirewallInterfacePolicyRead(d, m)
+	return readBackAfterCreate(d, "FirewallInterfacePolicy", mkey,
+		func() (map[string]interface{}, error) { return c.ReadFirewallInterfacePolicy(mkey, vdomparam) },
+		refreshObjectFirewallInterfacePolicy, c.Fv)
 }
 
 func resourceFirewallInterfacePolicyUpdate(d *schema.ResourceData, m interface{}) error {

@@ -129,7 +129,9 @@ func resourceCertificateRemoteCreate(d *schema.ResourceData, m interface{}) erro
 		d.SetId("CertificateRemote")
 	}
 
-	return resourceCertificateRemoteRead(d, m)
+	return readBackAfterCreate(d, "CertificateRemote", mkey,
+		func() (map[string]interface{}, error) { return c.ReadCertificateRemote(mkey, vdomparam) },
+		refreshObjectCertificateRemote, c.Fv)
 }
 
 func resourceCertificateRemoteUpdate(d *schema.ResourceData, m interface{}) error {

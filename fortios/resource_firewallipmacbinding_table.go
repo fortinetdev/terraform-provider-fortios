@@ -129,7 +129,9 @@ func resourceFirewallIpmacbindingTableCreate(d *schema.ResourceData, m interface
 		d.SetId("FirewallIpmacbindingTable")
 	}
 
-	return resourceFirewallIpmacbindingTableRead(d, m)
+	return readBackAfterCreate(d, "FirewallIpmacbindingTable", mkey,
+		func() (map[string]interface{}, error) { return c.ReadFirewallIpmacbindingTable(mkey, vdomparam) },
+		refreshObjectFirewallIpmacbindingTable, c.Fv)
 }
 
 func resourceFirewallIpmacbindingTableUpdate(d *schema.ResourceData, m interface{}) error {

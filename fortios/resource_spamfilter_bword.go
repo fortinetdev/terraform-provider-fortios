@@ -172,7 +172,9 @@ func resourceSpamfilterBwordCreate(d *schema.ResourceData, m interface{}) error 
 		d.SetId("SpamfilterBword")
 	}
 
-	return resourceSpamfilterBwordRead(d, m)
+	return readBackAfterCreate(d, "SpamfilterBword", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSpamfilterBword(mkey, vdomparam) },
+		refreshObjectSpamfilterBword, c.Fv)
 }
 
 func resourceSpamfilterBwordUpdate(d *schema.ResourceData, m interface{}) error {

@@ -175,7 +175,9 @@ func resourceUserPasswordPolicyCreate(d *schema.ResourceData, m interface{}) err
 		d.SetId("UserPasswordPolicy")
 	}
 
-	return resourceUserPasswordPolicyRead(d, m)
+	return readBackAfterCreate(d, "UserPasswordPolicy", mkey,
+		func() (map[string]interface{}, error) { return c.ReadUserPasswordPolicy(mkey, vdomparam) },
+		refreshObjectUserPasswordPolicy, c.Fv)
 }
 
 func resourceUserPasswordPolicyUpdate(d *schema.ResourceData, m interface{}) error {

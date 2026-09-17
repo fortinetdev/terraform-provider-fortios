@@ -148,7 +148,9 @@ func resourceSystemAutomationConditionCreate(d *schema.ResourceData, m interface
 		d.SetId("SystemAutomationCondition")
 	}
 
-	return resourceSystemAutomationConditionRead(d, m)
+	return readBackAfterCreate(d, "SystemAutomationCondition", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSystemAutomationCondition(mkey, vdomparam) },
+		refreshObjectSystemAutomationCondition, c.Fv)
 }
 
 func resourceSystemAutomationConditionUpdate(d *schema.ResourceData, m interface{}) error {

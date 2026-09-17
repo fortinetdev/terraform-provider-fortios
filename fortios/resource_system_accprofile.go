@@ -496,7 +496,9 @@ func resourceSystemAccprofileCreate(d *schema.ResourceData, m interface{}) error
 		d.SetId("SystemAccprofile")
 	}
 
-	return resourceSystemAccprofileRead(d, m)
+	return readBackAfterCreate(d, "SystemAccprofile", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSystemAccprofile(mkey, vdomparam) },
+		refreshObjectSystemAccprofile, c.Fv)
 }
 
 func resourceSystemAccprofileUpdate(d *schema.ResourceData, m interface{}) error {

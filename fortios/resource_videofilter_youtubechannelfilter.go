@@ -173,7 +173,9 @@ func resourceVideofilterYoutubeChannelFilterCreate(d *schema.ResourceData, m int
 		d.SetId("VideofilterYoutubeChannelFilter")
 	}
 
-	return resourceVideofilterYoutubeChannelFilterRead(d, m)
+	return readBackAfterCreate(d, "VideofilterYoutubeChannelFilter", mkey,
+		func() (map[string]interface{}, error) { return c.ReadVideofilterYoutubeChannelFilter(mkey, vdomparam) },
+		refreshObjectVideofilterYoutubeChannelFilter, c.Fv)
 }
 
 func resourceVideofilterYoutubeChannelFilterUpdate(d *schema.ResourceData, m interface{}) error {

@@ -172,7 +172,9 @@ func resourceFirewallLdbMonitorCreate(d *schema.ResourceData, m interface{}) err
 		d.SetId("FirewallLdbMonitor")
 	}
 
-	return resourceFirewallLdbMonitorRead(d, m)
+	return readBackAfterCreate(d, "FirewallLdbMonitor", mkey,
+		func() (map[string]interface{}, error) { return c.ReadFirewallLdbMonitor(mkey, vdomparam) },
+		refreshObjectFirewallLdbMonitor, c.Fv)
 }
 
 func resourceFirewallLdbMonitorUpdate(d *schema.ResourceData, m interface{}) error {

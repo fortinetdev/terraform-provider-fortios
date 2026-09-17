@@ -189,7 +189,9 @@ func resourceLlmServerCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("LlmServer")
 	}
 
-	return resourceLlmServerRead(d, m)
+	return readBackAfterCreate(d, "LlmServer", mkey,
+		func() (map[string]interface{}, error) { return c.ReadLlmServer(mkey, vdomparam) },
+		refreshObjectLlmServer, c.Fv)
 }
 
 func resourceLlmServerUpdate(d *schema.ResourceData, m interface{}) error {

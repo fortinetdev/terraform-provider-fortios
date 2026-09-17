@@ -326,7 +326,9 @@ func resourceRouterPolicyCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("RouterPolicy")
 	}
 
-	return resourceRouterPolicyRead(d, m)
+	return readBackAfterCreate(d, "RouterPolicy", mkey,
+		func() (map[string]interface{}, error) { return c.ReadRouterPolicy(mkey, vdomparam) },
+		refreshObjectRouterPolicy, c.Fv)
 }
 
 func resourceRouterPolicyUpdate(d *schema.ResourceData, m interface{}) error {

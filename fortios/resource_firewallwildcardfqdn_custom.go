@@ -134,7 +134,9 @@ func resourceFirewallWildcardFqdnCustomCreate(d *schema.ResourceData, m interfac
 		d.SetId("FirewallWildcardFqdnCustom")
 	}
 
-	return resourceFirewallWildcardFqdnCustomRead(d, m)
+	return readBackAfterCreate(d, "FirewallWildcardFqdnCustom", mkey,
+		func() (map[string]interface{}, error) { return c.ReadFirewallWildcardFqdnCustom(mkey, vdomparam) },
+		refreshObjectFirewallWildcardFqdnCustom, c.Fv)
 }
 
 func resourceFirewallWildcardFqdnCustomUpdate(d *schema.ResourceData, m interface{}) error {

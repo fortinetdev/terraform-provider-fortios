@@ -129,7 +129,9 @@ func resourceSystemVdomCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("SystemVdom")
 	}
 
-	return resourceSystemVdomRead(d, m)
+	return readBackAfterCreate(d, "SystemVdom", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSystemVdom(mkey, vdomparam) },
+		refreshObjectSystemVdom, c.Fv)
 }
 
 func resourceSystemVdomUpdate(d *schema.ResourceData, m interface{}) error {

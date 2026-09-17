@@ -162,7 +162,9 @@ func resourceRouterPrefixList6Create(d *schema.ResourceData, m interface{}) erro
 		d.SetId("RouterPrefixList6")
 	}
 
-	return resourceRouterPrefixList6Read(d, m)
+	return readBackAfterCreate(d, "RouterPrefixList6", mkey,
+		func() (map[string]interface{}, error) { return c.ReadRouterPrefixList6(mkey, vdomparam) },
+		refreshObjectRouterPrefixList6, c.Fv)
 }
 
 func resourceRouterPrefixList6Update(d *schema.ResourceData, m interface{}) error {

@@ -122,7 +122,9 @@ func resourceSwitchControllerCustomCommandCreate(d *schema.ResourceData, m inter
 		d.SetId("SwitchControllerCustomCommand")
 	}
 
-	return resourceSwitchControllerCustomCommandRead(d, m)
+	return readBackAfterCreate(d, "SwitchControllerCustomCommand", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSwitchControllerCustomCommand(mkey, vdomparam) },
+		refreshObjectSwitchControllerCustomCommand, c.Fv)
 }
 
 func resourceSwitchControllerCustomCommandUpdate(d *schema.ResourceData, m interface{}) error {

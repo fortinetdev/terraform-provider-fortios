@@ -183,7 +183,9 @@ func resourceFirewallAccessProxySshClientCertCreate(d *schema.ResourceData, m in
 		d.SetId("FirewallAccessProxySshClientCert")
 	}
 
-	return resourceFirewallAccessProxySshClientCertRead(d, m)
+	return readBackAfterCreate(d, "FirewallAccessProxySshClientCert", mkey,
+		func() (map[string]interface{}, error) { return c.ReadFirewallAccessProxySshClientCert(mkey, vdomparam) },
+		refreshObjectFirewallAccessProxySshClientCert, c.Fv)
 }
 
 func resourceFirewallAccessProxySshClientCertUpdate(d *schema.ResourceData, m interface{}) error {

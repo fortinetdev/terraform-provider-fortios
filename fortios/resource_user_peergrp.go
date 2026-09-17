@@ -135,7 +135,9 @@ func resourceUserPeergrpCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("UserPeergrp")
 	}
 
-	return resourceUserPeergrpRead(d, m)
+	return readBackAfterCreate(d, "UserPeergrp", mkey,
+		func() (map[string]interface{}, error) { return c.ReadUserPeergrp(mkey, vdomparam) },
+		refreshObjectUserPeergrp, c.Fv)
 }
 
 func resourceUserPeergrpUpdate(d *schema.ResourceData, m interface{}) error {

@@ -211,7 +211,9 @@ func resourceWebProxyForwardServerCreate(d *schema.ResourceData, m interface{}) 
 		d.SetId("WebProxyForwardServer")
 	}
 
-	return resourceWebProxyForwardServerRead(d, m)
+	return readBackAfterCreate(d, "WebProxyForwardServer", mkey,
+		func() (map[string]interface{}, error) { return c.ReadWebProxyForwardServer(mkey, vdomparam) },
+		refreshObjectWebProxyForwardServer, c.Fv)
 }
 
 func resourceWebProxyForwardServerUpdate(d *schema.ResourceData, m interface{}) error {

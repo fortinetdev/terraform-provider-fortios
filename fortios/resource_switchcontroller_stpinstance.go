@@ -135,7 +135,9 @@ func resourceSwitchControllerStpInstanceCreate(d *schema.ResourceData, m interfa
 		d.SetId("SwitchControllerStpInstance")
 	}
 
-	return resourceSwitchControllerStpInstanceRead(d, m)
+	return readBackAfterCreate(d, "SwitchControllerStpInstance", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSwitchControllerStpInstance(mkey, vdomparam) },
+		refreshObjectSwitchControllerStpInstance, c.Fv)
 }
 
 func resourceSwitchControllerStpInstanceUpdate(d *schema.ResourceData, m interface{}) error {

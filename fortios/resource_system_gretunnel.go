@@ -204,7 +204,9 @@ func resourceSystemGreTunnelCreate(d *schema.ResourceData, m interface{}) error 
 		d.SetId("SystemGreTunnel")
 	}
 
-	return resourceSystemGreTunnelRead(d, m)
+	return readBackAfterCreate(d, "SystemGreTunnel", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSystemGreTunnel(mkey, vdomparam) },
+		refreshObjectSystemGreTunnel, c.Fv)
 }
 
 func resourceSystemGreTunnelUpdate(d *schema.ResourceData, m interface{}) error {

@@ -135,7 +135,9 @@ func resourceSystemIpipTunnelCreate(d *schema.ResourceData, m interface{}) error
 		d.SetId("SystemIpipTunnel")
 	}
 
-	return resourceSystemIpipTunnelRead(d, m)
+	return readBackAfterCreate(d, "SystemIpipTunnel", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSystemIpipTunnel(mkey, vdomparam) },
+		refreshObjectSystemIpipTunnel, c.Fv)
 }
 
 func resourceSystemIpipTunnelUpdate(d *schema.ResourceData, m interface{}) error {

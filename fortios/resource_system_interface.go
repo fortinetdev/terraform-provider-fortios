@@ -2240,7 +2240,9 @@ func resourceSystemInterfaceCreate(d *schema.ResourceData, m interface{}) error 
 		d.SetId("SystemInterface")
 	}
 
-	return resourceSystemInterfaceRead(d, m)
+	return readBackAfterCreate(d, "SystemInterface", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSystemInterface(mkey, vdomparam) },
+		refreshObjectSystemInterface, c.Fv)
 }
 
 func resourceSystemInterfaceUpdate(d *schema.ResourceData, m interface{}) error {

@@ -203,7 +203,9 @@ func resourceSystemPppoeInterfaceCreate(d *schema.ResourceData, m interface{}) e
 		d.SetId("SystemPppoeInterface")
 	}
 
-	return resourceSystemPppoeInterfaceRead(d, m)
+	return readBackAfterCreate(d, "SystemPppoeInterface", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSystemPppoeInterface(mkey, vdomparam) },
+		refreshObjectSystemPppoeInterface, c.Fv)
 }
 
 func resourceSystemPppoeInterfaceUpdate(d *schema.ResourceData, m interface{}) error {

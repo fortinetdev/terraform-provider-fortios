@@ -209,7 +209,9 @@ func resourceEmailfilterBlockAllowListCreate(d *schema.ResourceData, m interface
 		d.SetId("EmailfilterBlockAllowList")
 	}
 
-	return resourceEmailfilterBlockAllowListRead(d, m)
+	return readBackAfterCreate(d, "EmailfilterBlockAllowList", mkey,
+		func() (map[string]interface{}, error) { return c.ReadEmailfilterBlockAllowList(mkey, vdomparam) },
+		refreshObjectEmailfilterBlockAllowList, c.Fv)
 }
 
 func resourceEmailfilterBlockAllowListUpdate(d *schema.ResourceData, m interface{}) error {

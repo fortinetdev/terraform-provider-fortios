@@ -140,7 +140,9 @@ func resourceSwitchControllerAutoConfigCustomCreate(d *schema.ResourceData, m in
 		d.SetId("SwitchControllerAutoConfigCustom")
 	}
 
-	return resourceSwitchControllerAutoConfigCustomRead(d, m)
+	return readBackAfterCreate(d, "SwitchControllerAutoConfigCustom", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSwitchControllerAutoConfigCustom(mkey, vdomparam) },
+		refreshObjectSwitchControllerAutoConfigCustom, c.Fv)
 }
 
 func resourceSwitchControllerAutoConfigCustomUpdate(d *schema.ResourceData, m interface{}) error {

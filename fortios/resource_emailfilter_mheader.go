@@ -188,7 +188,9 @@ func resourceEmailfilterMheaderCreate(d *schema.ResourceData, m interface{}) err
 		d.SetId("EmailfilterMheader")
 	}
 
-	return resourceEmailfilterMheaderRead(d, m)
+	return readBackAfterCreate(d, "EmailfilterMheader", mkey,
+		func() (map[string]interface{}, error) { return c.ReadEmailfilterMheader(mkey, vdomparam) },
+		refreshObjectEmailfilterMheader, c.Fv)
 }
 
 func resourceEmailfilterMheaderUpdate(d *schema.ResourceData, m interface{}) error {

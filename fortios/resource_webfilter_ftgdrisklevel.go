@@ -122,7 +122,9 @@ func resourceWebfilterFtgdRiskLevelCreate(d *schema.ResourceData, m interface{})
 		d.SetId("WebfilterFtgdRiskLevel")
 	}
 
-	return resourceWebfilterFtgdRiskLevelRead(d, m)
+	return readBackAfterCreate(d, "WebfilterFtgdRiskLevel", mkey,
+		func() (map[string]interface{}, error) { return c.ReadWebfilterFtgdRiskLevel(mkey, vdomparam) },
+		refreshObjectWebfilterFtgdRiskLevel, c.Fv)
 }
 
 func resourceWebfilterFtgdRiskLevelUpdate(d *schema.ResourceData, m interface{}) error {

@@ -153,7 +153,9 @@ func resourceApplicationCustomCreate(d *schema.ResourceData, m interface{}) erro
 		d.SetId("ApplicationCustom")
 	}
 
-	return resourceApplicationCustomRead(d, m)
+	return readBackAfterCreate(d, "ApplicationCustom", mkey,
+		func() (map[string]interface{}, error) { return c.ReadApplicationCustom(mkey, vdomparam) },
+		refreshObjectApplicationCustom, c.Fv)
 }
 
 func resourceApplicationCustomUpdate(d *schema.ResourceData, m interface{}) error {

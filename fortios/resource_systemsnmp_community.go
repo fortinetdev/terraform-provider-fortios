@@ -303,7 +303,9 @@ func resourceSystemSnmpCommunityCreate(d *schema.ResourceData, m interface{}) er
 		d.SetId("SystemSnmpCommunity")
 	}
 
-	return resourceSystemSnmpCommunityRead(d, m)
+	return readBackAfterCreate(d, "SystemSnmpCommunity", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSystemSnmpCommunity(mkey, vdomparam) },
+		refreshObjectSystemSnmpCommunity, c.Fv)
 }
 
 func resourceSystemSnmpCommunityUpdate(d *schema.ResourceData, m interface{}) error {

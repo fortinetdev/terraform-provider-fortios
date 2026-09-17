@@ -360,7 +360,9 @@ func resourceSwitchControllerLocationCreate(d *schema.ResourceData, m interface{
 		d.SetId("SwitchControllerLocation")
 	}
 
-	return resourceSwitchControllerLocationRead(d, m)
+	return readBackAfterCreate(d, "SwitchControllerLocation", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSwitchControllerLocation(mkey, vdomparam) },
+		refreshObjectSwitchControllerLocation, c.Fv)
 }
 
 func resourceSwitchControllerLocationUpdate(d *schema.ResourceData, m interface{}) error {

@@ -144,7 +144,9 @@ func resourceSystemAutoScriptCreate(d *schema.ResourceData, m interface{}) error
 		d.SetId("SystemAutoScript")
 	}
 
-	return resourceSystemAutoScriptRead(d, m)
+	return readBackAfterCreate(d, "SystemAutoScript", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSystemAutoScript(mkey, vdomparam) },
+		refreshObjectSystemAutoScript, c.Fv)
 }
 
 func resourceSystemAutoScriptUpdate(d *schema.ResourceData, m interface{}) error {

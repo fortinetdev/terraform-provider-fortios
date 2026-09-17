@@ -366,7 +366,9 @@ func resourceVpnIpsecPhase2InterfaceCreate(d *schema.ResourceData, m interface{}
 		d.SetId("VpnIpsecPhase2Interface")
 	}
 
-	return resourceVpnIpsecPhase2InterfaceRead(d, m)
+	return readBackAfterCreate(d, "VpnIpsecPhase2Interface", mkey,
+		func() (map[string]interface{}, error) { return c.ReadVpnIpsecPhase2Interface(mkey, vdomparam) },
+		refreshObjectVpnIpsecPhase2Interface, c.Fv)
 }
 
 func resourceVpnIpsecPhase2InterfaceUpdate(d *schema.ResourceData, m interface{}) error {

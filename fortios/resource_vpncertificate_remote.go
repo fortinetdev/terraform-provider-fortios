@@ -128,7 +128,9 @@ func resourceVpnCertificateRemoteCreate(d *schema.ResourceData, m interface{}) e
 		d.SetId("VpnCertificateRemote")
 	}
 
-	return resourceVpnCertificateRemoteRead(d, m)
+	return readBackAfterCreate(d, "VpnCertificateRemote", mkey,
+		func() (map[string]interface{}, error) { return c.ReadVpnCertificateRemote(mkey, vdomparam) },
+		refreshObjectVpnCertificateRemote, c.Fv)
 }
 
 func resourceVpnCertificateRemoteUpdate(d *schema.ResourceData, m interface{}) error {

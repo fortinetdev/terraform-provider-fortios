@@ -175,7 +175,11 @@ func resourceWirelessControllerHotspot20QosMapCreate(d *schema.ResourceData, m i
 		d.SetId("WirelessControllerHotspot20QosMap")
 	}
 
-	return resourceWirelessControllerHotspot20QosMapRead(d, m)
+	return readBackAfterCreate(d, "WirelessControllerHotspot20QosMap", mkey,
+		func() (map[string]interface{}, error) {
+			return c.ReadWirelessControllerHotspot20QosMap(mkey, vdomparam)
+		},
+		refreshObjectWirelessControllerHotspot20QosMap, c.Fv)
 }
 
 func resourceWirelessControllerHotspot20QosMapUpdate(d *schema.ResourceData, m interface{}) error {

@@ -786,7 +786,9 @@ func resourceVoipProfileCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("VoipProfile")
 	}
 
-	return resourceVoipProfileRead(d, m)
+	return readBackAfterCreate(d, "VoipProfile", mkey,
+		func() (map[string]interface{}, error) { return c.ReadVoipProfile(mkey, vdomparam) },
+		refreshObjectVoipProfile, c.Fv)
 }
 
 func resourceVoipProfileUpdate(d *schema.ResourceData, m interface{}) error {

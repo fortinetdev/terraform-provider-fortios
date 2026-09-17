@@ -407,7 +407,9 @@ func resourceRouterRouteMapCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("RouterRouteMap")
 	}
 
-	return resourceRouterRouteMapRead(d, m)
+	return readBackAfterCreate(d, "RouterRouteMap", mkey,
+		func() (map[string]interface{}, error) { return c.ReadRouterRouteMap(mkey, vdomparam) },
+		refreshObjectRouterRouteMap, c.Fv)
 }
 
 func resourceRouterRouteMapUpdate(d *schema.ResourceData, m interface{}) error {

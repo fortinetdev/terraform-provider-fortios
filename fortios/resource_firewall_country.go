@@ -138,7 +138,9 @@ func resourceFirewallCountryCreate(d *schema.ResourceData, m interface{}) error 
 		d.SetId("FirewallCountry")
 	}
 
-	return resourceFirewallCountryRead(d, m)
+	return readBackAfterCreate(d, "FirewallCountry", mkey,
+		func() (map[string]interface{}, error) { return c.ReadFirewallCountry(mkey, vdomparam) },
+		refreshObjectFirewallCountry, c.Fv)
 }
 
 func resourceFirewallCountryUpdate(d *schema.ResourceData, m interface{}) error {

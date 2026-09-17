@@ -323,7 +323,9 @@ func resourceSpamfilterProfileCreate(d *schema.ResourceData, m interface{}) erro
 		d.SetId("SpamfilterProfile")
 	}
 
-	return resourceSpamfilterProfileRead(d, m)
+	return readBackAfterCreate(d, "SpamfilterProfile", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSpamfilterProfile(mkey, vdomparam) },
+		refreshObjectSpamfilterProfile, c.Fv)
 }
 
 func resourceSpamfilterProfileUpdate(d *schema.ResourceData, m interface{}) error {

@@ -167,7 +167,9 @@ func resourceFirewallInternetServiceGroupCreate(d *schema.ResourceData, m interf
 		d.SetId("FirewallInternetServiceGroup")
 	}
 
-	return resourceFirewallInternetServiceGroupRead(d, m)
+	return readBackAfterCreate(d, "FirewallInternetServiceGroup", mkey,
+		func() (map[string]interface{}, error) { return c.ReadFirewallInternetServiceGroup(mkey, vdomparam) },
+		refreshObjectFirewallInternetServiceGroup, c.Fv)
 }
 
 func resourceFirewallInternetServiceGroupUpdate(d *schema.ResourceData, m interface{}) error {

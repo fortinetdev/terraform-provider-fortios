@@ -174,7 +174,9 @@ func resourceSctpFilterProfileCreate(d *schema.ResourceData, m interface{}) erro
 		d.SetId("SctpFilterProfile")
 	}
 
-	return resourceSctpFilterProfileRead(d, m)
+	return readBackAfterCreate(d, "SctpFilterProfile", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSctpFilterProfile(mkey, vdomparam) },
+		refreshObjectSctpFilterProfile, c.Fv)
 }
 
 func resourceSctpFilterProfileUpdate(d *schema.ResourceData, m interface{}) error {

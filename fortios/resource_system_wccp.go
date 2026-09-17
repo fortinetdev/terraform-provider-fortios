@@ -219,7 +219,9 @@ func resourceSystemWccpCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("SystemWccp")
 	}
 
-	return resourceSystemWccpRead(d, m)
+	return readBackAfterCreate(d, "SystemWccp", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSystemWccp(mkey, vdomparam) },
+		refreshObjectSystemWccp, c.Fv)
 }
 
 func resourceSystemWccpUpdate(d *schema.ResourceData, m interface{}) error {

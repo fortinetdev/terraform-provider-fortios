@@ -202,7 +202,9 @@ func resourceUserOidcCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("UserOidc")
 	}
 
-	return resourceUserOidcRead(d, m)
+	return readBackAfterCreate(d, "UserOidc", mkey,
+		func() (map[string]interface{}, error) { return c.ReadUserOidc(mkey, vdomparam) },
+		refreshObjectUserOidc, c.Fv)
 }
 
 func resourceUserOidcUpdate(d *schema.ResourceData, m interface{}) error {

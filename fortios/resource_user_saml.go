@@ -264,7 +264,9 @@ func resourceUserSamlCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("UserSaml")
 	}
 
-	return resourceUserSamlRead(d, m)
+	return readBackAfterCreate(d, "UserSaml", mkey,
+		func() (map[string]interface{}, error) { return c.ReadUserSaml(mkey, vdomparam) },
+		refreshObjectUserSaml, c.Fv)
 }
 
 func resourceUserSamlUpdate(d *schema.ResourceData, m interface{}) error {

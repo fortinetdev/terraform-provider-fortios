@@ -162,7 +162,9 @@ func resourceRouterAccessListCreate(d *schema.ResourceData, m interface{}) error
 		d.SetId("RouterAccessList")
 	}
 
-	return resourceRouterAccessListRead(d, m)
+	return readBackAfterCreate(d, "RouterAccessList", mkey,
+		func() (map[string]interface{}, error) { return c.ReadRouterAccessList(mkey, vdomparam) },
+		refreshObjectRouterAccessList, c.Fv)
 }
 
 func resourceRouterAccessListUpdate(d *schema.ResourceData, m interface{}) error {

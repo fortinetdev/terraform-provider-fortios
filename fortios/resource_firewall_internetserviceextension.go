@@ -299,7 +299,9 @@ func resourceFirewallInternetServiceExtensionCreate(d *schema.ResourceData, m in
 		d.SetId("FirewallInternetServiceExtension")
 	}
 
-	return resourceFirewallInternetServiceExtensionRead(d, m)
+	return readBackAfterCreate(d, "FirewallInternetServiceExtension", mkey,
+		func() (map[string]interface{}, error) { return c.ReadFirewallInternetServiceExtension(mkey, vdomparam) },
+		refreshObjectFirewallInternetServiceExtension, c.Fv)
 }
 
 func resourceFirewallInternetServiceExtensionUpdate(d *schema.ResourceData, m interface{}) error {

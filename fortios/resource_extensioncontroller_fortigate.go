@@ -147,7 +147,9 @@ func resourceExtensionControllerFortigateCreate(d *schema.ResourceData, m interf
 		d.SetId("ExtensionControllerFortigate")
 	}
 
-	return resourceExtensionControllerFortigateRead(d, m)
+	return readBackAfterCreate(d, "ExtensionControllerFortigate", mkey,
+		func() (map[string]interface{}, error) { return c.ReadExtensionControllerFortigate(mkey, vdomparam) },
+		refreshObjectExtensionControllerFortigate, c.Fv)
 }
 
 func resourceExtensionControllerFortigateUpdate(d *schema.ResourceData, m interface{}) error {

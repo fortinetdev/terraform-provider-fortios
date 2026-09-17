@@ -183,7 +183,9 @@ func resourceReportDatasetCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("ReportDataset")
 	}
 
-	return resourceReportDatasetRead(d, m)
+	return readBackAfterCreate(d, "ReportDataset", mkey,
+		func() (map[string]interface{}, error) { return c.ReadReportDataset(mkey, vdomparam) },
+		refreshObjectReportDataset, c.Fv)
 }
 
 func resourceReportDatasetUpdate(d *schema.ResourceData, m interface{}) error {

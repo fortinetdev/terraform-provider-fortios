@@ -173,7 +173,9 @@ func resourceWebfilterContentHeaderCreate(d *schema.ResourceData, m interface{})
 		d.SetId("WebfilterContentHeader")
 	}
 
-	return resourceWebfilterContentHeaderRead(d, m)
+	return readBackAfterCreate(d, "WebfilterContentHeader", mkey,
+		func() (map[string]interface{}, error) { return c.ReadWebfilterContentHeader(mkey, vdomparam) },
+		refreshObjectWebfilterContentHeader, c.Fv)
 }
 
 func resourceWebfilterContentHeaderUpdate(d *schema.ResourceData, m interface{}) error {

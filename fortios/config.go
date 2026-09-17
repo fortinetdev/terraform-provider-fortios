@@ -3,6 +3,7 @@ package fortios
 import (
 	"encoding/binary"
 	"fmt"
+	"log"
 	"net"
 	"net/url"
 	"os"
@@ -11,6 +12,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"time"
 	"unicode"
 
 	"github.com/hashicorp/go-version"
@@ -380,6 +382,30 @@ func bZero(v interface{}) bool {
 	return reflect.ValueOf(v).IsZero()
 }
 
+// mkeyToString renders a subtable mkey in its canonical string form so that
+// values from the API response and values from the Terraform configuration
+// compare equal in mergeBlock. Numeric mkeys read from the API arrive as
+// float64 (JSON decoding), and %v would render large whole numbers in
+// scientific notation (e.g. 3221225985 as 3.221225985e+09), which never
+// matches the plain integer form used on the configuration side. Format
+// numbers with their shortest exact decimal representation instead.
+func mkeyToString(v interface{}) string {
+	switch t := v.(type) {
+	case float64:
+		return strconv.FormatFloat(t, 'f', -1, 64)
+	case float32:
+		return strconv.FormatFloat(float64(t), 'f', -1, 32)
+	case int:
+		return strconv.Itoa(t)
+	case int32:
+		return strconv.FormatInt(int64(t), 10)
+	case int64:
+		return strconv.FormatInt(t, 10)
+	default:
+		return fmt.Sprintf("%v", v)
+	}
+}
+
 func mergeBlock(tf_list, rsp_list []interface{}, api_mkey, tf_mkey string) []interface{} {
 	result := []interface{}{}
 	mkey_index_map := make(map[string]int)
@@ -391,7 +417,7 @@ func mergeBlock(tf_list, rsp_list []interface{}, api_mkey, tf_mkey string) []int
 		}
 		item := raw.(map[string]interface{})
 
-		keyStr := fmt.Sprintf("%v", item[api_mkey])
+		keyStr := mkeyToString(item[api_mkey])
 		mkey_index_map[keyStr] = i
 	}
 
@@ -403,7 +429,7 @@ func mergeBlock(tf_list, rsp_list []interface{}, api_mkey, tf_mkey string) []int
 		}
 		item := raw.(map[string]interface{})
 
-		keyStr := fmt.Sprintf("%v", item[tf_mkey])
+		keyStr := mkeyToString(item[tf_mkey])
 
 		if rspIndex, ok := mkey_index_map[keyStr]; ok {
 			rspItem := rsp_list[rspIndex].(map[string]interface{})
@@ -544,4 +570,40 @@ func dedup(v interface{}) interface{} {
 	default:
 		return v
 	}
+}
+
+// readBackAfterCreate re-reads a resource right after a successful Create.
+//
+// Retry a few times before giving up; if the object is still absent, return an
+// explicit error instead of silently removing the resource from state.
+// The Read used during Refresh keeps its own semantics: a real deletion still
+// removes the resource from state.
+func readBackAfterCreate(
+	d *schema.ResourceData,
+	rname string,
+	mkey string,
+	readOnce func() (map[string]interface{}, error),
+	refresh func(*schema.ResourceData, map[string]interface{}, string) error,
+	fv string,
+) error {
+	const attempts = 6
+	const delay = 1 * time.Second
+
+	for i := 0; i < attempts; i++ {
+		o, err := readOnce()
+		if err != nil {
+			return fmt.Errorf("Error reading %s resource after creation: %v", rname, err)
+		}
+		if o != nil {
+			return refresh(d, o, fv)
+		}
+		if i < attempts-1 {
+			log.Printf("[WARN] %s resource (%s) not found right after creation, retrying read-back (%d/%d)", rname, mkey, i+1, attempts-1)
+			time.Sleep(delay)
+		}
+	}
+	return fmt.Errorf(
+		"Error reading %s resource after creation: the creation request succeeded but the object (mkey %q) "+
+			"could not be read back after %d attempts; it may become visible on the device shortly - re-run apply or import it",
+		rname, mkey, attempts)
 }

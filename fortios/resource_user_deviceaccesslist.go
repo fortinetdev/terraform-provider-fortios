@@ -147,7 +147,9 @@ func resourceUserDeviceAccessListCreate(d *schema.ResourceData, m interface{}) e
 		d.SetId("UserDeviceAccessList")
 	}
 
-	return resourceUserDeviceAccessListRead(d, m)
+	return readBackAfterCreate(d, "UserDeviceAccessList", mkey,
+		func() (map[string]interface{}, error) { return c.ReadUserDeviceAccessList(mkey, vdomparam) },
+		refreshObjectUserDeviceAccessList, c.Fv)
 }
 
 func resourceUserDeviceAccessListUpdate(d *schema.ResourceData, m interface{}) error {

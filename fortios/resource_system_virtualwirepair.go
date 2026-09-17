@@ -157,7 +157,9 @@ func resourceSystemVirtualWirePairCreate(d *schema.ResourceData, m interface{}) 
 		d.SetId("SystemVirtualWirePair")
 	}
 
-	return resourceSystemVirtualWirePairRead(d, m)
+	return readBackAfterCreate(d, "SystemVirtualWirePair", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSystemVirtualWirePair(mkey, vdomparam) },
+		refreshObjectSystemVirtualWirePair, c.Fv)
 }
 
 func resourceSystemVirtualWirePairUpdate(d *schema.ResourceData, m interface{}) error {

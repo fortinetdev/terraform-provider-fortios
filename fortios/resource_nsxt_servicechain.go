@@ -156,7 +156,9 @@ func resourceNsxtServiceChainCreate(d *schema.ResourceData, m interface{}) error
 		d.SetId("NsxtServiceChain")
 	}
 
-	return resourceNsxtServiceChainRead(d, m)
+	return readBackAfterCreate(d, "NsxtServiceChain", mkey,
+		func() (map[string]interface{}, error) { return c.ReadNsxtServiceChain(mkey, vdomparam) },
+		refreshObjectNsxtServiceChain, c.Fv)
 }
 
 func resourceNsxtServiceChainUpdate(d *schema.ResourceData, m interface{}) error {

@@ -115,7 +115,9 @@ func resourceFirewallInternetServiceBotnetCreate(d *schema.ResourceData, m inter
 		d.SetId("FirewallInternetServiceBotnet")
 	}
 
-	return resourceFirewallInternetServiceBotnetRead(d, m)
+	return readBackAfterCreate(d, "FirewallInternetServiceBotnet", mkey,
+		func() (map[string]interface{}, error) { return c.ReadFirewallInternetServiceBotnet(mkey, vdomparam) },
+		refreshObjectFirewallInternetServiceBotnet, c.Fv)
 }
 
 func resourceFirewallInternetServiceBotnetUpdate(d *schema.ResourceData, m interface{}) error {

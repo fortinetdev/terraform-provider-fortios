@@ -398,7 +398,9 @@ func resourceWanoptProfileCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("WanoptProfile")
 	}
 
-	return resourceWanoptProfileRead(d, m)
+	return readBackAfterCreate(d, "WanoptProfile", mkey,
+		func() (map[string]interface{}, error) { return c.ReadWanoptProfile(mkey, vdomparam) },
+		refreshObjectWanoptProfile, c.Fv)
 }
 
 func resourceWanoptProfileUpdate(d *schema.ResourceData, m interface{}) error {

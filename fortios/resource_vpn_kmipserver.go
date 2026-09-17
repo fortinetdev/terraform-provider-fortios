@@ -197,7 +197,9 @@ func resourceVpnKmipServerCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("VpnKmipServer")
 	}
 
-	return resourceVpnKmipServerRead(d, m)
+	return readBackAfterCreate(d, "VpnKmipServer", mkey,
+		func() (map[string]interface{}, error) { return c.ReadVpnKmipServer(mkey, vdomparam) },
+		refreshObjectVpnKmipServer, c.Fv)
 }
 
 func resourceVpnKmipServerUpdate(d *schema.ResourceData, m interface{}) error {

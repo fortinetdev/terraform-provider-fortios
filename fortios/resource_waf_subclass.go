@@ -116,7 +116,9 @@ func resourceWafSubClassCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("WafSubClass")
 	}
 
-	return resourceWafSubClassRead(d, m)
+	return readBackAfterCreate(d, "WafSubClass", mkey,
+		func() (map[string]interface{}, error) { return c.ReadWafSubClass(mkey, vdomparam) },
+		refreshObjectWafSubClass, c.Fv)
 }
 
 func resourceWafSubClassUpdate(d *schema.ResourceData, m interface{}) error {

@@ -117,7 +117,9 @@ func resourceSystemSmsServerCreate(d *schema.ResourceData, m interface{}) error 
 		d.SetId("SystemSmsServer")
 	}
 
-	return resourceSystemSmsServerRead(d, m)
+	return readBackAfterCreate(d, "SystemSmsServer", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSystemSmsServer(mkey, vdomparam) },
+		refreshObjectSystemSmsServer, c.Fv)
 }
 
 func resourceSystemSmsServerUpdate(d *schema.ResourceData, m interface{}) error {

@@ -160,7 +160,9 @@ func resourceVpnQkdCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("VpnQkd")
 	}
 
-	return resourceVpnQkdRead(d, m)
+	return readBackAfterCreate(d, "VpnQkd", mkey,
+		func() (map[string]interface{}, error) { return c.ReadVpnQkd(mkey, vdomparam) },
+		refreshObjectVpnQkd, c.Fv)
 }
 
 func resourceVpnQkdUpdate(d *schema.ResourceData, m interface{}) error {

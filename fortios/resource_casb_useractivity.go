@@ -475,7 +475,9 @@ func resourceCasbUserActivityCreate(d *schema.ResourceData, m interface{}) error
 		d.SetId("CasbUserActivity")
 	}
 
-	return resourceCasbUserActivityRead(d, m)
+	return readBackAfterCreate(d, "CasbUserActivity", mkey,
+		func() (map[string]interface{}, error) { return c.ReadCasbUserActivity(mkey, vdomparam) },
+		refreshObjectCasbUserActivity, c.Fv)
 }
 
 func resourceCasbUserActivityUpdate(d *schema.ResourceData, m interface{}) error {

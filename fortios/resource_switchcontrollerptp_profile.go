@@ -143,7 +143,9 @@ func resourceSwitchControllerPtpProfileCreate(d *schema.ResourceData, m interfac
 		d.SetId("SwitchControllerPtpProfile")
 	}
 
-	return resourceSwitchControllerPtpProfileRead(d, m)
+	return readBackAfterCreate(d, "SwitchControllerPtpProfile", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSwitchControllerPtpProfile(mkey, vdomparam) },
+		refreshObjectSwitchControllerPtpProfile, c.Fv)
 }
 
 func resourceSwitchControllerPtpProfileUpdate(d *schema.ResourceData, m interface{}) error {

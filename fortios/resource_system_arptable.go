@@ -123,7 +123,9 @@ func resourceSystemArpTableCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("SystemArpTable")
 	}
 
-	return resourceSystemArpTableRead(d, m)
+	return readBackAfterCreate(d, "SystemArpTable", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSystemArpTable(mkey, vdomparam) },
+		refreshObjectSystemArpTable, c.Fv)
 }
 
 func resourceSystemArpTableUpdate(d *schema.ResourceData, m interface{}) error {

@@ -131,7 +131,9 @@ func resourceIpsViewMapCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("IpsViewMap")
 	}
 
-	return resourceIpsViewMapRead(d, m)
+	return readBackAfterCreate(d, "IpsViewMap", mkey,
+		func() (map[string]interface{}, error) { return c.ReadIpsViewMap(mkey, vdomparam) },
+		refreshObjectIpsViewMap, c.Fv)
 }
 
 func resourceIpsViewMapUpdate(d *schema.ResourceData, m interface{}) error {

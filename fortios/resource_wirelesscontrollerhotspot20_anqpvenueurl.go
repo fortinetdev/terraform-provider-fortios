@@ -145,7 +145,11 @@ func resourceWirelessControllerHotspot20AnqpVenueUrlCreate(d *schema.ResourceDat
 		d.SetId("WirelessControllerHotspot20AnqpVenueUrl")
 	}
 
-	return resourceWirelessControllerHotspot20AnqpVenueUrlRead(d, m)
+	return readBackAfterCreate(d, "WirelessControllerHotspot20AnqpVenueUrl", mkey,
+		func() (map[string]interface{}, error) {
+			return c.ReadWirelessControllerHotspot20AnqpVenueUrl(mkey, vdomparam)
+		},
+		refreshObjectWirelessControllerHotspot20AnqpVenueUrl, c.Fv)
 }
 
 func resourceWirelessControllerHotspot20AnqpVenueUrlUpdate(d *schema.ResourceData, m interface{}) error {

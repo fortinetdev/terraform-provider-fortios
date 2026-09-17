@@ -115,7 +115,11 @@ func resourceFirewallInternetServiceIpblReasonCreate(d *schema.ResourceData, m i
 		d.SetId("FirewallInternetServiceIpblReason")
 	}
 
-	return resourceFirewallInternetServiceIpblReasonRead(d, m)
+	return readBackAfterCreate(d, "FirewallInternetServiceIpblReason", mkey,
+		func() (map[string]interface{}, error) {
+			return c.ReadFirewallInternetServiceIpblReason(mkey, vdomparam)
+		},
+		refreshObjectFirewallInternetServiceIpblReason, c.Fv)
 }
 
 func resourceFirewallInternetServiceIpblReasonUpdate(d *schema.ResourceData, m interface{}) error {

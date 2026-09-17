@@ -253,7 +253,9 @@ func resourceAuthenticationRuleCreate(d *schema.ResourceData, m interface{}) err
 		d.SetId("AuthenticationRule")
 	}
 
-	return resourceAuthenticationRuleRead(d, m)
+	return readBackAfterCreate(d, "AuthenticationRule", mkey,
+		func() (map[string]interface{}, error) { return c.ReadAuthenticationRule(mkey, vdomparam) },
+		refreshObjectAuthenticationRule, c.Fv)
 }
 
 func resourceAuthenticationRuleUpdate(d *schema.ResourceData, m interface{}) error {

@@ -1000,7 +1000,9 @@ func resourceWafProfileCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("WafProfile")
 	}
 
-	return resourceWafProfileRead(d, m)
+	return readBackAfterCreate(d, "WafProfile", mkey,
+		func() (map[string]interface{}, error) { return c.ReadWafProfile(mkey, vdomparam) },
+		refreshObjectWafProfile, c.Fv)
 }
 
 func resourceWafProfileUpdate(d *schema.ResourceData, m interface{}) error {

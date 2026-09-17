@@ -188,7 +188,9 @@ func resourceSystemSsoAdminCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("SystemSsoAdmin")
 	}
 
-	return resourceSystemSsoAdminRead(d, m)
+	return readBackAfterCreate(d, "SystemSsoAdmin", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSystemSsoAdmin(mkey, vdomparam) },
+		refreshObjectSystemSsoAdmin, c.Fv)
 }
 
 func resourceSystemSsoAdminUpdate(d *schema.ResourceData, m interface{}) error {

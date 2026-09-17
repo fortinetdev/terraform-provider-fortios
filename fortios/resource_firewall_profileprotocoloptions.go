@@ -1059,7 +1059,9 @@ func resourceFirewallProfileProtocolOptionsCreate(d *schema.ResourceData, m inte
 		d.SetId("FirewallProfileProtocolOptions")
 	}
 
-	return resourceFirewallProfileProtocolOptionsRead(d, m)
+	return readBackAfterCreate(d, "FirewallProfileProtocolOptions", mkey,
+		func() (map[string]interface{}, error) { return c.ReadFirewallProfileProtocolOptions(mkey, vdomparam) },
+		refreshObjectFirewallProfileProtocolOptions, c.Fv)
 }
 
 func resourceFirewallProfileProtocolOptionsUpdate(d *schema.ResourceData, m interface{}) error {

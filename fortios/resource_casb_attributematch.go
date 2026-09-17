@@ -221,7 +221,9 @@ func resourceCasbAttributeMatchCreate(d *schema.ResourceData, m interface{}) err
 		d.SetId("CasbAttributeMatch")
 	}
 
-	return resourceCasbAttributeMatchRead(d, m)
+	return readBackAfterCreate(d, "CasbAttributeMatch", mkey,
+		func() (map[string]interface{}, error) { return c.ReadCasbAttributeMatch(mkey, vdomparam) },
+		refreshObjectCasbAttributeMatch, c.Fv)
 }
 
 func resourceCasbAttributeMatchUpdate(d *schema.ResourceData, m interface{}) error {

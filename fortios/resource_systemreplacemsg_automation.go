@@ -127,7 +127,9 @@ func resourceSystemReplacemsgAutomationCreate(d *schema.ResourceData, m interfac
 		d.SetId("SystemReplacemsgAutomation")
 	}
 
-	return resourceSystemReplacemsgAutomationRead(d, m)
+	return readBackAfterCreate(d, "SystemReplacemsgAutomation", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSystemReplacemsgAutomation(mkey, vdomparam) },
+		refreshObjectSystemReplacemsgAutomation, c.Fv)
 }
 
 func resourceSystemReplacemsgAutomationUpdate(d *schema.ResourceData, m interface{}) error {

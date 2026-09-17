@@ -230,7 +230,9 @@ func resourceReportStyleCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("ReportStyle")
 	}
 
-	return resourceReportStyleRead(d, m)
+	return readBackAfterCreate(d, "ReportStyle", mkey,
+		func() (map[string]interface{}, error) { return c.ReadReportStyle(mkey, vdomparam) },
+		refreshObjectReportStyle, c.Fv)
 }
 
 func resourceReportStyleUpdate(d *schema.ResourceData, m interface{}) error {

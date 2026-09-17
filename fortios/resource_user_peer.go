@@ -209,7 +209,9 @@ func resourceUserPeerCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("UserPeer")
 	}
 
-	return resourceUserPeerRead(d, m)
+	return readBackAfterCreate(d, "UserPeer", mkey,
+		func() (map[string]interface{}, error) { return c.ReadUserPeer(mkey, vdomparam) },
+		refreshObjectUserPeer, c.Fv)
 }
 
 func resourceUserPeerUpdate(d *schema.ResourceData, m interface{}) error {

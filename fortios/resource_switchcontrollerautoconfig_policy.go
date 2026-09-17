@@ -138,7 +138,9 @@ func resourceSwitchControllerAutoConfigPolicyCreate(d *schema.ResourceData, m in
 		d.SetId("SwitchControllerAutoConfigPolicy")
 	}
 
-	return resourceSwitchControllerAutoConfigPolicyRead(d, m)
+	return readBackAfterCreate(d, "SwitchControllerAutoConfigPolicy", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSwitchControllerAutoConfigPolicy(mkey, vdomparam) },
+		refreshObjectSwitchControllerAutoConfigPolicy, c.Fv)
 }
 
 func resourceSwitchControllerAutoConfigPolicyUpdate(d *schema.ResourceData, m interface{}) error {

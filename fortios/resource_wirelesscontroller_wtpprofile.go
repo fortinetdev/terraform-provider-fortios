@@ -2843,7 +2843,9 @@ func resourceWirelessControllerWtpProfileCreate(d *schema.ResourceData, m interf
 		d.SetId("WirelessControllerWtpProfile")
 	}
 
-	return resourceWirelessControllerWtpProfileRead(d, m)
+	return readBackAfterCreate(d, "WirelessControllerWtpProfile", mkey,
+		func() (map[string]interface{}, error) { return c.ReadWirelessControllerWtpProfile(mkey, vdomparam) },
+		refreshObjectWirelessControllerWtpProfile, c.Fv)
 }
 
 func resourceWirelessControllerWtpProfileUpdate(d *schema.ResourceData, m interface{}) error {

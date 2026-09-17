@@ -169,7 +169,9 @@ func resourceUserScimCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("UserScim")
 	}
 
-	return resourceUserScimRead(d, m)
+	return readBackAfterCreate(d, "UserScim", mkey,
+		func() (map[string]interface{}, error) { return c.ReadUserScim(mkey, vdomparam) },
+		refreshObjectUserScim, c.Fv)
 }
 
 func resourceUserScimUpdate(d *schema.ResourceData, m interface{}) error {

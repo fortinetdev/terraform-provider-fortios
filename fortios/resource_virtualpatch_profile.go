@@ -205,7 +205,9 @@ func resourceVirtualPatchProfileCreate(d *schema.ResourceData, m interface{}) er
 		d.SetId("VirtualPatchProfile")
 	}
 
-	return resourceVirtualPatchProfileRead(d, m)
+	return readBackAfterCreate(d, "VirtualPatchProfile", mkey,
+		func() (map[string]interface{}, error) { return c.ReadVirtualPatchProfile(mkey, vdomparam) },
+		refreshObjectVirtualPatchProfile, c.Fv)
 }
 
 func resourceVirtualPatchProfileUpdate(d *schema.ResourceData, m interface{}) error {

@@ -169,7 +169,9 @@ func resourceSystemVirtualSwitchCreate(d *schema.ResourceData, m interface{}) er
 		d.SetId("SystemVirtualSwitch")
 	}
 
-	return resourceSystemVirtualSwitchRead(d, m)
+	return readBackAfterCreate(d, "SystemVirtualSwitch", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSystemVirtualSwitch(mkey, vdomparam) },
+		refreshObjectSystemVirtualSwitch, c.Fv)
 }
 
 func resourceSystemVirtualSwitchUpdate(d *schema.ResourceData, m interface{}) error {

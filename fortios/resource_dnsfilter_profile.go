@@ -333,7 +333,9 @@ func resourceDnsfilterProfileCreate(d *schema.ResourceData, m interface{}) error
 		d.SetId("DnsfilterProfile")
 	}
 
-	return resourceDnsfilterProfileRead(d, m)
+	return readBackAfterCreate(d, "DnsfilterProfile", mkey,
+		func() (map[string]interface{}, error) { return c.ReadDnsfilterProfile(mkey, vdomparam) },
+		refreshObjectDnsfilterProfile, c.Fv)
 }
 
 func resourceDnsfilterProfileUpdate(d *schema.ResourceData, m interface{}) error {

@@ -268,7 +268,9 @@ func resourceUserDomainControllerCreate(d *schema.ResourceData, m interface{}) e
 		d.SetId("UserDomainController")
 	}
 
-	return resourceUserDomainControllerRead(d, m)
+	return readBackAfterCreate(d, "UserDomainController", mkey,
+		func() (map[string]interface{}, error) { return c.ReadUserDomainController(mkey, vdomparam) },
+		refreshObjectUserDomainController, c.Fv)
 }
 
 func resourceUserDomainControllerUpdate(d *schema.ResourceData, m interface{}) error {

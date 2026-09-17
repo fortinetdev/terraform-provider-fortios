@@ -160,7 +160,9 @@ func resourceFirewallIdentityBasedRouteCreate(d *schema.ResourceData, m interfac
 		d.SetId("FirewallIdentityBasedRoute")
 	}
 
-	return resourceFirewallIdentityBasedRouteRead(d, m)
+	return readBackAfterCreate(d, "FirewallIdentityBasedRoute", mkey,
+		func() (map[string]interface{}, error) { return c.ReadFirewallIdentityBasedRoute(mkey, vdomparam) },
+		refreshObjectFirewallIdentityBasedRoute, c.Fv)
 }
 
 func resourceFirewallIdentityBasedRouteUpdate(d *schema.ResourceData, m interface{}) error {

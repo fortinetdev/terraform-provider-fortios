@@ -153,7 +153,9 @@ func resourceFirewallScheduleRecurringCreate(d *schema.ResourceData, m interface
 		d.SetId("FirewallScheduleRecurring")
 	}
 
-	return resourceFirewallScheduleRecurringRead(d, m)
+	return readBackAfterCreate(d, "FirewallScheduleRecurring", mkey,
+		func() (map[string]interface{}, error) { return c.ReadFirewallScheduleRecurring(mkey, vdomparam) },
+		refreshObjectFirewallScheduleRecurring, c.Fv)
 }
 
 func resourceFirewallScheduleRecurringUpdate(d *schema.ResourceData, m interface{}) error {

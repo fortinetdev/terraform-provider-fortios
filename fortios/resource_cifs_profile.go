@@ -207,7 +207,9 @@ func resourceCifsProfileCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("CifsProfile")
 	}
 
-	return resourceCifsProfileRead(d, m)
+	return readBackAfterCreate(d, "CifsProfile", mkey,
+		func() (map[string]interface{}, error) { return c.ReadCifsProfile(mkey, vdomparam) },
+		refreshObjectCifsProfile, c.Fv)
 }
 
 func resourceCifsProfileUpdate(d *schema.ResourceData, m interface{}) error {

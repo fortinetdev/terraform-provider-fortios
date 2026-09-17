@@ -140,7 +140,9 @@ func resourceRouterbgpNetworkCreate(d *schema.ResourceData, m interface{}) error
 		d.SetId("RouterbgpNetwork")
 	}
 
-	return resourceRouterbgpNetworkRead(d, m)
+	return readBackAfterCreate(d, "RouterbgpNetwork", mkey,
+		func() (map[string]interface{}, error) { return c.ReadRouterbgpNetwork(mkey, vdomparam) },
+		refreshObjectRouterbgpNetwork, c.Fv)
 }
 
 func resourceRouterbgpNetworkUpdate(d *schema.ResourceData, m interface{}) error {

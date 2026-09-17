@@ -127,7 +127,9 @@ func resourceWebfilterFtgdLocalRiskCreate(d *schema.ResourceData, m interface{})
 		d.SetId("WebfilterFtgdLocalRisk")
 	}
 
-	return resourceWebfilterFtgdLocalRiskRead(d, m)
+	return readBackAfterCreate(d, "WebfilterFtgdLocalRisk", mkey,
+		func() (map[string]interface{}, error) { return c.ReadWebfilterFtgdLocalRisk(mkey, vdomparam) },
+		refreshObjectWebfilterFtgdLocalRisk, c.Fv)
 }
 
 func resourceWebfilterFtgdLocalRiskUpdate(d *schema.ResourceData, m interface{}) error {

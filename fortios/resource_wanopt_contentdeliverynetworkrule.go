@@ -308,7 +308,9 @@ func resourceWanoptContentDeliveryNetworkRuleCreate(d *schema.ResourceData, m in
 		d.SetId("WanoptContentDeliveryNetworkRule")
 	}
 
-	return resourceWanoptContentDeliveryNetworkRuleRead(d, m)
+	return readBackAfterCreate(d, "WanoptContentDeliveryNetworkRule", mkey,
+		func() (map[string]interface{}, error) { return c.ReadWanoptContentDeliveryNetworkRule(mkey, vdomparam) },
+		refreshObjectWanoptContentDeliveryNetworkRule, c.Fv)
 }
 
 func resourceWanoptContentDeliveryNetworkRuleUpdate(d *schema.ResourceData, m interface{}) error {

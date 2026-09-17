@@ -130,7 +130,11 @@ func resourceSystemAffinityPacketRedistributionCreate(d *schema.ResourceData, m 
 		d.SetId("SystemAffinityPacketRedistribution")
 	}
 
-	return resourceSystemAffinityPacketRedistributionRead(d, m)
+	return readBackAfterCreate(d, "SystemAffinityPacketRedistribution", mkey,
+		func() (map[string]interface{}, error) {
+			return c.ReadSystemAffinityPacketRedistribution(mkey, vdomparam)
+		},
+		refreshObjectSystemAffinityPacketRedistribution, c.Fv)
 }
 
 func resourceSystemAffinityPacketRedistributionUpdate(d *schema.ResourceData, m interface{}) error {

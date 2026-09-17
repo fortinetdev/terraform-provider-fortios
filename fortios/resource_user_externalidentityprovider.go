@@ -174,7 +174,9 @@ func resourceUserExternalIdentityProviderCreate(d *schema.ResourceData, m interf
 		d.SetId("UserExternalIdentityProvider")
 	}
 
-	return resourceUserExternalIdentityProviderRead(d, m)
+	return readBackAfterCreate(d, "UserExternalIdentityProvider", mkey,
+		func() (map[string]interface{}, error) { return c.ReadUserExternalIdentityProvider(mkey, vdomparam) },
+		refreshObjectUserExternalIdentityProvider, c.Fv)
 }
 
 func resourceUserExternalIdentityProviderUpdate(d *schema.ResourceData, m interface{}) error {

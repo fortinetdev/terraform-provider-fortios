@@ -225,7 +225,9 @@ func resourceFirewallInternetServiceCustomCreate(d *schema.ResourceData, m inter
 		d.SetId("FirewallInternetServiceCustom")
 	}
 
-	return resourceFirewallInternetServiceCustomRead(d, m)
+	return readBackAfterCreate(d, "FirewallInternetServiceCustom", mkey,
+		func() (map[string]interface{}, error) { return c.ReadFirewallInternetServiceCustom(mkey, vdomparam) },
+		refreshObjectFirewallInternetServiceCustom, c.Fv)
 }
 
 func resourceFirewallInternetServiceCustomUpdate(d *schema.ResourceData, m interface{}) error {

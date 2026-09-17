@@ -193,7 +193,9 @@ func resourceSystemVdomPropertyCreate(d *schema.ResourceData, m interface{}) err
 		d.SetId("SystemVdomProperty")
 	}
 
-	return resourceSystemVdomPropertyRead(d, m)
+	return readBackAfterCreate(d, "SystemVdomProperty", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSystemVdomProperty(mkey, vdomparam) },
+		refreshObjectSystemVdomProperty, c.Fv)
 }
 
 func resourceSystemVdomPropertyUpdate(d *schema.ResourceData, m interface{}) error {

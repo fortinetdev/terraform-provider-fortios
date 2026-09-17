@@ -192,7 +192,9 @@ func resourceVpnSslClientCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("VpnSslClient")
 	}
 
-	return resourceVpnSslClientRead(d, m)
+	return readBackAfterCreate(d, "VpnSslClient", mkey,
+		func() (map[string]interface{}, error) { return c.ReadVpnSslClient(mkey, vdomparam) },
+		refreshObjectVpnSslClient, c.Fv)
 }
 
 func resourceVpnSslClientUpdate(d *schema.ResourceData, m interface{}) error {

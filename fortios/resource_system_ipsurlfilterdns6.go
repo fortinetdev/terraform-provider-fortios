@@ -116,7 +116,9 @@ func resourceSystemIpsUrlfilterDns6Create(d *schema.ResourceData, m interface{})
 		d.SetId("SystemIpsUrlfilterDns6")
 	}
 
-	return resourceSystemIpsUrlfilterDns6Read(d, m)
+	return readBackAfterCreate(d, "SystemIpsUrlfilterDns6", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSystemIpsUrlfilterDns6(mkey, vdomparam) },
+		refreshObjectSystemIpsUrlfilterDns6, c.Fv)
 }
 
 func resourceSystemIpsUrlfilterDns6Update(d *schema.ResourceData, m interface{}) error {

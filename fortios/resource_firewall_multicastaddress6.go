@@ -187,7 +187,9 @@ func resourceFirewallMulticastAddress6Create(d *schema.ResourceData, m interface
 		d.SetId("FirewallMulticastAddress6")
 	}
 
-	return resourceFirewallMulticastAddress6Read(d, m)
+	return readBackAfterCreate(d, "FirewallMulticastAddress6", mkey,
+		func() (map[string]interface{}, error) { return c.ReadFirewallMulticastAddress6(mkey, vdomparam) },
+		refreshObjectFirewallMulticastAddress6, c.Fv)
 }
 
 func resourceFirewallMulticastAddress6Update(d *schema.ResourceData, m interface{}) error {

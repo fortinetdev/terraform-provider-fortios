@@ -144,7 +144,9 @@ func resourceFirewallAccessProxyVirtualHostCreate(d *schema.ResourceData, m inte
 		d.SetId("FirewallAccessProxyVirtualHost")
 	}
 
-	return resourceFirewallAccessProxyVirtualHostRead(d, m)
+	return readBackAfterCreate(d, "FirewallAccessProxyVirtualHost", mkey,
+		func() (map[string]interface{}, error) { return c.ReadFirewallAccessProxyVirtualHost(mkey, vdomparam) },
+		refreshObjectFirewallAccessProxyVirtualHost, c.Fv)
 }
 
 func resourceFirewallAccessProxyVirtualHostUpdate(d *schema.ResourceData, m interface{}) error {

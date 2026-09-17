@@ -205,7 +205,9 @@ func resourceFirewallShapingProfileCreate(d *schema.ResourceData, m interface{})
 		d.SetId("FirewallShapingProfile")
 	}
 
-	return resourceFirewallShapingProfileRead(d, m)
+	return readBackAfterCreate(d, "FirewallShapingProfile", mkey,
+		func() (map[string]interface{}, error) { return c.ReadFirewallShapingProfile(mkey, vdomparam) },
+		refreshObjectFirewallShapingProfile, c.Fv)
 }
 
 func resourceFirewallShapingProfileUpdate(d *schema.ResourceData, m interface{}) error {

@@ -132,7 +132,9 @@ func resourceTelemetryControllerAgentCreate(d *schema.ResourceData, m interface{
 		d.SetId("TelemetryControllerAgent")
 	}
 
-	return resourceTelemetryControllerAgentRead(d, m)
+	return readBackAfterCreate(d, "TelemetryControllerAgent", mkey,
+		func() (map[string]interface{}, error) { return c.ReadTelemetryControllerAgent(mkey, vdomparam) },
+		refreshObjectTelemetryControllerAgent, c.Fv)
 }
 
 func resourceTelemetryControllerAgentUpdate(d *schema.ResourceData, m interface{}) error {

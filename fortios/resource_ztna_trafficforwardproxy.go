@@ -515,7 +515,9 @@ func resourceZtnaTrafficForwardProxyCreate(d *schema.ResourceData, m interface{}
 		d.SetId("ZtnaTrafficForwardProxy")
 	}
 
-	return resourceZtnaTrafficForwardProxyRead(d, m)
+	return readBackAfterCreate(d, "ZtnaTrafficForwardProxy", mkey,
+		func() (map[string]interface{}, error) { return c.ReadZtnaTrafficForwardProxy(mkey, vdomparam) },
+		refreshObjectZtnaTrafficForwardProxy, c.Fv)
 }
 
 func resourceZtnaTrafficForwardProxyUpdate(d *schema.ResourceData, m interface{}) error {

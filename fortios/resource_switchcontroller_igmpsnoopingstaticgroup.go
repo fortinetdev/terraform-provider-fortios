@@ -172,7 +172,11 @@ func resourceSwitchControllerIgmpSnoopingStaticGroupCreate(d *schema.ResourceDat
 		d.SetId("SwitchControllerIgmpSnoopingStaticGroup")
 	}
 
-	return resourceSwitchControllerIgmpSnoopingStaticGroupRead(d, m)
+	return readBackAfterCreate(d, "SwitchControllerIgmpSnoopingStaticGroup", mkey,
+		func() (map[string]interface{}, error) {
+			return c.ReadSwitchControllerIgmpSnoopingStaticGroup(mkey, vdomparam)
+		},
+		refreshObjectSwitchControllerIgmpSnoopingStaticGroup, c.Fv)
 }
 
 func resourceSwitchControllerIgmpSnoopingStaticGroupUpdate(d *schema.ResourceData, m interface{}) error {

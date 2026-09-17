@@ -161,7 +161,9 @@ func resourceSwitchControllerQosDot1PMapCreate(d *schema.ResourceData, m interfa
 		d.SetId("SwitchControllerQosDot1PMap")
 	}
 
-	return resourceSwitchControllerQosDot1PMapRead(d, m)
+	return readBackAfterCreate(d, "SwitchControllerQosDot1PMap", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSwitchControllerQosDot1PMap(mkey, vdomparam) },
+		refreshObjectSwitchControllerQosDot1PMap, c.Fv)
 }
 
 func resourceSwitchControllerQosDot1PMapUpdate(d *schema.ResourceData, m interface{}) error {

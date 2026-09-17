@@ -192,7 +192,9 @@ func resourceUserSecurityExemptListCreate(d *schema.ResourceData, m interface{})
 		d.SetId("UserSecurityExemptList")
 	}
 
-	return resourceUserSecurityExemptListRead(d, m)
+	return readBackAfterCreate(d, "UserSecurityExemptList", mkey,
+		func() (map[string]interface{}, error) { return c.ReadUserSecurityExemptList(mkey, vdomparam) },
+		refreshObjectUserSecurityExemptList, c.Fv)
 }
 
 func resourceUserSecurityExemptListUpdate(d *schema.ResourceData, m interface{}) error {

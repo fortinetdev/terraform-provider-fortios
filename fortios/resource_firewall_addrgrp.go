@@ -249,7 +249,9 @@ func resourceFirewallAddrgrpCreate(d *schema.ResourceData, m interface{}) error 
 		d.SetId("FirewallAddrgrp")
 	}
 
-	return resourceFirewallAddrgrpRead(d, m)
+	return readBackAfterCreate(d, "FirewallAddrgrp", mkey,
+		func() (map[string]interface{}, error) { return c.ReadFirewallAddrgrp(mkey, vdomparam) },
+		refreshObjectFirewallAddrgrp, c.Fv)
 }
 
 func resourceFirewallAddrgrpUpdate(d *schema.ResourceData, m interface{}) error {

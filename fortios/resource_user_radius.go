@@ -509,7 +509,9 @@ func resourceUserRadiusCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("UserRadius")
 	}
 
-	return resourceUserRadiusRead(d, m)
+	return readBackAfterCreate(d, "UserRadius", mkey,
+		func() (map[string]interface{}, error) { return c.ReadUserRadius(mkey, vdomparam) },
+		refreshObjectUserRadius, c.Fv)
 }
 
 func resourceUserRadiusUpdate(d *schema.ResourceData, m interface{}) error {

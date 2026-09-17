@@ -148,7 +148,9 @@ func resourceSystemVdomExceptionCreate(d *schema.ResourceData, m interface{}) er
 		d.SetId("SystemVdomException")
 	}
 
-	return resourceSystemVdomExceptionRead(d, m)
+	return readBackAfterCreate(d, "SystemVdomException", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSystemVdomException(mkey, vdomparam) },
+		refreshObjectSystemVdomException, c.Fv)
 }
 
 func resourceSystemVdomExceptionUpdate(d *schema.ResourceData, m interface{}) error {

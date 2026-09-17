@@ -194,7 +194,9 @@ func resourceFirewallAddress6TemplateCreate(d *schema.ResourceData, m interface{
 		d.SetId("FirewallAddress6Template")
 	}
 
-	return resourceFirewallAddress6TemplateRead(d, m)
+	return readBackAfterCreate(d, "FirewallAddress6Template", mkey,
+		func() (map[string]interface{}, error) { return c.ReadFirewallAddress6Template(mkey, vdomparam) },
+		refreshObjectFirewallAddress6Template, c.Fv)
 }
 
 func resourceFirewallAddress6TemplateUpdate(d *schema.ResourceData, m interface{}) error {

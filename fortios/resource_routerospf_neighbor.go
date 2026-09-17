@@ -133,7 +133,9 @@ func resourceRouterospfNeighborCreate(d *schema.ResourceData, m interface{}) err
 		d.SetId("RouterospfNeighbor")
 	}
 
-	return resourceRouterospfNeighborRead(d, m)
+	return readBackAfterCreate(d, "RouterospfNeighbor", mkey,
+		func() (map[string]interface{}, error) { return c.ReadRouterospfNeighbor(mkey, vdomparam) },
+		refreshObjectRouterospfNeighbor, c.Fv)
 }
 
 func resourceRouterospfNeighborUpdate(d *schema.ResourceData, m interface{}) error {

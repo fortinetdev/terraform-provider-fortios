@@ -126,7 +126,9 @@ func resourceWirelessControllerApStatusCreate(d *schema.ResourceData, m interfac
 		d.SetId("WirelessControllerApStatus")
 	}
 
-	return resourceWirelessControllerApStatusRead(d, m)
+	return readBackAfterCreate(d, "WirelessControllerApStatus", mkey,
+		func() (map[string]interface{}, error) { return c.ReadWirelessControllerApStatus(mkey, vdomparam) },
+		refreshObjectWirelessControllerApStatus, c.Fv)
 }
 
 func resourceWirelessControllerApStatusUpdate(d *schema.ResourceData, m interface{}) error {

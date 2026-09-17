@@ -133,7 +133,9 @@ func resourceWebProxyFastFallbackCreate(d *schema.ResourceData, m interface{}) e
 		d.SetId("WebProxyFastFallback")
 	}
 
-	return resourceWebProxyFastFallbackRead(d, m)
+	return readBackAfterCreate(d, "WebProxyFastFallback", mkey,
+		func() (map[string]interface{}, error) { return c.ReadWebProxyFastFallback(mkey, vdomparam) },
+		refreshObjectWebProxyFastFallback, c.Fv)
 }
 
 func resourceWebProxyFastFallbackUpdate(d *schema.ResourceData, m interface{}) error {

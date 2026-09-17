@@ -2195,7 +2195,9 @@ func resourceSwitchControllerManagedSwitchCreate(d *schema.ResourceData, m inter
 		d.SetId("SwitchControllerManagedSwitch")
 	}
 
-	return resourceSwitchControllerManagedSwitchRead(d, m)
+	return readBackAfterCreate(d, "SwitchControllerManagedSwitch", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSwitchControllerManagedSwitch(mkey, vdomparam) },
+		refreshObjectSwitchControllerManagedSwitch, c.Fv)
 }
 
 func resourceSwitchControllerManagedSwitchUpdate(d *schema.ResourceData, m interface{}) error {

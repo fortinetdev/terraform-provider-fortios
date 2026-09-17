@@ -110,7 +110,9 @@ func resourceDlpFpSensitivityCreate(d *schema.ResourceData, m interface{}) error
 		d.SetId("DlpFpSensitivity")
 	}
 
-	return resourceDlpFpSensitivityRead(d, m)
+	return readBackAfterCreate(d, "DlpFpSensitivity", mkey,
+		func() (map[string]interface{}, error) { return c.ReadDlpFpSensitivity(mkey, vdomparam) },
+		refreshObjectDlpFpSensitivity, c.Fv)
 }
 
 func resourceDlpFpSensitivityUpdate(d *schema.ResourceData, m interface{}) error {

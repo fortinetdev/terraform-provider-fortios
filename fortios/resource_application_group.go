@@ -193,7 +193,9 @@ func resourceApplicationGroupCreate(d *schema.ResourceData, m interface{}) error
 		d.SetId("ApplicationGroup")
 	}
 
-	return resourceApplicationGroupRead(d, m)
+	return readBackAfterCreate(d, "ApplicationGroup", mkey,
+		func() (map[string]interface{}, error) { return c.ReadApplicationGroup(mkey, vdomparam) },
+		refreshObjectApplicationGroup, c.Fv)
 }
 
 func resourceApplicationGroupUpdate(d *schema.ResourceData, m interface{}) error {

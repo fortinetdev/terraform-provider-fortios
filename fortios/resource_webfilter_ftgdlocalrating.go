@@ -126,7 +126,9 @@ func resourceWebfilterFtgdLocalRatingCreate(d *schema.ResourceData, m interface{
 		d.SetId("WebfilterFtgdLocalRating")
 	}
 
-	return resourceWebfilterFtgdLocalRatingRead(d, m)
+	return readBackAfterCreate(d, "WebfilterFtgdLocalRating", mkey,
+		func() (map[string]interface{}, error) { return c.ReadWebfilterFtgdLocalRating(mkey, vdomparam) },
+		refreshObjectWebfilterFtgdLocalRating, c.Fv)
 }
 
 func resourceWebfilterFtgdLocalRatingUpdate(d *schema.ResourceData, m interface{}) error {

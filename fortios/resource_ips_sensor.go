@@ -473,7 +473,9 @@ func resourceIpsSensorCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("IpsSensor")
 	}
 
-	return resourceIpsSensorRead(d, m)
+	return readBackAfterCreate(d, "IpsSensor", mkey,
+		func() (map[string]interface{}, error) { return c.ReadIpsSensor(mkey, vdomparam) },
+		refreshObjectIpsSensor, c.Fv)
 }
 
 func resourceIpsSensorUpdate(d *schema.ResourceData, m interface{}) error {

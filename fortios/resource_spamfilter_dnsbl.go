@@ -155,7 +155,9 @@ func resourceSpamfilterDnsblCreate(d *schema.ResourceData, m interface{}) error 
 		d.SetId("SpamfilterDnsbl")
 	}
 
-	return resourceSpamfilterDnsblRead(d, m)
+	return readBackAfterCreate(d, "SpamfilterDnsbl", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSpamfilterDnsbl(mkey, vdomparam) },
+		refreshObjectSpamfilterDnsbl, c.Fv)
 }
 
 func resourceSpamfilterDnsblUpdate(d *schema.ResourceData, m interface{}) error {

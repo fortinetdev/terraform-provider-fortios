@@ -200,7 +200,11 @@ func resourceFirewallInternetServiceFortiguardCreate(d *schema.ResourceData, m i
 		d.SetId("FirewallInternetServiceFortiguard")
 	}
 
-	return resourceFirewallInternetServiceFortiguardRead(d, m)
+	return readBackAfterCreate(d, "FirewallInternetServiceFortiguard", mkey,
+		func() (map[string]interface{}, error) {
+			return c.ReadFirewallInternetServiceFortiguard(mkey, vdomparam)
+		},
+		refreshObjectFirewallInternetServiceFortiguard, c.Fv)
 }
 
 func resourceFirewallInternetServiceFortiguardUpdate(d *schema.ResourceData, m interface{}) error {

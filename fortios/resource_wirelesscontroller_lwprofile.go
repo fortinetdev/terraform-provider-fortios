@@ -154,7 +154,9 @@ func resourceWirelessControllerLwProfileCreate(d *schema.ResourceData, m interfa
 		d.SetId("WirelessControllerLwProfile")
 	}
 
-	return resourceWirelessControllerLwProfileRead(d, m)
+	return readBackAfterCreate(d, "WirelessControllerLwProfile", mkey,
+		func() (map[string]interface{}, error) { return c.ReadWirelessControllerLwProfile(mkey, vdomparam) },
+		refreshObjectWirelessControllerLwProfile, c.Fv)
 }
 
 func resourceWirelessControllerLwProfileUpdate(d *schema.ResourceData, m interface{}) error {

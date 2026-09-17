@@ -157,7 +157,9 @@ func resourceRouterAccessList6Create(d *schema.ResourceData, m interface{}) erro
 		d.SetId("RouterAccessList6")
 	}
 
-	return resourceRouterAccessList6Read(d, m)
+	return readBackAfterCreate(d, "RouterAccessList6", mkey,
+		func() (map[string]interface{}, error) { return c.ReadRouterAccessList6(mkey, vdomparam) },
+		refreshObjectRouterAccessList6, c.Fv)
 }
 
 func resourceRouterAccessList6Update(d *schema.ResourceData, m interface{}) error {

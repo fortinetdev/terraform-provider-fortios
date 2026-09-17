@@ -239,7 +239,9 @@ func resourceSystemDdnsCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("SystemDdns")
 	}
 
-	return resourceSystemDdnsRead(d, m)
+	return readBackAfterCreate(d, "SystemDdns", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSystemDdns(mkey, vdomparam) },
+		refreshObjectSystemDdns, c.Fv)
 }
 
 func resourceSystemDdnsUpdate(d *schema.ResourceData, m interface{}) error {

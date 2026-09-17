@@ -132,7 +132,9 @@ func resourceWirelessControllerRegionCreate(d *schema.ResourceData, m interface{
 		d.SetId("WirelessControllerRegion")
 	}
 
-	return resourceWirelessControllerRegionRead(d, m)
+	return readBackAfterCreate(d, "WirelessControllerRegion", mkey,
+		func() (map[string]interface{}, error) { return c.ReadWirelessControllerRegion(mkey, vdomparam) },
+		refreshObjectWirelessControllerRegion, c.Fv)
 }
 
 func resourceWirelessControllerRegionUpdate(d *schema.ResourceData, m interface{}) error {

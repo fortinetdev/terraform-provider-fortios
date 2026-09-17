@@ -481,7 +481,9 @@ func resourceEmailfilterProfileCreate(d *schema.ResourceData, m interface{}) err
 		d.SetId("EmailfilterProfile")
 	}
 
-	return resourceEmailfilterProfileRead(d, m)
+	return readBackAfterCreate(d, "EmailfilterProfile", mkey,
+		func() (map[string]interface{}, error) { return c.ReadEmailfilterProfile(mkey, vdomparam) },
+		refreshObjectEmailfilterProfile, c.Fv)
 }
 
 func resourceEmailfilterProfileUpdate(d *schema.ResourceData, m interface{}) error {

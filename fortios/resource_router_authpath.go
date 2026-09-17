@@ -121,7 +121,9 @@ func resourceRouterAuthPathCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("RouterAuthPath")
 	}
 
-	return resourceRouterAuthPathRead(d, m)
+	return readBackAfterCreate(d, "RouterAuthPath", mkey,
+		func() (map[string]interface{}, error) { return c.ReadRouterAuthPath(mkey, vdomparam) },
+		refreshObjectRouterAuthPath, c.Fv)
 }
 
 func resourceRouterAuthPathUpdate(d *schema.ResourceData, m interface{}) error {

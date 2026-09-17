@@ -189,7 +189,9 @@ func resourceWirelessControllerApcfgProfileCreate(d *schema.ResourceData, m inte
 		d.SetId("WirelessControllerApcfgProfile")
 	}
 
-	return resourceWirelessControllerApcfgProfileRead(d, m)
+	return readBackAfterCreate(d, "WirelessControllerApcfgProfile", mkey,
+		func() (map[string]interface{}, error) { return c.ReadWirelessControllerApcfgProfile(mkey, vdomparam) },
+		refreshObjectWirelessControllerApcfgProfile, c.Fv)
 }
 
 func resourceWirelessControllerApcfgProfileUpdate(d *schema.ResourceData, m interface{}) error {

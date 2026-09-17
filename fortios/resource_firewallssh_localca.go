@@ -131,7 +131,9 @@ func resourceFirewallSshLocalCaCreate(d *schema.ResourceData, m interface{}) err
 		d.SetId("FirewallSshLocalCa")
 	}
 
-	return resourceFirewallSshLocalCaRead(d, m)
+	return readBackAfterCreate(d, "FirewallSshLocalCa", mkey,
+		func() (map[string]interface{}, error) { return c.ReadFirewallSshLocalCa(mkey, vdomparam) },
+		refreshObjectFirewallSshLocalCa, c.Fv)
 }
 
 func resourceFirewallSshLocalCaUpdate(d *schema.ResourceData, m interface{}) error {

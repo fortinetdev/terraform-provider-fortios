@@ -146,7 +146,9 @@ func resourceVpnIpsecConcentratorCreate(d *schema.ResourceData, m interface{}) e
 		d.SetId("VpnIpsecConcentrator")
 	}
 
-	return resourceVpnIpsecConcentratorRead(d, m)
+	return readBackAfterCreate(d, "VpnIpsecConcentrator", mkey,
+		func() (map[string]interface{}, error) { return c.ReadVpnIpsecConcentrator(mkey, vdomparam) },
+		refreshObjectVpnIpsecConcentrator, c.Fv)
 }
 
 func resourceVpnIpsecConcentratorUpdate(d *schema.ResourceData, m interface{}) error {

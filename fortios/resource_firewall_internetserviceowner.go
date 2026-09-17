@@ -115,7 +115,9 @@ func resourceFirewallInternetServiceOwnerCreate(d *schema.ResourceData, m interf
 		d.SetId("FirewallInternetServiceOwner")
 	}
 
-	return resourceFirewallInternetServiceOwnerRead(d, m)
+	return readBackAfterCreate(d, "FirewallInternetServiceOwner", mkey,
+		func() (map[string]interface{}, error) { return c.ReadFirewallInternetServiceOwner(mkey, vdomparam) },
+		refreshObjectFirewallInternetServiceOwner, c.Fv)
 }
 
 func resourceFirewallInternetServiceOwnerUpdate(d *schema.ResourceData, m interface{}) error {

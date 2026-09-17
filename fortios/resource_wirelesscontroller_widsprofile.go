@@ -748,7 +748,9 @@ func resourceWirelessControllerWidsProfileCreate(d *schema.ResourceData, m inter
 		d.SetId("WirelessControllerWidsProfile")
 	}
 
-	return resourceWirelessControllerWidsProfileRead(d, m)
+	return readBackAfterCreate(d, "WirelessControllerWidsProfile", mkey,
+		func() (map[string]interface{}, error) { return c.ReadWirelessControllerWidsProfile(mkey, vdomparam) },
+		refreshObjectWirelessControllerWidsProfile, c.Fv)
 }
 
 func resourceWirelessControllerWidsProfileUpdate(d *schema.ResourceData, m interface{}) error {

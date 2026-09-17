@@ -208,7 +208,9 @@ func resourceSwitchControllerVlanCreate(d *schema.ResourceData, m interface{}) e
 		d.SetId("SwitchControllerVlan")
 	}
 
-	return resourceSwitchControllerVlanRead(d, m)
+	return readBackAfterCreate(d, "SwitchControllerVlan", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSwitchControllerVlan(mkey, vdomparam) },
+		refreshObjectSwitchControllerVlan, c.Fv)
 }
 
 func resourceSwitchControllerVlanUpdate(d *schema.ResourceData, m interface{}) error {

@@ -161,7 +161,9 @@ func resourceWirelessControllerHotspot20IconCreate(d *schema.ResourceData, m int
 		d.SetId("WirelessControllerHotspot20Icon")
 	}
 
-	return resourceWirelessControllerHotspot20IconRead(d, m)
+	return readBackAfterCreate(d, "WirelessControllerHotspot20Icon", mkey,
+		func() (map[string]interface{}, error) { return c.ReadWirelessControllerHotspot20Icon(mkey, vdomparam) },
+		refreshObjectWirelessControllerHotspot20Icon, c.Fv)
 }
 
 func resourceWirelessControllerHotspot20IconUpdate(d *schema.ResourceData, m interface{}) error {

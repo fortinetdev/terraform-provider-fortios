@@ -219,7 +219,11 @@ func resourceWirelessControllerAccessControlListCreate(d *schema.ResourceData, m
 		d.SetId("WirelessControllerAccessControlList")
 	}
 
-	return resourceWirelessControllerAccessControlListRead(d, m)
+	return readBackAfterCreate(d, "WirelessControllerAccessControlList", mkey,
+		func() (map[string]interface{}, error) {
+			return c.ReadWirelessControllerAccessControlList(mkey, vdomparam)
+		},
+		refreshObjectWirelessControllerAccessControlList, c.Fv)
 }
 
 func resourceWirelessControllerAccessControlListUpdate(d *schema.ResourceData, m interface{}) error {

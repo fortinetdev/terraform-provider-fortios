@@ -121,7 +121,9 @@ func resourceSystemCustomLanguageCreate(d *schema.ResourceData, m interface{}) e
 		d.SetId("SystemCustomLanguage")
 	}
 
-	return resourceSystemCustomLanguageRead(d, m)
+	return readBackAfterCreate(d, "SystemCustomLanguage", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSystemCustomLanguage(mkey, vdomparam) },
+		refreshObjectSystemCustomLanguage, c.Fv)
 }
 
 func resourceSystemCustomLanguageUpdate(d *schema.ResourceData, m interface{}) error {

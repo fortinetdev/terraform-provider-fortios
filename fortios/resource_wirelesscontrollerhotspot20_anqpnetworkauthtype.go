@@ -122,7 +122,11 @@ func resourceWirelessControllerHotspot20AnqpNetworkAuthTypeCreate(d *schema.Reso
 		d.SetId("WirelessControllerHotspot20AnqpNetworkAuthType")
 	}
 
-	return resourceWirelessControllerHotspot20AnqpNetworkAuthTypeRead(d, m)
+	return readBackAfterCreate(d, "WirelessControllerHotspot20AnqpNetworkAuthType", mkey,
+		func() (map[string]interface{}, error) {
+			return c.ReadWirelessControllerHotspot20AnqpNetworkAuthType(mkey, vdomparam)
+		},
+		refreshObjectWirelessControllerHotspot20AnqpNetworkAuthType, c.Fv)
 }
 
 func resourceWirelessControllerHotspot20AnqpNetworkAuthTypeUpdate(d *schema.ResourceData, m interface{}) error {

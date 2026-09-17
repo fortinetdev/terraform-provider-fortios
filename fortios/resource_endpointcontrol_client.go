@@ -133,7 +133,9 @@ func resourceEndpointControlClientCreate(d *schema.ResourceData, m interface{}) 
 		d.SetId("EndpointControlClient")
 	}
 
-	return resourceEndpointControlClientRead(d, m)
+	return readBackAfterCreate(d, "EndpointControlClient", mkey,
+		func() (map[string]interface{}, error) { return c.ReadEndpointControlClient(mkey, vdomparam) },
+		refreshObjectEndpointControlClient, c.Fv)
 }
 
 func resourceEndpointControlClientUpdate(d *schema.ResourceData, m interface{}) error {

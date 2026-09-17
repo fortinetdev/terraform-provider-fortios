@@ -117,7 +117,9 @@ func resourceSystemGeoipCountryCreate(d *schema.ResourceData, m interface{}) err
 		d.SetId("SystemGeoipCountry")
 	}
 
-	return resourceSystemGeoipCountryRead(d, m)
+	return readBackAfterCreate(d, "SystemGeoipCountry", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSystemGeoipCountry(mkey, vdomparam) },
+		refreshObjectSystemGeoipCountry, c.Fv)
 }
 
 func resourceSystemGeoipCountryUpdate(d *schema.ResourceData, m interface{}) error {

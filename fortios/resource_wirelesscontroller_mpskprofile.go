@@ -239,7 +239,9 @@ func resourceWirelessControllerMpskProfileCreate(d *schema.ResourceData, m inter
 		d.SetId("WirelessControllerMpskProfile")
 	}
 
-	return resourceWirelessControllerMpskProfileRead(d, m)
+	return readBackAfterCreate(d, "WirelessControllerMpskProfile", mkey,
+		func() (map[string]interface{}, error) { return c.ReadWirelessControllerMpskProfile(mkey, vdomparam) },
+		refreshObjectWirelessControllerMpskProfile, c.Fv)
 }
 
 func resourceWirelessControllerMpskProfileUpdate(d *schema.ResourceData, m interface{}) error {

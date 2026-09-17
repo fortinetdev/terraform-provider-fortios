@@ -189,7 +189,9 @@ func resourceVpnSslWebHostCheckSoftwareCreate(d *schema.ResourceData, m interfac
 		d.SetId("VpnSslWebHostCheckSoftware")
 	}
 
-	return resourceVpnSslWebHostCheckSoftwareRead(d, m)
+	return readBackAfterCreate(d, "VpnSslWebHostCheckSoftware", mkey,
+		func() (map[string]interface{}, error) { return c.ReadVpnSslWebHostCheckSoftware(mkey, vdomparam) },
+		refreshObjectVpnSslWebHostCheckSoftware, c.Fv)
 }
 
 func resourceVpnSslWebHostCheckSoftwareUpdate(d *schema.ResourceData, m interface{}) error {

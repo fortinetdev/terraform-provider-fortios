@@ -148,7 +148,9 @@ func resourceFirewallDecryptedTrafficMirrorCreate(d *schema.ResourceData, m inte
 		d.SetId("FirewallDecryptedTrafficMirror")
 	}
 
-	return resourceFirewallDecryptedTrafficMirrorRead(d, m)
+	return readBackAfterCreate(d, "FirewallDecryptedTrafficMirror", mkey,
+		func() (map[string]interface{}, error) { return c.ReadFirewallDecryptedTrafficMirror(mkey, vdomparam) },
+		refreshObjectFirewallDecryptedTrafficMirror, c.Fv)
 }
 
 func resourceFirewallDecryptedTrafficMirrorUpdate(d *schema.ResourceData, m interface{}) error {

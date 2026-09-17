@@ -123,7 +123,9 @@ func resourceSystemIpv6NeighborCacheCreate(d *schema.ResourceData, m interface{}
 		d.SetId("SystemIpv6NeighborCache")
 	}
 
-	return resourceSystemIpv6NeighborCacheRead(d, m)
+	return readBackAfterCreate(d, "SystemIpv6NeighborCache", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSystemIpv6NeighborCache(mkey, vdomparam) },
+		refreshObjectSystemIpv6NeighborCache, c.Fv)
 }
 
 func resourceSystemIpv6NeighborCacheUpdate(d *schema.ResourceData, m interface{}) error {

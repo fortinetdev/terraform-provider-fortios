@@ -304,7 +304,9 @@ func resourceUserFssoCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("UserFsso")
 	}
 
-	return resourceUserFssoRead(d, m)
+	return readBackAfterCreate(d, "UserFsso", mkey,
+		func() (map[string]interface{}, error) { return c.ReadUserFsso(mkey, vdomparam) },
+		refreshObjectUserFsso, c.Fv)
 }
 
 func resourceUserFssoUpdate(d *schema.ResourceData, m interface{}) error {

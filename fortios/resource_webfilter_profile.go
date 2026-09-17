@@ -824,7 +824,9 @@ func resourceWebfilterProfileCreate(d *schema.ResourceData, m interface{}) error
 		d.SetId("WebfilterProfile")
 	}
 
-	return resourceWebfilterProfileRead(d, m)
+	return readBackAfterCreate(d, "WebfilterProfile", mkey,
+		func() (map[string]interface{}, error) { return c.ReadWebfilterProfile(mkey, vdomparam) },
+		refreshObjectWebfilterProfile, c.Fv)
 }
 
 func resourceWebfilterProfileUpdate(d *schema.ResourceData, m interface{}) error {

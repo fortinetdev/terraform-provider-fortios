@@ -138,7 +138,9 @@ func resourceWanoptAuthGroupCreate(d *schema.ResourceData, m interface{}) error 
 		d.SetId("WanoptAuthGroup")
 	}
 
-	return resourceWanoptAuthGroupRead(d, m)
+	return readBackAfterCreate(d, "WanoptAuthGroup", mkey,
+		func() (map[string]interface{}, error) { return c.ReadWanoptAuthGroup(mkey, vdomparam) },
+		refreshObjectWanoptAuthGroup, c.Fv)
 }
 
 func resourceWanoptAuthGroupUpdate(d *schema.ResourceData, m interface{}) error {

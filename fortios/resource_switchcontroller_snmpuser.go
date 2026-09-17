@@ -150,7 +150,9 @@ func resourceSwitchControllerSnmpUserCreate(d *schema.ResourceData, m interface{
 		d.SetId("SwitchControllerSnmpUser")
 	}
 
-	return resourceSwitchControllerSnmpUserRead(d, m)
+	return readBackAfterCreate(d, "SwitchControllerSnmpUser", mkey,
+		func() (map[string]interface{}, error) { return c.ReadSwitchControllerSnmpUser(mkey, vdomparam) },
+		refreshObjectSwitchControllerSnmpUser, c.Fv)
 }
 
 func resourceSwitchControllerSnmpUserUpdate(d *schema.ResourceData, m interface{}) error {

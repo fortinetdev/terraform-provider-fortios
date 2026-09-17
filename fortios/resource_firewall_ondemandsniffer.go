@@ -179,7 +179,9 @@ func resourceFirewallOnDemandSnifferCreate(d *schema.ResourceData, m interface{}
 		d.SetId("FirewallOnDemandSniffer")
 	}
 
-	return resourceFirewallOnDemandSnifferRead(d, m)
+	return readBackAfterCreate(d, "FirewallOnDemandSniffer", mkey,
+		func() (map[string]interface{}, error) { return c.ReadFirewallOnDemandSniffer(mkey, vdomparam) },
+		refreshObjectFirewallOnDemandSniffer, c.Fv)
 }
 
 func resourceFirewallOnDemandSnifferUpdate(d *schema.ResourceData, m interface{}) error {
