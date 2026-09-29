@@ -61,7 +61,7 @@ func resourceCertificateLocal() *schema.Resource {
 			},
 			"private_key": &schema.Schema{
 				Type:      schema.TypeString,
-				Required:  true,
+				Optional:  true,
 				Sensitive: true,
 				DiffSuppressFunc: func(k, old, new string, d *schema.ResourceData) bool {
 					return strings.TrimSpace(old) == strings.TrimSpace(new)
