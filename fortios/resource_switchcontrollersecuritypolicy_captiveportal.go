@@ -122,9 +122,9 @@ func resourceSwitchControllerSecurityPolicyCaptivePortalCreate(d *schema.Resourc
 		d.SetId("SwitchControllerSecurityPolicyCaptivePortal")
 	}
 
-	return readBackAfterCreate(d, "SwitchControllerSecurityPolicyCaptivePortal", mkey,
+	return readBackAfterCreate(d, "SwitchControllerSecurityPolicyCaptivePortal", d.Id(),
 		func() (map[string]interface{}, error) {
-			return c.ReadSwitchControllerSecurityPolicyCaptivePortal(mkey, vdomparam)
+			return c.ReadSwitchControllerSecurityPolicyCaptivePortal(d.Id(), vdomparam)
 		},
 		refreshObjectSwitchControllerSecurityPolicyCaptivePortal, c.Fv)
 }

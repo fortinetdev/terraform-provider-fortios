@@ -209,8 +209,8 @@ func resourceRuleOtdtCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("RuleOtdt")
 	}
 
-	return readBackAfterCreate(d, "RuleOtdt", mkey,
-		func() (map[string]interface{}, error) { return c.ReadRuleOtdt(mkey, vdomparam) },
+	return readBackAfterCreate(d, "RuleOtdt", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadRuleOtdt(d.Id(), vdomparam) },
 		refreshObjectRuleOtdt, c.Fv)
 }
 

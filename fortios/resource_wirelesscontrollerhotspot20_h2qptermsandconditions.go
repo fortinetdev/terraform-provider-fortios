@@ -126,9 +126,9 @@ func resourceWirelessControllerHotspot20H2QpTermsAndConditionsCreate(d *schema.R
 		d.SetId("WirelessControllerHotspot20H2QpTermsAndConditions")
 	}
 
-	return readBackAfterCreate(d, "WirelessControllerHotspot20H2QpTermsAndConditions", mkey,
+	return readBackAfterCreate(d, "WirelessControllerHotspot20H2QpTermsAndConditions", d.Id(),
 		func() (map[string]interface{}, error) {
-			return c.ReadWirelessControllerHotspot20H2QpTermsAndConditions(mkey, vdomparam)
+			return c.ReadWirelessControllerHotspot20H2QpTermsAndConditions(d.Id(), vdomparam)
 		},
 		refreshObjectWirelessControllerHotspot20H2QpTermsAndConditions, c.Fv)
 }

@@ -183,8 +183,8 @@ func resourceZtnaReverseConnectorCreate(d *schema.ResourceData, m interface{}) e
 		d.SetId("ZtnaReverseConnector")
 	}
 
-	return readBackAfterCreate(d, "ZtnaReverseConnector", mkey,
-		func() (map[string]interface{}, error) { return c.ReadZtnaReverseConnector(mkey, vdomparam) },
+	return readBackAfterCreate(d, "ZtnaReverseConnector", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadZtnaReverseConnector(d.Id(), vdomparam) },
 		refreshObjectZtnaReverseConnector, c.Fv)
 }
 

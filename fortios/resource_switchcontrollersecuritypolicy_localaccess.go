@@ -122,9 +122,9 @@ func resourceSwitchControllerSecurityPolicyLocalAccessCreate(d *schema.ResourceD
 		d.SetId("SwitchControllerSecurityPolicyLocalAccess")
 	}
 
-	return readBackAfterCreate(d, "SwitchControllerSecurityPolicyLocalAccess", mkey,
+	return readBackAfterCreate(d, "SwitchControllerSecurityPolicyLocalAccess", d.Id(),
 		func() (map[string]interface{}, error) {
-			return c.ReadSwitchControllerSecurityPolicyLocalAccess(mkey, vdomparam)
+			return c.ReadSwitchControllerSecurityPolicyLocalAccess(d.Id(), vdomparam)
 		},
 		refreshObjectSwitchControllerSecurityPolicyLocalAccess, c.Fv)
 }

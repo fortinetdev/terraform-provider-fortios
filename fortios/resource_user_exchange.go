@@ -196,8 +196,8 @@ func resourceUserExchangeCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("UserExchange")
 	}
 
-	return readBackAfterCreate(d, "UserExchange", mkey,
-		func() (map[string]interface{}, error) { return c.ReadUserExchange(mkey, vdomparam) },
+	return readBackAfterCreate(d, "UserExchange", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadUserExchange(d.Id(), vdomparam) },
 		refreshObjectUserExchange, c.Fv)
 }
 

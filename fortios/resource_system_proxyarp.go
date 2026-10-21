@@ -125,8 +125,8 @@ func resourceSystemProxyArpCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("SystemProxyArp")
 	}
 
-	return readBackAfterCreate(d, "SystemProxyArp", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSystemProxyArp(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SystemProxyArp", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSystemProxyArp(d.Id(), vdomparam) },
 		refreshObjectSystemProxyArp, c.Fv)
 }
 

@@ -263,8 +263,8 @@ func resourceVideofilterProfileCreate(d *schema.ResourceData, m interface{}) err
 		d.SetId("VideofilterProfile")
 	}
 
-	return readBackAfterCreate(d, "VideofilterProfile", mkey,
-		func() (map[string]interface{}, error) { return c.ReadVideofilterProfile(mkey, vdomparam) },
+	return readBackAfterCreate(d, "VideofilterProfile", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadVideofilterProfile(d.Id(), vdomparam) },
 		refreshObjectVideofilterProfile, c.Fv)
 }
 

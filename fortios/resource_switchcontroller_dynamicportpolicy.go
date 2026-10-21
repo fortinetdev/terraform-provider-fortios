@@ -250,9 +250,9 @@ func resourceSwitchControllerDynamicPortPolicyCreate(d *schema.ResourceData, m i
 		d.SetId("SwitchControllerDynamicPortPolicy")
 	}
 
-	return readBackAfterCreate(d, "SwitchControllerDynamicPortPolicy", mkey,
+	return readBackAfterCreate(d, "SwitchControllerDynamicPortPolicy", d.Id(),
 		func() (map[string]interface{}, error) {
-			return c.ReadSwitchControllerDynamicPortPolicy(mkey, vdomparam)
+			return c.ReadSwitchControllerDynamicPortPolicy(d.Id(), vdomparam)
 		},
 		refreshObjectSwitchControllerDynamicPortPolicy, c.Fv)
 }

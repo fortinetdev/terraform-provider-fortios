@@ -152,8 +152,8 @@ func resourceVpnSslWebRealmCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("VpnSslWebRealm")
 	}
 
-	return readBackAfterCreate(d, "VpnSslWebRealm", mkey,
-		func() (map[string]interface{}, error) { return c.ReadVpnSslWebRealm(mkey, vdomparam) },
+	return readBackAfterCreate(d, "VpnSslWebRealm", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadVpnSslWebRealm(d.Id(), vdomparam) },
 		refreshObjectVpnSslWebRealm, c.Fv)
 }
 

@@ -150,8 +150,8 @@ func resourceSwitchControllerSwitchGroupCreate(d *schema.ResourceData, m interfa
 		d.SetId("SwitchControllerSwitchGroup")
 	}
 
-	return readBackAfterCreate(d, "SwitchControllerSwitchGroup", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSwitchControllerSwitchGroup(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SwitchControllerSwitchGroup", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSwitchControllerSwitchGroup(d.Id(), vdomparam) },
 		refreshObjectSwitchControllerSwitchGroup, c.Fv)
 }
 

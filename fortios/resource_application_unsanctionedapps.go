@@ -129,8 +129,8 @@ func resourceApplicationUnsanctionedAppsCreate(d *schema.ResourceData, m interfa
 		d.SetId("ApplicationUnsanctionedApps")
 	}
 
-	return readBackAfterCreate(d, "ApplicationUnsanctionedApps", mkey,
-		func() (map[string]interface{}, error) { return c.ReadApplicationUnsanctionedApps(mkey, vdomparam) },
+	return readBackAfterCreate(d, "ApplicationUnsanctionedApps", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadApplicationUnsanctionedApps(d.Id(), vdomparam) },
 		refreshObjectApplicationUnsanctionedApps, c.Fv)
 }
 

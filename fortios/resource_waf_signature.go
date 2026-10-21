@@ -116,8 +116,8 @@ func resourceWafSignatureCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("WafSignature")
 	}
 
-	return readBackAfterCreate(d, "WafSignature", mkey,
-		func() (map[string]interface{}, error) { return c.ReadWafSignature(mkey, vdomparam) },
+	return readBackAfterCreate(d, "WafSignature", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadWafSignature(d.Id(), vdomparam) },
 		refreshObjectWafSignature, c.Fv)
 }
 

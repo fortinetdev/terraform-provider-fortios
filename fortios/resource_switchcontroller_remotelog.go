@@ -143,8 +143,8 @@ func resourceSwitchControllerRemoteLogCreate(d *schema.ResourceData, m interface
 		d.SetId("SwitchControllerRemoteLog")
 	}
 
-	return readBackAfterCreate(d, "SwitchControllerRemoteLog", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSwitchControllerRemoteLog(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SwitchControllerRemoteLog", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSwitchControllerRemoteLog(d.Id(), vdomparam) },
 		refreshObjectSwitchControllerRemoteLog, c.Fv)
 }
 

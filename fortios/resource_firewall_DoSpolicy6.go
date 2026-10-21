@@ -280,8 +280,8 @@ func resourceFirewallDosPolicy6Create(d *schema.ResourceData, m interface{}) err
 		d.SetId("FirewallDosPolicy6")
 	}
 
-	return readBackAfterCreate(d, "FirewallDosPolicy6", mkey,
-		func() (map[string]interface{}, error) { return c.ReadFirewallDosPolicy6(mkey, vdomparam) },
+	return readBackAfterCreate(d, "FirewallDosPolicy6", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadFirewallDosPolicy6(d.Id(), vdomparam) },
 		refreshObjectFirewallDosPolicy6, c.Fv)
 }
 

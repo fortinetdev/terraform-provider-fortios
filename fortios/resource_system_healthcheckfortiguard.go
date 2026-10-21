@@ -128,8 +128,8 @@ func resourceSystemHealthCheckFortiguardCreate(d *schema.ResourceData, m interfa
 		d.SetId("SystemHealthCheckFortiguard")
 	}
 
-	return readBackAfterCreate(d, "SystemHealthCheckFortiguard", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSystemHealthCheckFortiguard(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SystemHealthCheckFortiguard", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSystemHealthCheckFortiguard(d.Id(), vdomparam) },
 		refreshObjectSystemHealthCheckFortiguard, c.Fv)
 }
 

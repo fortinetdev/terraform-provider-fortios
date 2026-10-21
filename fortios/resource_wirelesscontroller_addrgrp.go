@@ -140,8 +140,8 @@ func resourceWirelessControllerAddrgrpCreate(d *schema.ResourceData, m interface
 		d.SetId("WirelessControllerAddrgrp")
 	}
 
-	return readBackAfterCreate(d, "WirelessControllerAddrgrp", mkey,
-		func() (map[string]interface{}, error) { return c.ReadWirelessControllerAddrgrp(mkey, vdomparam) },
+	return readBackAfterCreate(d, "WirelessControllerAddrgrp", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadWirelessControllerAddrgrp(d.Id(), vdomparam) },
 		refreshObjectWirelessControllerAddrgrp, c.Fv)
 }
 

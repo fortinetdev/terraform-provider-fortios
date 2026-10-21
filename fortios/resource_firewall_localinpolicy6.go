@@ -316,8 +316,8 @@ func resourceFirewallLocalInPolicy6Create(d *schema.ResourceData, m interface{})
 		d.SetId("FirewallLocalInPolicy6")
 	}
 
-	return readBackAfterCreate(d, "FirewallLocalInPolicy6", mkey,
-		func() (map[string]interface{}, error) { return c.ReadFirewallLocalInPolicy6(mkey, vdomparam) },
+	return readBackAfterCreate(d, "FirewallLocalInPolicy6", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadFirewallLocalInPolicy6(d.Id(), vdomparam) },
 		refreshObjectFirewallLocalInPolicy6, c.Fv)
 }
 

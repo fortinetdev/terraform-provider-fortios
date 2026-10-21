@@ -497,8 +497,8 @@ func resourceSystemAutomationActionCreate(d *schema.ResourceData, m interface{})
 		d.SetId("SystemAutomationAction")
 	}
 
-	return readBackAfterCreate(d, "SystemAutomationAction", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSystemAutomationAction(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SystemAutomationAction", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSystemAutomationAction(d.Id(), vdomparam) },
 		refreshObjectSystemAutomationAction, c.Fv)
 }
 

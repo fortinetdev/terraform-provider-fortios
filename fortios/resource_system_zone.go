@@ -196,8 +196,8 @@ func resourceSystemZoneCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("SystemZone")
 	}
 
-	return readBackAfterCreate(d, "SystemZone", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSystemZone(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SystemZone", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSystemZone(d.Id(), vdomparam) },
 		refreshObjectSystemZone, c.Fv)
 }
 

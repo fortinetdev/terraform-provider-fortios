@@ -199,9 +199,9 @@ func resourceSwitchControllerFortilinkSettingsCreate(d *schema.ResourceData, m i
 		d.SetId("SwitchControllerFortilinkSettings")
 	}
 
-	return readBackAfterCreate(d, "SwitchControllerFortilinkSettings", mkey,
+	return readBackAfterCreate(d, "SwitchControllerFortilinkSettings", d.Id(),
 		func() (map[string]interface{}, error) {
-			return c.ReadSwitchControllerFortilinkSettings(mkey, vdomparam)
+			return c.ReadSwitchControllerFortilinkSettings(d.Id(), vdomparam)
 		},
 		refreshObjectSwitchControllerFortilinkSettings, c.Fv)
 }

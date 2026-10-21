@@ -176,8 +176,8 @@ func resourceLogCustomFormatCreate(d *schema.ResourceData, m interface{}) error 
 		d.SetId("LogCustomFormat")
 	}
 
-	return readBackAfterCreate(d, "LogCustomFormat", mkey,
-		func() (map[string]interface{}, error) { return c.ReadLogCustomFormat(mkey, vdomparam) },
+	return readBackAfterCreate(d, "LogCustomFormat", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadLogCustomFormat(d.Id(), vdomparam) },
 		refreshObjectLogCustomFormat, c.Fv)
 }
 

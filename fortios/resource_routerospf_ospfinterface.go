@@ -265,8 +265,8 @@ func resourceRouterospfOspfInterfaceCreate(d *schema.ResourceData, m interface{}
 		d.SetId("RouterospfOspfInterface")
 	}
 
-	return readBackAfterCreate(d, "RouterospfOspfInterface", mkey,
-		func() (map[string]interface{}, error) { return c.ReadRouterospfOspfInterface(mkey, vdomparam) },
+	return readBackAfterCreate(d, "RouterospfOspfInterface", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadRouterospfOspfInterface(d.Id(), vdomparam) },
 		refreshObjectRouterospfOspfInterface, c.Fv)
 }
 

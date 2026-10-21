@@ -142,8 +142,8 @@ func resourceWebProxyUrlMatchCreate(d *schema.ResourceData, m interface{}) error
 		d.SetId("WebProxyUrlMatch")
 	}
 
-	return readBackAfterCreate(d, "WebProxyUrlMatch", mkey,
-		func() (map[string]interface{}, error) { return c.ReadWebProxyUrlMatch(mkey, vdomparam) },
+	return readBackAfterCreate(d, "WebProxyUrlMatch", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadWebProxyUrlMatch(d.Id(), vdomparam) },
 		refreshObjectWebProxyUrlMatch, c.Fv)
 }
 

@@ -174,8 +174,10 @@ func resourceFirewallInternetServiceAdditionCreate(d *schema.ResourceData, m int
 		d.SetId("FirewallInternetServiceAddition")
 	}
 
-	return readBackAfterCreate(d, "FirewallInternetServiceAddition", mkey,
-		func() (map[string]interface{}, error) { return c.ReadFirewallInternetServiceAddition(mkey, vdomparam) },
+	return readBackAfterCreate(d, "FirewallInternetServiceAddition", d.Id(),
+		func() (map[string]interface{}, error) {
+			return c.ReadFirewallInternetServiceAddition(d.Id(), vdomparam)
+		},
 		refreshObjectFirewallInternetServiceAddition, c.Fv)
 }
 

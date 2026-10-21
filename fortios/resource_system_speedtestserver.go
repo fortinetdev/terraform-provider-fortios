@@ -177,8 +177,8 @@ func resourceSystemSpeedTestServerCreate(d *schema.ResourceData, m interface{}) 
 		d.SetId("SystemSpeedTestServer")
 	}
 
-	return readBackAfterCreate(d, "SystemSpeedTestServer", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSystemSpeedTestServer(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SystemSpeedTestServer", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSystemSpeedTestServer(d.Id(), vdomparam) },
 		refreshObjectSystemSpeedTestServer, c.Fv)
 }
 

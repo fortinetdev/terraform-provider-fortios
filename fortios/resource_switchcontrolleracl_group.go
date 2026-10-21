@@ -135,8 +135,8 @@ func resourceSwitchControllerAclGroupCreate(d *schema.ResourceData, m interface{
 		d.SetId("SwitchControllerAclGroup")
 	}
 
-	return readBackAfterCreate(d, "SwitchControllerAclGroup", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSwitchControllerAclGroup(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SwitchControllerAclGroup", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSwitchControllerAclGroup(d.Id(), vdomparam) },
 		refreshObjectSwitchControllerAclGroup, c.Fv)
 }
 

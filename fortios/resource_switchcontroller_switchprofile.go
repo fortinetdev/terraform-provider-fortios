@@ -149,8 +149,8 @@ func resourceSwitchControllerSwitchProfileCreate(d *schema.ResourceData, m inter
 		d.SetId("SwitchControllerSwitchProfile")
 	}
 
-	return readBackAfterCreate(d, "SwitchControllerSwitchProfile", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSwitchControllerSwitchProfile(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SwitchControllerSwitchProfile", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSwitchControllerSwitchProfile(d.Id(), vdomparam) },
 		refreshObjectSwitchControllerSwitchProfile, c.Fv)
 }
 

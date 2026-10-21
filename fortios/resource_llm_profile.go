@@ -198,8 +198,8 @@ func resourceLlmProfileCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("LlmProfile")
 	}
 
-	return readBackAfterCreate(d, "LlmProfile", mkey,
-		func() (map[string]interface{}, error) { return c.ReadLlmProfile(mkey, vdomparam) },
+	return readBackAfterCreate(d, "LlmProfile", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadLlmProfile(d.Id(), vdomparam) },
 		refreshObjectLlmProfile, c.Fv)
 }
 

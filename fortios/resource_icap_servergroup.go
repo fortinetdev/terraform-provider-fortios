@@ -166,8 +166,8 @@ func resourceIcapServerGroupCreate(d *schema.ResourceData, m interface{}) error 
 		d.SetId("IcapServerGroup")
 	}
 
-	return readBackAfterCreate(d, "IcapServerGroup", mkey,
-		func() (map[string]interface{}, error) { return c.ReadIcapServerGroup(mkey, vdomparam) },
+	return readBackAfterCreate(d, "IcapServerGroup", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadIcapServerGroup(d.Id(), vdomparam) },
 		refreshObjectIcapServerGroup, c.Fv)
 }
 

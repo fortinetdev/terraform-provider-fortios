@@ -121,8 +121,8 @@ func resourceSystemIpsUrlfilterDnsCreate(d *schema.ResourceData, m interface{}) 
 		d.SetId("SystemIpsUrlfilterDns")
 	}
 
-	return readBackAfterCreate(d, "SystemIpsUrlfilterDns", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSystemIpsUrlfilterDns(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SystemIpsUrlfilterDns", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSystemIpsUrlfilterDns(d.Id(), vdomparam) },
 		refreshObjectSystemIpsUrlfilterDns, c.Fv)
 }
 

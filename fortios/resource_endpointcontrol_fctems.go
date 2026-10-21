@@ -266,8 +266,8 @@ func resourceEndpointControlFctemsCreate(d *schema.ResourceData, m interface{}) 
 		d.SetId("EndpointControlFctems")
 	}
 
-	return readBackAfterCreate(d, "EndpointControlFctems", mkey,
-		func() (map[string]interface{}, error) { return c.ReadEndpointControlFctems(mkey, vdomparam) },
+	return readBackAfterCreate(d, "EndpointControlFctems", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadEndpointControlFctems(d.Id(), vdomparam) },
 		refreshObjectEndpointControlFctems, c.Fv)
 }
 

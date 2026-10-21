@@ -207,8 +207,8 @@ func resourceRuleOtvpCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("RuleOtvp")
 	}
 
-	return readBackAfterCreate(d, "RuleOtvp", mkey,
-		func() (map[string]interface{}, error) { return c.ReadRuleOtvp(mkey, vdomparam) },
+	return readBackAfterCreate(d, "RuleOtvp", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadRuleOtvp(d.Id(), vdomparam) },
 		refreshObjectRuleOtvp, c.Fv)
 }
 

@@ -145,8 +145,8 @@ func resourceRouterMulticast6FlowCreate(d *schema.ResourceData, m interface{}) e
 		d.SetId("RouterMulticast6Flow")
 	}
 
-	return readBackAfterCreate(d, "RouterMulticast6Flow", mkey,
-		func() (map[string]interface{}, error) { return c.ReadRouterMulticast6Flow(mkey, vdomparam) },
+	return readBackAfterCreate(d, "RouterMulticast6Flow", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadRouterMulticast6Flow(d.Id(), vdomparam) },
 		refreshObjectRouterMulticast6Flow, c.Fv)
 }
 

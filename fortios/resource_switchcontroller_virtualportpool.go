@@ -117,8 +117,10 @@ func resourceSwitchControllerVirtualPortPoolCreate(d *schema.ResourceData, m int
 		d.SetId("SwitchControllerVirtualPortPool")
 	}
 
-	return readBackAfterCreate(d, "SwitchControllerVirtualPortPool", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSwitchControllerVirtualPortPool(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SwitchControllerVirtualPortPool", d.Id(),
+		func() (map[string]interface{}, error) {
+			return c.ReadSwitchControllerVirtualPortPool(d.Id(), vdomparam)
+		},
 		refreshObjectSwitchControllerVirtualPortPool, c.Fv)
 }
 

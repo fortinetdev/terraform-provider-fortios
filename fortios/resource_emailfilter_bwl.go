@@ -184,8 +184,8 @@ func resourceEmailfilterBwlCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("EmailfilterBwl")
 	}
 
-	return readBackAfterCreate(d, "EmailfilterBwl", mkey,
-		func() (map[string]interface{}, error) { return c.ReadEmailfilterBwl(mkey, vdomparam) },
+	return readBackAfterCreate(d, "EmailfilterBwl", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadEmailfilterBwl(d.Id(), vdomparam) },
 		refreshObjectEmailfilterBwl, c.Fv)
 }
 

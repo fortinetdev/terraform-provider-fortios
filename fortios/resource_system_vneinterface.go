@@ -165,8 +165,8 @@ func resourceSystemVneInterfaceCreate(d *schema.ResourceData, m interface{}) err
 		d.SetId("SystemVneInterface")
 	}
 
-	return readBackAfterCreate(d, "SystemVneInterface", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSystemVneInterface(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SystemVneInterface", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSystemVneInterface(d.Id(), vdomparam) },
 		refreshObjectSystemVneInterface, c.Fv)
 }
 

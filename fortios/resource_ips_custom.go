@@ -173,8 +173,8 @@ func resourceIpsCustomCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("IpsCustom")
 	}
 
-	return readBackAfterCreate(d, "IpsCustom", mkey,
-		func() (map[string]interface{}, error) { return c.ReadIpsCustom(mkey, vdomparam) },
+	return readBackAfterCreate(d, "IpsCustom", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadIpsCustom(d.Id(), vdomparam) },
 		refreshObjectIpsCustom, c.Fv)
 }
 

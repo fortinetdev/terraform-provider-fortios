@@ -121,8 +121,8 @@ func resourceSystemSnmpRmonStatCreate(d *schema.ResourceData, m interface{}) err
 		d.SetId("SystemSnmpRmonStat")
 	}
 
-	return readBackAfterCreate(d, "SystemSnmpRmonStat", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSystemSnmpRmonStat(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SystemSnmpRmonStat", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSystemSnmpRmonStat(d.Id(), vdomparam) },
 		refreshObjectSystemSnmpRmonStat, c.Fv)
 }
 

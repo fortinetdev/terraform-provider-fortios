@@ -244,8 +244,8 @@ func resourceEndpointControlFctemsOverrideCreate(d *schema.ResourceData, m inter
 		d.SetId("EndpointControlFctemsOverride")
 	}
 
-	return readBackAfterCreate(d, "EndpointControlFctemsOverride", mkey,
-		func() (map[string]interface{}, error) { return c.ReadEndpointControlFctemsOverride(mkey, vdomparam) },
+	return readBackAfterCreate(d, "EndpointControlFctemsOverride", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadEndpointControlFctemsOverride(d.Id(), vdomparam) },
 		refreshObjectEndpointControlFctemsOverride, c.Fv)
 }
 

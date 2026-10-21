@@ -222,8 +222,8 @@ func resourceVpnIpsecFecCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("VpnIpsecFec")
 	}
 
-	return readBackAfterCreate(d, "VpnIpsecFec", mkey,
-		func() (map[string]interface{}, error) { return c.ReadVpnIpsecFec(mkey, vdomparam) },
+	return readBackAfterCreate(d, "VpnIpsecFec", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadVpnIpsecFec(d.Id(), vdomparam) },
 		refreshObjectVpnIpsecFec, c.Fv)
 }
 

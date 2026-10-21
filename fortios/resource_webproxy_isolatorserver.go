@@ -184,8 +184,8 @@ func resourceWebProxyIsolatorServerCreate(d *schema.ResourceData, m interface{})
 		d.SetId("WebProxyIsolatorServer")
 	}
 
-	return readBackAfterCreate(d, "WebProxyIsolatorServer", mkey,
-		func() (map[string]interface{}, error) { return c.ReadWebProxyIsolatorServer(mkey, vdomparam) },
+	return readBackAfterCreate(d, "WebProxyIsolatorServer", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadWebProxyIsolatorServer(d.Id(), vdomparam) },
 		refreshObjectWebProxyIsolatorServer, c.Fv)
 }
 

@@ -217,9 +217,9 @@ func resourceSwitchControllerSecurityPolicyAdminCreate(d *schema.ResourceData, m
 		d.SetId("SwitchControllerSecurityPolicyAdmin")
 	}
 
-	return readBackAfterCreate(d, "SwitchControllerSecurityPolicyAdmin", mkey,
+	return readBackAfterCreate(d, "SwitchControllerSecurityPolicyAdmin", d.Id(),
 		func() (map[string]interface{}, error) {
-			return c.ReadSwitchControllerSecurityPolicyAdmin(mkey, vdomparam)
+			return c.ReadSwitchControllerSecurityPolicyAdmin(d.Id(), vdomparam)
 		},
 		refreshObjectSwitchControllerSecurityPolicyAdmin, c.Fv)
 }

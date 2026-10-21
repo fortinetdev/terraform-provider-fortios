@@ -267,8 +267,8 @@ func resourceUserLocalCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("UserLocal")
 	}
 
-	return readBackAfterCreate(d, "UserLocal", mkey,
-		func() (map[string]interface{}, error) { return c.ReadUserLocal(mkey, vdomparam) },
+	return readBackAfterCreate(d, "UserLocal", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadUserLocal(d.Id(), vdomparam) },
 		refreshObjectUserLocal, c.Fv)
 }
 

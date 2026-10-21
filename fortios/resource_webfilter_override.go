@@ -161,8 +161,8 @@ func resourceWebfilterOverrideCreate(d *schema.ResourceData, m interface{}) erro
 		d.SetId("WebfilterOverride")
 	}
 
-	return readBackAfterCreate(d, "WebfilterOverride", mkey,
-		func() (map[string]interface{}, error) { return c.ReadWebfilterOverride(mkey, vdomparam) },
+	return readBackAfterCreate(d, "WebfilterOverride", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadWebfilterOverride(d.Id(), vdomparam) },
 		refreshObjectWebfilterOverride, c.Fv)
 }
 

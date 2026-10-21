@@ -115,8 +115,8 @@ func resourceFirewallInternetServiceListCreate(d *schema.ResourceData, m interfa
 		d.SetId("FirewallInternetServiceList")
 	}
 
-	return readBackAfterCreate(d, "FirewallInternetServiceList", mkey,
-		func() (map[string]interface{}, error) { return c.ReadFirewallInternetServiceList(mkey, vdomparam) },
+	return readBackAfterCreate(d, "FirewallInternetServiceList", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadFirewallInternetServiceList(d.Id(), vdomparam) },
 		refreshObjectFirewallInternetServiceList, c.Fv)
 }
 

@@ -273,8 +273,8 @@ func resourceWirelessControllerQosProfileCreate(d *schema.ResourceData, m interf
 		d.SetId("WirelessControllerQosProfile")
 	}
 
-	return readBackAfterCreate(d, "WirelessControllerQosProfile", mkey,
-		func() (map[string]interface{}, error) { return c.ReadWirelessControllerQosProfile(mkey, vdomparam) },
+	return readBackAfterCreate(d, "WirelessControllerQosProfile", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadWirelessControllerQosProfile(d.Id(), vdomparam) },
 		refreshObjectWirelessControllerQosProfile, c.Fv)
 }
 

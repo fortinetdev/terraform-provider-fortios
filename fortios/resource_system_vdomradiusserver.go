@@ -122,8 +122,8 @@ func resourceSystemVdomRadiusServerCreate(d *schema.ResourceData, m interface{})
 		d.SetId("SystemVdomRadiusServer")
 	}
 
-	return readBackAfterCreate(d, "SystemVdomRadiusServer", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSystemVdomRadiusServer(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SystemVdomRadiusServer", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSystemVdomRadiusServer(d.Id(), vdomparam) },
 		refreshObjectSystemVdomRadiusServer, c.Fv)
 }
 

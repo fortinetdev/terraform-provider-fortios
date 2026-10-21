@@ -375,8 +375,8 @@ func resourceIcapProfileCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("IcapProfile")
 	}
 
-	return readBackAfterCreate(d, "IcapProfile", mkey,
-		func() (map[string]interface{}, error) { return c.ReadIcapProfile(mkey, vdomparam) },
+	return readBackAfterCreate(d, "IcapProfile", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadIcapProfile(d.Id(), vdomparam) },
 		refreshObjectIcapProfile, c.Fv)
 }
 

@@ -138,8 +138,8 @@ func resourceWanoptAuthGroupCreate(d *schema.ResourceData, m interface{}) error 
 		d.SetId("WanoptAuthGroup")
 	}
 
-	return readBackAfterCreate(d, "WanoptAuthGroup", mkey,
-		func() (map[string]interface{}, error) { return c.ReadWanoptAuthGroup(mkey, vdomparam) },
+	return readBackAfterCreate(d, "WanoptAuthGroup", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadWanoptAuthGroup(d.Id(), vdomparam) },
 		refreshObjectWanoptAuthGroup, c.Fv)
 }
 

@@ -122,8 +122,8 @@ func resourceSystemVdomLinkCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("SystemVdomLink")
 	}
 
-	return readBackAfterCreate(d, "SystemVdomLink", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSystemVdomLink(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SystemVdomLink", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSystemVdomLink(d.Id(), vdomparam) },
 		refreshObjectSystemVdomLink, c.Fv)
 }
 

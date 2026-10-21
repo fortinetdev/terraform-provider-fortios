@@ -140,8 +140,8 @@ func resourceSystemIpsecAggregateCreate(d *schema.ResourceData, m interface{}) e
 		d.SetId("SystemIpsecAggregate")
 	}
 
-	return readBackAfterCreate(d, "SystemIpsecAggregate", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSystemIpsecAggregate(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SystemIpsecAggregate", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSystemIpsecAggregate(d.Id(), vdomparam) },
 		refreshObjectSystemIpsecAggregate, c.Fv)
 }
 

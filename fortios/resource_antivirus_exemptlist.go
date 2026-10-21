@@ -132,8 +132,8 @@ func resourceAntivirusExemptListCreate(d *schema.ResourceData, m interface{}) er
 		d.SetId("AntivirusExemptList")
 	}
 
-	return readBackAfterCreate(d, "AntivirusExemptList", mkey,
-		func() (map[string]interface{}, error) { return c.ReadAntivirusExemptList(mkey, vdomparam) },
+	return readBackAfterCreate(d, "AntivirusExemptList", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadAntivirusExemptList(d.Id(), vdomparam) },
 		refreshObjectAntivirusExemptList, c.Fv)
 }
 

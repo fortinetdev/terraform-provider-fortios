@@ -236,8 +236,8 @@ func resourceTelemetryControllerProfileCreate(d *schema.ResourceData, m interfac
 		d.SetId("TelemetryControllerProfile")
 	}
 
-	return readBackAfterCreate(d, "TelemetryControllerProfile", mkey,
-		func() (map[string]interface{}, error) { return c.ReadTelemetryControllerProfile(mkey, vdomparam) },
+	return readBackAfterCreate(d, "TelemetryControllerProfile", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadTelemetryControllerProfile(d.Id(), vdomparam) },
 		refreshObjectTelemetryControllerProfile, c.Fv)
 }
 

@@ -159,8 +159,8 @@ func resourceRouterExtcommunityListCreate(d *schema.ResourceData, m interface{})
 		d.SetId("RouterExtcommunityList")
 	}
 
-	return readBackAfterCreate(d, "RouterExtcommunityList", mkey,
-		func() (map[string]interface{}, error) { return c.ReadRouterExtcommunityList(mkey, vdomparam) },
+	return readBackAfterCreate(d, "RouterExtcommunityList", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadRouterExtcommunityList(d.Id(), vdomparam) },
 		refreshObjectRouterExtcommunityList, c.Fv)
 }
 

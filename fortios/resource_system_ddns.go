@@ -239,8 +239,8 @@ func resourceSystemDdnsCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("SystemDdns")
 	}
 
-	return readBackAfterCreate(d, "SystemDdns", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSystemDdns(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SystemDdns", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSystemDdns(d.Id(), vdomparam) },
 		refreshObjectSystemDdns, c.Fv)
 }
 

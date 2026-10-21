@@ -131,8 +131,8 @@ func resourceRouterbgpNetwork6Create(d *schema.ResourceData, m interface{}) erro
 		d.SetId("RouterbgpNetwork6")
 	}
 
-	return readBackAfterCreate(d, "RouterbgpNetwork6", mkey,
-		func() (map[string]interface{}, error) { return c.ReadRouterbgpNetwork6(mkey, vdomparam) },
+	return readBackAfterCreate(d, "RouterbgpNetwork6", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadRouterbgpNetwork6(d.Id(), vdomparam) },
 		refreshObjectRouterbgpNetwork6, c.Fv)
 }
 

@@ -697,8 +697,8 @@ func resourceZtnaWebProxyCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("ZtnaWebProxy")
 	}
 
-	return readBackAfterCreate(d, "ZtnaWebProxy", mkey,
-		func() (map[string]interface{}, error) { return c.ReadZtnaWebProxy(mkey, vdomparam) },
+	return readBackAfterCreate(d, "ZtnaWebProxy", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadZtnaWebProxy(d.Id(), vdomparam) },
 		refreshObjectZtnaWebProxy, c.Fv)
 }
 

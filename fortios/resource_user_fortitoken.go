@@ -151,8 +151,8 @@ func resourceUserFortitokenCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("UserFortitoken")
 	}
 
-	return readBackAfterCreate(d, "UserFortitoken", mkey,
-		func() (map[string]interface{}, error) { return c.ReadUserFortitoken(mkey, vdomparam) },
+	return readBackAfterCreate(d, "UserFortitoken", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadUserFortitoken(d.Id(), vdomparam) },
 		refreshObjectUserFortitoken, c.Fv)
 }
 

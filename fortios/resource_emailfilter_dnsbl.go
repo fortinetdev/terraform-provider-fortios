@@ -179,8 +179,8 @@ func resourceEmailfilterDnsblCreate(d *schema.ResourceData, m interface{}) error
 		d.SetId("EmailfilterDnsbl")
 	}
 
-	return readBackAfterCreate(d, "EmailfilterDnsbl", mkey,
-		func() (map[string]interface{}, error) { return c.ReadEmailfilterDnsbl(mkey, vdomparam) },
+	return readBackAfterCreate(d, "EmailfilterDnsbl", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadEmailfilterDnsbl(d.Id(), vdomparam) },
 		refreshObjectEmailfilterDnsbl, c.Fv)
 }
 

@@ -164,8 +164,8 @@ func resourceVideofilterKeywordCreate(d *schema.ResourceData, m interface{}) err
 		d.SetId("VideofilterKeyword")
 	}
 
-	return readBackAfterCreate(d, "VideofilterKeyword", mkey,
-		func() (map[string]interface{}, error) { return c.ReadVideofilterKeyword(mkey, vdomparam) },
+	return readBackAfterCreate(d, "VideofilterKeyword", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadVideofilterKeyword(d.Id(), vdomparam) },
 		refreshObjectVideofilterKeyword, c.Fv)
 }
 

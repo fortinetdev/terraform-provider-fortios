@@ -142,8 +142,8 @@ func resourceLogCustomFieldCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("LogCustomField")
 	}
 
-	return readBackAfterCreate(d, "LogCustomField", mkey,
-		func() (map[string]interface{}, error) { return c.ReadLogCustomField(mkey, vdomparam) },
+	return readBackAfterCreate(d, "LogCustomField", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadLogCustomField(d.Id(), vdomparam) },
 		refreshObjectLogCustomField, c.Fv)
 }
 

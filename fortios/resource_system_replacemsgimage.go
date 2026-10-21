@@ -122,8 +122,8 @@ func resourceSystemReplacemsgImageCreate(d *schema.ResourceData, m interface{}) 
 		d.SetId("SystemReplacemsgImage")
 	}
 
-	return readBackAfterCreate(d, "SystemReplacemsgImage", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSystemReplacemsgImage(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SystemReplacemsgImage", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSystemReplacemsgImage(d.Id(), vdomparam) },
 		refreshObjectSystemReplacemsgImage, c.Fv)
 }
 

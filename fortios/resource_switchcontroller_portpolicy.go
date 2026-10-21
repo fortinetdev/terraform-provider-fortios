@@ -147,8 +147,8 @@ func resourceSwitchControllerPortPolicyCreate(d *schema.ResourceData, m interfac
 		d.SetId("SwitchControllerPortPolicy")
 	}
 
-	return readBackAfterCreate(d, "SwitchControllerPortPolicy", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSwitchControllerPortPolicy(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SwitchControllerPortPolicy", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSwitchControllerPortPolicy(d.Id(), vdomparam) },
 		refreshObjectSwitchControllerPortPolicy, c.Fv)
 }
 

@@ -127,8 +127,8 @@ func resourceWebfilterFtgdLocalCatCreate(d *schema.ResourceData, m interface{}) 
 		d.SetId("WebfilterFtgdLocalCat")
 	}
 
-	return readBackAfterCreate(d, "WebfilterFtgdLocalCat", mkey,
-		func() (map[string]interface{}, error) { return c.ReadWebfilterFtgdLocalCat(mkey, vdomparam) },
+	return readBackAfterCreate(d, "WebfilterFtgdLocalCat", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadWebfilterFtgdLocalCat(d.Id(), vdomparam) },
 		refreshObjectWebfilterFtgdLocalCat, c.Fv)
 }
 

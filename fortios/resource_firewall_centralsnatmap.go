@@ -301,8 +301,8 @@ func resourceFirewallCentralSnatMapCreate(d *schema.ResourceData, m interface{})
 		d.SetId("FirewallCentralSnatMap")
 	}
 
-	return readBackAfterCreate(d, "FirewallCentralSnatMap", mkey,
-		func() (map[string]interface{}, error) { return c.ReadFirewallCentralSnatMap(mkey, vdomparam) },
+	return readBackAfterCreate(d, "FirewallCentralSnatMap", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadFirewallCentralSnatMap(d.Id(), vdomparam) },
 		refreshObjectFirewallCentralSnatMap, c.Fv)
 }
 

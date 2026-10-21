@@ -340,8 +340,8 @@ func resourceSystemLinkMonitorCreate(d *schema.ResourceData, m interface{}) erro
 		d.SetId("SystemLinkMonitor")
 	}
 
-	return readBackAfterCreate(d, "SystemLinkMonitor", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSystemLinkMonitor(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SystemLinkMonitor", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSystemLinkMonitor(d.Id(), vdomparam) },
 		refreshObjectSystemLinkMonitor, c.Fv)
 }
 

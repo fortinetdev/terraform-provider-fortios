@@ -841,8 +841,8 @@ func resourceFirewallProxyPolicyCreate(d *schema.ResourceData, m interface{}) er
 		d.SetId("FirewallProxyPolicy")
 	}
 
-	return readBackAfterCreate(d, "FirewallProxyPolicy", mkey,
-		func() (map[string]interface{}, error) { return c.ReadFirewallProxyPolicy(mkey, vdomparam) },
+	return readBackAfterCreate(d, "FirewallProxyPolicy", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadFirewallProxyPolicy(d.Id(), vdomparam) },
 		refreshObjectFirewallProxyPolicy, c.Fv)
 }
 

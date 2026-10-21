@@ -157,8 +157,8 @@ func resourceVpnIpsecManualkeyCreate(d *schema.ResourceData, m interface{}) erro
 		d.SetId("VpnIpsecManualkey")
 	}
 
-	return readBackAfterCreate(d, "VpnIpsecManualkey", mkey,
-		func() (map[string]interface{}, error) { return c.ReadVpnIpsecManualkey(mkey, vdomparam) },
+	return readBackAfterCreate(d, "VpnIpsecManualkey", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadVpnIpsecManualkey(d.Id(), vdomparam) },
 		refreshObjectVpnIpsecManualkey, c.Fv)
 }
 

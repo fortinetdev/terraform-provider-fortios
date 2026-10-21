@@ -158,8 +158,10 @@ func resourceWirelessControllerSyslogProfileCreate(d *schema.ResourceData, m int
 		d.SetId("WirelessControllerSyslogProfile")
 	}
 
-	return readBackAfterCreate(d, "WirelessControllerSyslogProfile", mkey,
-		func() (map[string]interface{}, error) { return c.ReadWirelessControllerSyslogProfile(mkey, vdomparam) },
+	return readBackAfterCreate(d, "WirelessControllerSyslogProfile", d.Id(),
+		func() (map[string]interface{}, error) {
+			return c.ReadWirelessControllerSyslogProfile(d.Id(), vdomparam)
+		},
 		refreshObjectWirelessControllerSyslogProfile, c.Fv)
 }
 

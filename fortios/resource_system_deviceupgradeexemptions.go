@@ -121,8 +121,8 @@ func resourceSystemDeviceUpgradeExemptionsCreate(d *schema.ResourceData, m inter
 		d.SetId("SystemDeviceUpgradeExemptions")
 	}
 
-	return readBackAfterCreate(d, "SystemDeviceUpgradeExemptions", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSystemDeviceUpgradeExemptions(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SystemDeviceUpgradeExemptions", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSystemDeviceUpgradeExemptions(d.Id(), vdomparam) },
 		refreshObjectSystemDeviceUpgradeExemptions, c.Fv)
 }
 

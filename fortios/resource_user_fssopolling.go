@@ -192,8 +192,8 @@ func resourceUserFssoPollingCreate(d *schema.ResourceData, m interface{}) error 
 		d.SetId("UserFssoPolling")
 	}
 
-	return readBackAfterCreate(d, "UserFssoPolling", mkey,
-		func() (map[string]interface{}, error) { return c.ReadUserFssoPolling(mkey, vdomparam) },
+	return readBackAfterCreate(d, "UserFssoPolling", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadUserFssoPolling(d.Id(), vdomparam) },
 		refreshObjectUserFssoPolling, c.Fv)
 }
 

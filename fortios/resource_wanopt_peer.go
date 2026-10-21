@@ -117,8 +117,8 @@ func resourceWanoptPeerCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("WanoptPeer")
 	}
 
-	return readBackAfterCreate(d, "WanoptPeer", mkey,
-		func() (map[string]interface{}, error) { return c.ReadWanoptPeer(mkey, vdomparam) },
+	return readBackAfterCreate(d, "WanoptPeer", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadWanoptPeer(d.Id(), vdomparam) },
 		refreshObjectWanoptPeer, c.Fv)
 }
 

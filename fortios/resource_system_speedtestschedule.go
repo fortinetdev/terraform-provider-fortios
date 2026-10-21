@@ -254,8 +254,8 @@ func resourceSystemSpeedTestScheduleCreate(d *schema.ResourceData, m interface{}
 		d.SetId("SystemSpeedTestSchedule")
 	}
 
-	return readBackAfterCreate(d, "SystemSpeedTestSchedule", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSystemSpeedTestSchedule(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SystemSpeedTestSchedule", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSystemSpeedTestSchedule(d.Id(), vdomparam) },
 		refreshObjectSystemSpeedTestSchedule, c.Fv)
 }
 

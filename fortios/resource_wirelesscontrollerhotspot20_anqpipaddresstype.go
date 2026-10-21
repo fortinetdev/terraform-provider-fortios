@@ -122,9 +122,9 @@ func resourceWirelessControllerHotspot20AnqpIpAddressTypeCreate(d *schema.Resour
 		d.SetId("WirelessControllerHotspot20AnqpIpAddressType")
 	}
 
-	return readBackAfterCreate(d, "WirelessControllerHotspot20AnqpIpAddressType", mkey,
+	return readBackAfterCreate(d, "WirelessControllerHotspot20AnqpIpAddressType", d.Id(),
 		func() (map[string]interface{}, error) {
-			return c.ReadWirelessControllerHotspot20AnqpIpAddressType(mkey, vdomparam)
+			return c.ReadWirelessControllerHotspot20AnqpIpAddressType(d.Id(), vdomparam)
 		},
 		refreshObjectWirelessControllerHotspot20AnqpIpAddressType, c.Fv)
 }

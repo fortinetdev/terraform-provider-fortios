@@ -148,8 +148,10 @@ func resourceCredentialStoreDomainControllerCreate(d *schema.ResourceData, m int
 		d.SetId("CredentialStoreDomainController")
 	}
 
-	return readBackAfterCreate(d, "CredentialStoreDomainController", mkey,
-		func() (map[string]interface{}, error) { return c.ReadCredentialStoreDomainController(mkey, vdomparam) },
+	return readBackAfterCreate(d, "CredentialStoreDomainController", d.Id(),
+		func() (map[string]interface{}, error) {
+			return c.ReadCredentialStoreDomainController(d.Id(), vdomparam)
+		},
 		refreshObjectCredentialStoreDomainController, c.Fv)
 }
 

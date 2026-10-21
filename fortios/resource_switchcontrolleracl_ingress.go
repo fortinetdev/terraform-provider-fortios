@@ -176,8 +176,8 @@ func resourceSwitchControllerAclIngressCreate(d *schema.ResourceData, m interfac
 		d.SetId("SwitchControllerAclIngress")
 	}
 
-	return readBackAfterCreate(d, "SwitchControllerAclIngress", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSwitchControllerAclIngress(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SwitchControllerAclIngress", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSwitchControllerAclIngress(d.Id(), vdomparam) },
 		refreshObjectSwitchControllerAclIngress, c.Fv)
 }
 

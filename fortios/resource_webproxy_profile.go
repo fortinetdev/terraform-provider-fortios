@@ -266,8 +266,8 @@ func resourceWebProxyProfileCreate(d *schema.ResourceData, m interface{}) error 
 		d.SetId("WebProxyProfile")
 	}
 
-	return readBackAfterCreate(d, "WebProxyProfile", mkey,
-		func() (map[string]interface{}, error) { return c.ReadWebProxyProfile(mkey, vdomparam) },
+	return readBackAfterCreate(d, "WebProxyProfile", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadWebProxyProfile(d.Id(), vdomparam) },
 		refreshObjectWebProxyProfile, c.Fv)
 }
 

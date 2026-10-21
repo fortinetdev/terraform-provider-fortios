@@ -394,8 +394,8 @@ func resourceFirewallSnifferCreate(d *schema.ResourceData, m interface{}) error 
 		d.SetId("FirewallSniffer")
 	}
 
-	return readBackAfterCreate(d, "FirewallSniffer", mkey,
-		func() (map[string]interface{}, error) { return c.ReadFirewallSniffer(mkey, vdomparam) },
+	return readBackAfterCreate(d, "FirewallSniffer", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadFirewallSniffer(d.Id(), vdomparam) },
 		refreshObjectFirewallSniffer, c.Fv)
 }
 

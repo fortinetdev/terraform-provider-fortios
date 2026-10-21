@@ -183,8 +183,8 @@ func resourceSystemSsoFortigateCloudAdminCreate(d *schema.ResourceData, m interf
 		d.SetId("SystemSsoFortigateCloudAdmin")
 	}
 
-	return readBackAfterCreate(d, "SystemSsoFortigateCloudAdmin", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSystemSsoFortigateCloudAdmin(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SystemSsoFortigateCloudAdmin", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSystemSsoFortigateCloudAdmin(d.Id(), vdomparam) },
 		refreshObjectSystemSsoFortigateCloudAdmin, c.Fv)
 }
 

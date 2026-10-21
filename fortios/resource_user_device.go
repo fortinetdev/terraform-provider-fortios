@@ -185,8 +185,8 @@ func resourceUserDeviceCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("UserDevice")
 	}
 
-	return readBackAfterCreate(d, "UserDevice", mkey,
-		func() (map[string]interface{}, error) { return c.ReadUserDevice(mkey, vdomparam) },
+	return readBackAfterCreate(d, "UserDevice", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadUserDevice(d.Id(), vdomparam) },
 		refreshObjectUserDevice, c.Fv)
 }
 

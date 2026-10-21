@@ -140,9 +140,9 @@ func resourceEndpointControlRegisteredForticlientCreate(d *schema.ResourceData, 
 		d.SetId("EndpointControlRegisteredForticlient")
 	}
 
-	return readBackAfterCreate(d, "EndpointControlRegisteredForticlient", mkey,
+	return readBackAfterCreate(d, "EndpointControlRegisteredForticlient", d.Id(),
 		func() (map[string]interface{}, error) {
-			return c.ReadEndpointControlRegisteredForticlient(mkey, vdomparam)
+			return c.ReadEndpointControlRegisteredForticlient(d.Id(), vdomparam)
 		},
 		refreshObjectEndpointControlRegisteredForticlient, c.Fv)
 }

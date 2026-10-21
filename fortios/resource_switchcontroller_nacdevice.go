@@ -156,8 +156,8 @@ func resourceSwitchControllerNacDeviceCreate(d *schema.ResourceData, m interface
 		d.SetId("SwitchControllerNacDevice")
 	}
 
-	return readBackAfterCreate(d, "SwitchControllerNacDevice", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSwitchControllerNacDevice(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SwitchControllerNacDevice", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSwitchControllerNacDevice(d.Id(), vdomparam) },
 		refreshObjectSwitchControllerNacDevice, c.Fv)
 }
 
