@@ -153,9 +153,9 @@ func resourceExtensionControllerFortigateProfileCreate(d *schema.ResourceData, m
 		d.SetId("ExtensionControllerFortigateProfile")
 	}
 
-	return readBackAfterCreate(d, "ExtensionControllerFortigateProfile", mkey,
+	return readBackAfterCreate(d, "ExtensionControllerFortigateProfile", d.Id(),
 		func() (map[string]interface{}, error) {
-			return c.ReadExtensionControllerFortigateProfile(mkey, vdomparam)
+			return c.ReadExtensionControllerFortigateProfile(d.Id(), vdomparam)
 		},
 		refreshObjectExtensionControllerFortigateProfile, c.Fv)
 }

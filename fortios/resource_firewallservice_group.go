@@ -168,8 +168,8 @@ func resourceFirewallServiceGroupCreate(d *schema.ResourceData, m interface{}) e
 		d.SetId("FirewallServiceGroup")
 	}
 
-	return readBackAfterCreate(d, "FirewallServiceGroup", mkey,
-		func() (map[string]interface{}, error) { return c.ReadFirewallServiceGroup(mkey, vdomparam) },
+	return readBackAfterCreate(d, "FirewallServiceGroup", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadFirewallServiceGroup(d.Id(), vdomparam) },
 		refreshObjectFirewallServiceGroup, c.Fv)
 }
 

@@ -202,8 +202,8 @@ func resourceZtnaDestinationCreate(d *schema.ResourceData, m interface{}) error 
 		d.SetId("ZtnaDestination")
 	}
 
-	return readBackAfterCreate(d, "ZtnaDestination", mkey,
-		func() (map[string]interface{}, error) { return c.ReadZtnaDestination(mkey, vdomparam) },
+	return readBackAfterCreate(d, "ZtnaDestination", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadZtnaDestination(d.Id(), vdomparam) },
 		refreshObjectZtnaDestination, c.Fv)
 }
 

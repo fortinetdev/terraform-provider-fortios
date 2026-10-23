@@ -191,8 +191,8 @@ func resourceDlpLabelCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("DlpLabel")
 	}
 
-	return readBackAfterCreate(d, "DlpLabel", mkey,
-		func() (map[string]interface{}, error) { return c.ReadDlpLabel(mkey, vdomparam) },
+	return readBackAfterCreate(d, "DlpLabel", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadDlpLabel(d.Id(), vdomparam) },
 		refreshObjectDlpLabel, c.Fv)
 }
 

@@ -271,8 +271,8 @@ func resourceSystemAutomationTriggerCreate(d *schema.ResourceData, m interface{}
 		d.SetId("SystemAutomationTrigger")
 	}
 
-	return readBackAfterCreate(d, "SystemAutomationTrigger", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSystemAutomationTrigger(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SystemAutomationTrigger", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSystemAutomationTrigger(d.Id(), vdomparam) },
 		refreshObjectSystemAutomationTrigger, c.Fv)
 }
 

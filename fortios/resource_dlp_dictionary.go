@@ -185,8 +185,8 @@ func resourceDlpDictionaryCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("DlpDictionary")
 	}
 
-	return readBackAfterCreate(d, "DlpDictionary", mkey,
-		func() (map[string]interface{}, error) { return c.ReadDlpDictionary(mkey, vdomparam) },
+	return readBackAfterCreate(d, "DlpDictionary", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadDlpDictionary(d.Id(), vdomparam) },
 		refreshObjectDlpDictionary, c.Fv)
 }
 

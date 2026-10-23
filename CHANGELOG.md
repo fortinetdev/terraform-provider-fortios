@@ -1,5 +1,10 @@
 ## 1.27.0 (Unreleased)
 
+## 1.26.2 (Oct 23, 2026)
+BUG FIXES:
+
+* Fix error when not specific the mkey for the auto-generated mkey resources;
+
 ## 1.26.1 (Sep 15, 2026)
 BUG FIXES:
 

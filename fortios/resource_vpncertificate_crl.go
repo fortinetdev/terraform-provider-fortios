@@ -179,8 +179,8 @@ func resourceVpnCertificateCrlCreate(d *schema.ResourceData, m interface{}) erro
 		d.SetId("VpnCertificateCrl")
 	}
 
-	return readBackAfterCreate(d, "VpnCertificateCrl", mkey,
-		func() (map[string]interface{}, error) { return c.ReadVpnCertificateCrl(mkey, vdomparam) },
+	return readBackAfterCreate(d, "VpnCertificateCrl", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadVpnCertificateCrl(d.Id(), vdomparam) },
 		refreshObjectVpnCertificateCrl, c.Fv)
 }
 

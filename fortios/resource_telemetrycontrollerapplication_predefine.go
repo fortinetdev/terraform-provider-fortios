@@ -117,9 +117,9 @@ func resourceTelemetryControllerApplicationPredefineCreate(d *schema.ResourceDat
 		d.SetId("TelemetryControllerApplicationPredefine")
 	}
 
-	return readBackAfterCreate(d, "TelemetryControllerApplicationPredefine", mkey,
+	return readBackAfterCreate(d, "TelemetryControllerApplicationPredefine", d.Id(),
 		func() (map[string]interface{}, error) {
-			return c.ReadTelemetryControllerApplicationPredefine(mkey, vdomparam)
+			return c.ReadTelemetryControllerApplicationPredefine(d.Id(), vdomparam)
 		},
 		refreshObjectTelemetryControllerApplicationPredefine, c.Fv)
 }

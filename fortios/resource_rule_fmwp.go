@@ -207,8 +207,8 @@ func resourceRuleFmwpCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("RuleFmwp")
 	}
 
-	return readBackAfterCreate(d, "RuleFmwp", mkey,
-		func() (map[string]interface{}, error) { return c.ReadRuleFmwp(mkey, vdomparam) },
+	return readBackAfterCreate(d, "RuleFmwp", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadRuleFmwp(d.Id(), vdomparam) },
 		refreshObjectRuleFmwp, c.Fv)
 }
 

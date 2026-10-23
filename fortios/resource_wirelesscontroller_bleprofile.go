@@ -214,8 +214,8 @@ func resourceWirelessControllerBleProfileCreate(d *schema.ResourceData, m interf
 		d.SetId("WirelessControllerBleProfile")
 	}
 
-	return readBackAfterCreate(d, "WirelessControllerBleProfile", mkey,
-		func() (map[string]interface{}, error) { return c.ReadWirelessControllerBleProfile(mkey, vdomparam) },
+	return readBackAfterCreate(d, "WirelessControllerBleProfile", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadWirelessControllerBleProfile(d.Id(), vdomparam) },
 		refreshObjectWirelessControllerBleProfile, c.Fv)
 }
 

@@ -168,8 +168,8 @@ func resourceFirewallIppool6Create(d *schema.ResourceData, m interface{}) error 
 		d.SetId("FirewallIppool6")
 	}
 
-	return readBackAfterCreate(d, "FirewallIppool6", mkey,
-		func() (map[string]interface{}, error) { return c.ReadFirewallIppool6(mkey, vdomparam) },
+	return readBackAfterCreate(d, "FirewallIppool6", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadFirewallIppool6(d.Id(), vdomparam) },
 		refreshObjectFirewallIppool6, c.Fv)
 }
 

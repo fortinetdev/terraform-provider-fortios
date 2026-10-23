@@ -241,8 +241,8 @@ func resourceCasbSaasApplicationCreate(d *schema.ResourceData, m interface{}) er
 		d.SetId("CasbSaasApplication")
 	}
 
-	return readBackAfterCreate(d, "CasbSaasApplication", mkey,
-		func() (map[string]interface{}, error) { return c.ReadCasbSaasApplication(mkey, vdomparam) },
+	return readBackAfterCreate(d, "CasbSaasApplication", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadCasbSaasApplication(d.Id(), vdomparam) },
 		refreshObjectCasbSaasApplication, c.Fv)
 }
 

@@ -209,8 +209,8 @@ func resourceFirewallMulticastAddressCreate(d *schema.ResourceData, m interface{
 		d.SetId("FirewallMulticastAddress")
 	}
 
-	return readBackAfterCreate(d, "FirewallMulticastAddress", mkey,
-		func() (map[string]interface{}, error) { return c.ReadFirewallMulticastAddress(mkey, vdomparam) },
+	return readBackAfterCreate(d, "FirewallMulticastAddress", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadFirewallMulticastAddress(d.Id(), vdomparam) },
 		refreshObjectFirewallMulticastAddress, c.Fv)
 }
 

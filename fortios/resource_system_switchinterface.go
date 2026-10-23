@@ -183,8 +183,8 @@ func resourceSystemSwitchInterfaceCreate(d *schema.ResourceData, m interface{}) 
 		d.SetId("SystemSwitchInterface")
 	}
 
-	return readBackAfterCreate(d, "SystemSwitchInterface", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSystemSwitchInterface(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SystemSwitchInterface", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSystemSwitchInterface(d.Id(), vdomparam) },
 		refreshObjectSystemSwitchInterface, c.Fv)
 }
 

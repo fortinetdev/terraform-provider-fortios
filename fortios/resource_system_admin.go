@@ -653,8 +653,8 @@ func resourceSystemAdminCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("SystemAdmin")
 	}
 
-	return readBackAfterCreate(d, "SystemAdmin", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSystemAdmin(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SystemAdmin", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSystemAdmin(d.Id(), vdomparam) },
 		refreshObjectSystemAdmin, c.Fv)
 }
 

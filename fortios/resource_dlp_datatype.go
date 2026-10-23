@@ -171,8 +171,8 @@ func resourceDlpDataTypeCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("DlpDataType")
 	}
 
-	return readBackAfterCreate(d, "DlpDataType", mkey,
-		func() (map[string]interface{}, error) { return c.ReadDlpDataType(mkey, vdomparam) },
+	return readBackAfterCreate(d, "DlpDataType", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadDlpDataType(d.Id(), vdomparam) },
 		refreshObjectDlpDataType, c.Fv)
 }
 

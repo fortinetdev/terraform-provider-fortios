@@ -143,8 +143,8 @@ func resourceRouterAspathListCreate(d *schema.ResourceData, m interface{}) error
 		d.SetId("RouterAspathList")
 	}
 
-	return readBackAfterCreate(d, "RouterAspathList", mkey,
-		func() (map[string]interface{}, error) { return c.ReadRouterAspathList(mkey, vdomparam) },
+	return readBackAfterCreate(d, "RouterAspathList", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadRouterAspathList(d.Id(), vdomparam) },
 		refreshObjectRouterAspathList, c.Fv)
 }
 

@@ -159,8 +159,8 @@ func resourceSpamfilterIptrustCreate(d *schema.ResourceData, m interface{}) erro
 		d.SetId("SpamfilterIptrust")
 	}
 
-	return readBackAfterCreate(d, "SpamfilterIptrust", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSpamfilterIptrust(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SpamfilterIptrust", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSpamfilterIptrust(d.Id(), vdomparam) },
 		refreshObjectSpamfilterIptrust, c.Fv)
 }
 

@@ -148,9 +148,9 @@ func resourceSwitchControllerStormControlPolicyCreate(d *schema.ResourceData, m 
 		d.SetId("SwitchControllerStormControlPolicy")
 	}
 
-	return readBackAfterCreate(d, "SwitchControllerStormControlPolicy", mkey,
+	return readBackAfterCreate(d, "SwitchControllerStormControlPolicy", d.Id(),
 		func() (map[string]interface{}, error) {
-			return c.ReadSwitchControllerStormControlPolicy(mkey, vdomparam)
+			return c.ReadSwitchControllerStormControlPolicy(d.Id(), vdomparam)
 		},
 		refreshObjectSwitchControllerStormControlPolicy, c.Fv)
 }

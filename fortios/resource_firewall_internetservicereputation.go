@@ -135,9 +135,9 @@ func resourceFirewallInternetServiceReputationCreate(d *schema.ResourceData, m i
 		d.SetId("FirewallInternetServiceReputation")
 	}
 
-	return readBackAfterCreate(d, "FirewallInternetServiceReputation", mkey,
+	return readBackAfterCreate(d, "FirewallInternetServiceReputation", d.Id(),
 		func() (map[string]interface{}, error) {
-			return c.ReadFirewallInternetServiceReputation(mkey, vdomparam)
+			return c.ReadFirewallInternetServiceReputation(d.Id(), vdomparam)
 		},
 		refreshObjectFirewallInternetServiceReputation, c.Fv)
 }

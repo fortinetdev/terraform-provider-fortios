@@ -886,8 +886,8 @@ func resourceVpnSslWebPortalCreate(d *schema.ResourceData, m interface{}) error 
 		d.SetId("VpnSslWebPortal")
 	}
 
-	return readBackAfterCreate(d, "VpnSslWebPortal", mkey,
-		func() (map[string]interface{}, error) { return c.ReadVpnSslWebPortal(mkey, vdomparam) },
+	return readBackAfterCreate(d, "VpnSslWebPortal", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadVpnSslWebPortal(d.Id(), vdomparam) },
 		refreshObjectVpnSslWebPortal, c.Fv)
 }
 

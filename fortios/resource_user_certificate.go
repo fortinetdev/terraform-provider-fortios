@@ -137,8 +137,8 @@ func resourceUserCertificateCreate(d *schema.ResourceData, m interface{}) error 
 		d.SetId("UserCertificate")
 	}
 
-	return readBackAfterCreate(d, "UserCertificate", mkey,
-		func() (map[string]interface{}, error) { return c.ReadUserCertificate(mkey, vdomparam) },
+	return readBackAfterCreate(d, "UserCertificate", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadUserCertificate(d.Id(), vdomparam) },
 		refreshObjectUserCertificate, c.Fv)
 }
 

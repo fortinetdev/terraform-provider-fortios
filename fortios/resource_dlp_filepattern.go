@@ -173,8 +173,8 @@ func resourceDlpFilepatternCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("DlpFilepattern")
 	}
 
-	return readBackAfterCreate(d, "DlpFilepattern", mkey,
-		func() (map[string]interface{}, error) { return c.ReadDlpFilepattern(mkey, vdomparam) },
+	return readBackAfterCreate(d, "DlpFilepattern", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadDlpFilepattern(d.Id(), vdomparam) },
 		refreshObjectDlpFilepattern, c.Fv)
 }
 

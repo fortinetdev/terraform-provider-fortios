@@ -271,8 +271,8 @@ func resourceSystemDnsDatabaseCreate(d *schema.ResourceData, m interface{}) erro
 		d.SetId("SystemDnsDatabase")
 	}
 
-	return readBackAfterCreate(d, "SystemDnsDatabase", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSystemDnsDatabase(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SystemDnsDatabase", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSystemDnsDatabase(d.Id(), vdomparam) },
 		refreshObjectSystemDnsDatabase, c.Fv)
 }
 

@@ -182,8 +182,8 @@ func resourceSystemThemeCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("SystemTheme")
 	}
 
-	return readBackAfterCreate(d, "SystemTheme", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSystemTheme(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SystemTheme", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSystemTheme(d.Id(), vdomparam) },
 		refreshObjectSystemTheme, c.Fv)
 }
 

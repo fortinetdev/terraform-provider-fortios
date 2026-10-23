@@ -120,8 +120,8 @@ func resourceSystemMacAddressTableCreate(d *schema.ResourceData, m interface{}) 
 		d.SetId("SystemMacAddressTable")
 	}
 
-	return readBackAfterCreate(d, "SystemMacAddressTable", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSystemMacAddressTable(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SystemMacAddressTable", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSystemMacAddressTable(d.Id(), vdomparam) },
 		refreshObjectSystemMacAddressTable, c.Fv)
 }
 

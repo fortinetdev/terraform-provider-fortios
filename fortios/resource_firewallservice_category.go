@@ -135,8 +135,8 @@ func resourceFirewallServiceCategoryCreate(d *schema.ResourceData, m interface{}
 		d.SetId("FirewallServiceCategory")
 	}
 
-	return readBackAfterCreate(d, "FirewallServiceCategory", mkey,
-		func() (map[string]interface{}, error) { return c.ReadFirewallServiceCategory(mkey, vdomparam) },
+	return readBackAfterCreate(d, "FirewallServiceCategory", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadFirewallServiceCategory(d.Id(), vdomparam) },
 		refreshObjectFirewallServiceCategory, c.Fv)
 }
 

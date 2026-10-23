@@ -156,8 +156,8 @@ func resourceSwitchControllerQosIpDscpMapCreate(d *schema.ResourceData, m interf
 		d.SetId("SwitchControllerQosIpDscpMap")
 	}
 
-	return readBackAfterCreate(d, "SwitchControllerQosIpDscpMap", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSwitchControllerQosIpDscpMap(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SwitchControllerQosIpDscpMap", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSwitchControllerQosIpDscpMap(d.Id(), vdomparam) },
 		refreshObjectSwitchControllerQosIpDscpMap, c.Fv)
 }
 

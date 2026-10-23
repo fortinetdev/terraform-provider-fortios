@@ -141,8 +141,8 @@ func resourceSystemSitTunnelCreate(d *schema.ResourceData, m interface{}) error 
 		d.SetId("SystemSitTunnel")
 	}
 
-	return readBackAfterCreate(d, "SystemSitTunnel", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSystemSitTunnel(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SystemSitTunnel", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSystemSitTunnel(d.Id(), vdomparam) },
 		refreshObjectSystemSitTunnel, c.Fv)
 }
 

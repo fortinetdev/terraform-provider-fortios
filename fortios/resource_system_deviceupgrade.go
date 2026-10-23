@@ -205,8 +205,8 @@ func resourceSystemDeviceUpgradeCreate(d *schema.ResourceData, m interface{}) er
 		d.SetId("SystemDeviceUpgrade")
 	}
 
-	return readBackAfterCreate(d, "SystemDeviceUpgrade", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSystemDeviceUpgrade(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SystemDeviceUpgrade", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSystemDeviceUpgrade(d.Id(), vdomparam) },
 		refreshObjectSystemDeviceUpgrade, c.Fv)
 }
 

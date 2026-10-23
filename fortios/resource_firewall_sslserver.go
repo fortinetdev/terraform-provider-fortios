@@ -174,8 +174,8 @@ func resourceFirewallSslServerCreate(d *schema.ResourceData, m interface{}) erro
 		d.SetId("FirewallSslServer")
 	}
 
-	return readBackAfterCreate(d, "FirewallSslServer", mkey,
-		func() (map[string]interface{}, error) { return c.ReadFirewallSslServer(mkey, vdomparam) },
+	return readBackAfterCreate(d, "FirewallSslServer", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadFirewallSslServer(d.Id(), vdomparam) },
 		refreshObjectFirewallSslServer, c.Fv)
 }
 

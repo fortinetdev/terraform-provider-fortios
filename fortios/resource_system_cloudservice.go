@@ -143,8 +143,8 @@ func resourceSystemCloudServiceCreate(d *schema.ResourceData, m interface{}) err
 		d.SetId("SystemCloudService")
 	}
 
-	return readBackAfterCreate(d, "SystemCloudService", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSystemCloudService(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SystemCloudService", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSystemCloudService(d.Id(), vdomparam) },
 		refreshObjectSystemCloudService, c.Fv)
 }
 

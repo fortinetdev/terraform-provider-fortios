@@ -146,8 +146,8 @@ func resourceUserAdgrpCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("UserAdgrp")
 	}
 
-	return readBackAfterCreate(d, "UserAdgrp", mkey,
-		func() (map[string]interface{}, error) { return c.ReadUserAdgrp(mkey, vdomparam) },
+	return readBackAfterCreate(d, "UserAdgrp", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadUserAdgrp(d.Id(), vdomparam) },
 		refreshObjectUserAdgrp, c.Fv)
 }
 

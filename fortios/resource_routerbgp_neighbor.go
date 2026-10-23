@@ -1018,8 +1018,8 @@ func resourceRouterbgpNeighborCreate(d *schema.ResourceData, m interface{}) erro
 		d.SetId("RouterbgpNeighbor")
 	}
 
-	return readBackAfterCreate(d, "RouterbgpNeighbor", mkey,
-		func() (map[string]interface{}, error) { return c.ReadRouterbgpNeighbor(mkey, vdomparam) },
+	return readBackAfterCreate(d, "RouterbgpNeighbor", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadRouterbgpNeighbor(d.Id(), vdomparam) },
 		refreshObjectRouterbgpNeighbor, c.Fv)
 }
 

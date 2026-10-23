@@ -158,8 +158,8 @@ func resourceFirewallScheduleGroupCreate(d *schema.ResourceData, m interface{}) 
 		d.SetId("FirewallScheduleGroup")
 	}
 
-	return readBackAfterCreate(d, "FirewallScheduleGroup", mkey,
-		func() (map[string]interface{}, error) { return c.ReadFirewallScheduleGroup(mkey, vdomparam) },
+	return readBackAfterCreate(d, "FirewallScheduleGroup", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadFirewallScheduleGroup(d.Id(), vdomparam) },
 		refreshObjectFirewallScheduleGroup, c.Fv)
 }
 

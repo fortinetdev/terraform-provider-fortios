@@ -116,8 +116,8 @@ func resourceVideofilterYoutubeKeyCreate(d *schema.ResourceData, m interface{}) 
 		d.SetId("VideofilterYoutubeKey")
 	}
 
-	return readBackAfterCreate(d, "VideofilterYoutubeKey", mkey,
-		func() (map[string]interface{}, error) { return c.ReadVideofilterYoutubeKey(mkey, vdomparam) },
+	return readBackAfterCreate(d, "VideofilterYoutubeKey", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadVideofilterYoutubeKey(d.Id(), vdomparam) },
 		refreshObjectVideofilterYoutubeKey, c.Fv)
 }
 

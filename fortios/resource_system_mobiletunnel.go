@@ -205,8 +205,8 @@ func resourceSystemMobileTunnelCreate(d *schema.ResourceData, m interface{}) err
 		d.SetId("SystemMobileTunnel")
 	}
 
-	return readBackAfterCreate(d, "SystemMobileTunnel", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSystemMobileTunnel(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SystemMobileTunnel", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSystemMobileTunnel(d.Id(), vdomparam) },
 		refreshObjectSystemMobileTunnel, c.Fv)
 }
 

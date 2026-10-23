@@ -160,8 +160,8 @@ func resourceSystemObjectTaggingCreate(d *schema.ResourceData, m interface{}) er
 		d.SetId("SystemObjectTagging")
 	}
 
-	return readBackAfterCreate(d, "SystemObjectTagging", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSystemObjectTagging(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SystemObjectTagging", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSystemObjectTagging(d.Id(), vdomparam) },
 		refreshObjectSystemObjectTagging, c.Fv)
 }
 

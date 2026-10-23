@@ -251,8 +251,8 @@ func resourceWirelessControllerArrpProfileCreate(d *schema.ResourceData, m inter
 		d.SetId("WirelessControllerArrpProfile")
 	}
 
-	return readBackAfterCreate(d, "WirelessControllerArrpProfile", mkey,
-		func() (map[string]interface{}, error) { return c.ReadWirelessControllerArrpProfile(mkey, vdomparam) },
+	return readBackAfterCreate(d, "WirelessControllerArrpProfile", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadWirelessControllerArrpProfile(d.Id(), vdomparam) },
 		refreshObjectWirelessControllerArrpProfile, c.Fv)
 }
 

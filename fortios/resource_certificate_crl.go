@@ -179,8 +179,8 @@ func resourceCertificateCrlCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("CertificateCrl")
 	}
 
-	return readBackAfterCreate(d, "CertificateCrl", mkey,
-		func() (map[string]interface{}, error) { return c.ReadCertificateCrl(mkey, vdomparam) },
+	return readBackAfterCreate(d, "CertificateCrl", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadCertificateCrl(d.Id(), vdomparam) },
 		refreshObjectCertificateCrl, c.Fv)
 }
 

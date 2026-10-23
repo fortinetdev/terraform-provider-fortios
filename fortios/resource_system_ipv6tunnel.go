@@ -136,8 +136,8 @@ func resourceSystemIpv6TunnelCreate(d *schema.ResourceData, m interface{}) error
 		d.SetId("SystemIpv6Tunnel")
 	}
 
-	return readBackAfterCreate(d, "SystemIpv6Tunnel", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSystemIpv6Tunnel(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SystemIpv6Tunnel", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSystemIpv6Tunnel(d.Id(), vdomparam) },
 		refreshObjectSystemIpv6Tunnel, c.Fv)
 }
 

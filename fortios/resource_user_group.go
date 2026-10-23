@@ -372,8 +372,8 @@ func resourceUserGroupCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("UserGroup")
 	}
 
-	return readBackAfterCreate(d, "UserGroup", mkey,
-		func() (map[string]interface{}, error) { return c.ReadUserGroup(mkey, vdomparam) },
+	return readBackAfterCreate(d, "UserGroup", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadUserGroup(d.Id(), vdomparam) },
 		refreshObjectUserGroup, c.Fv)
 }
 

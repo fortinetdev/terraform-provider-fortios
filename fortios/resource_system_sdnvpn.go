@@ -204,8 +204,8 @@ func resourceSystemSdnVpnCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("SystemSdnVpn")
 	}
 
-	return readBackAfterCreate(d, "SystemSdnVpn", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSystemSdnVpn(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SystemSdnVpn", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSystemSdnVpn(d.Id(), vdomparam) },
 		refreshObjectSystemSdnVpn, c.Fv)
 }
 

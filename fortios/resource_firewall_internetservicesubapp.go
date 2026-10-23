@@ -132,8 +132,8 @@ func resourceFirewallInternetServiceSubappCreate(d *schema.ResourceData, m inter
 		d.SetId("FirewallInternetServiceSubapp")
 	}
 
-	return readBackAfterCreate(d, "FirewallInternetServiceSubapp", mkey,
-		func() (map[string]interface{}, error) { return c.ReadFirewallInternetServiceSubapp(mkey, vdomparam) },
+	return readBackAfterCreate(d, "FirewallInternetServiceSubapp", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadFirewallInternetServiceSubapp(d.Id(), vdomparam) },
 		refreshObjectFirewallInternetServiceSubapp, c.Fv)
 }
 

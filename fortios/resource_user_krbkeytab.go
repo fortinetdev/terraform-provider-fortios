@@ -132,8 +132,8 @@ func resourceUserKrbKeytabCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("UserKrbKeytab")
 	}
 
-	return readBackAfterCreate(d, "UserKrbKeytab", mkey,
-		func() (map[string]interface{}, error) { return c.ReadUserKrbKeytab(mkey, vdomparam) },
+	return readBackAfterCreate(d, "UserKrbKeytab", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadUserKrbKeytab(d.Id(), vdomparam) },
 		refreshObjectUserKrbKeytab, c.Fv)
 }
 

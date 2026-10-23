@@ -126,8 +126,8 @@ func resourceSystemAffinityInterruptCreate(d *schema.ResourceData, m interface{}
 		d.SetId("SystemAffinityInterrupt")
 	}
 
-	return readBackAfterCreate(d, "SystemAffinityInterrupt", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSystemAffinityInterrupt(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SystemAffinityInterrupt", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSystemAffinityInterrupt(d.Id(), vdomparam) },
 		refreshObjectSystemAffinityInterrupt, c.Fv)
 }
 

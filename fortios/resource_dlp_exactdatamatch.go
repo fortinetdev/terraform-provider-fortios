@@ -175,8 +175,8 @@ func resourceDlpExactDataMatchCreate(d *schema.ResourceData, m interface{}) erro
 		d.SetId("DlpExactDataMatch")
 	}
 
-	return readBackAfterCreate(d, "DlpExactDataMatch", mkey,
-		func() (map[string]interface{}, error) { return c.ReadDlpExactDataMatch(mkey, vdomparam) },
+	return readBackAfterCreate(d, "DlpExactDataMatch", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadDlpExactDataMatch(d.Id(), vdomparam) },
 		refreshObjectDlpExactDataMatch, c.Fv)
 }
 

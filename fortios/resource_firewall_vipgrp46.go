@@ -148,8 +148,8 @@ func resourceFirewallVipgrp46Create(d *schema.ResourceData, m interface{}) error
 		d.SetId("FirewallVipgrp46")
 	}
 
-	return readBackAfterCreate(d, "FirewallVipgrp46", mkey,
-		func() (map[string]interface{}, error) { return c.ReadFirewallVipgrp46(mkey, vdomparam) },
+	return readBackAfterCreate(d, "FirewallVipgrp46", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadFirewallVipgrp46(d.Id(), vdomparam) },
 		refreshObjectFirewallVipgrp46, c.Fv)
 }
 

@@ -296,8 +296,8 @@ func resourceUserNacPolicyCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("UserNacPolicy")
 	}
 
-	return readBackAfterCreate(d, "UserNacPolicy", mkey,
-		func() (map[string]interface{}, error) { return c.ReadUserNacPolicy(mkey, vdomparam) },
+	return readBackAfterCreate(d, "UserNacPolicy", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadUserNacPolicy(d.Id(), vdomparam) },
 		refreshObjectUserNacPolicy, c.Fv)
 }
 

@@ -110,8 +110,8 @@ func resourceIpsRuleSettingsCreate(d *schema.ResourceData, m interface{}) error 
 		d.SetId("IpsRuleSettings")
 	}
 
-	return readBackAfterCreate(d, "IpsRuleSettings", mkey,
-		func() (map[string]interface{}, error) { return c.ReadIpsRuleSettings(mkey, vdomparam) },
+	return readBackAfterCreate(d, "IpsRuleSettings", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadIpsRuleSettings(d.Id(), vdomparam) },
 		refreshObjectIpsRuleSettings, c.Fv)
 }
 

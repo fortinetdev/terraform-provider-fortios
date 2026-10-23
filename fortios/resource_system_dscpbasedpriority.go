@@ -121,8 +121,8 @@ func resourceSystemDscpBasedPriorityCreate(d *schema.ResourceData, m interface{}
 		d.SetId("SystemDscpBasedPriority")
 	}
 
-	return readBackAfterCreate(d, "SystemDscpBasedPriority", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSystemDscpBasedPriority(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SystemDscpBasedPriority", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSystemDscpBasedPriority(d.Id(), vdomparam) },
 		refreshObjectSystemDscpBasedPriority, c.Fv)
 }
 

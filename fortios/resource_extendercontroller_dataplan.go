@@ -206,8 +206,8 @@ func resourceExtenderControllerDataplanCreate(d *schema.ResourceData, m interfac
 		d.SetId("ExtenderControllerDataplan")
 	}
 
-	return readBackAfterCreate(d, "ExtenderControllerDataplan", mkey,
-		func() (map[string]interface{}, error) { return c.ReadExtenderControllerDataplan(mkey, vdomparam) },
+	return readBackAfterCreate(d, "ExtenderControllerDataplan", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadExtenderControllerDataplan(d.Id(), vdomparam) },
 		refreshObjectExtenderControllerDataplan, c.Fv)
 }
 

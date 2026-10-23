@@ -188,9 +188,9 @@ func resourceWirelessControllerHotspot20H2QpOsuProviderCreate(d *schema.Resource
 		d.SetId("WirelessControllerHotspot20H2QpOsuProvider")
 	}
 
-	return readBackAfterCreate(d, "WirelessControllerHotspot20H2QpOsuProvider", mkey,
+	return readBackAfterCreate(d, "WirelessControllerHotspot20H2QpOsuProvider", d.Id(),
 		func() (map[string]interface{}, error) {
-			return c.ReadWirelessControllerHotspot20H2QpOsuProvider(mkey, vdomparam)
+			return c.ReadWirelessControllerHotspot20H2QpOsuProvider(d.Id(), vdomparam)
 		},
 		refreshObjectWirelessControllerHotspot20H2QpOsuProvider, c.Fv)
 }

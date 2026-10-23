@@ -263,8 +263,8 @@ func resourceFirewallPolicy46Create(d *schema.ResourceData, m interface{}) error
 		d.SetId("FirewallPolicy46")
 	}
 
-	return readBackAfterCreate(d, "FirewallPolicy46", mkey,
-		func() (map[string]interface{}, error) { return c.ReadFirewallPolicy46(mkey, vdomparam) },
+	return readBackAfterCreate(d, "FirewallPolicy46", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadFirewallPolicy46(d.Id(), vdomparam) },
 		refreshObjectFirewallPolicy46, c.Fv)
 }
 

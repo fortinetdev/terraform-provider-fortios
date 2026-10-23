@@ -140,8 +140,8 @@ func resourceIpsDecoderCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("IpsDecoder")
 	}
 
-	return readBackAfterCreate(d, "IpsDecoder", mkey,
-		func() (map[string]interface{}, error) { return c.ReadIpsDecoder(mkey, vdomparam) },
+	return readBackAfterCreate(d, "IpsDecoder", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadIpsDecoder(d.Id(), vdomparam) },
 		refreshObjectIpsDecoder, c.Fv)
 }
 

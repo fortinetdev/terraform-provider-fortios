@@ -136,8 +136,8 @@ func resourceFirewallTrafficClassCreate(d *schema.ResourceData, m interface{}) e
 		d.SetId("FirewallTrafficClass")
 	}
 
-	return readBackAfterCreate(d, "FirewallTrafficClass", mkey,
-		func() (map[string]interface{}, error) { return c.ReadFirewallTrafficClass(mkey, vdomparam) },
+	return readBackAfterCreate(d, "FirewallTrafficClass", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadFirewallTrafficClass(d.Id(), vdomparam) },
 		refreshObjectFirewallTrafficClass, c.Fv)
 }
 

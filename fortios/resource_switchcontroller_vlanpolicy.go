@@ -173,8 +173,8 @@ func resourceSwitchControllerVlanPolicyCreate(d *schema.ResourceData, m interfac
 		d.SetId("SwitchControllerVlanPolicy")
 	}
 
-	return readBackAfterCreate(d, "SwitchControllerVlanPolicy", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSwitchControllerVlanPolicy(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SwitchControllerVlanPolicy", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSwitchControllerVlanPolicy(d.Id(), vdomparam) },
 		refreshObjectSwitchControllerVlanPolicy, c.Fv)
 }
 

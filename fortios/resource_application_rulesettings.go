@@ -110,8 +110,8 @@ func resourceApplicationRuleSettingsCreate(d *schema.ResourceData, m interface{}
 		d.SetId("ApplicationRuleSettings")
 	}
 
-	return readBackAfterCreate(d, "ApplicationRuleSettings", mkey,
-		func() (map[string]interface{}, error) { return c.ReadApplicationRuleSettings(mkey, vdomparam) },
+	return readBackAfterCreate(d, "ApplicationRuleSettings", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadApplicationRuleSettings(d.Id(), vdomparam) },
 		refreshObjectApplicationRuleSettings, c.Fv)
 }
 

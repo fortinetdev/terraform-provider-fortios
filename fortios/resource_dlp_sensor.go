@@ -330,8 +330,8 @@ func resourceDlpSensorCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("DlpSensor")
 	}
 
-	return readBackAfterCreate(d, "DlpSensor", mkey,
-		func() (map[string]interface{}, error) { return c.ReadDlpSensor(mkey, vdomparam) },
+	return readBackAfterCreate(d, "DlpSensor", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadDlpSensor(d.Id(), vdomparam) },
 		refreshObjectDlpSensor, c.Fv)
 }
 

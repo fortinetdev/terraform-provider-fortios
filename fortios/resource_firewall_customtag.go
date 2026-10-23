@@ -146,8 +146,8 @@ func resourceFirewallCustomTagCreate(d *schema.ResourceData, m interface{}) erro
 		d.SetId("FirewallCustomTag")
 	}
 
-	return readBackAfterCreate(d, "FirewallCustomTag", mkey,
-		func() (map[string]interface{}, error) { return c.ReadFirewallCustomTag(mkey, vdomparam) },
+	return readBackAfterCreate(d, "FirewallCustomTag", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadFirewallCustomTag(d.Id(), vdomparam) },
 		refreshObjectFirewallCustomTag, c.Fv)
 }
 

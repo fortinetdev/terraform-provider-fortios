@@ -269,8 +269,8 @@ func resourceFirewallVip64Create(d *schema.ResourceData, m interface{}) error {
 		d.SetId("FirewallVip64")
 	}
 
-	return readBackAfterCreate(d, "FirewallVip64", mkey,
-		func() (map[string]interface{}, error) { return c.ReadFirewallVip64(mkey, vdomparam) },
+	return readBackAfterCreate(d, "FirewallVip64", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadFirewallVip64(d.Id(), vdomparam) },
 		refreshObjectFirewallVip64, c.Fv)
 }
 

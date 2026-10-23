@@ -454,8 +454,8 @@ func resourceApplicationListCreate(d *schema.ResourceData, m interface{}) error 
 		d.SetId("ApplicationList")
 	}
 
-	return readBackAfterCreate(d, "ApplicationList", mkey,
-		func() (map[string]interface{}, error) { return c.ReadApplicationList(mkey, vdomparam) },
+	return readBackAfterCreate(d, "ApplicationList", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadApplicationList(d.Id(), vdomparam) },
 		refreshObjectApplicationList, c.Fv)
 }
 

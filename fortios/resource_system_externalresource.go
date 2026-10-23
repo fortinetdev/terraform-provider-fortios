@@ -257,8 +257,8 @@ func resourceSystemExternalResourceCreate(d *schema.ResourceData, m interface{})
 		d.SetId("SystemExternalResource")
 	}
 
-	return readBackAfterCreate(d, "SystemExternalResource", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSystemExternalResource(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SystemExternalResource", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSystemExternalResource(d.Id(), vdomparam) },
 		refreshObjectSystemExternalResource, c.Fv)
 }
 

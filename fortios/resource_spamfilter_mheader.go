@@ -164,8 +164,8 @@ func resourceSpamfilterMheaderCreate(d *schema.ResourceData, m interface{}) erro
 		d.SetId("SpamfilterMheader")
 	}
 
-	return readBackAfterCreate(d, "SpamfilterMheader", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSpamfilterMheader(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SpamfilterMheader", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSpamfilterMheader(d.Id(), vdomparam) },
 		refreshObjectSpamfilterMheader, c.Fv)
 }
 

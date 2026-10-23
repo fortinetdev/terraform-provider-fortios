@@ -152,8 +152,8 @@ func resourceRouterKeyChainCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("RouterKeyChain")
 	}
 
-	return readBackAfterCreate(d, "RouterKeyChain", mkey,
-		func() (map[string]interface{}, error) { return c.ReadRouterKeyChain(mkey, vdomparam) },
+	return readBackAfterCreate(d, "RouterKeyChain", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadRouterKeyChain(d.Id(), vdomparam) },
 		refreshObjectRouterKeyChain, c.Fv)
 }
 

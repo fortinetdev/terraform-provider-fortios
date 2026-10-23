@@ -176,8 +176,8 @@ func resourceWebProxyForwardServerGroupCreate(d *schema.ResourceData, m interfac
 		d.SetId("WebProxyForwardServerGroup")
 	}
 
-	return readBackAfterCreate(d, "WebProxyForwardServerGroup", mkey,
-		func() (map[string]interface{}, error) { return c.ReadWebProxyForwardServerGroup(mkey, vdomparam) },
+	return readBackAfterCreate(d, "WebProxyForwardServerGroup", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadWebProxyForwardServerGroup(d.Id(), vdomparam) },
 		refreshObjectWebProxyForwardServerGroup, c.Fv)
 }
 

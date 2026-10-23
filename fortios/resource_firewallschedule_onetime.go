@@ -157,8 +157,8 @@ func resourceFirewallScheduleOnetimeCreate(d *schema.ResourceData, m interface{}
 		d.SetId("FirewallScheduleOnetime")
 	}
 
-	return readBackAfterCreate(d, "FirewallScheduleOnetime", mkey,
-		func() (map[string]interface{}, error) { return c.ReadFirewallScheduleOnetime(mkey, vdomparam) },
+	return readBackAfterCreate(d, "FirewallScheduleOnetime", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadFirewallScheduleOnetime(d.Id(), vdomparam) },
 		refreshObjectFirewallScheduleOnetime, c.Fv)
 }
 

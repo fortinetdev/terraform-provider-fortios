@@ -139,8 +139,8 @@ func resourceWirelessControllerVapGroupCreate(d *schema.ResourceData, m interfac
 		d.SetId("WirelessControllerVapGroup")
 	}
 
-	return readBackAfterCreate(d, "WirelessControllerVapGroup", mkey,
-		func() (map[string]interface{}, error) { return c.ReadWirelessControllerVapGroup(mkey, vdomparam) },
+	return readBackAfterCreate(d, "WirelessControllerVapGroup", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadWirelessControllerVapGroup(d.Id(), vdomparam) },
 		refreshObjectWirelessControllerVapGroup, c.Fv)
 }
 

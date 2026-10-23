@@ -189,8 +189,8 @@ func resourceWirelessControllerApcfgProfileCreate(d *schema.ResourceData, m inte
 		d.SetId("WirelessControllerApcfgProfile")
 	}
 
-	return readBackAfterCreate(d, "WirelessControllerApcfgProfile", mkey,
-		func() (map[string]interface{}, error) { return c.ReadWirelessControllerApcfgProfile(mkey, vdomparam) },
+	return readBackAfterCreate(d, "WirelessControllerApcfgProfile", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadWirelessControllerApcfgProfile(d.Id(), vdomparam) },
 		refreshObjectWirelessControllerApcfgProfile, c.Fv)
 }
 

@@ -115,8 +115,8 @@ func resourceFirewallInternetServiceIpblVendorCreate(d *schema.ResourceData, m i
 		d.SetId("FirewallInternetServiceIpblVendor")
 	}
 
-	return readBackAfterCreate(d, "FirewallInternetServiceIpblVendor", mkey,
-		func() (map[string]interface{}, error) { return c.ReadFirewallInternetServiceIpblVendor(mkey, vdomparam) },
+	return readBackAfterCreate(d, "FirewallInternetServiceIpblVendor", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadFirewallInternetServiceIpblVendor(d.Id(), vdomparam) },
 		refreshObjectFirewallInternetServiceIpblVendor, c.Fv)
 }
 

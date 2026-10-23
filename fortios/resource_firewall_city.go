@@ -115,8 +115,8 @@ func resourceFirewallCityCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("FirewallCity")
 	}
 
-	return readBackAfterCreate(d, "FirewallCity", mkey,
-		func() (map[string]interface{}, error) { return c.ReadFirewallCity(mkey, vdomparam) },
+	return readBackAfterCreate(d, "FirewallCity", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadFirewallCity(d.Id(), vdomparam) },
 		refreshObjectFirewallCity, c.Fv)
 }
 

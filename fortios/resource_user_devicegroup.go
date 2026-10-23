@@ -170,8 +170,8 @@ func resourceUserDeviceGroupCreate(d *schema.ResourceData, m interface{}) error 
 		d.SetId("UserDeviceGroup")
 	}
 
-	return readBackAfterCreate(d, "UserDeviceGroup", mkey,
-		func() (map[string]interface{}, error) { return c.ReadUserDeviceGroup(mkey, vdomparam) },
+	return readBackAfterCreate(d, "UserDeviceGroup", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadUserDeviceGroup(d.Id(), vdomparam) },
 		refreshObjectUserDeviceGroup, c.Fv)
 }
 

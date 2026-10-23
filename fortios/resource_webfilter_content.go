@@ -188,8 +188,8 @@ func resourceWebfilterContentCreate(d *schema.ResourceData, m interface{}) error
 		d.SetId("WebfilterContent")
 	}
 
-	return readBackAfterCreate(d, "WebfilterContent", mkey,
-		func() (map[string]interface{}, error) { return c.ReadWebfilterContent(mkey, vdomparam) },
+	return readBackAfterCreate(d, "WebfilterContent", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadWebfilterContent(d.Id(), vdomparam) },
 		refreshObjectWebfilterContent, c.Fv)
 }
 

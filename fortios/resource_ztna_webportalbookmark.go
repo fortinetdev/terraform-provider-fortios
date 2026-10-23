@@ -304,8 +304,8 @@ func resourceZtnaWebPortalBookmarkCreate(d *schema.ResourceData, m interface{}) 
 		d.SetId("ZtnaWebPortalBookmark")
 	}
 
-	return readBackAfterCreate(d, "ZtnaWebPortalBookmark", mkey,
-		func() (map[string]interface{}, error) { return c.ReadZtnaWebPortalBookmark(mkey, vdomparam) },
+	return readBackAfterCreate(d, "ZtnaWebPortalBookmark", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadZtnaWebPortalBookmark(d.Id(), vdomparam) },
 		refreshObjectZtnaWebPortalBookmark, c.Fv)
 }
 

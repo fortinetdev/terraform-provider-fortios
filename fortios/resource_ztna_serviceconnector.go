@@ -184,8 +184,8 @@ func resourceZtnaServiceConnectorCreate(d *schema.ResourceData, m interface{}) e
 		d.SetId("ZtnaServiceConnector")
 	}
 
-	return readBackAfterCreate(d, "ZtnaServiceConnector", mkey,
-		func() (map[string]interface{}, error) { return c.ReadZtnaServiceConnector(mkey, vdomparam) },
+	return readBackAfterCreate(d, "ZtnaServiceConnector", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadZtnaServiceConnector(d.Id(), vdomparam) },
 		refreshObjectZtnaServiceConnector, c.Fv)
 }
 

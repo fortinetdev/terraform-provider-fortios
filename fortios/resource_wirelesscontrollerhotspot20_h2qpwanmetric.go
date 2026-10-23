@@ -152,9 +152,9 @@ func resourceWirelessControllerHotspot20H2QpWanMetricCreate(d *schema.ResourceDa
 		d.SetId("WirelessControllerHotspot20H2QpWanMetric")
 	}
 
-	return readBackAfterCreate(d, "WirelessControllerHotspot20H2QpWanMetric", mkey,
+	return readBackAfterCreate(d, "WirelessControllerHotspot20H2QpWanMetric", d.Id(),
 		func() (map[string]interface{}, error) {
-			return c.ReadWirelessControllerHotspot20H2QpWanMetric(mkey, vdomparam)
+			return c.ReadWirelessControllerHotspot20H2QpWanMetric(d.Id(), vdomparam)
 		},
 		refreshObjectWirelessControllerHotspot20H2QpWanMetric, c.Fv)
 }

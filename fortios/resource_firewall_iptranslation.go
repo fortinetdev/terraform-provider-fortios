@@ -126,8 +126,8 @@ func resourceFirewallIpTranslationCreate(d *schema.ResourceData, m interface{}) 
 		d.SetId("FirewallIpTranslation")
 	}
 
-	return readBackAfterCreate(d, "FirewallIpTranslation", mkey,
-		func() (map[string]interface{}, error) { return c.ReadFirewallIpTranslation(mkey, vdomparam) },
+	return readBackAfterCreate(d, "FirewallIpTranslation", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadFirewallIpTranslation(d.Id(), vdomparam) },
 		refreshObjectFirewallIpTranslation, c.Fv)
 }
 

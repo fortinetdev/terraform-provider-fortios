@@ -1203,8 +1203,8 @@ func resourceAntivirusProfileCreate(d *schema.ResourceData, m interface{}) error
 		d.SetId("AntivirusProfile")
 	}
 
-	return readBackAfterCreate(d, "AntivirusProfile", mkey,
-		func() (map[string]interface{}, error) { return c.ReadAntivirusProfile(mkey, vdomparam) },
+	return readBackAfterCreate(d, "AntivirusProfile", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadAntivirusProfile(d.Id(), vdomparam) },
 		refreshObjectAntivirusProfile, c.Fv)
 }
 

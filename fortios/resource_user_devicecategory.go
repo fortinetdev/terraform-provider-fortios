@@ -121,8 +121,8 @@ func resourceUserDeviceCategoryCreate(d *schema.ResourceData, m interface{}) err
 		d.SetId("UserDeviceCategory")
 	}
 
-	return readBackAfterCreate(d, "UserDeviceCategory", mkey,
-		func() (map[string]interface{}, error) { return c.ReadUserDeviceCategory(mkey, vdomparam) },
+	return readBackAfterCreate(d, "UserDeviceCategory", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadUserDeviceCategory(d.Id(), vdomparam) },
 		refreshObjectUserDeviceCategory, c.Fv)
 }
 

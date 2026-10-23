@@ -1056,8 +1056,8 @@ func resourceFirewallSslSshProfileCreate(d *schema.ResourceData, m interface{}) 
 		d.SetId("FirewallSslSshProfile")
 	}
 
-	return readBackAfterCreate(d, "FirewallSslSshProfile", mkey,
-		func() (map[string]interface{}, error) { return c.ReadFirewallSslSshProfile(mkey, vdomparam) },
+	return readBackAfterCreate(d, "FirewallSslSshProfile", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadFirewallSslSshProfile(d.Id(), vdomparam) },
 		refreshObjectFirewallSslSshProfile, c.Fv)
 }
 

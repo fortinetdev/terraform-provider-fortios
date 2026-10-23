@@ -193,8 +193,8 @@ func resourceSystemVxlanCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("SystemVxlan")
 	}
 
-	return readBackAfterCreate(d, "SystemVxlan", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSystemVxlan(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SystemVxlan", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSystemVxlan(d.Id(), vdomparam) },
 		refreshObjectSystemVxlan, c.Fv)
 }
 

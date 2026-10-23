@@ -158,9 +158,9 @@ func resourceFirewallInternetServiceCustomGroupCreate(d *schema.ResourceData, m 
 		d.SetId("FirewallInternetServiceCustomGroup")
 	}
 
-	return readBackAfterCreate(d, "FirewallInternetServiceCustomGroup", mkey,
+	return readBackAfterCreate(d, "FirewallInternetServiceCustomGroup", d.Id(),
 		func() (map[string]interface{}, error) {
-			return c.ReadFirewallInternetServiceCustomGroup(mkey, vdomparam)
+			return c.ReadFirewallInternetServiceCustomGroup(d.Id(), vdomparam)
 		},
 		refreshObjectFirewallInternetServiceCustomGroup, c.Fv)
 }

@@ -122,8 +122,8 @@ func resourceSystemSnmpMibViewCreate(d *schema.ResourceData, m interface{}) erro
 		d.SetId("SystemSnmpMibView")
 	}
 
-	return readBackAfterCreate(d, "SystemSnmpMibView", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSystemSnmpMibView(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SystemSnmpMibView", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSystemSnmpMibView(d.Id(), vdomparam) },
 		refreshObjectSystemSnmpMibView, c.Fv)
 }
 

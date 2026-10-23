@@ -122,8 +122,8 @@ func resourceWirelessControllerNacProfileCreate(d *schema.ResourceData, m interf
 		d.SetId("WirelessControllerNacProfile")
 	}
 
-	return readBackAfterCreate(d, "WirelessControllerNacProfile", mkey,
-		func() (map[string]interface{}, error) { return c.ReadWirelessControllerNacProfile(mkey, vdomparam) },
+	return readBackAfterCreate(d, "WirelessControllerNacProfile", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadWirelessControllerNacProfile(d.Id(), vdomparam) },
 		refreshObjectWirelessControllerNacProfile, c.Fv)
 }
 

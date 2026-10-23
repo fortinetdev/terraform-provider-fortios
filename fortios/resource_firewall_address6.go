@@ -423,8 +423,8 @@ func resourceFirewallAddress6Create(d *schema.ResourceData, m interface{}) error
 		d.SetId("FirewallAddress6")
 	}
 
-	return readBackAfterCreate(d, "FirewallAddress6", mkey,
-		func() (map[string]interface{}, error) { return c.ReadFirewallAddress6(mkey, vdomparam) },
+	return readBackAfterCreate(d, "FirewallAddress6", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadFirewallAddress6(d.Id(), vdomparam) },
 		refreshObjectFirewallAddress6, c.Fv)
 }
 

@@ -181,8 +181,8 @@ func resourceCertificateCaCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("CertificateCa")
 	}
 
-	return readBackAfterCreate(d, "CertificateCa", mkey,
-		func() (map[string]interface{}, error) { return c.ReadCertificateCa(mkey, vdomparam) },
+	return readBackAfterCreate(d, "CertificateCa", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadCertificateCa(d.Id(), vdomparam) },
 		refreshObjectCertificateCa, c.Fv)
 }
 

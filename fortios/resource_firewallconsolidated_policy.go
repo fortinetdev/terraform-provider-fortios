@@ -736,8 +736,8 @@ func resourceFirewallConsolidatedPolicyCreate(d *schema.ResourceData, m interfac
 		d.SetId("FirewallConsolidatedPolicy")
 	}
 
-	return readBackAfterCreate(d, "FirewallConsolidatedPolicy", mkey,
-		func() (map[string]interface{}, error) { return c.ReadFirewallConsolidatedPolicy(mkey, vdomparam) },
+	return readBackAfterCreate(d, "FirewallConsolidatedPolicy", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadFirewallConsolidatedPolicy(d.Id(), vdomparam) },
 		refreshObjectFirewallConsolidatedPolicy, c.Fv)
 }
 

@@ -304,8 +304,8 @@ func resourceVpnSslWebUserGroupBookmarkCreate(d *schema.ResourceData, m interfac
 		d.SetId("VpnSslWebUserGroupBookmark")
 	}
 
-	return readBackAfterCreate(d, "VpnSslWebUserGroupBookmark", mkey,
-		func() (map[string]interface{}, error) { return c.ReadVpnSslWebUserGroupBookmark(mkey, vdomparam) },
+	return readBackAfterCreate(d, "VpnSslWebUserGroupBookmark", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadVpnSslWebUserGroupBookmark(d.Id(), vdomparam) },
 		refreshObjectVpnSslWebUserGroupBookmark, c.Fv)
 }
 

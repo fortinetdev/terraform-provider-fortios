@@ -132,8 +132,8 @@ func resourceSwitchControllerQosQosPolicyCreate(d *schema.ResourceData, m interf
 		d.SetId("SwitchControllerQosQosPolicy")
 	}
 
-	return readBackAfterCreate(d, "SwitchControllerQosQosPolicy", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSwitchControllerQosQosPolicy(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SwitchControllerQosQosPolicy", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSwitchControllerQosQosPolicy(d.Id(), vdomparam) },
 		refreshObjectSwitchControllerQosQosPolicy, c.Fv)
 }
 

@@ -460,8 +460,8 @@ func resourceReportChartCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("ReportChart")
 	}
 
-	return readBackAfterCreate(d, "ReportChart", mkey,
-		func() (map[string]interface{}, error) { return c.ReadReportChart(mkey, vdomparam) },
+	return readBackAfterCreate(d, "ReportChart", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadReportChart(d.Id(), vdomparam) },
 		refreshObjectReportChart, c.Fv)
 }
 

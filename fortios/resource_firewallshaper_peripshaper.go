@@ -173,8 +173,8 @@ func resourceFirewallShaperPerIpShaperCreate(d *schema.ResourceData, m interface
 		d.SetId("FirewallShaperPerIpShaper")
 	}
 
-	return readBackAfterCreate(d, "FirewallShaperPerIpShaper", mkey,
-		func() (map[string]interface{}, error) { return c.ReadFirewallShaperPerIpShaper(mkey, vdomparam) },
+	return readBackAfterCreate(d, "FirewallShaperPerIpShaper", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadFirewallShaperPerIpShaper(d.Id(), vdomparam) },
 		refreshObjectFirewallShaperPerIpShaper, c.Fv)
 }
 

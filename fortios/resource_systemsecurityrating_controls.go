@@ -122,8 +122,8 @@ func resourceSystemSecurityRatingControlsCreate(d *schema.ResourceData, m interf
 		d.SetId("SystemSecurityRatingControls")
 	}
 
-	return readBackAfterCreate(d, "SystemSecurityRatingControls", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSystemSecurityRatingControls(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SystemSecurityRatingControls", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSystemSecurityRatingControls(d.Id(), vdomparam) },
 		refreshObjectSystemSecurityRatingControls, c.Fv)
 }
 

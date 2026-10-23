@@ -691,8 +691,8 @@ func resourceSystemDhcpServerCreate(d *schema.ResourceData, m interface{}) error
 		d.SetId("SystemDhcpServer")
 	}
 
-	return readBackAfterCreate(d, "SystemDhcpServer", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSystemDhcpServer(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SystemDhcpServer", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSystemDhcpServer(d.Id(), vdomparam) },
 		refreshObjectSystemDhcpServer, c.Fv)
 }
 

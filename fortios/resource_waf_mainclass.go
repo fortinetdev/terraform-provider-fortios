@@ -116,8 +116,8 @@ func resourceWafMainClassCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("WafMainClass")
 	}
 
-	return readBackAfterCreate(d, "WafMainClass", mkey,
-		func() (map[string]interface{}, error) { return c.ReadWafMainClass(mkey, vdomparam) },
+	return readBackAfterCreate(d, "WafMainClass", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadWafMainClass(d.Id(), vdomparam) },
 		refreshObjectWafMainClass, c.Fv)
 }
 

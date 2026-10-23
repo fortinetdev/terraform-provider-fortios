@@ -152,8 +152,8 @@ func resourceFirewallWildcardFqdnGroupCreate(d *schema.ResourceData, m interface
 		d.SetId("FirewallWildcardFqdnGroup")
 	}
 
-	return readBackAfterCreate(d, "FirewallWildcardFqdnGroup", mkey,
-		func() (map[string]interface{}, error) { return c.ReadFirewallWildcardFqdnGroup(mkey, vdomparam) },
+	return readBackAfterCreate(d, "FirewallWildcardFqdnGroup", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadFirewallWildcardFqdnGroup(d.Id(), vdomparam) },
 		refreshObjectFirewallWildcardFqdnGroup, c.Fv)
 }
 

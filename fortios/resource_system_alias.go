@@ -117,8 +117,8 @@ func resourceSystemAliasCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("SystemAlias")
 	}
 
-	return readBackAfterCreate(d, "SystemAlias", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSystemAlias(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SystemAlias", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSystemAlias(d.Id(), vdomparam) },
 		refreshObjectSystemAlias, c.Fv)
 }
 

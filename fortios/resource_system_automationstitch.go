@@ -208,8 +208,8 @@ func resourceSystemAutomationStitchCreate(d *schema.ResourceData, m interface{})
 		d.SetId("SystemAutomationStitch")
 	}
 
-	return readBackAfterCreate(d, "SystemAutomationStitch", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSystemAutomationStitch(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SystemAutomationStitch", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSystemAutomationStitch(d.Id(), vdomparam) },
 		refreshObjectSystemAutomationStitch, c.Fv)
 }
 

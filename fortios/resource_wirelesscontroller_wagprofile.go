@@ -156,8 +156,8 @@ func resourceWirelessControllerWagProfileCreate(d *schema.ResourceData, m interf
 		d.SetId("WirelessControllerWagProfile")
 	}
 
-	return readBackAfterCreate(d, "WirelessControllerWagProfile", mkey,
-		func() (map[string]interface{}, error) { return c.ReadWirelessControllerWagProfile(mkey, vdomparam) },
+	return readBackAfterCreate(d, "WirelessControllerWagProfile", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadWirelessControllerWagProfile(d.Id(), vdomparam) },
 		refreshObjectWirelessControllerWagProfile, c.Fv)
 }
 

@@ -417,8 +417,8 @@ func resourceSystemLldpNetworkPolicyCreate(d *schema.ResourceData, m interface{}
 		d.SetId("SystemLldpNetworkPolicy")
 	}
 
-	return readBackAfterCreate(d, "SystemLldpNetworkPolicy", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSystemLldpNetworkPolicy(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SystemLldpNetworkPolicy", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSystemLldpNetworkPolicy(d.Id(), vdomparam) },
 		refreshObjectSystemLldpNetworkPolicy, c.Fv)
 }
 

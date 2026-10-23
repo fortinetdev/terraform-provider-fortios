@@ -662,8 +662,8 @@ func resourceSystemDhcpTemplateCreate(d *schema.ResourceData, m interface{}) err
 		d.SetId("SystemDhcpTemplate")
 	}
 
-	return readBackAfterCreate(d, "SystemDhcpTemplate", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSystemDhcpTemplate(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SystemDhcpTemplate", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSystemDhcpTemplate(d.Id(), vdomparam) },
 		refreshObjectSystemDhcpTemplate, c.Fv)
 }
 

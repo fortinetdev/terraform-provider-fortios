@@ -148,8 +148,8 @@ func resourceSystemAutomationConditionCreate(d *schema.ResourceData, m interface
 		d.SetId("SystemAutomationCondition")
 	}
 
-	return readBackAfterCreate(d, "SystemAutomationCondition", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSystemAutomationCondition(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SystemAutomationCondition", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSystemAutomationCondition(d.Id(), vdomparam) },
 		refreshObjectSystemAutomationCondition, c.Fv)
 }
 

@@ -146,8 +146,8 @@ func resourceSystemGeneveCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("SystemGeneve")
 	}
 
-	return readBackAfterCreate(d, "SystemGeneve", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSystemGeneve(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SystemGeneve", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSystemGeneve(d.Id(), vdomparam) },
 		refreshObjectSystemGeneve, c.Fv)
 }
 

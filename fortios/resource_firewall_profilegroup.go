@@ -257,8 +257,8 @@ func resourceFirewallProfileGroupCreate(d *schema.ResourceData, m interface{}) e
 		d.SetId("FirewallProfileGroup")
 	}
 
-	return readBackAfterCreate(d, "FirewallProfileGroup", mkey,
-		func() (map[string]interface{}, error) { return c.ReadFirewallProfileGroup(mkey, vdomparam) },
+	return readBackAfterCreate(d, "FirewallProfileGroup", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadFirewallProfileGroup(d.Id(), vdomparam) },
 		refreshObjectFirewallProfileGroup, c.Fv)
 }
 

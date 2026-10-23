@@ -218,8 +218,8 @@ func resourceFirewallShaperTrafficShaperCreate(d *schema.ResourceData, m interfa
 		d.SetId("FirewallShaperTrafficShaper")
 	}
 
-	return readBackAfterCreate(d, "FirewallShaperTrafficShaper", mkey,
-		func() (map[string]interface{}, error) { return c.ReadFirewallShaperTrafficShaper(mkey, vdomparam) },
+	return readBackAfterCreate(d, "FirewallShaperTrafficShaper", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadFirewallShaperTrafficShaper(d.Id(), vdomparam) },
 		refreshObjectFirewallShaperTrafficShaper, c.Fv)
 }
 

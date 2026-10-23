@@ -162,8 +162,8 @@ func resourceWebProxyWispCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("WebProxyWisp")
 	}
 
-	return readBackAfterCreate(d, "WebProxyWisp", mkey,
-		func() (map[string]interface{}, error) { return c.ReadWebProxyWisp(mkey, vdomparam) },
+	return readBackAfterCreate(d, "WebProxyWisp", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadWebProxyWisp(d.Id(), vdomparam) },
 		refreshObjectWebProxyWisp, c.Fv)
 }
 

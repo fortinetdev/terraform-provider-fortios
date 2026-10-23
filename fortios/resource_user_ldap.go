@@ -346,8 +346,8 @@ func resourceUserLdapCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("UserLdap")
 	}
 
-	return readBackAfterCreate(d, "UserLdap", mkey,
-		func() (map[string]interface{}, error) { return c.ReadUserLdap(mkey, vdomparam) },
+	return readBackAfterCreate(d, "UserLdap", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadUserLdap(d.Id(), vdomparam) },
 		refreshObjectUserLdap, c.Fv)
 }
 

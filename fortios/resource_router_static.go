@@ -243,8 +243,8 @@ func resourceRouterStaticCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("RouterStatic")
 	}
 
-	return readBackAfterCreate(d, "RouterStatic", mkey,
-		func() (map[string]interface{}, error) { return c.ReadRouterStatic(mkey, vdomparam) },
+	return readBackAfterCreate(d, "RouterStatic", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadRouterStatic(d.Id(), vdomparam) },
 		refreshObjectRouterStatic, c.Fv)
 }
 

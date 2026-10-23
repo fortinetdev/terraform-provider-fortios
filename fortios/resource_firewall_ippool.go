@@ -263,8 +263,8 @@ func resourceFirewallIppoolCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("FirewallIppool")
 	}
 
-	return readBackAfterCreate(d, "FirewallIppool", mkey,
-		func() (map[string]interface{}, error) { return c.ReadFirewallIppool(mkey, vdomparam) },
+	return readBackAfterCreate(d, "FirewallIppool", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadFirewallIppool(d.Id(), vdomparam) },
 		refreshObjectFirewallIppool, c.Fv)
 }
 

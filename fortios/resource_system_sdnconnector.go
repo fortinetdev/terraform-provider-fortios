@@ -640,8 +640,8 @@ func resourceSystemSdnConnectorCreate(d *schema.ResourceData, m interface{}) err
 		d.SetId("SystemSdnConnector")
 	}
 
-	return readBackAfterCreate(d, "SystemSdnConnector", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSystemSdnConnector(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SystemSdnConnector", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSystemSdnConnector(d.Id(), vdomparam) },
 		refreshObjectSystemSdnConnector, c.Fv)
 }
 

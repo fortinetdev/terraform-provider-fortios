@@ -138,8 +138,8 @@ func resourceFirewallRegionCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("FirewallRegion")
 	}
 
-	return readBackAfterCreate(d, "FirewallRegion", mkey,
-		func() (map[string]interface{}, error) { return c.ReadFirewallRegion(mkey, vdomparam) },
+	return readBackAfterCreate(d, "FirewallRegion", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadFirewallRegion(d.Id(), vdomparam) },
 		refreshObjectFirewallRegion, c.Fv)
 }
 

@@ -121,8 +121,8 @@ func resourceSystemTosBasedPriorityCreate(d *schema.ResourceData, m interface{})
 		d.SetId("SystemTosBasedPriority")
 	}
 
-	return readBackAfterCreate(d, "SystemTosBasedPriority", mkey,
-		func() (map[string]interface{}, error) { return c.ReadSystemTosBasedPriority(mkey, vdomparam) },
+	return readBackAfterCreate(d, "SystemTosBasedPriority", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadSystemTosBasedPriority(d.Id(), vdomparam) },
 		refreshObjectSystemTosBasedPriority, c.Fv)
 }
 

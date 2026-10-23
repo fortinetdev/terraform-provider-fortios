@@ -957,9 +957,9 @@ func resourceExtensionControllerExtenderProfileCreate(d *schema.ResourceData, m 
 		d.SetId("ExtensionControllerExtenderProfile")
 	}
 
-	return readBackAfterCreate(d, "ExtensionControllerExtenderProfile", mkey,
+	return readBackAfterCreate(d, "ExtensionControllerExtenderProfile", d.Id(),
 		func() (map[string]interface{}, error) {
-			return c.ReadExtensionControllerExtenderProfile(mkey, vdomparam)
+			return c.ReadExtensionControllerExtenderProfile(d.Id(), vdomparam)
 		},
 		refreshObjectExtensionControllerExtenderProfile, c.Fv)
 }

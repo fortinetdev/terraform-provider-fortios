@@ -370,8 +370,8 @@ func resourceCasbProfileCreate(d *schema.ResourceData, m interface{}) error {
 		d.SetId("CasbProfile")
 	}
 
-	return readBackAfterCreate(d, "CasbProfile", mkey,
-		func() (map[string]interface{}, error) { return c.ReadCasbProfile(mkey, vdomparam) },
+	return readBackAfterCreate(d, "CasbProfile", d.Id(),
+		func() (map[string]interface{}, error) { return c.ReadCasbProfile(d.Id(), vdomparam) },
 		refreshObjectCasbProfile, c.Fv)
 }
 
